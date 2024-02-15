@@ -73,10 +73,26 @@ Teleprompter is used when taking vocals. The teleprompter will display the lyric
 
 **Music Production Manager** use MariaDB or MySQL database.
 
+# System Rquirement
+
+1. Apache Web Server
+2. PHP runtime
+3. MariaDB or MySQL Database
+
 # Installation
 
 To install **Music Production Manager**, clone **MusicProductionManager** repository from Github.
 
+**Clone Repository**
+
 ```git
 git clone https://github.com/kamshory/MusicProductionManager.git
 ```
+
+**Create Configuration**
+
+User must setup application configuration.
+
+**Create New User Account**
+
+User must create an user account.
