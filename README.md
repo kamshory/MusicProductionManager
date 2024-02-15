@@ -55,3 +55,7 @@ Karaoke is a feature that vocalists can use while practicing. Features can be ac
 ## Recording Teleprompter
 
 Teleprompter is used when taking vocals. The teleprompter will display the lyrics on the vocalist's screen during the vocal take. The lyrics will be in sync with the music listened to through the vocalist's monitor headphones.
+
+# Library
+
+**Music Production Manager** use **MagicObject** (https://github.com/Planetbiru/MagicObject)
