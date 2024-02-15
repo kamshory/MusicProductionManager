@@ -5,10 +5,11 @@
 1. song management
 2. album management
 3. artist management
-4. lyric editor
-5. MIDI editor
-6. karaoke
-7. recording teleprompter
+4. song attachment
+5. lyric editor
+6. MIDI editor
+7. karaoke
+8. recording teleprompter
 
 ## Song Management
 
@@ -23,6 +24,10 @@ Song groups marked as draft cannot yet be seen from other modules but can still 
 ## Artist Management
 
 The Music Production Manager manages the artists involved in the creation of each song. The artist can have roles as vocalist, composer or arranger. Songs can be sorted by artist from the above roles.
+
+## Song Attachment
+
+Producers can attach multiple documents or files to each song.
 
 ## Lyric Editor
 
