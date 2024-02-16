@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 23, 2023 at 06:40 AM
+-- Generation Time: Feb 16, 2024 at 07:51 AM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS `album` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  `as_draft` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -173,6 +174,9 @@ CREATE TABLE IF NOT EXISTS `song` (
   `genre_id` varchar(50) DEFAULT NULL,
   `lyric` longtext,
   `lyric_complete` tinyint(1) DEFAULT '0',
+  `lyric_midi` longtext,
+  `vocal` tinyint(1) DEFAULT '0',
+  `instrument` longtext,
   `score` int(11) DEFAULT NULL,
   `comment` longtext,
   `time_create` timestamp NULL DEFAULT NULL,
@@ -196,6 +200,25 @@ CREATE TABLE IF NOT EXISTS `song_attachment` (
   `name` varchar(255) DEFAULT NULL,
   `path` text,
   `file_size` bigint(20) DEFAULT NULL,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  `admin_create` varchar(40) DEFAULT NULL,
+  `admin_edit` varchar(40) DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL,
+  `ip_edit` varchar(50) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `song_comment`
+--
+
+CREATE TABLE IF NOT EXISTS `song_comment` (
+  `song_comment_id` varchar(40) NOT NULL,
+  `song_id` varchar(40) DEFAULT NULL,
+  `comment` longtext,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,
   `admin_create` varchar(40) DEFAULT NULL,
@@ -270,6 +293,12 @@ ALTER TABLE `song`
 --
 ALTER TABLE `song_attachment`
   ADD PRIMARY KEY (`song_attachment_id`);
+
+--
+-- Indexes for table `song_comment`
+--
+ALTER TABLE `song_comment`
+  ADD PRIMARY KEY (`song_comment_id`);
 
 --
 -- Indexes for table `user`
