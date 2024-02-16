@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="lib/css/widget-karaoke.css">
+</head>
+<body translate="no" style="position:relative">
+    <svg class="karaoke__progressbar" height="120" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="54" fill="none" stroke="#e6e6e6" stroke-width="12"></circle>
+    <circle class="karaoke__progress" stroke-dasharray=" 339.292" stroke-dashoffset="" cx="60" cy="60" r="54" fill="none" stroke="#f77a52" stroke-width="12"></circle>
+  </svg>
+  <ul class="karaoke__lyrics" style="overflow:scroll">
+    <li class="karaoke__lyrics-item">There is a house in New Orleans</li><li class="karaoke__lyrics-item">They call the Rising Sun</li><li class="karaoke__lyrics-item">And it's been the ruin of many a poor boy</li><li class="karaoke__lyrics-item">And God I know I'm one</li><li class="karaoke__lyrics-item">My mother was a tailor</li><li class="karaoke__lyrics-item">She sewed my new bluejeans</li><li class="karaoke__lyrics-item">My father was a gamblin' man</li><li class="karaoke__lyrics-item">Down in New Orleans</li><li class="karaoke__lyrics-item">Now the only thing a gambler needs</li><li class="karaoke__lyrics-item">Is a suitcase and trunk</li><li class="karaoke__lyrics-item">And the only time he's satisfied</li><li class="karaoke__lyrics-item">Is when he's on, a drunk</li><li class="karaoke__lyrics-item">Oh mother tell your children</li><li class="karaoke__lyrics-item">Not to do what I have done</li><li class="karaoke__lyrics-item">Spend your lives in sin and misery</li><li class="karaoke__lyrics-item">In the House of the Rising Sun</li><li class="karaoke__lyrics-item">Well, I got one foot on the platform</li><li class="karaoke__lyrics-item">The other foot on the train</li><li class="karaoke__lyrics-item">I'm goin' back to New Orleans</li><li class="karaoke__lyrics-item">To wear that ball and chain</li><li class="karaoke__lyrics-item">Well, there is a house in New Orleans</li><li class="karaoke__lyrics-item">They call the Rising Sunn</li><li class="karaoke__lyrics-item">And it's been the ruin of many a poor boy</li><li class="karaoke__lyrics-item">And God I know I'm one</li></ul>
+  <audio class="karaoke__audio" preload="auto" autoplay="">
+    <source src="https://www.dropbox.com/s/aacta7o0em0u4rm/house-of-rising-sun.mp3?dl=1" type="audio/mpeg">
+    <p>Whoops, your browser does not support the audio element.</p>
+  </audio>
+      <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script id="rendered-js">
+  $(document).ready(function () {
+    var Karaoke = function () {
+      this.$audioElem = $(".karaoke__audio");
+      this.$divLyrics = $(".karaoke__lyrics");
+      this.lyrics = [
+      { end: "19", start: "12", text: "There is a house in New Orleans" },
+      { end: "24", start: "19", text: "They call the Rising Sun" },
+      {
+        end: "31",
+        start: "25",
+        text: "And it's been the ruin of many a poor boy" },
+  
+      { end: "36", start: "31", text: "And God I know I'm one" }, 
+      { end: "51", start: "48", text: "My mother was a tailor" },
+      { end: "58", start: "54", text: "She sewed my new bluejeans" },
+      { end: "66", start: "60", text: "My father was a gamblin' man" },
+      { end: "70", start: "67", text: "Down in New Orleans" },
+  
+      {
+        end: "87",
+        start: "81",
+        text: "Now the only thing a gambler needs" },
+  
+      { end: "92", start: "88", text: "Is a suitcase and trunk" },
+      {
+        end: "99",
+        start: "94",
+        text: "And the only time he's satisfied" },
+  
+      { end: "104", start: "99", text: "Is when he's on, a drunk" },
+  
+      { end: "152", start: "149", text: "Oh mother tell your children" },
+      { end: "158", start: "154", text: "Not to do what I have done" },
+      {
+        end: "166",
+        start: "161",
+        text: "Spend your lives in sin and misery" },
+  
+      {
+        end: "171",
+        start: "167",
+        text: "In the House of the Rising Sun" },
+  
+  
+      {
+        end: "187",
+        start: "182",
+        text: "Well, I got one foot on the platform" },
+  
+      { end: "192", start: "188", text: "The other foot on the train" },
+      { end: "199", start: "194", text: "I'm goin' back to New Orleans" },
+      { end: "204", start: "200", text: "To wear that ball and chain" },
+  
+      {
+        end: "220",
+        start: "214",
+        text: "Well, there is a house in New Orleans" },
+  
+      { end: "225", start: "222", text: "They call the Rising Sunn" },
+      {
+        end: "232",
+        start: "227",
+        text: "And it's been the ruin of many a poor boy" },
+  
+      { end: "237", start: "232", text: "And God I know I'm one" }];
+  
+      this.addLyricsInDom();
+      this.canPlayMedia();
+    };
+  
+    Karaoke.prototype.canPlayMedia = function () {
+      const audio = document.querySelector(".karaoke__audio");
+      //https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/canplay_event
+      audio.addEventListener(
+      "canplay",
+      function () {
+        try {
+          this.run();
+        } catch (e) {
+          alert(e);
+        }
+      }.bind(this),
+      false);
+  
+    };
+  
+    Karaoke.prototype.run = function () {
+      this.svgLoader();
+      this.timeupdate();
+    };
+  
+    Karaoke.prototype.addLyricsInDom = function () {
+      this.lyrics.map((item, i) => {
+        let elem = document.createElement("li");
+        elem.className = "karaoke__lyrics-item";
+        elem.innerHTML = this.lyrics[i].text;
+        this.$divLyrics.append(elem);
+      });
+    };
+  
+    Karaoke.prototype.svgLoader = function () {
+      const getLengthOfDashoffset = document.
+      querySelector(".karaoke__progress").
+      getTotalLength();
+      const coef = getLengthOfDashoffset / this.lyrics[0].start;
+      let i = 0;
+  
+      let gauge = setInterval(
+      function () {
+        i++;
+        $(".karaoke__progress").css("strokeDashoffset", i * coef);
+        if (i >= this.lyrics[0].start) {
+          clearInterval(gauge);
+          $(".karaoke__progressbar").fadeOut("slow");
+        }
+      }.bind(this),
+      1000);
+  
+    };
+  
+    Karaoke.prototype.timeupdate = function () {
+      var scrollHeight = 120;
+      var previousIndex;
+      this.$audioElem.on(
+      "timeupdate",
+      function (e) {
+        this.lyrics.forEach(
+        function (elem, index, array) {
+          if (
+          e.target.currentTime >= elem.start &&
+          e.target.currentTime <= elem.end)
+          {
+            this.$divLyrics.
+            children().
+            eq(index).
+            addClass("karaoke__lyrics-item--selected");
+  
+            if (
+            elem.end >= e.target.currentTime &&
+            index != 0)
+            {
+              this.$divLyrics.
+              children().
+              eq(index - 1).
+              removeClass(
+              "karaoke__lyrics-item--selected");
+  
+  
+              if (index >= 3 && index != previousIndex) {
+
+                let elem2 = document.querySelector('karaoke__lyrics-item--selected');
+                elem2.scrollIntoView({
+                    behavior: 'auto',
+                    block: 'center',
+                    inline: 'center'
+                });
+
+                /*
+                $("html,body").animate(
+                { scrollTop: scrollHeight },
+                1000);
+                */
+                scrollHeight += 120;
+              }
+              previousIndex = index;
+            }
+          }
+        }.bind(this));
+  
+      }.bind(this));
+  
+    };
+  
+    new Karaoke();
+  });
+  //# sourceURL=pen.js
+      </script>
+  
+    
+  
+  
+  
+  </body>
+</html>
