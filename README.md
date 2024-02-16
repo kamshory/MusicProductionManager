@@ -1,5 +1,7 @@
 # Music Production Manager
 
+Music Production Management is a software used in music production. Music Production Management is not a DAW or Digital Audio Workstation although it is equipped with features such as changing instruments and creating lyrics in MIDI files.
+
 ## Feature
 
 1. song management
