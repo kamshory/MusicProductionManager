@@ -63,7 +63,7 @@ if (isset($song)) {
 		<script type="text/javascript">
 			var midi_data = <?php echo json_encode($midi->getMidData());?>;
 		</script>
-		<script type="text/javascript" src="assets/js/lyric-editor.js?rnd=<?php echo mt_rand(1, 9999999);?>"></script>
+		<script type="text/javascript" src="assets/js/lyric-editor.js"></script>
 		<script type="text/javascript" src="assets/midijs/midi.js"></script>
 
 		<div style="background-color: rgba(0, 0, 0, 0.11);" class="modal fade" id="generate-dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="generateDialogLabel" aria-hidden="true">
@@ -204,7 +204,7 @@ if (isset($song)) {
 		<div class="flex-row">
 			<div class="flex-column lyric-preview-container">
 				<div class="raw-area">
-					<div><textarea name="rawdata" id="rawdata" class="rawdata"><?php echo htmlspecialchars($lyricMidi); ?></textarea>
+					<div><textarea name="rawdata" id="rawdata" class="rawdata" spellcheck="false"><?php echo htmlspecialchars($lyricMidi); ?></textarea>
 					</div>
 					<div class="button-area">
 						<input type="button" id="generate" value="Generate" class="btn btn-primary">

@@ -1,5 +1,6 @@
 result_per_page: 20
 song_base_url: ${SONG_BASE_UER}
+app_name: Music Production Manager
 database:
   time_zone_system: Asia/Jakarta
   default_charset: utf8
