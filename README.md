@@ -6,10 +6,11 @@
 2. album management
 3. artist management
 4. song attachment
-5. lyric editor
-6. MIDI editor
-7. karaoke
-8. recording teleprompter
+5. comment
+6. lyric editor
+7. MIDI editor
+8. karaoke
+9. recording teleprompter
 
 ## Song Management
 
@@ -28,6 +29,12 @@ The Music Production Manager manages the artists involved in the creation of eac
 ## Song Attachment
 
 Producers can attach multiple documents or files to each song.
+
+## Comment
+
+Users can provide comments on each song. Comments have time and duration like subtitles. Comments can be seen by other users.
+
+Comments will be notes by the composer, arranger, vocalist or producer about parts of a song.
 
 ## Lyric Editor
 
