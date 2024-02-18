@@ -317,6 +317,7 @@ if(!empty($result))
         <tr>
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
+        <th scope="col" width="20"><i class="ti ti-download"></i></th>
         <th scope="col" width="20"><i class="ti ti-player-play"></i></th>
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
@@ -341,12 +342,14 @@ if(!empty($result))
         $songId = $song->getSongId();
         $linkEditInstrument = basename($_SERVER['PHP_SELF'])."?action=edit-instrument&song_id=".$songId;
         $linkEditLyric = basename($_SERVER['PHP_SELF'])."?action=edit-lyric&song_id=".$songId;
+        $linkDownload = basename($_SERVER['PHP_SELF'])."?action=download&song_id=".$songId;
         $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_id=".$songId;
         $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_id=".$songId;
         ?>
         <tr data-id="<?php echo $songId;?>">
         <th scope="row"><a href="<?php echo $linkEditInstrument;?>"><i class="ti ti-edit"></i></a></th>
         <th scope="row"><a href="<?php echo $linkEditLyric;?>"><i class="ti ti-edit"></i></a></th>
+        <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
