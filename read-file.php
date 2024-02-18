@@ -70,16 +70,16 @@ function downloadSongFiles($zip, $path, $song, $perAlbum = false)
     if ($zip->open($path) === true) {
         if (file_exists($song->getFilePath())) {
 
-            $zip = addFileMp3($zip, $song, $perAlbum);
+            addFileMp3($zip, $song, $perAlbum);
         }
         if (file_exists($song->getFilePathMidi())) {
-            $zip = addFileMidi($zip, $song, $perAlbum);
+            addFileMidi($zip, $song, $perAlbum);
         }
         if (file_exists($song->getFilePathPdf())) {
-            $zip = addFilePdf($zip, $song, $perAlbum);
+            addFilePdf($zip, $song, $perAlbum);
         }
         if (file_exists($song->getFilePathXml())) {
-            $zip = addFileXml($zip, $song, $perAlbum);
+            addFileXml($zip, $song, $perAlbum);
         }
         if ($perAlbum) {
             $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".srt";
@@ -206,7 +206,6 @@ if ($inputGet->getSongId() != null) {
         unlink($path);
     } catch (Exception $e) {
         // do nothing
-        echo $e->getMessage();
     }
     exit();
 }
