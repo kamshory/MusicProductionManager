@@ -125,7 +125,7 @@ function addFileMidi($zip, $song, $perAlbum)
     if ($perAlbum) {
         $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".mid";
         $zip->addFromString($filename, $buff);
-        $filename = $song->getTitle() . ".mid";
+        $filename = str_replace(" ", "", $song->getTitle()) . ".mid";
         $zip->addFromString($filename, $buff);
     } else {
         $filename = $song->getTitle() . ".mid";
