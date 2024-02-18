@@ -26,7 +26,7 @@ if($inputGet->equalsAction('download') && $inputGet->getSongId() != null)
     $song->findOneBySongId($inputGet->getSongId());
     if(file_exists($song->getFilePathMidi()))
     {
-      $filename = basename($song->getFilePathMidi());
+      $filename = $song->getTitle().".mid";
       header("Content-disposition: attachment; filename=\"$filename\"");
       header("Content-type: audio/midi");
       readfile($song->getFilePathMidi());
