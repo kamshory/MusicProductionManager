@@ -120,6 +120,12 @@ class Song extends DynamicObject
 	protected $filePathXml;
 
 	/**
+	 * @Column(name="file_path_pdf", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $filePathPdf;
+
+	/**
 	 * @Column(name="duration", type="float", nullable=true)
 	 * @var double
 	 */
@@ -185,6 +191,24 @@ class Song extends DynamicObject
 	 * @var string
 	 */
 	protected $lastUploadTime;
+
+	/**
+	 * @Column(name="last_upload_time_midi", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeMidi;
+
+	/**
+	 * @Column(name="last_upload_time_xml", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeXml;
+
+	/**
+	 * @Column(name="last_upload_time_pdf", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimePdf;
 
 	/**
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
