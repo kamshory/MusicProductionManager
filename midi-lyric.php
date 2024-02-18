@@ -111,7 +111,7 @@ if (isset($song)) {
 			</div>
 		</div>
 
-		<div class="planet-midi-player" data-is-stoped="true" data-midi-url="files/<?php echo basename($song->getFilePathMidi()); ?>?hash=<?php echo date('YmdHis', strtotime($song->getLastUploadTimeMidi()));?>">
+		<div class="planet-midi-player" data-is-stoped="true" data-midi-url="read-file.php?type=midi&song_id=<?php echo $song->getSongId(); ?>">
 			<div class="mp-wrapper">
 				<div class="mp-div waveform">
 					<canvas id="canvas" style="width:256px; height:64px" width="256" height="64"></canvas>
