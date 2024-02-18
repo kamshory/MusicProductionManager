@@ -1,10 +1,12 @@
 <?php
 
+use Pico\Constants\HttpHeaderConstant;
 use Pico\Data\Entity\Album;
 use Pico\Data\Entity\EntitySong;
 use Pico\Request\PicoRequest;
 
 require_once "inc/auth-with-login-form.php";
+
 
 /**
  * Download per song
@@ -17,33 +19,38 @@ function downloadPerSong($inputGet, $song)
 {
     if ($inputGet->equalsType('mp3') && file_exists($song->getFilePath())) {
         $filename = $song->getTitle() . ".mp3";
-        header("Content-type: audio/mp3");
-        header("Content-disposition: attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_TYPE . "audio/mp3");
+        header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePath()));
         readfile($song->getFilePathMidi());
     }
     if ($inputGet->equalsType('midi') && file_exists($song->getFilePathMidi())) {
         $filename = $song->getTitle() . ".mid";
-        header("Content-type: audio/midi");
-        header("Content-disposition: attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_TYPE . "audio/midi");
+        header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathMidi()));
         readfile($song->getFilePathMidi());
     } else if ($inputGet->equalsType('pdf') && file_exists($song->getFilePathPdf())) {
         $filename = $song->getTitle() . ".pdf";
-        header("Content-type: application/pdf");
-        header("Content-disposition: attachment; filename=\"$filename\"");
-        readfile($song->getFilePathMidi());
+        header(HttpHeaderConstant::CONTENT_TYPE . "application/pdf");
+        header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathPdf()));
+        readfile($song->getFilePathPdf());
     } else if ($inputGet->equalsType('xml') && file_exists($song->getFilePathXml())) {
         $filename = $song->getTitle() . ".xml";
-        header("Content-type: application/xml");
-        header("Content-disposition: attachment; filename=\"$filename\"");
-        readfile($song->getFilePathMidi());
+        header(HttpHeaderConstant::CONTENT_TYPE . "application/xml");
+        header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathXml()));
+        readfile($song->getFilePathXml());
     } else if ($inputGet->equalsType('all')) {
         $path = tempnam(__DIR__ . "/temp", "tmp_");
         $zip = new ZipArchive();
         downloadSongFiles($zip, $path, $song);
         $zip->close();
         $filename = $song->getTitle() . ".zip";
-        header("Content-disposition: attachment; filename=\"$filename\"");
-        header("Content-type: application/zip");
+        header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_TYPE . "application/zip");
+        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($path));
         readfile($path);
         unlink($path);
     }
@@ -74,7 +81,11 @@ function downloadSongFiles($zip, $path, $song, $perAlbum = false)
         if (file_exists($song->getFilePathXml())) {
             $zip = addFileXml($zip, $song, $perAlbum);
         }
-        $filename = $song->getTitle() . ".srt";
+        if ($perAlbum) {
+            $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".srt";
+        } else {
+            $filename = $song->getTitle() . ".srt";
+        }
         $buff = $song->getLyric();
         $zip->addFromString($filename, $buff);
     }
@@ -188,8 +199,9 @@ if ($inputGet->getSongId() != null) {
         }
         $zip->close();
         $filename = $album->getName() . ".zip";
-        header("Content-disposition: attachment; filename=\"$filename\"");
-        header("Content-type: application/zip");
+        header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_TYPE . "application/zip");
+        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($path));
         readfile($path);
         unlink($path);
     } catch (Exception $e) {
