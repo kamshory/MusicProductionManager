@@ -26,19 +26,19 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="midi.php" aria-expanded="false">
-                <span>
-                    <i class="ti ti-music"></i>
-                </span>
-                <span class="hide-menu">Midi</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
             <a class="sidebar-link" href="lyric.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-file-description"></i>
                 </span>
                 <span class="hide-menu">Lyric</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="midi.php" aria-expanded="false">
+                <span>
+                    <i class="ti ti-music"></i>
+                </span>
+                <span class="hide-menu">Midi</span>
             </a>
         </li>
         <li class="sidebar-item">
@@ -114,6 +114,15 @@
                     <i class="ti ti-article"></i>
                 </span>
                 <span class="hide-menu">Reference</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="user-type.php" aria-expanded="false">
+                <span>
+                    <i class="ti ti-user"></i>
+                </span>
+                <span class="hide-menu">User Type</span>
             </a>
         </li>
 

@@ -260,6 +260,32 @@ class SpecificationUtil
     }
 
     /**
+     * Create user type specification
+     * @param PicoRequest $name
+     * @return PicoSpecification
+     */
+    public static function createUserTypeSpecification($inputGet)
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet->getUserTypeId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->equals('userTypeId', $inputGet->getUserTypeId());
+            $spesification->addAnd($predicate1);
+        }
+
+        if($inputGet->getName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->like('name', PicoPredicate::generateCenterLike($inputGet->getName()));
+            $spesification->addAnd($predicate1);
+        }
+        
+        return $spesification;
+    }
+
+    /**
      * Create artist specification
      * @param PicoRequest $name
      * @return PicoSpecification

@@ -1,8 +1,8 @@
 <?php
 
 use Pico\Constants\PicoHttpStatus;
-use Pico\Data\Dto\GenreDto;
-use Pico\Data\Entity\Genre;
+use Pico\Data\Dto\UserTypeDto;
+use Pico\Data\Entity\UserType;
 use Pico\Request\PicoRequest;
 use Pico\Response\PicoResponse;
 
@@ -15,25 +15,25 @@ $inputPost->checkboxActive(false);
 $inputPost->filterName(FILTER_SANITIZE_SPECIAL_CHARS);
 // filter stage name
 $inputPost->setActive(true);
-$genre = new Genre($inputPost, $database);
+$userType = new UserType($inputPost, $database);
 
 try
 {
-    $savedData = new Genre(null, $database);
+    $savedData = new UserType(null, $database);
     $saved = $savedData->findOneByName($inputPost->getName());
-    if($saved->getGenreId() != "")
+    if($saved->getUserTypeId() != "")
     {
-        $genre->setGenreId($saved->getGenreId());
+        $userType->setUserTypeId($saved->getUserTypeId());
     }
     else
     {
-        $genre->save();
+        $userType->save();
     }  
 }
 catch(Exception $e)
 {
-    $genre->insert();
+    $userType->insert();
 }
 $restResponse = new PicoResponse();
-$response = GenreDto::valueOf($genre);
+$response = UserTypeDto::valueOf($userType);
 $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);

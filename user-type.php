@@ -1,5 +1,5 @@
 <?php
-use Pico\Data\Entity\Genre;
+use Pico\Data\Entity\UserType;
 use Pico\Database\PicoPagable;
 use Pico\Database\PicoPage;
 use Pico\Database\PicoSortable;
@@ -24,29 +24,28 @@ $inputGet = new PicoRequest(INPUT_GET);
   
   <input class="btn btn-success" type="submit" value="Show">
   <input class="btn btn-primary add-data" type="button" value="Add">
+  
   </form>
 </div>
 <?php
 $orderMap = array(
   'name'=>'name', 
-  'genreId'=>'genreId', 
-  'genre'=>'genreId',
+  'userTypeId'=>'userTypeId', 
+  'userType'=>'userTypeId',
   'sortOrder'=>'sortOrder',
   'active'=>'active'
 );
 $defaultOrderBy = 'sortOrder';
 $defaultOrderType = 'asc';
 $pagination = new PicoPagination($cfg->getResultPerPage());
-
-$spesification = SpecificationUtil::createGenreSpecification($inputGet);
+$spesification = SpecificationUtil::createUserTypeSpecification($inputGet);
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
-$genreEntity = new Genre(null, $database);
-$rowData = $genreEntity->findAll($spesification, $pagable, $sortable, true);
+$userTypeEntity = new UserType(null, $database);
+$rowData = $userTypeEntity->findAll($spesification, $pagable, $sortable, true);
 
 $result = $rowData->getResult();
-
 ?>
 
 <script>
@@ -87,21 +86,21 @@ if(!empty($result))
   <tbody>
     <?php
     $no = $pagination->getOffset();
-    foreach($result as $genre)
+    foreach($result as $userType)
     {
       $no++;
-      $genreId = $genre->getGenreId();
-      $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&genre_id=".$genreId;
-      $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&genre_id=".$genreId;
-      $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&genre_id=".$genreId;
+      $userTypeId = $userType->getUserTypeId();
+      $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&userType_id=".$userTypeId;
+      $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&userType_id=".$userTypeId;
+      $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&userType_id=".$userTypeId;
     ?>
-    <tr data-id="<?php echo $genreId;?>">
+    <tr data-id="<?php echo $userTypeId;?>">
       <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
       <th scope="row"><a href="<?php echo $linkDelete;?>" class="delete-data"><i class="ti ti-trash"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
-      <td><a href="<?php echo $linkDetail;?>"><?php echo $genre->getName();?></a></td>
-      <td><?php echo $genre->getSortOrder();?></td>
-      <td><?php echo $genre->isActive() ? 'Yes' : 'No';?></td>
+      <td><a href="<?php echo $linkDetail;?>"><?php echo $userType->getName();?></a></td>
+      <td><?php echo $userType->getSortOrder();?></td>
+      <td><?php echo $userType->isActive() ? 'Yes' : 'No';?></td>
     </tr>
     <?php
     }
@@ -109,69 +108,69 @@ if(!empty($result))
     
   </tbody>
 </table>
+
+
 <?php
 }
 ?>
-
-<div class="lazy-dom modal-container modal-add-data" data-url="lib.ajax/genre-add-dialog.php"></div>
-<div class="lazy-dom modal-container modal-update-data" data-url="lib.ajax/genre-update-dialog.php"></div>
-
+<div class="lazy-dom modal-container modal-add-data" data-url="lib.ajax/user-type-add-dialog.php"></div>
+<div class="lazy-dom modal-container modal-update-data" data-url="lib.ajax/user-type-update-dialog.php"></div>
 <script>
-  let addGenreModal;
-  let updateGenreModal;
+  let addUserTypeModal;
+  let updateUserTypeModal;
   $(document).ready(function(e){
     $(document).on('click', '.add-data', function(e2){
       e2.preventDefault();
       e2.stopPropagation();
       let dialogSelector = $('.modal-add-data');
       dialogSelector.load(dialogSelector.attr('data-url'), function(data){
-        let addGenreModalElem = document.querySelector('#addGenreDialog');
-        addGenreModal = new bootstrap.Modal(addGenreModalElem, {
+        let addUserTypeModalElem = document.querySelector('#addUserTypeDialog');
+        addUserTypeModal = new bootstrap.Modal(addUserTypeModalElem, {
           keyboard: false
         });
-        addGenreModal.show();
+        addUserTypeModal.show();
       })
     });
 
     $(document).on('click', '.edit-data', function(e2){
       e2.preventDefault();
       e2.stopPropagation();
-      let genreId = $(this).closest('tr').attr('data-id') || '';
+      let userTypeId = $(this).closest('tr').attr('data-id') || '';
       let dialogSelector = $('.modal-update-data');
-      dialogSelector.load(dialogSelector.attr('data-url')+'?genre_id='+genreId, function(data){
-        let updateGenreModalElem = document.querySelector('#updateGenreDialog');
-        updateGenreModal = new bootstrap.Modal(updateGenreModalElem, {
+      dialogSelector.load(dialogSelector.attr('data-url')+'?userType_id='+userTypeId, function(data){
+        let updateUserTypeModalElem = document.querySelector('#updateUserTypeDialog');
+        updateUserTypeModal = new bootstrap.Modal(updateUserTypeModalElem, {
           keyboard: false
         });
-        updateGenreModal.show();
+        updateUserTypeModal.show();
       })
     });
 
-    $(document).on('click', '.save-add-genre', function(){
+    $(document).on('click', '.save-add-user-type', function(){
       let dataSet = $(this).closest('form').serializeArray();
       $.ajax({
         type:'POST',
-        url:'lib.ajax/genre-add.php',
+        url:'lib.ajax/user-type-add.php',
         data:dataSet, 
         dataType:'html',
         success: function(data)
         {
-          addGenreModal.hide();
+          addUserTypeModal.hide();
           window.location.reload();
         }
       })
     });
 
-    $(document).on('click', '.save-edit-genre', function(){
+    $(document).on('click', '.save-edit-user-type', function(){
       let dataSet = $(this).closest('form').serializeArray();
       $.ajax({
         type:'POST',
-        url:'lib.ajax/genre-update.php',
+        url:'lib.ajax/user-type-update.php',
         data:dataSet, 
         dataType:'html',
         success: function(data)
         {
-          updateGenreModal.hide();
+          updateUserTypeModal.hide();
         }
       })
     });

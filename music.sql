@@ -259,6 +259,26 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `user_type`
+--
+
+CREATE TABLE IF NOT EXISTS `user_type` (
+  `user_type_id` varchar(50) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  `admin_create` varchar(40) DEFAULT NULL,
+  `admin_edit` varchar(40) DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL,
+  `ip_edit` varchar(50) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `genre`
+  ADD PRIMARY KEY (`genre_id`);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -309,6 +329,12 @@ ALTER TABLE `song_comment`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `user_type`
+--
+ALTER TABLE `user_type`
+  ADD PRIMARY KEY (`user_type_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

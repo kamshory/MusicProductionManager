@@ -267,7 +267,9 @@ if(!empty($result))
   ?>
   </div>
 </div>
-
+<?php
+}
+?>
 <div class="lazy-dom modal-container modal-add-data" data-url="lib.ajax/user-add-dialog.php"></div>
 <div class="lazy-dom modal-container modal-update-data" data-url="lib.ajax/user-update-dialog.php"></div>
 
@@ -347,7 +349,6 @@ if(!empty($result))
 </script>
 
 <?php
-}
 require_once "inc/footer.php";
 }
 

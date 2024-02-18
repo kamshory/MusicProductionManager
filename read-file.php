@@ -174,6 +174,19 @@ function addFileXml($zip, $song, $perAlbum)
     return $zip;
 }
 
+function prepareTempDir()
+{
+    $dir = __DIR__ . "/temp";
+    if (!file_exists($dir)) {
+        $created = mkdir($dir, 0755, true);
+        if (!$created) {
+            echo "Can not create temporary directory";
+            exit();
+        }
+    }
+    return $dir;
+}
+
 $inputGet = new PicoRequest(INPUT_GET);
 if ($inputGet->getSongId() != null) {
     try {
@@ -187,12 +200,13 @@ if ($inputGet->getSongId() != null) {
     }
     exit();
 } else if ($inputGet->getAlbumId() != null) {
+    $tempDir = prepareTempDir();
     try {
         $songs = new EntitySong(null, $database);
         $result = $songs->findByAlbumId($inputGet->getAlbumId());
         $album = new Album(null, $database);
         $album->findOneByAlbumId($inputGet->getAlbumId());
-        $path = tempnam(__DIR__ . "/temp", "tmp_");
+        $path = tempnam($tempDir, "tmp_");
         $zip = new ZipArchive();
         foreach ($result->getResult() as $song) {
             downloadSongFiles($zip, $path, $song, true);
