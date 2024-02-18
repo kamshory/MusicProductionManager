@@ -75,6 +75,17 @@ Karaoke is a feature that vocalists can use while practicing. Features can be ac
 
 Teleprompter is used when taking vocals. The teleprompter will display the lyrics on the vocalist's screen during the vocal take. The lyrics will be in sync with the music listened to through the vocalist's monitor headphones.
 
+## Download Files
+
+Users can download files individually, download files per song, or download files per album. The types of files that can be downloaded are as follows:
+
+1. MP3 (audio files)
+2. MIDI (audio files)
+3. XML (audio files)
+4. PDF (music score file)
+
+When downloading files per song or per album, **Music Production Manager** will only download files that have been uploaded by the user.
+
 # Language
 
 **Music Production Manager** use PHP
