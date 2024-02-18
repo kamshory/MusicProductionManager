@@ -61,7 +61,7 @@ if (isset($song)) {
 		<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle(); ?></h3>
 
 		<script type="text/javascript">
-			var midi_data = <?php echo json_encode($midi->getMidData());?>;
+			var midiData = <?php echo json_encode($midi->getMidData());?>;
 		</script>
 		<script type="text/javascript" src="assets/js/lyric-editor.js"></script>
 		<script type="text/javascript" src="assets/midijs/midi.js"></script>
@@ -111,7 +111,7 @@ if (isset($song)) {
 			</div>
 		</div>
 
-		<div class="planet-midi-player" data-is-stoped="true" data-midi-url="files/<?php echo basename($song->getFilePathMidi()); ?>">
+		<div class="planet-midi-player" data-is-stoped="true" data-midi-url="files/<?php echo basename($song->getFilePathMidi()); ?>?hash=<?php echo date('YmdHis', strtotime($song->getLastUploadTimeMidi()));?>">
 			<div class="mp-wrapper">
 				<div class="mp-div waveform">
 					<canvas id="canvas" style="width:256px; height:64px" width="256" height="64"></canvas>

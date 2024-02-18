@@ -160,10 +160,10 @@ $(document).ready(function () {
   });
 
 
-  lyricData.lyric = getLyric(midi_data);
-  lyricData.time = getTempoData(midi_data);
-  lyricData.timebase = midi_data.timebase;
-  lyricData.note = getNote(midi_data, lyricData.time, lyricData.timebase);
+  lyricData.lyric = getLyric(midiData);
+  lyricData.time = getTempoData(midiData);
+  lyricData.timebase = midiData.timebase;
+  lyricData.note = getNote(midiData, lyricData.time, lyricData.timebase);
 
   let playerModalSelector = document.querySelector("#generate-dialog");
   playerModal = new bootstrap.Modal(playerModalSelector, {

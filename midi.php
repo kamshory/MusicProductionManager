@@ -16,9 +16,32 @@ use Pico\Request\PicoRequest;
 use Pico\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";
-require_once "inc/header.php";
 
 $inputGet = new PicoRequest(INPUT_GET);
+if($inputGet->equalsAction('download') && $inputGet->getSongId() != null)
+{
+  try
+  {
+    $song = new EntitySong(null, $database);
+    $song->findOneBySongId($inputGet->getSongId());
+    if(file_exists($song->getFilePathMidi()))
+    {
+      $filename = basename($song->getFilePathMidi());
+      header("Content-disposition: attachment; filename=\"$filename\"");
+      header("Content-type: audio/midi");
+      readfile($song->getFilePathMidi());
+    }
+  }
+  catch(Exception $e)
+  {
+    // do nothing
+  }
+  exit();
+}
+else
+{
+require_once "inc/header.php";
+
 if($inputGet->equalsAction('edit-lyric') && $inputGet->getSongId() != null)
 {
   try
@@ -45,6 +68,7 @@ else if($inputGet->equalsAction('edit-instrument') && $inputGet->getSongId() != 
     // do nothing
   }
 }
+
 else if($inputGet->equalsAction(PicoRequest::ACTION_DETAIL) && $inputGet->getSongId() != null)
 {
   try
@@ -499,4 +523,5 @@ if(!empty($result))
 <?php
 }
 require_once "inc/footer.php";
+}
 ?>
