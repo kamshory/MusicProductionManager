@@ -79,11 +79,19 @@ try
     {
         $midiPath = SongFileUtil::saveMidiFile($id, $targetDir, file_get_contents($path));
         $song->setFilePathMidi($midiPath);
+        $song->setLastUploadTimeMidi($now);
     }
     else if(SongFileUtil::isXmlMusicFile($path))
     {
         $xmlMusicPath = SongFileUtil::saveXmlMusicFile($id, $targetDir, file_get_contents($path));
         $song->setFilePathXml($xmlMusicPath);
+        $song->setLastUploadTimeXml($now);
+    }  
+    else if(SongFileUtil::isPdfFile($path))
+    {
+        $xmlMusicPath = SongFileUtil::savePdfFile($id, $targetDir, file_get_contents($path));
+        $song->setFilePathPdf($xmlMusicPath);
+        $song->setLastUploadTimePdf($now);
     }  
     
     $song->save();
