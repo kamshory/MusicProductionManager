@@ -40,7 +40,7 @@ class SongFileUtil
     public static function isXmlMusicFile($path)
     {
         $content = self::getContent($path, 100);
-        return stripos($content, '<'.'?'.'xml') === false;
+        return stripos($content, '<'.'?'.'xml') !== false;
     }
 
     /**

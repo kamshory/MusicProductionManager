@@ -137,6 +137,7 @@ if(!empty($result))
     <tr>
       <th scope="col" width="20"><i class="ti ti-edit"></i></th>
       <th scope="col" width="20"><i class="ti ti-trash"></i></th>
+      <th scope="col" width="20"><i class="ti ti-download"></i></th>
       <th scope="col" width="20">#</th>
       <th scope="col" class="col-sort" data-name="name">Name</th>
       <th scope="col" class="col-sort" data-name="duration">Duration</th>
@@ -156,10 +157,12 @@ if(!empty($result))
       $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&album_id=".$albumId;
       $linkdDelete = basename($_SERVER['PHP_SELF'])."?action=delete&album_id=".$albumId;
       $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&album_id=".$albumId;
+      $linkDownload = "read-file.php?type=all&album_id=".$albumId;
     ?>
       <tr data-id="<?php echo $albumId;?>">
       <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
       <th scope="row"><a href="<?php echo $linkdDelete;?>" class="delete-data"><i class="ti ti-trash"></i></a></th>
+      <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $album->getName();?></a></td>
       <td class="text-data text-data-duration"><?php echo sprintf("%.3f", $album->getDuration());?></td>

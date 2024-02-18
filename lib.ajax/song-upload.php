@@ -89,8 +89,8 @@ try
     }  
     else if(SongFileUtil::isPdfFile($path))
     {
-        $xmlMusicPath = SongFileUtil::savePdfFile($id, $targetDir, file_get_contents($path));
-        $song->setFilePathPdf($xmlMusicPath);
+        $pdfPath = SongFileUtil::savePdfFile($id, $targetDir, file_get_contents($path));
+        $song->setFilePathPdf($pdfPath);
         $song->setLastUploadTimePdf($now);
     }  
     

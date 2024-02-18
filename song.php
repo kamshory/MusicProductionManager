@@ -287,6 +287,7 @@ if(!empty($result))
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
         <th scope="col" width="20"><i class="ti ti-trash"></i></th>
         <th scope="col" width="20"><i class="ti ti-player-play"></i></th>
+        <th scope="col" width="20"><i class="ti ti-download"></i></th>
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="score">Score</th>
@@ -311,11 +312,13 @@ if(!empty($result))
         $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&song_id=".$songId;
         $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_id=".$songId;
         $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_id=".$songId;
+        $linkDownload = "read-file.php?type=all&song_id=".$songId;
         ?>
         <tr data-id="<?php echo $songId;?>">
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
         <th scope="row"><a href="<?php echo $linkDelete;?>" class="delete-data"><i class="ti ti-trash"></i></a></th>
         <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
+        <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
         <td class="text-data text-data-score"><?php echo $song->hasValueScore() ? $song->getScore() : "";?></td>
