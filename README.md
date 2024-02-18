@@ -65,9 +65,7 @@ MIDI lyrics are based on syllables and have the exact time the syllables are sun
 
 ## MIDI Editor
 
-MIDI editor is useful for changing instruments on each song track. DAWs like FL studio are not easy enough to export songs in MIDI format. The instruments in each channel do not automatically represent the instruments from the songs created in the original format.
-
-The producer may need to change the instruments of a MIDI format song that has been exported to **Music Production Manager**.
+MIDI editor is useful for changing instruments on each song track. Producers may need to change the instruments of songs to MIDI format that have been uploaded to **Music Production Manager** without having to download the MIDI file and edit it using a third-party application.
 
 ## Karaoke
 
