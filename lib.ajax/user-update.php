@@ -92,7 +92,7 @@ function isValidPassword($password)
  * @param string $format
  * @return boolean
  */
-function isValidDate($date, $format = 'Y-m-d H:i:s')
+function isValidDate($date, $format = 'Y-m-d')
 {
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) == $date;
