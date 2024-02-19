@@ -1,4 +1,6 @@
 <?php
+
+use Pico\Data\Entity\EntityUser;
 use Pico\Data\Entity\User;
 use Pico\Database\PicoPagable;
 use Pico\Database\PicoPage;
@@ -190,7 +192,7 @@ $spesification = SpecificationUtil::createUserSpecification($inputGet);
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType());
 $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
-$userEntity = new User(null, $database);
+$userEntity = new EntityUser(null, $database);
 $rowData = $userEntity->findAll($spesification, $pagable, $sortable, true);
 
 $result = $rowData->getResult();
@@ -227,8 +229,10 @@ if(!empty($result))
     <tr>
       <th scope="col" width="20"><i class="ti ti-edit"></i></th>
       <th scope="col" width="20">#</th>
-      <th scope="col">Real Name</th>
-      <th scope="col">Stage Name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Name</th>
+      <th scope="col">Admin</th>
+      <th scope="col">Artist</th>
       <th scope="col">Gender</th>
       <th scope="col">Active</th>
     </tr>
@@ -245,8 +249,15 @@ if(!empty($result))
     <tr data-id="<?php echo $user->getUserId();?>">
       <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
+      <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-username"><?php echo $user->getUsername();?></a></td>
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $user->getName();?></a></td>
-      <td class="text-data text-data-stage_name"><?php echo $user->getStageName();?></td>
+      <td class="text-data text-data-admin"><?php echo $user->getAdmin() ? 'Yes' : 'No';?></td>
+      <td class="text-data text-data-associated-artist"><?php 
+      if($user->hasValueArtist())
+      {
+        echo $user->getArtist()->getName();
+      }
+      ?></td>
       <td class="text-data text-data-gender"><?php echo $user->getGender() == 'M' ? 'Man' : 'Woman';?></td>
       <td class="text-data text-data-active"><?php echo $user->getActive() ? 'Yes' : 'No';?></td>
     </tr>
@@ -335,12 +346,16 @@ if(!empty($result))
           let formData = getFormData(dataSet);
           let dataId = formData.user_id;
           let name = formData.name;
-          let stage_name = formData.stage_name;
+          let username = formData.username;
           let gender = formData.gender;
           let active = $('[name="active"]')[0].checked;
+          let admin = $('[name="admin"]')[0].checked;
+          let artist = $('[name="associated_artist"] option:selected').text();
           $('[data-id="'+dataId+'"] .text-data.text-data-name').text(name);
-          $('[data-id="'+dataId+'"] .text-data.text-data-stage_name').text(stage_name);
+          $('[data-id="'+dataId+'"] .text-data.text-data-username').text(username);
           $('[data-id="'+dataId+'"] .text-data.text-data-gender').text(gender=='M'?'Man':'Woman');
+          $('[data-id="'+dataId+'"] .text-data.text-data-admin').text(admin?'Yes':'No');
+          $('[data-id="'+dataId+'"] .text-data.text-data-associated-artist').text(artist);
           $('[data-id="'+dataId+'"] .text-data.text-data-active').text(active?'Yes':'No');
         }
       })

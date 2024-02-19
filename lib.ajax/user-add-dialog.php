@@ -1,9 +1,11 @@
 <?php
 
+use Pico\Data\Entity\Artist;
+use Pico\Data\Tools\SelectOption;
 use Pico\Util\PicoHttpCache;
 
-require_once dirname(__DIR__)."/inc/auth.php";
-PicoHttpCache::cacheLifetime(3600*12);
+require_once dirname(__DIR__) . "/inc/auth.php";
+PicoHttpCache::cacheLifetime(3600 * 12);
 ?>
 <form action="">
     <div style="background-color: rgba(0, 0, 0, 0.11);" class="modal fade" id="addUserDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserDialogLabel" aria-hidden="true">
@@ -35,9 +37,9 @@ PicoHttpCache::cacheLifetime(3600*12);
                             <tr>
                                 <td>Gender</td>
                                 <td><select class="form-control" name="gender" id="gender">
-                                <option value="M">Man</option>
-                                <option value="W">Woman</option>
-                                </select>
+                                        <option value="M">Man</option>
+                                        <option value="W">Woman</option>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -47,6 +49,15 @@ PicoHttpCache::cacheLifetime(3600*12);
                             <tr>
                                 <td>Admin</td>
                                 <td><label></label><input type="checkbox" name="admin" value="1"> Admin</label></td>
+                            </tr>
+                            <tr>
+                                <td>Associated Artist</td>
+                                <td>
+                                    <select class="form-control" name="associated_user">
+                                        <option value="">- Select One -</option>
+                                        <?php echo new SelectOption(new Artist(null, $database), array('value' => 'artistId', 'label' => 'name'), null); ?>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Active</td>

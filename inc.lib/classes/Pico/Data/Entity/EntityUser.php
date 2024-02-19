@@ -8,7 +8,7 @@ use Pico\DynamicObject\DynamicObject;
  * @Entity
  * @Table(name=user)
  */
-class User extends DynamicObject
+class EntityUser extends DynamicObject
 {    
 
 	/**
@@ -87,6 +87,12 @@ class User extends DynamicObject
      * @Column(name=associated_artist)
      */
     protected $associatedArtist;
+    
+    /**
+	 * @JoinColumn(name="associated_artist")
+	 * @var Artist
+	 */
+	protected $artist;
 
     /**
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)

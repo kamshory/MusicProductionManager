@@ -1,6 +1,8 @@
 <?php
 
+use Pico\Data\Entity\Artist;
 use Pico\Data\Entity\User;
+use Pico\Data\Tools\SelectOption;
 use Pico\Request\PicoRequest;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
@@ -51,6 +53,15 @@ try {
                                 <tr>
                                     <td>Admin</td>
                                     <td><label></label><input type="checkbox" name="admin" value="1" <?php echo $user->getAdmin() == 1 ? ' checked' : ''; ?>> Admin</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Associated Artist</td>
+                                    <td>
+                                        <select class="form-control" name="associated_artist">
+                                            <option value="">- Select One -</option>
+                                            <?php echo new SelectOption(new Artist(null, $database), array('value' => 'artistId', 'label' => 'name'), $user->getAssociatedArtist()); ?>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Blocked</td>

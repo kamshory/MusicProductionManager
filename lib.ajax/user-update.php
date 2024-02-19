@@ -155,6 +155,7 @@ try {
         $user->setAdmin($admin);
     }
 
+    $user->setAssociatedArtist($inputPost->getAssociatedArtist());
 
     // set blocked
     $blocked = $inputPost->getBlocked();
