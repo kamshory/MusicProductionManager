@@ -23,6 +23,14 @@ $genre = new Genre($inputPost, $database);
 
 try
 {
+    $now = date('Y-m-d H:i:s');
+    $genre->setTimeCreate($now);
+    $genre->setTimeEdit($now);
+    $genre->setIpCreate($_SERVER['REMOTE_ADDR']);
+    $genre->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $genre->setAdminCreate(1);
+    $genre->setAdminEdit(1);
+    
     $genre->update();
     $restResponse = new PicoResponse();
     $response = GenreDto::valueOf($genre);

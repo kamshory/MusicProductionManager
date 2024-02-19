@@ -19,6 +19,14 @@ $user = new User($inputPost, $database);
 
 try
 {
+    $now = date('Y-m-d H:i:s');
+    $user->setTimeCreate($now);
+    $user->setTimeEdit($now);
+    $user->setIpCreate($_SERVER['REMOTE_ADDR']);
+    $user->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $user->setAdminCreate(1);
+    $user->setAdminEdit(1);
+    
     $savedData = new User(null, $database);
     $saved = $savedData->findOneByName($inputPost->getName());
     if($saved->getUserId() != "")

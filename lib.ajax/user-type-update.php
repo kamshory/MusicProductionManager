@@ -24,6 +24,14 @@ $userType = new UserType($inputPost, $database);
 
 try
 {
+    $now = date('Y-m-d H:i:s');
+    $userType->setTimeCreate($now);
+    $userType->setTimeEdit($now);
+    $userType->setIpCreate($_SERVER['REMOTE_ADDR']);
+    $userType->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $userType->setAdminCreate(1);
+    $userType->setAdminEdit(1);
+    
     $userType->update();
     $restResponse = new PicoResponse();
     $response = UserTypeDto::valueOf($userType);

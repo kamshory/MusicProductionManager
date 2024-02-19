@@ -15,7 +15,6 @@ $inputPost->checkboxActive(false);
 // filter
 $inputPost->filterName(FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->filterUsername(FILTER_SANITIZE_SPECIAL_CHARS);
-$inputPost->setActive(true);
 $user = new User($inputPost, $database);
 
 /**
@@ -25,7 +24,7 @@ $user = new User($inputPost, $database);
  * @param string $username
  * @return bool
  */
-function checkDuplicated($existing, $username)
+function checkDuplicatedUsername($existing, $username)
 {
     if($existing != null)
     {
@@ -44,27 +43,141 @@ function checkDuplicated($existing, $username)
     return false;
 }
 
+/**
+ * Check duplicated email
+ *
+ * @param PicoPageData $duplicated
+ * @param string $email
+ * @return bool
+ */
+function checkDuplicatedEmail($existing, $email)
+{
+    if($existing != null)
+    {
+        $result = $existing->getResult();
+        if($result != null && is_array($result))
+        {
+            foreach($result as $user)
+            {
+                if($user->getUsername() != $email)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * Validate password
+ *
+ * @param string $password
+ * @return boolean
+ */
+function isValidPassword($password)
+{
+    if($password != null & strlen($password) >= 6)
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Validate date
+ *
+ * @param string $date
+ * @param string $format
+ * @return boolean
+ */
+function isValidDate($date, $format = 'Y-m-d H:i:s')
+{
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) == $date;
+}
+
 try
 {
     $savedData = new User(null, $database);
     $savedData2 = new User(null, $database);
+    $savedData3 = new User(null, $database);
     $saved = $savedData->findOneUserId($inputPost->getUserId());
     
     // check duplicated username
     $username = $inputPost->getUsername();
     if(!empty($username))
     {
-        $existing = $savedData2->findByUsername($username);
-        $duplicated = checkDuplicated($existing, $username);
+        $existing1 = $savedData2->findByUsername($username);
+        
+        // set username
+        $duplicated = checkDuplicatedUsername($existing1, $username);
         if(!$duplicated)
         {
             // not duplicated
             $user->setUsername($username);
         }
-        $user->setName($inputPost->getName());
-        $user->getGender($inputPost->getGender());
     }
     
+    // check duplicated email
+    $email = $inputPost->getUsername();
+    if(!empty($email))
+    {
+        $existing2 = $savedData3->findByEmail($email);
+        
+        // set username
+        $duplicated = checkDuplicatedEmail($existing2, $email);
+        if(!$duplicated)
+        {
+            // not duplicated
+            $user->setEmail($email);
+        }
+    }
+    
+    // set name
+    $user->setName($inputPost->getName());
+    
+    // set gender
+    $user->setGender($inputPost->getGender());
+    
+    // set password
+    $password = trim($inputPost->getPassword());
+    if(isValidPassword($password))
+    {
+        $password = hash('sha256', $password);
+        $user->setPassword($password);
+    }
+    
+    // set birth_day
+    $birthDay = trim($inputPost->getBirthDate());
+    if(isValidDate($birthDay))
+    {
+        $user->setBirthday($birthDay);
+    }   
+    
+    // set active
+    $active = $inputPost->getActive();
+    if($inputPost->getUserId() == $currentLoggedInUser->getUserId())
+    {
+        $active = "1";
+    }
+    $user->setActive($active);
+    
+    // set blocked
+    $blocked = $inputPost->getBlocked();
+    if($inputPost->getUserId() == $currentLoggedInUser->getUserId())
+    {
+        $blocked = "0";
+    }
+    $user->setBlocked($blocked);
+    
+    $now = date('Y-m-d H:i:s');
+    $user->setTimeCreate($now);
+    $user->setTimeEdit($now);
+    $user->setIpCreate($_SERVER['REMOTE_ADDR']);
+    $user->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $user->setAdminCreate(1);
+    $user->setAdminEdit(1);
     
     $user->save();
 }

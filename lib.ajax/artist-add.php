@@ -21,6 +21,14 @@ $artist = new Artist($inputPost, $database);
 
 try
 {
+    $now = date('Y-m-d H:i:s');
+    $artist->setTimeCreate($now);
+    $artist->setTimeEdit($now);
+    $artist->setIpCreate($_SERVER['REMOTE_ADDR']);
+    $artist->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $artist->setAdminCreate(1);
+    $artist->setAdminEdit(1);
+    
     $artist->save();
     $restResponse = new PicoResponse();
     $response = ArtistDto::valueOf($artist);
