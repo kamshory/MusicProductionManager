@@ -7,7 +7,7 @@ use Pico\Database\PicoPageData;
 use Pico\Request\PicoRequest;
 use Pico\Response\PicoResponse;
 
-require_once dirname(__DIR__)."/inc/auth.php";
+require_once dirname(__DIR__) . "/inc/auth.php";
 $inputPost = new PicoRequest(INPUT_POST);
 // check box only sent if it checeked
 // if active is null, then set to false
@@ -27,15 +27,11 @@ $user = new User(null, $database);
  */
 function checkDuplicatedUsername($existing, $username)
 {
-    if($existing != null)
-    {
+    if ($existing != null) {
         $result = $existing->getResult();
-        if($result != null && is_array($result))
-        {
-            foreach($result as $user)
-            {
-                if($user->getUsername() != $username)
-                {
+        if ($result != null && is_array($result)) {
+            foreach ($result as $user) {
+                if ($user->getUsername() != $username) {
                     return true;
                 }
             }
@@ -53,15 +49,11 @@ function checkDuplicatedUsername($existing, $username)
  */
 function checkDuplicatedEmail($existing, $email)
 {
-    if($existing != null)
-    {
+    if ($existing != null) {
         $result = $existing->getResult();
-        if($result != null && is_array($result))
-        {
-            foreach($result as $user)
-            {
-                if($user->getUsername() != $email)
-                {
+        if ($result != null && is_array($result)) {
+            foreach ($result as $user) {
+                if ($user->getUsername() != $email) {
                     return true;
                 }
             }
@@ -78,8 +70,7 @@ function checkDuplicatedEmail($existing, $email)
  */
 function isValidPassword($password)
 {
-    if($password != null & strlen($password) >= 6)
-    {
+    if ($password != null & strlen($password) >= 6) {
         return true;
     }
     return false;
@@ -98,82 +89,80 @@ function isValidDate($date, $format = 'Y-m-d')
     return $d && $d->format($format) == $date;
 }
 
-try
-{
+try {
     $user->setUserId($inputPost->getUserId());
-    
+
     $savedData1 = new User(null, $database);
     $savedData2 = new User(null, $database);
     $savedData3 = new User(null, $database);
     $saved = $savedData1->findOneUserId($inputPost->getUserId());
-    
+
     // check duplicated username
     $username = $inputPost->getUsername();
-    if(!empty($username))
-    {
+    if (!empty($username)) {
         $existing1 = $savedData2->findByUsername($username);
-        
+
         // set username
         $duplicated = checkDuplicatedUsername($existing1, $username);
-        if(!$duplicated)
-        {
+        if (!$duplicated) {
             // not duplicated
             $user->setUsername($username);
         }
     }
-    
+
     // check duplicated email
     $email = $inputPost->getEmail();
-    if(!empty($email))
-    {
+    if (!empty($email)) {
         $existing2 = $savedData3->findByEmail($email);
-        
+
         // set username
         $duplicated = checkDuplicatedEmail($existing2, $email);
-        if(!$duplicated)
-        {
+        if (!$duplicated) {
             // not duplicated
             $user->setEmail($email);
         }
     }
-    
+
     // set name
     $user->setName($inputPost->getName());
-    
+
     // set gender
     $user->setGender($inputPost->getGender());
-    
+
     // set password
     $password = trim($inputPost->getPassword());
-    if(isValidPassword($password))
-    {
+    if (isValidPassword($password)) {
         $password = hash('sha256', $password);
         $user->setPassword($password);
     }
-    
+
     // set birth_day
     $birthDay = trim($inputPost->getBirthDay());
-    if(isValidDate($birthDay))
-    {
+    if (isValidDate($birthDay)) {
         $user->setBirthDay($birthDay);
-    }  
-    
+    }
+
     // set active
     $active = $inputPost->getActive();
-    if($inputPost->getUserId() == $currentLoggedInUser->getUserId())
-    {
+    if ($inputPost->getUserId() == $currentLoggedInUser->getUserId()) {
         $active = "1";
     }
     $user->setActive($active);
-    
+
+    // set admin
+    $admin = $inputPost->getAdmin();
+    if ($inputPost->getUserId() != $currentLoggedInUser->getUserId()) {
+        $user->setAdmin($admin);
+    }
+
+
     // set blocked
     $blocked = $inputPost->getBlocked();
-    if($inputPost->getUserId() == $currentLoggedInUser->getUserId())
-    {
+    if ($inputPost->getUserId() == $currentLoggedInUser->getUserId()) {
         $blocked = "0";
     }
     $user->setBlocked($blocked);
-    
+
     $now = date('Y-m-d H:i:s');
     $user->setTimeCreate($now);
     $user->setTimeEdit($now);
@@ -181,11 +170,9 @@ try
     $user->setIpEdit($_SERVER['REMOTE_ADDR']);
     $user->setAdminCreate($currentLoggedInUser->getUserId());
     $user->setAdminEdit($currentLoggedInUser->getUserId());
-    
+
     $user->save();
-}
-catch(Exception $e)
-{
+} catch (Exception $e) {
     // do nothing
 }
 $restResponse = new PicoResponse();

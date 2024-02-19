@@ -45,6 +45,10 @@ PicoHttpCache::cacheLifetime(3600*12);
                                 <td><input type="date" class="form-control" name="birth_day" value=""></td>
                             </tr>
                             <tr>
+                                <td>Admin</td>
+                                <td><label></label><input type="checkbox" name="admin" value="1"> Admin</label></td>
+                            </tr>
+                            <tr>
                                 <td>Active</td>
                                 <td><label></label><input type="checkbox" name="active" value="1"> Active</label></td>
                             </tr>

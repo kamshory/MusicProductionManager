@@ -49,6 +49,14 @@ try {
                                     <td><input type="date" class="form-control" name="birth_day" value="<?php echo $user->getBirthDay(); ?>"></td>
                                 </tr>
                                 <tr>
+                                    <td>Admin</td>
+                                    <td><label></label><input type="checkbox" name="admin" value="1" <?php echo $user->getAdmin() == 1 ? ' checked' : ''; ?>> Admin</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Blocked</td>
+                                    <td><label></label><input type="checkbox" name="blocked" value="1" <?php echo $user->getBlocked() == 1 ? ' checked' : ''; ?>> Blocked</label></td>
+                                </tr>
+                                <tr>
                                     <td>Active</td>
                                     <td><label></label><input type="checkbox" name="active" value="1" <?php echo $user->getActive() == 1 ? ' checked' : ''; ?>> Active</label></td>
                                 </tr>
