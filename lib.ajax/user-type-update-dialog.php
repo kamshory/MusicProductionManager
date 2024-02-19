@@ -35,11 +35,11 @@ $userType->findOneByUserTypeId($inputGet->getUserTypeId());
                                 <td><label></label><input type="checkbox" name="active" value="1" <?php echo $userType->getActive() == 1 ?' checked':'';?>> Active</label></td>
                             </tr>
                         </tbody>
-                        <input type="hidden" name="genre_id" value="<?php echo $userType->getUserTypeId();?>">
+                        <input type="hidden" name="user_type_id" value="<?php echo $userType->getUserTypeId();?>">
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success save-edit-genre">OK</button>
+                    <button type="button" class="btn btn-success save-edit-user-type">OK</button>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>

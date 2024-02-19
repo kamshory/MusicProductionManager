@@ -90,9 +90,9 @@ if(!empty($result))
     {
       $no++;
       $userTypeId = $userType->getUserTypeId();
-      $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&userType_id=".$userTypeId;
-      $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&userType_id=".$userTypeId;
-      $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&userType_id=".$userTypeId;
+      $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&user_type_id=".$userTypeId;
+      $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&user_type_id=".$userTypeId;
+      $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&user_type_id=".$userTypeId;
     ?>
     <tr data-id="<?php echo $userTypeId;?>">
       <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
@@ -137,7 +137,7 @@ if(!empty($result))
       e2.stopPropagation();
       let userTypeId = $(this).closest('tr').attr('data-id') || '';
       let dialogSelector = $('.modal-update-data');
-      dialogSelector.load(dialogSelector.attr('data-url')+'?userType_id='+userTypeId, function(data){
+      dialogSelector.load(dialogSelector.attr('data-url')+'?user_type_id='+userTypeId, function(data){
         let updateUserTypeModalElem = document.querySelector('#updateUserTypeDialog');
         updateUserTypeModal = new bootstrap.Modal(updateUserTypeModalElem, {
           keyboard: false

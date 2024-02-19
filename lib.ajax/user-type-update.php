@@ -12,7 +12,7 @@ $inputPost = new PicoRequest(INPUT_POST);
 $inputPost->filterName(FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->checkboxActive(false);
 
-$userTypeId = $inputPost->getGenreId();
+$userTypeId = $inputPost->getUserTypeId();
 $name = $inputPost->getName();
 if(empty($userTypeId) || empty($name))
 {
