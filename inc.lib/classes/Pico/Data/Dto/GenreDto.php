@@ -42,6 +42,13 @@ class GenreDto extends SetterGetter
     protected $defaultData;
 
     /**
+     * Admin
+     *
+     * @var bool
+     */
+    protected $admin;
+    
+    /**
      * Active
      *
      * @var bool
@@ -61,6 +68,7 @@ class GenreDto extends SetterGetter
         $output->setName($input->getName());
         $output->setSortOrder($input->getSortOrder());
         $output->setDefaultData($input->getDefaultData());
+        $output->setAdmin($input->getAdmin());        
         $output->setActive($input->getActive());        
         return $output;
     } 

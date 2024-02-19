@@ -33,6 +33,7 @@ $orderMap = array(
   'userTypeId'=>'userTypeId', 
   'userType'=>'userTypeId',
   'sortOrder'=>'sortOrder',
+  'admin'=>'admin',
   'active'=>'active'
 );
 $defaultOrderBy = 'sortOrder';
@@ -79,6 +80,7 @@ if(!empty($result))
       <th scope="col" width="20"><i class="ti ti-trash"></i></th>
       <th scope="col" width="20">#</th>
       <th scope="col" class="col-sort" data-name="name">Name</th>
+      <th scope="col" class="col-sort" data-name="admin">Admin</th>
       <th scope="col" class="col-sort" data-name="sort_order">Order</th>
       <th scope="col" class="col-sort" data-name="active">Active</th>
     </tr>
@@ -98,9 +100,10 @@ if(!empty($result))
       <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
       <th scope="row"><a href="<?php echo $linkDelete;?>" class="delete-data"><i class="ti ti-trash"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
-      <td><a href="<?php echo $linkDetail;?>"><?php echo $userType->getName();?></a></td>
-      <td><?php echo $userType->getSortOrder();?></td>
-      <td><?php echo $userType->isActive() ? 'Yes' : 'No';?></td>
+      <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $userType->getName();?></a></td>
+      <td class="text-data text-data-admin"><?php echo $userType->isAdmin() ? 'Yes' : 'No';?></td>
+      <td class="text-data text-data-sort-order"><?php echo $userType->getSortOrder();?></td>
+      <td class="text-data text-data-active"><?php echo $userType->isActive() ? 'Yes' : 'No';?></td>
     </tr>
     <?php
     }
@@ -171,6 +174,16 @@ if(!empty($result))
         success: function(data)
         {
           updateUserTypeModal.hide();
+          let formData = getFormData(dataSet);
+          let dataId = formData.user_type_id;
+          let sortOrder = formData.sort_order;
+          let name = formData.name;
+          let active = $('[name="active"]')[0].checked;
+          let admin = $('[name="admin"]')[0].checked;
+          $('[data-id="'+dataId+'"] .text-data.text-data-name').text(name);
+          $('[data-id="'+dataId+'"] .text-data.text-data-sort-order').text(sortOrder);
+          $('[data-id="'+dataId+'"] .text-data.text-data-active').text(active?'Yes':'No');
+          $('[data-id="'+dataId+'"] .text-data.text-data-admin').text(admin?'Yes':'No');
         }
       })
     });

@@ -8,6 +8,7 @@ use Pico\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputPost = new PicoRequest(INPUT_POST);
+$inputPost->checkboxAdmin(false);
 // check box only sent if it checeked
 // if active is null, then set to false
 $inputPost->checkboxActive(false);

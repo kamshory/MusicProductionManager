@@ -2,8 +2,8 @@
 
 use Pico\Util\PicoHttpCache;
 
-require_once dirname(__DIR__)."/inc/auth.php";
-PicoHttpCache::cacheLifetime(3600*12);
+require_once dirname(__DIR__) . "/inc/auth.php";
+PicoHttpCache::cacheLifetime(3600 * 12);
 ?>
 <form action="">
     <div style="background-color: rgba(0, 0, 0, 0.11);" class="modal fade" id="addUserTypeDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserTypeDialogLabel" aria-hidden="true">
@@ -21,9 +21,13 @@ PicoHttpCache::cacheLifetime(3600*12);
                                 <td><input type="text" class="form-control" name="name"></td>
                             </tr>
                             <tr>
-                            <td>Sort Order</td>
-                            <td><input type="number" class="form-control" name="sort_order"></td>
-                        </tr>
+                                <td>Sort Order</td>
+                                <td><input type="number" class="form-control" name="sort_order"></td>
+                            </tr>
+                            <tr>
+                                <td>Admin</td>
+                                <td><label></label><input type="checkbox" name="admin" value="1"> Admin</label></td>
+                            </tr>
                             <tr>
                                 <td>Active</td>
                                 <td><label></label><input type="checkbox" name="active" value="1"> Active</label></td>

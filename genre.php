@@ -99,9 +99,9 @@ if(!empty($result))
       <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
       <th scope="row"><a href="<?php echo $linkDelete;?>" class="delete-data"><i class="ti ti-trash"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
-      <td><a href="<?php echo $linkDetail;?>"><?php echo $genre->getName();?></a></td>
-      <td><?php echo $genre->getSortOrder();?></td>
-      <td><?php echo $genre->isActive() ? 'Yes' : 'No';?></td>
+      <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $genre->getName();?></a></td>
+      <td class="text-data text-data-sort-order"><?php echo $genre->getSortOrder();?></td>
+      <td class="text-data text-data-active"><?php echo $genre->isActive() ? 'Yes' : 'No';?></td>
     </tr>
     <?php
     }
@@ -172,6 +172,14 @@ if(!empty($result))
         success: function(data)
         {
           updateGenreModal.hide();
+          let formData = getFormData(dataSet);
+          let dataId = formData.genre_id;
+          let sortOrder = formData.sort_order;
+          let name = formData.name;
+          let active = $('[name="active"]')[0].checked;
+          $('[data-id="'+dataId+'"] .text-data.text-data-name').text(name);
+          $('[data-id="'+dataId+'"] .text-data.text-data-sort-order').text(sortOrder);
+          $('[data-id="'+dataId+'"] .text-data.text-data-active').text(active?'Yes':'No');
         }
       })
     });

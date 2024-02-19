@@ -67,6 +67,13 @@ class UserType extends DynamicObject
 	 * @var string
 	 */
 	protected $ipEdit;
+	
+	/**
+	 * @Column(name="admin", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="0")
+	 * @var bool
+	 */
+	protected $admin;
 
 	/**
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
