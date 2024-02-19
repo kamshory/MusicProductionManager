@@ -35,7 +35,7 @@ $user->findOneByUserId($inputGet->getUserId());
                             </tr>
                             <tr>
                                 <td>Password</td>
-                                <td><input type="text" class="form-control" name="password" value=""></td>
+                                <td><input type="password" class="form-control" name="password" value=""></td>
                             </tr>
                             <tr>
                                 <td>Gender</td>
@@ -57,7 +57,7 @@ $user->findOneByUserId($inputGet->getUserId());
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success save-add-user">OK</button>
+                    <button type="button" class="btn btn-success save-update-user">OK</button>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>

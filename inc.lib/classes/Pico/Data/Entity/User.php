@@ -43,6 +43,14 @@ class User extends DynamicObject
      * @Column(name=password)
      */
     protected $password;
+    
+    /**
+     * Admin
+     *
+     * @var bool
+     * @Column(name=admin)
+     */
+    protected $admin;
 
     /**
      * Birth day

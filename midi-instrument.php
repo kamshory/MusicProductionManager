@@ -70,8 +70,6 @@ $instrumentName = $midi->getInstrumentList();
         padding: 2px 0;
     }
     
-    
-    
     ul.midi-program{
         padding: 0 0;
         margin: 0;
@@ -108,8 +106,7 @@ $instrumentName = $midi->getInstrumentList();
 foreach($list->program->parsed as $trackNumber=>$track)
 {
     ?>
-    <li class="midi-track" data-track-number="<?php echo $trackNumber;?>">
-    
+    <li class="midi-track" data-track-number="<?php echo $trackNumber;?>">    
     <div class="track-label">Track <?php echo $trackNumber;?></div>
     <?php
     
@@ -166,7 +163,7 @@ foreach($list->program->parsed as $trackNumber=>$track)
     let midiProgram = <?php echo json_encode($list->program->parsed);?>; 
     let instrumentList = <?php echo json_encode($instrumentName, JSON_FORCE_OBJECT);?>; 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<script src="assets/js/selectize.min.js"></script>
 <link rel="stylesheet" href="assets/css/selectize.css" />
 
 <script>

@@ -322,7 +322,7 @@ if(!empty($result))
       })
     });
 
-    $(document).on('click', '.save-edit-user', function(){
+    $(document).on('click', '.save-update-user', function(){
       let dataSet = $(this).closest('form').serializeArray();
       $.ajax({
         type:'POST',

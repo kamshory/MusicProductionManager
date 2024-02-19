@@ -30,7 +30,7 @@ PicoHttpCache::cacheLifetime(3600*12);
                             </tr>
                             <tr>
                                 <td>Password</td>
-                                <td><input type="text" class="form-control" name="password" value=""></td>
+                                <td><input type="password" class="form-control" name="password" value=""></td>
                             </tr>
                             <tr>
                                 <td>Gender</td>
