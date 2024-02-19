@@ -12,6 +12,8 @@ use Pico\DynamicObject\DynamicObject;
 class UserType extends DynamicObject
 {
 	/**
+	 * User Type ID
+	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull

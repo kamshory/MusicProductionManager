@@ -29,8 +29,8 @@ try
     $userType->setTimeEdit($now);
     $userType->setIpCreate($_SERVER['REMOTE_ADDR']);
     $userType->setIpEdit($_SERVER['REMOTE_ADDR']);
-    $userType->setAdminCreate(1);
-    $userType->setAdminEdit(1);
+    $userType->setAdminCreate($currentLoggedInUser->getUserId());
+    $userType->setAdminEdit($currentLoggedInUser->getUserId());
     
     $userType->update();
     $restResponse = new PicoResponse();

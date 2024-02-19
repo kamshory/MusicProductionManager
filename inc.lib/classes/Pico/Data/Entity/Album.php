@@ -12,6 +12,8 @@ use Pico\DynamicObject\DynamicObject;
 class Album extends DynamicObject
 {
 	/**
+	 * Album ID
+	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull

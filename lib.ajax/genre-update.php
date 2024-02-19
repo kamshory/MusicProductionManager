@@ -28,8 +28,8 @@ try
     $genre->setTimeEdit($now);
     $genre->setIpCreate($_SERVER['REMOTE_ADDR']);
     $genre->setIpEdit($_SERVER['REMOTE_ADDR']);
-    $genre->setAdminCreate(1);
-    $genre->setAdminEdit(1);
+    $genre->setAdminCreate($currentLoggedInUser->getUserId());
+    $genre->setAdminEdit($currentLoggedInUser->getUserId());
     
     $genre->update();
     $restResponse = new PicoResponse();

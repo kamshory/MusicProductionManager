@@ -42,7 +42,7 @@ try
     $now = date('Y-m-d H:i:s');
     $album->setTimeEdit($now);
     $album->setIpEdit($_SERVER['REMOTE_ADDR']);
-    $album->setAdminEdit(1);
+    $album->setAdminEdit($currentLoggedInUser->getUserId());
 
     $album->update();
     $restResponse = new PicoResponse();

@@ -12,6 +12,8 @@ use Pico\DynamicObject\DynamicObject;
 class Genre extends DynamicObject
 {
 	/**
+	 * Genre ID
+	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull

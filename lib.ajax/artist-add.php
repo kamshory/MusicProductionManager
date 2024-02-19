@@ -26,8 +26,8 @@ try
     $artist->setTimeEdit($now);
     $artist->setIpCreate($_SERVER['REMOTE_ADDR']);
     $artist->setIpEdit($_SERVER['REMOTE_ADDR']);
-    $artist->setAdminCreate(1);
-    $artist->setAdminEdit(1);
+    $artist->setAdminCreate($currentLoggedInUser->getUserId());
+    $artist->setAdminEdit($currentLoggedInUser->getUserId());
     
     $artist->save();
     $restResponse = new PicoResponse();

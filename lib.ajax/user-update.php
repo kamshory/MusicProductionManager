@@ -152,11 +152,11 @@ try
     }
     
     // set birth_day
-    $birthDay = trim($inputPost->getBirthDate());
+    $birthDay = trim($inputPost->getBirthDay());
     if(isValidDate($birthDay))
     {
-        $user->setBirthday($birthDay);
-    }   
+        $user->setBirthDay($birthDay);
+    }  
     
     // set active
     $active = $inputPost->getActive();
@@ -179,8 +179,8 @@ try
     $user->setTimeEdit($now);
     $user->setIpCreate($_SERVER['REMOTE_ADDR']);
     $user->setIpEdit($_SERVER['REMOTE_ADDR']);
-    $user->setAdminCreate(1);
-    $user->setAdminEdit(1);
+    $user->setAdminCreate($currentLoggedInUser->getUserId());
+    $user->setAdminEdit($currentLoggedInUser->getUserId());
     
     $user->save();
 }

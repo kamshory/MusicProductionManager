@@ -12,6 +12,8 @@ use Pico\DynamicObject\DynamicObject;
 class SongAttachment extends DynamicObject
 {
 	/**
+	 * Song Atttchment ID
+	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull

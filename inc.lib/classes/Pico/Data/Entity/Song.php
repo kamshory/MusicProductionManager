@@ -12,6 +12,8 @@ use Pico\DynamicObject\DynamicObject;
 class Song extends DynamicObject
 {
 	/**
+	 * Song ID
+	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull

@@ -42,8 +42,8 @@ catch(Exception $e)
     $album->setTimeEdit($now);
     $album->setIpCreate($_SERVER['REMOTE_ADDR']);
     $album->setIpEdit($_SERVER['REMOTE_ADDR']);
-    $album->setAdminCreate(1);
-    $album->setAdminEdit(1);
+    $album->setAdminCreate($currentLoggedInUser->getUserId());
+    $album->setAdminEdit($currentLoggedInUser->getUserId());
     
     $album->insert();
     

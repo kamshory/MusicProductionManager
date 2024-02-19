@@ -12,6 +12,8 @@ use Pico\DynamicObject\DynamicObject;
 class EntityReference extends DynamicObject
 {
 	/**
+	 * Reference ID
+	 * 
 	 * @NotNull
 	 * @Column(name="reference_id", type="varchar(50)", length=50, nullable=false)
 	 * @var string

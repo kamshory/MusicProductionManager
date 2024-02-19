@@ -11,8 +11,12 @@ use Pico\DynamicObject\DynamicObject;
 class User extends DynamicObject
 {    
 
-    /**
+	/**
      * User ID
+     * 
+	 * @Id
+	 * @GeneratedValue(strategy=GenerationType.UUID)
+	 * @NotNull
      *
      * @var string
      * @Column(name=user_id)
