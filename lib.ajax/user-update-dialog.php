@@ -56,6 +56,7 @@ try {
                         </table>
                     </div>
                     <div class="modal-footer">
+                        <input type="hidden" name="user_id" value="<?php echo $user->getUserId(); ?>">
                         <button type="button" class="btn btn-success save-update-user">OK</button>
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
                     </div>
@@ -65,4 +66,5 @@ try {
     </form>
 <?php
 } catch (Exception $e) {
+    // do nothing
 }

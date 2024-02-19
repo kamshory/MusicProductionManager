@@ -15,7 +15,8 @@ $inputPost->checkboxActive(false);
 // filter
 $inputPost->filterName(FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->filterUsername(FILTER_SANITIZE_SPECIAL_CHARS);
-$user = new User($inputPost, $database);
+
+$user = new User(null, $database);
 
 /**
  * Check duplicated username
@@ -99,10 +100,12 @@ function isValidDate($date, $format = 'Y-m-d H:i:s')
 
 try
 {
-    $savedData = new User(null, $database);
+    $user->setUserId($inputPost->getUserId());
+    
+    $savedData1 = new User(null, $database);
     $savedData2 = new User(null, $database);
     $savedData3 = new User(null, $database);
-    $saved = $savedData->findOneUserId($inputPost->getUserId());
+    $saved = $savedData1->findOneUserId($inputPost->getUserId());
     
     // check duplicated username
     $username = $inputPost->getUsername();
@@ -120,7 +123,7 @@ try
     }
     
     // check duplicated email
-    $email = $inputPost->getUsername();
+    $email = $inputPost->getEmail();
     if(!empty($email))
     {
         $existing2 = $savedData3->findByEmail($email);
