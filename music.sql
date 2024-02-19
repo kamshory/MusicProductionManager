@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 18, 2024 at 06:18 AM
+-- Generation Time: Feb 19, 2024 at 07:39 AM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -242,10 +242,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_id` varchar(40) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
+  `admin` tinyint(1) DEFAULT '0',
   `name` varchar(100) DEFAULT NULL,
   `birth_day` varchar(100) DEFAULT NULL,
   `gender` varchar(2) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
+  `user_type_id` varchar(40) DEFAULT NULL,
+  `associated_artist` varchar(40) DEFAULT NULL,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,
   `admin_create` varchar(40) DEFAULT NULL,
@@ -258,6 +261,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `user_type`
 --
@@ -265,6 +270,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 CREATE TABLE IF NOT EXISTS `user_type` (
   `user_type_id` varchar(50) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `admin` tinyint(1) DEFAULT '0',
   `sort_order` int(11) DEFAULT NULL,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,
@@ -274,9 +280,6 @@ CREATE TABLE IF NOT EXISTS `user_type` (
   `ip_edit` varchar(50) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-ALTER TABLE `genre`
-  ADD PRIMARY KEY (`genre_id`);
 
 --
 -- Indexes for dumped tables
@@ -328,7 +331,9 @@ ALTER TABLE `song_comment`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `user_type`
