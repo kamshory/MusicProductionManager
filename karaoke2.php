@@ -100,10 +100,104 @@ require_once "inc/header.php";
   </form>
 </div>
 
-    <script src="assets/js/karaoke.js"></script>
-    <link rel="stylesheet" href="assets/css/karaoke.css">
+    <script src="karaoke-js.js"></script>
 <style> 
+    .teleprompter
+    {
+        position: relative;
+        width: calc(100% + 40px);
+        height: calc(100vh - 270px);
+        min-height: 200px;
+        background-color: white;
+        overflow: hidden;
+        margin: 30px -20px;
+        white-space: nowrap;
+        text-transform: uppercase;
+    }
+    @media screen and (min-width: 1200px) {
+        .main .teleprompter{
+            margin: 0;
+            width: 100%;
+        }
+        
+    }
     
+    .teleprompter-container{
+        position: relative;
+        width: 100%;
+    }
+    .teleprompter-container > div{
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        border-top: 1px solid #fafafa;
+        padding-top: 5px;
+        box-sizing: border-box;
+    }
+    .marked{
+        background-color: #cdff43c4;
+        color: #222222;
+    }
+    
+    .box1{
+        position: relative;
+        margin-top: 5px;
+    }
+    .box2{
+        max-width: 400px;
+        width: calc(100% - 0px);
+        position: relative;
+        height: 40px;
+        margin: auto;
+        
+    }
+    .box3{
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-bottom: 1px solid #DDDDDD;
+        border-left: 1px solid #DDDDDD;
+        border-right: 1px solid #DDDDDD;
+        width: 100%;
+        height: 40px;
+        margin: auto;
+        position: absolute;
+        top: 20px;
+        box-sizing: border-box;
+        z-index: -1;
+    }
+    .box4{
+        width: 100%;    
+        box-sizing: border-box;
+        text-align: center;
+        padding: 10px 10px 0px 10px;
+        z-index: 1;
+    }
+    .box2::before, .box2::after{
+        content: "";
+        width: 20px;
+        height: 20px;
+        top: 0;
+        position: absolute;
+        border-top: 1px solid #DDDDDD;
+    }
+    .box2::before{
+        left: -19px;
+        border-top-right-radius: 10px;
+        border-right: 1px solid #DDDDDD;
+        
+    }
+    .box2::after{
+        right: -19px;
+        border-top-left-radius: 10px;
+        border-left: 1px solid #DDDDDD;
+        
+    }
+    audio{
+        border-radius: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        height: 40px;
+    }
 </style>
 
 <div class="control">
