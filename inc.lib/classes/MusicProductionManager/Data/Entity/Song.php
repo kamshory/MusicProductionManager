@@ -158,6 +158,12 @@ class Song extends MagicObject
 	protected $lyricMidi;
 
 	/**
+	 * @Column(name="lyric_midi_raw", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $lyricMidiRaw;
+
+	/**
 	 * @Column(name="vocal", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="0")
 	 * @var bool

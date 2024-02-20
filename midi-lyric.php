@@ -2,8 +2,6 @@
 
 use MagicObject\Request\PicoRequest;
 use Midi\MidiLyric;
-use MusicProductionManager\Data\Entity\Song;
-
 
 require_once "inc/auth-with-login-form.php";
 function importLyricMidi($original)
@@ -17,24 +15,12 @@ function importLyricMidi($original)
 	$str = str_replace("\r\n\r\n", "\r\n", $str);
 	$str = str_replace("\r\n\r\n", "\r\n", $str);
 	$str = trim($str);
+	$str = str_replace("-", "_", $str);
 	$str = str_replace("\r\n", "\\\r\n", $str);
 	$str = str_replace(" ", "_ ", $str);
 	return $str;
 }
-error_reporting(E_ALL);
 $inputGet = new PicoRequest(INPUT_GET);
-
-if($inputGet->equalsAction('save-raw'))
-{
-	$inputPost = new PicoRequest(INPUT_POST);
-	if($inputPost->getRaw() != null)
-	{
-		$raw = $inputPost->getRaw();
-		$songUpdate = new Song(array('songId'=>$inputPost->getSongId(), 'lyricMidi'=>$raw), $database);
-		$songUpdate->update();
-	}
-	exit();
-}
 
 if (isset($song)) {
 	$midi = new MidiLyric();
@@ -48,7 +34,6 @@ if (isset($song)) {
 	{
 		$lyricMidi = importLyricMidi($song->getLyric());
 	}
-
 ?>
 
 <script>
@@ -234,7 +219,5 @@ if (isset($song)) {
 
 		</div>
 	<?php
-
-
 }
 ?>

@@ -47,8 +47,6 @@ class EntitySong extends MagicObject
 	protected $album;
 
 	/**
-     * Track number
-     *
      * @var integer
      * @Column(name=track_number, type="int", length=11, nullable=true)
      */
@@ -188,6 +186,12 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $lyricMidi;
+
+	/**
+	 * @Column(name="lyric_midi_raw", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $lyricMidiRaw;
 
 	/**
 	 * @Column(name="vocal", type="tinyint(1)", length=1, default_value="1", nullable=true)

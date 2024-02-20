@@ -179,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `song` (
   `lyric` longtext,
   `lyric_complete` tinyint(1) DEFAULT '0',
   `lyric_midi` longtext,
+  `lyric_midi_raw` longtext,
   `vocal` tinyint(1) DEFAULT '0',
   `instrument` longtext,
   `rating` int(11) DEFAULT NULL,

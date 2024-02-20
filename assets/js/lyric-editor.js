@@ -45,19 +45,23 @@ function updateLyricForm(value) {
   value = value.split("\r\r\n").join("\r\n");
   value = value.split("\r").join("\r\n");
   value = value.split("\r\n\n").join("\r\n");
-  let values = value.split('\r\n').join(' ').split(' ');
-  console.log(values);
+  while (value.indexOf("\r\n\r\n") > -1) {
+    value = value.split("\r\n\r\n").join("\r\n");
+  }
+  let values = value.split("\r\n").join(" ").split(" ");
   let idx = 0;
-  $('.timetable tbody').find('tr').each(function (e) {
-    let tr = $(this);
-    let sub = values[idx] || null;
-    if (sub != null && sub.length <= 10) {
-      sub = sub.split('_').join(' ');
-      sub = sub.split('\\').join('\r\n');
-      tr.find('textarea.ta-lyric-editor').val('"' + sub + '"');
-    }
-    idx++;
-  });
+  $(".timetable tbody")
+    .find("tr")
+    .each(function (e) {
+      let tr = $(this);
+      let sub = values[idx] || null;
+      if (sub != null && sub.length <= 10) {
+        sub = sub.split("_").join(" ");
+        sub = sub.split("\\").join("\r\n");
+        tr.find("textarea.ta-lyric-editor").val('"' + sub + '"');
+      }
+      idx++;
+    });
   renderLyricEditor();
 }
 
@@ -139,26 +143,20 @@ $(document).ready(function () {
     }
   });
 
-
-  $(document).on('click', '#save-raw', function (e) {
-    let rawData = $('#rawdata').val();
-    let songId = $('#song_id').val();
+  $(document).on("click", "#save-raw", function (e) {
+    let rawData = $("#rawdata").val();
+    let songId = $("#song_id").val();
     $.ajax({
-      url: 'midi-lyric.php?action=save-raw',
-      type: 'POST',
-      data: { 'raw': rawData, 'song_id': songId },
-      success: function (data) {
-      },
-      error: function (e1, e2) {
-        console.error(e1);
-        console.error(e2);
-      }
+      url: "lib.ajax/lyric-midi-update-raw.php",
+      type: "POST",
+      data: { raw: rawData, song_id: songId },
+      success: function (data) {},
+      error: function (e1, e2) {},
     });
   });
-  $(document).on('click', '#update-lyric', function (e) {
+  $(document).on("click", "#update-lyric", function (e) {
     getFormData();
   });
-
 
   lyricData.lyric = getLyric(midiData);
   lyricData.time = getTempoData(midiData);
@@ -170,7 +168,7 @@ $(document).ready(function () {
     keyboard: false,
   });
 
-  $(document).on('change, keyup', '.rawdata', function (e) {
+  $(document).on("change, keyup", ".rawdata", function (e) {
     let value = $(this).val();
     updateLyricForm(value);
   });
@@ -179,7 +177,10 @@ $(document).ready(function () {
     playerModal.show();
   });
 
-  $(document).on("click", "#replace-lyric", function (e) { });
+  $(document).on("click", "#replace-lyric", function (e) {
+    let value = $(".rawdata").val();
+    updateLyricForm(value);
+  });
 
   $(document).on("keyup", "textarea", function (e) {
     renderLyricEditor();
@@ -231,38 +232,40 @@ $(document).ready(function () {
 
 function getFormData() {
   lyricData.lyric.tracks = [];
-  $('.lyric-editor table tbody').find('tr').each(function (e2) {
-    var rtime = $(this).attr('data-rtime');
-    var track = $(this).attr('data-track');
-    if ($(this).find('textarea').length > 0) {
-      var txt = $(this).find('textarea').val().trim();
-      txt = txt.substring(1, txt.length - 1);
-      txt = txt.split('\\"').join('"');
-      txt = txt.split('\n').join('\r\n');
-      txt = txt.split('\r\r\n').join('\r\n');
-      txt = txt.split('\r').join('\r\n');
-      txt = txt.split('\r\n\n').join('\r\n');
-      txt = txt.split('"').join('\\"');
-      txt = '"' + txt + '"';
-      if (typeof lyricData.lyric.tracks[track] == 'undefined') {
-        lyricData.lyric.tracks[track] = [];
+  $(".lyric-editor table tbody")
+    .find("tr")
+    .each(function (e2) {
+      var rtime = $(this).attr("data-rtime");
+      var track = $(this).attr("data-track");
+      if ($(this).find("textarea").length > 0) {
+        var txt = $(this).find("textarea").val().trim();
+        txt = txt.substring(1, txt.length - 1);
+        txt = txt.split('\\"').join('"');
+        txt = txt.split("\n").join("\r\n");
+        txt = txt.split("\r\r\n").join("\r\n");
+        txt = txt.split("\r").join("\r\n");
+        txt = txt.split("\r\n\n").join("\r\n");
+        txt = txt.split('"').join('\\"');
+        txt = '"' + txt + '"';
+        if (typeof lyricData.lyric.tracks[track] == "undefined") {
+          lyricData.lyric.tracks[track] = [];
+        }
+        lyricData.lyric.tracks[track].push(rtime + " Meta Lyric " + txt);
       }
-      lyricData.lyric.tracks[track].push(rtime + ' Meta Lyric ' + txt);
-    }
-  });
-  let songId = $('#song_id').val();
-  var url = $('.planet-midi-player').attr('data-midi-url');
+    });
+  let songId = $("#song_id").val();
+  var url = $(".planet-midi-player").attr("data-midi-url");
   $.ajax({
-    url: 'lib.ajax/lyric-midi-update.php',
-    type: 'post',
-    dataType: 'html',
+    url: "lib.ajax/lyric-midi-update.php",
+    type: "post",
+    dataType: "html",
     data: {
       song_id: songId,
-      lyric: JSON.stringify(lyricData.lyric)
+      lyric: JSON.stringify(lyricData.lyric),
     },
     success: function (data) {
       console.log(data);
-    }
+    },
   });
 }
 
@@ -320,7 +323,9 @@ function generateLyricFromVocal() {
               '" data-atime="' +
               atime +
               '"><td>' +
-              i + '/' + channel +
+              i +
+              "/" +
+              channel +
               "</td><td>" +
               rtime +
               "</td><td>" +
@@ -1100,7 +1105,7 @@ function playPrev() {
     );
   }, 100);
 }
-let midiUpdate = function (time) { };
+let midiUpdate = function (time) {};
 let midiStop = function () {
   $("#midi-player").attr("data-system", "true");
   $("#midi-player").modal("hide");
@@ -1135,14 +1140,14 @@ function downloadMidi() {
   });
   window.open(
     "download.php?action=download-midi&ids=" +
-    ids +
-    "&file_name_option=" +
-    file_name_option +
-    "&file_name_separator=" +
-    file_name_separator +
-    "&file_name_white_space=" +
-    file_name_white_space +
-    "&dos=" +
-    dos
+      ids +
+      "&file_name_option=" +
+      file_name_option +
+      "&file_name_separator=" +
+      file_name_separator +
+      "&file_name_white_space=" +
+      file_name_white_space +
+      "&dos=" +
+      dos
   );
 }
