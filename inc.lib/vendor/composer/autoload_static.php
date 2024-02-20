@@ -159,13 +159,6 @@ class ComposerStaticInit2219d434bd9928e433eb450fe0d2c608
     );
 
     public static $prefixesPsr0 = array (
-        'P' => 
-        array (
-            'Pico\\' => 
-            array (
-                0 => __DIR__ . '/../..' . '/classes',
-            ),
-        ),
         'N' => 
         array (
             'Neutron' => 
@@ -175,6 +168,10 @@ class ComposerStaticInit2219d434bd9928e433eb450fe0d2c608
         ),
         'M' => 
         array (
+            'MusicProductionManager\\' => 
+            array (
+                0 => __DIR__ . '/../..' . '/classes',
+            ),
             'Midi\\' => 
             array (
                 0 => __DIR__ . '/../..' . '/classes',

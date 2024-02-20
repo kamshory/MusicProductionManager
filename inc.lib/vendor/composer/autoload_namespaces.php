@@ -6,8 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Pico\\' => array($baseDir . '/classes'),
     'Neutron' => array($vendorDir . '/neutron/temporary-filesystem/src'),
+    'MusicProductionManager\\' => array($baseDir . '/classes'),
     'Midi\\' => array($baseDir . '/classes'),
     'FFMpeg' => array($vendorDir . '/php-ffmpeg/php-ffmpeg/src'),
     'Evenement' => array($vendorDir . '/evenement/evenement/src'),
