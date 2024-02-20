@@ -7,7 +7,6 @@ use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MusicProductionManager\Data\Entity\Song;
 use \PDO as PDO;
 
-
 class PicoSong
 {
     /**

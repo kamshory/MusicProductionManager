@@ -2,8 +2,6 @@
 
 namespace MusicProductionManager\File;
 
-use stdClass;
-
 class FileUpload
 {
     /**
