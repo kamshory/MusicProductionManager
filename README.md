@@ -86,7 +86,7 @@ Users can download files individually, download files per song, or download file
 
 When downloading files per song or per album, **Music Production Manager** will only download files that have been uploaded by the user.
 
-## user Management
+## User Management
 
 Like most applications, **Music Production Manager** provides user management so that it can be used by many users. A user can add other users, change data, deactivate, block and delete other users' data.
 
