@@ -91,6 +91,7 @@ Users can download files individually, download files per song, or download file
 2. MIDI (audio files)
 3. MusicXML (xml files)
 4. PDF (music score file)
+5. SRT (subtitle for YouTube and other supported applications)
 
 When downloading files per song or per album, **Music Production Manager** will only download files that have been uploaded by the user.
 
