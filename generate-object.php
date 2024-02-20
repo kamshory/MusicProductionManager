@@ -1,7 +1,7 @@
 <?php
 
-use Pico\DynamicObject\DynamicObject;
-use Pico\Util\StringUtil;
+
+use MusicProductionManager\Util\StringUtil;
 
 require_once __DIR__ . "/inc/app.php";
 
@@ -33,7 +33,7 @@ $path = str_replace("\\", "/", $path);
 
 $sql = "SHOW COLUMNS FROM $picoTableName";
 
-$obj = new DynamicObject();
+$obj = new MagicObject();
 
 $typeMap = array(
     "double" => "double",
@@ -222,7 +222,7 @@ foreach($rows as $row)
 
 
 $uses = array();
-$uses[] = "use Pico\DynamicObject\DynamicObject;";
+$uses[] = "";
 
 $classStr = '<?php
 
@@ -235,7 +235,7 @@ namespace '.$namespace.';
  * @JSON(property-naming-strategy=SNAKE_CASE)
  * @Table(name="'.$picoTableName.'")
  */
-class '.$className.' extends DynamicObject
+class '.$className.' extends MagicObject
 {
 '.implode("\r\n", $attrs).'
 }';

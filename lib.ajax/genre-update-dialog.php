@@ -1,7 +1,8 @@
 <?php
 
-use Pico\Data\Entity\Genre;
-use Pico\Request\PicoRequest;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Genre;
+
 
 require_once dirname(__DIR__)."/inc/auth.php";
 

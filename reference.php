@@ -1,15 +1,16 @@
 <?php
-use Pico\Data\Entity\Artist;
-use Pico\Data\Entity\EntityReference;
-use Pico\Data\Entity\Genre;
-use Pico\Data\Tools\SelectOption;
-use Pico\Database\PicoPagable;
-use Pico\Database\PicoPage;
-use Pico\Database\PicoSortable;
-use Pico\Pagination\PicoPagination;
-use Pico\Request\PicoFilterConstant;
-use Pico\Request\PicoRequest;
-use Pico\Utility\SpecificationUtil;
+use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPage;
+use MagicObject\Database\PicoSortable;
+use MagicObject\Pagination\PicoPagination;
+use MagicObject\Request\PicoFilterConstant;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Artist;
+use MusicProductionManager\Data\Entity\EntityReference;
+use MusicProductionManager\Data\Entity\Genre;
+use MusicProductionManager\Data\Tools\SelectOption;
+use MusicProductionManager\Utility\SpecificationUtil;
+
 
 require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";

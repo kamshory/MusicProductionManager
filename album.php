@@ -1,13 +1,14 @@
 <?php
-use Pico\Data\Entity\Album;
-use Pico\Database\PicoPagable;
-use Pico\Database\PicoPage;
-use Pico\Database\PicoSortable;
-use Pico\Exceptions\NoRecordFoundException;
-use Pico\Pagination\PicoPagination;
-use Pico\Request\PicoFilterConstant;
-use Pico\Request\PicoRequest;
-use Pico\Utility\SpecificationUtil;
+
+use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPage;
+use MagicObject\Database\PicoSortable;
+use MagicObject\Exceptions\NoRecordFoundException;
+use MagicObject\Pagination\PicoPagination;
+use MagicObject\Request\PicoFilterConstant;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";

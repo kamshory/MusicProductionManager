@@ -1,12 +1,12 @@
 <?php
 
-use Pico\Constants\PicoHttpStatus;
-use Pico\Data\Entity\Album;
-use Pico\Data\Entity\Song;
-use Pico\Database\PicoDatabaseQueryBuilder;
-use Pico\Request\PicoFilterConstant;
-use Pico\Request\PicoRequest;
-use Pico\Response\PicoResponse;
+use MagicObject\Constants\PicoHttpStatus;
+use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Data\Entity\Song;
+use MagicObject\Database\PicoDatabaseQueryBuilder;
+use MagicObject\Request\PicoFilterConstant;
+use MagicObject\Request\PicoRequest;
+use MagicObject\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 

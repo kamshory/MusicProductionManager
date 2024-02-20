@@ -1,6 +1,6 @@
 <?php
 
-use Pico\Data\Entity\Album;
+use MusicProductionManager\Data\Entity\Album;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 

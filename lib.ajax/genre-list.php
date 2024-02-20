@@ -1,9 +1,9 @@
 <?php
 
-use Pico\Constants\PicoHttpStatus;
-use Pico\Database\PicoDatabaseQueryBuilder;
-use Pico\Response\Generated\PicoSelectOption;
-use Pico\Response\PicoResponse;
+use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Database\PicoDatabaseQueryBuilder;
+use MagicObject\Response\Generated\PicoSelectOption;
+use MagicObject\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 

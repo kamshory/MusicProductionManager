@@ -1,9 +1,10 @@
 <?php
 
-use Pico\Constants\HttpHeaderConstant;
-use Pico\Data\Entity\Album;
-use Pico\Data\Entity\EntitySong;
-use Pico\Request\PicoRequest;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Constants\HttpHeaderConstant;
+use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Data\Entity\EntitySong;
+
 
 require_once "inc/auth-with-login-form.php";
 

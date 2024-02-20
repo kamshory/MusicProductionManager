@@ -1,6 +1,6 @@
 <?php
 
-use Pico\Data\Entity\User;
+use MusicProductionManager\Data\Entity\User;
 
 require_once __DIR__."/app.php";
 require_once __DIR__."/session.php";

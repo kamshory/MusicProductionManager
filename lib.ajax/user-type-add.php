@@ -1,10 +1,10 @@
 <?php
 
-use Pico\Constants\PicoHttpStatus;
-use Pico\Data\Dto\UserTypeDto;
-use Pico\Data\Entity\UserType;
-use Pico\Request\PicoRequest;
-use Pico\Response\PicoResponse;
+use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Request\PicoRequest;
+use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Data\Dto\UserTypeDto;
+use MusicProductionManager\Data\Entity\UserType;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputPost = new PicoRequest(INPUT_POST);

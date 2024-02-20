@@ -1,8 +1,9 @@
 <?php
 
+use MagicObject\Request\PicoRequest;
 use Midi\MidiLyric;
-use Pico\Data\Entity\Song;
-use Pico\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Song;
+
 
 require_once "inc/auth-with-login-form.php";
 function importLyricMidi($original)

@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd021e4db2ea1ade70beaaf2fa93c9938b21634f0',
+        'reference' => '79e46348d83a5cf2d2d0f429f3dfc5a3f9f9bdd0',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd021e4db2ea1ade70beaaf2fa93c9938b21634f0',
+            'reference' => '79e46348d83a5cf2d2d0f429f3dfc5a3f9f9bdd0',
             'dev_requirement' => false,
         ),
         'alchemy/binary-driver' => array(
@@ -80,6 +80,17 @@
             'install_path' => __DIR__ . '/../php-ffmpeg/php-ffmpeg',
             'aliases' => array(),
             'reference' => '22b71931fd1a97207788636b283eee1c0067eff7',
+            'dev_requirement' => false,
+        ),
+        'planetbiru/magic-object' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../planetbiru/magic-object',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => '2e3831812d1758aeb922574c70382b8135d75f9f',
             'dev_requirement' => false,
         ),
         'psr/cache' => array(

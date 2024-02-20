@@ -1,8 +1,8 @@
 <?php
 
-use Pico\Data\Entity\EntitySong;
-use Pico\Data\Entity\Song;
-use Pico\Request\PicoRequest;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\EntitySong;
+use MusicProductionManager\Data\Entity\Song;
 
 require_once "inc/auth-with-login-form.php";
 

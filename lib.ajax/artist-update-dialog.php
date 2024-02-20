@@ -1,8 +1,10 @@
 <?php
 
-use Pico\Data\Entity\Artist;
-use Pico\Exceptions\NoRecordFoundException;
-use Pico\Request\PicoRequest;
+use MagicObject\Exceptions\NoRecordFoundException;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Artist;
+
+
 
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputGet = new PicoRequest(INPUT_GET);

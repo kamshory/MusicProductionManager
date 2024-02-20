@@ -1,9 +1,9 @@
 <?php
 
-use Pico\Config\ConfigApp;
-use Pico\Database\PicoDatabaseCredentials;
-use Pico\Util\PicoEnvironmentVariable;
-use Pico\Util\WebsocketClient;
+use MagicObject\Database\PicoDatabaseCredentials;
+use MagicObject\Util\PicoEnvironmentVariable;
+use MusicProductionManager\Config\ConfigApp;
+use MusicProductionManager\Util\WebsocketClient;
 
 
 require_once "inc/app.php";

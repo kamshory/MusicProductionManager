@@ -1,7 +1,8 @@
 <?php
 
-use Pico\Data\Entity\User;
-use Pico\Request\PicoRequest;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\User;
+
 
 require_once "inc/app.php";
 require_once "inc/session.php";

@@ -493,6 +493,49 @@
             "install-path": "../php-ffmpeg/php-ffmpeg"
         },
         {
+            "name": "planetbiru/magic-object",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Planetbiru/MagicObject.git",
+                "reference": "2e3831812d1758aeb922574c70382b8135d75f9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/2e3831812d1758aeb922574c70382b8135d75f9f",
+                "reference": "2e3831812d1758aeb922574c70382b8135d75f9f",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/yaml": "^3.4"
+            },
+            "time": "2024-02-20T08:53:15+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "MagicObject\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Kamshory"
+                }
+            ],
+            "description": "Magic object",
+            "support": {
+                "issues": "https://github.com/Planetbiru/MagicObject/issues",
+                "source": "https://github.com/Planetbiru/MagicObject/tree/main"
+            },
+            "install-path": "../planetbiru/magic-object"
+        },
+        {
             "name": "psr/cache",
             "version": "1.0.1",
             "version_normalized": "1.0.1.0",

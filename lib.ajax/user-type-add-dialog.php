@@ -1,6 +1,6 @@
 <?php
 
-use Pico\Util\PicoHttpCache;
+use MusicProductionManager\Util\PicoHttpCache;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 PicoHttpCache::cacheLifetime(3600 * 12);

@@ -1,8 +1,9 @@
 <?php
 
+use MagicObject\Request\PicoRequest;
 use Midi\MidiLyric;
-use Pico\Data\Entity\Song;
-use Pico\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Song;
+
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 

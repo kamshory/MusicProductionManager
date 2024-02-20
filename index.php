@@ -1,5 +1,5 @@
 <?php
-use Pico\Database\PicoDatabaseQueryBuilder;
+use MagicObject\Database\PicoDatabaseQueryBuilder;
 require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";
 ?>

@@ -1,8 +1,8 @@
 <?php
 
-use Pico\Data\Entity\Artist;
-use Pico\Data\Tools\SelectOption;
-use Pico\Util\PicoHttpCache;
+use MusicProductionManager\Data\Entity\Artist;
+use MusicProductionManager\Data\Tools\SelectOption;
+use MusicProductionManager\Util\PicoHttpCache;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 PicoHttpCache::cacheLifetime(3600 * 12);

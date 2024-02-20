@@ -1,9 +1,10 @@
 <?php
 
-use Pico\Data\Entity\Artist;
-use Pico\Data\Entity\User;
-use Pico\Data\Tools\SelectOption;
-use Pico\Request\PicoRequest;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Artist;
+use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Data\Tools\SelectOption;
+
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 $inputGet = new PicoRequest(INPUT_GET);

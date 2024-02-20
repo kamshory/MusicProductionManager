@@ -1,8 +1,8 @@
 <?php
 
-use Pico\Config\ConfigApp;
-use Pico\Database\PicoDatabase;
-use Pico\Database\PicoDatabaseCredentials;
+use MagicObject\Database\PicoDatabase;
+use MagicObject\Database\PicoDatabaseCredentials;
+use MusicProductionManager\Config\ConfigApp;
 
 require_once dirname(__DIR__)."/inc.lib/vendor/autoload.php";
 

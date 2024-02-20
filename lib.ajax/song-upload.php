@@ -1,12 +1,14 @@
 <?php
 
-use Pico\Constants\PicoHttpStatus;
-use Pico\Data\Entity\Song;
-use Pico\File\FileMp3;
-use Pico\File\FileUpload;
-use Pico\Request\PicoRequest;
-use Pico\Response\PicoResponse;
-use Pico\Utility\SongFileUtil;
+use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Request\PicoRequest;
+use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\File\FileMp3;
+use MusicProductionManager\File\FileUpload;
+
+
+use MusicProductionManager\Utility\SongFileUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 

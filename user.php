@@ -1,15 +1,15 @@
 <?php
 
-use Pico\Data\Entity\EntityUser;
-use Pico\Data\Entity\User;
-use Pico\Database\PicoPagable;
-use Pico\Database\PicoPage;
-use Pico\Database\PicoSortable;
-use Pico\Pagination\PicoPagination;
-use Pico\Request\PicoFilterConstant;
-use Pico\Request\PicoRequest;
-use Pico\Utility\SpecificationUtil;
-use Pico\Utility\UserUtil;
+use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPage;
+use MagicObject\Database\PicoSortable;
+use MagicObject\Pagination\PicoPagination;
+use MagicObject\Request\PicoFilterConstant;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\EntityUser;
+use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Utility\SpecificationUtil;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once "inc/auth-with-login-form.php";
 
@@ -102,7 +102,7 @@ if($inputGet->equalsAction(PicoRequest::ACTION_EDIT))
     }
     catch(Exception $e)
     {
-
+      // do nothing
     }
     require_once "inc/footer.php";
 }
@@ -147,7 +147,7 @@ else if($inputGet->equalsAction(PicoRequest::ACTION_DETAIL))
     }
     catch(Exception $e)
     {
-        
+        // do nothing
     }
     require_once "inc/footer.php";
 }
