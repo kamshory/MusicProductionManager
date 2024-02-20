@@ -65,6 +65,8 @@ MIDI lyrics are based on syllables and have the exact time the syllables are sun
 
 ## MIDI Editor
 
+**Music Production Manager** has the ability to change instruments in MIDI files.
+
 ## MIDI Player
 
 **Music Production Manager** is equipped with a MIDI player that can be used when editing MIDI lyrics.
