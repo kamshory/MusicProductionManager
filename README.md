@@ -65,6 +65,14 @@ MIDI lyrics are based on syllables and have the exact time the syllables are sun
 
 ## MIDI Editor
 
+## MIDI Player
+
+**Music Production Manager** is equipped with a MIDI player that can be used when editing MIDI lyrics.
+
+## MusicXML Player
+
+**Music Production Manager** is equipped with a MusicXML player which can be used both when the vocalist is practicing and when taking vocals. MusicXML player will display the music score in sync with the music being played.
+
 MIDI editor is useful for changing instruments on each song track. Producers may need to change the instruments of songs to MIDI format that have been uploaded to **Music Production Manager** without having to download the MIDI file and edit it using a third-party application.
 
 ## Karaoke
@@ -81,7 +89,7 @@ Users can download files individually, download files per song, or download file
 
 1. MP3 (audio files)
 2. MIDI (audio files)
-3. XML (audio files)
+3. MusicXML (xml files)
 4. PDF (music score file)
 
 When downloading files per song or per album, **Music Production Manager** will only download files that have been uploaded by the user.
