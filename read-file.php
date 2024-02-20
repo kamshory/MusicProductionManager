@@ -93,7 +93,7 @@ function downloadSongFiles($zip, $path, $song, $perAlbum = false)
 }
 
 /**
- * Add file mp3
+ * Add file mp3 to ZIP archive
  *
  * @param ZipArchive $zip
  * @param EntitySong $song
@@ -113,7 +113,7 @@ function addFileMp3($zip, $song, $perAlbum)
 }
 
 /**
- * Add file mid
+ * Add file mid to ZIP archive
  *
  * @param ZipArchive $zip
  * @param EntitySong $song
@@ -136,7 +136,7 @@ function addFileMidi($zip, $song, $perAlbum)
 }
 
 /**
- * Add file pdf
+ * Add file pdf to ZIP archive
  *
  * @param ZipArchive $zip
  * @param EntitySong $song
@@ -156,7 +156,7 @@ function addFilePdf($zip, $song, $perAlbum)
 }
 
 /**
- * Add file xml
+ * Add file xml to ZIP archive
  *
  * @param ZipArchive $zip
  * @param EntitySong $song

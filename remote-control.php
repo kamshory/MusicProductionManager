@@ -372,7 +372,7 @@ if(!empty($result))
           let title = data.title;
           let active = data.active;
           $('[data-id="'+dataId+'"] .text-data.text-data-title').text(data.title);
-          $('[data-id="'+dataId+'"] .text-data.text-data-score').text(data.score);
+          $('[data-id="'+dataId+'"] .text-data.text-data-rating').text(data.score);
           $('[data-id="'+dataId+'"] .text-data.text-data-track-number').text(data.track_number);
           $('[data-id="'+dataId+'"] .text-data.text-data-artist-vocal-name').text(data.artist_vocal_name);
           $('[data-id="'+dataId+'"] .text-data.text-data-artist-composer-name').text(data.artist_composer_name);

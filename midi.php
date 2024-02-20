@@ -348,7 +348,7 @@ if(!empty($result))
         <th scope="col" width="20"><i class="ti ti-player-play"></i></th>
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
-        <th scope="col" class="col-sort" data-name="score">Score</th>
+        <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
         <th scope="col" class="col-sort" data-name="track_number">Track</th>
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
@@ -380,7 +380,7 @@ if(!empty($result))
         <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
-        <td class="text-data text-data-score"><?php echo $song->hasValueScore() ? $song->getScore() : "";?></td>
+        <td class="text-data text-data-rating"><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td class="text-data text-data-album-name"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
         <td class="text-data text-data-track-number"><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
         <td class="text-data text-data-genre-name"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
@@ -508,7 +508,7 @@ if(!empty($result))
           let title = data.title;
           let active = data.active;
           $('[data-id="'+dataId+'"] .text-data.text-data-title').text(data.title);
-          $('[data-id="'+dataId+'"] .text-data.text-data-score').text(data.score);
+          $('[data-id="'+dataId+'"] .text-data.text-data-rating').text(data.score);
           $('[data-id="'+dataId+'"] .text-data.text-data-track-number').text(data.track_number);
           $('[data-id="'+dataId+'"] .text-data.text-data-artist-vocal-name').text(data.artist_vocal_name);
           $('[data-id="'+dataId+'"] .text-data.text-data-artist-composer-name').text(data.artist_composer_name);

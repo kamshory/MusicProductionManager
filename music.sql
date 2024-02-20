@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `song` (
   `lyric_midi` longtext,
   `vocal` tinyint(1) DEFAULT '0',
   `instrument` longtext,
-  `score` int(11) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   `comment` longtext,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,

@@ -368,7 +368,7 @@ if(!empty($result))
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
-        <th scope="col" class="col-sort" data-name="score">Score</th>
+        <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
         <th scope="col" class="col-sort" data-name="track_number">Track</th>
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
@@ -392,7 +392,7 @@ if(!empty($result))
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getTitle();?></a></td>
-        <td><?php echo $song->hasValueScore() ? $song->getScore() : "";?></td>
+        <td><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
         <td><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
         <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>

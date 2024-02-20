@@ -101,7 +101,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                     <tr>
                                         <td>Score</td>
                                         <td>
-                                            <input type="number" class="form-control" name="score" min="0" max="10" value="<?php echo $song->hasValueScore() ? $song->getScore() : '';?>">
+                                            <input type="number" class="form-control" name="rating" min="0" max="10" value="<?php echo $song->hasValueRating() ? $song->getRating() : '';?>">
                                         </td>
                                         </tr>
                                     <tr>

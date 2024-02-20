@@ -203,10 +203,10 @@ class EntitySong extends MagicObject
 	protected $instrument;
 
 	/**
-	 * @Column(name="score", type="int", length=11, nullable=true)
+	 * @Column(name="rating", type="int", length=11, nullable=true)
 	 * @var integer
 	 */
-	protected $score;
+	protected $rating;
 
 	/**
 	 * @Column(name="comment", type="longtext", nullable=true)
