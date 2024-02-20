@@ -8,11 +8,11 @@ use MusicProductionManager\Exceptions\InvalidFileFormatException;
 class FileMp3
 {
     protected $filename = "";
-    protected $id3v2_major_version = "";
-    protected $id3v2_minor_version = "";
-    protected $flag_unsynchronisation = "";
-    protected $flag_extended_header = "";
-    protected $flag_experimental_ind = "";
+    protected $id3v2MajorVersion = "";
+    protected $id3v2MinorVersion = "";
+    protected $flagUnsynchronisation = "";
+    protected $flagExtendedHeader = "";
+    protected $flagExperimentalInd = "";
 
     public function __construct($filename)
     {
@@ -94,12 +94,12 @@ class FileMp3
     private function skipID3v2Tag(&$block)
     {
         if (substr($block, 0, 3) == "ID3") {
-            $this->id3v2_major_version = ord($block[3]);
-            $this->id3v2_minor_version = ord($block[4]);
+            $this->id3v2MajorVersion = ord($block[3]);
+            $this->id3v2MinorVersion = ord($block[4]);
             $id3v2_flags = ord($block[5]);
-            $this->flag_unsynchronisation  = $id3v2_flags & 0x80 ? 1 : 0;
-            $this->flag_extended_header    = $id3v2_flags & 0x40 ? 1 : 0;
-            $this->flag_experimental_ind   = $id3v2_flags & 0x20 ? 1 : 0;
+            $this->flagUnsynchronisation  = $id3v2_flags & 0x80 ? 1 : 0;
+            $this->flagExtendedHeader    = $id3v2_flags & 0x40 ? 1 : 0;
+            $this->flagExperimentalInd   = $id3v2_flags & 0x20 ? 1 : 0;
             $flag_footer_present     = $id3v2_flags & 0x10 ? 1 : 0;
             $z0 = ord($block[6]);
             $z1 = ord($block[7]);
