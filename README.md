@@ -86,6 +86,29 @@ Users can download files individually, download files per song, or download file
 
 When downloading files per song or per album, **Music Production Manager** will only download files that have been uploaded by the user.
 
+## user Management
+
+Like most applications, **Music Production Manager** provides user management so that it can be used by many users. A user can add other users, change data, deactivate, block and delete other users' data.
+
+## User Role
+
+Users can be given access rights according to their role in the application or music production.
+
+User roles include the following:
+
+1. administrators
+2. composer
+3. arranger
+4. vocalist
+
+Users with the administrator role have more access rights than others.
+
+Users with the role of arranger can edit instruments in MIDI.
+
+Users with the composer role can edit lyrics and subtitles on MP3 and MIDI files.
+
+Users with the role of vocalist cannot edit lyrics and subtitles on MP3 or MIDI files.
+
 # Language
 
 **Music Production Manager** use PHP
