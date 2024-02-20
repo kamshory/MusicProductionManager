@@ -17,7 +17,7 @@ Music Production Management is a software used in music production. Music Produc
 
 ## Song Management
 
-**Music Production Manager** arranges songs during the production process. Songs can be arranged in an album, extended player, single player or group of songs. Songs can be sorted by track number or score. Score is very important during song composition. A song with a low score means there are still many shortcomings that need to be corrected. Producers can focus on improving songs with lower scores.
+**Music Production Manager** arranges songs during the production process. Songs can be arranged in an album, extended player, single player or group of songs. Songs can be sorted by track number or rating. Rating is very important during song composition. A song with a low score means there are still many shortcomings that need to be corrected. Producers can focus on improving songs with lower scores.
 
 ## Album Management
 
