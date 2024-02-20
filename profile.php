@@ -1,4 +1,7 @@
 <?php
+
+use MagicObject\Request\PicoFilterConstant;
+use MagicObject\Request\PicoRequest;
 use MusicProductionManager\Data\Entity\User;
 
 

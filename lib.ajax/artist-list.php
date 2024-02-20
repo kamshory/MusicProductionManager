@@ -3,7 +3,7 @@
 use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Request\PicoRequest;
-use MagicObject\Response\Generated\PicoSelectOption;
+use MagicObject\Response\Generated\JSONSelectOption;
 use MagicObject\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
@@ -17,6 +17,6 @@ $queryBuilder
     ->select("artist.artist_id as id, artist.name as value")
     ->from("artist")
     ->where("artist.active = ? ", true);
-$response = new PicoSelectOption($database, $queryBuilder, $defautValue);
+$response = new JSONSelectOption($database, $queryBuilder, $defautValue);
 $restResponse = new PicoResponse();
 $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);

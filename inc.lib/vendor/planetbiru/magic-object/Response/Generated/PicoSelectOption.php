@@ -1,57 +1,169 @@
 <?php
+
 namespace MagicObject\Response\Generated;
 
-use PDO;
-use MagicObject\Database\PicoDatabase;
-use MagicObject\Database\PicoDatabaseQueryBuilder;
+use Exception;
+use MagicObject\Database\PicoSortable;
+use MagicObject\MagicObject;
 
 class PicoSelectOption
 {
-    private $data = array();
+    /**
+     * Object
+     *
+     * @var MagicObject
+     */
+    private $object;
+
+    /**
+     * Map
+     *
+     * @var array
+     */
+    private $map = array();
+
+    /**
+     * Value
+     *
+     * @var mixed
+     */
+    private $value;
+    
+    /**
+     * Attributes
+     *
+     * @var array
+     */
+    private $attributes = array();
+    
+    /**
+     * Rows
+     *
+     * @var array
+     */
+    private $rows = array();
+    
+    /**
+     * Sortable
+     *
+     * @var PicoSortable
+     */
+    private $sortable = null;
 
     /**
      * Constructor
      *
-     * @param PicoDatabase $database
-     * @param PicoDatabaseQueryBuilder $query
-     * @param mixed $defautValue
+     * @param MagicObject $object
+     * @param array $map
+     * @param mixed $value
+     * @param array|null $attributes
+     * @param PicoSortable $sortable
      */
-    public function __construct($database, $query, $defautValue)
+    public function __construct($object, $map, $value, $attributes = null, $sortable = null)
     {
-        $rows = $database->fetchAll($query, PDO::FETCH_OBJ);
-        $this->updateData($rows, $defautValue);
+        $this->object = $object;
+        $this->map = $map;
+        $this->value = $value;
+        if(isset($attributes) && is_array($attributes))
+        {
+            $this->attributes = $attributes;
+        }
+        if($sortable != null)
+        {
+            $this->sortable = $sortable;
+        }
+        else
+        {
+            $this->sortable = new PicoSortable('name', PicoSortable::ORDER_TYPE_DESC);
+        }
+        $this->findAllActive();
     }
 
-    private function updateData($rows, $defautValue = null)
+    /**
+     * Create attributes
+     *
+     * @param MagicObject $row
+     * @param string $attr
+     * @param string $value
+     * @return array
+     */
+    private function createAttributes($row, $attr, $value)
     {
-        if($rows != null)
+        $optAttributes = array();
+        if(is_array($this->attributes))
         {
-            foreach($rows as $key=>$row)
+            foreach($this->attributes as $k=>$v)
             {
-                if($defautValue != null && $defautValue == $row->id)
+                $val = $row->get($v);
+                if($val != null)
                 {
-                    $rows[$key]->selected = true;
+                    $optAttributes[$k] = $val;
                 }
             }
         }
-        $this->data = $rows;
+        if($value == $this->value)
+        {
+            $optAttributes['selected'] = 'selected';
+        }
+        $optAttributes[$attr] = $value;
+        return $optAttributes;
     }
 
     /**
-     * Get the value of data
-     */ 
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * toString
+     * Find all data from database
      *
+     * @return void
+     */
+    private function findAllActive()
+    {
+        try
+        {         
+            $result = $this->object->findByActive(true, null, $this->sortable);
+            foreach($result->getResult() as $row)
+            {
+                $value = $row->get($this->map['value']);
+                $label = $row->get($this->map['label']);
+                $optAttributes = $this->createAttributes($row, 'value', $value);
+                $this->rows[] = array(
+                    'attribute'=>$optAttributes,
+                    'textNode'=>$label
+                );
+            }
+        }
+        catch(Exception $e)
+        {
+            // do nothing
+        }
+    }
+
+    /**
+     * Convert associated array to HTML attributes as string
+     *
+     * @param array $array
      * @return string
      */
+    private function attributeToString($array)
+    {
+        if($array == null || empty($array))
+        {
+            return "";
+        }
+        $optAttributes = array();
+        foreach($array as $key=>$value)
+        {
+            $optAttributes[] = $key."=\"".htmlspecialchars($value)."\"";
+        }
+        return rtrim(" ".implode(" ", $optAttributes));
+    }
+
     public function __toString()
     {
-        return json_encode($this->data);
+        $texts = array();
+        foreach($this->rows as $row)
+        {
+            $optAttributes = $this->attributeToString($row['attribute']);
+            $texts[] = "<option".$optAttributes.">".htmlspecialchars($row['textNode'])."</option>";
+        }
+        return implode("\r\n", $texts);
     }
 }

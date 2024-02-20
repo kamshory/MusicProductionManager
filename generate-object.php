@@ -33,8 +33,6 @@ $path = str_replace("\\", "/", $path);
 
 $sql = "SHOW COLUMNS FROM $picoTableName";
 
-$obj = new MagicObject();
-
 $typeMap = array(
     "double" => "double",
     "float" => "double",

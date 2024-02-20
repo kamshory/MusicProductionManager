@@ -1,7 +1,7 @@
 <?php
 
+use MagicObject\Response\Generated\PicoSelectOption;
 use MusicProductionManager\Data\Entity\Artist;
-use MusicProductionManager\Data\Tools\SelectOption;
 use MusicProductionManager\Util\PicoHttpCache;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
@@ -55,7 +55,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                                 <td>
                                     <select class="form-control" name="associated_user">
                                         <option value="">- Select One -</option>
-                                        <?php echo new SelectOption(new Artist(null, $database), array('value' => 'artistId', 'label' => 'name'), null); ?>
+                                        <?php echo new PicoSelectOption(new Artist(null, $database), array('value' => 'artistId', 'label' => 'name'), null); ?>
                                     </select>
                                 </td>
                             </tr>

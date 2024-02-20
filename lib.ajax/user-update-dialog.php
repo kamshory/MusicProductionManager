@@ -1,10 +1,9 @@
 <?php
 
 use MagicObject\Request\PicoRequest;
+use MagicObject\Response\Generated\PicoSelectOption;
 use MusicProductionManager\Data\Entity\Artist;
 use MusicProductionManager\Data\Entity\User;
-use MusicProductionManager\Data\Tools\SelectOption;
-
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 $inputGet = new PicoRequest(INPUT_GET);
@@ -60,7 +59,7 @@ try {
                                     <td>
                                         <select class="form-control" name="associated_artist">
                                             <option value="">- Select One -</option>
-                                            <?php echo new SelectOption(new Artist(null, $database), array('value' => 'artistId', 'label' => 'name'), $user->getAssociatedArtist()); ?>
+                                            <?php echo new PicoSelectOption(new Artist(null, $database), array('value' => 'artistId', 'label' => 'name'), $user->getAssociatedArtist()); ?>
                                         </select>
                                     </td>
                                 </tr>

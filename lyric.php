@@ -7,12 +7,13 @@ use MagicObject\Database\PicoSortable;
 use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\PicoRequest;
+use MagicObject\Response\Generated\PicoSelectOption;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Artist;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Genre;
 use MusicProductionManager\Data\Entity\Song;
-use MusicProductionManager\Data\Tools\SelectOption;
+
 use MusicProductionManager\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";
@@ -270,21 +271,21 @@ else
         <span>Genre</span>
         <select class="form-control" name="genre_id" id="genre_id">
             <option value="">- All -</option>
-            <?php echo new SelectOption(new Genre(null, $database), array('value'=>'genreId', 'label'=>'name'), $inputGet->getGenreId()); ?>
+            <?php echo new PicoSelectOption(new Genre(null, $database), array('value'=>'genreId', 'label'=>'name'), $inputGet->getGenreId()); ?>
         </select>
     </div>
     <div class="filter-group">
         <span>Album</span>
         <select class="form-control" name="album_id" id="album_id">
             <option value="">- All -</option>
-            <?php echo new SelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
+            <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
         </select>
     </div>
     <div class="filter-group">
         <span>Artist Vocal</span>
         <select class="form-control" name="artist_vocal_id" id="artist_vocal_id">
             <option value="">- All -</option>
-            <?php echo new SelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalId()); ?>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalId()); ?>
         </select>
     </div>
     <div class="filter-group">

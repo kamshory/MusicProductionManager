@@ -2,7 +2,7 @@
 
 use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
-use MagicObject\Response\Generated\PicoSelectOption;
+use MagicObject\Response\Generated\JSONSelectOption;
 use MagicObject\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
@@ -15,6 +15,6 @@ $queryBuilder
     ->from("genre")
     ->where("genre.active = ? ", true)
     ->orderBy("genre.sort_order asc");
-$response = new PicoSelectOption($database, $queryBuilder, $defautValue);
+$response = new JSONSelectOption($database, $queryBuilder, $defautValue);
 $restResponse = new PicoResponse();
 $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
