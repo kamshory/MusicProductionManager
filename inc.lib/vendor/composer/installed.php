@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '41f92cdd6a699062e8cf16dec6b755cabafad696',
+        'reference' => 'bbd4efd3e12dc1c134ef44da32684dac41c5488e',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '41f92cdd6a699062e8cf16dec6b755cabafad696',
+            'reference' => 'bbd4efd3e12dc1c134ef44da32684dac41c5488e',
             'dev_requirement' => false,
         ),
         'alchemy/binary-driver' => array(
