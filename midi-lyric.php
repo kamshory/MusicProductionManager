@@ -29,10 +29,10 @@ if (isset($song)) {
 
 	$list = $midi->getLyric();
 
-	$lyricMidi = $song->getLyricMidi();
-	if(empty($lyricMidi))
+	$lyricMidiRaw = $song->getLyricMidiRaw();
+	if(empty($lyricMidiRaw))
 	{
-		$lyricMidi = importLyricMidi($song->getLyric());
+		$lyricMidiRaw = importLyricMidi($song->getLyric());
 	}
 ?>
 
@@ -190,7 +190,7 @@ if (isset($song)) {
 		<div class="flex-row">
 			<div class="flex-column lyric-preview-container">
 				<div class="raw-area">
-					<div><textarea name="rawdata" id="rawdata" class="rawdata" spellcheck="false"><?php echo htmlspecialchars($lyricMidi); ?></textarea>
+					<div><textarea name="rawdata" id="rawdata" class="rawdata" spellcheck="false"><?php echo htmlspecialchars($lyricMidiRaw); ?></textarea>
 					</div>
 					<div class="button-area">
 						<input type="button" id="generate" value="Generate" class="btn btn-primary">
