@@ -42,7 +42,7 @@ if (isset($song)) {
 
 	<div class="main-content">
 		<link rel="stylesheet" type="text/css" href="assets/css/midi-player.css" />
-		<link rel="stylesheet" type="text/css" href="assets/css/lyric-editor.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/midi-lyric-editor.css" />
 
 		<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle(); ?></h3>
 
