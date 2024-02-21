@@ -222,7 +222,7 @@ $(document).ready(function () {
       dataType: "html",
       data: { url: url, lyric: JSON.stringify(lyricData.lyric) },
       success: function (data) {
-        console.log(data);
+        
       },
     });
   });
@@ -232,10 +232,12 @@ $(document).ready(function () {
 
 function getFormData() {
   lyricData.lyric.tracks = [];
+  let midiLyricJSON = [];
   $(".lyric-editor table tbody")
     .find("tr")
     .each(function (e2) {
       var rtime = $(this).attr("data-rtime");
+      var atime = $(this).attr("data-atime");
       var track = $(this).attr("data-track");
       if ($(this).find("textarea").length > 0) {
         var txt = $(this).find("textarea").val().trim();
@@ -245,8 +247,13 @@ function getFormData() {
         txt = txt.split("\r\r\n").join("\r\n");
         txt = txt.split("\r").join("\r\n");
         txt = txt.split("\r\n\n").join("\r\n");
+        midiLyricJSON.push({
+          time:parseFloat(atime),
+          text: txt
+        });
         txt = txt.split('"').join('\\"');
         txt = '"' + txt + '"';
+        
         if (typeof lyricData.lyric.tracks[track] == "undefined") {
           lyricData.lyric.tracks[track] = [];
         }
@@ -254,17 +261,16 @@ function getFormData() {
       }
     });
   let songId = $("#song_id").val();
-  var url = $(".planet-midi-player").attr("data-midi-url");
   $.ajax({
     url: "lib.ajax/lyric-midi-update.php",
     type: "post",
     dataType: "html",
     data: {
       song_id: songId,
-      lyric: JSON.stringify(lyricData.lyric),
+      midi_lyric: JSON.stringify(lyricData.lyric),
+      lyric: JSON.stringify(midiLyricJSON)
     },
     success: function (data) {
-      console.log(data);
     },
   });
 }
