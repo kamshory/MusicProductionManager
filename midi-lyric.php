@@ -24,7 +24,8 @@ $inputGet = new PicoRequest(INPUT_GET);
 
 if (isset($song)) {
 	$midi = new MidiLyric();
-
+	if(file_exists($song->getFilePathMidi()))
+	{
 	$midi->importMid($song->getFilePathMidi());
 
 	$list = $midi->getLyric();
@@ -219,5 +220,15 @@ if (isset($song)) {
 
 		</div>
 	<?php
+}
+else
+{
+	?>
+	<div class="alert alert-warning">MIDI file not found</div>
+	<div class="button-area">
+        <button class="btn btn-primary" onclick="window.history.back()">Back</button>
+    </div>
+	<?php
+}
 }
 ?>

@@ -5,7 +5,8 @@ require_once "inc/auth-with-login-form.php";
 if(isset($song))
 {
 $midi = new MidiInstrument();
-
+if(file_exists($song->getFilePathMidi()))
+{
 $midi->importMid($song->getFilePathMidi());
 
 $list = $midi->getInstrument();
@@ -308,5 +309,15 @@ foreach($list->program->parsed as $trackNumber=>$track)
     }
 </script>
 <?php
+}
+else
+{
+	?>
+	<div class="alert alert-warning">MIDI file not found</div>
+    <div class="button-area">
+        <button class="btn btn-primary" onclick="window.history.back()">Back</button>
+    </div>
+	<?php
+}
 }
 ?>
