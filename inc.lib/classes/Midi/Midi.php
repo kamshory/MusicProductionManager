@@ -2,6 +2,8 @@
 
 namespace Midi;
 
+use XMLParser;
+
 /****************************************************************************
 Software: Midi Class
 Version:  1.7.8
@@ -19,38 +21,104 @@ Last Changes:
 class Midi //NOSONAR
 {
 
-	//Private properties
-	protected $tracks = array();          //array of tracks, where each track is array of message strings
-	protected $timebase = 0;        //timebase = ticks per frame (quarter note)
-	protected $tempo = 0;           //tempo as integer (0 for unknown)
-	protected $tempoMsgNum = 0;     //position of tempo event in track 0
-	protected $type = 0;            // SMF type 0 or 1 (0=only a single track)
-	protected $throwFlag;       // wether to throw exception on error (only PHP5+)
+	/**
+	 * array of tracks, where each track is array of message strings
+	 *
+	 * @var array
+	 */
+	protected $tracks = array();
+
+	/**
+	 * timebase = ticks per frame (quarter note)
+	 *
+	 * @var integer
+	 */
+	protected $timebase = 0;        
+
+	/**
+	 * tempo as integer (0 for unknown)
+	 *
+	 * @var integer
+	 */
+	protected $tempo = 0;           
+
+	/**
+	 * position of tempo event in track 0
+	 *
+	 * @var integer
+	 */
+	protected $tempoMsgNum = 0;     
+
+	/**
+	 * SMF type 0 or 1 (0=only a single track)
+	 *
+	 * @var integer
+	 */
+	protected $type = 0;            
+
+	/**
+	 * wether to throw exception on error (only PHP5+)
+	 *
+	 * @var bool
+	 */
+	protected $throwFlag;     
+	
+	/**
+	 * Event
+	 *
+	 * @var array
+	 */
 	protected $evt = array();
+
+	/**
+	 * Attribute
+	 *
+	 * @var array
+	 */
 	protected $atr = array();
+
+	/**
+	 * Data
+	 *
+	 * @var string
+	 */
 	protected $dat = '';
+
+	/**
+	 * XML parser
+	 *
+	 * @var XMLParser
+	 */
 	protected $xmlParser;
 
+	/**
+	 * DELTA or ABSOLUTE
+	 *
+	 * @var string
+	 */
 	protected $ttype = '';
-	protected $t = '';
 
-	/****************************************************************************
-	 *                                                                           *
-	 *                              Public methods                               *
-	 *                                                                           *
-	 ****************************************************************************/
+	/**
+	 * Time
+	 *
+	 * @var integer
+	 */
+	protected $t = 0;
 
-	//---------------------------------------------------------------
-	// CONSTRUCTOR
-	//---------------------------------------------------------------
+	/**
+	 * Constructor
+	 */
 	public function __construct()
 	{
 		$this->throwFlag = ((int)phpversion() >= 5);
 	}
 
-	//---------------------------------------------------------------
-	// creates (or resets to) new empty MIDI song
-	//---------------------------------------------------------------
+	/**
+	 * creates (or resets to) new empty MIDI song
+	 *
+	 * @param integer $timebase
+	 * @return void
+	 */
 	public function open($timebase = 480)
 	{
 		$this->tempo = 0; //125000 = 120 bpm
@@ -59,9 +127,12 @@ class Midi //NOSONAR
 		$this->tracks = array();
 	}
 
-	//---------------------------------------------------------------
-	// sets tempo by replacing set tempo msg in track 0 (or adding new track 0)
-	//---------------------------------------------------------------
+	/**
+	 * sets tempo by replacing set tempo msg in track 0 (or adding new track 0)
+	 *
+	 * @param integer $tempo
+	 * @return void
+	 */
 	public function setTempo($tempo)
 	{
 		$tempo = round($tempo);
@@ -75,34 +146,44 @@ class Midi //NOSONAR
 		$this->tempo = $tempo;
 	}
 
-	//---------------------------------------------------------------
-	// returns tempo (0 if not set)
-	//---------------------------------------------------------------
+	/**
+	 * Get tempo (0 if not set)
+	 *
+	 * @return integer
+	 */
 	public function getTempo()
 	{
 		return $this->tempo;
 	}
 
-	//---------------------------------------------------------------
-	// sets tempo corresponding to given bpm
-	//---------------------------------------------------------------
+	/**
+	 * Set tempo corresponding to given bpm
+	 *
+	 * @param integer $bpm
+	 * @return void
+	 */
 	public function setBpm($bpm)
 	{
 		$tempo = round(60000000 / $bpm);
 		$this->setTempo($tempo);
 	}
 
-	//---------------------------------------------------------------
-	// returns bpm corresponding to tempo
-	//---------------------------------------------------------------
+	/**
+	 * Get bpm corresponding to tempo
+	 *
+	 * @return integer
+	 */
 	public function getBpm()
 	{
 		return ($this->tempo != 0) ? (int)(60000000 / $this->tempo) : 0;
 	}
 
-	//---------------------------------------------------------------
-	// sets timebase
-	//---------------------------------------------------------------
+	/**
+	 * Set timebase
+	 *
+	 * @param integer $tb
+	 * @return void
+	 */
 	public function setTimebase($tb)
 	{
 		$this->timebase = $tb;
@@ -120,26 +201,35 @@ class Midi //NOSONAR
 		return $this->timebase;
 		## echo "".$this->timebase." ".__LINE__."\r\n";
 	}
-	//---------------------------------------------------------------
-	// adds new track, returns new track count
-	//---------------------------------------------------------------
+	
+	/**
+	 * Add new track, returns new track count
+	 *
+	 * @return integer
+	 */
 	public function newTrack()
 	{
 		array_push($this->tracks, array());
 		return count($this->tracks);
 	}
 
-	//---------------------------------------------------------------
-	// returns track $tn as array of msg strings
-	//---------------------------------------------------------------
+	/**
+	 * Get track $tn as array of msg strings
+	 *
+	 * @param [type] $tn
+	 * @return void
+	 */
 	public function getTrack($tn)
 	{
 		return $this->tracks[$tn];
 	}
 
-	//---------------------------------------------------------------
-	// returns number of messages of track $tn
-	//---------------------------------------------------------------
+	/**
+	 * Get number of messages of track $tn
+	 *
+	 * @param string $tn
+	 * @return integer
+	 */
 	public function getMsgCount($tn)
 	{
 		return count($this->tracks[$tn]);
