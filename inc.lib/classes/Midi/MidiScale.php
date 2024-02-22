@@ -2,6 +2,14 @@
 
 namespace Midi;
 
+/**
+ * Rescale MIDI
+ * Example
+ * $midi = new MidiScale();
+ * $midi->importMid("song.mid");
+ * $rescaled = $midi->rescale(2, 1);
+ * $rescaled->saveMidFile("song-rescaled.mid");
+ */
 class MidiScale extends Midi
 {
 

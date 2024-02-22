@@ -15,6 +15,9 @@ class PicoSortable
      */
     private $sortable = array();
     
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $argc = func_num_args();

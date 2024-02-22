@@ -2,7 +2,7 @@
 
 namespace MagicObject\Database;
 
-use Pico\DynamicObject\DynamicObject;
+use MagicObject\MagicObject;
 use stdClass;
 
 class PicoPageData
@@ -13,7 +13,7 @@ class PicoPageData
     /**
      * Result
      *
-     * @var DynamicObject[]
+     * @var MagicObject[]
      */
     private $result = array();
 
@@ -81,7 +81,7 @@ class PicoPageData
     /**
      * Constructor
      *
-     * @param DynamicObject[] $result
+     * @param MagicObject[] $result
      * @param PicoPagable $pagable
      * @param integer $match
      */
@@ -141,7 +141,7 @@ class PicoPageData
     /**
      * Get result
      *
-     * @return DynamicObject[]
+     * @return MagicObject[]
      */ 
     public function getResult()
     {

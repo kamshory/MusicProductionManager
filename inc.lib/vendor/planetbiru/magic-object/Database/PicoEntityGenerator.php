@@ -201,7 +201,7 @@ namespace ' . $namespace . ';
  * @JSON(property-naming-strategy=SNAKE_CASE)
  * @Table(name="' . $picoTableName . '")
  */
-class ' . $className . ' extends DynamicObject
+class ' . $className . ' extends MagicObject
 {
 ' . implode("\r\n", $attrs) . '
 }';

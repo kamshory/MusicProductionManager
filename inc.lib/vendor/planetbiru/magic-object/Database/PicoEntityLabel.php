@@ -2,7 +2,7 @@
 
 namespace MagicObject\Database;
 
-use Pico\DynamicObject\DynamicObject;
+use MagicObject\MagicObject;
 use MagicObject\Util\PicoAnnotationParser;
 use stdClass;
 
@@ -49,7 +49,7 @@ class PicoEntityLabel
     /**
      * Object
      *
-     * @param DynamicObject $object
+     * @param MagicObject $object
      * @param string[] $langs
      */
     public function __construct($object, $langs)

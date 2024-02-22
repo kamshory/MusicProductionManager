@@ -2,8 +2,8 @@
 
 namespace MagicObject\Database;
 
-use Pico\DynamicObject\DynamicObject;
 use MagicObject\Exceptions\MandatoryTableNameException;
+use MagicObject\MagicObject;
 use MagicObject\Util\PicoAnnotationParser;
 use stdClass;
 
@@ -25,7 +25,7 @@ class PicoDatabaseStructure
     /**
      * Object
      *
-     * @var DynamicObject
+     * @var MagicObject
      */
     private $object;
     

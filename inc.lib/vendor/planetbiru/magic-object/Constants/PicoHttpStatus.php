@@ -41,6 +41,11 @@ class PicoHttpStatus
     const HTTP_GATEWAY_TIME_OUT = 504;
     const HTTP_HTTP_VERSION_NOT_SUPPORTED = 505;
     
+    /**
+     * HTTP status
+     *
+     * @var array
+     */
     public static $httpStatus = array(
         100 => 'Continue',
         101 => 'Switching Protocols',
