@@ -144,7 +144,7 @@ Users with the role of vocalist cannot edit lyrics and subtitles on MP3 or MIDI 
 
 ## Article
 
-Music Production Studio provides space for articles that can be read by all users. This article may contain:
+**Music Production Studio** provides space for articles that can be read by all users. This article may contain:
 
 1. music theory
 2. music production application tutorial
