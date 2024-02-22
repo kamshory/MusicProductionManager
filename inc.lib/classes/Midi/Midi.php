@@ -944,9 +944,9 @@ class Midi //NOSONAR
 	//---------------------------------------------------------------
 	public function importMid($smf_path)
 	{
-		$SMF = fopen($smf_path, "rb"); // Standard MIDI File, typ 0 or 1
-		$song = fread($SMF, filesize($smf_path));
-		fclose($SMF);
+		$smf = fopen($smf_path, "rb"); // Standard MIDI File, typ 0 or 1
+		$song = fread($smf, filesize($smf_path));
+		fclose($smf);
 		$this->parseMid($song);
 	}
 
@@ -1006,9 +1006,9 @@ class Midi //NOSONAR
 		if (count($this->tracks) < 1) {
 			$this->_err('MIDI song has no tracks');
 		}
-		$SMF = fopen($mid_path, "wb"); // SMF
-		fwrite($SMF, $this->getMid());
-		fclose($SMF);
+		$smf = fopen($mid_path, "wb"); // SMF
+		fwrite($smf, $this->getMid());
+		fclose($smf);
 		if ($chmod !== false) {
 			@chmod($mid_path, $chmod);
 		}
