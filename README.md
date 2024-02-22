@@ -69,7 +69,7 @@ MIDI lyrics are based on syllables and have the exact time the syllables are sun
 
 ## Rescale MIDI
 
-**Music Production Manager** can change the MIDi scale, namely by changing the tempo and time base with a ratio of 2^x where x is an integer number, either positive or negative (..., 1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, ...).
+**Music Production Manager** can change the MIDi scale, namely by changing the tempo and time base with a ratio of 2^x where x is an integer number, either positive or negative like (..., 1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, ...).
 
 This feature is very useful for repairing MIDI files so that the bar size is as desired.
 
