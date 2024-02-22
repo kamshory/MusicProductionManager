@@ -4,16 +4,23 @@ Music Production Management is a software used in music production. Music Produc
 
 ## Feature
 
-1. song management
-2. album management
-3. artist management
+1. Song Management
+2. Album Management
+3. Artist Management
 4. genre management
-5. song attachment
-6. comment
-7. lyric editor
-8. MIDI editor
-9. karaoke
-10. recording teleprompter
+5. Genre Management
+6. Song Attachment
+7. Comment
+8. Lyric Editor
+9. MIDI Editor
+10. MIDI Player
+11. MusicXML Player
+12. Karaoke
+13. Recording Teleprompter
+14. Piano Display
+15. Download Files
+16. User Management
+17. User Role
 
 ## Song Management
 
@@ -134,7 +141,7 @@ Users with the composer role can edit lyrics and subtitles on MP3 and MIDI files
 
 Users with the role of vocalist cannot edit lyrics and subtitles on MP3 or MIDI files.
 
-# Language
+# Programming Language
 
 **Music Production Manager** use PHP
 
