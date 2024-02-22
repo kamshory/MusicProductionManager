@@ -22,6 +22,15 @@ function fixValue($value)
     return $val;
 }
 
+/**
+ * Check if request is via AJAX
+ *
+ * @return boolean
+ */
+function isAjax() {
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+}
+
 $inputPost = new PicoRequest(INPUT_POST);
 $songId = $inputPost->getSongId();
 
@@ -46,7 +55,7 @@ $denominator = fixValue($denominator);
 
 
 
-if ($lyric != null && $songId != null) {
+if ($songId != null) {
 
 	$song = new Song(null, $database);
 	$song->findOneBySongId($songId);
@@ -57,7 +66,12 @@ if ($lyric != null && $songId != null) {
 	$midi->importMid($midiPath);
     
     $rescaled = $midi->rescale($numerator, $denominator);
+    echo "NUMERATOR = $numerator; DENOMINATOR = $denominator";
     $rescaled->saveMidFile($midiPath, 0777);
     
-	echo json_encode(array('ok' => true));
+    if(isAjax())
+	{
+        echo json_encode(array('ok' => true));
+    }
 }
+

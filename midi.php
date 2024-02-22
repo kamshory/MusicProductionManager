@@ -71,6 +71,19 @@ else if($inputGet->equalsAction('edit-instrument') && $inputGet->getSongId() != 
     // do nothing
   }
 }
+else if($inputGet->equalsAction('rescale') && $inputGet->getSongId() != null)
+{
+  try
+  {
+    $song = new EntitySong(null, $database);
+    $song->findOneBySongId($inputGet->getSongId());
+    require_once "midi-rescale.php";
+  }
+  catch(Exception $e)
+  {
+    // do nothing
+  }
+}
 
 else if($inputGet->equalsAction(PicoRequest::ACTION_DETAIL) && $inputGet->getSongId() != null)
 {
@@ -344,6 +357,7 @@ if(!empty($result))
         <tr>
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
+        <th scope="col" width="20"><i class="ti ti-edit"></i></th>
         <th scope="col" width="20"><i class="ti ti-download"></i></th>
         <th scope="col" width="20"><i class="ti ti-player-play"></i></th>
         <th scope="col" width="20">#</th>
@@ -369,6 +383,7 @@ if(!empty($result))
         $songId = $song->getSongId();
         $linkEditInstrument = basename($_SERVER['PHP_SELF'])."?action=edit-instrument&song_id=".$songId;
         $linkEditLyric = basename($_SERVER['PHP_SELF'])."?action=edit-lyric&song_id=".$songId;
+        $linkRescale = basename($_SERVER['PHP_SELF'])."?action=rescale&song_id=".$songId;
         $linkDownload = basename($_SERVER['PHP_SELF'])."?action=download&song_id=".$songId;
         $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_id=".$songId;
         $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_id=".$songId;
@@ -376,6 +391,7 @@ if(!empty($result))
         <tr data-id="<?php echo $songId;?>">
         <th scope="row"><a href="<?php echo $linkEditInstrument;?>"><i class="ti ti-edit"></i></a></th>
         <th scope="row"><a href="<?php echo $linkEditLyric;?>"><i class="ti ti-edit"></i></a></th>
+        <th scope="row"><a href="<?php echo $linkRescale;?>"><i class="ti ti-edit"></i></a></th>
         <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>

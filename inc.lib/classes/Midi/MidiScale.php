@@ -52,9 +52,9 @@ class MidiScale extends Midi
 	 *
 	 * @return string
 	 */
-	public function getMid()
+	public function getMidRescaled()
 	{
-		$tracks = $this->tracks;
+		$tracks = $this->getTracks();
 		$tc = count($tracks);
 		$type = ($tc > 1) ? 1 : 0;
 		$midStr = "MThd\0\0\0\6\0" . chr($type) . $this->_getBytes($tc, 2) . $this->_getBytes($this->getTimebase(), 2);
@@ -114,7 +114,7 @@ class MidiScale extends Midi
 			$this->_err('MIDI song has no tracks');
 		}
 		$smf = fopen($midPath, "wb"); // SMF
-		fwrite($smf, $this->getMid());
+		fwrite($smf, $this->getMidRescaled());
 		fclose($smf);
 		if ($chmod !== false) {
 			@chmod($midPath, $chmod);
@@ -140,8 +140,8 @@ class MidiScale extends Midi
             throw new InvalidScaleException("Invalid scale (numerator = $numerator, denominator = $denominator)");
         }
         $arr = explode(' ', $line, 3);
-        $arr[2] = (int) ($arr[2] * $numerator / $denominator);
-        return explode(' ', $arr);
+        $arr[2] = (int) ($arr[2] * $denominator / $numerator);
+        return implode(' ', $arr);
     }
 
     /**

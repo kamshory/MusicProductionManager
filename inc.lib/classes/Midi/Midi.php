@@ -102,6 +102,13 @@ class Midi //NOSONAR
 	 * @var integer
 	 */
 	protected $t = 0;
+	
+	/**
+	 * Time signature
+	 *
+	 * @var array
+	 */
+	protected $timeSignature = array();
 
 	/**
 	 * Constructor
@@ -1385,6 +1392,8 @@ class Midi //NOSONAR
 	//---------------------------------------------------------------
 	private function _parseTrack($binStr, $tn) //NOSONAR
 	{
+		$this->timeSignature = array();
+		
 		$trackLen = strlen($binStr);
 		$p = 4;
 		$time = 0;
@@ -1538,7 +1547,15 @@ class Midi //NOSONAR
 									$t = pow(2, ord($binStr[$p + 4]));
 									$mc = ord($binStr[$p + 5]);
 									$c = ord($binStr[$p + 6]);
-									$track[] = "$time TimeSig $z/$t $mc $c";
+									
+									
+									$timeSignature = "$z/$t $mc $c";
+									$this->timeSignature[] = array(
+										array("time"=>$time, "time_signature"=>$timeSignature)
+									); 
+									
+									$track[] = "$time TimeSig $timeSignature";
+									
 									$p += 7;
 									break;
 								case 0x59: // KeySig
@@ -1953,5 +1970,15 @@ class Midi //NOSONAR
 	public function getTracks()
 	{
 		return $this->tracks;
+	}
+
+	/**
+	 * Get time signature
+	 *
+	 * @return  array
+	 */ 
+	public function getTimeSignature()
+	{
+		return $this->timeSignature;
 	}
 } // END OF CLASS
