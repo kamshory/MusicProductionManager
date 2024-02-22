@@ -21,6 +21,7 @@ Music Production Management is a software used in music production. Music Produc
 15. Download Files
 16. User Management
 17. User Role
+18. Article
 
 ## Song Management
 
@@ -140,6 +141,16 @@ Users with the role of arranger can edit instruments in MIDI.
 Users with the composer role can edit lyrics and subtitles on MP3 and MIDI files.
 
 Users with the role of vocalist cannot edit lyrics and subtitles on MP3 or MIDI files.
+
+## Article
+
+Music Production Studio provides space for articles that can be read by all users. This article may contain:
+
+1. music theory
+2. music production application tutorial
+3. tips and tricks for making songs
+
+Any user can publish articles. This article may be modified by other users. Each change will be saved in a log so that changes can be tracked.
 
 # Programming Language
 

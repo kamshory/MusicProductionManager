@@ -28,6 +28,11 @@ class MidiInstrument extends Midi
 	 */
 	private $prChIndex = array();
 
+	/**
+	 * Get current MIDI instrument
+	 *
+	 * @return stdClass
+	 */
 	public function getMidInstrumentList()
 	{
 		$midi = $this;
@@ -71,6 +76,9 @@ class MidiInstrument extends Midi
 				}
 			}
 		}
+		
+		/*
+		Unused
 		foreach ($midi->tracks as $i => $track) {
 			$program->time->tracks[$i] = array();
 			$j = 0;
@@ -86,9 +94,39 @@ class MidiInstrument extends Midi
 				}
 			}
 		}
+		*/
+		
+
+		$program->time->tracks = $this->tracks($midi->tracks);
 
 		$program->timebase = $this->getTimebase();
 		return $program;
+	}
+
+	/**
+	 * Build track
+	 *
+	 * @param array $tracks
+	 * @return array
+	 */
+	private function tracks($tracksInput)
+	{
+		$tracks = array();
+		foreach ($tracksInput as $i => $track) {
+			$tracks[$i] = array();
+			$k = 0;
+			foreach ($track as $raw) {
+				$arr = explode(' ', $raw, 3);
+				$time = $arr[0]; // NOSONAR
+				$type = $arr[1];
+				$data = $arr[2]; // NOSONAR
+				if ($type == 'Tempo') {
+					$tracks[$i][$k] = $raw;
+					$k++;
+				}
+			}
+		}
+		return $tracks;
 	}
 	
 	/**
