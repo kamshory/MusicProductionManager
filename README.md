@@ -202,6 +202,12 @@ database:
   salt: ${APP_DATABASE_SALT}
 ```
 
+**Environment Variable**
+
 **Create New User Account**
+
+On Windows, users can directly create environment variables either via the graphical user interface (GUI) or the `setx` command line. PHP can immediately read environment variables after Windows is restarted.
+
+On Linux, users must create a configuration on the Apache server by creating a file with the .conf extension in the `/etc/httpd/conf.d` folder then restart Apache web server.
 
 User must create an user account.
