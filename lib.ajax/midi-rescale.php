@@ -6,10 +6,46 @@ use MusicProductionManager\Data\Entity\Song;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 
+/**
+ * Fix value
+ *
+ * @param mixed $value
+ * @return integer
+ */
+function fixValue($value)
+{
+    $val = (int) $value;
+    if($val <= 0)
+    {
+        $val = 1;
+    }
+    return $val;
+}
+
 $inputPost = new PicoRequest(INPUT_POST);
 $songId = $inputPost->getSongId();
-$numerator = $inputPost->getNumerator();
-$denominator = $inputPost->getDenominator();
+
+$numerator = 1;
+$denominator = 1;
+
+if($inputPost->getScale() != null)
+{
+    $scale = $inputPost->getScale();
+    $arr = explode("/", $scale, 2);
+    $numerator = isset($arr[0]) ? (int) $arr[0] : 1;
+    $denominator = isset($arr[1]) ? (int) $arr[1] : 1;
+}
+else
+{
+    $numerator = $inputPost->getNumerator();
+    $denominator = $inputPost->getDenominator();
+}
+
+$numerator = fixValue($numerator);
+$denominator = fixValue($denominator);
+
+
+
 if ($lyric != null && $songId != null) {
 
 	$song = new Song(null, $database);
