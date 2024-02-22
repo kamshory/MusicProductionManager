@@ -95,7 +95,7 @@ Teleprompter is used when taking vocals. The teleprompter will display the lyric
 
 ## Piano Display
 
-**Music Production Manager** displays the piano keys when the song is sung according to the note that must be sung by the vocalist. This really helps the vocalist to sing the correct notes instead of relying on the ear to hear the notes according to the pitch of the lead instrument which may not be heard clearly because it is mixed with other instruments at a higher level.
+Apart from displaying the lyric text, **Music Production Manager** also displays the piano keys when the song is sung according to the note that must be sung by the vocalist. This really helps the vocalist to sing the correct notes instead of relying on the ear to hear the notes according to the pitch of the lead instrument which may not be heard clearly because it is mixed with other instruments at a higher level.
 
 This feature is important to prevent vocalists from singing songs incorrectly.
 

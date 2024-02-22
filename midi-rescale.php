@@ -30,10 +30,6 @@ if (isset($song)) {
 
 ?>
 
-        <script>
-
-        </script>
-
         <div class="main-content">
             <form action="" method="post" onsubmit="return confirm('Are you sure to rescale MIDI?');">
                 <table class="table table-responsive">
