@@ -235,9 +235,14 @@ class Midi //NOSONAR
 		return count($this->tracks[$tn]);
 	}
 
-	//---------------------------------------------------------------
-	// adds message to end of track $tn
-	//---------------------------------------------------------------
+	/**
+	 * Add message to end of track $tn
+	 *
+	 * @param string $tn
+	 * @param string $msgStr
+	 * @param integer $ttype
+	 * @return void
+	 */
 	public function addMsg($tn, $msgStr, $ttype = 0)
 	{ //0:absolute, 1:delta
 		$track = $this->tracks[$tn];
@@ -254,9 +259,13 @@ class Midi //NOSONAR
 		$this->tracks[$tn] = $track;
 	}
 
-	//---------------------------------------------------------------
-	// adds message at adequate position of track $n (slower than addMsg)
-	//---------------------------------------------------------------
+	/**
+	 * Add message at adequate position of track $n (slower than addMsg)
+	 *
+	 * @param string $tn
+	 * @param string $msgStr
+	 * @return void
+	 */
 	public function insertMsg($tn, $msgStr)
 	{
 		$time = $this->_getTime($msgStr);
@@ -271,9 +280,13 @@ class Midi //NOSONAR
 		array_splice($this->tracks[$tn], $i, 0, $msgStr);
 	}
 
-	//---------------------------------------------------------------
-	// returns message number $mn of track $tn
-	//---------------------------------------------------------------
+	/**
+	 * Get message number $mn of track $tn
+	 *
+	 * @param string $tn
+	 * @param integer $mn
+	 * @return mixed
+	 */
 	public function getMsg($tn, $mn)
 	{
 		return $this->tracks[$tn][$mn];
