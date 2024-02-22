@@ -93,6 +93,12 @@ Karaoke is a feature that vocalists can use while practicing. Features can be ac
 
 Teleprompter is used when taking vocals. The teleprompter will display the lyrics on the vocalist's screen during the vocal take. The lyrics will be in sync with the music listened to through the vocalist's monitor headphones.
 
+## Piano Display
+
+**Music Production Manager** displays the piano keys when the song is sung according to the note that must be sung by the vocalist. This really helps the vocalist to sing the correct notes instead of relying on the ear to hear the notes according to the pitch of the lead instrument which may not be heard clearly because it is mixed with other instruments at a higher level.
+
+This feature is important to prevent vocalists from singing songs incorrectly.
+
 ## Download Files
 
 Users can download files individually, download files per song, or download files per album. The types of files that can be downloaded are as follows:
