@@ -17,7 +17,7 @@ PicoHttpCache::cacheLifetime(3600*12);
                     <table class="dialog-table">
                         <tbody>
                             <tr>
-                                <td>Genre Name</td>
+                                <td>Genre</td>
                                 <td><input type="text" class="form-control" name="name"></td>
                             </tr>
                             <tr>

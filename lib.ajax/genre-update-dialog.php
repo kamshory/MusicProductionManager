@@ -24,7 +24,7 @@ $genre->findOneByGenreId($inputGet->getGenreId());
                     <table class="dialog-table">
                         <tbody>
                             <tr>
-                                <td>Genre Name</td>
+                                <td>Genre</td>
                                 <td><input type="text" class="form-control" name="name" value="<?php echo $genre->getName();?>"></td>
                             </tr>
                             <tr>
