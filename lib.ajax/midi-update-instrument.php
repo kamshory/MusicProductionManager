@@ -36,25 +36,6 @@ $inputPost = new PicoRequest(INPUT_POST);
 $songId = $inputPost->getSongId();
 $newInstr = $inputPost->getNewInstrument();
 
-$numerator = 1;
-$denominator = 1;
-
-if($inputPost->getScale() != null)
-{
-    $scale = $inputPost->getScale();
-    $arr = explode("/", $scale, 2);
-    $numerator = isset($arr[0]) ? (int) $arr[0] : 1;
-    $denominator = isset($arr[1]) ? (int) $arr[1] : 1;
-}
-else
-{
-    $numerator = $inputPost->getNumerator();
-    $denominator = $inputPost->getDenominator();
-}
-
-$numerator = fixValue($numerator);
-$denominator = fixValue($denominator);
-
 if ($songId != null) {
 
 	$song = new Song(null, $database);

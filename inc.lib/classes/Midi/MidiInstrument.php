@@ -20,6 +20,7 @@ class MidiInstrument extends Midi
 	 */
 	protected $newInstrumentList = array();
 	
+	
 	/**
 	 * Index of program channel
 	 *
@@ -42,12 +43,18 @@ class MidiInstrument extends Midi
 			$program->program->tracks[$i] = array();
 			$j = 0;
 			$k = 0;
+			$trackName = '';
 			foreach ($track as $j => $raw) {
 				$arr = explode(' ', $raw, 4);
 				$time = $arr[0];
-				$type = $arr[1];
+				$event = $arr[1];
 				$data = $arr[2];
-				if ($type == 'PrCh') {
+				if ($event == 'Meta' && $arr[2] == 'TrkName')
+				{
+					$trackName = $arr[3];
+					$trackName = preg_replace('~^"?(.*?)"?$~', '$1', $trackName);
+				}
+				if ($event == 'PrCh') {
 
 					list(, $ch) = explode('=', $arr[2]);
 					list(, $p) = explode('=', $arr[3]);
@@ -56,7 +63,9 @@ class MidiInstrument extends Midi
 					$program->program->parsed[$i][$k] = array(
 						'channel' => $ch,
 						'program' => $p,
-						'instrument' => $instruments[$p]
+						'instrument' => $instruments[$p],
+						'track_name' => $trackName,
+						'track_id' => $j
 					);
 					$k++;
 				}

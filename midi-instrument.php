@@ -106,9 +106,14 @@ $instrumentName = $midi->getInstrumentList();
 <?php
 foreach($list->program->parsed as $trackNumber=>$track)
 {
+    $trackName = '';
+    if(isset($track[0]) && isset($track[0]['track_name']) && !empty($track[0]['track_name']))
+    {
+        $trackName = ' &mdash; ' . $track[0]['track_name'];
+    }
     ?>
     <li class="midi-track" data-track-number="<?php echo $trackNumber;?>">    
-    <div class="track-label">Track <?php echo $trackNumber;?></div>
+    <div class="track-label">Track <?php echo $trackNumber;?><?php echo $trackName;?></div>
     <?php
     
     $inst = array();
@@ -140,7 +145,7 @@ foreach($list->program->parsed as $trackNumber=>$track)
         ?>
         <li class="midi-channel" data-index="<?php echo $index;?>" data-channel-number="<?php echo $instrument['channel'];?>">
             <div>
-            <div class="channel-label">Channel <?php echo $instrument['channel'] + 1;?></div>
+            <div class="channel-label">Channel <?php echo $instrument['channel'];?></div>
             <div class="select-wrapper">
             <select class="form-control midi-instrument" data-value="<?php echo $instrument['program'];?>"></select>
             </div>
@@ -157,7 +162,9 @@ foreach($list->program->parsed as $trackNumber=>$track)
 ?>
 </ul>
 <div class="button-area">
-<input type="button" class="btn btn-success" value="Update Instrument" onclick="getData();">
+<input type="button" class="btn btn-success" value="Update Instrument" onclick="updateInstrument();">
+<input type="button" class="btn btn-primary" value="Download MIDI" onclick="window.open('midi.php?action=download&song_id=<?php echo $song->getSongId();?>');">
+<input type="hidden" name="song_id" value="<?php echo $song->getSongId();?>">
 </div>
 </form>
 <script>
@@ -192,7 +199,24 @@ foreach($list->program->parsed as $trackNumber=>$track)
             }
             trackData[trackNumber] = channelData;
         }
-        console.log(trackData);
+        return trackData;
+    }
+    function updateInstrument()
+    {
+        let songId = $('[name="song_id"]').val();
+        let newInstrument = getData();
+        $.ajax({
+            type:'POST',
+            url:'lib.ajax/midi-update-instrument.php',
+            data:{
+                song_id:songId,
+                new_instrument:JSON.stringify(newInstrument)
+            },
+            success: function(data)
+            {
+                console.log(data);
+            }
+        });
     }
     window.onload = function(){
         for(let t in midiProgram)
