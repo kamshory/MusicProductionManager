@@ -53,21 +53,19 @@ The lyric editor is also used to synchronize the time of the lyric. Lyrics can b
 
 When taking vocals, the lyrics can help the vocalist, making it easier to sing a song.
 
-Lyric editors are divided into 2, namely SRT and MIDI.
-
-### SRT
-
 Lyrics in SRT format will be displayed in the form of phrases or sentences. Generally, there are breaks between lines of lyrics. Usually these lyrics are displayed ahead of time to give the vocalist enough time to read the lyric lines.
-
-### MIDI
-
-MIDI lyrics are based on syllables and have the exact time the syllables are sung. MIDI lyrics will be saved to a MIDI file and can be converted into sheet music. Sheet music can be sung by vocalists either verbally or using melodic instruments such as piano, saxophone, trumpet, guitar, etc.
 
 ## MIDI Editor
 
+### Replace MIDI Instrument
+
 **Music Production Manager** has the ability to change instruments in MIDI files.
 
-## Rescale MIDI
+### Add and Update Lyric
+
+MIDI lyrics are based on syllables and have the exact time the syllables are sung. MIDI lyrics will be saved to a MIDI file and can be converted into sheet music. Sheet music can be sung by vocalists either verbally or using melodic instruments such as piano, saxophone, trumpet, guitar, etc.
+
+### Rescale MIDI
 
 **Music Production Manager** can change the MIDi scale, namely by changing the tempo and time base with a ratio of 2^x where x is an integer number, either positive or negative like (..., 1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, ...).
 

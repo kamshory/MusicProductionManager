@@ -6,9 +6,28 @@ use stdClass;
 
 class MidiInstrument extends Midi
 {
+	/**
+	 * Program list
+	 *
+	 * @var array
+	 */
 	protected $program = array();
+	
+	/**
+	 * New instrument list
+	 *
+	 * @var array
+	 */
+	protected $newInstrumentList = array();
+	
+	/**
+	 * Index of program channel
+	 *
+	 * @var array
+	 */
+	private $prChIndex = array();
 
-	public function getInstrument()
+	public function getMidInstrumentList()
 	{
 		$midi = $this;
 		$program = new stdClass();
@@ -32,7 +51,6 @@ class MidiInstrument extends Midi
 
 					list(, $ch) = explode('=', $arr[2]);
 					list(, $p) = explode('=', $arr[3]);
-
 
 					$program->program->tracks[$i][$k] = $raw;
 					$program->program->parsed[$i][$k] = array(
@@ -63,6 +81,38 @@ class MidiInstrument extends Midi
 		$program->timebase = $this->getTimebase();
 		return $program;
 	}
+	
+	/**
+	 * Build list from input
+	 *
+	 * @param array $input
+	 * @return self
+	 */
+	public function updateMidInstrument($input)
+	{
+		$result = array();
+		foreach($input as $track=>$instrumentList)
+		{
+			if($instrumentList != null && is_array($instrumentList))
+			{
+				foreach($instrumentList as $idx=>$info)
+				{
+					$ch = (int) $info->channel;
+					$id = (int) $info->index;
+					$pr = (int) $info->program;
+					if(!isset($result[$ch]))
+					{
+						$result[$ch] = array();
+					}
+					$result[$ch][$id] = $pr;    
+				}
+				
+			}
+		}
+		$this->newInstrumentList = $result;
+		return $this;
+	}
+
 	public function getMidData()
 	{
 		$midi = new StdClass();
@@ -75,7 +125,7 @@ class MidiInstrument extends Midi
 
 		foreach ($this->tracks as $i => $track) {
 			$midi->tracks[$i] = array();
-			foreach ($track as $j => $raw) {
+			foreach ($track as $raw) {
 				if (stripos($raw, 'copyright') === false) {
 					$midi->tracks[$i][] = $raw;
 				}
@@ -83,44 +133,144 @@ class MidiInstrument extends Midi
 		}
 		return $midi;
 	}
+	
 	/**
-	 * returns absolute time in mili seconds
+	 * Replace instrument
 	 *
-	 * @access public
-	 * @return int absolute time
+	 * @param string $line
+	 * @param array $newInstrumentList
+	 * @param integer $ch
+	 * @param integer $index
+	 * @return string
 	 */
-	public function getAbsoluteTime($relativeTime)
+	public function replaceInstrument($line, $newInstrumentList, $ch, $index)
 	{
-		$duration = 0;
-		$currentTempo = 0;
-		$t = 0;
-
-		$track = $this->tracks[0];
-
-
-		$f = 1 / $this->getTimebase() / 1000000;
-
-		foreach ($this->tracks as $trk) {
-			$mc = count($trk);
-			for ($i = 0; $i < $mc; $i++) {
-				$msg = explode(' ', $trk[$i]);
-
-				$tm = (int)@$msg[0];
-				if ($tm > $relativeTime) {
-					break 2;
-				}
-
-				if (@$msg[1] == 'Tempo') {
-					$dt = (int)$msg[0] - $t;
-					$duration += $dt * $currentTempo * $f;
-					$t = (int)$msg[0];
-					$currentTempo = (int)$msg[2];
-				}
+		$arr = explode(' ', $line);
+		eval("\$".$arr[2].";");
+		eval("\$".$arr[3].";");
+		$ch = isset($ch) ? $ch : 0;
+		$p = isset($p) ? $p : 0;
+		
+		$time = $arr[0];
+		
+		$newProgram = $newInstrumentList[$ch][$index];
+		
+		return "$time PrCh ch=$ch p=$newProgram";
+	}
+	
+	public function replaceInst($line)
+	{
+		$arr = explode(' ', $line);
+		if($arr[1] == 'PrCh')
+		{
+			eval("\$".$arr[2].";");
+			eval("\$".$arr[3].";");
+			$ch = isset($ch) ? $ch : 0;
+			$p = isset($p) ? $p : 0;
+			if(!isset($this->prChIndex[$ch]))
+			{
+				$this->prChIndex[$ch] = 0;
 			}
+			$this->prChIndex[$ch]++;
+			$index = $this->prChIndex[$ch] - 1;
+			$line = $this->replaceInstrument($line, $this->getNewInstrumentList(), $ch, $index);
 		}
+		return $line;
+	}
+	
+	/**
+	 * Get MIDI with new instruments
+	 *
+	 * @return string
+	 */
+	public function getMidWithNewInstrument()
+	{
+		$this->prChIndex = array();
+		
+		$tracks = $this->getTracks();
+		$tc = count($tracks);
+		$type = ($tc > 1) ? 1 : 0;
+		$midStr = "MThd\0\0\0\6\0" . chr($type) . $this->_getBytes($tc, 2) . $this->_getBytes($this->getTimebase(), 2);
+		## echo "".$this->timebase." ".__LINE__."\r\n";
+		for ($i = 0; $i < $tc; $i++) {
+			$track = $tracks[$i];
+			$mc = count($track);
+			$time = 0;
+			$midStr .= "MTrk";
+			$trackStart = strlen($midStr);
 
-		$dt = $relativeTime - $t;
-		$duration += $dt * $currentTempo * $f;
-		return $duration * 1000;
+			$last = '';
+
+			for ($j = 0; $j < $mc; $j++) {
+				$line = $track[$j];
+                
+                // update instrument
+				$line = $this->replaceInst($line);
+				
+				$t = $this->_getTime($line);
+				$dt = $t - $time;
+
+				// A: IGNORE EVENTS WITH INCORRECT TIMESTAMP
+				if ($dt < 0) {
+					continue;
+				}
+
+				$time = $t;
+				$midStr .= $this->_writeVarLen($dt);
+
+				// repetition, same event, same channel, omit first byte (smaller file size)
+				$str = $this->_getMsgStr($line);
+				$start = ord($str[0]);
+				if ($start >= 0x80 && $start <= 0xEF && $start == $last) {
+					$str = substr($str, 1);
+				}
+				$last = $start;
+
+				$midStr .= $str;
+			}
+			$trackLen = strlen($midStr) - $trackStart;
+			$midStr = substr($midStr, 0, $trackStart) . $this->_getBytes($trackLen, 4) . substr($midStr, $trackStart);
+		}
+		return $midStr;
+	}
+    
+    /**
+	 * Save MIDI song as Standard MIDI File
+	 *
+	 * @param string $midPath
+	 * @param integer $chmod
+	 * @return void
+	 */
+	public function saveMidFile($midPath, $chmod = 0755)
+	{
+		if (count($this->tracks) < 1) {
+			$this->_err('MIDI song has no tracks');
+		}
+		$smf = fopen($midPath, "wb"); // SMF
+		fwrite($smf, $this->getMidWithNewInstrument());
+		fclose($smf);
+		if ($chmod !== false) {
+			@chmod($midPath, $chmod);
+		}
+	}
+
+	/**
+	 * Get the value of newInstrumentList
+	 */ 
+	public function getNewInstrumentList()
+	{
+		return $this->newInstrumentList;
+	}
+
+	/**
+	 * Set the value of newInstrumentList
+	 *
+	 * @return  self
+	 */ 
+	public function setNewInstrumentList($newInstrumentList)
+	{
+		$this->newInstrumentList = $newInstrumentList;
+
+		return $this;
 	}
 }

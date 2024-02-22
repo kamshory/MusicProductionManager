@@ -9,7 +9,7 @@ if(file_exists($song->getFilePathMidi()))
 {
 $midi->importMid($song->getFilePathMidi());
 
-$list = $midi->getInstrument();
+$list = $midi->getMidInstrumentList();
 
 $instrumentName = $midi->getInstrumentList();
 ?>
