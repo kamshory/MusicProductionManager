@@ -4,20 +4,18 @@ namespace Midi;
 
 use XMLParser;
 
-/****************************************************************************
-Software: Midi Class
-Version:  1.7.8
-Date:     2013-11-02
-Author:   Valentin Schmidt
-License:  Freeware
-
-You may use and modify this software as you wish.
-
-Last Changes:
-    - added variable length encoding to Meta and SeqSpec Events
-    
- ****************************************************************************/
-
+/**
+ * Software: Midi Class
+ * Version:  1.7.8
+ * Date:     2013-11-02
+ * Author:   Valentin Schmidt
+ * License:  Freeware
+ * 
+ * You may use and modify this software as you wish.
+ * 
+ * Last Changes:
+ *     - added variable length encoding to Meta and SeqSpec Events
+ */
 class Midi //NOSONAR
 {
 
@@ -216,7 +214,7 @@ class Midi //NOSONAR
 	/**
 	 * Get track $tn as array of msg strings
 	 *
-	 * @param [type] $tn
+	 * @param integer $tn
 	 * @return void
 	 */
 	public function getTrack($tn)
@@ -227,7 +225,7 @@ class Midi //NOSONAR
 	/**
 	 * Get number of messages of track $tn
 	 *
-	 * @param string $tn
+	 * @param integer $tn
 	 * @return integer
 	 */
 	public function getMsgCount($tn)
@@ -238,7 +236,7 @@ class Midi //NOSONAR
 	/**
 	 * Add message to end of track $tn
 	 *
-	 * @param string $tn
+	 * @param integer $tn
 	 * @param string $msgStr
 	 * @param integer $ttype
 	 * @return void
@@ -262,7 +260,7 @@ class Midi //NOSONAR
 	/**
 	 * Add message at adequate position of track $n (slower than addMsg)
 	 *
-	 * @param string $tn
+	 * @param integer $tn
 	 * @param string $msgStr
 	 * @return void
 	 */
@@ -283,7 +281,7 @@ class Midi //NOSONAR
 	/**
 	 * Get message number $mn of track $tn
 	 *
-	 * @param string $tn
+	 * @param integer $tn
 	 * @param integer $mn
 	 * @return mixed
 	 */
@@ -292,34 +290,46 @@ class Midi //NOSONAR
 		return $this->tracks[$tn][$mn];
 	}
 
-	//---------------------------------------------------------------
-	// deletes message number $mn of track $tn
-	//---------------------------------------------------------------
+	/**
+	 * Delete message number $mn of track $tn
+	 *
+	 * @param integer $tn
+	 * @param integer $mn
+	 * @return void
+	 */
 	public function deleteMsg($tn, $mn)
 	{
 		array_splice($this->tracks[$tn], $mn, 1);
 	}
 
-	//---------------------------------------------------------------
-	// deletes track $tn
-	//---------------------------------------------------------------
+	/**
+	 * Delete track $tn
+	 *
+	 * @param integer $tn
+	 * @return integer
+	 */
 	public function deleteTrack($tn)
 	{
 		array_splice($this->tracks, $tn, 1);
 		return count($this->tracks);
 	}
 
-	//---------------------------------------------------------------
-	// returns number of tracks
-	//---------------------------------------------------------------
+	/**
+	 * Get number of tracks
+	 *
+	 * @return integer
+	 */
 	public function getTrackCount()
 	{
 		return count($this->tracks);
 	}
 
-	//---------------------------------------------------------------
-	// deletes all tracks except track $tn (and $track 0 which contains tempo info)
-	//---------------------------------------------------------------
+	/**
+	 * Delete all tracks except track $tn (and $track 0 which contains tempo info)
+	 *
+	 * @param integer $tn
+	 * @return void
+	 */
 	public function soloTrack($tn)
 	{
 		if ($tn == 0) {
@@ -329,9 +339,12 @@ class Midi //NOSONAR
 		}
 	}
 
-	//---------------------------------------------------------------
-	// transposes song by $dn half tone steps
-	//---------------------------------------------------------------
+	/**
+	 * Transpose song by $dn half tone steps
+	 *
+	 * @param integer $dn
+	 * @return void
+	 */
 	public function transpose($dn)
 	{
 		$tc = count($this->tracks);
@@ -340,9 +353,13 @@ class Midi //NOSONAR
 		}
 	}
 
-	//---------------------------------------------------------------
-	// transposes track $tn by $dn half tone steps
-	//---------------------------------------------------------------
+	/**
+	 * Transpose track $tn by $dn half tone steps
+	 *
+	 * @param integer $tn
+	 * @param integer $dn
+	 * @return void
+	 */
 	public function transposeTrack($tn, $dn)
 	{
 		$track = $this->tracks[$tn];
@@ -360,9 +377,12 @@ class Midi //NOSONAR
 		$this->tracks[$tn] = $track;
 	}
 
-	//---------------------------------------------------------------
-	// import whole MIDI song as text (mf2t-format)
-	//---------------------------------------------------------------
+	/**
+	 * Import whole MIDI song as text (mf2t-format)
+	 *
+	 * @param string $txt
+	 * @return void
+	 */
 	public function importTxt($txt)
 	{
 		$txt = trim($txt);
@@ -402,9 +422,13 @@ class Midi //NOSONAR
 		$this->_findTempo();
 	}
 
-	//---------------------------------------------------------------
-	// imports track as text (mf2t-format)
-	//---------------------------------------------------------------
+	/**
+	 * Import track as text (mf2t-format)
+	 *
+	 * @param string $txt
+	 * @param integer $tn
+	 * @return void
+	 */
 	public function importTrackTxt($txt, $tn)
 	{
 		$txt = trim($txt);
@@ -438,9 +462,12 @@ class Midi //NOSONAR
 		}
 	}
 
-	//---------------------------------------------------------------
-	// returns MIDI song as score
-	//---------------------------------------------------------------
+	/**
+	 * Get MIDI song as score
+	 *
+	 * @param integer $ttype
+	 * @return string
+	 */
 	public function getScore($ttype = 0) //NOSONAR
 	{ //0:absolute, 1:delta
 		$str = "";
@@ -464,7 +491,7 @@ class Midi //NOSONAR
 
 		//0 track, invalid and just return	
 		if ($tc == 0) {
-			return;
+			return null;
 		}
 
 		$trk_no = 0;
@@ -581,10 +608,15 @@ class Midi //NOSONAR
 		return $str;
 	}
 
-	//---------------------------------------------------------------
-	// returns simplified note
-	//---------------------------------------------------------------
-	public function KeyToNoteSimp($key, $time, $time_base)
+	/**
+	 * Simplified note
+	 *
+	 * @param integer $key
+	 * @param integer $time
+	 * @param integer $timeBase
+	 * @return integer
+	 */
+	public function KeyToNoteSimp($key, $time, $timeBase)
 	{
 		$noteSharpMap = array(
 			array(1, 0), /* C  */
@@ -617,7 +649,7 @@ class Midi //NOSONAR
 		$fraction = 1.0; // NOSONAR
 		$FRACTION_TOLERANCE = 0.40;
 
-		$fraction = (float)$time / $time_base;
+		$fraction = (float)$time / $timeBase;
 		if ($fraction >= 4.0 - $FRACTION_TOLERANCE) {
 			$len = 4;
 		} else if ($fraction >= 2.0 - $FRACTION_TOLERANCE / 2) {
@@ -646,9 +678,12 @@ class Midi //NOSONAR
 		return $NOTE;
 	}
 
-	//---------------------------------------------------------------
-	// returns MIDI song as text
-	//---------------------------------------------------------------
+	/**
+	 * Get MIDI song as text
+	 *
+	 * @param integer $ttype
+	 * @return string
+	 */
 	public function getTxt($ttype = 0)
 	{ //0:absolute, 1:delta
 		$timebase = $this->timebase;
@@ -663,9 +698,13 @@ class Midi //NOSONAR
 		return $str;
 	}
 
-	//---------------------------------------------------------------
-	// returns track as text
-	//---------------------------------------------------------------
+	/**
+	 * Get track as text
+	 *
+	 * @param integer $tn
+	 * @param integer $ttype
+	 * @return string
+	 */
 	public function getTrackTxt($tn, $ttype = 0)
 	{ //0:absolute, 1:delta
 		$track = $this->tracks[$tn];
@@ -689,9 +728,12 @@ class Midi //NOSONAR
 		return $str;
 	}
 
-	//---------------------------------------------------------------
-	// returns MIDI XML representation (v0.9, http://www.musicxml.org/dtds/midixml.dtd)
-	//---------------------------------------------------------------
+	/**
+	 * Get MIDI XML representation (v0.9, http://www.musicxml.org/dtds/midixml.dtd)
+	 *
+	 * @param integer $ttype
+	 * @return string
+	 */	
 	public function getXml($ttype = 0) //NOSONAR
 	{ //0:absolute, 1:delta
 		$tracks = $this->tracks;
@@ -938,10 +980,13 @@ class Midi //NOSONAR
 	}
 
 
-	//---------------------------------------------------------------
-	// imports Standard MIDI File (typ 0 or 1) (and RMID)
-	// (if optional parameter $tn set, only track $tn is imported)
-	//---------------------------------------------------------------
+	/**
+	 * imports Standard MIDI File (typ 0 or 1) (and RMID)
+	 * (if optional parameter $tn set, only track $tn is imported)
+	 *
+	 * @param string $smfPath
+	 * @return void
+	 */
 	public function importMid($smfPath)
 	{
 		$smf = fopen($smfPath, "rb"); // Standard MIDI File, typ 0 or 1
@@ -950,15 +995,17 @@ class Midi //NOSONAR
 		$this->parseMid($song);
 	}
 
-	//---------------------------------------------------------------
-	// returns binary MIDI string
-	//---------------------------------------------------------------
+	/**
+	 * Get binary MIDI string
+	 *
+	 * @return string
+	 */
 	public function getMid()
 	{
 		$tracks = $this->tracks;
 		$tc = count($tracks);
 		$type = ($tc > 1) ? 1 : 0;
-		$midStr = "MThd\0\0\0\6\0" . chr($type) . $this->_getBytes($tc, 2) . $this->_getBytes($this->timebase, 2);
+		$midStr = "MThd\0\0\0\6\0" . chr($type) . $this->_getBytes($tc, 2) . $this->_getBytes($this->getTimebase(), 2);
 		## echo "".$this->timebase." ".__LINE__."\r\n";
 		for ($i = 0; $i < $tc; $i++) {
 			$track = $tracks[$i];
@@ -998,10 +1045,14 @@ class Midi //NOSONAR
 		return $midStr;
 	}
 
-	//---------------------------------------------------------------
-	// saves MIDI song as Standard MIDI File
-	//---------------------------------------------------------------
-	public function saveMidFile($midPath, $chmod = false)
+	/**
+	 * Save MIDI song as Standard MIDI File
+	 *
+	 * @param string $midPath
+	 * @param integer $chmod
+	 * @return void
+	 */
+	public function saveMidFile($midPath, $chmod = 0755)
 	{
 		if (count($this->tracks) < 1) {
 			$this->_err('MIDI song has no tracks');
