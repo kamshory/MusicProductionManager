@@ -67,6 +67,16 @@ MIDI lyrics are based on syllables and have the exact time the syllables are sun
 
 **Music Production Manager** has the ability to change instruments in MIDI files.
 
+## Rescale MIDI
+
+**Music Production Manager** can change the MIDi scale, namely by changing the tempo and time base with a ratio of 2^x where x is an integer number, either positive or negative (..., 1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16, ...).
+
+This feature is very useful for repairing MIDI files so that the bar size is as desired.
+
+As an example:
+
+A song is made with a tempo of 130 bpm but in fact, the song is only 65 bpm. The song has no problems when played in either mp3 or MIDI format. However, when creating musical notes or number notes from MIDi format, the musical note reader will have difficulty because the note is too high. **Music Production Manager** can fix this problem very easily by converting it to 1/2 scale. There is no change in the song when played with a MIDI player application even though the tempo is reduced by half.
+
 ## MIDI Player
 
 **Music Production Manager** is equipped with a MIDI player that can be used when editing MIDI lyrics.
