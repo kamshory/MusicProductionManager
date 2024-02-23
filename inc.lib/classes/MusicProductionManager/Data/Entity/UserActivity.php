@@ -64,6 +64,13 @@ class UserActivity extends MagicObject
 	protected $postData;
 
 	/**
+	 * Request Body
+	 * @Column(name="request_body", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $requestBody;
+
+	/**
 	 * Time Create
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
 	 * @var string
