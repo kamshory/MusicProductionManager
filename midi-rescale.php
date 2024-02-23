@@ -25,7 +25,11 @@ if (isset($song)) {
         if(isset($ts) && is_array($ts) && !empty($ts))
         {
             $arr0 = $ts[0];
-            $timeSignature = $arr0['time_signature'];
+            if(!empty($arr0))
+            {
+                $ts2 = explode(' ', $arr0[0]['time_signature']);
+                $timeSignature = $ts2[0];
+            }
         }
 
 ?>

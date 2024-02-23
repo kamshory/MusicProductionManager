@@ -951,6 +951,7 @@ class Midi //NOSONAR
 	 */
 	public function parseMid($song)
 	{
+		$this->timeSignature = array();
 		if (strpos($song, 'MThd') > 0) {
 			$song = substr($song, strpos($song, 'MThd')); //get rid of RMID header
 		}
@@ -1392,7 +1393,6 @@ class Midi //NOSONAR
 	//---------------------------------------------------------------
 	private function _parseTrack($binStr, $tn) //NOSONAR
 	{
-		$this->timeSignature = array();
 		
 		$trackLen = strlen($binStr);
 		$p = 4;
