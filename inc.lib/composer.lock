@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e604e542cfc483adbf4f0bea9a408e01",
+    "content-hash": "1e4759f5e4726163a36d45681481d211",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -479,7 +479,7 @@
         },
         {
             "name": "planetbiru/magic-object",
-            "version": "dev-main",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
@@ -494,7 +494,6 @@
             "require": {
                 "symfony/yaml": "^3.4"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -513,7 +512,7 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/main"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/0.0.3"
             },
             "time": "2024-02-23T18:43:48+00:00"
         },
@@ -2021,9 +2020,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "planetbiru/magic-object": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
