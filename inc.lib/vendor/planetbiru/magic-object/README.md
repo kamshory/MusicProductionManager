@@ -22,13 +22,13 @@ Some examples of using MagicObject are as follows:
 To install Magic Obbject
 
 ```
-composer require planetbiru/magic-object:dev-main
+composer require planetbiru/magic-object:0.0.3
 ```
 
 or if composer is not installed
 
 ```
-php composer.phar require planetbiru/magic-object:dev-main
+php composer.phar require planetbiru/magic-object:0.0.3
 ```
 
 To remove Magic Obbject

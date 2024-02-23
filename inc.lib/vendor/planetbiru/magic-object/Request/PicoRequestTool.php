@@ -473,6 +473,16 @@ class PicoRequestTool extends stdClass
     }
 
     /**
+     * Check if request is empty
+     *
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return empty($this->value(false));
+    }
+
+    /**
      * toString
      *
      * @return string
