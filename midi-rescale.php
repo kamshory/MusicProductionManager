@@ -32,6 +32,11 @@ if (isset($song)) {
 
 ?>
 
+<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle();?></h3>
+<?php
+require_once __DIR__ . "/inc/menu-song.php";
+?>
+
         <div class="main-content">
             <form action="" method="post" onsubmit="return confirm('Are you sure to rescale MIDI?');">
                 <table class="table table-responsive">
@@ -72,6 +77,7 @@ if (isset($song)) {
                 </table>
                 <input type="hidden" name="song_id" value="<?php echo $song->getSongId(); ?>">
                 <button type="submit" class="btn btn-success" name="update">Update</button>
+                <input type="button" class="btn btn-primary" value="Download MIDI" onclick="window.open('midi.php?action=download&song_id=<?php echo $song->getSongId();?>');">
             </form>
         <?php
     } else {
