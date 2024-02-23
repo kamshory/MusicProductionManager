@@ -6,6 +6,7 @@ use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserDto;
 use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 $inputPost = new PicoRequest(INPUT_POST);
@@ -173,6 +174,9 @@ try {
     $user->setAdminEdit($currentLoggedInUser->getUserId());
 
     $user->save();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$inputPost->getUserId());
+
 } catch (Exception $e) {
     // do nothing
 }

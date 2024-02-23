@@ -3,6 +3,7 @@
 use MagicObject\Request\PicoRequest;
 use Midi\MidiScale;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 
@@ -66,8 +67,9 @@ if ($songId != null) {
 	$midi->importMid($midiPath);
     
     $rescaled = $midi->rescale($numerator, $denominator);
-    echo "NUMERATOR = $numerator; DENOMINATOR = $denominator";
     $rescaled->saveMidFile($midiPath, 0777);
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Rescale MIDI ".$song->getSongId());
     
     if(isAjax())
 	{

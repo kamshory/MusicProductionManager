@@ -5,8 +5,7 @@ use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\ArtistDto;
 use MusicProductionManager\Data\Entity\Artist;
-
-
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -31,6 +30,9 @@ try
     $artist->setAdminEdit($currentLoggedInUser->getUserId());
     
     $artist->update();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update artist ".$artist->getArtistId());
+
     $restResponse = new PicoResponse();
     $response = ArtistDto::valueOf($artist);
     $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);

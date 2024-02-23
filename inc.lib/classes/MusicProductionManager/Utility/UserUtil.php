@@ -4,8 +4,9 @@ namespace MusicProductionManager\Utility;
 
 use Exception;
 use MagicObject\Database\PicoDatabase;
+use MagicObject\Request\PicoRequest;
 use MusicProductionManager\Data\Entity\User;
-
+use MusicProductionManager\Data\Entity\UserActivity;
 
 class UserUtil
 {
@@ -67,5 +68,39 @@ class UserUtil
         {
             return false;
         }
+    }
+
+    /**
+     * Log user activity
+     *
+     * @param PicoDatabase $database
+     * @param string $userId
+     * @param string $activity
+     * @return void
+     */
+    public static function logUserActivity($database, $userId, $activity)
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+        $inputPost = new PicoRequest(INPUT_POST);
+        $requestBody = null;
+        if($inputPost->isEmpty())
+        {
+            $requestBody = json_decode(file_get_contents("php://input"));
+        }
+        $method = $_SERVER['REQUEST_METHOD'];
+        $path = $_SERVER['REQUEST_URI'];
+        
+        $data = array(
+            'name' => $activity,
+            'path' => $path,
+            'user_id' => $userId,
+            'method' => $method,
+            'get_data' => $inputGet,
+            'post_data' => $inputPost,
+            'request_body' => $requestBody
+        );
+        $userActivity = new UserActivity($data, $database);
+        $userActivity->insert();
+
     }
 }

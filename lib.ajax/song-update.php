@@ -7,6 +7,7 @@ use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -64,6 +65,7 @@ try
         updateAlbum($database, $albumId2);
     }
     
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update song ".$inputPost->getSongId());
 
     $restResponse = new PicoResponse();    
     $queryBuilder = new PicoDatabaseQueryBuilder($database);

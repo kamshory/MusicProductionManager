@@ -6,6 +6,7 @@ use MagicObject\Response\PicoResponse;
 use MagicObject\Constants\PicoHttpStatus;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -45,6 +46,9 @@ try
     $album->setAdminEdit($currentLoggedInUser->getUserId());
 
     $album->update();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update album ".$album->getAlbumId());
+
     $restResponse = new PicoResponse();
     $restResponse->sendResponse($album, 'json', null, PicoHttpStatus::HTTP_OK);
 }

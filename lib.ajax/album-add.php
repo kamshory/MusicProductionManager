@@ -6,6 +6,7 @@ use MagicObject\Response\PicoResponse;
 use MagicObject\Constants\PicoHttpStatus;
 use MusicProductionManager\Data\Dto\AlbumDto;
 use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputPost = new PicoRequest(INPUT_POST);
@@ -46,6 +47,8 @@ catch(Exception $e)
     $album->setAdminEdit($currentLoggedInUser->getUserId());
     
     $album->insert();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add album ".$album->getAlbumId());
     
     $restResponse = new PicoResponse();   
     $response = AlbumDto::valueOf($album);

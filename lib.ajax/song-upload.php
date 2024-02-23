@@ -9,6 +9,7 @@ use MusicProductionManager\File\FileUpload;
 
 
 use MusicProductionManager\Utility\SongFileUtil;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -108,6 +109,8 @@ try
     {
         unlink($path);
     }
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Upload song ".$song->getSongId());
 
     $restResponse = new PicoResponse();
     $restResponse->sendResponse($song, 'json', null, PicoHttpStatus::HTTP_OK);

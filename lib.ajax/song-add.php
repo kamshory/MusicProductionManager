@@ -6,6 +6,7 @@ use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Exceptions\NoRecordFoundException;
 use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 $songId = $database->generateNewId();
@@ -46,13 +47,15 @@ try
     $now = date('Y-m-d H:i:s');
     $song->setTimeCreate($now);
     $song->setIpCreate($_SERVER['REMOTE_ADDR']);
-    $song->setAdminCreate('1');
+    $song->setAdminCreate($currentLoggedInUser->getUserId());
 
     $song->setTimeEdit($now);
     $song->setIpEdit($_SERVER['REMOTE_ADDR']);
-    $song->setAdminEdit('1');
+    $song->setAdminEdit($currentLoggedInUser->getUserId());
 
     $song->save();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add song ".$song->getSongId());
 
     $restResponse = new PicoResponse();    
     $queryBuilder = new PicoDatabaseQueryBuilder($database);

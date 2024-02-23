@@ -5,8 +5,7 @@ use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\GenreDto;
 use MusicProductionManager\Data\Entity\Genre;
-
-
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputPost = new PicoRequest(INPUT_POST);
@@ -39,6 +38,8 @@ try
     {
         $genre->save();
     }  
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add genre ".$genre->getGenreId());
 }
 catch(Exception $e)
 {

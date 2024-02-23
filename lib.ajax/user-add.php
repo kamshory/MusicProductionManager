@@ -5,6 +5,7 @@ use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserDto;
 use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 $inputPost = new PicoRequest(INPUT_POST);
@@ -101,6 +102,8 @@ try {
         $user->setAdminEdit($currentLoggedInUser->getUserId());
 
         $user->insert();
+
+        UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add user ".$user->getUserId());
     } else {
         // do nothing
     }
