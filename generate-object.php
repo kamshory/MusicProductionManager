@@ -25,7 +25,7 @@ if(empty($picoTableName))
 }
 
 $className = ucfirst(StringUtil::camelize($picoTableName));
-$namespace = "Pico\\Data\\Entity";
+$namespace = "MusicProductionManager\\Data\\Entity";
 
 $fileName = $namespace."/".$className;
 $path = __DIR__ . "/inc.lib/classes/".$fileName.".php";
@@ -226,7 +226,7 @@ $classStr = '<?php
 
 namespace '.$namespace.';
 
-'.implode("\r\n", $uses).'
+use MagicObject\MagicObject;'.implode("\r\n", $uses).'
 
 /**
  * @Entity
