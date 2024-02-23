@@ -104,7 +104,7 @@ class UserUtil
             'path' => $path,
             'user_id' => $userId,
             'method' => $method,
-            'get_data' => $inputGet,
+            'get_data' => $inputGet->isEmpty() ? null : $inputGet,
             'post_data' => $inputPost,
             'request_body' => $requestBody
         );
