@@ -51,6 +51,9 @@ if($inputGet->equalsAction(PicoRequest::ACTION_EDIT) && $inputPost->getSave() ==
     $user->setIpEdit($_SERVER['REMOTE_ADDR']);
 
     $user->update();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$user->getUserId());
+
     header('Location: '.basename(($_SERVER['PHP_SELF'])));
 }
 

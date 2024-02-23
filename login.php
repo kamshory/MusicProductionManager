@@ -2,7 +2,7 @@
 
 use MagicObject\Request\PicoRequest;
 use MusicProductionManager\Data\Entity\User;
-
+use MusicProductionManager\Utility\UserUtil;
 
 require_once "inc/app.php";
 require_once "inc/session.php";
@@ -35,6 +35,7 @@ if($inputPost->getUsername() != null && $inputPost->getPassword() != null)
           }
         }
       }
+      UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Login to system");
       header("Location: ".$url);
       exit();
     }

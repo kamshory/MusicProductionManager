@@ -17,7 +17,6 @@ use MusicProductionManager\Data\Entity\Genre;
 
 use MusicProductionManager\Utility\SpecificationUtil;
 
-
 require_once "inc/auth-with-login-form.php";
 
 $inputGet = new PicoRequest(INPUT_GET);
