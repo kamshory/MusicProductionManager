@@ -7,8 +7,7 @@ require_once "inc/auth-with-login-form.php";
 
 $inputGet = new PicoRequest(INPUT_GET);
 
-if(isset($_POST['update']))
-{
+if (isset($_POST['update'])) {
     require_once __DIR__ . "/lib.ajax/midi-rescale.php";
 }
 
@@ -22,8 +21,7 @@ if (isset($song)) {
         $duration = $midi->getDuration();
         $ts = $midi->getTimeSignature();
         $timeSignature = 'n/a';
-        if(isset($ts) && is_array($ts) && !empty($ts))
-        {
+        if (isset($ts) && is_array($ts) && !empty($ts)) {
             $arr0 = $ts[0];
             if(!empty($arr0))
             {
@@ -40,39 +38,39 @@ if (isset($song)) {
                     <tbody>
                         <tr>
                             <td>Title</td>
-                            <td><?php echo $song->getTitle();?></td>
+                            <td><?php echo $song->getTitle(); ?></td>
                         </tr>
                         <tr>
                             <td>Time Sinature</td>
-                            <td><?php echo $timeSignature;?></td>
+                            <td><?php echo $timeSignature; ?></td>
                         </tr>
                         <tr>
                             <td>Time Base</td>
-                            <td><?php echo $timeBase;?></td>
+                            <td><?php echo $timeBase; ?></td>
                         </tr>
                         <tr>
                             <td>Tempo</td>
-                            <td><?php echo $tempo;?></td>
+                            <td><?php echo $tempo; ?></td>
                         </tr>
                         <tr>
                             <td>Duration</td>
-                            <td><?php echo $duration;?></td>
+                            <td><?php echo $duration; ?></td>
                         </tr>
                         <tr>
                             <td>Rescale</td>
                             <td><select name="scale" id="scale" class="form-control">
-                                <option value="1/1">1</option>
-                                <option value="1/2">1/2</option>
-                                <option value="1/4">1/4</option>
-                                <option value="1/8">1/8</option>
-                                <option value="2/1">2</option>
-                                <option value="4/4">4</option>
-                                <option value="8/1">8</option>
-                            </select></td>
+                                    <option value="1/8">1/8</option>
+                                    <option value="1/4">1/4</option>
+                                    <option value="1/2">1/2</option>
+                                    <option value="1/1" selected>1</option>
+                                    <option value="2/1">2</option>
+                                    <option value="4/4">4</option>
+                                    <option value="8/1">8</option>
+                                </select></td>
                         </tr>
                     </tbody>
                 </table>
-                <input type="hidden" name="song_id" value="<?php echo $song->getSongId();?>">
+                <input type="hidden" name="song_id" value="<?php echo $song->getSongId(); ?>">
                 <button type="submit" class="btn btn-success" name="update">Update</button>
             </form>
         <?php
