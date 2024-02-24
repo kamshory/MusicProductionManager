@@ -414,6 +414,11 @@ class PicoRequestTool extends stdClass
                 return $this->$var == $params[0] ? ' checked="checked"' : '';
             }
         }
+        else if (strncasecmp($method, "unset", 5) === 0) {
+            $var = lcfirst(substr($method, 5));
+            $this->removeValue($var, $params[0]);
+            return $this;
+        }
     }  
     private function applyFilter($value, $filterType)
     {

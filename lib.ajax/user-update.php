@@ -174,8 +174,13 @@ try {
     $user->setAdminEdit($currentLoggedInUser->getUserId());
 
     $user->save();
-
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$inputPost->getUserId());
+    
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    $inputPost->unsetPassword();
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$inputPost->getUserId(), $inputGet, $inputPost);
 
 } catch (Exception $e) {
     // do nothing

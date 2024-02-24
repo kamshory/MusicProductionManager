@@ -47,7 +47,11 @@ try
 
     $album->update();
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update album ".$album->getAlbumId());
+    if(!isset($inputGet))
+    {
+      $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update album ".$album->getAlbumId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();
     $restResponse->sendResponse($album, 'json', null, PicoHttpStatus::HTTP_OK);

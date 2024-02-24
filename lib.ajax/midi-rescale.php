@@ -69,7 +69,11 @@ if ($songId != null) {
     $rescaled = $midi->rescale($numerator, $denominator);
     $rescaled->saveMidFile($midiPath, 0777);
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Rescale MIDI ".$song->getSongId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Rescale MIDI ".$song->getSongId(), $inputGet, $inputPost);
     
     if(isAjax())
 	{

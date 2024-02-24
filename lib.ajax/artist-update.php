@@ -31,7 +31,11 @@ try
     
     $artist->update();
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update artist ".$artist->getArtistId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update artist ".$artist->getArtistId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();
     $response = ArtistDto::valueOf($artist);

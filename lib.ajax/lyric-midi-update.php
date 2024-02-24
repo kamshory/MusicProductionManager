@@ -26,8 +26,11 @@ if ($lyric != null && $songId != null) {
 	$midi->addLyric(json_decode($midiLyric));
 	$midi->saveMidFile($midiPath, 0777);
 
-
-	UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI lyric ".$song->getSongId());
+	if(!isset($inputGet))
+    {
+      	$inputGet = new PicoRequest(INPUT_GET);
+    }
+	UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI lyric ".$song->getSongId(), $inputGet, $inputPost);
 
 	echo json_encode(array('ok' => true));
 }

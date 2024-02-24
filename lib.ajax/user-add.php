@@ -103,7 +103,12 @@ try {
 
         $user->insert();
 
-        UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add user ".$user->getUserId());
+        if(!isset($inputGet))
+        {
+            $inputGet = new PicoRequest(INPUT_GET);
+        }
+        $inputPost->unsetPassword();
+        UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add user ".$user->getUserId(), $inputGet, $inputPost);
     } else {
         // do nothing
     }

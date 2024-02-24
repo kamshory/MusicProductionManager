@@ -55,7 +55,11 @@ try
 
     $song->save();
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add song ".$song->getSongId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add song ".$song->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();    
     $queryBuilder = new PicoDatabaseQueryBuilder($database);

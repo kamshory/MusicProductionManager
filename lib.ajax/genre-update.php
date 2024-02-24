@@ -34,7 +34,11 @@ try
     
     $genre->update();
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update genre ".$genre->getGenreId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update genre ".$genre->getGenreId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();
     $response = GenreDto::valueOf($genre);

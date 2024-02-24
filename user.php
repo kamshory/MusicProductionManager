@@ -52,7 +52,11 @@ if($inputGet->equalsAction(PicoRequest::ACTION_EDIT) && $inputPost->getSave() ==
 
     $user->update();
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$user->getUserId());
+    if(!isset($inputGet))
+    {
+      $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$user->getUserId(), $inputGet, $inputPost);
 
     header('Location: '.basename(($_SERVER['PHP_SELF'])));
 }

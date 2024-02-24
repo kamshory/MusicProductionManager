@@ -80,17 +80,8 @@ class UserUtil
      * @param bool $skipRequestBody
      * @return void
      */
-    public static function logUserActivity($database, $userId, $activity, $skipPostData = false, $skipRequestBody = false)
+    public static function logUserActivity($database, $userId, $activity, $inputGet, $inputPost, $skipRequestBody = false)
     {
-        $inputGet = new PicoRequest(INPUT_GET);
-        if($skipPostData)
-        {
-            $inputPost = null;
-        }
-        else
-        {
-            $inputPost = new PicoRequest(INPUT_POST);
-        }
         $requestBody = null;
         if(!$skipRequestBody && $inputPost->isEmpty())
         {

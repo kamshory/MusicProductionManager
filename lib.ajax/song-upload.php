@@ -110,7 +110,11 @@ try
         unlink($path);
     }
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Upload song ".$song->getSongId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Upload song ".$song->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();
     $restResponse->sendResponse($song, 'json', null, PicoHttpStatus::HTTP_OK);

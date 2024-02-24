@@ -39,7 +39,11 @@ try
         $genre->save();
     }  
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add genre ".$genre->getGenreId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add genre ".$genre->getGenreId(), $inputGet, $inputPost);
 }
 catch(Exception $e)
 {

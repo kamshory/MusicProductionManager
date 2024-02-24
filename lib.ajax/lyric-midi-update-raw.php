@@ -17,5 +17,9 @@ if ($lyricMidiRaw != null && $songId != null) {
     $song->setLyricMidiRaw($lyricMidiRaw);
     $songUpdate->update();
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update raw MIDI lyric ".$song->getSongId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update raw MIDI lyric ".$song->getSongId(), $inputGet, $inputPost);
 }

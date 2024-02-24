@@ -17,7 +17,11 @@ $song = new Song($inputPost, $database);
 try
 {
     $song->update();
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update lyric ".$song->getSongId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update lyric ".$song->getSongId(), $inputGet, $inputPost);
 }
 catch(Exception $e)
 {

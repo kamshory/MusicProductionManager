@@ -4,6 +4,7 @@ use MagicObject\Request\PicoRequest;
 use Midi\MidiInstrument;
 use Midi\MidiScale;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 
@@ -49,6 +50,12 @@ if ($songId != null) {
     $midi->updateMidInstrument(json_decode($newInstr));
     
     $midi->saveMidFile($midiPath, 0777);
+
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI instrument ".$song->getSongId(), $inputGet, $inputPost);
     
     if(isAjax())
 	{

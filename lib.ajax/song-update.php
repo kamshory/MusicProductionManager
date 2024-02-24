@@ -65,7 +65,11 @@ try
         updateAlbum($database, $albumId2);
     }
     
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update song ".$inputPost->getSongId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update song ".$inputPost->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();    
     $queryBuilder = new PicoDatabaseQueryBuilder($database);

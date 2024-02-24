@@ -55,7 +55,11 @@ if ($songId != null && $tn != null && $cn != null && $dn != 0) {
     $midi->transposeTrackChannel($trackNumber, $channelNumber, $dn);
     $midi->saveMidFile($midiPath, 0777);
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Transpose MIDI ".$song->getSongId());
+    if(!isset($inputGet))
+    {
+        $inputGet = new PicoRequest(INPUT_GET);
+    }
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Transpose MIDI ".$song->getSongId(), $inputGet, $inputPost);
     
     if(isAjax())
 	{
