@@ -31,36 +31,36 @@ class Midi //NOSONAR
 	 *
 	 * @var integer
 	 */
-	protected $timebase = 0;        
+	protected $timebase = 0;
 
 	/**
 	 * tempo as integer (0 for unknown)
 	 *
 	 * @var integer
 	 */
-	protected $tempo = 0;           
+	protected $tempo = 0;
 
 	/**
 	 * position of tempo event in track 0
 	 *
 	 * @var integer
 	 */
-	protected $tempoMsgNum = 0;     
+	protected $tempoMsgNum = 0;
 
 	/**
 	 * SMF type 0 or 1 (0=only a single track)
 	 *
 	 * @var integer
 	 */
-	protected $type = 0;            
+	protected $type = 0;
 
 	/**
 	 * wether to throw exception on error (only PHP5+)
 	 *
 	 * @var bool
 	 */
-	protected $throwFlag;     
-	
+	protected $throwFlag;
+
 	/**
 	 * Event
 	 *
@@ -102,7 +102,7 @@ class Midi //NOSONAR
 	 * @var integer
 	 */
 	protected $t = 0;
-	
+
 	/**
 	 * Time signature
 	 *
@@ -206,7 +206,7 @@ class Midi //NOSONAR
 		return $this->timebase;
 		## echo "".$this->timebase." ".__LINE__."\r\n";
 	}
-	
+
 	/**
 	 * Add new track, returns new track count
 	 *
@@ -382,6 +382,86 @@ class Midi //NOSONAR
 			}
 		}
 		$this->tracks[$tn] = $track;
+	}
+
+	/**
+	 * Transpose track $tn and channel $ch by $dn half tone steps
+	 *
+	 * @param integer $tn
+	 * @param integer $cn
+	 * @param integer $dn
+	 * @return void
+	 */
+	public function transposeTrackChannel($tn, $cn, $dn)
+	{
+		foreach ($this->tracks as $ti => $track) {
+			if ($this->isMatch($tn, $ti)) {
+				$mc = count($track);
+				for ($i = 0; $i < $mc; $i++) {
+					$msg = explode(' ', $track[$i]);
+					if ($this->isNote($msg[1])) {
+						$ch = $this->getChannel($msg[2]);
+						$n = $this->getNote($msg[3]);
+						if ($this->isMatch($cn, $ch)) {
+							// transpose if channel is match
+							$n = max(0, min(127, $n + $dn));
+						}
+						$msg[3] = "n=$n";
+						$track[$i] = join(' ', $msg);
+					}
+				}
+				$this->tracks[$tn] = $track;
+			}
+		}
+	}
+
+	/**
+	 * Parse channel from submessage
+	 *
+	 * @param string $msg
+	 * @return integer
+	 */
+	private function getChannel($msg)
+	{
+		eval("\$" . $msg . ';'); // $ch
+		$ch = isset($ch) ? $ch : 0;
+		return $ch;
+	}
+
+	/**
+	 * Check if event is note
+	 *
+	 * @param string $msg
+	 * @return bool
+	 */
+	private function isNote($msg)
+	{
+		return $msg == 'On' || $msg == 'Off';
+	}
+
+	/**
+	 * Parse note from submessage
+	 *
+	 * @param string $msg
+	 * @return integer
+	 */
+	private function getNote($msg)
+	{
+		eval("\$" . $msg . ';'); // $ch
+		$n = isset($n) ? $n : 0;
+		return $n;
+	}
+
+	/**
+	 * Match index
+	 *
+	 * @param integer $v1
+	 * @param integer $v2
+	 * @return boolean
+	 */
+	private function isMatch($v1, $v2)
+	{
+		return $v1 === null || $v1 === $v2;
 	}
 
 	/**
@@ -740,7 +820,7 @@ class Midi //NOSONAR
 	 *
 	 * @param integer $ttype
 	 * @return string
-	 */	
+	 */
 	public function getXml($ttype = 0) //NOSONAR
 	{ //0:absolute, 1:delta
 		$tracks = $this->tracks;
@@ -1393,7 +1473,7 @@ class Midi //NOSONAR
 	//---------------------------------------------------------------
 	private function _parseTrack($binStr, $tn) //NOSONAR
 	{
-		
+
 		$trackLen = strlen($binStr);
 		$p = 4;
 		$time = 0;
@@ -1547,15 +1627,15 @@ class Midi //NOSONAR
 									$t = pow(2, ord($binStr[$p + 4]));
 									$mc = ord($binStr[$p + 5]);
 									$c = ord($binStr[$p + 6]);
-									
-									
+
+
 									$timeSignature = "$z/$t $mc $c";
 									$this->timeSignature[] = array(
-										array("time"=>$time, "time_signature"=>$timeSignature)
-									); 
-									
+										array("time" => $time, "time_signature" => $timeSignature)
+									);
+
 									$track[] = "$time TimeSig $timeSignature";
-									
+
 									$p += 7;
 									break;
 								case 0x59: // KeySig
@@ -1976,7 +2056,7 @@ class Midi //NOSONAR
 	 * Get time signature
 	 *
 	 * @return  array
-	 */ 
+	 */
 	public function getTimeSignature()
 	{
 		return $this->timeSignature;
