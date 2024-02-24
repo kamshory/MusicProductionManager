@@ -89,6 +89,8 @@ class UserUtil
         }
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['REQUEST_URI'];
+        $timeCreate = date('Y-m-d H:i:s');
+        $ipCreate = $_SERVER['REMOTE_ADDR'];
         
         $data = array(
             'name' => $activity,
@@ -97,7 +99,9 @@ class UserUtil
             'method' => $method,
             'get_data' => $inputGet->isEmpty() ? null : $inputGet,
             'post_data' => $inputPost,
-            'request_body' => $requestBody
+            'request_body' => $requestBody,
+            'time_create' => $timeCreate,
+            'ip_create' => $ipCreate
         );
         $userActivity = new UserActivity($data, $database);
         $userActivity->insert();
