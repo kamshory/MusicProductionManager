@@ -83,6 +83,10 @@ As an example:
 
 A song is made with a tempo of 130 bpm but in fact, the song is only 65 bpm. The song has no problems when played in either mp3 or MIDI format. However, when creating musical notes or number notes from MIDi format, the musical note reader will have difficulty because the note is too high. **Music Production Manager** can fix this problem very easily by converting it to 1/2 scale. There is no change in the song when played with a MIDI player application even though the tempo is reduced by half.
 
+### Transpose MIDI
+
+Users can transpose notes from MIDI. Users can choose whether to apply transpose to all trucks, all channels, or only to certain buses and channels. However, **Music Production Manager** will skip channel 10 in the transpose process because that channel is designated as the channel for percussion instruments.
+
 ## MIDI Player
 
 **Music Production Manager** is equipped with a MIDI player that can be used when editing MIDI lyrics.
