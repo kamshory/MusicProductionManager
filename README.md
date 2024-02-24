@@ -211,3 +211,7 @@ On Windows, users can directly create environment variables either via the graph
 On Linux, users must create a configuration on the Apache server by creating a file with the .conf extension in the `/etc/httpd/conf.d` folder then restart Apache web server.
 
 User must create an user account.
+
+# Need Support
+
+Please support or YouTube channel https://www.youtube.com/@maliktamvan

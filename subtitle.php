@@ -20,7 +20,7 @@ require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";
 ?>
 <link rel="stylesheet" href="lib/lyric-editor.css">
-<script src="lib/script.js"></script>
+<script src="lib/subtitle-editor.js"></script>
 <script src="lib/ajax.js"></script>
 <link rel="stylesheet" href="lib/icon.css">
 <?php
@@ -39,6 +39,16 @@ $song->findOneBySongId($songId);
 <div class="song-tite">
     <h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle();?></h3>
 </div>
+
+<?php
+require_once __DIR__ . "/inc/menu-song.php";
+?>
+
+<style>
+    .player-controller .button-offset{
+        width: 40px;
+    }
+</style>
 <div class="srt-editor editor1">
     <div class="row">
         <div class="col col-7">
@@ -89,6 +99,8 @@ $song->findOneBySongId($songId);
                     <button class="btn btn-dark button-reset-master">Reset</button>
                     <button class="btn btn-dark button-save-master">Save</button>
                     <button class="btn btn-dark button-complete-master">OK</button>
+                    <button class="btn btn-dark button-offset button-sub">&lsaquo;</button>
+                    <button class="btn btn-dark button-offset button-add">&rsaquo;</button>
                 </div>
             </div>
         </div>
@@ -161,6 +173,7 @@ if($song != null)
 </script>
 <script>
     let srt;
+    let increment = 10;
     $(document).ready(function(evt)
     {      
         srt = new SrtGenerator('.editor1', rawData, path);
@@ -212,6 +225,19 @@ if($song != null)
             e.stopPropagation();
             resetLyric();
         });
+
+        document.querySelector('.button-sub').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            srt.moveLeft(increment);
+        });
+
+        document.querySelector('.button-add').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            srt.moveRight(increment);
+        });
+
 
         document.onkeydown = function(e) {
             if (e.ctrlKey && e.keyCode === 83) {

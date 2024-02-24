@@ -46,6 +46,9 @@ if (isset($song)) {
 		<link rel="stylesheet" type="text/css" href="assets/css/midi-lyric-editor.css" />
 
 		<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle(); ?></h3>
+		<?php
+require_once __DIR__ . "/inc/menu-song.php";
+?>
 
 		<script type="text/javascript">
 			var midiData = <?php echo json_encode($midi->getMidData());?>;
@@ -191,6 +194,7 @@ if (isset($song)) {
 						<input type="button" id="replace-lyric" value="Replace Lyric" class="btn btn-success">
 						<input type="button" id="save-raw" value="Save Raw" class="btn btn-success">
 						<input type="button" id="update-lyric" value="Update Lyric" class="btn btn-success">
+						<input type="button" class="btn btn-primary" value="Download MIDI" onclick="window.open('midi.php?action=download&song_id=<?php echo $song->getSongId();?>');">
 						<input type="hidden" name="song_id" id="song_id" value="<?php echo $song->getSongId();?>">
 					</div>
 				</div>

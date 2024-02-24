@@ -229,7 +229,7 @@ input[type="text"]:focus-visible {
 }
 
 .srt-list-wrapper {
-    height: calc(100vh - 415px);
+    height: calc(100vh - 450px);
     min-height: 200px;
     overflow-y: auto;
     position: relative;

@@ -23,7 +23,6 @@
                 <a href="index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="assets/images/logos/dark-logo.png" width="220" alt="">
                 </a>
-                <p class="text-center"><?php echo $cfg->getAppName();?></p>
                 <form>
                   <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Name</label>
