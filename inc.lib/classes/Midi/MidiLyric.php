@@ -7,6 +7,12 @@ use stdClass;
 class MidiLyric extends Midi
 {
 	protected $lyric = array();
+
+	/**
+	 * Get lyric
+	 *
+	 * @return stdClass
+	 */
 	public function getLyric()
 	{
 		$midi = $this;
@@ -20,7 +26,7 @@ class MidiLyric extends Midi
 		foreach ($midi->tracks as $i => $track) {
 			$lyric->lyric->tracks[$i] = array();
 			$k = 0;
-			foreach ($track as $j => $raw) {
+			foreach ($track as $raw) {
 				$arr = explode(' ', $raw, 3);
 				$type = $arr[1];
 				$data = $arr[2];
@@ -32,9 +38,8 @@ class MidiLyric extends Midi
 		}
 		foreach ($midi->tracks as $i => $track) {
 			$lyric->time->tracks[$i] = array();
-			$j = 0;
 			$k = 0;
-			foreach ($track as $j => $raw) {
+			foreach ($track as $raw) {
 				$arr = explode(' ', $raw, 3);
 				$time = $arr[0]; // NOSONAR
 				$type = $arr[1];
@@ -49,9 +54,15 @@ class MidiLyric extends Midi
 		$lyric->timebase = $this->getTimebase();
 		return $lyric;
 	}
+
+	/**
+	 * Get MIDI data
+	 *
+	 * @return stdClass
+	 */
 	public function getMidData()
 	{
-		$midi = new StdClass();
+		$midi = new stdClass();
 		$midi->tempo = $this->tempo;
 		$midi->timebase = $this->timebase;
 		$midi->tempoMsgNum = $this->tempoMsgNum;
@@ -61,7 +72,7 @@ class MidiLyric extends Midi
 
 		foreach ($this->tracks as $i => $track) {
 			$midi->tracks[$i] = array();
-			foreach ($track as $j => $raw) {
+			foreach ($track as $raw) {
 				if (stripos($raw, 'copyright') === false) {
 					$midi->tracks[$i][] = $raw;
 				}
