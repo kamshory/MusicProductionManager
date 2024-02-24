@@ -69,7 +69,7 @@ require_once __DIR__ . "/inc/menu-song.php";
                                 foreach($chList as $i=>$ch)
                                 {
                                     ?>
-                                    <option value="<?php echo $ch;?>"<?php echo $ch == $song->getMidiVocalChannel() ? ' selected' : '';?>>Channel <?php echo $ch;?></option>
+                                    <option value="<?php echo $ch;?>"<?php echo $ch == $song->getMidiVocalChannel() ? ' selected' : '';?><?php echo $ch == 10 ? ' disabled' : '';?>>Channel <?php echo $ch;?></option>
                                     <?php
                                 }
                                 ?>

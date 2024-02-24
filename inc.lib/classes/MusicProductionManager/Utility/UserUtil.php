@@ -95,13 +95,13 @@ class UserUtil
         $data = array(
             'name' => $activity,
             'path' => $path,
-            'user_id' => $userId,
+            'userId' => $userId,
             'method' => $method,
-            'get_data' => $inputGet->isEmpty() ? null : $inputGet,
-            'post_data' => $inputPost,
-            'request_body' => $requestBody,
-            'time_create' => $timeCreate,
-            'ip_create' => $ipCreate
+            'getData' => $inputGet->isEmpty() ? null : $inputGet,
+            'postData' => $inputPost,
+            'requestBody' => $requestBody,
+            'timeCreate' => $timeCreate,
+            'ipCreate' => $ipCreate
         );
         $userActivity = new UserActivity($data, $database);
         $userActivity->insert();
