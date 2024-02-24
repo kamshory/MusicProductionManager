@@ -177,6 +177,12 @@ class Song extends MagicObject
 	protected $instrument;
 	
 	/**
+	 * @Column(name="midi_vocal_channel", type="int", length=11, nullable=true)
+	 * @var integer
+	 */
+	protected $midiVocalChannel;
+	
+	/**
 	 * @Column(name="rating", type="int", length=11, nullable=true)
 	 * @var integer
 	 */
