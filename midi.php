@@ -84,6 +84,20 @@ else if($inputGet->equalsAction('rescale') && $inputGet->getSongId() != null)
   }
 }
 
+else if($inputGet->equalsAction('transpose') && $inputGet->getSongId() != null)
+{
+  try
+  {
+    $song = new EntitySong(null, $database);
+    $song->findOneBySongId($inputGet->getSongId());
+    require_once "midi-transpose.php";
+  }
+  catch(Exception $e)
+  {
+    // do nothing
+  }
+}
+
 else if($inputGet->equalsAction(PicoRequest::ACTION_DETAIL) && $inputGet->getSongId() != null)
 {
   try

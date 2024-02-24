@@ -111,6 +111,13 @@ class Midi //NOSONAR
 	protected $timeSignature = array();
 
 	/**
+	 * List of channel
+	 *
+	 * @var array
+	 */
+	protected $channelList = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -399,6 +406,7 @@ class Midi //NOSONAR
 				$mc = count($track);
 				for ($i = 0; $i < $mc; $i++) {
 					$msg = explode(' ', $track[$i]);
+
 					if ($this->isNote($msg[1])) {
 						$ch = $this->getChannel($msg[2]);
 						$n = $this->getNote($msg[3]);
@@ -410,8 +418,8 @@ class Midi //NOSONAR
 						$track[$i] = join(' ', $msg);
 					}
 				}
-				$this->tracks[$tn] = $track;
 			}
+			$this->tracks[$ti] = $track;
 		}
 	}
 
@@ -461,7 +469,7 @@ class Midi //NOSONAR
 	 */
 	private function isMatch($v1, $v2)
 	{
-		return $v1 === null || $v1 === $v2;
+		return $v1 === null || $v1 == $v2;
 	}
 
 	/**
@@ -1031,6 +1039,7 @@ class Midi //NOSONAR
 	 */
 	public function parseMid($song)
 	{
+		$this->channelList = array();
 		$this->timeSignature = array();
 		if (strpos($song, 'MThd') > 0) {
 			$song = substr($song, strpos($song, 'MThd')); //get rid of RMID header
@@ -1473,7 +1482,9 @@ class Midi //NOSONAR
 	//---------------------------------------------------------------
 	private function _parseTrack($binStr, $tn) //NOSONAR
 	{
-
+		if (!isset($this->channelList[$tn])) {
+			$this->channelList[$tn] = array();
+		}
 		$trackLen = strlen($binStr);
 		$p = 4;
 		$time = 0;
@@ -1501,6 +1512,10 @@ class Midi //NOSONAR
 					$last = 'On';
 					$track[] = "$time On ch=$chan n=$note v=$vel dt=$dt";
 					$p += 3;
+
+					if (!in_array($chan, $this->channelList[$tn])) {
+						$this->channelList[$tn][] = $chan;
+					}
 					break;
 				case 0x08: //Off
 					$chan = $low + 1;
@@ -1743,6 +1758,9 @@ class Midi //NOSONAR
 					} // switch ($byte)
 			} // switch ($high)
 		} // while
+
+		$this->channelList[$tn] = array_unique($this->channelList[$tn]);
+
 		return $track;
 	}
 
@@ -2060,5 +2078,15 @@ class Midi //NOSONAR
 	public function getTimeSignature()
 	{
 		return $this->timeSignature;
+	}
+
+	/**
+	 * Get list of channel
+	 *
+	 * @return  array
+	 */
+	public function getChannelList()
+	{
+		return $this->channelList;
 	}
 } // END OF CLASS

@@ -115,12 +115,18 @@ class MidiLyric extends Midi
 	//---------------------------------------------------------------
 	public function saveMidFile($mid_path, $chmod = false)
 	{
-		if (count($this->tracks) < 1) $this->_err('MIDI song has no tracks');
+		if (count($this->tracks) < 1) 
+		{
+			$this->_err('MIDI song has no tracks');
+		}
 		$SMF = fopen($mid_path, "wb"); // SMF
 		$data = $this->getMidWithLyric($this->lyric);
 		fwrite($SMF, $data);
 		fclose($SMF);
-		if ($chmod !== false) @chmod($mid_path, $chmod);
+		if ($chmod !== false) 
+		{
+			@chmod($mid_path, $chmod);
+		}
 	}
 	//---------------------------------------------------------------
 	// returns binary MIDI string
@@ -154,7 +160,10 @@ class MidiLyric extends Midi
 				// repetition, same event, same channel, omit first byte (smaller file size)
 				$str = $this->_getMsgStr($line);
 				$start = ord($str[0]);
-				if ($start >= 0x80 && $start <= 0xEF && $start == $last) $str = substr($str, 1);
+				if ($start >= 0x80 && $start <= 0xEF && $start == $last) 
+				{
+					$str = substr($str, 1);
+				}
 				$last = $start;
 				$midStr .= $str;
 			}
