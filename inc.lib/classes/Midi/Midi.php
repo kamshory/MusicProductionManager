@@ -410,7 +410,7 @@ class Midi //NOSONAR
 					if ($this->isNote($msg[1])) {
 						$ch = $this->getChannel($msg[2]);
 						$n = $this->getNote($msg[3]);
-						if ($this->isMatch($cn, $ch)) {
+						if ($this->isMatch($cn, $ch, true)) {
 							// transpose if channel is match
 							$n = max(0, min(127, $n + $dn));
 						}
@@ -465,11 +465,12 @@ class Midi //NOSONAR
 	 *
 	 * @param integer $v1
 	 * @param integer $v2
+	 * @param bool $ch
 	 * @return boolean
 	 */
-	private function isMatch($v1, $v2)
+	private function isMatch($v1, $v2, $ch = false)
 	{
-		return $v1 === null || $v1 == $v2;
+		return ($v1 === null || $v1 == $v2) && ($ch && $v2 != 10);
 	}
 
 	/**
