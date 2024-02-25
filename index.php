@@ -179,7 +179,6 @@ foreach($result as $uActivity)
 
 }
 ?>
-
           
         </ul>
       </div>
@@ -359,12 +358,12 @@ foreach($result as $song)
         <div class="d-flex align-items-center justify-content-between">
         <h6 class="fw-semibold fs-4 col-5"><?php echo $song->getTitle();?></h6>
         <div class="col-7 justify-content-end text-end">
-        <a href="#" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
+        <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
         <a href="#" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
-        <a href="read-file.php?type=mp3&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> MP3</a>
-        <a href="read-file.php?type=midi&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> MID</a>
-        <a href="read-file.php?type=xml&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> XML</a>
-        <a href="read-file.php?type=pdf&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> PDF</a>
+        <a href="read-file.php?type=mp3&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MP3</a>
+        <a href="read-file.php?type=midi&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MID</a>
+        <a href="read-file.php?type=xml&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> XML</a>
+        <a href="read-file.php?type=pdf&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> PDF</a>
         </div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
@@ -390,6 +389,9 @@ foreach($result as $song)
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit()));?></div>
           <div class="list-unstyled d-flex align-items-center mb-0 me-1">
+          <span class="ti ti-music"></span> &nbsp;
+          <span class="ti ti-microphone"></span> &nbsp;
+            <span class="ti ti-message"></span> &nbsp;
             <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() / 2;?>" data-song-id="<?php echo $song->getSongId();?>"></div>
           </div>
         </div>
