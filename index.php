@@ -1,7 +1,23 @@
 <?php
+
 use MagicObject\Database\PicoDatabaseQueryBuilder;
+use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPage;
+use MagicObject\Database\PicoPredicate;
+use MagicObject\Database\PicoSortable;
+use MagicObject\Database\PicoSpecification;
+use MagicObject\Pagination\PicoPagination;
+use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Data\Entity\EntitySong;
+use MusicProductionManager\Data\Entity\EntityUserActivity;
+use MusicProductionManager\Utility\SpecificationUtil;
+
 require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";
+
+
+$inputGet = new PicoRequest(INPUT_GET);
 ?>
 <script src="assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 <script src="assets/libs/simplebar/dist/simplebar.js"></script>
@@ -33,13 +49,13 @@ require_once "inc/header.php";
     <div class="row">
       <div class="col-lg-12">
         <!-- Yearly Breakup -->
-        
+
         <?php
-        
+
         $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
-        
+
         ?>
-        
+
         <div class="card overflow-hidden">
           <div class="card-body p-4">
             <h5 class="card-title mb-9 fw-semibold">Yearly Breakup</h5>
@@ -109,261 +125,283 @@ require_once "inc/header.php";
     <div class="card w-100">
       <div class="card-body p-4">
         <div class="mb-4">
-          <h5 class="card-title fw-semibold">Recent Transactions</h5>
+          <h5 class="card-title fw-semibold">Recent Activity</h5>
         </div>
         <ul class="timeline-widget mb-0 position-relative mb-n5">
+
+          <?php
+
+
+$orderMap = array(
+  'userId'=>'userId', 
+  'timeCreate'=>'timeCreate'
+);
+$defaultOrderBy = 'timeCreate';
+$defaultOrderType = 'desc';
+
+$spesification = new PicoSpecification();
+
+$sortable = new PicoSortable('timeCreate', 'desc');
+
+$pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
+
+$userActivityEntity = new EntityUserActivity(null, $database);
+$rowData = $userActivityEntity->findAll($spesification, $pagable, $sortable, true);
+
+$result = $rowData->getResult();
+
+$currentDay = date('Y-m-d');
+foreach($result as $uActivity)
+{
+
+  if(date('Y-m-d', strtotime($uActivity->getTimeCreate())) == $currentDay)
+  {
+    $dateFormat = 'H:i:s';
+  }
+  else
+  {
+    $dateFormat = 'M j<\s\u\p>S</\s\u\p> Y H:i:s';
+  }
+
+  ?>
           <li class="timeline-item d-flex position-relative overflow-hidden">
-            <div class="timeline-time text-dark flex-shrink-0 text-end">09:30</div>
-            <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-              <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
-              <span class="timeline-badge-border d-block flex-shrink-0"></span>
-            </div>
-            <div class="timeline-desc fs-3 text-dark mt-n1">Payment received from John Doe of $385.90</div>
-          </li>
-          <li class="timeline-item d-flex position-relative overflow-hidden">
-            <div class="timeline-time text-dark flex-shrink-0 text-end">10:00 am</div>
+            <div class="timeline-time text-dark flex-shrink-0 text-end"><?php echo date($dateFormat, strtotime($uActivity->getTimeCreate()));?></div>
             <div class="timeline-badge-wrap d-flex flex-column align-items-center">
               <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
               <span class="timeline-badge-border d-block flex-shrink-0"></span>
             </div>
-            <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
+            <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">
+              <div><?php echo $uActivity->getName();?> </div>
+              <div><?php echo $uActivity->hasValueUser() ? $uActivity->getUser()->getName() : '';?></div>
             </div>
           </li>
-          <li class="timeline-item d-flex position-relative overflow-hidden">
-            <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-            <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-              <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-              <span class="timeline-badge-border d-block flex-shrink-0"></span>
-            </div>
-            <div class="timeline-desc fs-3 text-dark mt-n1">Payment was made of $64.95 to Michael</div>
-          </li>
-          <li class="timeline-item d-flex position-relative overflow-hidden">
-            <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-            <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-              <span class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
-              <span class="timeline-badge-border d-block flex-shrink-0"></span>
-            </div>
-            <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-            </div>
-          </li>
-          <li class="timeline-item d-flex position-relative overflow-hidden">
-            <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-            <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-              <span class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
-              <span class="timeline-badge-border d-block flex-shrink-0"></span>
-            </div>
-            <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New arrival recorded
-            </div>
-          </li>
-          <li class="timeline-item d-flex position-relative overflow-hidden">
-            <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-            <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-              <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-            </div>
-            <div class="timeline-desc fs-3 text-dark mt-n1">Payment Done</div>
-          </li>
+<?php
+
+}
+?>
+
+          
         </ul>
       </div>
     </div>
   </div>
+
+
   <div class="col-lg-8 d-flex align-items-stretch">
     <div class="card w-100">
       <div class="card-body p-4">
-        <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+        <h5 class="card-title fw-semibold mb-4">Recent Album</h5>
         <div class="table-responsive">
-          <table class="table text-nowrap mb-0 align-middle">
+
+        <?php
+
+
+        $orderMap = array(
+          'userId'=>'userId', 
+          'timeCreate'=>'timeCreate'
+        );
+        $defaultOrderBy = 'sortOrder';
+        $defaultOrderType = 'desc';
+
+        $spesification = new PicoSpecification();
+
+        $spesification->add((new PicoPredicate())->equals('active', true));
+        $spesification->add((new PicoPredicate())->equals('asDraft', false));
+
+        $sortable = new PicoSortable('timeCreate', 'desc');
+
+        $pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
+
+        $albumEntity = new Album(null, $database);
+        $rowData = $albumEntity->findAll($spesification, $pagable, $sortable, true);
+
+        $result = $rowData->getResult();
+        if(!empty( $result))
+        {
+        ?>
+        <table class="table text-nowrap mb-0 align-middle">
             <thead class="text-dark fs-4">
               <tr>
-                <th class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">Id</h6>
+                <th class="border-bottom-0" width="32">
+                  <h6 class="fw-semibold mb-0">No</h6>
                 </th>
                 <th class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">Assigned</h6>
+                  <h6 class="fw-semibold mb-0">Album</h6>
                 </th>
-                <th class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">Name</h6>
+                <th class="border-bottom-0" width="100">
+                  <h6 class="fw-semibold mb-0">Song</h6>
                 </th>
-                <th class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">Priority</h6>
+                <th class="border-bottom-0"  width="120">
+                  <h6 class="fw-semibold mb-0">Duration</h6>
                 </th>
-                <th class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">Budget</h6>
+                <th class="border-bottom-0" width="180">
+                  <h6 class="fw-semibold mb-0">Release Date</h6>
                 </th>
               </tr>
             </thead>
             <tbody>
+              <?php
+        $no = 0;
+        foreach($result as $album)
+        {
+          $no++;
+          ?>
+
+          
               <tr>
                 <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">1</h6>
+                  <h6 class="fw-semibold mb-0"><?php echo $no;?></h6>
                 </td>
                 <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
-                  <span class="fw-normal">Web Designer</span>
+                  <h6 class="fw-semibold mb-1"><?php echo $album->getName();?></h6>
+                  <span class="fw-normal"><?php echo $album->getDescription();?></span>
                 </td>
                 <td class="border-bottom-0">
-                  <p class="mb-0 fw-normal">Elite Admin</p>
+                  <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getNumberOfSong();?></h6>
                 </td>
                 <td class="border-bottom-0">
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                  </div>
+                  <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getDuration();?></h6>
                 </td>
                 <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
+                  <p class="mb-0 fw-normal"><?php echo date('j F Y', strtotime($album->getReleaseDate()));?></p>
                 </td>
               </tr>
-              <tr>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">2</h6>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-1">Andrew McDownland</h6>
-                  <span class="fw-normal">Project Manager</span>
-                </td>
-                <td class="border-bottom-0">
-                  <p class="mb-0 fw-normal">Real Homes WP Theme</p>
-                </td>
-                <td class="border-bottom-0">
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
-                  </div>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0 fs-4">$24.5k</h6>
-                </td>
-              </tr>
-              <tr>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">3</h6>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-1">Christopher Jamil</h6>
-                  <span class="fw-normal">Project Manager</span>
-                </td>
-                <td class="border-bottom-0">
-                  <p class="mb-0 fw-normal">MedicalPro WP Theme</p>
-                </td>
-                <td class="border-bottom-0">
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-danger rounded-3 fw-semibold">High</span>
-                  </div>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0 fs-4">$12.8k</h6>
-                </td>
-              </tr>
-              <tr>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">4</h6>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
-                  <span class="fw-normal">Frontend Engineer</span>
-                </td>
-                <td class="border-bottom-0">
-                  <p class="mb-0 fw-normal">Hosting Press HTML</p>
-                </td>
-                <td class="border-bottom-0">
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-success rounded-3 fw-semibold">Critical</span>
-                  </div>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0 fs-4">$2.4k</h6>
-                </td>
-              </tr>
+              
+              <?php
+        }
+          ?>
             </tbody>
           </table>
+          <?php
+        }
+          ?>
         </div>
       </div>
     </div>
   </div>
 </div>
+<link rel="stylesheet" href="assets/rateyo/rateyo.css">
+<script src="assets/rateyo/rateyo.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.song-rating').each(function(e) {
+      let rate = parseFloat($(this).attr('data-rate'));
+      $(this).rateYo({
+        rating: rate,
+        starWidth: "16px"
+      });
+    });
+
+    $('.song-rating').rateYo().on('rateyo.set', function(e, data) {
+      $.ajax({
+        type:'POST',
+        url:'lib.ajax/song-set-rating.php',
+        data:{song_id: $(e.currentTarget).attr('data-song-id'), rating:data.rating},
+        success:function(e)
+        {
+
+        }
+      })
+    });
+
+  });
+</script>
+<style>
+  .btn-tn{
+    font-size: 0.7em;
+}
+</style>
 <div class="row">
+
+<?php
+
+$orderMap = array(
+  'title'=>'title', 
+  'score'=>'score',
+  'albumId'=>'albumId', 
+  'album'=>'albumId', 
+  'trackNumber'=>'trackNumber',
+  'genreId'=>'genreId', 
+  'genre'=>'genreId',
+  'artistVocalId'=>'artistVocalId',
+  'artistVocal'=>'artistVocalId',
+  'artistComposerId'=>'artistComposerId',
+  'artistComposer'=>'artistComposerId',
+  'duration'=>'duration',
+  'lyricComplete'=>'lyricComplete',
+  'vocal'=>'vocal',
+  'active'=>'active'
+);
+$defaultOrderBy = 'songId';
+$defaultOrderType = 'desc';
+$pagination = new PicoPagination($cfg->getResultPerPage());
+
+$spesification = SpecificationUtil::createSongSpecification($inputGet);
+
+
+$sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
+
+$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+
+$songEntity = new EntitySong(null, $database);
+$rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
+
+$result = $rowData->getResult();
+
+foreach($result as $song)
+{
+?>
+
   <div class="col-sm-6 col-xl-3">
     <div class="card overflow-hidden rounded-2">
-      <div class="position-relative">
-        <a href="javascript:void(0)"><img src="../assets/images/products/s4.jpg" class="card-img-top rounded-0" alt="..."></a>
-        <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>
-      </div>
       <div class="card-body pt-3 p-4">
-        <h6 class="fw-semibold fs-4">Boat Headphone</h6>
+        
         <div class="d-flex align-items-center justify-content-between">
-          <h6 class="fw-semibold fs-4 mb-0">$50 <span class="ms-2 fw-normal text-muted fs-3"><del>$65</del></span></h6>
-          <ul class="list-unstyled d-flex align-items-center mb-0">
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-          </ul>
+        <h6 class="fw-semibold fs-4 col-5"><?php echo $song->getTitle();?></h6>
+        <div class="col-7 justify-content-end text-end">
+        <a href="#" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
+        <a href="#" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
+        <a href="read-file.php?type=mp3&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> MP3</a>
+        <a href="read-file.php?type=midi&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> MID</a>
+        <a href="read-file.php?type=xml&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> XML</a>
+        <a href="read-file.php?type=pdf&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-download"></span> PDF</a>
+        </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Album</div>
+          <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : '';?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Genre</div>
+          <div class="col-8"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : '';?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Composer</div>
+          <div class="col-8"><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : '';?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Arranger</div>
+          <div class="col-8"><?php echo $song->hasValueArtistArranger() ? $song->getArtistArranger()->getName() : '';?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Vocalist</div>
+          <div class="col-8"><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : '';?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit()));?></div>
+          <div class="list-unstyled d-flex align-items-center mb-0 me-1">
+            <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() / 2;?>" data-song-id="<?php echo $song->getSongId();?>"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-sm-6 col-xl-3">
-    <div class="card overflow-hidden rounded-2">
-      <div class="position-relative">
-        <a href="javascript:void(0)"><img src="../assets/images/products/s5.jpg" class="card-img-top rounded-0" alt="..."></a>
-        <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>
-      </div>
-      <div class="card-body pt-3 p-4">
-        <h6 class="fw-semibold fs-4">MacBook Air Pro</h6>
-        <div class="d-flex align-items-center justify-content-between">
-          <h6 class="fw-semibold fs-4 mb-0">$650 <span class="ms-2 fw-normal text-muted fs-3"><del>$900</del></span></h6>
-          <ul class="list-unstyled d-flex align-items-center mb-0">
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-xl-3">
-    <div class="card overflow-hidden rounded-2">
-      <div class="position-relative">
-        <a href="javascript:void(0)"><img src="../assets/images/products/s7.jpg" class="card-img-top rounded-0" alt="..."></a>
-        <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>
-      </div>
-      <div class="card-body pt-3 p-4">
-        <h6 class="fw-semibold fs-4">Red Valvet Dress</h6>
-        <div class="d-flex align-items-center justify-content-between">
-          <h6 class="fw-semibold fs-4 mb-0">$150 <span class="ms-2 fw-normal text-muted fs-3"><del>$200</del></span></h6>
-          <ul class="list-unstyled d-flex align-items-center mb-0">
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-xl-3">
-    <div class="card overflow-hidden rounded-2">
-      <div class="position-relative">
-        <a href="javascript:void(0)"><img src="../assets/images/products/s11.jpg" class="card-img-top rounded-0" alt="..."></a>
-        <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>
-      </div>
-      <div class="card-body pt-3 p-4">
-        <h6 class="fw-semibold fs-4">Cute Soft Teddybear</h6>
-        <div class="d-flex align-items-center justify-content-between">
-          <h6 class="fw-semibold fs-4 mb-0">$285 <span class="ms-2 fw-normal text-muted fs-3"><del>$345</del></span></h6>
-          <ul class="list-unstyled d-flex align-items-center mb-0">
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-            <li><a class="" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+
+<?php
+}
+?>
+  
+ 
 </div>
 
 <?php

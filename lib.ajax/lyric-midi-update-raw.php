@@ -1,7 +1,6 @@
 <?php
 
 use MagicObject\Request\PicoRequest;
-use Midi\MidiLyric;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -15,7 +14,7 @@ if ($lyricMidiRaw != null && $songId != null) {
 	$song = new Song(null, $database);
 	$song->findOneBySongId($songId);
     $song->setLyricMidiRaw($lyricMidiRaw);
-    $songUpdate->update();
+    $song->update();
 
     if(!isset($inputGet))
     {

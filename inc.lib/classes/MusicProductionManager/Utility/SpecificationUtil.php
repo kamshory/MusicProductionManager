@@ -352,6 +352,4 @@ class SpecificationUtil
         
         return $spesification;
     }
-
-    
 }
