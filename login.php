@@ -35,7 +35,7 @@ if($inputPost->getUsername() != null && $inputPost->getPassword() != null)
           }
         }
       }
-      UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Login to system", null, null);
+      UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Login to system", null, null, true);
       header("Location: ".$url);
       exit();
     }

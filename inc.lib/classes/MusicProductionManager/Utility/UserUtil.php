@@ -76,14 +76,15 @@ class UserUtil
      * @param PicoDatabase $database
      * @param string $userId
      * @param string $activity
-     * @param bool $skipPostData
-     * @param bool $skipRequestBody
+     * @param PicoRequest $inputGet
+     * @param PicoRequest $inputPost
+     * @param boolean $skipRequestBody
      * @return void
      */
     public static function logUserActivity($database, $userId, $activity, $inputGet, $inputPost, $skipRequestBody = false)
     {
         $requestBody = null;
-        if(!$skipRequestBody && $inputPost->isEmpty())
+        if(!$skipRequestBody && ($inputPost == null || $inputPost->isEmpty()))
         {
             $requestBody = json_decode(file_get_contents("php://input"));
         }
@@ -97,7 +98,7 @@ class UserUtil
             'path' => $path,
             'userId' => $userId,
             'method' => $method,
-            'getData' => $inputGet->isEmpty() ? null : $inputGet,
+            'getData' => $inputGet == null || $inputGet->isEmpty() ? null : $inputGet,
             'postData' => $inputPost,
             'requestBody' => $requestBody,
             'timeCreate' => $timeCreate,
