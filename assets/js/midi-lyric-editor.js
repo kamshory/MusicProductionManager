@@ -294,7 +294,7 @@ function getLastEvent(lastNote, tone) {
 
 function generateLyricFromVocal() {
   let channel = parseInt($('#generate-dialog [name="channel"]').val());
-  let songId = parseInt($('#generate-dialog [name="song_id"]').val());
+  let songId = $('#generate-dialog [name="song_id"]').val();
 
   let note = {};
   let tone = 0;
@@ -350,7 +350,20 @@ function generateLyricFromVocal() {
     }
   }
   renderLyricEditor();
+  saveLyricSource(songId, channel);
   playerModal.hide();
+}
+
+function saveLyricSource(songId, channel)
+{
+  $.ajax({
+    type:'POST',
+    url:'lib.ajax/midi-update-lyric-channel.php',
+    data:{song_id:songId, channel:channel},
+    success: function(data){
+      
+    }
+  });
 }
 
 function generateLyric() {
