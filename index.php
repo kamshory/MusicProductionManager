@@ -201,9 +201,9 @@ foreach($result as $uActivity)
         $defaultOrderBy = 'sortOrder';
         $defaultOrderType = 'desc';
 
-        $spesification = new PicoSpecification();
-        $spesification->add((new PicoPredicate())->equals('active', true));
-        $spesification->add((new PicoPredicate())->equals('asDraft', false));
+        $spesification = (new PicoSpecification())
+          ->add((new PicoPredicate())->equals('active', true))
+          ->add((new PicoPredicate())->equals('asDraft', false));
 
         $sortable = new PicoSortable('timeCreate', 'desc');
 
@@ -243,7 +243,6 @@ foreach($result as $uActivity)
         {
           $no++;
           ?>
-
           
               <tr>
                 <td class="border-bottom-0">

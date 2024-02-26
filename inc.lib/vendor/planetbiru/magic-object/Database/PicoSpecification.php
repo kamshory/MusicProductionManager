@@ -25,18 +25,19 @@ class PicoSpecification
      * Add AND specification
      *
      * @param PicoSpecification|PicoPredicate|array $predicate
-     * @return void
+     * @return self
      */
     public function add($predicate)
     {
         $this->addAnd($predicate);
+        return $this;
     }
     
     /**
      * Add AND specification
      *
      * @param PicoSpecification|PicoPredicate|array $predicate
-     * @return void
+     * @return self
      */
     public function addAnd($predicate)
     {
@@ -48,13 +49,14 @@ class PicoSpecification
         {
             $this->addSubfilter($predicate, self::LOGIC_AND);      
         } 
+        return $this;
     }
 
     /**
      * Add OR specification
      *
      * @param PicoSpecification|PicoPredicate|array $predicate
-     * @return void
+     * @return self
      */
     public function addOr($predicate)
     {
@@ -66,6 +68,7 @@ class PicoSpecification
         {
             $this->addSubfilter($predicate, self::LOGIC_OR);      
         }  
+        return $this;
     }
 
     /**
@@ -73,7 +76,7 @@ class PicoSpecification
      *
      * @param PicoSpecification|PicoPredicate|array $predicate
      * @param string $logic
-     * @return void
+     * @return self
      */
     private function addFilter($predicate, $logic)
     {
@@ -92,6 +95,7 @@ class PicoSpecification
                 $this->specifications[count($this->specifications)] = $pred;
             }
         }
+        return $this;
     }
 
     /**
@@ -99,7 +103,7 @@ class PicoSpecification
      *
      * @param PicoSpecification|array $predicate
      * @param string $logic
-     * @return void
+     * @return self
      */
     private function addSubFilter($predicate, $logic)
     {
@@ -114,6 +118,7 @@ class PicoSpecification
             }
             $this->specifications[count($this->specifications)] = $specification;
         }
+        return $this;
     }
 
 
@@ -155,7 +160,6 @@ class PicoSpecification
     public function setParentFilterLogic($parentFilterLogic)
     {
         $this->parentFilterLogic = $parentFilterLogic;
-
         return $this;
     }
 }
