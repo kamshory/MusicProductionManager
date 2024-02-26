@@ -156,7 +156,7 @@ foreach($result as $uActivity)
 
   if(date('Y-m-d', strtotime($uActivity->getTimeCreate())) == $currentDay)
   {
-    $dateFormat = 'H:i:s';
+    $dateFormat = '\T\o\d\a\y H:i:s';
   }
   else
   {
@@ -194,7 +194,6 @@ foreach($result as $uActivity)
 
         <?php
 
-
         $orderMap = array(
           'userId'=>'userId', 
           'timeCreate'=>'timeCreate'
@@ -203,7 +202,6 @@ foreach($result as $uActivity)
         $defaultOrderType = 'desc';
 
         $spesification = new PicoSpecification();
-
         $spesification->add((new PicoPredicate())->equals('active', true));
         $spesification->add((new PicoPredicate())->equals('asDraft', false));
 
