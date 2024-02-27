@@ -286,12 +286,16 @@ $inputGet = new PicoRequest(INPUT_GET);
       $.ajax({
         type: 'POST',
         url: 'lib.ajax/song-set-rating.php',
+        dataType: 'json',
         data: {
           song_id: $(e.currentTarget).attr('data-song-id'),
           rating: data.rating
         },
-        success: function(e) {
-
+        success: function(data) {
+          $(this).rateYo({
+            rating: data.rating,
+            starWidth: "16px"
+          });
         }
       })
     });
@@ -398,9 +402,6 @@ $inputGet = new PicoRequest(INPUT_GET);
 
 </div>
 
-<div class="file-uploader">
-  <input id="song_file_uploader" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3,audio/midi,application/xml,application/pdf" multiple />
-</div>
 
 <?php
 require_once "inc/footer.php";
