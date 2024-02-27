@@ -50,22 +50,6 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="teleprompter.php" aria-expanded="false">
-                <span>
-                    <i class="ti ti-music"></i>
-                </span>
-                <span class="hide-menu">Teleprompter</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
-            <a class="sidebar-link" href="remote-control.php" aria-expanded="false">
-                <span>
-                    <i class="ti ti-music"></i>
-                </span>
-                <span class="hide-menu">Remote Controll</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
             <a class="sidebar-link" href="comment.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-file-description"></i>
