@@ -426,7 +426,7 @@ $inputGet = new PicoRequest(INPUT_GET);
               <span class="ti ti-music"></span> &nbsp;
               <span class="ti ti-microphone"></span> &nbsp;
               <span class="ti ti-message"></span> &nbsp;
-              <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() / 2; ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
+              <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating(); ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
             </div>
           </div>
         </div>
