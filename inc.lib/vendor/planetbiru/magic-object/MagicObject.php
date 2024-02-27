@@ -1193,6 +1193,61 @@ class MagicObject extends stdClass // NOSONAR
                 return $this->$var == $params[0] ? ' checked="checked"' : '';
             }
         }     
+        
+        else if (strncasecmp($method, "startsWith", 10) === 0) {
+            $var = lcfirst(substr($method, 13));
+            $value = $params[0];
+            $caseSensitive = $params[1];    
+            $haystack = $this->$var;
+            return $this->startsWith($haystack, $value, $caseSensitive);
+        }  
+        else if (strncasecmp($method, "endsWith", 8) === 0) {
+            $var = lcfirst(substr($method, 13));
+            $value = $params[0];
+            $caseSensitive = $params[1];    
+            $haystack = $this->$var;
+            return $this->endsWith($haystack, $value, $caseSensitive);
+        } 
+    }
+    
+    /**
+     * Check if string is starts with substring
+     *
+     * @param string $haystack
+     * @param string $value
+     * @param boolean $caseSensitive
+     * @return boolean
+     */
+    private function startsWith($haystack, $value, $caseSensitive = false)
+    {
+        if($caseSensitive)
+        {
+            return isset($haystack) && str_starts_with(strtolower($haystack), strtolower($value));
+        }
+        else
+        {
+            return isset($haystack) && str_starts_with($haystack, $value);
+        }
+    }
+    
+    /**
+     * Check if string is ends with substring
+     *
+     * @param string $haystack
+     * @param string $value
+     * @param boolean $caseSensitive
+     * @return boolean
+     */
+    private function endsWith($haystack, $value, $caseSensitive = false)
+    {
+        if($caseSensitive)
+        {
+            return isset($haystack) && str_ends_with(strtolower($haystack), strtolower($value));
+        }
+        else
+        {
+            return isset($haystack) && str_ends_with($haystack, $value);
+        }
     }
     
     /**

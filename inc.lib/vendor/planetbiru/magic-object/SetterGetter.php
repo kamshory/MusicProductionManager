@@ -159,7 +159,7 @@ class SetterGetter
      * @param string $params
      * @return mixed|null
      */
-    public function __call($method, $params)
+    public function __call($method, $params) //NOSONAR
     {
         if (strncasecmp($method, "is", 2) === 0) 
         {

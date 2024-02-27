@@ -406,11 +406,15 @@ $inputGet = new PicoRequest(INPUT_GET);
             <div class="col-8"><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : ''; ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Track</div>
+            <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->hasValueAlbum() ? "/".$song->getAlbum()->getNumberOfSong() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Duration</div>
             <div class="col-8"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>
+            <div class="col-5"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>
             <div class="list-unstyled d-flex align-items-center mb-0 me-1">
               <span class="ti ti-music"></span> &nbsp;
               <span class="ti ti-microphone"></span> &nbsp;
