@@ -2,6 +2,7 @@
 
 namespace MusicProductionManager\Utility;
 
+use MusicProductionManager\Data\Dto\SongFile;
 use MusicProductionManager\File\FileMp3;
 
 class SongFileUtil
@@ -118,5 +119,18 @@ class SongFileUtil
         $path = $targetDir . "/" . $songId . ".pdf";
         file_put_contents($path, $content);
         return $path;
+    }
+    
+    /**
+     * Create button
+     *
+     * @param SongFile $songFile
+     * @return string
+     */
+    public static function createDownloadButton($songFile, $type, $caption, $baseUrl, $target)
+    {
+        $songId = $songFile->getSongId();
+        $format = '<a href="%s?type=%s&song_id=%s" class="btn btn-sm btn-tn btn-success" target="%s"><span class="ti ti-download"></span> %s</a>';
+        return sprintf($format, $baseUrl, $type, $songId, $target, $caption);
     }
 }

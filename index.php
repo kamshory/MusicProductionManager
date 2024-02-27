@@ -9,9 +9,11 @@ use MagicObject\Database\PicoSpecification;
 use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoRequest;
 use MagicObject\Util\Dms;
+use MusicProductionManager\Data\Dto\SongFile;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\EntityUserActivity;
+use MusicProductionManager\Utility\SongFileUtil;
 use MusicProductionManager\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";
@@ -368,6 +370,8 @@ $inputGet = new PicoRequest(INPUT_GET);
   $result = $rowData->getResult();
 
   foreach ($result as $song) {
+    $songFile = new SongFile($song);
+    $button1 = SongFileUtil::createDownloadButton($songFile);
   ?>
 
     <div class="col-sm-6 col-xl-3">
