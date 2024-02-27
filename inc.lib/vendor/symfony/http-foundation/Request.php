@@ -1575,7 +1575,7 @@ class Request
      *
      * @see https://tools.ietf.org/html/rfc7231#section-4.2.1
      *
-     * @param bool $andCacheable Adds the additional condition that the method should be cacheable. True by default.
+     * @param boolean $andCacheable Adds the additional condition that the method should be cacheable. True by default.
      *
      * @return bool
      */
@@ -1641,7 +1641,7 @@ class Request
     /**
      * Returns the request body content.
      *
-     * @param bool $asResource If true, a resource will be returned
+     * @param boolean $asResource If true, a resource will be returned
      *
      * @return string|resource The request body content or a resource to read the body stream
      *

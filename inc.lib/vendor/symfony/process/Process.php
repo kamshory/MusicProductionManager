@@ -1015,7 +1015,7 @@ class Process implements \IteratorAggregate
     /**
      * Enables or disables the TTY mode.
      *
-     * @param bool $tty True to enabled and false to disable
+     * @param boolean $tty True to enabled and false to disable
      *
      * @return $this
      *
@@ -1056,7 +1056,7 @@ class Process implements \IteratorAggregate
     /**
      * Sets PTY mode.
      *
-     * @param bool $bool
+     * @param boolean $bool
      *
      * @return $this
      */
@@ -1227,7 +1227,7 @@ class Process implements \IteratorAggregate
     /**
      * Sets whether or not Windows compatibility is enabled.
      *
-     * @param bool $enhance
+     * @param boolean $enhance
      *
      * @return $this
      *
@@ -1263,7 +1263,7 @@ class Process implements \IteratorAggregate
      * determine the success of a process when PHP has been compiled with
      * the --enable-sigchild option
      *
-     * @param bool $enhance
+     * @param boolean $enhance
      *
      * @return $this
      *
@@ -1281,7 +1281,7 @@ class Process implements \IteratorAggregate
     /**
      * Sets whether environment variables will be inherited or not.
      *
-     * @param bool $inheritEnv
+     * @param boolean $inheritEnv
      *
      * @return $this
      */
@@ -1414,7 +1414,7 @@ class Process implements \IteratorAggregate
     /**
      * Updates the status of the process, reads pipes.
      *
-     * @param bool $blocking Whether to use a blocking read call
+     * @param boolean $blocking Whether to use a blocking read call
      */
     protected function updateStatus($blocking)
     {
@@ -1461,7 +1461,7 @@ class Process implements \IteratorAggregate
      * Reads pipes for the freshest output.
      *
      * @param string $caller   The name of the method that needs fresh outputs
-     * @param bool   $blocking Whether to use blocking calls or not
+     * @param boolean   $blocking Whether to use blocking calls or not
      *
      * @throws LogicException in case output has been disabled or process is not started
      */
@@ -1501,8 +1501,8 @@ class Process implements \IteratorAggregate
     /**
      * Reads pipes, executes callback.
      *
-     * @param bool $blocking Whether to use blocking calls or not
-     * @param bool $close    Whether to close file handles or not
+     * @param boolean $blocking Whether to use blocking calls or not
+     * @param boolean $close    Whether to close file handles or not
      */
     private function readPipes($blocking, $close)
     {
@@ -1573,7 +1573,7 @@ class Process implements \IteratorAggregate
      * Sends a POSIX signal to the process.
      *
      * @param int  $signal         A valid POSIX signal (see https://php.net/pcntl.constants)
-     * @param bool $throwException Whether to throw exception in case signal failed
+     * @param boolean $throwException Whether to throw exception in case signal failed
      *
      * @return bool True if the signal was sent successfully, false otherwise
      *

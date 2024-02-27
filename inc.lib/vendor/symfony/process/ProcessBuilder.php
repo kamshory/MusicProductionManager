@@ -117,7 +117,7 @@ class ProcessBuilder
     /**
      * Sets whether environment variables will be inherited or not.
      *
-     * @param bool $inheritEnv
+     * @param boolean $inheritEnv
      *
      * @return $this
      */

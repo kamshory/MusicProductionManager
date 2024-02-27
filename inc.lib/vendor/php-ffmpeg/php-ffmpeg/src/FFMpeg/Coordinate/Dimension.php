@@ -60,7 +60,7 @@ class Dimension
     /**
      * Returns the ratio.
      *
-     * @param bool $forceStandards Whether or not force the use of standards ratios;
+     * @param boolean $forceStandards Whether or not force the use of standards ratios;
      *
      * @return AspectRatio
      */

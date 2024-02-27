@@ -53,7 +53,7 @@ class FlashPolicy implements MessageComponentInterface {
      * is allowed to connect to. A range of ports is specified through a dash (-) between two port numbers.
      * Ranges can be used with individual ports when separated with a comma. A single wildcard (*) can
      * be used to allow all ports.
-     * @param bool $secure
+     * @param boolean $secure
      * @throws \UnexpectedValueException
      * @return FlashPolicy
      */

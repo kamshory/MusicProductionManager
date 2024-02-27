@@ -619,7 +619,7 @@ class Response
     /**
      * Marks the response as "immutable".
      *
-     * @param bool $immutable enables or disables the immutable directive
+     * @param boolean $immutable enables or disables the immutable directive
      *
      * @return $this
      *
@@ -942,7 +942,7 @@ class Response
      * Sets the ETag value.
      *
      * @param string|null $etag The ETag unique identifier or null to remove the header
-     * @param bool        $weak Whether you want a weak ETag or not
+     * @param boolean        $weak Whether you want a weak ETag or not
      *
      * @return $this
      *
@@ -1083,7 +1083,7 @@ class Response
      * Sets the Vary header.
      *
      * @param string|array $headers
-     * @param bool         $replace Whether to replace the actual value or not (true by default)
+     * @param boolean         $replace Whether to replace the actual value or not (true by default)
      *
      * @return $this
      *
@@ -1274,7 +1274,7 @@ class Response
      * Resulting level can be greater than target level if a non-removable buffer has been encountered.
      *
      * @param int  $targetLevel The target output buffering level
-     * @param bool $flush       Whether to flush or clean the buffers
+     * @param boolean $flush       Whether to flush or clean the buffers
      *
      * @final since version 3.3
      */

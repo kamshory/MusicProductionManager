@@ -309,7 +309,7 @@ class Inline
      * @param int      $flags
      * @param string[] $delimiters
      * @param int      &$i
-     * @param bool     $evaluate
+     * @param boolean     $evaluate
      * @param array    $references
      *
      * @return string

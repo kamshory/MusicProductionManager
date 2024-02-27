@@ -41,7 +41,7 @@ class Cookie
      * Creates cookie from raw header string.
      *
      * @param string $cookie
-     * @param bool   $decode
+     * @param boolean   $decode
      *
      * @return static
      */
@@ -92,9 +92,9 @@ class Cookie
      * @param int|string|\DateTimeInterface $expire   The time the cookie expires
      * @param string                        $path     The path on the server in which the cookie will be available on
      * @param string|null                   $domain   The domain that the cookie is available to
-     * @param bool                          $secure   Whether the cookie should only be transmitted over a secure HTTPS connection from the client
-     * @param bool                          $httpOnly Whether the cookie will be made accessible only through the HTTP protocol
-     * @param bool                          $raw      Whether the cookie value should be sent with no url encoding
+     * @param boolean                          $secure   Whether the cookie should only be transmitted over a secure HTTPS connection from the client
+     * @param boolean                          $httpOnly Whether the cookie will be made accessible only through the HTTP protocol
+     * @param boolean                          $raw      Whether the cookie value should be sent with no url encoding
      * @param string|null                   $sameSite Whether the cookie will be available for cross-site requests
      *
      * @throws \InvalidArgumentException

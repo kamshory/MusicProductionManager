@@ -177,7 +177,7 @@ class ClassLoader
      *
      * @param string          $prefix  The prefix
      * @param string[]|string $paths   The PSR-0 root directories
-     * @param bool            $prepend Whether to prepend the directories
+     * @param boolean            $prepend Whether to prepend the directories
      *
      * @return void
      */
@@ -224,7 +224,7 @@ class ClassLoader
      *
      * @param string          $prefix  The prefix/namespace, with trailing '\\'
      * @param string[]|string $paths   The PSR-4 base directories
-     * @param bool            $prepend Whether to prepend the directories
+     * @param boolean            $prepend Whether to prepend the directories
      *
      * @throws \InvalidArgumentException
      *
@@ -314,7 +314,7 @@ class ClassLoader
     /**
      * Turns on searching the include path for class files.
      *
-     * @param bool $useIncludePath
+     * @param boolean $useIncludePath
      *
      * @return void
      */
@@ -338,7 +338,7 @@ class ClassLoader
      * Turns off searching the prefix and fallback directories for classes
      * that have not been registered with the class map.
      *
-     * @param bool $classMapAuthoritative
+     * @param boolean $classMapAuthoritative
      *
      * @return void
      */
@@ -382,7 +382,7 @@ class ClassLoader
     /**
      * Registers this instance as an autoloader.
      *
-     * @param bool $prepend Whether to prepend the autoloader or not
+     * @param boolean $prepend Whether to prepend the autoloader or not
      *
      * @return void
      */

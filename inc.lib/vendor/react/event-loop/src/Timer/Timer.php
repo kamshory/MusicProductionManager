@@ -25,7 +25,7 @@ final class Timer implements TimerInterface
      *
      * @param float         $interval The interval after which this timer will execute, in seconds
      * @param callable      $callback The callback that will be executed when this timer elapses
-     * @param bool          $periodic Whether the time is periodic
+     * @param boolean          $periodic Whether the time is periodic
      */
     public function __construct($interval, $callback, $periodic = false)
     {

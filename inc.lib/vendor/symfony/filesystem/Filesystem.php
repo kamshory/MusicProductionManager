@@ -32,7 +32,7 @@ class Filesystem
      *
      * @param string $originFile          The original filename
      * @param string $targetFile          The target filename
-     * @param bool   $overwriteNewerFiles If true, target files newer than origin files are overwritten
+     * @param boolean   $overwriteNewerFiles If true, target files newer than origin files are overwritten
      *
      * @throws FileNotFoundException When originFile doesn't exist
      * @throws IOException           When copy fails
@@ -191,7 +191,7 @@ class Filesystem
      * @param string|iterable $files     A filename, an array of files, or a \Traversable instance to change mode
      * @param int             $mode      The new mode (octal)
      * @param int             $umask     The mode mask (octal)
-     * @param bool            $recursive Whether change the mod recursively or not
+     * @param boolean            $recursive Whether change the mod recursively or not
      *
      * @throws IOException When the change fails
      */
@@ -212,7 +212,7 @@ class Filesystem
      *
      * @param string|iterable $files     A filename, an array of files, or a \Traversable instance to change owner
      * @param string|int      $user      A user name or number
-     * @param bool            $recursive Whether change the owner recursively or not
+     * @param boolean            $recursive Whether change the owner recursively or not
      *
      * @throws IOException When the change fails
      */
@@ -239,7 +239,7 @@ class Filesystem
      *
      * @param string|iterable $files     A filename, an array of files, or a \Traversable instance to change group
      * @param string|int      $group     A group name or number
-     * @param bool            $recursive Whether change the group recursively or not
+     * @param boolean            $recursive Whether change the group recursively or not
      *
      * @throws IOException When the change fails
      */
@@ -266,7 +266,7 @@ class Filesystem
      *
      * @param string $origin    The origin filename or directory
      * @param string $target    The new filename or directory
-     * @param bool   $overwrite Whether to overwrite the target if it already exists
+     * @param boolean   $overwrite Whether to overwrite the target if it already exists
      *
      * @throws IOException When target file or directory already exists
      * @throws IOException When origin cannot be renamed
@@ -315,7 +315,7 @@ class Filesystem
      *
      * @param string $originDir     The origin directory path
      * @param string $targetDir     The symbolic link name
-     * @param bool   $copyOnWindows Whether to copy files if on Windows
+     * @param boolean   $copyOnWindows Whether to copy files if on Windows
      *
      * @throws IOException When symlink fails
      */
@@ -406,7 +406,7 @@ class Filesystem
      *      - if $path exists, returns its absolute fully resolved final version
      *
      * @param string $path         A filesystem path
-     * @param bool   $canonicalize Whether or not to return a canonicalized path
+     * @param boolean   $canonicalize Whether or not to return a canonicalized path
      *
      * @return string|null
      */

@@ -465,7 +465,7 @@ class Midi //NOSONAR
 	 *
 	 * @param integer $v1
 	 * @param integer $v2
-	 * @param bool $ch
+	 * @param boolean $ch
 	 * @return boolean
 	 */
 	private function isMatch($v1, $v2, $ch = false)

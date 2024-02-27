@@ -63,7 +63,7 @@ function downloadPerSong($inputGet, $song)
  * @param ZipArchive $zip
  * @param string $path
  * @param EntitySong $song
- * @param bool $perAlbum
+ * @param boolean $perAlbum
  * @return void
  */
 function downloadSongFiles($zip, $path, $song, $perAlbum = false)
@@ -97,7 +97,7 @@ function downloadSongFiles($zip, $path, $song, $perAlbum = false)
  *
  * @param ZipArchive $zip
  * @param EntitySong $song
- * @param bool $perAlbum
+ * @param boolean $perAlbum
  * @return ZipArchive
  */
 function addFileMp3($zip, $song, $perAlbum)
@@ -117,7 +117,7 @@ function addFileMp3($zip, $song, $perAlbum)
  *
  * @param ZipArchive $zip
  * @param EntitySong $song
- * @param bool $perAlbum
+ * @param boolean $perAlbum
  * @return ZipArchive
  */
 function addFileMidi($zip, $song, $perAlbum)
@@ -140,7 +140,7 @@ function addFileMidi($zip, $song, $perAlbum)
  *
  * @param ZipArchive $zip
  * @param EntitySong $song
- * @param bool $perAlbum
+ * @param boolean $perAlbum
  * @return ZipArchive
  */
 function addFilePdf($zip, $song, $perAlbum)
@@ -160,7 +160,7 @@ function addFilePdf($zip, $song, $perAlbum)
  *
  * @param ZipArchive $zip
  * @param EntitySong $song
- * @param bool $perAlbum
+ * @param boolean $perAlbum
  * @return ZipArchive
  */
 function addFileXml($zip, $song, $perAlbum)

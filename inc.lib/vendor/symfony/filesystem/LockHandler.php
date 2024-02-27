@@ -62,7 +62,7 @@ class LockHandler
     /**
      * Lock the resource.
      *
-     * @param bool $blocking Wait until the lock is released
+     * @param boolean $blocking Wait until the lock is released
      *
      * @return bool Returns true if the lock was acquired, false otherwise
      *

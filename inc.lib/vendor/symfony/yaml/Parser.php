@@ -558,7 +558,7 @@ class Parser
      * Returns the next embed block of YAML.
      *
      * @param int  $indentation The indent level at which the block is to be read, or null for default
-     * @param bool $inSequence  True if the enclosing data structure is a sequence
+     * @param boolean $inSequence  True if the enclosing data structure is a sequence
      *
      * @return string A YAML string
      *

@@ -364,7 +364,7 @@ class MessageBuffer {
 
     /**
      * @param string|null $payload
-     * @param bool|null   $final
+     * @param boolean|null   $final
      * @param int|null    $opcode
      * @return \Ratchet\RFC6455\Messaging\FrameInterface
      */

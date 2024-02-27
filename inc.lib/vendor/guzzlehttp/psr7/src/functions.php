@@ -225,7 +225,7 @@ function copy_to_stream(StreamInterface $source, StreamInterface $dest, $maxLen 
  *
  * @param StreamInterface $stream    Stream to calculate the hash for
  * @param string          $algo      Hash algorithm (e.g. md5, crc32, etc)
- * @param bool            $rawOutput Whether or not to use raw output
+ * @param boolean            $rawOutput Whether or not to use raw output
  *
  * @return string Returns the hash of the stream
  *
