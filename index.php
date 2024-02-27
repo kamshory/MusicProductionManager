@@ -132,54 +132,50 @@ $inputGet = new PicoRequest(INPUT_GET);
           <?php
 
 
-$orderMap = array(
-  'userId'=>'userId', 
-  'timeCreate'=>'timeCreate'
-);
-$defaultOrderBy = 'timeCreate';
-$defaultOrderType = 'desc';
+          $orderMap = array(
+            'userId' => 'userId',
+            'timeCreate' => 'timeCreate'
+          );
+          $defaultOrderBy = 'timeCreate';
+          $defaultOrderType = 'desc';
 
-$spesification = new PicoSpecification();
+          $spesification = new PicoSpecification();
 
-$sortable = new PicoSortable('timeCreate', 'desc');
+          $sortable = new PicoSortable('timeCreate', 'desc');
 
-$pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
+          $pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
 
-$userActivityEntity = new EntityUserActivity(null, $database);
-$rowData = $userActivityEntity->findAll($spesification, $pagable, $sortable, true);
+          $userActivityEntity = new EntityUserActivity(null, $database);
+          $rowData = $userActivityEntity->findAll($spesification, $pagable, $sortable, true);
 
-$result = $rowData->getResult();
+          $result = $rowData->getResult();
 
-$currentDay = date('Y-m-d');
-foreach($result as $uActivity)
-{
+          $currentDay = date('Y-m-d');
+          foreach ($result as $uActivity) {
 
-  if(date('Y-m-d', strtotime($uActivity->getTimeCreate())) == $currentDay)
-  {
-    $dateFormat = '\T\o\d\a\y H:i:s';
-  }
-  else
-  {
-    $dateFormat = 'M j<\s\u\p>S</\s\u\p> Y H:i:s';
-  }
+            if (date('Y-m-d', strtotime($uActivity->getTimeCreate())) == $currentDay) {
+              $dateFormat = '\T\o\d\a\y H:i:s';
+            } else {
+              $dateFormat = 'M j<\s\u\p>S</\s\u\p> Y H:i:s';
+            }
 
-  ?>
-          <li class="timeline-item d-flex position-relative overflow-hidden">
-            <div class="timeline-time text-dark flex-shrink-0 text-end"><?php echo date($dateFormat, strtotime($uActivity->getTimeCreate()));?></div>
-            <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-              <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
-              <span class="timeline-badge-border d-block flex-shrink-0"></span>
-            </div>
-            <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">
-              <div><?php echo $uActivity->getName();?> </div>
-              <div><?php echo $uActivity->hasValueUser() ? $uActivity->getUser()->getName() : '';?></div>
-            </div>
-          </li>
-<?php
+          ?>
+            <li class="timeline-item d-flex position-relative overflow-hidden">
+              <div class="timeline-time text-dark flex-shrink-0 text-end"><?php echo date($dateFormat, strtotime($uActivity->getTimeCreate())); ?></div>
+              <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
+                <span class="timeline-badge-border d-block flex-shrink-0"></span>
+              </div>
+              <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">
+                <div><?php echo $uActivity->getName(); ?> </div>
+                <div><?php echo $uActivity->hasValueUser() ? $uActivity->getUser()->getName() : ''; ?></div>
+              </div>
+            </li>
+          <?php
 
-}
-?>
-          
+          }
+          ?>
+
         </ul>
       </div>
     </div>
@@ -192,84 +188,82 @@ foreach($result as $uActivity)
         <h5 class="card-title fw-semibold mb-4">Recent Album</h5>
         <div class="table-responsive">
 
-        <?php
-
-        $orderMap = array(
-          'userId'=>'userId', 
-          'timeCreate'=>'timeCreate'
-        );
-        $defaultOrderBy = 'sortOrder';
-        $defaultOrderType = 'desc';
-
-        $spesification = (new PicoSpecification())
-          ->add((new PicoPredicate())->equals('active', true))
-          ->add((new PicoPredicate())->equals('asDraft', false));
-
-        $sortable = new PicoSortable('timeCreate', 'desc');
-
-        $pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
-
-        $albumEntity = new Album(null, $database);
-        $rowData = $albumEntity->findAll($spesification, $pagable, $sortable, true);
-
-        $result = $rowData->getResult();
-        if(!empty( $result))
-        {
-        ?>
-        <table class="table text-nowrap mb-0 align-middle">
-            <thead class="text-dark fs-4">
-              <tr>
-                <th class="border-bottom-0" width="32">
-                  <h6 class="fw-semibold mb-0">No</h6>
-                </th>
-                <th class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0">Album</h6>
-                </th>
-                <th class="border-bottom-0" width="100">
-                  <h6 class="fw-semibold mb-0">Song</h6>
-                </th>
-                <th class="border-bottom-0"  width="120">
-                  <h6 class="fw-semibold mb-0">Duration</h6>
-                </th>
-                <th class="border-bottom-0" width="180">
-                  <h6 class="fw-semibold mb-0">Release Date</h6>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-        $no = 0;
-        foreach($result as $album)
-        {
-          $no++;
-          ?>
-          
-              <tr>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-0"><?php echo $no;?></h6>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-semibold mb-1"><?php echo $album->getName();?></h6>
-                  <span class="fw-normal"><?php echo $album->getDescription();?></span>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getNumberOfSong();?></h6>
-                </td>
-                <td class="border-bottom-0">
-                  <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getDuration();?></h6>
-                </td>
-                <td class="border-bottom-0">
-                  <p class="mb-0 fw-normal"><?php echo date('j F Y', strtotime($album->getReleaseDate()));?></p>
-                </td>
-              </tr>
-              
-              <?php
-        }
-          ?>
-            </tbody>
-          </table>
           <?php
-        }
+
+          $orderMap = array(
+            'userId' => 'userId',
+            'timeCreate' => 'timeCreate'
+          );
+          $defaultOrderBy = 'sortOrder';
+          $defaultOrderType = 'desc';
+
+          $spesification = (new PicoSpecification())
+            ->add((new PicoPredicate())->equals('active', true))
+            ->add((new PicoPredicate())->equals('asDraft', false));
+
+          $sortable = new PicoSortable('timeCreate', 'desc');
+
+          $pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
+
+          $albumEntity = new Album(null, $database);
+          $rowData = $albumEntity->findAll($spesification, $pagable, $sortable, true);
+
+          $result = $rowData->getResult();
+          if (!empty($result)) {
+          ?>
+            <table class="table text-nowrap mb-0 align-middle">
+              <thead class="text-dark fs-4">
+                <tr>
+                  <th class="border-bottom-0" width="32">
+                    <h6 class="fw-semibold mb-0">No</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Album</h6>
+                  </th>
+                  <th class="border-bottom-0" width="100">
+                    <h6 class="fw-semibold mb-0">Song</h6>
+                  </th>
+                  <th class="border-bottom-0" width="120">
+                    <h6 class="fw-semibold mb-0">Duration</h6>
+                  </th>
+                  <th class="border-bottom-0" width="180">
+                    <h6 class="fw-semibold mb-0">Release Date</h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $no = 0;
+                foreach ($result as $album) {
+                  $no++;
+                ?>
+
+                  <tr>
+                    <td class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0"><?php echo $no; ?></h6>
+                    </td>
+                    <td class="border-bottom-0">
+                      <h6 class="fw-semibold mb-1"><?php echo $album->getName(); ?></h6>
+                      <span class="fw-normal"><?php echo $album->getDescription(); ?></span>
+                    </td>
+                    <td class="border-bottom-0">
+                      <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getNumberOfSong(); ?></h6>
+                    </td>
+                    <td class="border-bottom-0">
+                      <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getDuration(); ?></h6>
+                    </td>
+                    <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal"><?php echo date('j F Y', strtotime($album->getReleaseDate())); ?></p>
+                    </td>
+                  </tr>
+
+                <?php
+                }
+                ?>
+              </tbody>
+            </table>
+          <?php
+          }
           ?>
         </div>
       </div>
@@ -290,11 +284,13 @@ foreach($result as $uActivity)
 
     $('.song-rating').rateYo().on('rateyo.set', function(e, data) {
       $.ajax({
-        type:'POST',
-        url:'lib.ajax/song-set-rating.php',
-        data:{song_id: $(e.currentTarget).attr('data-song-id'), rating:data.rating},
-        success:function(e)
-        {
+        type: 'POST',
+        url: 'lib.ajax/song-set-rating.php',
+        data: {
+          song_id: $(e.currentTarget).attr('data-song-id'),
+          rating: data.rating
+        },
+        success: function(e) {
 
         }
       })
@@ -303,104 +299,271 @@ foreach($result as $uActivity)
   });
 </script>
 <style>
-  .btn-tn{
+  .btn-tn {
     font-size: 0.7em;
-}
+  }
 </style>
 <div class="row">
 
-<?php
+  <?php
 
-$orderMap = array(
-  'title'=>'title', 
-  'score'=>'score',
-  'albumId'=>'albumId', 
-  'album'=>'albumId', 
-  'trackNumber'=>'trackNumber',
-  'genreId'=>'genreId', 
-  'genre'=>'genreId',
-  'artistVocalId'=>'artistVocalId',
-  'artistVocal'=>'artistVocalId',
-  'artistComposerId'=>'artistComposerId',
-  'artistComposer'=>'artistComposerId',
-  'duration'=>'duration',
-  'lyricComplete'=>'lyricComplete',
-  'vocal'=>'vocal',
-  'active'=>'active'
-);
-$defaultOrderBy = 'songId';
-$defaultOrderType = 'desc';
-$pagination = new PicoPagination($cfg->getResultPerPage());
+  $orderMap = array(
+    'title' => 'title',
+    'score' => 'score',
+    'albumId' => 'albumId',
+    'album' => 'albumId',
+    'trackNumber' => 'trackNumber',
+    'genreId' => 'genreId',
+    'genre' => 'genreId',
+    'artistVocalId' => 'artistVocalId',
+    'artistVocal' => 'artistVocalId',
+    'artistComposerId' => 'artistComposerId',
+    'artistComposer' => 'artistComposerId',
+    'duration' => 'duration',
+    'lyricComplete' => 'lyricComplete',
+    'vocal' => 'vocal',
+    'active' => 'active'
+  );
+  $defaultOrderBy = 'songId';
+  $defaultOrderType = 'desc';
+  $pagination = new PicoPagination($cfg->getResultPerPage());
 
-$spesification = SpecificationUtil::createSongSpecification($inputGet);
+  $spesification = SpecificationUtil::createSongSpecification($inputGet);
 
 
-$sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
+  $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+  $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
-$songEntity = new EntitySong(null, $database);
-$rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
+  $songEntity = new EntitySong(null, $database);
+  $rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
 
-$result = $rowData->getResult();
+  $result = $rowData->getResult();
 
-foreach($result as $song)
-{
-?>
+  foreach ($result as $song) {
+  ?>
 
-  <div class="col-sm-6 col-xl-3">
-    <div class="card overflow-hidden rounded-2">
-      <div class="card-body pt-3 p-4">
-        
-        <div class="d-flex align-items-center justify-content-between">
-        <h6 class="fw-semibold fs-4 col-5"><?php echo $song->getTitle();?></h6>
-        <div class="col-7 justify-content-end text-end">
-        <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
-        <a href="#" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
-        <a href="read-file.php?type=mp3&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MP3</a>
-        <a href="read-file.php?type=midi&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MID</a>
-        <a href="read-file.php?type=xml&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> XML</a>
-        <a href="read-file.php?type=pdf&song_id=<?php echo $song->getSongId();?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> PDF</a>
-        </div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="col-4">Album</div>
-          <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : '';?></div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="col-4">Genre</div>
-          <div class="col-8"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : '';?></div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="col-4">Composer</div>
-          <div class="col-8"><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : '';?></div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="col-4">Arranger</div>
-          <div class="col-8"><?php echo $song->hasValueArtistArranger() ? $song->getArtistArranger()->getName() : '';?></div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="col-4">Vocalist</div>
-          <div class="col-8"><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : '';?></div>
-        </div>
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="col-4"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit()));?></div>
-          <div class="list-unstyled d-flex align-items-center mb-0 me-1">
-          <span class="ti ti-music"></span> &nbsp;
-          <span class="ti ti-microphone"></span> &nbsp;
-            <span class="ti ti-message"></span> &nbsp;
-            <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() / 2;?>" data-song-id="<?php echo $song->getSongId();?>"></div>
+    <div class="col-sm-6 col-xl-3">
+      <div class="card overflow-hidden rounded-2">
+        <div class="card-body pt-3 p-4">
+
+          <div class="d-flex align-items-center justify-content-between">
+            <h6 class="fw-semibold fs-4 col-5"><?php echo $song->getTitle(); ?></h6>
+            <div class="col-7 justify-content-end text-end">
+              <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
+              <a href="javascript;" onclick="uploadFile('<?php echo $song->getSongId(); ?>'); return false" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
+              <a href="read-file.php?type=mp3&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MP3</a>
+              <a href="read-file.php?type=midi&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MID</a>
+              <a href="read-file.php?type=xml&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> XML</a>
+              <a href="read-file.php?type=pdf&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> PDF</a>
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Album</div>
+            <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Genre</div>
+            <div class="col-8"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Composer</div>
+            <div class="col-8"><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Arranger</div>
+            <div class="col-8"><?php echo $song->hasValueArtistArranger() ? $song->getArtistArranger()->getName() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Vocalist</div>
+            <div class="col-8"><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>
+            <div class="list-unstyled d-flex align-items-center mb-0 me-1">
+              <span class="ti ti-music"></span> &nbsp;
+              <span class="ti ti-microphone"></span> &nbsp;
+              <span class="ti ti-message"></span> &nbsp;
+              <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() / 2; ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-<?php
-}
-?>
-  
- 
+  <?php
+  }
+  ?>
+
+
+</div>
+
+<script>
+  function createToast(id, time, icon, title, body) {
+    let toast = $('<div />');
+    toast.addClass('toast');
+    toast.addClass('hide');
+    toast.attr({
+      id: id,
+      role: 'alert',
+      'aria-live': 'assertive',
+      'aria-atomic': 'true'
+    });
+    toast.append(`<div class="toast-header">
+      <span class="ti"></span>
+      <strong class="me-auto title-text"></strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      
+    </div>`);
+    if (body) {
+
+    }
+    toast.find('.toast-header .ti').addClass('ti-' + icon);
+    toast.find('.toast-header .title-text').text(title);
+    if (typeof body != 'undefined') {
+      toast.find('.toast-body').append(body);
+    }
+    return toast;
+  }
+
+  function showToast(toast) {
+    let container;
+    if ($('.toast-container').length > 0) {
+      container = $('.toast-container');
+    } else {
+      container = $('<div />');
+      container.addClass('toast-container');
+      container.addClass('position-fixed');
+      container.addClass('bottom-0');
+      container.addClass('end-0');
+      container.addClass('p-3');
+      container.css('z-index', 11);
+      container.appendTo($('body'));
+    }
+    container.append(toast);
+    toast.css('display', 'block');
+  }
+
+  function getToastIndex() {
+    let container;
+    if ($('.toast-container').length > 0) {
+      container = $('.toast-container');
+      let lastId = parseInt(container.attr('data-next-index'));
+      return lastId;
+    }
+    return 0;
+  }
+
+  function setToastIndex(id) {
+    let container;
+    if ($('.toast-container').length > 0) {
+      container = $('.toast-container');
+      container.attr('data-next-index', id);
+    }
+  }
+
+  function uploadFile(songId) {
+    let uploader = $('input#song_file_uploader[type="file"]');
+    uploader.attr('data-song-id', songId);
+    uploader.click();
+  }
+  $(document).ready(function(e) {
+    $(document).on(
+      "change",
+      'input#song_file_uploader[type="file"]',
+      function(e) {
+        let files = e.target.files;
+        songId = e.target.getAttribute('data-song-id');
+
+        for (let i = 0; i < files.length; i++) {
+          let file = files[i];
+          let formData = new FormData();
+          formData.append("file", file);
+          formData.append(
+            "song_id",
+            songId
+          );
+          let toastIndex = getToastIndex();
+          toastBody = $('<div />');
+          toastBody.addClass('upload-area');
+          let fileName = $('<div />');
+          fileName.addClass('file-name');
+          fileName.text(file.name);
+          toastBody.append(fileName);
+          toast = createToast(toastIndex, '', 'upload', 'Upload File', toastBody);
+          showToast(toast);
+          setToastIndex(toastIndex + 1);
+          let progressBar = createProgressBar(toast.find('.upload-area'));
+
+          $.ajax({
+            xhr: function() {
+              let xhr = new window.XMLHttpRequest();
+              xhr.upload.addEventListener(
+                "progress",
+                function(evt) {
+                  if (evt.lengthComputable) {
+                    let val = parseInt((evt.loaded / evt.total) * 100);
+                    let pb = progressBar.find('.progress-bar');
+                    pb.css("width", val + "%");
+                    pb.attr("aria-valuenow", val);
+                    pb.html(val + "%");
+                    if (val == 100) {
+                      setTimeout(function() {
+                        pb.closest('.toast').fadeOut('fast', function() {
+                          $(this).remove();
+                        });
+                      }, 2000);
+                    }
+                  }
+                },
+                false
+              );
+              return xhr;
+            },
+            type: "POST",
+            url: "lib.ajax/song-upload.php",
+            data: formData,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+              let pb = progressBar.find('.progress-bar');
+              let val = 0;
+              pb.css("width", val + "%");
+              pb.attr("aria-valuenow", val);
+              pb.html(val + "%");
+              $(".loader-icon").show();
+            },
+            error: function() {
+              $(".loader-icon").html(
+                '<p style="color:#EA4335;">File upload failed, please try again.</p>'
+              );
+            },
+            success: function(response) {
+              if (response) {
+                $(".loader-icon").html(
+                  '<p style="color:#28A74B;">File has uploaded successfully!</p>'
+                );
+              } else if (resp == "err") {
+                $(".loader-icon").html(
+                  '<p style="color:#EA4335;">Please select a valid file to upload.</p>'
+                );
+              }
+            },
+          });
+          $(".file-uploader").attr("data-status", "2");
+        }
+      }
+    );
+  });
+</script>
+
+<div class="file-uploader">
+  <input id="song_file_uploader" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3,audio/midi,application/xml,application/pdf" multiple />
 </div>
 
 <?php
