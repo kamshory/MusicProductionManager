@@ -8,6 +8,7 @@ use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
 use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoRequest;
+use MagicObject\Util\Dms;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\EntityUserActivity;
@@ -283,24 +284,46 @@ $inputGet = new PicoRequest(INPUT_GET);
     });
 
     $('.song-rating').rateYo().on('rateyo.set', function(e, data) {
+      setRateEvent(e, data);
+    });
+
+  });
+  
+  function setRateEvent(e, data)
+  {
+    let songId = $(e.currentTarget).attr('data-song-id');
       $.ajax({
         type: 'POST',
         url: 'lib.ajax/song-set-rating.php',
         dataType: 'json',
         data: {
-          song_id: $(e.currentTarget).attr('data-song-id'),
+          song_id: songId,
           rating: data.rating
         },
-        success: function(data) {
-          $(this).rateYo({
-            rating: data.rating,
-            starWidth: "16px"
-          });
+        success: function(response) {
+          updateRate(response);
         }
-      })
+      });
+  }
+  function updateRate(response)
+  {
+    let selector = '.song-rating[data-song-id="'+response.song_id+'"]';
+    let newRate = $('<div />');
+    $(selector).replaceWith(newRate);
+    newRate.addClass("song-rating");
+    newRate.addClass("half-star-ratings");
+    newRate.attr("data-rateyo-half-star", "true");
+    newRate.attr('data-song-id', response.song_id);
+    newRate.attr('data-rate', response.rating);
+  
+    $(selector).rateYo({
+      rating: parseFloat(response.rating),
+      starWidth: "16px"
     });
-
-  });
+    $(selector).rateYo().on('rateyo.set', function(e, data) {
+      setRateEvent(e, data);
+    });
+  }
 </script>
 <style>
   .btn-tn {
@@ -381,6 +404,10 @@ $inputGet = new PicoRequest(INPUT_GET);
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Vocalist</div>
             <div class="col-8"><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Duration</div>
+            <div class="col-8"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>

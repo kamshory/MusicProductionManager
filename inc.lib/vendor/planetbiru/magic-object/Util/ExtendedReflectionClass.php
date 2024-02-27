@@ -4,7 +4,6 @@ namespace MagicObject\Util;
 
 use MagicObject\Exceptions\InvalidClassExceptio;
 use ReflectionClass;
-use RuntimeException;
 
 /**
  * The MIT License (MIT)

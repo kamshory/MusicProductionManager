@@ -3,6 +3,7 @@
 use MagicObject\Constants\PicoHttpStatus;
 use MusicProductionManager\Data\Entity\Song;
 use MagicObject\Request\PicoRequest;
+use MagicObject\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -18,7 +19,9 @@ try
     $song1->update();
     
     $response = new stdClass();
-    $response->rating = $rating/2;
+    $response->rating = $rating / 2;
+    $response->song_id = $song1->getSongId();
+    $restResponse = new PicoResponse();    
     $restResponse->sendResponseJSON($response, null, PicoHttpStatus::HTTP_OK);
 
 }
