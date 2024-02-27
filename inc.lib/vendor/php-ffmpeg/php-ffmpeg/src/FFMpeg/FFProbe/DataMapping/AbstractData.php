@@ -24,7 +24,7 @@ abstract class AbstractData implements \Countable
      * Returns true if data has property.
      *
      * @param  string  $property
-     * @return bool
+     * @return boolean
      */
     public function has($property)
     {

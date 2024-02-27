@@ -335,7 +335,7 @@ class MessageBuffer {
     /**
      * Determine if a message is valid
      * @param \Ratchet\RFC6455\Messaging\MessageInterface
-     * @return bool|int true if valid - false if incomplete - int of recommended close code
+     * @return boolean|int true if valid - false if incomplete - int of recommended close code
      */
     public function checkMessage(MessageInterface $message) {
         if (!$message->isBinary()) {

@@ -63,7 +63,7 @@ interface CacheItemPoolInterface
      *   If the $key string is not a legal value a \Psr\Cache\InvalidArgumentException
      *   MUST be thrown.
      *
-     * @return bool
+     * @return boolean
      *   True if item exists in the cache, false otherwise.
      */
     public function hasItem($key);
@@ -71,7 +71,7 @@ interface CacheItemPoolInterface
     /**
      * Deletes all items in the pool.
      *
-     * @return bool
+     * @return boolean
      *   True if the pool was successfully cleared. False if there was an error.
      */
     public function clear();
@@ -86,7 +86,7 @@ interface CacheItemPoolInterface
      *   If the $key string is not a legal value a \Psr\Cache\InvalidArgumentException
      *   MUST be thrown.
      *
-     * @return bool
+     * @return boolean
      *   True if the item was successfully removed. False if there was an error.
      */
     public function deleteItem($key);
@@ -101,7 +101,7 @@ interface CacheItemPoolInterface
      *   If any of the keys in $keys are not a legal value a \Psr\Cache\InvalidArgumentException
      *   MUST be thrown.
      *
-     * @return bool
+     * @return boolean
      *   True if the items were successfully removed. False if there was an error.
      */
     public function deleteItems(array $keys);
@@ -112,7 +112,7 @@ interface CacheItemPoolInterface
      * @param CacheItemInterface $item
      *   The cache item to save.
      *
-     * @return bool
+     * @return boolean
      *   True if the item was successfully persisted. False if there was an error.
      */
     public function save(CacheItemInterface $item);
@@ -123,7 +123,7 @@ interface CacheItemPoolInterface
      * @param CacheItemInterface $item
      *   The cache item to save.
      *
-     * @return bool
+     * @return boolean
      *   False if the item could not be queued or if a commit was attempted and failed. True otherwise.
      */
     public function saveDeferred(CacheItemInterface $item);
@@ -131,7 +131,7 @@ interface CacheItemPoolInterface
     /**
      * Persists any deferred cache items.
      *
-     * @return bool
+     * @return boolean
      *   True if all not-yet-saved items were successfully saved or there were none. False otherwise.
      */
     public function commit();

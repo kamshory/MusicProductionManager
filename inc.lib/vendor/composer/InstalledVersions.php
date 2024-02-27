@@ -90,7 +90,7 @@ class InstalledVersions
      *
      * @param  string $packageName
      * @param  bool   $includeDevRequirements
-     * @return bool
+     * @return boolean
      */
     public static function isInstalled($packageName, $includeDevRequirements = true)
     {
@@ -113,7 +113,7 @@ class InstalledVersions
      * @param  VersionParser $parser      Install composer/semver to have access to this class and functionality
      * @param  string        $packageName
      * @param  string|null   $constraint  A version constraint to check for, if you pass one you have to make sure composer/semver is required by your package
-     * @return bool
+     * @return boolean
      */
     public static function satisfies(VersionParser $parser, $packageName, $constraint)
     {

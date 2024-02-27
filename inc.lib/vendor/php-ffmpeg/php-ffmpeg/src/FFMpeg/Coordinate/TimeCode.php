@@ -110,7 +110,7 @@ class TimeCode
      * Helper function wether `$timecode` is after this one
      *
      * @param   TimeCode    $timecode   The Timecode to compare
-     * @return bool
+     * @return boolean
      */
     public function isAfter(TimeCode $timecode) {
         // convert everything to seconds and compare

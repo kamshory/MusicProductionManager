@@ -4,7 +4,7 @@ namespace Ratchet\RFC6455\Messaging;
 interface DataInterface {
     /**
      * Determine if the message is complete or still fragmented
-     * @return bool
+     * @return boolean
      */
     function isCoalesced();
 

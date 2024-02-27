@@ -114,7 +114,7 @@ class Filesystem
      *
      * @param string|iterable $files A filename, an array of files, or a \Traversable instance to check
      *
-     * @return bool true if the file exists, false otherwise
+     * @return boolean true if the file exists, false otherwise
      */
     public function exists($files)
     {
@@ -295,7 +295,7 @@ class Filesystem
      *
      * @param string $filename Path to the file
      *
-     * @return bool
+     * @return boolean
      *
      * @throws IOException When windows path is longer than 258 characters
      */
@@ -595,7 +595,7 @@ class Filesystem
      *
      * @param string $file A file path
      *
-     * @return bool
+     * @return boolean
      */
     public function isAbsolutePath($file)
     {

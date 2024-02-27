@@ -23,7 +23,7 @@ interface SessionInterface
     /**
      * Starts the session storage.
      *
-     * @return bool True if session started
+     * @return boolean True if session started
      *
      * @throws \RuntimeException if session fails to start
      */
@@ -68,7 +68,7 @@ interface SessionInterface
      *                      to expire with browser session. Time is in seconds, and is
      *                      not a Unix timestamp.
      *
-     * @return bool True if session invalidated, false if error
+     * @return boolean True if session invalidated, false if error
      */
     public function invalidate($lifetime = null);
 
@@ -82,7 +82,7 @@ interface SessionInterface
      *                       to expire with browser session. Time is in seconds, and is
      *                       not a Unix timestamp.
      *
-     * @return bool True if session migrated, false if error
+     * @return boolean True if session migrated, false if error
      */
     public function migrate($destroy = false, $lifetime = null);
 
@@ -100,7 +100,7 @@ interface SessionInterface
      *
      * @param string $name The attribute name
      *
-     * @return bool true if the attribute is defined, false otherwise
+     * @return boolean true if the attribute is defined, false otherwise
      */
     public function has($name);
 
@@ -153,7 +153,7 @@ interface SessionInterface
     /**
      * Checks if the session was started.
      *
-     * @return bool
+     * @return boolean
      */
     public function isStarted();
 

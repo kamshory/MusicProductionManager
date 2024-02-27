@@ -64,7 +64,7 @@ class LockHandler
      *
      * @param boolean $blocking Wait until the lock is released
      *
-     * @return bool Returns true if the lock was acquired, false otherwise
+     * @return boolean Returns true if the lock was acquired, false otherwise
      *
      * @throws IOException If the lock file could not be created or opened
      */

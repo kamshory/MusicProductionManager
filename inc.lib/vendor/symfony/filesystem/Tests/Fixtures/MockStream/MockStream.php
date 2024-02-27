@@ -26,7 +26,7 @@ class MockStream
      * @param string $opened_path If the path is opened successfully, and STREAM_USE_PATH is set in options,
      *                            opened_path should be set to the full path of the file/resource that was actually opened
      *
-     * @return bool
+     * @return boolean
      */
     public function stream_open($path, $mode, $options, &$opened_path)
     {

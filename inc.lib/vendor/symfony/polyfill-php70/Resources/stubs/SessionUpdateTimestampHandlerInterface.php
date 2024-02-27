@@ -7,7 +7,7 @@ interface SessionUpdateTimestampHandlerInterface
      *
      * @param string $key
      *
-     * @return bool
+     * @return boolean
      */
     public function validateId($key);
 
@@ -17,7 +17,7 @@ interface SessionUpdateTimestampHandlerInterface
      * @param string $key
      * @param string $val
      *
-     * @return bool
+     * @return boolean
      */
     public function updateTimestamp($key, $val);
 }

@@ -795,7 +795,7 @@ class Request
     /**
      * Checks whether support for the _method request parameter is enabled.
      *
-     * @return bool True when the _method request parameter is enabled, false otherwise
+     * @return boolean True when the _method request parameter is enabled, false otherwise
      */
     public static function getHttpMethodParameterOverride()
     {
@@ -847,7 +847,7 @@ class Request
      * Whether the request contains a Session which was started in one of the
      * previous requests.
      *
-     * @return bool
+     * @return boolean
      */
     public function hasPreviousSession()
     {
@@ -862,7 +862,7 @@ class Request
      * like whether the session is started or not. It is just a way to check if this Request
      * is associated with a Session instance.
      *
-     * @return bool true when the Request contains a Session object, false otherwise
+     * @return boolean true when the Request contains a Session object, false otherwise
      */
     public function hasSession()
     {
@@ -1241,7 +1241,7 @@ class Request
      * ("SSL_HTTPS" for instance), configure it via the $trustedHeaderSet
      * argument of the Request::setTrustedProxies() method instead.
      *
-     * @return bool
+     * @return boolean
      */
     public function isSecure()
     {
@@ -1563,7 +1563,7 @@ class Request
      *
      * @param string $method Uppercase request method (GET, POST etc)
      *
-     * @return bool
+     * @return boolean
      */
     public function isMethod($method)
     {
@@ -1577,7 +1577,7 @@ class Request
      *
      * @param boolean $andCacheable Adds the additional condition that the method should be cacheable. True by default.
      *
-     * @return bool
+     * @return boolean
      */
     public function isMethodSafe(/* $andCacheable = true */)
     {
@@ -1595,7 +1595,7 @@ class Request
     /**
      * Checks whether or not the method is idempotent.
      *
-     * @return bool
+     * @return boolean
      */
     public function isMethodIdempotent()
     {
@@ -1607,7 +1607,7 @@ class Request
      *
      * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
      *
-     * @return bool True for GET and HEAD, false otherwise
+     * @return boolean True for GET and HEAD, false otherwise
      */
     public function isMethodCacheable()
     {
@@ -1699,7 +1699,7 @@ class Request
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isNoCache()
     {
@@ -1831,7 +1831,7 @@ class Request
      *
      * @see https://wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
      *
-     * @return bool true if the request is an XMLHttpRequest, false otherwise
+     * @return boolean true if the request is an XMLHttpRequest, false otherwise
      */
     public function isXmlHttpRequest()
     {
@@ -2101,7 +2101,7 @@ class Request
      * This can be useful to determine whether or not to trust the
      * contents of a proxy-specific header.
      *
-     * @return bool true if the request came from a trusted proxy, false otherwise
+     * @return boolean true if the request came from a trusted proxy, false otherwise
      */
     public function isFromTrustedProxy()
     {

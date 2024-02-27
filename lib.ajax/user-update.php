@@ -24,7 +24,7 @@ $user = new User(null, $database);
  *
  * @param PicoPageData $duplicated
  * @param string $username
- * @return bool
+ * @return boolean
  */
 function checkDuplicatedUsername($existing, $username)
 {
@@ -46,7 +46,7 @@ function checkDuplicatedUsername($existing, $username)
  *
  * @param PicoPageData $duplicated
  * @param string $email
- * @return bool
+ * @return boolean
  */
 function checkDuplicatedEmail($existing, $email)
 {

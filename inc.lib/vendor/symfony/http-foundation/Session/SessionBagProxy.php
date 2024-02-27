@@ -40,7 +40,7 @@ final class SessionBagProxy implements SessionBagInterface
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isEmpty()
     {

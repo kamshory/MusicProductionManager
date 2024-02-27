@@ -152,7 +152,7 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
     }
 
     /**
-     * @return bool
+     * @return boolean
      *
      * @internal
      */

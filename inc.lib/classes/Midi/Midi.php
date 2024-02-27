@@ -440,7 +440,7 @@ class Midi //NOSONAR
 	 * Check if event is note
 	 *
 	 * @param string $msg
-	 * @return bool
+	 * @return boolean
 	 */
 	private function isNote($msg)
 	{

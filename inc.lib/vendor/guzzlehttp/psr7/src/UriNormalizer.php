@@ -171,7 +171,7 @@ final class UriNormalizer
      * @param UriInterface $uri2           An URI to compare
      * @param int          $normalizations A bitmask of normalizations to apply, see constants
      *
-     * @return bool
+     * @return boolean
      *
      * @link https://tools.ietf.org/html/rfc3986#section-6.1
      */

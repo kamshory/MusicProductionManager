@@ -10,13 +10,13 @@ interface FrameInterface extends DataInterface {
 
     /**
      * Is this the final frame in a fragmented message?
-     * @return bool
+     * @return boolean
      */
     function isFinal();
 
     /**
      * Is the payload masked?
-     * @return bool
+     * @return boolean
      */
     function isMasked();
 

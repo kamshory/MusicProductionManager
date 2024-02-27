@@ -47,7 +47,7 @@ trait AbstractTrait
      *
      * @param string $id The identifier for which to check existence
      *
-     * @return bool True if item exists in the cache, false otherwise
+     * @return boolean True if item exists in the cache, false otherwise
      */
     abstract protected function doHave($id);
 
@@ -56,7 +56,7 @@ trait AbstractTrait
      *
      * @param string $namespace The prefix used for all identifiers managed by this pool
      *
-     * @return bool True if the pool was successfully cleared, false otherwise
+     * @return boolean True if the pool was successfully cleared, false otherwise
      */
     abstract protected function doClear($namespace);
 
@@ -65,7 +65,7 @@ trait AbstractTrait
      *
      * @param array $ids An array of identifiers that should be removed from the pool
      *
-     * @return bool True if the items were successfully removed, false otherwise
+     * @return boolean True if the items were successfully removed, false otherwise
      */
     abstract protected function doDelete(array $ids);
 
@@ -181,7 +181,7 @@ trait AbstractTrait
      *
      * @param boolean $enable
      *
-     * @return bool the previous state of versioning
+     * @return boolean the previous state of versioning
      */
     public function enableVersioning($enable = true)
     {

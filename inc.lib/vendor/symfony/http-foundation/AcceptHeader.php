@@ -75,7 +75,7 @@ class AcceptHeader
      *
      * @param string $value
      *
-     * @return bool
+     * @return boolean
      */
     public function has($value)
     {

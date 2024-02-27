@@ -24,7 +24,7 @@ trait FilesystemTrait
     use FilesystemCommonTrait;
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function prune()
     {

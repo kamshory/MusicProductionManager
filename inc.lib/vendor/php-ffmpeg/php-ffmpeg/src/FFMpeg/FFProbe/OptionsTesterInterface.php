@@ -18,7 +18,7 @@ interface OptionsTesterInterface
      *
      * @param string $name
      *
-     * @return bool
+     * @return boolean
      */
     public function has($name);
 }

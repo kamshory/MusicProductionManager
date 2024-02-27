@@ -17,7 +17,7 @@ namespace Symfony\Component\Cache;
 interface PruneableInterface
 {
     /**
-     * @return bool
+     * @return boolean
      */
     public function prune();
 }

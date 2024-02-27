@@ -327,7 +327,7 @@ class ClassLoader
      * Can be used to check if the autoloader uses the include path to check
      * for classes.
      *
-     * @return bool
+     * @return boolean
      */
     public function getUseIncludePath()
     {
@@ -350,7 +350,7 @@ class ClassLoader
     /**
      * Should class lookup fail if not found in the current class map?
      *
-     * @return bool
+     * @return boolean
      */
     public function isClassMapAuthoritative()
     {

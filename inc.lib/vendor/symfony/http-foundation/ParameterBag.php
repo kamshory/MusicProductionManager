@@ -100,7 +100,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
      *
      * @param string $key The key
      *
-     * @return bool true if the parameter exists, false otherwise
+     * @return boolean true if the parameter exists, false otherwise
      */
     public function has($key)
     {
@@ -176,7 +176,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
      * @param string $key     The parameter key
      * @param boolean   $default The default value if the parameter key does not exist
      *
-     * @return bool The filtered value
+     * @return boolean The filtered value
      */
     public function getBoolean($key, $default = false)
     {

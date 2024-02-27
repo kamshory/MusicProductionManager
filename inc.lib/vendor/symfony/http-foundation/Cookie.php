@@ -254,7 +254,7 @@ class Cookie
     /**
      * Checks whether the cookie should only be transmitted over a secure HTTPS connection from the client.
      *
-     * @return bool
+     * @return boolean
      */
     public function isSecure()
     {
@@ -264,7 +264,7 @@ class Cookie
     /**
      * Checks whether the cookie will be made accessible only through the HTTP protocol.
      *
-     * @return bool
+     * @return boolean
      */
     public function isHttpOnly()
     {
@@ -274,7 +274,7 @@ class Cookie
     /**
      * Whether this cookie is about to be cleared.
      *
-     * @return bool
+     * @return boolean
      */
     public function isCleared()
     {
@@ -284,7 +284,7 @@ class Cookie
     /**
      * Checks if the cookie value should be sent with no url encoding.
      *
-     * @return bool
+     * @return boolean
      */
     public function isRaw()
     {

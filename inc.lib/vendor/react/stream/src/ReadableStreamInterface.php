@@ -192,7 +192,7 @@ interface ReadableStreamInterface extends EventEmitterInterface
      * method. Unless this is a half-open duplex stream, they SHOULD usually
      * have the same return value.
      *
-     * @return bool
+     * @return boolean
      */
     public function isReadable();
 

@@ -12,7 +12,7 @@ interface NegotiatorInterface {
     /**
      * Given an HTTP header, determine if this version should handle the protocol
      * @param RequestInterface $request
-     * @return bool
+     * @return boolean
      */
     function isProtocol(RequestInterface $request);
 

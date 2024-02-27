@@ -61,14 +61,14 @@ interface StreamInterface
     /**
      * Returns true if the stream is at the end of the stream.
      *
-     * @return bool
+     * @return boolean
      */
     public function eof();
 
     /**
      * Returns whether or not the stream is seekable.
      *
-     * @return bool
+     * @return boolean
      */
     public function isSeekable();
 
@@ -101,7 +101,7 @@ interface StreamInterface
     /**
      * Returns whether or not the stream is writable.
      *
-     * @return bool
+     * @return boolean
      */
     public function isWritable();
 
@@ -117,7 +117,7 @@ interface StreamInterface
     /**
      * Returns whether or not the stream is readable.
      *
-     * @return bool
+     * @return boolean
      */
     public function isReadable();
 

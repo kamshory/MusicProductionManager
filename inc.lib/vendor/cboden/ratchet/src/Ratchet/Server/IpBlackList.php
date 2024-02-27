@@ -47,7 +47,7 @@ class IpBlackList implements MessageComponentInterface {
 
     /**
      * @param  string $address
-     * @return bool
+     * @return boolean
      */
     public function isBlocked($address) {
         return (isset($this->_blacklist[$this->filterAddress($address)]));

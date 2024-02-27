@@ -34,7 +34,7 @@ trait PhpFilesTrait
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function prune()
     {

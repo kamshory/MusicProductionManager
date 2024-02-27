@@ -26,7 +26,7 @@ interface CacheInterface
      *                                      the driver supports TTL then the library may set a default value
      *                                      for it or let the driver take care of that.
      *
-     * @return bool True on success and false on failure.
+     * @return boolean True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
@@ -38,7 +38,7 @@ interface CacheInterface
      *
      * @param string $key The unique cache key of the item to delete.
      *
-     * @return bool True if the item was successfully removed. False if there was an error.
+     * @return boolean True if the item was successfully removed. False if there was an error.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
@@ -48,7 +48,7 @@ interface CacheInterface
     /**
      * Wipes clean the entire cache's keys.
      *
-     * @return bool True on success and false on failure.
+     * @return boolean True on success and false on failure.
      */
     public function clear();
 
@@ -74,7 +74,7 @@ interface CacheInterface
      *                                       the driver supports TTL then the library may set a default value
      *                                       for it or let the driver take care of that.
      *
-     * @return bool True on success and false on failure.
+     * @return boolean True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if $values is neither an array nor a Traversable,
@@ -87,7 +87,7 @@ interface CacheInterface
      *
      * @param iterable $keys A list of string-based keys to be deleted.
      *
-     * @return bool True if the items were successfully removed. False if there was an error.
+     * @return boolean True if the items were successfully removed. False if there was an error.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if $keys is neither an array nor a Traversable,
@@ -105,7 +105,7 @@ interface CacheInterface
      *
      * @param string $key The cache item key.
      *
-     * @return bool
+     * @return boolean
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.

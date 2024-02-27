@@ -254,7 +254,7 @@ class Inline
      *
      * @param array|\ArrayObject|\stdClass $value The PHP array or array-like object to check
      *
-     * @return bool true if value is hash array, false otherwise
+     * @return boolean true if value is hash array, false otherwise
      */
     public static function isHash($value)
     {

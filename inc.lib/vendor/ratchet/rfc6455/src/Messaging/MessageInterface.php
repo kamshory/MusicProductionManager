@@ -14,7 +14,7 @@ interface MessageInterface extends DataInterface, \Traversable, \Countable {
     function getOpcode();
 
     /**
-     * @return bool
+     * @return boolean
      */
     function isBinary();
 }

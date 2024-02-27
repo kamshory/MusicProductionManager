@@ -145,7 +145,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * @param mixed $param
      *
-     * @return bool
+     * @return boolean
      */
     private function isStringOrNull($param)
     {
@@ -155,7 +155,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * @param mixed $param
      *
-     * @return bool
+     * @return boolean
      */
     private function isStringNotEmpty($param)
     {
@@ -197,7 +197,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * Return true if there is no upload error
      *
-     * @return bool
+     * @return boolean
      */
     private function isOk()
     {
@@ -205,7 +205,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isMoved()
     {

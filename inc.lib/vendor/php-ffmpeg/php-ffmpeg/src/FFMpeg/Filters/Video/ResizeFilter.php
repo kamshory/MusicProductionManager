@@ -69,7 +69,7 @@ class ResizeFilter implements VideoFilterInterface
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function areStandardsForced()
     {

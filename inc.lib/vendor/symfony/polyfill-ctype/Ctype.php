@@ -27,7 +27,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_alnum($text)
     {
@@ -43,7 +43,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_alpha($text)
     {
@@ -59,7 +59,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_cntrl($text)
     {
@@ -75,7 +75,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_digit($text)
     {
@@ -91,7 +91,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_graph($text)
     {
@@ -107,7 +107,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_lower($text)
     {
@@ -123,7 +123,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_print($text)
     {
@@ -139,7 +139,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_punct($text)
     {
@@ -155,7 +155,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_space($text)
     {
@@ -171,7 +171,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_upper($text)
     {
@@ -187,7 +187,7 @@ final class Ctype
      *
      * @param string|int $text
      *
-     * @return bool
+     * @return boolean
      */
     public static function ctype_xdigit($text)
     {

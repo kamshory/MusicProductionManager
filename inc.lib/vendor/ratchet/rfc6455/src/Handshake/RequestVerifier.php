@@ -13,7 +13,7 @@ class RequestVerifier {
     /**
      * Given an array of the headers this method will run through all verification methods
      * @param RequestInterface $request
-     * @return bool TRUE if all headers are valid, FALSE if 1 or more were invalid
+     * @return boolean TRUE if all headers are valid, FALSE if 1 or more were invalid
      */
     public function verifyAll(RequestInterface $request) {
         $passes = 0;
@@ -33,7 +33,7 @@ class RequestVerifier {
     /**
      * Test the HTTP method.  MUST be "GET"
      * @param string
-     * @return bool
+     * @return boolean
      */
     public function verifyMethod($val) {
         return ('get' === strtolower($val));
@@ -42,7 +42,7 @@ class RequestVerifier {
     /**
      * Test the HTTP version passed.  MUST be 1.1 or greater
      * @param string|int
-     * @return bool
+     * @return boolean
      */
     public function verifyHTTPVersion($val) {
         return (1.1 <= (double)$val);
@@ -50,7 +50,7 @@ class RequestVerifier {
 
     /**
      * @param string
-     * @return bool
+     * @return boolean
      */
     public function verifyRequestURI($val) {
         if ($val[0] !== '/') {
@@ -70,7 +70,7 @@ class RequestVerifier {
 
     /**
      * @param array $hostHeader
-     * @return bool
+     * @return boolean
      * @todo Once I fix HTTP::getHeaders just verify this isn't NULL or empty...or maybe need to verify it's a valid domain??? Or should it equal $_SERVER['HOST'] ?
      */
     public function verifyHost(array $hostHeader) {
@@ -80,7 +80,7 @@ class RequestVerifier {
     /**
      * Verify the Upgrade request to WebSockets.
      * @param  array $upgradeHeader MUST equal "websocket"
-     * @return bool
+     * @return boolean
      */
     public function verifyUpgradeRequest(array $upgradeHeader) {
         return (1 === count($upgradeHeader) && 'websocket' === strtolower($upgradeHeader[0]));
@@ -89,7 +89,7 @@ class RequestVerifier {
     /**
      * Verify the Connection header
      * @param  array $connectionHeader MUST include "Upgrade"
-     * @return bool
+     * @return boolean
      */
     public function verifyConnection(array $connectionHeader) {
         foreach ($connectionHeader as $l) {
@@ -109,7 +109,7 @@ class RequestVerifier {
     /**
      * This function verifies the nonce is valid (64 big encoded, 16 bytes random string)
      * @param array $keyHeader
-     * @return bool
+     * @return boolean
      * @todo The spec says we don't need to base64_decode - can I just check if the length is 24 and not decode?
      * @todo Check the spec to see what the encoding of the key could be
      */
@@ -120,7 +120,7 @@ class RequestVerifier {
     /**
      * Verify the version passed matches this RFC
      * @param string[] $versionHeader MUST equal ["13"]
-     * @return bool
+     * @return boolean
      */
     public function verifyVersion(array $versionHeader) {
         return (1 === count($versionHeader) && static::VERSION === (int)$versionHeader[0]);

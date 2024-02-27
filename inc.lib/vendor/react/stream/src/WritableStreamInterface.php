@@ -168,7 +168,7 @@ interface WritableStreamInterface extends EventEmitterInterface
      * method. Unless this is a half-open duplex stream, they SHOULD usually
      * have the same return value.
      *
-     * @return bool
+     * @return boolean
      */
     public function isWritable();
 
@@ -217,7 +217,7 @@ interface WritableStreamInterface extends EventEmitterInterface
      * these low-level data chunks in order to achieve proper message framing.
      *
      * @param mixed|string $data
-     * @return bool
+     * @return boolean
      */
     public function write($data);
 

@@ -189,7 +189,7 @@ class Uri implements UriInterface
      *
      * @param UriInterface $uri
      *
-     * @return bool
+     * @return boolean
      */
     public static function isDefaultPort(UriInterface $uri)
     {
@@ -209,7 +209,7 @@ class Uri implements UriInterface
      *
      * @param UriInterface $uri
      *
-     * @return bool
+     * @return boolean
      *
      * @see Uri::isNetworkPathReference
      * @see Uri::isAbsolutePathReference
@@ -228,7 +228,7 @@ class Uri implements UriInterface
      *
      * @param UriInterface $uri
      *
-     * @return bool
+     * @return boolean
      *
      * @link https://tools.ietf.org/html/rfc3986#section-4.2
      */
@@ -244,7 +244,7 @@ class Uri implements UriInterface
      *
      * @param UriInterface $uri
      *
-     * @return bool
+     * @return boolean
      *
      * @link https://tools.ietf.org/html/rfc3986#section-4.2
      */
@@ -263,7 +263,7 @@ class Uri implements UriInterface
      *
      * @param UriInterface $uri
      *
-     * @return bool
+     * @return boolean
      *
      * @link https://tools.ietf.org/html/rfc3986#section-4.2
      */
@@ -284,7 +284,7 @@ class Uri implements UriInterface
      * @param UriInterface      $uri  The URI to check
      * @param UriInterface|null $base An optional base URI to compare against
      *
-     * @return bool
+     * @return boolean
      *
      * @link https://tools.ietf.org/html/rfc3986#section-4.4
      */

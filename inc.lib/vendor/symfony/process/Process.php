@@ -503,7 +503,7 @@ class Process implements \IteratorAggregate
     /**
      * Returns true in case the output is disabled, false otherwise.
      *
-     * @return bool
+     * @return boolean
      */
     public function isOutputDisabled()
     {
@@ -725,7 +725,7 @@ class Process implements \IteratorAggregate
     /**
      * Checks if the process ended successfully.
      *
-     * @return bool true if the process ended successfully, false otherwise
+     * @return boolean true if the process ended successfully, false otherwise
      */
     public function isSuccessful()
     {
@@ -737,7 +737,7 @@ class Process implements \IteratorAggregate
      *
      * It always returns false on Windows.
      *
-     * @return bool
+     * @return boolean
      *
      * @throws RuntimeException In case --enable-sigchild is activated
      * @throws LogicException   In case the process is not terminated
@@ -779,7 +779,7 @@ class Process implements \IteratorAggregate
      *
      * It always returns false on Windows.
      *
-     * @return bool
+     * @return boolean
      *
      * @throws LogicException In case the process is not terminated
      */
@@ -809,7 +809,7 @@ class Process implements \IteratorAggregate
     /**
      * Checks if the process is currently running.
      *
-     * @return bool true if the process is currently running, false otherwise
+     * @return boolean true if the process is currently running, false otherwise
      */
     public function isRunning()
     {
@@ -825,7 +825,7 @@ class Process implements \IteratorAggregate
     /**
      * Checks if the process has been started with no regard to the current state.
      *
-     * @return bool true if status is ready, false otherwise
+     * @return boolean true if status is ready, false otherwise
      */
     public function isStarted()
     {
@@ -835,7 +835,7 @@ class Process implements \IteratorAggregate
     /**
      * Checks if the process is terminated.
      *
-     * @return bool true if process is terminated, false otherwise
+     * @return boolean true if process is terminated, false otherwise
      */
     public function isTerminated()
     {
@@ -1046,7 +1046,7 @@ class Process implements \IteratorAggregate
     /**
      * Checks if the TTY mode is enabled.
      *
-     * @return bool true if the TTY mode is enabled, false otherwise
+     * @return boolean true if the TTY mode is enabled, false otherwise
      */
     public function isTty()
     {
@@ -1070,7 +1070,7 @@ class Process implements \IteratorAggregate
     /**
      * Returns PTY state.
      *
-     * @return bool
+     * @return boolean
      */
     public function isPty()
     {
@@ -1213,7 +1213,7 @@ class Process implements \IteratorAggregate
      *
      * This is true by default.
      *
-     * @return bool
+     * @return boolean
      *
      * @deprecated since version 3.3, to be removed in 4.0. Enhanced Windows compatibility will always be enabled.
      */
@@ -1245,7 +1245,7 @@ class Process implements \IteratorAggregate
     /**
      * Returns whether sigchild compatibility mode is activated or not.
      *
-     * @return bool
+     * @return boolean
      *
      * @deprecated since version 3.3, to be removed in 4.0. Sigchild compatibility will always be enabled.
      */
@@ -1299,7 +1299,7 @@ class Process implements \IteratorAggregate
     /**
      * Returns whether environment variables will be inherited or not.
      *
-     * @return bool
+     * @return boolean
      *
      * @deprecated since version 3.3, to be removed in 4.0. Environment variables will always be inherited.
      */
@@ -1340,7 +1340,7 @@ class Process implements \IteratorAggregate
     /**
      * Returns whether PTY is supported on the current operating system.
      *
-     * @return bool
+     * @return boolean
      */
     public static function isPtySupported()
     {
@@ -1439,7 +1439,7 @@ class Process implements \IteratorAggregate
     /**
      * Returns whether PHP has been compiled with the '--enable-sigchild' option or not.
      *
-     * @return bool
+     * @return boolean
      */
     protected function isSigchildEnabled()
     {
@@ -1575,7 +1575,7 @@ class Process implements \IteratorAggregate
      * @param int  $signal         A valid POSIX signal (see https://php.net/pcntl.constants)
      * @param boolean $throwException Whether to throw exception in case signal failed
      *
-     * @return bool True if the signal was sent successfully, false otherwise
+     * @return boolean True if the signal was sent successfully, false otherwise
      *
      * @throws LogicException   In case the process is not running
      * @throws RuntimeException In case --enable-sigchild is activated and the process can't be killed

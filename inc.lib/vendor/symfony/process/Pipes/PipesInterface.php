@@ -49,14 +49,14 @@ interface PipesInterface
     /**
      * Returns if the current state has open file handles or pipes.
      *
-     * @return bool
+     * @return boolean
      */
     public function areOpen();
 
     /**
      * Returns if pipes are able to read output.
      *
-     * @return bool
+     * @return boolean
      */
     public function haveReadSupport();
 

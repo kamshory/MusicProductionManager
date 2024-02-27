@@ -55,7 +55,7 @@ class MemcachedSessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function close()
     {
@@ -71,7 +71,7 @@ class MemcachedSessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function updateTimestamp($sessionId, $data)
     {
@@ -99,7 +99,7 @@ class MemcachedSessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function gc($maxlifetime)
     {

@@ -192,7 +192,7 @@ final class PermessageDeflateOptions
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isEnabled()
     {

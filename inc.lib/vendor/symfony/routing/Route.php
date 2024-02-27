@@ -192,7 +192,7 @@ class Route implements \Serializable
      *
      * @param string $scheme
      *
-     * @return bool true if the scheme requirement exists, otherwise false
+     * @return boolean true if the scheme requirement exists, otherwise false
      */
     public function hasScheme($scheme)
     {
@@ -310,7 +310,7 @@ class Route implements \Serializable
      *
      * @param string $name An option name
      *
-     * @return bool true if the option is set, false otherwise
+     * @return boolean true if the option is set, false otherwise
      */
     public function hasOption($name)
     {
@@ -379,7 +379,7 @@ class Route implements \Serializable
      *
      * @param string $name A variable name
      *
-     * @return bool true if the default value is set, false otherwise
+     * @return boolean true if the default value is set, false otherwise
      */
     public function hasDefault($name)
     {
@@ -464,7 +464,7 @@ class Route implements \Serializable
      *
      * @param string $key A variable name
      *
-     * @return bool true if a requirement is specified, false otherwise
+     * @return boolean true if a requirement is specified, false otherwise
      */
     public function hasRequirement($key)
     {

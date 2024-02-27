@@ -176,7 +176,7 @@ class FFProbe
      * Checks wether the given `$pathfile` is considered a valid media file.
      *
      * @param string $pathfile
-     * @return bool
+     * @return boolean
      * @since 0.10.0
      */
     public function isValid($pathfile)

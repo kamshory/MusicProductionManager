@@ -171,7 +171,7 @@ class FlashPolicy implements MessageComponentInterface {
      * Make sure the proper site control was passed
      *
      * @param string $permittedCrossDomainPolicies
-     * @return bool
+     * @return boolean
      */
     public function validateSiteControl($permittedCrossDomainPolicies) {
         //'by-content-type' and 'by-ftp-filename' are not available for sockets
@@ -182,7 +182,7 @@ class FlashPolicy implements MessageComponentInterface {
      * Validate for proper domains (wildcards allowed)
      *
      * @param string $domain
-     * @return bool
+     * @return boolean
      */
     public function validateDomain($domain) {
         return (bool)preg_match("/^((http(s)?:\/\/)?([a-z0-9-_]+\.|\*\.)*([a-z0-9-_\.]+)|\*)$/i", $domain);
@@ -192,7 +192,7 @@ class FlashPolicy implements MessageComponentInterface {
      * Make sure valid ports were passed
      *
      * @param string $port
-     * @return bool
+     * @return boolean
      */
     public function validatePorts($port) {
         return (bool)preg_match('/^(\*|(\d+[,-]?)*\d+)$/', $port);

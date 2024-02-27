@@ -54,7 +54,7 @@ interface CacheItemInterface
      * Note: This method MUST NOT have a race condition between calling isHit()
      * and calling get().
      *
-     * @return bool
+     * @return boolean
      *   True if the request resulted in a cache hit. False otherwise.
      */
     public function isHit();

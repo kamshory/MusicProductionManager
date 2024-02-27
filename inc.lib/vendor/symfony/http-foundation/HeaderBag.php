@@ -172,7 +172,7 @@ class HeaderBag implements \IteratorAggregate, \Countable
      *
      * @param string $key The HTTP header
      *
-     * @return bool true if the parameter exists, false otherwise
+     * @return boolean true if the parameter exists, false otherwise
      */
     public function has($key)
     {
@@ -185,7 +185,7 @@ class HeaderBag implements \IteratorAggregate, \Countable
      * @param string $key   The HTTP header name
      * @param string $value The HTTP value
      *
-     * @return bool true if the value is contained in the header, false otherwise
+     * @return boolean true if the value is contained in the header, false otherwise
      */
     public function contains($key, $value)
     {
@@ -249,7 +249,7 @@ class HeaderBag implements \IteratorAggregate, \Countable
      *
      * @param string $key The Cache-Control directive
      *
-     * @return bool true if the directive exists, false otherwise
+     * @return boolean true if the directive exists, false otherwise
      */
     public function hasCacheControlDirective($key)
     {

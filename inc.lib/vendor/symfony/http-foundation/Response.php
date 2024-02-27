@@ -536,7 +536,7 @@ class Response
      * can be reused by a cache with heuristic expiration unless otherwise indicated"
      * (https://tools.ietf.org/html/rfc7231#section-6.1)
      *
-     * @return bool true if the response is worth caching, false otherwise
+     * @return boolean true if the response is worth caching, false otherwise
      *
      * @final since version 3.3
      */
@@ -560,7 +560,7 @@ class Response
      * origin. A response is considered fresh when it includes a Cache-Control/max-age
      * indicator or Expires header and the calculated age is less than the freshness lifetime.
      *
-     * @return bool true if the response is fresh, false otherwise
+     * @return boolean true if the response is fresh, false otherwise
      *
      * @final since version 3.3
      */
@@ -573,7 +573,7 @@ class Response
      * Returns true if the response includes headers that can be used to validate
      * the response with the origin server using a conditional GET request.
      *
-     * @return bool true if the response is validateable, false otherwise
+     * @return boolean true if the response is validateable, false otherwise
      *
      * @final since version 3.3
      */
@@ -639,7 +639,7 @@ class Response
     /**
      * Returns true if the response is marked as "immutable".
      *
-     * @return bool returns true if the response is marked as "immutable"; otherwise false
+     * @return boolean returns true if the response is marked as "immutable"; otherwise false
      *
      * @final
      */
@@ -656,7 +656,7 @@ class Response
      * When present, the TTL of the response should not be overridden to be
      * greater than the value provided by the origin.
      *
-     * @return bool true if the response must be revalidated by a cache, false otherwise
+     * @return boolean true if the response must be revalidated by a cache, false otherwise
      *
      * @final since version 3.3
      */
@@ -1049,7 +1049,7 @@ class Response
     /**
      * Returns true if the response includes a Vary header.
      *
-     * @return bool true if the response includes a Vary header, false otherwise
+     * @return boolean true if the response includes a Vary header, false otherwise
      *
      * @final since version 3.2
      */
@@ -1103,7 +1103,7 @@ class Response
      * If the Response is not modified, it sets the status code to 304 and
      * removes the actual content by calling the setNotModified() method.
      *
-     * @return bool true if the Response validators match the Request, false otherwise
+     * @return boolean true if the Response validators match the Request, false otherwise
      *
      * @final since version 3.3
      */
@@ -1135,7 +1135,7 @@ class Response
     /**
      * Is response invalid?
      *
-     * @return bool
+     * @return boolean
      *
      * @see https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
      *
@@ -1149,7 +1149,7 @@ class Response
     /**
      * Is response informative?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.3
      */
@@ -1161,7 +1161,7 @@ class Response
     /**
      * Is response successful?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */
@@ -1173,7 +1173,7 @@ class Response
     /**
      * Is the response a redirect?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */
@@ -1185,7 +1185,7 @@ class Response
     /**
      * Is there a client error?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */
@@ -1197,7 +1197,7 @@ class Response
     /**
      * Was there a server side error?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.3
      */
@@ -1209,7 +1209,7 @@ class Response
     /**
      * Is the response OK?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */
@@ -1221,7 +1221,7 @@ class Response
     /**
      * Is the response forbidden?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */
@@ -1233,7 +1233,7 @@ class Response
     /**
      * Is the response a not found error?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */
@@ -1247,7 +1247,7 @@ class Response
      *
      * @param string $location
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */
@@ -1259,7 +1259,7 @@ class Response
     /**
      * Is the response empty?
      *
-     * @return bool
+     * @return boolean
      *
      * @final since version 3.2
      */

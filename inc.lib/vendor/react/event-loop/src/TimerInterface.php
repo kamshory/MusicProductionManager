@@ -21,7 +21,7 @@ interface TimerInterface
     /**
      * Determine whether the time is periodic
      *
-     * @return bool
+     * @return boolean
      */
     public function isPeriodic();
 }

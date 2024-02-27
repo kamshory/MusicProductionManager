@@ -67,7 +67,7 @@ class NullSessionHandler extends AbstractSessionHandler
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function gc($maxlifetime)
     {

@@ -208,7 +208,7 @@ final class DuplexResourceStream extends EventEmitter implements DuplexStreamInt
      * and PHP 5.5.12+ and newer.
      *
      * @param resource $resource
-     * @return bool
+     * @return boolean
      * @link https://github.com/reactphp/child-process/issues/40
      *
      * @codeCoverageIgnore
