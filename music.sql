@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 21, 2024 at 01:03 AM
+-- Generation Time: Feb 27, 2024 at 04:11 PM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -153,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `reference` (
 CREATE TABLE IF NOT EXISTS `song` (
   `song_id` varchar(50) NOT NULL,
   `random_song_id` varchar(50) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
   `title` text,
   `album_id` varchar(50) DEFAULT NULL,
   `track_number` int(11) DEFAULT NULL,
@@ -182,7 +183,8 @@ CREATE TABLE IF NOT EXISTS `song` (
   `lyric_midi_raw` longtext,
   `vocal` tinyint(1) DEFAULT '0',
   `instrument` longtext,
-  `rating` int(11) DEFAULT NULL,
+  `midi_vocal_channel` int(11) DEFAULT NULL,
+  `rating` float DEFAULT NULL,
   `comment` longtext,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,
@@ -265,6 +267,25 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_activity`
+--
+
+CREATE TABLE IF NOT EXISTS `user_activity` (
+  `user_activity_id` varchar(40) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `user_id` varchar(40) DEFAULT NULL,
+  `path` text,
+  `method` varchar(10) DEFAULT NULL,
+  `get_data` longtext,
+  `post_data` longtext,
+  `request_body` longtext,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_type`
 --
 
@@ -335,6 +356,12 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `user_activity`
+--
+ALTER TABLE `user_activity`
+  ADD PRIMARY KEY (`user_activity_id`);
 
 --
 -- Indexes for table `user_type`
