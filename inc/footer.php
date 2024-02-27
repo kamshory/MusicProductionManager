@@ -51,10 +51,11 @@
 </div>
 </div>
 </div>
-<script>
-    $(document).ready(function(e){
-        
-    })
-</script>
+
+<div class="file-uploader">
+  <input id="song_file_uploader" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3,audio/midi,application/xml,application/pdf" multiple />
+</div>
+
+
 </body>
 </html>
