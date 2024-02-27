@@ -79,9 +79,14 @@ class SongFile extends SetterGetter
     public function __construct($song)
     {
         $this->songId = $song->getSongId();
-        $this->mp3Path = $song->getFilePathMp3();
+        $this->mp3Path = $song->getFilePath();
         $this->midiPath = $song->getFilePathMidi();
         $this->pdfPath = $song->getFilePathPdf();
         $this->xmlPath = $song->getFilePathXml();
+
+        $this->mp3Exists = $song->getFilePath() != null;
+        $this->midiExists = $song->getFilePathMidi() != null;
+        $this->pdfExists = $song->getFilePathPdf() != null;
+        $this->xmlExists = $song->getFilePathXml() != null;
     }
 }

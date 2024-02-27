@@ -371,7 +371,10 @@ $inputGet = new PicoRequest(INPUT_GET);
 
   foreach ($result as $song) {
     $songFile = new SongFile($song);
-    $button1 = SongFileUtil::createDownloadButton($songFile);
+    $buttonMp3 = SongFileUtil::createDownloadButton($songFile, 'mp3', 'MP3', 'read-file.php', '_blank');
+    $buttonMidi = SongFileUtil::createDownloadButton($songFile, 'midi', 'MIDI', 'read-file.php', '_blank');
+    $buttonXml = SongFileUtil::createDownloadButton($songFile, 'xml', 'xml', 'read-file.php', '_blank');
+    $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
 
     <div class="col-sm-6 col-xl-3">
@@ -383,10 +386,10 @@ $inputGet = new PicoRequest(INPUT_GET);
             <div class="col-7 justify-content-end text-end">
               <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
               <a href="javascript;" onclick="uploadFile('<?php echo $song->getSongId(); ?>'); return false" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
-              <a href="read-file.php?type=mp3&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MP3</a>
-              <a href="read-file.php?type=midi&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> MID</a>
-              <a href="read-file.php?type=xml&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> XML</a>
-              <a href="read-file.php?type=pdf&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success" target="_blank"><span class="ti ti-download"></span> PDF</a>
+              <?php echo $buttonMp3;?>
+              <?php echo $buttonMidi;?>
+              <?php echo $buttonXml;?>
+              <?php echo $buttonPdf;?>
             </div>
           </div>
           <div class="d-flex align-items-center justify-content-between">

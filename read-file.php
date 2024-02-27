@@ -23,7 +23,7 @@ function downloadPerSong($inputGet, $song)
         header(HttpHeaderConstant::CONTENT_TYPE . "audio/mp3");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePath()));
-        readfile($song->getFilePathMidi());
+        readfile($song->getFilePath());
     }
     if ($inputGet->equalsType('midi') && file_exists($song->getFilePathMidi())) {
         $filename = $song->getTitle() . ".mid";

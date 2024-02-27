@@ -130,7 +130,17 @@ class SongFileUtil
     public static function createDownloadButton($songFile, $type, $caption, $baseUrl, $target)
     {
         $songId = $songFile->getSongId();
-        $format = '<a href="%s?type=%s&song_id=%s" class="btn btn-sm btn-tn btn-success" target="%s"><span class="ti ti-download"></span> %s</a>';
-        return sprintf($format, $baseUrl, $type, $songId, $target, $caption);
+        $exists = false;
+        $exists = ($type == 'mp3' && $songFile->getMp3Exists()) || ($type == 'xml' && $songFile->getXmlExists()) || ($type == 'midi' && $songFile->getMidiExists()) || ($type == 'pdf' && $songFile->getPdfExists());       
+        if(!$exists)
+        {
+            $format = '<a href="javascript:;" data-href="%s?type=%s&song_id=%s" class="btn btn-sm btn-tn btn-warning" target="%s"><span class="ti ti-download"></span> %s</a>';
+            return sprintf($format, $baseUrl, $type, $songId, $target, $caption);
+        }
+        else
+        {
+            $format = '<a href="%s?type=%s&song_id=%s" class="btn btn-sm btn-tn btn-success" target="%s"><span class="ti ti-download"></span> %s</a>';
+            return sprintf($format, $baseUrl, $type, $songId, $target, $caption);
+        }
     }
 }
