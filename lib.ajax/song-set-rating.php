@@ -8,7 +8,7 @@ use MagicObject\Response\PicoResponse;
 require_once dirname(__DIR__)."/inc/auth.php";
 
 $inputPost = new PicoRequest(INPUT_POST);
-$rating = $inputPost->getRating() * 2;
+$rating = $inputPost->getRating() * 1;
 
 try
 {
@@ -19,7 +19,7 @@ try
     $song1->update();
     
     $response = new stdClass();
-    $response->rating = $rating / 2;
+    $response->rating = $rating;
     $response->song_id = $song1->getSongId();
     $restResponse = new PicoResponse();    
     $restResponse->sendResponseJSON($response, null, PicoHttpStatus::HTTP_OK);
