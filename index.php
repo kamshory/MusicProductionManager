@@ -382,7 +382,7 @@ $inputGet = new PicoRequest(INPUT_GET);
         <div class="card-body pt-3 p-4">
 
           <div class="d-flex align-items-center justify-content-between">
-            <h6 class="fw-semibold fs-4 col-5"><?php echo $song->getTitle(); ?></h6>
+            <h6 class="fw-semibold fs-4 col-5"><?php echo $song->getName(); ?></h6>
             <div class="col-7 justify-content-end text-end">
               <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
               <a href="javascript;" onclick="uploadFile('<?php echo $song->getSongId(); ?>'); return false" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>

@@ -33,7 +33,7 @@ if($inputGet->equalsAction(PicoRequest::ACTION_DETAIL) && $inputGet->getSongId()
         </tr>
         <tr>
           <td>Title</td>
-          <td><?php echo $song->getTitle();?></td>
+          <td><?php echo $song->getName();?></td>
         </tr>
         <tr>
           <td>Duration</td>
@@ -257,7 +257,7 @@ if(!empty($result))
             <div class="song-wrapper" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>">
             <button class="btn btn-success" onclick="push('<?php echo $songId;?>')">Push</button>
             <button class="btn btn-primary" onclick="start('<?php echo $songId;?>', this)">Start</button>          
-            <?php echo $song->getTitle();?>
+            <?php echo $song->getName();?>
             </div>
         <?php
         }

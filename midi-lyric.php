@@ -45,7 +45,7 @@ if (isset($song)) {
 		<link rel="stylesheet" type="text/css" href="assets/css/midi-player.css" />
 		<link rel="stylesheet" type="text/css" href="assets/css/midi-lyric-editor.css" />
 
-		<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle(); ?></h3>
+		<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getName(); ?></h3>
 		<?php
 require_once __DIR__ . "/inc/menu-song.php";
 ?>

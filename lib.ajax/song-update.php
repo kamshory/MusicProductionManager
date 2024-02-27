@@ -39,6 +39,7 @@ function updateAlbum($database, $albumId)
 }
 
 $inputPost = new PicoRequest(INPUT_POST);
+$inputPost->filterName(FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->filterTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->checkboxActive(false);
 $inputPost->checkboxVocal(false);

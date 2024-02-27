@@ -42,6 +42,12 @@ $song->findOneBySongId($inputGet->getSongId());
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
+                                        <td>Name</td>
+                                        <td>
+                                            <input type="text" class="form-control" name="name" value="<?php echo $song->getName();?>">
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>Title</td>
                                         <td>
                                             <input type="text" class="form-control" name="title" value="<?php echo $song->getTitle();?>">
@@ -101,7 +107,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                     <tr>
                                         <td>Score</td>
                                         <td>
-                                            <input type="number" class="form-control" name="rating" min="0" max="10" value="<?php echo $song->hasValueRating() ? $song->getRating() : '';?>">
+                                            <input type="number" class="form-control" name="rating" min="0" max="5" step="any" value="<?php echo $song->hasValueRating() ? $song->getRating() : '';?>">
                                         </td>
                                         </tr>
                                     <tr>

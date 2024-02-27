@@ -29,6 +29,12 @@ class EntitySong extends MagicObject
 	protected $randomSongId;
 
 	/**
+	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @var string
+	 */
+	protected $name;
+
+	/**
 	 * @Column(name="title", type="text", nullable=true)
 	 * @var string
 	 */
@@ -213,8 +219,8 @@ class EntitySong extends MagicObject
 	protected $midiVocalChannel;
 
 	/**
-	 * @Column(name="rating", type="int", length=11, nullable=true)
-	 * @var integer
+	 * @Column(name="rating", type="float", nullable=true)
+	 * @var float
 	 */
 	protected $rating;
 

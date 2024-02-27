@@ -3,7 +3,6 @@
 namespace MusicProductionManager\Utility;
 
 use MagicObject\Database\PicoPredicate;
-use MagicObject\Database\PicoSpecification as DatabasePicoSpecification;
 use MagicObject\Database\PicoSpecification;
 use MagicObject\Request\PicoRequest;
 
@@ -13,7 +12,7 @@ class SpecificationUtil
     /**
      * Create MIDI specification
      * @param PicoRequest $name
-     * @return DatabasePicoSpecification
+     * @return PicoSpecification
      */
     public static function createMidiSpecification($inputGet)
     {
@@ -37,6 +36,13 @@ class SpecificationUtil
         {
             $predicate1 = new PicoPredicate();
             $predicate1->equals('albumId', $inputGet->getAlbumId());
+            $spesification->addAnd($predicate1);
+        }
+
+        if($inputGet->getName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->like('name', PicoPredicate::generateCenterLike($inputGet->getName()));
             $spesification->addAnd($predicate1);
         }
 
@@ -89,11 +95,16 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getTitle() != "")
+        if($inputGet->getName() != "")
         {
+            $spesificationTitle = new PicoSpecification();
             $predicate1 = new PicoPredicate();
-            $predicate1->like('title', PicoPredicate::generateCenterLike($inputGet->getTitle()));
-            $spesification->addAnd($predicate1);
+            $predicate1->like('name', PicoPredicate::generateCenterLike($inputGet->getName()));
+            $spesificationTitle->addOr($predicate1);
+            $predicate2 = new PicoPredicate();
+            $predicate2->like('title', PicoPredicate::generateCenterLike($inputGet->getName()));
+            $spesificationTitle->addOr($predicate2);
+            $spesification->addAnd($spesificationTitle);
         }
 
         if($inputGet->getLyric() != "")

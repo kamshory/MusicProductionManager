@@ -28,7 +28,7 @@ if($inputGet->equalsAction('download') && $inputGet->getSongId() != null)
     $song->findOneBySongId($inputGet->getSongId());
     if(file_exists($song->getFilePathMidi()))
     {
-      $filename = $song->getTitle().".mid";
+      $filename = $song->getName().".mid";
       header("Content-disposition: attachment; filename=\"$filename\"");
       header("Content-type: audio/midi");
       readfile($song->getFilePathMidi());
@@ -110,6 +110,10 @@ else if($inputGet->equalsAction(PicoRequest::ACTION_DETAIL) && $inputGet->getSon
         <tr>
           <td>Song ID</td>
           <td><?php echo $song->getSongId();?></td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><?php echo $song->getName();?></td>
         </tr>
         <tr>
           <td>Title</td>
@@ -257,7 +261,7 @@ else
     </div>
     <div class="filter-group">
         <span>Title</span>
-        <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+        <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
     
     <div class="filter-group">
@@ -293,8 +297,9 @@ else
 </div>
 <?php
 $orderMap = array(
+    'name'=>'name',
     'title'=>'title', 
-    'score'=>'score',
+    'rating'=>'rating',
     'albumId'=>'albumId', 
     'album'=>'albumId', 
     'trackNumber'=>'trackNumber',
@@ -374,6 +379,7 @@ if(!empty($result))
         <th scope="col" width="20"><i class="ti ti-download"></i></th>
         <th scope="col" width="20"><i class="ti ti-player-play"></i></th>
         <th scope="col" width="20">#</th>
+        <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
@@ -408,6 +414,7 @@ if(!empty($result))
         <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
+        <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $song->getName();?></a></td>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
         <td class="text-data text-data-rating"><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td class="text-data text-data-album-name"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
@@ -537,7 +544,7 @@ if(!empty($result))
           let title = data.title;
           let active = data.active;
           $('[data-id="'+dataId+'"] .text-data.text-data-title').text(data.title);
-          $('[data-id="'+dataId+'"] .text-data.text-data-rating').text(data.score);
+          $('[data-id="'+dataId+'"] .text-data.text-data-rating').text(data.rating);
           $('[data-id="'+dataId+'"] .text-data.text-data-track-number').text(data.track_number);
           $('[data-id="'+dataId+'"] .text-data.text-data-artist-vocal-name').text(data.artist_vocal_name);
           $('[data-id="'+dataId+'"] .text-data.text-data-artist-composer-name').text(data.artist_composer_name);

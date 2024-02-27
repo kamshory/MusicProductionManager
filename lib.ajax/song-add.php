@@ -12,6 +12,7 @@ require_once dirname(__DIR__)."/inc/auth.php";
 $songId = $database->generateNewId();
 
 $inputPost = new PicoRequest(INPUT_POST);
+$inputPost->filterName(FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->filterTitle(FILTER_SANITIZE_SPECIAL_CHARS);
 
 $randomSongId = $inputPost->getRandomSongId();

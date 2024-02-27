@@ -362,7 +362,7 @@ if(!empty($result))
         <tr>
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
-        <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getTitle();?></a></td>
+        <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getName();?></a></td>
         <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
         <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
         <td><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : "";?></td>

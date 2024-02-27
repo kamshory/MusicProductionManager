@@ -1,8 +1,8 @@
 <?php
 
 namespace MusicProductionManager\Data\Entity;
-
 use MagicObject\MagicObject;
+
 
 /**
  * @Entity

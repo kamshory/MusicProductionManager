@@ -37,7 +37,7 @@ $song = new Song(null, $database);
 $song->findOneBySongId($songId);
 ?>
 <div class="song-tite">
-    <h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle();?></h3>
+    <h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getName();?></h3>
 </div>
 
 <?php
@@ -348,8 +348,9 @@ else
 <?php
 $orderMap = array(
     'songId'=>'songId',
+    'name'=>'name',
     'title'=>'title', 
-    'score'=>'score',
+    'rating'=>'rating',
     'albumId'=>'albumId', 
     'album'=>'albumId',
     'trackNumber'=>'trackNumber', 
@@ -419,6 +420,7 @@ if(!empty($result))
         <tr>
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
         <th scope="col" width="20">#</th>
+        <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
@@ -444,6 +446,7 @@ if(!empty($result))
         <tr>
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
+        <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getName();?></a></td>
         <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getTitle();?></a></td>
         <td><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>

@@ -19,26 +19,26 @@ require_once "inc/auth-with-login-form.php";
 function downloadPerSong($inputGet, $song)
 {
     if ($inputGet->equalsType('mp3') && file_exists($song->getFilePath())) {
-        $filename = $song->getTitle() . ".mp3";
+        $filename = $song->getName() . ".mp3";
         header(HttpHeaderConstant::CONTENT_TYPE . "audio/mp3");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePath()));
         readfile($song->getFilePath());
     }
     if ($inputGet->equalsType('midi') && file_exists($song->getFilePathMidi())) {
-        $filename = $song->getTitle() . ".mid";
+        $filename = $song->getName() . ".mid";
         header(HttpHeaderConstant::CONTENT_TYPE . "audio/midi");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathMidi()));
         readfile($song->getFilePathMidi());
     } else if ($inputGet->equalsType('pdf') && file_exists($song->getFilePathPdf())) {
-        $filename = $song->getTitle() . ".pdf";
+        $filename = $song->getName() . ".pdf";
         header(HttpHeaderConstant::CONTENT_TYPE . "application/pdf");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathPdf()));
         readfile($song->getFilePathPdf());
     } else if ($inputGet->equalsType('xml') && file_exists($song->getFilePathXml())) {
-        $filename = $song->getTitle() . ".xml";
+        $filename = $song->getName() . ".xml";
         header(HttpHeaderConstant::CONTENT_TYPE . "application/xml");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathXml()));
@@ -48,7 +48,7 @@ function downloadPerSong($inputGet, $song)
         $zip = new ZipArchive();
         downloadSongFiles($zip, $path, $song);
         $zip->close();
-        $filename = $song->getTitle() . ".zip";
+        $filename = $song->getName() . ".zip";
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_TYPE . "application/zip");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($path));
@@ -83,9 +83,9 @@ function downloadSongFiles($zip, $path, $song, $perAlbum = false)
             addFileXml($zip, $song, $perAlbum);
         }
         if ($perAlbum) {
-            $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".srt";
+            $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getName() . ".srt";
         } else {
-            $filename = $song->getTitle() . ".srt";
+            $filename = $song->getName() . ".srt";
         }
         $buff = $song->getLyric();
         $zip->addFromString($filename, $buff);
@@ -103,9 +103,9 @@ function downloadSongFiles($zip, $path, $song, $perAlbum = false)
 function addFileMp3($zip, $song, $perAlbum)
 {
     if ($perAlbum) {
-        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".mp3";
+        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getName() . ".mp3";
     } else {
-        $filename = $song->getTitle() . ".mp3";
+        $filename = $song->getName() . ".mp3";
     }
     $buff = file_get_contents($song->getFilePath());
     $zip->addFromString($filename, $buff);
@@ -124,12 +124,12 @@ function addFileMidi($zip, $song, $perAlbum)
 {
     $buff = file_get_contents($song->getFilePathMidi());
     if ($perAlbum) {
-        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".mid";
+        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getName() . ".mid";
         $zip->addFromString($filename, $buff);
-        $filename = str_replace(" ", "", $song->getTitle()) . ".mid";
+        $filename = str_replace(" ", "", $song->getName()) . ".mid";
         $zip->addFromString($filename, $buff);
     } else {
-        $filename = $song->getTitle() . ".mid";
+        $filename = $song->getName() . ".mid";
     }
     $zip->addFromString($filename, $buff);
     return $zip;
@@ -146,9 +146,9 @@ function addFileMidi($zip, $song, $perAlbum)
 function addFilePdf($zip, $song, $perAlbum)
 {
     if ($perAlbum) {
-        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".pdf";
+        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getName() . ".pdf";
     } else {
-        $filename = $song->getTitle() . ".pdf";
+        $filename = $song->getName() . ".pdf";
     }
     $buff = file_get_contents($song->getFilePathPdf());
     $zip->addFromString($filename, $buff);
@@ -166,9 +166,9 @@ function addFilePdf($zip, $song, $perAlbum)
 function addFileXml($zip, $song, $perAlbum)
 {
     if ($perAlbum) {
-        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getTitle() . ".xml";
+        $filename = sprintf("%02d", $song->getTrackNumber()) . " - " . $song->getName() . ".xml";
     } else {
-        $filename = $song->getTitle() . ".xml";
+        $filename = $song->getName() . ".xml";
     }
     $buff = file_get_contents($song->getFilePathXml());
     $zip->addFromString($filename, $buff);

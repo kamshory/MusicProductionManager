@@ -32,7 +32,7 @@ if (isset($song)) {
 
 ?>
 
-<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getTitle();?></h3>
+<h3 style="font-size: 18px; padding-bottom:2px;"><?php echo $song->getName();?></h3>
 <?php
 require_once __DIR__ . "/inc/menu-song.php";
 ?>
@@ -43,7 +43,7 @@ require_once __DIR__ . "/inc/menu-song.php";
                     <tbody>
                         <tr>
                             <td>Title</td>
-                            <td><?php echo $song->getTitle(); ?></td>
+                            <td><?php echo $song->getName(); ?></td>
                         </tr>
                         <tr>
                             <td>Time Sinature</td>
