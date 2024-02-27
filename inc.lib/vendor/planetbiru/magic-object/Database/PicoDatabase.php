@@ -51,7 +51,7 @@ class PicoDatabase
 
 	/**
 	 * Connect to database
-	 * @return bool true if success and false if failed
+	 * @return boolean true if success and false if failed
 	 */
 	public function connect()
 	{
@@ -132,7 +132,7 @@ class PicoDatabase
 	 * Check if record is exists
 	 *
 	 * @param string $sql
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isRecordExists($sql)
 	{

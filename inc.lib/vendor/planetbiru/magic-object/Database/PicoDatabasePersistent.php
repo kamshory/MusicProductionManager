@@ -136,12 +136,13 @@ class PicoDatabasePersistent // NOSONAR
     /**
      * Set flag to skip null column
      *
-     * @param bool $skip
-     * @return void
+     * @param boolean $skip
+     * @return self
      */
     public function includeNull($skip)
     {
         $this->flagIncludeNull = $skip;
+        return $this;
     }
     
     /**
@@ -310,7 +311,7 @@ class PicoDatabasePersistent // NOSONAR
      * Get match row
      *
      * @param PDOStatement $stmt
-     * @return bool
+     * @return boolean
      */
     public function matchRow($stmt)
     {
@@ -325,7 +326,7 @@ class PicoDatabasePersistent // NOSONAR
     /**
      * Save data to database
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PDOStatement
      */
     public function save($includeNull = false)
@@ -628,7 +629,7 @@ class PicoDatabasePersistent // NOSONAR
      * Add generated value
      *
      * @param stdClass $info
-     * @param bool $fisrtCall
+     * @param boolean $fisrtCall
      * @return void
      */
     private function addGeneratedValue($info, $fisrtCall)
@@ -686,7 +687,7 @@ class PicoDatabasePersistent // NOSONAR
     /**
      * Insert data
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PDOStatement
      */
     public function insert($includeNull = false)
@@ -1629,7 +1630,7 @@ class PicoDatabasePersistent // NOSONAR
      * Check if data is not null and not empty and not a space
      *
      * @param string $value
-     * @return bool
+     * @return boolean
      */
     private function notNullAndNotEmptyAndNotSpace($value)
     {
@@ -1723,7 +1724,7 @@ class PicoDatabasePersistent // NOSONAR
      * Boolean value
      *
      * @param mixed $value
-     * @return bool
+     * @return boolean
      */
     private function boolval($value)
     {
@@ -1794,7 +1795,7 @@ class PicoDatabasePersistent // NOSONAR
     /**
      * Check if date time is NULL
      * @param string $value
-     * @return bool
+     * @return boolean
      */
     private function isDateTimeNull($value)
     {

@@ -56,7 +56,7 @@ namespace MagicObject\Util;
 \*============================================================================*/
 
 
-class WebsocketClient
+class PicoWebsocketClient
 {
 
   public static function websocketOpen($host = '', $port = 80, $headers = array(), &$error_string = '', $timeout = 10, $ssl = false, $persistant = false, $path = '/', $context = null) // NOSONAR
@@ -86,19 +86,15 @@ class WebsocketClient
 
     // Connect to server
     $host = $host ? $host : "127.0.0.1";
-    
-    if($port < 1)
-    {
-      if($ssl)
-      {
+
+    if ($port < 1) {
+      if ($ssl) {
         $port = 443;
-      }
-      else
-      {
+      } else {
         $port = 80;
       }
     }
-    
+
     $address = ($ssl ? 'ssl://' : '') . $host . ':' . $port;
 
     $flags = STREAM_CLIENT_CONNECT | ($persistant ? STREAM_CLIENT_PERSISTENT : 0);
@@ -181,19 +177,24 @@ class WebsocketClient
     return fwrite($sp, $header . $data);
   }
 
-  /*============================================================================*\
-  Read from websocket
-  string websocketRead(resource $handle [,string &error_string])
-  read a chunk of data from the server, using hybi10 frame encoding
-  handle
-    the resource handle returned by websocketOpen, if successful
-  error_string (optional)
-    A referenced variable to store error messages, i any
-  Read
-  Note:
-    - This implementation waits for the final chunk of data, before returning.
-    - Reading data while handling/ignoring other kind of packages
- \*============================================================================*/
+  /**
+   * Read from websocket
+   *   string websocketRead(resource $handle [,string &error_string])
+   *   read a chunk of data from the server, using hybi10 frame encoding
+   *   handle
+   *     the resource handle returned by websocketOpen, if successful
+   *   error_string (optional)
+   *     A referenced variable to store error messages, i any
+   *   Read
+   *   Note:
+   *     - This implementation waits for the final chunk of data, before returning.
+   *     - Reading data while handling/ignoring other kind of packages
+   *
+   * @param resource $sp
+   * @param integer $error_code
+   * @param string $error_string
+   * @return mixed
+   */
   public static function websocketRead($sp, &$error_code = null, &$error_string = null) // NOSONAR
   {
     $data = "";
@@ -321,7 +322,7 @@ class WebsocketClient
     }
     return $decodedData;
   }
-  
+
   private static function getFrameHead0($type)
   {
     $frameHead = 0;

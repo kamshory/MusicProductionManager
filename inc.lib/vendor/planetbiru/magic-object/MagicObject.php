@@ -128,7 +128,7 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from INI file
      *
      * @param string $path
-     * @param bool $systemEnv
+     * @param boolean $systemEnv
      * @return self
      */
     public function loadIniFile($path, $systemEnv = false)
@@ -148,7 +148,7 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from Yaml file
      *
      * @param string $path
-     * @param bool $systemEnv
+     * @param boolean $systemEnv
      * @return self
      */
     public function loadYamlFile($path, $systemEnv = false, $asObject = false)
@@ -176,7 +176,7 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from JSON file
      *
      * @param string $path
-     * @param bool $systemEnv
+     * @param boolean $systemEnv
      * @return self
      */
     public function loadJsonFile($path, $systemEnv = false, $asObject = false)
@@ -203,7 +203,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Set readonly. When object is set to readonly, setter will not change value of its properties but loadData still works fine
      *
-     * @param bool $readonly
+     * @param boolean $readonly
      * @return self
      */
     protected function readOnly($readonly)
@@ -263,7 +263,7 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Save to database
-     * @param bool $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
+     * @param boolean $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
      * @return PDOStatement
      * NoDatabaseConnectionException|NoRecordFoundException|PDOException
      */
@@ -308,7 +308,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Insert into database
      *
-     * @param bool $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
+     * @param boolean $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
      * @return PDOStatement
      * @throws NoDatabaseConnectionException|PDOException
      */
@@ -328,7 +328,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Update data on database
      *
-     * @param bool $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
+     * @param boolean $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
      * @return PDOStatement
      * @throws NoDatabaseConnectionException|PDOException
      */
@@ -422,7 +422,7 @@ class MagicObject extends stdClass // NOSONAR
      *
      * @param string $propertyName
      * @param mixed|null
-     * @param bool $skipModifyNullProperties
+     * @param boolean $skipModifyNullProperties
      * @return self
      */
     public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
@@ -468,7 +468,7 @@ class MagicObject extends stdClass // NOSONAR
      *
      * @param self|mixed $source
      * @param array $filter
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return void
      */
     public function copyValueFrom($source, $filter = null, $includeNull = false)
@@ -502,7 +502,7 @@ class MagicObject extends stdClass // NOSONAR
      * Unset property value
      *
      * @param string $propertyName
-     * @param bool $skipModifyNullProperties
+     * @param boolean $skipModifyNullProperties
      * @return self
      */
     private function removeValue($propertyName, $skipModifyNullProperties = false)
@@ -513,7 +513,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Get default value
      *
-     * @param bool $snakeCase
+     * @param boolean $snakeCase
      * @return stdClass
      */
     public function defatultValue($snakeCase = false)
@@ -643,7 +643,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     protected function _snake()
     {
@@ -656,7 +656,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      *  Check if JSON naming strategy is upper camel case or not
      *
-     * @return bool
+     * @return boolean
      */
     protected function isUpperCamel()
     {
@@ -669,7 +669,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Check if JSON naming strategy is camel case or not
      *
-     * @return bool
+     * @return boolean
      */
     protected function _camel()
     {
@@ -679,7 +679,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     protected function _pretty()
     {
@@ -693,7 +693,7 @@ class MagicObject extends stdClass // NOSONAR
      * Check if data is not null and not empty
      *
      * @param mixed $value
-     * @return bool
+     * @return boolean
      */
     private function _notNullAndNotEmpty($value)
     {
@@ -757,7 +757,7 @@ class MagicObject extends stdClass // NOSONAR
      * @param PicoSpecification $specification
      * @param PicoPagable|string $pagable
      * @param PicoSortable|string $sortable
-     * @param bool $passive
+     * @param boolean $passive
      * @return PicoPageData
      * @throws NoRecordFoundException if no record found
      * @throws NoDatabaseConnectionException if no database connection
@@ -829,7 +829,7 @@ class MagicObject extends stdClass // NOSONAR
      * @param mixed $params
      * @param PicoPagable $pagable
      * @param PicoSortable|string $sortable
-     * @param bool $passive
+     * @param boolean $passive
      * @return PicoPageData
      * @throws NoRecordFoundException|NoDatabaseConnectionException
      */
@@ -941,7 +941,7 @@ class MagicObject extends stdClass // NOSONAR
      * @param string $method
      * @param mixed $params
      * @param string $orderType
-     * @return bool
+     * @return boolean
      */
     private function existsBy($method, $params)
     {
@@ -981,7 +981,7 @@ class MagicObject extends stdClass // NOSONAR
      * Convert to array object
      *
      * @param array $result
-     * @param bool $passive
+     * @param boolean $passive
      * @return array
      */
     private function toArrayObject($result, $passive = false)
@@ -1312,7 +1312,7 @@ class MagicObject extends stdClass // NOSONAR
      * Stringify object
      *
      * @param self $value
-     * @param bool $snake
+     * @param boolean $snake
      * @return mixed
      */
     private function stringifyObject($value, $snake)
