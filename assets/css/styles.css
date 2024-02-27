@@ -20451,3 +20451,7 @@ ul {
 .timeline-widget .timeline-item .timeline-badge.badge-primary {
     border: 2px solid #5D87FF
 }
+
+.progress-bar-container .progress-upload{
+    margin: 2px 0;
+}

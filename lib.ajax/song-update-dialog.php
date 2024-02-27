@@ -31,7 +31,7 @@ $song->findOneBySongId($inputGet->getSongId());
                             <use href="#icon-imageUpload"></use>
                         </svg>
                         <p class="small my-2">Drag &amp; drop song into this region<br><i>or</i></p>
-                        <input id="upload_image_background" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3,audio/midi,application/xml,application/pdf" />
+                        <input id="upload_image_background" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3,audio/midi,application/xml,application/pdf" multiple />
                         <label class="btn btn-primary mb-3" for="upload_image_background">Choose File</label>
                         <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
                     </fieldset>
@@ -119,8 +119,8 @@ $song->findOneBySongId($inputGet->getSongId());
                                     
                                 </tbody>
                             </table>
-                            <div class="progress-upload">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            <div class="progress-bar-container progress-bar-container-update">
+                                
                             </div>
                             <div class="loader-icon">&nbsp;</div>
                         </form>
