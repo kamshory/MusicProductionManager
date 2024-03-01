@@ -295,7 +295,7 @@ function Piano(elem) {
             marker.classList.add('octave-marker');
             marker.style.width = ((7 * this.factor) - 1) + 'px';
             marker.style.left = (offsetLeft - 0) + 'px';
-            marker.innerText = i;
+            marker.innerText = 'Octave '+i;
             octave.appendChild(marker);
             offsetLeft += 7 * this.factor;
         }    
