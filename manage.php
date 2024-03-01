@@ -279,6 +279,67 @@ $result = $rowData->getResult();
 if(!empty($result))
 {
 ?>
+
+<link rel="stylesheet" href="assets/rateyo/rateyo.css">
+<script src="assets/rateyo/rateyo.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.song-rating').each(function(e) {
+      let rate = parseFloat($(this).attr('data-rate'));
+      $(this).rateYo({
+        rating: rate,
+        starWidth: "16px"
+      });
+    });
+
+    $('.song-rating').rateYo().on('rateyo.set', function(e, data) {
+      setRateEvent(e, data);
+    });
+
+  });
+  
+  function setRateEvent(e, data)
+  {
+    let songId = $(e.currentTarget).attr('data-song-id');
+      $.ajax({
+        type: 'POST',
+        url: 'lib.ajax/song-set-rating.php',
+        dataType: 'json',
+        data: {
+          song_id: songId,
+          rating: data.rating
+        },
+        success: function(response) {
+          updateRate(response);
+        }
+      });
+  }
+  function updateRate(response)
+  {
+    let selector = '.song-rating[data-song-id="'+response.song_id+'"]';
+    let newRate = $('<div />');
+    $(selector).replaceWith(newRate);
+    newRate.addClass("song-rating");
+    newRate.addClass("half-star-ratings");
+    newRate.attr("data-rateyo-half-star", "true");
+    newRate.attr('data-song-id', response.song_id);
+    newRate.attr('data-rate', response.rating);
+  
+    $(selector).rateYo({
+      rating: parseFloat(response.rating),
+      starWidth: "16px"
+    });
+    $(selector).rateYo().on('rateyo.set', function(e, data) {
+      setRateEvent(e, data);
+    });
+  }
+</script>
+<style>
+  .btn-tn {
+    font-size: 0.7em;
+  }
+</style>
+
 <div class="pagination">
     <div class="pagination-number">
     <?php
@@ -289,6 +350,8 @@ if(!empty($result))
     ?>
     </div>
 </div>
+
+
 
 <div class="row">
 <?php
