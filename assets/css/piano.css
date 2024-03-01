@@ -1,0 +1,86 @@
+.piano {
+    width: 336px;
+    margin: 20px auto 0 auto;
+    position: relative;
+    height: 62px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 54px;
+}
+
+.piano-inner{
+    border: 1px solid #DDDDDD;
+    border-right: none;
+    height: 62px;
+}
+.piano-inner > .piano-tuts:nth-child(1)
+{
+    border-left: 1px solid #DDDDDD;
+}
+
+.piano-tuts-white {
+    background-color: #FFFFFF;
+    border-right: 1px solid #DDDDDD;
+    box-sizing: border-box;
+    position: absolute;
+    height: 60px;
+}
+
+.piano-tuts-white.note-on {
+    background-color: rgb(255, 169, 9);
+}
+
+.piano-tuts-black {
+    background-color: #111111;
+    box-sizing: border-box;
+    position: absolute;
+    height: 30px;
+}
+
+.piano-tuts-black.note-on {
+    background-color: rgb(255, 169, 9);
+}
+
+.lyric-item {
+    position: absolute;
+    z-index: 20;
+    top: -30px;
+    width: 50px;
+    text-align: center;
+    padding: 1px 2px;
+    box-sizing: border-box;
+    height: 24px;
+    background-color: #12619d;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    line-height: 1;
+    align-items: center;
+    border-radius: 3.5px;
+    font-size: 12px;
+}
+
+.lyric-item:after {
+    content: "";
+    position: absolute;
+    border-left: 7.5px solid rgba(0, 0, 0, 0);
+    border-right: 7.5px solid rgba(0, 0, 0, 0);
+    border-bottom: 7.5px solid rgba(0, 0, 0, 0);
+    border-top: 7.5px solid #12619d;
+    display: inline-block;
+    height: 15px;
+    top: 24px;
+}
+.piano-octave{
+    padding-top: 4px;
+}
+.octave-marker{
+    position: absolute;
+    top: 64px;
+    width: 10px;
+    height: 16px;
+    border: solid #DDDDDD;
+    border-width: 0px 1px 1px 1px;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 12px;
+}
