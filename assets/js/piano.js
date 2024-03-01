@@ -129,6 +129,14 @@ function Piano(elem) {
         }
         this.min = songMin - (songMin % 12);
         this.max = 12 + songMax - (songMax % 12);
+        if(this.max - this.min <= 24)
+        {
+            this.factor = 20;
+        }
+        else
+        {
+            this.factor = 14;
+        }
         this.createPiano();
     }
     
@@ -169,9 +177,9 @@ function Piano(elem) {
         this.clearTuts();
         let lyricContainer = this.element.querySelector('.lyric-container');
         lyricContainer.innerHTML = "";
-        for(let i = 0; i<notes.length;i++)
+        for(let note of notes)
         {
-            this.setNoteOn(notes[i]);
+            this.setNoteOn(note);
         }
     }
     
@@ -190,9 +198,9 @@ function Piano(elem) {
     this.clearTuts = function()
     {
         let tuts = this.element.querySelectorAll('.piano-tuts');
-        for(let i = 0; i < tuts.length; i++)
+        for(let tut of tuts)
         {
-            tuts[i].classList.remove('note-on');
+            tut.classList.remove('note-on');
         }
     }
     

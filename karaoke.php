@@ -101,13 +101,10 @@ require_once "inc/header.php";
   </form>
 </div>
 
-    <script src="assets/js/karaoke.js"></script>
-    <script src="assets/js/piano.js?rand=<?php echo mt_rand(1, 99999);?>"></script>
-    <link rel="stylesheet" href="assets/css/karaoke.css">
-    <link rel="stylesheet" href="assets/css/piano.css">
-<style> 
-    
-</style>
+<link rel="stylesheet" href="assets/css/karaoke.css">
+<link rel="stylesheet" href="assets/css/piano.css">
+<script src="assets/js/karaoke.js"></script>
+<script src="assets/js/piano.js"></script>
 
 <div class="control">
     <div class="box1">
@@ -184,8 +181,12 @@ require_once "inc/header.php";
         </div>
     </div>
 </div>
-
-<div class="piano"></div>
+<style>
+    
+</style>
+<div class="piano-container">
+    <div class="piano"></div>
+</div>
 
 <div class="teleprompter">
     <div class="teleprompter-container"></div>
