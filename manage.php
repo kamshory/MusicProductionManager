@@ -410,9 +410,9 @@ foreach ($result as $song) {
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-5"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>
             <div class="list-unstyled d-flex align-items-center mb-0 me-1">
-              <span class="ti ti-music"></span> &nbsp;
-              <span class="ti ti-microphone"></span> &nbsp;
-              <span class="ti ti-message"></span> &nbsp;
+              <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-music"></span></a> &nbsp;
+              <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-microphone"></span></a> &nbsp;
+              <a href="comment.php?song_id=<?php echo $song->getSongId(); ?>&action=edit"><span class="ti ti-message"></span></a> &nbsp;
               <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating(); ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
             </div>
           </div>

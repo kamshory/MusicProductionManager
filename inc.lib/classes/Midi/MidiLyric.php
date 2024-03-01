@@ -91,9 +91,6 @@ class MidiLyric extends Midi
 				if ($type == 'Tempo') {
 					$currentTempo = $arr[2] * 1;
 				}
-				
-				
-				
 				if ($type == 'On') {
 					
 
@@ -146,7 +143,30 @@ class MidiLyric extends Midi
 				}
 			}
 		}
+		$song = $this->fixingSong($song);
 		return $song;
+	}
+
+	/**
+	 * Fixing note without note off
+	 *
+	 * @param array $song
+	 * @return array
+	 */
+	public function fixingSong($song)
+	{
+		$keys = array_keys($song);
+		$values = array_values($song);
+		$count = count($values);
+		$count2 = $count - 2;
+		foreach($values as $index=>$value)
+		{
+			if($value['start'] == $value['end'] && $index < $count2 && $value['note'] == $values[$index + 1]['note'])
+			{
+				$values[$index]['end'] = $values[$index + 1]['start'];
+			}
+		}
+		return array_combine($keys, $values);
 	}
 
 	/**
