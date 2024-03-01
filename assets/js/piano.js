@@ -79,14 +79,14 @@ function Piano(elem) {
             width: 1,
         },
         {
-            type: 1,
-            offset: 6,
-            width: 1,
-        },
-        {
             type: 2,
             offset: 5.7,
             width: 0.8,
+        },
+        {
+            type: 1,
+            offset: 6,
+            width: 1,
         },
     ];
     
