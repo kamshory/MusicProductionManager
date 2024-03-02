@@ -2,6 +2,9 @@
 
 namespace MusicProductionManager\Utility;
 
+use Exception;
+use getID3;
+use getid3_writetags;
 use MusicProductionManager\Data\Dto\SongFile;
 use MusicProductionManager\File\FileMp3;
 
@@ -54,6 +57,19 @@ class SongFileUtil
     {
         $content = self::getContent($path, 100);
         return stripos($content, '%PDF') === 0;
+    }
+
+    public static function isImageFile($path)
+    {
+        try
+        {
+            $imageSize = getimagesize($path);
+            return $imageSize != null && is_array($imageSize);
+        }
+        catch(Exception $e)
+        {
+            return false;
+        }
     }
     
     /**
@@ -120,7 +136,46 @@ class SongFileUtil
         file_put_contents($path, $content);
         return $path;
     }
-    
+
+    /**
+     * Get base diretory of song file
+     *
+     * @param string $songId
+     * @param string $targetDir
+     * @return string
+     */
+    public static function getBaseName($songId, $targetDir)
+    {
+        return $targetDir."/".$songId;
+    }
+
+    public static function prepareDir($targetDir, $permission = 0755)
+    {
+        return mkdir($targetDir, $permission, true);
+    }
+
+    public static function addID3Tag($path, $tagData)
+    {
+        $getID3 = new getID3;
+
+        // Initialize getID3 tag-writing module
+        $tagwriter = new getid3_writetags;
+        $tagwriter->filename = $path;
+        $tagwriter->tagformats = array('id3v2.4');
+        $tagwriter->overwrite_tags    = true;
+        $tagwriter->remove_other_tags = true;
+        $tagwriter->tag_encoding      = 'UTF-8';
+
+        $tagwriter->tag_data = $tagData;
+
+        // write tags
+        if ($tagwriter->WriteTags()){
+            return true;
+        }else{
+            throw new Exception(implode(' : ', $tagwriter->errors));
+        }
+    }
+
     /**
      * Create button
      *

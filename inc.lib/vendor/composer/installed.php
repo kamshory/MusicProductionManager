@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '7e0a5b50884f57e6983eec1c27cf4a7f7faf7ca7',
+        'reference' => '1132243f587375398b1fcc668fb6ed229f373f79',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '7e0a5b50884f57e6983eec1c27cf4a7f7faf7ca7',
+            'reference' => '1132243f587375398b1fcc668fb6ed229f373f79',
             'dev_requirement' => false,
         ),
         'alchemy/binary-driver' => array(
@@ -56,14 +56,12 @@
             'dev_requirement' => false,
         ),
         'james-heinrich/getid3' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => 'v1.9.23',
+            'version' => '1.9.23.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../james-heinrich/getid3',
-            'aliases' => array(
-                0 => '1.9.x-dev',
-            ),
-            'reference' => 'a94fb704aee97e9b9d7b461eda6dc022f44805ed',
+            'aliases' => array(),
+            'reference' => '06c7482532ff2b3f9111b011d880ca6699c8542b',
             'dev_requirement' => false,
         ),
         'neutron/temporary-filesystem' => array(

@@ -243,7 +243,7 @@ class getID3_cached_dbm extends getID3
 		$result = parent::analyze($filename, $filesize, $original_filename, $fp);
 
 		// Save result
-		if ($key !== null) {
+		if (isset($key) && file_exists($filename)) {
 			dba_insert($key, serialize($result), $this->dba);
 		}
 

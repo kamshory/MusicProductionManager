@@ -9,6 +9,7 @@ use MusicProductionManager\File\FileMp3;
 use MusicProductionManager\File\FileUpload;
 
 
+use MusicProductionManager\Utility\Id3Tag;
 use MusicProductionManager\Utility\SongFileUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -96,7 +97,17 @@ try
         $pdfPath = SongFileUtil::savePdfFile($id, $targetDir, file_get_contents($path));
         $song->setFilePathPdf($pdfPath);
         $song->setLastUploadTimePdf($now);
-    }  
+    } 
+    else if(SongFileUtil::isImageFile($path))
+    {
+        $tagData = new Id3Tag;
+        $tagData->addAlbum('Album');
+        $tagData->addArtist('artist');
+        $tagData->addComment('Comment');
+
+        $mp3Path = $song->getFilePath();
+        SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
+    } 
     
     $song->save();
     $song->select();

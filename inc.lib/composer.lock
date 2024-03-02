@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "331ffec887ad914adba37be71154b13a",
+    "content-hash": "5c77d20d5bf098a56dd82508e97b302c",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -294,16 +294,16 @@
         },
         {
             "name": "james-heinrich/getid3",
-            "version": "dev-master",
+            "version": "v1.9.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "a94fb704aee97e9b9d7b461eda6dc022f44805ed"
+                "reference": "06c7482532ff2b3f9111b011d880ca6699c8542b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/a94fb704aee97e9b9d7b461eda6dc022f44805ed",
-                "reference": "a94fb704aee97e9b9d7b461eda6dc022f44805ed",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/06c7482532ff2b3f9111b011d880ca6699c8542b",
+                "reference": "06c7482532ff2b3f9111b011d880ca6699c8542b",
                 "shasum": ""
             },
             "require": {
@@ -329,7 +329,6 @@
                 "ext-xml": "XML extension is required for graphic modules to analyze the XML metadata.",
                 "ext-zlib": "Zlib extension is required for archive modules and compressed metadata."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -356,9 +355,9 @@
             ],
             "support": {
                 "issues": "https://github.com/JamesHeinrich/getID3/issues",
-                "source": "https://github.com/JamesHeinrich/getID3/tree/master"
+                "source": "https://github.com/JamesHeinrich/getID3/tree/v1.9.23"
             },
-            "time": "2024-02-19T15:13:15+00:00"
+            "time": "2023-10-19T13:18:49+00:00"
         },
         {
             "name": "neutron/temporary-filesystem",
@@ -2090,8 +2089,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "planetbiru/magic-object": 20,
-        "james-heinrich/getid3": 20
+        "planetbiru/magic-object": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
