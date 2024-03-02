@@ -53,7 +53,7 @@
 </div>
 
 <div class="file-uploader">
-  <input id="song_file_uploader" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3,audio/midi,application/xml,application/pdf" multiple />
+  <input id="song_file_uploader" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3,audio/midi,application/xml,application/vnd.recordare.musicxml+xml,audio/musicxml,application/pdf" multiple />
 </div>
 
 

@@ -337,3 +337,7 @@ catch(Exception $e)
 
 ```
 
+# Application
+
+One application that uses **MagicObjects** is **Music Production Manager** https://github.com/kamshory/MusicProductionManager
+
