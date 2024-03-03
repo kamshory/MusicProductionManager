@@ -4,6 +4,7 @@ use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\File\FileMp3;
 use MusicProductionManager\File\FileUpload;
@@ -100,13 +101,25 @@ try
     } 
     else if(SongFileUtil::isImageFile($path))
     {
-        $tagData = new Id3Tag;
-        $tagData->addAlbum('Album');
-        $tagData->addArtist('artist');
-        $tagData->addComment('Comment');
+        $song->setFilePathJpeg($pdfPath);
+        $song->setLastUploadTimeJpeg($now);
 
         $mp3Path = $song->getFilePath();
-        SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
+        if($mp3Path != null && !empty($mp3Path) && file_exists($mp3Path))
+        {
+            $entitySong = new EntitySong(null, $database);
+            $entitySong->findOneBySongId($song->getSongId());
+
+            $album = $entitySong->hasValueAlbum() ? $entitySong->getAlbum()->getName() : "";
+            $artist = $entitySong->hasValueArtistVocal() ? $entitySong->ArtistVocal()->getName() : "";
+
+            $tagData = new Id3Tag;
+            $tagData->addAlbum($album);
+            $tagData->addArtist($artist);
+            $tagData->addComment('Comment');
+           
+            SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
+        }
     } 
     
     $song->save();
