@@ -5,8 +5,7 @@ use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserTypeDto;
 use MusicProductionManager\Data\Entity\UserType;
-
-
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -35,6 +34,9 @@ try
     $userType->setAdminEdit($currentLoggedInUser->getUserId());
     
     $userType->update();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user type ".$userType->getUserTypeId(), $inputGet, $inputPost);
+    
     $restResponse = new PicoResponse();
     $response = UserTypeDto::valueOf($userType);
     $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);

@@ -4,6 +4,7 @@ use MagicObject\Constants\PicoHttpStatus;
 use MusicProductionManager\Data\Entity\Song;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -17,6 +18,8 @@ try
     $song1->findOneBySongId($inputPost->getSongId());
     $song1->setRating($rating);
     $song1->update();
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Set rating song ".$song->getSongId(), $inputGet, $inputPost);
     
     $response = new stdClass();
     $response->rating = $rating;

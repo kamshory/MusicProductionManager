@@ -5,6 +5,7 @@ use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserTypeDto;
 use MusicProductionManager\Data\Entity\UserType;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputPost = new InputPost();
@@ -38,6 +39,7 @@ try
     {
         $userType->save();
     }  
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add user type ".$userType->getUserTypeId(), $inputGet, $inputPost);
 }
 catch(Exception $e)
 {
