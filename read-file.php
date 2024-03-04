@@ -8,10 +8,12 @@ use MusicProductionManager\Data\Entity\EntitySong;
 
 require_once "inc/auth-with-login-form.php";
 
-function compressOutput()
+function compressOutput($flag = false)
 {
-    // for faster transfer when download uncompressed file (PDF, MIDI, XML)
-    ob_start("ob_gzhandler");
+    if($flag)
+    {
+        ob_start("ob_gzhandler");
+    }
 }
 
 /**
@@ -24,6 +26,7 @@ function compressOutput()
 function downloadPerSong($inputGet, $song)
 {
     if ($inputGet->equalsType('mp3') && file_exists($song->getFilePath())) {
+        compressOutput(false);
         $filename = $song->getName() . ".mp3";
         header(HttpHeaderConstant::CONTENT_TYPE . "audio/mp3");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
@@ -31,27 +34,28 @@ function downloadPerSong($inputGet, $song)
         readfile($song->getFilePath());
     }
     if ($inputGet->equalsType('midi') && file_exists($song->getFilePathMidi())) {
-        compressOutput();
+        compressOutput(true);
         $filename = $song->getName() . ".mid";
         header(HttpHeaderConstant::CONTENT_TYPE . "audio/midi");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathMidi()));
         readfile($song->getFilePathMidi());
     } else if ($inputGet->equalsType('pdf') && file_exists($song->getFilePathPdf())) {
-        compressOutput();
+        compressOutput(true);
         $filename = $song->getName() . ".pdf";
         header(HttpHeaderConstant::CONTENT_TYPE . "application/pdf");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathPdf()));
         readfile($song->getFilePathPdf());
     } else if ($inputGet->equalsType('xml') && file_exists($song->getFilePathXml())) {
-        compressOutput();
+        compressOutput(true);
         $filename = $song->getName() . ".xml";
         header(HttpHeaderConstant::CONTENT_TYPE . "application/xml");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathXml()));
         readfile($song->getFilePathXml());
     } else if ($inputGet->equalsType('all')) {
+        compressOutput(false);
         $path = tempnam(__DIR__ . "/temp", "tmp_");
         $zip = new ZipArchive();
         downloadSongFiles($zip, $path, $song);
@@ -210,6 +214,7 @@ if ($inputGet->getSongId() != null) {
 } else if ($inputGet->getAlbumId() != null) {
     $tempDir = prepareTempDir();
     try {
+        compressOutput(false);
         $songs = new EntitySong(null, $database);
         $result = $songs->findByAlbumId($inputGet->getAlbumId());
         $album = new Album(null, $database);
