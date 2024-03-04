@@ -8,24 +8,33 @@ Not all DAWs support the MusicXML format but many DAWs support the MIDI format.
 
 ## Features
 
-1. Song Management
-2. Album Management
-3. Artist Management
-4. genre management
-5. Genre Management
-6. Song Attachment
-7. Comment
-8. Lyric Editor
-9. MIDI Editor
-10. MIDI Player
-11. MusicXML Player
-12. Karaoke
-13. Recording Teleprompter
-14. Piano Display
-15. Download Files
-16. User Management
-17. User Role
-18. Article
+1. Colaboration
+2. Song Management
+3. Album Management
+4. Artist Management
+5. genre management
+6. Genre Management
+7. Song Attachment
+8. Comment
+9. Lyric Editor
+10. MIDI Editor
+11. MIDI Player
+12. MusicXML Player
+13. Karaoke
+14. Recording Teleprompter
+15. Piano Display
+16. Download Files
+17. User Management
+18. User Role
+19. Article
+
+## Colaboration
+
+Music Production Manager is used jointly by several artists involved in music production, both as composer, arranger, vocalist and even producer. Music that has been created by the arranger and given lyrics by the composer can be reviewed by other artists and then given a rating. A low rating indicates that the song still has many shortcomings. Apart from that, other artists can also provide comments on parts of the song that need improvement.
+
+Both the composer and arranger can improve the song and then it can be reviewed again by another artist.
+
+Vocalists can learn the song, both the lyrics and the tune. Vocalists can read musical notes and see the piano keys while the song is being played to avoid note mistakes when singing it.
 
 ## Song Management
 
