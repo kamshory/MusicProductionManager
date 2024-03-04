@@ -138,6 +138,21 @@ class SongFileUtil
     }
 
     /**
+     * Save Image file
+     *
+     * @param string $songId
+     * @param string $targetDir
+     * @param string $content
+     * @return string
+     */
+    public static function saveImageFile($songId, $targetDir, $content)
+    {
+        $path = $targetDir . "/" . $songId . ".jpg";
+        file_put_contents($path, $content);
+        return $path;
+    }
+
+    /**
      * Get base diretory of song file
      *
      * @param string $songId

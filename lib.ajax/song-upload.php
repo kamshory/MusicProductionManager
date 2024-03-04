@@ -101,7 +101,8 @@ try
     } 
     else if(SongFileUtil::isImageFile($path))
     {
-        $song->setFilePathJpeg($pdfPath);
+        $jpegPath = SongFileUtil::saveImageFile($id, $targetDir, file_get_contents($path));
+        $song->setFilePathJpeg($jpegPath);
         $song->setLastUploadTimeJpeg($now);
 
         $mp3Path = $song->getFilePath();
