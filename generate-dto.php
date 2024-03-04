@@ -28,7 +28,7 @@ $className = ucfirst(StringUtil::camelize($picoTableName));
 $namespace = "MusicProductionManager\\Data\\Dto";
 
 $fileName = $namespace."/".$className;
-$path = __DIR__ . "/inc.lib/classes/".$fileName.".php";
+$path = __DIR__ . "/inc.lib/classes/".$fileName."Dto.php";
 $path = str_replace("\\", "/", $path);
 
 $sql = "SHOW COLUMNS FROM $picoTableName";
@@ -177,8 +177,6 @@ function createValuueOf($picoTableName, $rows)
     }
     $str .="        return \$output;\r\n";
     $str .="    }\r\n";
-    $str .="\r\n";    
-    $str .="}\r\n";
     return $str;
 }
 $rows = $database->fetchAll($sql);
@@ -209,14 +207,13 @@ $classStr = '<?php
 
 namespace '.$namespace.';
 
-use MagicObject\MagicObject;'.implode("\r\n", $uses).'
+use MagicObject\\SetterGetter;
+use MusicProductionManager\\Data\\Entity\\'.$className.';
 
 /**
- * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE)
- * @Table(name="'.$picoTableName.'")
  */
-class '.$className.' extends MagicObject
+class '.$className.'Dto extends SetterGetter
 {
 '.implode("\r\n", $attrs).'
 }';
