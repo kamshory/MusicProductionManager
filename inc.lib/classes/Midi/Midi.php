@@ -59,7 +59,7 @@ class Midi //NOSONAR
 	 *
 	 * @var bool
 	 */
-	protected $throwFlag;
+	protected $throwFlag = true;
 
 	/**
 	 * Event

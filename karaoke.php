@@ -38,7 +38,7 @@ require_once "inc/header.php";
   <div class="filter-group">
       <?php
       $inputGet = new InputGet();
-      $sql = "select song.song_id, song.title, song.track_number, album.album_id, album.name as album_name
+      $sql = "select song.song_id, song.name, song.title, song.track_number, album.album_id, album.name as album_name
       from song 
       inner join(album) on(album.album_id = song.album_id)
       where song.active = true and album.active = true and album.as_draft = false
@@ -74,7 +74,7 @@ require_once "inc/header.php";
                 {
                     $selected = "";
                 }
-                $arr2[] = '<option value="'.$songItem['song_id'].'"'.$selected.'>'.sprintf("%02d &mdash; ", $songItem['track_number']).$songItem['title'].'</option>';
+                $arr2[] = '<option value="'.$songItem['song_id'].'"'.$selected.'>'.sprintf("%02d &mdash; %s", $songItem['track_number'], $songItem['name']).'</option>';
             }
             $arr2[] = '</optgroup>';
         }
@@ -133,11 +133,19 @@ require_once "inc/header.php";
             <?php
 
             $midi = new MidiLyric();
-            $midi->importMid($song->getFilePathMidi());
-
-            echo "midiSong = ".json_encode(array_values($midi->getSong($song->getMidiVocalChannel()))).";\r\n";
-            echo "hasMidiSong = true;\r\n";
-
+            if(file_exists($song->getFilePathMidi()))
+            {
+                try
+                {
+                    $midi->importMid($song->getFilePathMidi());
+                    echo "midiSong = ".json_encode(array_values($midi->getSong($song->getMidiVocalChannel()))).";\r\n";
+                    echo "hasMidiSong = true;\r\n";
+                }
+                catch(Exception $e)
+                {
+                    // do nothing
+                }
+            }
             ?>
             
             $(document).ready(function(){           
