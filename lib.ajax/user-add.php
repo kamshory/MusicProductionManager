@@ -6,6 +6,7 @@ use MagicObject\Request\InputPost;
 use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserDto;
+use MusicProductionManager\Data\Entity\EntityUser;
 use MusicProductionManager\Data\Entity\User;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -49,7 +50,7 @@ function isValidDate($date, $format = 'Y-m-d')
     return $d && $d->format($format) == $date;
 }
 
-$user = new User(null, $database);
+$user = new EntityUser(null, $database);
 
 
 try {

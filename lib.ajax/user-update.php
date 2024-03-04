@@ -6,6 +6,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserDto;
+use MusicProductionManager\Data\Entity\EntityUser;
 use MusicProductionManager\Data\Entity\User;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -18,7 +19,7 @@ $inputPost->checkboxActive(false);
 $inputPost->filterName(FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->filterUsername(FILTER_SANITIZE_SPECIAL_CHARS);
 
-$user = new User(null, $database);
+$user = new EntityUser(null, $database);
 
 /**
  * Check duplicated username
