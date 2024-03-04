@@ -712,7 +712,7 @@ class Midi //NOSONAR
 	 * @param integer $timeBase
 	 * @return integer
 	 */
-	public function KeyToNoteSimp($key, $time, $timeBase)
+	public function keyToNoteSimp($key, $time, $timeBase)
 	{
 		$noteSharpMap = array(
 			array(1, 0), /* C  */
