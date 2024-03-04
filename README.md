@@ -29,7 +29,7 @@ Not all DAWs support the MusicXML format but many DAWs support the MIDI format.
 
 ## Song Management
 
-**Music Production Manager** arranges songs during the production process. Songs can be arranged in an album, extended player, single player or group of songs. Songs can be sorted by track number or rating. Rating is very important during song composition. A song with a low score means there are still many shortcomings that need to be corrected. Producers can focus on improving songs with lower scores.
+**Music Production Manager** arranges songs during the production process. Songs can be arranged in an album, extended player, single player or group of songs. Songs can be sorted by track number or rating. Rating is very important during song composition. A song with a low rating means there are still many shortcomings that need to be corrected. Producers can focus on improving songs with lower rating.
 
 ## Album Management
 
@@ -97,7 +97,7 @@ Users can transpose notes from MIDI. Users can choose whether to apply transpose
 
 ## MusicXML Player
 
-**Music Production Manager** is equipped with a MusicXML player which can be used both when the vocalist is practicing and when taking vocals. MusicXML player will display the music score in sync with the music being played.
+**Music Production Manager** is equipped with a MusicXML player which can be used both when the vocalist is practicing and when taking vocals. MusicXML player will display the music rating in sync with the music being played.
 
 MIDI editor is useful for changing instruments on each song track. Producers may need to change the instruments of songs to MIDI format that have been uploaded to **Music Production Manager** without having to download the MIDI file and edit it using a third-party application.
 
