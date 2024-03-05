@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 01, 2024 at 01:42 PM
+-- Generation Time: Mar 05, 2024 at 03:16 AM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -196,12 +196,12 @@ CREATE TABLE IF NOT EXISTS `song` (
   `file_upload_time` timestamp NULL DEFAULT NULL,
   `first_upload_time` timestamp NULL DEFAULT NULL,
   `last_upload_time` timestamp NULL DEFAULT NULL,
-  `last_upload_time_midi` timestamp NULL DEFAULT NULL,
-  `last_upload_time_xml` timestamp NULL DEFAULT NULL,
-  `last_upload_time_pdf` timestamp NULL DEFAULT NULL,
   `file_path_midi` text,
+  `last_upload_time_midi` timestamp NULL DEFAULT NULL,
   `file_path_xml` text,
+  `last_upload_time_xml` timestamp NULL DEFAULT NULL,
   `file_path_pdf` text,
+  `last_upload_time_pdf` timestamp NULL DEFAULT NULL,
   `duration` float DEFAULT NULL,
   `genre_id` varchar(50) DEFAULT NULL,
   `bpm` float DEFAULT NULL,
@@ -216,6 +216,7 @@ CREATE TABLE IF NOT EXISTS `song` (
   `rating` float DEFAULT NULL,
   `comment` longtext,
   `image_path` text,
+  `last_upload_time_image` timestamp NULL DEFAULT NULL,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
