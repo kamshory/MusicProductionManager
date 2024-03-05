@@ -159,36 +159,20 @@ class Song extends MagicObject
 	protected $lastUploadTime;
 
 	/**
-	 * Last Upload Time Midi
-	 * 
-	 * @Column(name="last_upload_time_midi", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastUploadTimeMidi;
-
-	/**
-	 * Last Upload Time Xml
-	 * 
-	 * @Column(name="last_upload_time_xml", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastUploadTimeXml;
-
-	/**
-	 * Last Upload Time Pdf
-	 * 
-	 * @Column(name="last_upload_time_pdf", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastUploadTimePdf;
-
-	/**
 	 * File Path Midi
 	 * 
 	 * @Column(name="file_path_midi", type="text", nullable=true)
 	 * @var string
 	 */
 	protected $filePathMidi;
+
+	/**
+	 * Last Upload Time Midi
+	 * 
+	 * @Column(name="last_upload_time_midi", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeMidi;
 
 	/**
 	 * File Path Xml
@@ -199,12 +183,28 @@ class Song extends MagicObject
 	protected $filePathXml;
 
 	/**
+	 * Last Upload Time Xml
+	 * 
+	 * @Column(name="last_upload_time_xml", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeXml;
+
+	/**
 	 * File Path Pdf
 	 * 
 	 * @Column(name="file_path_pdf", type="text", nullable=true)
 	 * @var string
 	 */
 	protected $filePathPdf;
+
+	/**
+	 * Last Upload Time Pdf
+	 * 
+	 * @Column(name="last_upload_time_pdf", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimePdf;
 
 	/**
 	 * Duration
@@ -317,6 +317,14 @@ class Song extends MagicObject
 	 * @var string
 	 */
 	protected $imagePath;
+
+	/**
+	 * Last Upload Time Image
+	 * 
+	 * @Column(name="last_upload_time_image", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeImage;
 
 	/**
 	 * Time Create
