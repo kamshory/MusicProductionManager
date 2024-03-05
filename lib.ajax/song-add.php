@@ -7,6 +7,7 @@ use MagicObject\Exceptions\NoRecordFoundException;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
@@ -46,6 +47,20 @@ else
 
 try
 {
+    // get producer
+    $producerId = "";
+    try
+    {
+        $album = new Album(null, $database);
+        $album->findOneByAlbumId($inputPost->getAlbumId);
+        $producerId = $album->getProducerId();
+    }
+    catch(Exception $e)
+    {
+        // do nothing
+    }
+    $song->setProducerId($producerId);
+    
     $now = date('Y-m-d H:i:s');
     $song->setTimeCreate($now);
     $song->setIpCreate($_SERVER['REMOTE_ADDR']);

@@ -53,6 +53,21 @@ try
     $albumId1 = $song1->getAlbumId();
     $albumId2 = $inputPost->getAlbumId();
     // get album ID end
+    
+    // get producer
+    $producerId = "";
+    try
+    {
+        $album = new Album(null, $database);
+        $album->findOneByAlbumId($inputPost->getAlbumId());
+        $producerId = $album->getProducerId();
+    }
+    catch(Exception $e)
+    {
+        // do nothing
+    }
+    $song->setProducerId($producerId);
+    
 
     $song = new Song($inputPost, $database);
     $song->update();
