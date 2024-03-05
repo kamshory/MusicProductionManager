@@ -66,10 +66,10 @@ try
     {
         // do nothing
     }
-    $song->setProducerId($producerId);
     
 
     $song = new Song($inputPost, $database);
+    $song->setProducerId($producerId);
     $song->update();
 
 
