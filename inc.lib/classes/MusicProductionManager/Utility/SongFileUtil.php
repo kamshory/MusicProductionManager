@@ -3,6 +3,7 @@
 namespace MusicProductionManager\Utility;
 
 use Exception;
+use GdImage;
 use getID3;
 use getid3_writetags;
 use MusicProductionManager\Data\Dto\SongFile;
@@ -142,14 +143,43 @@ class SongFileUtil
      *
      * @param string $songId
      * @param string $targetDir
-     * @param string $content
+     * @param GdImage $imageData
      * @return string
      */
-    public static function saveImageFile($songId, $targetDir, $content)
+    public static function saveImageFile($songId, $targetDir, $imageData)
     {
         $path = $targetDir . "/" . $songId . ".jpg";
-        file_put_contents($path, $content);
+        imagejpeg($imageData, $path, 85);
         return $path;
+    }
+    
+    /**
+     * Get image content
+     *
+     * @param string $path
+     * @return GdImage|boolean
+     */
+    public static function getJpegContent($path)
+    {
+        $imagesize = getimagesize($path);
+        if(is_array($imagesize) && count($imagesize) > 2 && $imagesize[0] > 0 && $imagesize[1] > 0)
+        {
+            
+            if($imagesize[2] == IMAGETYPE_JPEG) 
+            {
+                $imageData = imagecreatefrompng($path);
+            }
+            else if($imagesize[2] == IMAGETYPE_GIF) 
+            {
+                $imageData = imagecreatefromgif($path);
+            }
+            else
+            {
+                $imageData = imagecreatefromstring(file_get_contents($path));
+            }
+            return $imageData;
+        }
+        return false;
     }
 
     /**

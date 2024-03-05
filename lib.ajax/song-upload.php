@@ -101,6 +101,7 @@ try
     } 
     else if(SongFileUtil::isImageFile($path))
     {
+        // save image with original dimension
         $jpegPath = SongFileUtil::saveImageFile($id, $targetDir, file_get_contents($path));
         $song->setFilePathJpeg($jpegPath);
         $song->setLastUploadTimeJpeg($now);
@@ -118,7 +119,7 @@ try
             $tagData->addAlbum($album);
             $tagData->addArtist($artist);
             $tagData->addComment('Comment');
-           
+            
             SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
         }
     } 
