@@ -98,7 +98,9 @@ A song is made with a tempo of 130 bpm but in fact, the song is only 65 bpm. The
 
 ### Transpose MIDI
 
-Users can transpose notes from MIDI. Users can choose whether to apply transpose to all trucks, all channels, or only to certain buses and channels. However, **Music Production Manager** will skip channel 10 in the transpose process because that channel is designated as the channel for percussion instruments. UI allso prevent user select chanell 10.
+After the instruments are arranged and the lyrics are finished writing, the song still has to adapt to the vocalist. If the note is too low or too high compared to the vocalist's ability to sing the song, it is necessary to transpose the note. Transpose is raising or lowering the note by half a note.
+
+Users can choose whether to apply transpose to all trucks, all channels, or only to certain buses and channels. However, **Music Production Manager** will skip channel 10 in the transpose process because that channel is designated as the channel for percussion instruments. UI allso prevent user select chanell 10.
 
 ## MIDI Player
 
