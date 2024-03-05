@@ -23,150 +23,243 @@ class EntitySong extends MagicObject
 	protected $songId;
 
 	/**
+	 * Random Song ID
+	 * 
 	 * @Column(name="random_song_id", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $randomSongId;
 
 	/**
+	 * Name
+	 * 
 	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
 	 * @var string
 	 */
 	protected $name;
 
 	/**
+	 * Title
+	 * 
 	 * @Column(name="title", type="text", nullable=true)
 	 * @var string
 	 */
 	protected $title;
 
 	/**
+	 * Album ID
+	 * 
 	 * @Column(name="album_id", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $albumId;
-    
-    /**
+
+	/**
 	 * @JoinColumn(name="album_id")
 	 * @var Album
 	 */
 	protected $album;
 
 	/**
-     * @var integer
-     * @Column(name=track_number, type="int", length=11, nullable=true)
-     */
-    protected $trackNumber;
-
+	 * Track Number
+	 * 
+	 * @Column(name="track_number", type="int(11)", length=11, nullable=true)
+	 * @var integer
+	 */
+	protected $trackNumber;
 
 	/**
+	 * Artist Vocal
+	 * 
 	 * @Column(name="artist_vocal", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $artistVocalId;
-    
-    /**
+	
+	/**
+	 * Artist Vocal
+	 * 
 	 * @JoinColumn(name="artist_vocal")
 	 * @var Artist
 	 */
 	protected $artistVocal;
 
 	/**
+	 * Artist Composer
+	 * 
 	 * @Column(name="artist_composer", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $artistComposerId;
-    
-    /**
+	
+	/**
+	 * Artist Composer
+	 * 
 	 * @JoinColumn(name="artist_composer")
 	 * @var Artist
 	 */
 	protected $artistComposer;
 
 	/**
+	 * Artist Arranger
+	 * 
 	 * @Column(name="artist_arranger", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $artistArrangerId;
-    
-    /**
+	
+	/**
+	 * Artist Arranger
+	 * 
 	 * @JoinColumn(name="artist_arranger")
 	 * @var Artist
 	 */
 	protected $artistArranger;
 
 	/**
+	 * File Path
+	 * 
 	 * @Column(name="file_path", type="text", nullable=true)
 	 * @var string
 	 */
 	protected $filePath;
 
 	/**
+	 * File Name
+	 * 
 	 * @Column(name="file_name", type="varchar(100)", length=100, nullable=true)
 	 * @var string
 	 */
 	protected $fileName;
 
 	/**
+	 * File Type
+	 * 
 	 * @Column(name="file_type", type="varchar(100)", length=100, nullable=true)
 	 * @var string
 	 */
 	protected $fileType;
 
 	/**
+	 * File Extension
+	 * 
 	 * @Column(name="file_extension", type="varchar(20)", length=20, nullable=true)
 	 * @var string
 	 */
 	protected $fileExtension;
 
 	/**
+	 * File Size
+	 * 
 	 * @Column(name="file_size", type="bigint(20)", length=20, nullable=true)
 	 * @var integer
 	 */
 	protected $fileSize;
 
 	/**
+	 * File Md5
+	 * 
 	 * @Column(name="file_md5", type="varchar(32)", length=32, nullable=true)
 	 * @var string
 	 */
 	protected $fileMd5;
 
 	/**
+	 * File Upload Time
+	 * 
 	 * @Column(name="file_upload_time", type="timestamp", length=19, nullable=true)
 	 * @var string
 	 */
-	protected $fileUploadTime;	
-	
+	protected $fileUploadTime;
+
 	/**
+	 * First Upload Time
+	 * 
+	 * @Column(name="first_upload_time", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $firstUploadTime;
+
+	/**
+	 * Last Upload Time
+	 * 
+	 * @Column(name="last_upload_time", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTime;
+
+	/**
+	 * File Path Midi
+	 * 
 	 * @Column(name="file_path_midi", type="text", nullable=true)
 	 * @var string
 	 */
 	protected $filePathMidi;
 
 	/**
+	 * Last Upload Time Midi
+	 * 
+	 * @Column(name="last_upload_time_midi", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeMidi;
+
+	/**
+	 * File Path Xml
+	 * 
 	 * @Column(name="file_path_xml", type="text", nullable=true)
 	 * @var string
 	 */
 	protected $filePathXml;
 
 	/**
+	 * Last Upload Time Xml
+	 * 
+	 * @Column(name="last_upload_time_xml", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeXml;
+
+	/**
+	 * File Path Pdf
+	 * 
 	 * @Column(name="file_path_pdf", type="text", nullable=true)
 	 * @var string
 	 */
 	protected $filePathPdf;
 
 	/**
+	 * Last Upload Time Pdf
+	 * 
+	 * @Column(name="last_upload_time_pdf", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimePdf;
+
+	/**
+	 * Duration
+	 * 
 	 * @Column(name="duration", type="float", nullable=true)
 	 * @var double
 	 */
 	protected $duration;
 
 	/**
+	 * Genre ID
+	 * 
 	 * @Column(name="genre_id", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $genreId;
 	
+	/**
+	 * Genre ID
+	 * 
+	 * @JoinColumn(name="genre_id")
+	 * @var Genre
+	 */
+	protected $genre;
+
 	/**
 	 * Bpm
 	 * 
@@ -182,70 +275,79 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $timeSignature;
-    
-    /**
-     * Genre
-     *
-     * @var Genre
-     * @JoinColumn (name=genre_id)
-     */
-    protected $genre;
 
 	/**
+	 * Lyric
+	 * 
 	 * @Column(name="lyric", type="longtext", nullable=true)
 	 * @var string
 	 */
 	protected $lyric;
 
 	/**
-	 * @Column(name="lyric_complete", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * Lyric Complete
+	 * 
+	 * @Column(name="lyric_complete", type="tinyint(1)", length=1, nullable=true)
 	 * @var bool
 	 */
 	protected $lyricComplete;
-	
+
 	/**
+	 * Lyric Midi
+	 * 
 	 * @Column(name="lyric_midi", type="longtext", nullable=true)
 	 * @var string
 	 */
 	protected $lyricMidi;
 
 	/**
+	 * Lyric Midi Raw
+	 * 
 	 * @Column(name="lyric_midi_raw", type="longtext", nullable=true)
 	 * @var string
 	 */
 	protected $lyricMidiRaw;
 
 	/**
-	 * @Column(name="vocal", type="tinyint(1)", length=1, default_value="1", nullable=true)
-	 * @DefaultColumn(value="0")
+	 * Vocal
+	 * 
+	 * @Column(name="vocal", type="tinyint(1)", length=1, nullable=true)
 	 * @var bool
 	 */
 	protected $vocal;
-	
+
 	/**
+	 * Instrument
+	 * 
 	 * @Column(name="instrument", type="longtext", nullable=true)
 	 * @var string
 	 */
 	protected $instrument;
-	
+
 	/**
-	 * @Column(name="midi_vocal_channel", type="int", length=11, nullable=true)
+	 * Midi Vocal Channel
+	 * 
+	 * @Column(name="midi_vocal_channel", type="int(11)", length=11, nullable=true)
 	 * @var integer
 	 */
 	protected $midiVocalChannel;
 
 	/**
+	 * Rating
+	 * 
 	 * @Column(name="rating", type="float", nullable=true)
-	 * @var float
+	 * @var double
 	 */
 	protected $rating;
 
 	/**
+	 * Comment
+	 * 
 	 * @Column(name="comment", type="longtext", nullable=true)
 	 * @var string
 	 */
 	protected $comment;
-	
+
 	/**
 	 * Image Path
 	 * 
@@ -255,76 +357,67 @@ class EntitySong extends MagicObject
 	protected $imagePath;
 
 	/**
-	 * @Column(name="first_upload_time", type="timestamp", length=19, nullable=true)
+	 * Last Upload Time Image
+	 * 
+	 * @Column(name="last_upload_time_image", type="timestamp", length=19, nullable=true)
 	 * @var string
 	 */
-	protected $firstUploadTime;
+	protected $lastUploadTimeImage;
 
 	/**
-	 * @Column(name="last_upload_time", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastUploadTime;
-
-	/**
-	 * @Column(name="last_upload_time_midi", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastUploadTimeMidi;
-
-	/**
-	 * @Column(name="last_upload_time_xml", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastUploadTimeXml;
-
-	/**
-	 * @Column(name="last_upload_time_pdf", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastUploadTimePdf;
-
-	/**
+	 * Time Create
+	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
 	 * @var string
 	 */
 	protected $timeCreate;
 
 	/**
+	 * Time Edit
+	 * 
 	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
 	 * @var string
 	 */
 	protected $timeEdit;
 
 	/**
+	 * IP Create
+	 * 
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
 	 * @var string
 	 */
 	protected $ipCreate;
 
 	/**
+	 * IP Edit
+	 * 
 	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $ipEdit;
 
 	/**
+	 * Admin Create
+	 * 
 	 * @Column(name="admin_create", type="varchar(50)", length=50, nullable=true, updatable=false)
 	 * @var string
 	 */
 	protected $adminCreate;
 
 	/**
+	 * Admin Edit
+	 * 
 	 * @Column(name="admin_edit", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $adminEdit;
 
 	/**
+	 * Active
+	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
 	 * @var bool
 	 */
 	protected $active;
-
 }
