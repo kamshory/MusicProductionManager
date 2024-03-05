@@ -25,6 +25,15 @@ PicoHttpCache::cacheLifetime(3600*12);
                             <td><textarea class="form-control" name="description" id="description" rows="3"></textarea></td>
                         </tr>
                         <tr>
+                            <td>Producer</td>
+                            <td>
+                                <select class="form-control" name="producer_id" data-value="" data-ajax="true" data-source="lib.ajax/producer-list.php">
+                                    <option value="">- select -</option>
+                                </select>
+                                <button class="button-add-list button-add-general-producer">+</button>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Release Date</td>
                                 <td><input type="date" class="form-control" name="release_date"></td>
                             </tr>
