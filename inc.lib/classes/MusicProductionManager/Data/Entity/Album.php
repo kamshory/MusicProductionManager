@@ -37,6 +37,14 @@ class Album extends MagicObject
 	 * @var string
 	 */
 	protected $description;
+	
+	/**
+	 * Producer ID
+	 * 
+	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $producerId;
 
 	/**
 	 * Release Date

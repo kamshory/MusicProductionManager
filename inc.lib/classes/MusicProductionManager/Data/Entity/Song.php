@@ -61,6 +61,14 @@ class Song extends MagicObject
 	 * @var integer
 	 */
 	protected $trackNumber;
+	
+	/**
+	 * Producer ID
+	 * 
+	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $producerId;
 
 	/**
 	 * Artist Vocal
