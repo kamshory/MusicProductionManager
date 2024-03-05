@@ -3,9 +3,10 @@
 namespace MusicProductionManager\Utility;
 
 use MusicProductionManager\Data\Dto\SongFile;
+use MusicProductionManager\Exceptions\Mp3FileException;
 use MusicProductionManager\File\FileMp3;
 
-class SongFileUtil
+class SongFileUtil extends SongUtil
 {
     /**
      * Check if file is MP3
@@ -122,6 +123,80 @@ class SongFileUtil
     }
     
     /**
+<<<<<<< Updated upstream
+=======
+     * Get image content
+     *
+     * @param string $path
+     * @return GdImage|boolean
+     */
+    public static function getJpegContent($path)
+    {
+        $imagesize = getimagesize($path);
+        if(is_array($imagesize) && count($imagesize) > 2 && $imagesize[0] > 0 && $imagesize[1] > 0)
+        {
+            
+            if($imagesize[2] == IMAGETYPE_JPEG) 
+            {
+                $imageData = imagecreatefrompng($path);
+            }
+            else if($imagesize[2] == IMAGETYPE_GIF) 
+            {
+                $imageData = imagecreatefromgif($path);
+            }
+            else
+            {
+                $imageData = imagecreatefromstring(file_get_contents($path));
+            }
+            return $imageData;
+        }
+        return false;
+    }
+
+    /**
+     * Get base diretory of song file
+     *
+     * @param string $songId
+     * @param string $targetDir
+     * @return string
+     */
+    public static function getBaseName($songId, $targetDir)
+    {
+        return $targetDir."/".$songId;
+    }
+
+    public static function prepareDir($targetDir, $permission = 0755)
+    {
+        return mkdir($targetDir, $permission, true);
+    }
+
+    public static function addID3Tag($path, $tagData)
+    {
+        $getID3 = new getID3;
+        assert($getID3 != null, "Can not initialize ID3");
+
+        // Initialize getID3 tag-writing module
+        $tagwriter = new getid3_writetags;
+        $tagwriter->filename = $path;
+        $tagwriter->tagformats = array('id3v2.4');
+        $tagwriter->overwrite_tags    = true;
+        $tagwriter->remove_other_tags = true;
+        $tagwriter->tag_encoding      = 'UTF-8';
+
+        $tagwriter->tag_data = $tagData;
+
+        // write tags
+        if ($tagwriter->WriteTags()){
+            return true;
+        }
+        else
+        {
+            throw new Mp3FileException(implode(' : ', $tagwriter->errors));
+        }
+    }
+
+    /**
+>>>>>>> Stashed changes
      * Create button
      *
      * @param SongFile $songFile

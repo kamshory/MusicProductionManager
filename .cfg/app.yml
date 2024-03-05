@@ -1,6 +1,15 @@
 result_per_page: 20
 song_base_url: ${SONG_BASE_UER}
 app_name: Music Production Manager
+user_image:
+  width: 512
+  height: 512
+album_image:
+  width: 512
+  height: 512
+song_image:
+  width: 512
+  height: 512
 database:
   time_zone_system: Asia/Jakarta
   default_charset: utf8

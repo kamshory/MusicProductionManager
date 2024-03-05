@@ -5,7 +5,11 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
+<<<<<<< Updated upstream
         'reference' => '7e0a5b50884f57e6983eec1c27cf4a7f7faf7ca7',
+=======
+        'reference' => '54c09c7ab4a9b5a9392d310ded6bf9e2c9afbd52',
+>>>>>>> Stashed changes
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +20,11 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
+<<<<<<< Updated upstream
             'reference' => '7e0a5b50884f57e6983eec1c27cf4a7f7faf7ca7',
+=======
+            'reference' => '54c09c7ab4a9b5a9392d310ded6bf9e2c9afbd52',
+>>>>>>> Stashed changes
             'dev_requirement' => false,
         ),
         'alchemy/binary-driver' => array(

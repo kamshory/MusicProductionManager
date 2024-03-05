@@ -54,4 +54,12 @@ class Rating extends MagicObject
 	 */
 	protected $timeCreate;
 
+	/**
+	 * Time Edit
+	 * 
+	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $timeEdit;
+
 }

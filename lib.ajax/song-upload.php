@@ -9,6 +9,11 @@ use MusicProductionManager\File\FileMp3;
 use MusicProductionManager\File\FileUpload;
 
 
+<<<<<<< Updated upstream
+=======
+use MusicProductionManager\Utility\Id3Tag;
+use MusicProductionManager\Utility\ImageUtil;
+>>>>>>> Stashed changes
 use MusicProductionManager\Utility\SongFileUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -96,7 +101,39 @@ try
         $pdfPath = SongFileUtil::savePdfFile($id, $targetDir, file_get_contents($path));
         $song->setFilePathPdf($pdfPath);
         $song->setLastUploadTimePdf($now);
+<<<<<<< Updated upstream
     }  
+=======
+    } 
+    else if(SongFileUtil::isImageFile($path))
+    {
+        // save image with original dimension
+        $jpegPath = SongFileUtil::saveImageFile($id, $targetDir, file_get_contents($path));
+        $song->setFilePathJpeg($jpegPath);
+        $song->setLastUploadTimeJpeg($now);
+
+        $mp3Path = $song->getFilePath();
+        if($mp3Path != null && !empty($mp3Path) && file_exists($mp3Path))
+        {
+            $entitySong = new EntitySong(null, $database);
+            $entitySong->findOneBySongId($song->getSongId());
+
+            $album = $entitySong->hasValueAlbum() ? $entitySong->getAlbum()->getName() : "";
+            $artist = $entitySong->hasValueArtistVocal() ? $entitySong->ArtistVocal()->getName() : "";
+
+            $tagData = new Id3Tag;
+            $tagData->addAlbum($album);
+            $tagData->addArtist($artist);
+            $tagData->addComment('Comment');
+            
+            $picture = ImageUtil::imageToString(ImageUtil::cropImageCenter(ImageCreateFromJPEG($jpegPath), $cfg->getSongImage()->getWidth(), $cfg->getSongImage()->getHeight()));
+            
+            $tagData->addPicture($picture, "image/jpeg", $song->getTitle());
+            
+            SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
+        }
+    } 
+>>>>>>> Stashed changes
     
     $song->save();
     $song->select();
