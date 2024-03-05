@@ -410,7 +410,7 @@ if(!empty($result))
         <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
         <td><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
         <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
-        <td><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : "";?></td>
+        <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         <td><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : "";?></td>
         <td><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
         <td><?php echo $song->getDuration();?></td>

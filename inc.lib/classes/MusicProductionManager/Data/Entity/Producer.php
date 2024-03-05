@@ -7,44 +7,20 @@ use MagicObject\MagicObject;
 /**
  * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE)
- * @Table(name="user")
+ * @Table(name="producer")
  */
-class User extends MagicObject
+class Producer extends MagicObject
 {
 	/**
-	 * User ID
+	 * Producer ID
 	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
-	 * @Column(name="user_id", type="varchar(40)", length=40, nullable=false)
+	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=false)
 	 * @var string
 	 */
-	protected $userId;
-
-	/**
-	 * Username
-	 * 
-	 * @Column(name="username", type="varchar(100)", length=100, nullable=true)
-	 * @var string
-	 */
-	protected $username;
-
-	/**
-	 * Password
-	 * 
-	 * @Column(name="password", type="varchar(100)", length=100, nullable=true)
-	 * @var string
-	 */
-	protected $password;
-
-	/**
-	 * Admin
-	 * 
-	 * @Column(name="admin", type="tinyint(1)", length=1, nullable=true)
-	 * @var bool
-	 */
-	protected $admin;
+	protected $producerId;
 
 	/**
 	 * Name
@@ -55,20 +31,44 @@ class User extends MagicObject
 	protected $name;
 
 	/**
-	 * Birth Day
-	 * 
-	 * @Column(name="birth_day", type="varchar(100)", length=100, nullable=true)
-	 * @var string
-	 */
-	protected $birthDay;
-
-	/**
 	 * Gender
 	 * 
 	 * @Column(name="gender", type="varchar(2)", length=2, nullable=true)
 	 * @var string
 	 */
 	protected $gender;
+
+	/**
+	 * Birth Day
+	 * 
+	 * @Column(name="birth_day", type="date", nullable=true)
+	 * @var string
+	 */
+	protected $birthDay;
+
+	/**
+	 * Phone
+	 * 
+	 * @Column(name="phone", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $phone;
+
+	/**
+	 * Phone2
+	 * 
+	 * @Column(name="phone2", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $phone2;
+
+	/**
+	 * Phone3
+	 * 
+	 * @Column(name="phone3", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $phone3;
 
 	/**
 	 * Email
@@ -79,36 +79,44 @@ class User extends MagicObject
 	protected $email;
 
 	/**
-	 * User Type ID
+	 * Email2
 	 * 
-	 * @Column(name="user_type_id", type="varchar(40)", length=40, nullable=true)
+	 * @Column(name="email2", type="varchar(100)", length=100, nullable=true)
 	 * @var string
 	 */
-	protected $userTypeId;
+	protected $email2;
 
 	/**
-	 * Associated Artist
+	 * Email3
 	 * 
-	 * @Column(name="associated_artist", type="varchar(40)", length=40, nullable=true)
+	 * @Column(name="email3", type="varchar(100)", length=100, nullable=true)
 	 * @var string
 	 */
-	protected $associatedArtist;
-	
+	protected $email3;
+
 	/**
-	 * Associated Producer
+	 * Website
 	 * 
-	 * @Column(name="associated_producer", type="varchar(40)", length=40, nullable=true)
+	 * @Column(name="website", type="text", nullable=true)
 	 * @var string
 	 */
-	protected $associatedProducer;
-	
+	protected $website;
+
 	/**
-	 * Current Role
+	 * Address
 	 * 
-	 * @Column(name="surrent_role", type="text", nullable=true)
+	 * @Column(name="address", type="text", nullable=true)
 	 * @var string
 	 */
-	protected $currentRole;
+	protected $address;
+
+	/**
+	 * Picture
+	 * 
+	 * @Column(name="picture", type="tinyint(1)", length=1, nullable=true)
+	 * @var bool
+	 */
+	protected $picture;
 
 	/**
 	 * Image Path
@@ -117,6 +125,14 @@ class User extends MagicObject
 	 * @var string
 	 */
 	protected $imagePath;
+
+	/**
+	 * Image Update
+	 * 
+	 * @Column(name="image_update", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $imageUpdate;
 
 	/**
 	 * Time Create
@@ -165,30 +181,6 @@ class User extends MagicObject
 	 * @var string
 	 */
 	protected $ipEdit;
-
-	/**
-	 * Reset Password Hash
-	 * 
-	 * @Column(name="reset_password_hash", type="varchar(256)", length=256, nullable=true)
-	 * @var string
-	 */
-	protected $resetPasswordHash;
-
-	/**
-	 * Last Reset Password
-	 * 
-	 * @Column(name="last_reset_password", type="timestamp", length=19, nullable=true)
-	 * @var string
-	 */
-	protected $lastResetPassword;
-
-	/**
-	 * Blocked
-	 * 
-	 * @Column(name="blocked", type="tinyint(1)", length=1, nullable=true)
-	 * @var bool
-	 */
-	protected $blocked;
 
 	/**
 	 * Active

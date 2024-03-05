@@ -109,6 +109,30 @@ class EntityUser extends MagicObject
 	 * @var Artist
 	 */
 	protected $artist;
+	
+	/**
+	 * Associated Producer
+	 * 
+	 * @Column(name="associated_producer", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $associatedProducer;
+	
+	/**
+	 * Associated Producer
+	 * 
+	 * @JoinColumn(name="associated_producer")
+	 * @var Producer
+	 */
+	protected $producer;
+	
+	/**
+	 * Current Role
+	 * 
+	 * @Column(name="surrent_role", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $currentRole;
 
 	/**
 	 * Image Path

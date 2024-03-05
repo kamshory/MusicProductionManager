@@ -1,7 +1,7 @@
 <?php
 
 use MagicObject\Request\InputPost;
-use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Data\Entity\EntityUser;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once "inc/app.php";
@@ -20,7 +20,7 @@ if($inputPost->getUsername() != null && $inputPost->getPassword() != null)
   {
     try
     {
-      $currentLoggedInUser = new User(null, $database);
+      $currentLoggedInUser = new EntityUser(null, $database);
       $currentLoggedInUser->findOneByUsernameAndPasswordAndBlockedAndActive($username, $password, false, true);
       if($currentLoggedInUser->hasValueUserId())
       {

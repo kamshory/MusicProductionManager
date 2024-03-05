@@ -15,6 +15,7 @@ use MusicProductionManager\Data\Entity\EntitySongComment;
 use MusicProductionManager\Data\Entity\Genre;
 
 use MusicProductionManager\Utility\SpecificationUtil;
+use MusicProductionManager\Utility\UserUtil;
 
 require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";
@@ -55,15 +56,15 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
         </tr>
         <tr>
           <td>Vocal</td>
-          <td><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : '';?></td>
+          <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         </tr>
         <tr>
           <td>Composer</td>
-          <td><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : '';?></td>
+          <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Arranger</td>
-          <td><?php echo $song->hasValueArtistArranger() ? $song->getArtistArranger()->getName() : '';?></td>
+          <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : '';?></td>
         </tr>
         <tr>
           <td>File Size</td>
@@ -157,6 +158,10 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
 }
 else
 {
+  $allowChangeVocalist = UserUtil::isAllowSelectVocalist($currentLoggedInUser);
+  $allowChangeComposer = UserUtil::isAllowSelectComposer($currentLoggedInUser);
+  $allowChangeArranger = UserUtil::isAllowSelectArranger($currentLoggedInUser);
+  
     ?>
     <div class="filter-container">
     <form action="" method="get">
@@ -174,6 +179,10 @@ else
             <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
         </select>
     </div>
+    <?php
+    if($allowChangeVocalist)
+    {
+      ?>
     <div class="filter-group">
         <span>Artist Vocal</span>
         <select class="form-control" name="artist_vocal_id" id="artist_vocal_id">
@@ -181,6 +190,9 @@ else
             <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalId()); ?>
         </select>
     </div>
+    <?php
+    }
+    ?>
     <div class="filter-group">
         <span>Title</span>
         <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">

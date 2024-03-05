@@ -74,7 +74,7 @@ class EntitySong extends MagicObject
 	 * @Column(name="artist_vocal", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
-	protected $artistVocalId;
+	protected $artistVocal;
 	
 	/**
 	 * Artist Vocal
@@ -82,7 +82,7 @@ class EntitySong extends MagicObject
 	 * @JoinColumn(name="artist_vocal")
 	 * @var Artist
 	 */
-	protected $artistVocal;
+	protected $vocalist;
 
 	/**
 	 * Artist Composer
@@ -90,7 +90,7 @@ class EntitySong extends MagicObject
 	 * @Column(name="artist_composer", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
-	protected $artistComposerId;
+	protected $artistComposer;
 	
 	/**
 	 * Artist Composer
@@ -98,7 +98,7 @@ class EntitySong extends MagicObject
 	 * @JoinColumn(name="artist_composer")
 	 * @var Artist
 	 */
-	protected $artistComposer;
+	protected $composer;
 
 	/**
 	 * Artist Arranger
@@ -106,7 +106,7 @@ class EntitySong extends MagicObject
 	 * @Column(name="artist_arranger", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
-	protected $artistArrangerId;
+	protected $artistArranger;
 	
 	/**
 	 * Artist Arranger
@@ -114,7 +114,7 @@ class EntitySong extends MagicObject
 	 * @JoinColumn(name="artist_arranger")
 	 * @var Artist
 	 */
-	protected $artistArranger;
+	protected $arranger;
 
 	/**
 	 * File Path

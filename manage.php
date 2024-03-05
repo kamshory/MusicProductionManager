@@ -57,15 +57,15 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
         </tr>
         <tr>
           <td>Vocal</td>
-          <td><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : '';?></td>
+          <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         </tr>
         <tr>
           <td>Composer</td>
-          <td><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : '';?></td>
+          <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Arranger</td>
-          <td><?php echo $song->hasValueArtistArranger() ? $song->getArtistArranger()->getName() : '';?></td>
+          <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : '';?></td>
         </tr>
         <tr>
           <td>File Size</td>

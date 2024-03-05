@@ -412,7 +412,7 @@ $inputGet = new InputGet();
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Vocalist</div>
-            <div class="col-8"><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : ''; ?></div>
+            <div class="col-8"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Track</div>
