@@ -14,15 +14,15 @@ class  Id3Tags
     const TAG_YEAR = "TYER";
     
     protected $frames = array(
-        self::TAG_ALBUM=> "The Ultimate Experience",
-        self::TAG_TRACK_NO=>"1",
-        self::TAG_TITLE=>"All along the watchtower",
-        self::TAG_ARTIST=>"Jimi Hendrix",
-        self::TAG_GROUP=>"",
-        self::TAG_YEAR=>"19xx",
-        self::TAG_GENRE=>"Rock"
+        self::TAG_ALBUM => "The Ultimate Experience",
+        self::TAG_TRACK_NO => "1",
+        self::TAG_TITLE => "All along the watchtower",
+        self::TAG_ARTIST => "Jimi Hendrix",
+        self::TAG_GROUP => "",
+        self::TAG_YEAR => "19xx",
+        self::TAG_GENRE => "Rock"
     );
-    
+
     /**
      * Hex tag length
      *
@@ -39,7 +39,7 @@ class  Id3Tags
             $n=$n/128;
         }
         return $m;
-    } 
+    }
 
     /**
      * WRITE ID3 TAGS (Write MP3 [v1, v2]
@@ -54,9 +54,9 @@ class  Id3Tags
         $music = substr($fl,$tagLen+10,-128);
         # Can use input Header for output but you may
         # wish to change the output filename for testing
-            $tagLen = 1024; # or whatever you like >your actual
-            $header = substr($header,0,6).$this->setHexTagLen($tagLen);
-            file_put_contents($mp3, $this->mkV2Tag($header,$tagLen).$music.$this->mkV1Tag());
+        $tagLen = 1024; # or whatever you like >your actual
+        $header = substr($header, 0, 6) . $this->setHexTagLen($tagLen);
+        file_put_contents($mp3, $this->mkV2Tag($header, $tagLen) . $music . $this->mkV1Tag());
     }
 
     /**
@@ -76,7 +76,7 @@ class  Id3Tags
         }
         return $header.str_pad($out, $tagLen, $null);
     }
-    
+
     /**
      * Calculate Tag Length from bytes 6-10 of existing header
      *
@@ -92,7 +92,7 @@ class  Id3Tags
         }
         return $int;
     }
-    
+
     /**
      * Make the 4 byte frame length value for the V2tag
      *
@@ -108,7 +108,7 @@ class  Id3Tags
         }
         return str_pad($hx,4,chr(0),STR_PAD_LEFT);
     }
-    
+
     /**
      * Create the 128 byte V1 tag
      *
@@ -126,7 +126,7 @@ class  Id3Tags
             chr($n);
         return $tagOut;
     }
-    
+
     /**
      * Pad the header to 30 characters
      *
@@ -136,4 +136,5 @@ class  Id3Tags
     public function adj($str) {
         return substr(str_pad($str,30,chr(0)),0,30);
     } 
+
 }

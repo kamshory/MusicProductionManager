@@ -11,8 +11,8 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
-if (!defined('GETID3_LIBXML_OPTIONS') && defined('LIBXML_VERSION')) {
-	if (LIBXML_VERSION >= 20621) {
+if(!defined('GETID3_LIBXML_OPTIONS') && defined('LIBXML_VERSION')) {
+	if(LIBXML_VERSION >= 20621) {
 		define('GETID3_LIBXML_OPTIONS', LIBXML_NOENT | LIBXML_NONET | LIBXML_NOWARNING | LIBXML_COMPACT);
 	} else {
 		define('GETID3_LIBXML_OPTIONS', LIBXML_NOENT | LIBXML_NONET | LIBXML_NOWARNING);
@@ -115,9 +115,7 @@ class getid3_lib
 		// check if integers are 64-bit
 		static $hasINT64 = null;
 		if ($hasINT64 === null) { // 10x faster than is_null()
-			/** @var int|float|false $bigInt */
-			$bigInt = pow(2, 31);
-			$hasINT64 = is_int($bigInt); // 32-bit int are limited to (2^31)-1
+			$hasINT64 = is_int(pow(2, 31)); // 32-bit int are limited to (2^31)-1
 			if (!$hasINT64 && !defined('PHP_INT_MIN')) {
 				define('PHP_INT_MIN', ~PHP_INT_MAX);
 			}
@@ -746,36 +744,16 @@ class getid3_lib
 	 * @return array|false
 	 */
 	public static function XML2array($XMLstring) {
-		if (function_exists('simplexml_load_string')) {
-			if (PHP_VERSION_ID < 80000) {
-				if (function_exists('libxml_disable_entity_loader')) {
-					// http://websec.io/2012/08/27/Preventing-XEE-in-PHP.html
-					// https://core.trac.wordpress.org/changeset/29378
-					// This function has been deprecated in PHP 8.0 because in libxml 2.9.0, external entity loading is
-					// disabled by default, but is still needed when LIBXML_NOENT is used.
-					$loader = @libxml_disable_entity_loader(true);
-					$XMLobject = simplexml_load_string($XMLstring, 'SimpleXMLElement', GETID3_LIBXML_OPTIONS);
-					$return = self::SimpleXMLelement2array($XMLobject);
-					@libxml_disable_entity_loader($loader);
-					return $return;
-				}
-			} else {
-				$allow = false;
-				if (defined('LIBXML_VERSION') && (LIBXML_VERSION >= 20900)) {
-					// https://www.php.net/manual/en/function.libxml-disable-entity-loader.php
-					// "as of libxml 2.9.0 entity substitution is disabled by default, so there is no need to disable the loading
-					//  of external entities, unless there is the need to resolve internal entity references with LIBXML_NOENT."
-					$allow = true;
-				} elseif (function_exists('libxml_set_external_entity_loader')) {
-					libxml_set_external_entity_loader(function () { return null; }); // https://www.zend.com/blog/cve-2023-3823
-					$allow = true;
-				}
-				if ($allow) {
-					$XMLobject = simplexml_load_string($XMLstring, 'SimpleXMLElement', GETID3_LIBXML_OPTIONS);
-					$return = self::SimpleXMLelement2array($XMLobject);
-					return $return;
-				}
-			}
+		if (function_exists('simplexml_load_string') && function_exists('libxml_disable_entity_loader')) {
+			// http://websec.io/2012/08/27/Preventing-XEE-in-PHP.html
+			// https://core.trac.wordpress.org/changeset/29378
+			// This function has been deprecated in PHP 8.0 because in libxml 2.9.0, external entity loading is
+			// disabled by default, but is still needed when LIBXML_NOENT is used.
+			$loader = @libxml_disable_entity_loader(true);
+			$XMLobject = simplexml_load_string($XMLstring, 'SimpleXMLElement', GETID3_LIBXML_OPTIONS);
+			$return = self::SimpleXMLelement2array($XMLobject);
+			@libxml_disable_entity_loader($loader);
+			return $return;
 		}
 		return false;
 	}
@@ -1519,7 +1497,7 @@ class getid3_lib
 	public static function GetDataImageSize($imgData, &$imageinfo=array()) {
 		if (PHP_VERSION_ID >= 50400) {
 			$GetDataImageSize = @getimagesizefromstring($imgData, $imageinfo);
-			if ($GetDataImageSize === false) {
+			if ($GetDataImageSize === false || !isset($GetDataImageSize[0], $GetDataImageSize[1])) {
 				return false;
 			}
 			$GetDataImageSize['height'] = $GetDataImageSize[0];
@@ -1547,7 +1525,7 @@ class getid3_lib
 				fwrite($tmp, $imgData);
 				fclose($tmp);
 				$GetDataImageSize = @getimagesize($tempfilename, $imageinfo);
-				if ($GetDataImageSize === false) {
+				if (($GetDataImageSize === false) || !isset($GetDataImageSize[0]) || !isset($GetDataImageSize[1])) {
 					return false;
 				}
 				$GetDataImageSize['height'] = $GetDataImageSize[0];

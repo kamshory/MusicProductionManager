@@ -2,6 +2,10 @@
 
 namespace MusicProductionManager\Utility;
 
+use Exception;
+use GdImage;
+use getID3;
+use getid3_writetags;
 use MusicProductionManager\Data\Dto\SongFile;
 use MusicProductionManager\Exceptions\Mp3FileException;
 use MusicProductionManager\File\FileMp3;
@@ -55,6 +59,19 @@ class SongFileUtil extends SongUtil
     {
         $content = self::getContent($path, 100);
         return stripos($content, '%PDF') === 0;
+    }
+
+    public static function isImageFile($path)
+    {
+        try
+        {
+            $imageSize = getimagesize($path);
+            return $imageSize != null && is_array($imageSize);
+        }
+        catch(Exception $e)
+        {
+            return false;
+        }
     }
     
     /**
@@ -121,10 +138,23 @@ class SongFileUtil extends SongUtil
         file_put_contents($path, $content);
         return $path;
     }
+
+    /**
+     * Save Image file
+     *
+     * @param string $songId
+     * @param string $targetDir
+     * @param GdImage $imageData
+     * @return string
+     */
+    public static function saveImageFile($songId, $targetDir, $imageData)
+    {
+        $path = $targetDir . "/" . $songId . ".jpg";
+        imagejpeg($imageData, $path, 85);
+        return $path;
+    }
     
     /**
-<<<<<<< Updated upstream
-=======
      * Get image content
      *
      * @param string $path
@@ -196,7 +226,6 @@ class SongFileUtil extends SongUtil
     }
 
     /**
->>>>>>> Stashed changes
      * Create button
      *
      * @param SongFile $songFile

@@ -6,12 +6,8 @@ use MagicObject\Exceptions\NoRecordFoundException;
 use MusicProductionManager\Data\Entity\Song;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
-<<<<<<< Updated upstream
-=======
-use MusicProductionManager\Data\Entity\Rating;
 use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
->>>>>>> Stashed changes
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
@@ -26,16 +22,14 @@ try
     $song1->findOneBySongId($inputPost->getSongId());
     $song1->setRating($rating);
     $song1->update();
-<<<<<<< Updated upstream
-=======
-    
     // save rating
     SongUtil::setRating($database, $song1->getSongId(), $currentLoggedInUser->getUserId(), $rating, $now);
 
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Set rating song ".$song->getSongId(), $inputGet, $inputPost);
->>>>>>> Stashed changes
     
     $allRating = SongUtil::getRating($database, $song1->getSongId());
+
+    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Set rating song ".$song->getSongId(), $inputGet, $inputPost);
     
     $response = new stdClass();
     $response->rating = $allRating;

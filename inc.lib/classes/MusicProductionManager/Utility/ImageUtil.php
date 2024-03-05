@@ -131,6 +131,7 @@ class ImageUtil
             }
             return $im2;
         }
+        
         return false;
     }
 
@@ -183,4 +184,5 @@ class ImageUtil
         ob_end_clean(); // delete buffer
         return $stringdata;
     }
+    
 }

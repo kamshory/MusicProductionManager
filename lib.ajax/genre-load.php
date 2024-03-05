@@ -14,6 +14,6 @@ $queryBuilder
     ->select("genre.genre_id as id, genre.name as value")
     ->from("genre")
     ->where("genre.active = ? ", true);
-$data = new PicoSelectOption($database, $queryBuilder, $defautValue);
+$data = new JSONSelectOption($database, $queryBuilder, $defautValue);
 $restResponse = new PicoResponse();
 $restResponse->sendResponse($data, 'json', null, PicoHttpStatus::HTTP_OK);

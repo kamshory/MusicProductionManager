@@ -4,16 +4,12 @@ use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\File\FileMp3;
 use MusicProductionManager\File\FileUpload;
-
-
-<<<<<<< Updated upstream
-=======
 use MusicProductionManager\Utility\Id3Tag;
 use MusicProductionManager\Utility\ImageUtil;
->>>>>>> Stashed changes
 use MusicProductionManager\Utility\SongFileUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -101,10 +97,7 @@ try
         $pdfPath = SongFileUtil::savePdfFile($id, $targetDir, file_get_contents($path));
         $song->setFilePathPdf($pdfPath);
         $song->setLastUploadTimePdf($now);
-<<<<<<< Updated upstream
     }  
-=======
-    } 
     else if(SongFileUtil::isImageFile($path))
     {
         // save image with original dimension
@@ -125,7 +118,7 @@ try
             $tagData->addAlbum($album);
             $tagData->addArtist($artist);
             $tagData->addComment('Comment');
-            
+
             $picture = ImageUtil::imageToString(ImageUtil::cropImageCenter(ImageCreateFromJPEG($jpegPath), $cfg->getSongImage()->getWidth(), $cfg->getSongImage()->getHeight()));
             
             $tagData->addPicture($picture, "image/jpeg", $song->getTitle());
@@ -133,7 +126,6 @@ try
             SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
         }
     } 
->>>>>>> Stashed changes
     
     $song->save();
     $song->select();
