@@ -62,13 +62,9 @@ $typeMap = array(
  * @param array $typeMap
  * @param string $columnName
  * @param string $columnType
- * @param string $columnKey
- * @param string $columnNull
- * @param string $columnDefault
- * @param string $columnExtra
  * @return string
  */
-function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra)
+function createProperty($typeMap, $columnName, $columnType)
 {
     $propertyName = StringUtil::camelize($columnName);
     $docs = array();
@@ -193,7 +189,7 @@ if(is_array($rows))
         $columnDefault = $row['Default'];
         $columnExtra = $row['Extra'];
 
-        $prop = createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra);
+        $prop = createProperty($typeMap, $columnName, $columnType);
         $attrs[] = $prop;
     }
     $valueOf = createValuueOf($picoTableName, $rows);
