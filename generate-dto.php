@@ -169,7 +169,7 @@ function createValuueOf($picoTableName, $rows)
     foreach($rows as $row)
     {
         $columnName = $row['Field'];
-        $str .="        \$output->set".ucfirst(StringUtil::camelize($columnName))."(\$input->get".ucfirst(StringUtil::camelize($columnName)).");\r\n";
+        $str .="        \$output->set".ucfirst(StringUtil::camelize($columnName))."(\$input->get".ucfirst(StringUtil::camelize($columnName))."());\r\n";
     }
     $str .="        return \$output;\r\n";
     $str .="    }\r\n";
