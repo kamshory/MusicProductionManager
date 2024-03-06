@@ -176,10 +176,10 @@ else
         </select>
     </div>
     <div class="filter-group">
-        <span>Artist Vocal</span>
-        <select class="form-control" name="artist_vocal_id" id="artist_vocal_id">
+        <span>Vocalist</span>
+        <select class="form-control" name="vocalist" id="vocalist">
             <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalistId()); ?>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getVocalist()); ?>
         </select>
     </div>
     <div class="filter-group">

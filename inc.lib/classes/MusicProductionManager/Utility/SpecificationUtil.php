@@ -114,10 +114,10 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getArtistVocalistId() != "")
+        if($inputGet->getVocalist() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('artistVocalId', $inputGet->getArtistVocalistId());
+            $predicate1->equals('artistVocal', $inputGet->getVocalist());
             $spesification->addAnd($predicate1);
         }
 
