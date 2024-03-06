@@ -14,6 +14,13 @@
   <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
   <script src="lib/pagination.js"></script>
+
+  <style>
+    .filter-group{
+      padding: 5px 0;
+      vertical-align: middle;
+    }
+  </style>
   
   <script>
     $(document).ready(function(e){

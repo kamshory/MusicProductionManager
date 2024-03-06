@@ -95,6 +95,13 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
+        if($inputGet->getProducerId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->equals('producerId', $inputGet->getProducerId());
+            $spesification->addAnd($predicate1);
+        }
+
         if($inputGet->getName() != "")
         {
             $spesificationTitle = new PicoSpecification();

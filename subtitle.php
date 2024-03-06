@@ -13,6 +13,7 @@ use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Artist;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Genre;
+use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Data\Entity\Song;
 
 use MusicProductionManager\Utility\SpecificationUtil;
@@ -306,6 +307,13 @@ else
         <select class="form-control" name="album_id" id="album_id">
             <option value="">- All -</option>
             <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
+        </select>
+    </div>
+    <div class="filter-group">
+        <span>Producer</span>
+        <select class="form-control" name="producer_id" id="producer_id">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Producer(null, $database), array('value'=>'producerId', 'label'=>'name'), $inputGet->getProducerId()); ?>
         </select>
     </div>
     <div class="filter-group">

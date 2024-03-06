@@ -183,6 +183,20 @@ else
         </select>
     </div>
     <div class="filter-group">
+        <span>Composer</span>
+        <select class="form-control" name="composer" id="composer">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getComposer()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
+        <span>Arranger</span>
+        <select class="form-control" name="arranger" id="arranger">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArranger()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
         <span>Title</span>
         <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
