@@ -209,6 +209,15 @@ User must setup application configuration.
 result_per_page: 20
 song_base_url: ${SONG_BASE_UER}
 app_name: Music Production Manager
+user_image:
+  width: 512
+  height: 512
+album_image:
+  width: 512
+  height: 512
+song_image:
+  width: 512
+  height: 512
 database:
   time_zone_system: Asia/Jakarta
   default_charset: utf8
@@ -217,7 +226,7 @@ database:
   port: ${APP_DATABASE_PORT}
   username: ${APP_DATABASE_USER}
   password: ${APP_DATABASE_PASSWORD}
-  database_name: ${APP_DATABASE_NAME}
+  database_name: music
   database_schema: public
   time_zone: ${APP_DATABASE_TIME_ZONE}
   salt: ${APP_DATABASE_SALT}
