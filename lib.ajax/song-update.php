@@ -48,6 +48,7 @@ $inputPost->checkboxVocal(false);
 try
 {
     // get album ID begin
+    $now = date('Y-m-d H:i:s');
     $song1 = new Song(null, $database);
     $song1->findOneBySongId($inputPost->getSongId());
     $albumId1 = $song1->getAlbumId();
@@ -69,6 +70,7 @@ try
     
 
     $song = new Song($inputPost, $database);
+    $song->setTimeEdit($now);
     $song->setProducerId($producerId);
     $song->update();
 
