@@ -404,11 +404,11 @@ $inputGet = new InputGet();
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Composer</div>
-            <div class="col-8"><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : ''; ?></div>
+            <div class="col-8"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : ''; ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Arranger</div>
-            <div class="col-8"><?php echo $song->hasValueArtistArranger() ? $song->getArtistArranger()->getName() : ''; ?></div>
+            <div class="col-8"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : ''; ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Vocalist</div>

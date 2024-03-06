@@ -8,7 +8,9 @@ use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\InputGet;
 use MusicProductionManager\Constants\ParamConstant;
-use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Data\Entity\EntityAlbum;
+use MusicProductionManager\Data\Entity\Producer;
+use MagicObject\Response\Generated\PicoSelectOption;
 use MusicProductionManager\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";
@@ -17,7 +19,7 @@ require_once "inc/header.php";
 $inputGet = new InputGet();
 if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getAlbumId() != null)
 {
-  $album = new Album(null, $database);
+  $album = new EntityAlbum(null, $database);
   try
   {
   $album->findOneByAlbumId($inputGet->getAlbumId());
@@ -36,6 +38,10 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getAlbumI
       <tr>
         <td>Description</td>
         <td><?php echo $album->getDescription();?></td>
+      </tr>
+      <tr>
+        <td>Producer</td>
+        <td><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : "";?></td>
       </tr>
       <tr>
         <td>Release Date</td>
@@ -74,6 +80,14 @@ else
   ?>
   <div class="filter-container">
   <form action="" method="get">
+    
+  <div class="filter-group">
+      <span>Producer</span>
+      <select class="form-control" name="producer_id" id="producer_id">
+          <option value="">- All -</option>
+          <?php echo new PicoSelectOption(new Producer(null, $database), array('value'=>'producerId', 'label'=>'name'), $inputGet->getProducerId(), null, new PicoSortable('name', PicoSortable::ORDER_TYPE_ASC)); ?>
+      </select>
+  </div>
   <div class="filter-group">
       <span>Name</span>
       <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
@@ -93,7 +107,8 @@ $orderMap = array(
   'numberOfSong'=>'numberOfSong',
   'duration'=>'duration',
   'active'=>'active',
-  'ad_draft'=>'ad_draft'
+  'ad_draft'=>'ad_draft',
+  'producer_id'=>'producer_id'
 );
 $defaultOrderBy = 'sortOrder';
 $defaultOrderType = 'desc';
@@ -103,7 +118,7 @@ $spesification = SpecificationUtil::createAlbumSpecification($inputGet);
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
-$albumEntity = new Album(null, $database);
+$albumEntity = new EntityAlbum(null, $database);
 $rowData = $albumEntity->findAll($spesification, $pagable, $sortable, true);
 
 $result = $rowData->getResult();
@@ -144,6 +159,7 @@ if(!empty($result))
       <th scope="col" class="col-sort" data-name="name">Name</th>
       <th scope="col" class="col-sort" data-name="duration">Duration</th>
       <th scope="col" class="col-sort" data-name="number_of_song">Song</th>
+      <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
       <th scope="col" class="col-sort" data-name="sort_order">Order</th>
       <th scope="col" class="col-sort" data-name="active">Active</th>
       <th scope="col" class="col-sort" data-name="ad_draft">Draft</th>
@@ -169,6 +185,7 @@ if(!empty($result))
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $album->getName();?></a></td>
       <td class="text-data text-data-duration"><?php echo sprintf("%.3f", $album->getDuration());?></td>
       <td class="text-data text-data-number-of-song"><?php echo $album->getNumberOfSong();?></td>
+      <td class="text-data text-data-producer"><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : "";?></td>
       <td class="text-data text-data-sort-order"><?php echo $album->getSortOrder();?></td>
       <td class="text-data text-data-active"><?php echo $album->isActive() ? 'Yes' : 'No';?></td>
       <td class="text-data text-data-ad-draft"><?php echo $album->isAsDraft() ? 'Yes' : 'No';?></td>
@@ -226,7 +243,16 @@ if(!empty($result))
           keyboard: false
         });
         updateAlbumModal.show();
-      })
+        downloadForm('.lazy-dom-container', function(){
+          if(!allDownloaded)
+          {
+              initModal2();
+              console.log('loaded')
+              allDownloaded = true;
+          }
+          loadForm();
+      });
+      });
     });
     
     $(document).on('click', '.save-add-album', function(){

@@ -35,6 +35,15 @@ $album = new Album(null, $database);
                                 <td><textarea class="form-control" name="description" id="description" rows="3"><?php echo $album->getDescription();?></textarea></td>
                             </tr>
                             <tr>
+                            <td>Producer</td>
+                                <td>
+                                    <select class="form-control" name="producer_id" data-value="<?php echo $album->getProducerId();?>" data-ajax="true" data-source="lib.ajax/producer-list.php">
+                                        <option value="">- select -</option>
+                                    </select>
+                                    <button class="button-add-list button-add-general-producer">+</button>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Release Date</td>
                                 <td><input type="date" class="form-control" name="release_date" value="<?php echo $album->getReleaseDate();?>"></td>
                             </tr>

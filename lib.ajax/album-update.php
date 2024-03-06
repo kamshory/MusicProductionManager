@@ -31,6 +31,7 @@ try {
     catch(Exception $e)
     {
         $album = new Album($inputPost, $database);
+        $producerId = $inputPost->getProducerId();
     }
 
     try {

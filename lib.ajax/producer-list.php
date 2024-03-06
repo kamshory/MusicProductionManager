@@ -15,7 +15,7 @@ $queryBuilder
     ->select("producer.producer_id as id, producer.name as value")
     ->from("producer")
     ->where("producer.active = ? ", true)
-    ->orderBy("producer.sort_order desc");
+    ->orderBy("producer.name asc");
 $response = new JSONSelectOption($database, $queryBuilder, $defautValue);
 $restResponse = new PicoResponse();
 $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);

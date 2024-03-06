@@ -112,7 +112,7 @@ try
             $entitySong->findOneBySongId($song->getSongId());
 
             $album = $entitySong->hasValueAlbum() ? $entitySong->getAlbum()->getName() : "";
-            $artist = $entitySong->hasValueArtistVocal() ? $entitySong->ArtistVocal()->getName() : "";
+            $artist = $entitySong->hasValueVocalist() ? $entitySong->ArtistVocal()->getName() : "";
 
             $tagData = new Id3Tag;
             $tagData->addAlbum($album);

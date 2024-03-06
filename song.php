@@ -346,8 +346,8 @@ if(!empty($result))
         <td class="text-data text-data-album-name"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
         <td class="text-data text-data-track-number"><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
         <td class="text-data text-data-genre-name"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
-        <td class="text-data text-data-artist-vocal-name"><?php echo $song->hasValueArtistVocal() ? $song->getArtistVocal()->getName() : "";?></td>
-        <td class="text-data text-data-artist-composer-name"><?php echo $song->hasValueArtistComposer() ? $song->getArtistComposer()->getName() : "";?></td>
+        <td class="text-data text-data-artist-vocal-name"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
+        <td class="text-data text-data-artist-composer-name"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
         <td class="text-data text-data-duration"><?php echo $song->getDuration();?></td>
         <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
         <td class="text-data text-data-lyric-complete"><?php echo $song->isLyricComplete() ? 'Yes' : 'No';?></td>
