@@ -226,7 +226,7 @@ database:
   port: ${APP_DATABASE_PORT}
   username: ${APP_DATABASE_USER}
   password: ${APP_DATABASE_PASSWORD}
-  database_name: music
+  database_name: ${APP_DATABASE_NAME}
   database_schema: public
   time_zone: ${APP_DATABASE_TIME_ZONE}
   salt: ${APP_DATABASE_SALT}
