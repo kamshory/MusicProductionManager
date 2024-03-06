@@ -198,10 +198,10 @@ else
 
     <div class="filter-group">
         <span>Lyric</span>
-        <select class="form-control" name="lyric_complete" id="lyric_complete">
+        <select class="form-control" name="subtitle_complete" id="subtitle_complete">
             <option value="">- All -</option>
-            <option value="1"<?php echo $inputGet->createSelectedLyricComplete("1");?>>Yes</option>
-            <option value="0"<?php echo $inputGet->createSelectedLyricComplete("0");?>>No</option>
+            <option value="1"<?php echo $inputGet->createSelectedSsubtitleComplete("1");?>>Yes</option>
+            <option value="0"<?php echo $inputGet->createSelectedSsubtitleComplete("0");?>>No</option>
         </select>
     </div>
 
@@ -228,12 +228,13 @@ $orderMap = array(
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
     'genre'=>'genreId',
+    'producerId'=>'producerId',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
-    'artistComposerId'=>'artistComposerId',
-    'artistComposer'=>'artistComposerId',
+    'artistComposer'=>'artistComposer',
+    'artistArranger'=>'artistArranger',
     'duration'=>'duration',
-    'lyricComplete'=>'lyricComplete',
+    'lsubtitleComplete'=>'lsubtitleComplete',
     'vocal'=>'vocal',
     'active'=>'active'
 );

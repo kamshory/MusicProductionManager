@@ -348,12 +348,13 @@ $inputGet = new InputGet();
     'genre' => 'genreId',
     'artistVocalId' => 'artistVocalId',
     'artistVocalist' => 'artistVocalId',
-    'artistComposerId' => 'artistComposerId',
-    'artistComposer' => 'artistComposerId',
+    'artistComposer' => 'artistComposer',
+    'artistComposer' => 'artistComposer',
     'duration' => 'duration',
-    'lyricComplete' => 'lyricComplete',
+    'lsubtitleComplete' => 'lsubtitleComplete',
     'vocal' => 'vocal',
-    'active' => 'active'
+    'active' => 'active',
+    'producerId'=>'producerId'
   );
   $defaultOrderBy = 'songId';
   $defaultOrderType = 'desc';

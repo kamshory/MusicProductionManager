@@ -134,12 +134,13 @@ $orderMap = array(
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
     'genre'=>'genreId',
+    'producerId'=>'producerId',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
-    'artistComposerId'=>'artistComposerId',
-    'artistComposer'=>'artistComposerId',
+    'artistComposer'=>'artistComposer',
+    'artistArranger'=>'artistArranger',
     'duration'=>'duration',
-    'lyricComplete'=>'lyricComplete',
+    'lsubtitleComplete'=>'lsubtitleComplete',
     'vocal'=>'vocal',
     'active'=>'active'
 );

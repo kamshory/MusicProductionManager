@@ -274,7 +274,7 @@ if($song != null)
         ajax.post('lib.ajax/subtitle-save.php', {
             song_id: song_id,
             subtitle: rawData,
-            lyricComplete:complete?1:0,
+            lsubtitleComplete:complete?1:0,
             duration: duration
         }, function(response, status) {
         });
@@ -335,7 +335,7 @@ else
     
     <div class="filter-group">
         <span>Complete</span>
-        <select class="form-control" name="lyric_complete" id="lyric_complete">
+        <select class="form-control" name="subtitle_complete" id="subtitle_complete">
             <option value="">- All -</option>
             <option value="1"<?php echo $inputGet->createSelectedLyricComplete("1");?>>Yes</option>
             <option value="0"<?php echo $inputGet->createSelectedLyricComplete("0");?>>No</option>
@@ -357,14 +357,15 @@ $orderMap = array(
     'trackNumber'=>'trackNumber', 
     'genreId'=>'genreId', 
     'genre'=>'genreId',
+    'producerId'=>'producerId',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
-    'artistComposerId'=>'artistComposerId',
-    'artistComposer'=>'artistComposerId',
+    'artistComposer'=>'artistComposer',
+    'artistArranger'=>'artistArranger',
     'duration'=>'duration',
     'vocal'=>'vocal',
     'active'=>'active',
-    'lyricComplete'=>'lyricComplete'
+    'lsubtitleComplete'=>'lsubtitleComplete'
 );
 $defaultOrderBy = 'songId';
 $defaultOrderType = 'desc';
@@ -431,7 +432,7 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
-        <th scope="col" class="col-sort" data-name="lyric_complete">Complete</th>
+        <th scope="col" class="col-sort" data-name="subtitle_complete">Complete</th>
         </tr>
     </thead>
     <tbody>

@@ -208,11 +208,11 @@ else
     </div>
 
     <div class="filter-group">
-        <span>Lyric</span>
-        <select class="form-control" name="lyric_complete" id="lyric_complete">
+        <span>Subtitle</span>
+        <select class="form-control" name="subtitle_complete" id="subtitle_complete">
             <option value="">- All -</option>
-            <option value="1"<?php echo $inputGet->createSelectedLyricComplete("1");?>>Yes</option>
-            <option value="0"<?php echo $inputGet->createSelectedLyricComplete("0");?>>No</option>
+            <option value="1"<?php echo $inputGet->createSelectedSsubtitleComplete("1");?>>Yes</option>
+            <option value="0"<?php echo $inputGet->createSelectedSsubtitleComplete("0");?>>No</option>
         </select>
     </div>
 
@@ -239,12 +239,13 @@ $orderMap = array(
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
     'genre'=>'genreId',
+    'producerId'=>'producerId',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
-    'artistComposerId'=>'artistComposerId',
-    'artistComposer'=>'artistComposerId',
+    'artistComposer'=>'artistComposer',
+    'artistArranger'=>'artistArranger',
     'duration'=>'duration',
-    'lyricComplete'=>'lyricComplete',
+    'lsubtitleComplete'=>'lsubtitleComplete',
     'vocal'=>'vocal',
     'active'=>'active'
 );
@@ -312,13 +313,15 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
+        <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
         <th scope="col" class="col-sort" data-name="track_number">Track</th>
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
+        <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
         <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
-        <th scope="col" class="col-sort" data-name="lyric_complete">Lyric</th>
+        <th scope="col" class="col-sort" data-name="subtitle_complete">Subtitle</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
     </thead>
@@ -344,13 +347,15 @@ if(!empty($result))
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
         <td class="text-data text-data-rating"><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td class="text-data text-data-album-name"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
+        <td class="text-data text-data-producer-name"><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : "";?></td>
         <td class="text-data text-data-track-number"><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
         <td class="text-data text-data-genre-name"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
         <td class="text-data text-data-artist-vocal-name"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         <td class="text-data text-data-artist-composer-name"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
+        <td class="text-data text-data-artist-arranger-name"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : "";?></td>
         <td class="text-data text-data-duration"><?php echo $song->getDuration();?></td>
         <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
-        <td class="text-data text-data-lyric-complete"><?php echo $song->isLyricComplete() ? 'Yes' : 'No';?></td>
+        <td class="text-data text-data-subtitle-complete"><?php echo $song->isSsubtitleComplete() ? 'Yes' : 'No';?></td>
         <td class="text-data text-data-active"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
         </tr>
         <?php

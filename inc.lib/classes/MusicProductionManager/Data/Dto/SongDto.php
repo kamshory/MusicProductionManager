@@ -218,7 +218,7 @@ class SongDto extends SetterGetter
 	 * 
 	 * @var bool
 	 */
-	protected $lyricComplete;
+	protected $lsubtitleComplete;
 
 	/**
 	 * Lyric Midi

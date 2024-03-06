@@ -294,10 +294,11 @@ $orderMap = array(
     'album'=>'albumId', 
     'genreId'=>'genreId', 
     'genre'=>'genreId',
+    'producerId'=>'producerId',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
-    'artistComposerId'=>'artistComposerId',
-    'artistComposer'=>'artistComposerId'
+    'artistComposer'=>'artistComposer',
+    'artistArranger'=>'artistArranger'
 );
 $defaultOrderBy = 'songId';
 $defaultOrderType = 'desc';

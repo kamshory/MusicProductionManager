@@ -105,7 +105,7 @@ else
 
     <div class="filter-group">
         <span>Complete</span>
-        <select class="form-control" name="lyric_complete" id="lyric_complete">
+        <select class="form-control" name="subtitle_complete" id="subtitle_complete">
             <option value="">- All -</option>
             <option value="1"<?php echo $inputGet->createSelectedLyricComplete(true);?>>Yes</option>
             <option value="0"<?php echo $inputGet->createSelectedLyricComplete(false);?>>No</option>

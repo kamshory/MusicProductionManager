@@ -76,7 +76,7 @@ class EntityMidi extends MagicObject
      * @var string
      * @Column(name=artist_composer)
      */
-    protected $artistComposerId;
+    protected $artistComposer;
     
     /**
      * Artist Composer

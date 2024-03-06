@@ -117,14 +117,14 @@ class SpecificationUtil
         if($inputGet->getVocalist() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('artistVocal', $inputGet->getVocalist());
+            $predicate1->equals('artistVocalist', $inputGet->getVocalist());
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getLyricComplete() != "")
+        if($inputGet->getSsubtitleComplete() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('lyricComplete', $inputGet->getLyricComplete());
+            $predicate1->equals('lsubtitleComplete', $inputGet->getSsubtitleComplete());
             $spesification->addAnd($predicate1);
         }
 
