@@ -40,6 +40,8 @@ Vocalists can learn the song, both the lyrics and the tune. Vocalists can read m
 
 **Music Production Manager** arranges songs during the production process. Songs can be arranged in an album, extended player, single player or group of songs. Songs can be sorted by track number or rating. Rating is very important during song composition. A song with a low rating means there are still many shortcomings that need to be corrected. Producers can focus on improving songs with lower rating.
 
+Users can search for songs by typing keywords contained in the song subtitles. The keywords chosen should be unique and rarely used so they will provide more accurate results. **Music Production Manager** will display several songs with lyrics containing typed words.
+
 ## Album Management
 
 **Music Production Manager** manages the song groups. Groups are very important because the release of an album or extended player does not depend on when the song was created. Apart from that, in the creation process, the song does not yet have a final title. The producer may give each song a name with a certain code, for example a series code.
