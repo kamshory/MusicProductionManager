@@ -7,7 +7,8 @@ use MagicObject\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
-$defautValue = trim(@$_GET['current_value']);
+$inputGet = new InputGet();
+$defautValue = $inputGet->getCurrentValue();
 $queryBuilder = new PicoDatabaseQueryBuilder($database);
 $queryBuilder
     ->newQuery()
