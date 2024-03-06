@@ -21,48 +21,63 @@ class EntityReference extends MagicObject
 	protected $referenceId;
 
 	/**
+	 * Title
+	 * 
 	 * @Column(name="title", type="varchar(255)", length=255, nullable=true)
 	 * @var string
 	 */
 	protected $title;
 
     /**
+	 * Genre ID
+	 * 
 	 * @Column(name="genre_id", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $genreId;
 
     /**
+	 * Genre
+	 * 
 	 * @JoinColumn(name="genre_id", type="varchar(50)", length=50, nullable=true)
 	 * @var Genre
 	 */
 	protected $genre;
 
 	/**
+	 * Album
+	 * 
 	 * @Column(name="album", type="varchar(255)", length=255, nullable=true)
 	 * @var string
 	 */
 	protected $album;
 
 	/**
+	 * Artist ID
 	 * @Column(name="artist_id", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $artistId;
 
 	/**
+	 * Artist
+	 * 
 	 * @JoinColumn(name="artist_id", type="varchar(50)", length=50, nullable=true)
 	 * @var Artist
 	 */
 	protected $artist;
 
 	/**
+	 * Year
+	 * 
 	 * @Column(name="year", type="year(4)", length=4, nullable=true)
 	 * @var string
 	 */
 	protected $year;
 
 	/**
+	 * URL
+	 * 
 	 * @Column(name="url", type="text", nullable=true)
 	 * @var string
 	 */
@@ -75,54 +90,72 @@ class EntityReference extends MagicObject
 	protected $urlProvider;
 
 	/**
-	 * @Column(name="lyric", type="text", nullable=true)
+	 * Subtitle
+	 * 
+	 * @Column(name="subtitle", type="text", nullable=true)
 	 * @var string
 	 */
-	protected $lyric;
+	protected $subtitle;
 
 	/**
+	 * Description
+	 * 
 	 * @Column(name="description", type="longtext", nullable=true)
 	 * @var string
 	 */
 	protected $description;
 
 	/**
+	 * Time Create
+	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
 	 * @var string
 	 */
 	protected $timeCreate;
 
 	/**
+	 * Time Edit
+	 * 
 	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
 	 * @var string
 	 */
 	protected $timeEdit;
 
 	/**
+	 * IP Create
+	 * 
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
 	 * @var string
 	 */
 	protected $ipCreate;
 
 	/**
+	 * IP Edit
+	 * 
 	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $ipEdit;
 
 	/**
+	 * Admin Create
+	 * 
 	 * @Column(name="admin_create", type="varchar(50)", length=50, nullable=true, updatable=false)
 	 * @var string
 	 */
 	protected $adminCreate;
 
 	/**
+	 * Admin Edit
+	 * 
 	 * @Column(name="admin_edit", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
 	protected $adminEdit;
 
 	/**
+	 * Active
+	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
 	 * @var bool

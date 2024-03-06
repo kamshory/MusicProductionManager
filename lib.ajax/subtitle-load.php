@@ -11,7 +11,7 @@ $songId = $inputGet->getSongId();
 $queryBuilder = new PicoDatabaseQueryBuilder($database);
 $queryBuilder
     ->newQuery()
-    ->select("song.song_id as song_id, song.title as title, song.lyric as lyric")
+    ->select("song.song_id as song_id, song.title as title, song.subtitle as subtitle")
     ->from("song")
     ->where("song.active = ? and song.song_id = ? ", true, $songId);
 try

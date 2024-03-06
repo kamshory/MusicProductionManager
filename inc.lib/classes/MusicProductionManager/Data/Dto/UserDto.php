@@ -180,29 +180,29 @@ class UserDto extends SetterGetter
     public static function valueOf($input)
     {
         $output = new UserDto();
-        $output->setUserId($input->getUserId);
-        $output->setUsername($input->getUsername);
-        $output->setPassword($input->getPassword);
-        $output->setAdmin($input->getAdmin);
-        $output->setName($input->getName);
-        $output->setBirthDay($input->getBirthDay);
-        $output->setGender($input->getGender);
-        $output->setEmail($input->getEmail);
-        $output->setUserTypeId($input->getUserTypeId);
+        $output->setUserId($input->getUserId());
+        $output->setUsername($input->getUsername());
+        $output->setPassword($input->getPassword());
+        $output->setAdmin($input->getAdmin());
+        $output->setName($input->getName());
+        $output->setBirthDay($input->getBirthDay());
+        $output->setGender($input->getGender());
+        $output->setEmail($input->getEmail());
+        $output->setUserTypeId($input->getUserTypeId());
         $output->setUserType($input->hasValueUserType() ?$input->getUserType()->getName() : null);
-        $output->setAssociatedArtist($input->getAssociatedArtist);
+        $output->setAssociatedArtist($input->getAssociatedArtist());
         $output->setArtist($input->hasValueArtist() ?$input->getArtist()->getName() : null);
-        $output->setImagePath($input->getImagePath);
-        $output->setTimeCreate($input->getTimeCreate);
-        $output->setTimeEdit($input->getTimeEdit);
-        $output->setAdminCreate($input->getAdminCreate);
-        $output->setAdminEdit($input->getAdminEdit);
-        $output->setIpCreate($input->getIpCreate);
-        $output->setIpEdit($input->getIpEdit);
-        $output->setResetPasswordHash($input->getResetPasswordHash);
-        $output->setLastResetPassword($input->getLastResetPassword);
-        $output->setBlocked($input->getBlocked);
-        $output->setActive($input->getActive);
+        $output->setImagePath($input->getImagePath());
+        $output->setTimeCreate($input->getTimeCreate());
+        $output->setTimeEdit($input->getTimeEdit());
+        $output->setAdminCreate($input->getAdminCreate());
+        $output->setAdminEdit($input->getAdminEdit());
+        $output->setIpCreate($input->getIpCreate());
+        $output->setIpEdit($input->getIpEdit());
+        $output->setResetPasswordHash($input->getResetPasswordHash());
+        $output->setLastResetPassword($input->getLastResetPassword());
+        $output->setBlocked($input->getBlocked());
+        $output->setActive($input->getActive());
         return $output;
     }
 

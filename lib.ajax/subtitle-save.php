@@ -7,7 +7,7 @@ use MusicProductionManager\Utility\UserUtil;
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputPost = new InputPost();
 $songId = $inputPost->getSongId();
-$lyric = $inputPost->getLyric();
+$subtitle = $inputPost->getSubtitle();
 $duration = $inputPost->getDuration();
 
 if(empty($songId))
@@ -17,7 +17,7 @@ if(empty($songId))
 
 $song = new Song(null, $database);
 $song->setSongId($songId);
-$song->setLyric($lyric);
+$song->setSubtitle($subtitle);
 
 if($duration != '')
 {

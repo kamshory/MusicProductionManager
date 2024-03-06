@@ -61,12 +61,12 @@ class RatingDto extends SetterGetter
     public static function valueOf($input)
     {
         $output = new RatingDto();
-        $output->setRatingId($input->getRatingId);
-        $output->setUserId($input->getUserId);
+        $output->setRatingId($input->getRatingId());
+        $output->setUserId($input->getUserId());
 		$output->setUser($input->hasValueUser() ? $input->getUser()->getName() : null);
-        $output->setSongId($input->getSongId);
-        $output->setRating($input->getRating);
-        $output->setTimeCreate($input->getTimeCreate);
+        $output->setSongId($input->getSongId());
+        $output->setRating($input->getRating());
+        $output->setTimeCreate($input->getTimeCreate());
         return $output;
     }
 }

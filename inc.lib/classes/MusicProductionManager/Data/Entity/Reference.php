@@ -77,12 +77,12 @@ class Reference extends MagicObject
 	protected $urlProvider;
 
 	/**
-	 * Lyric
+	 * Subtitle
 	 * 
-	 * @Column(name="lyric", type="text", nullable=true)
+	 * @Column(name="subtitle", type="text", nullable=true)
 	 * @var string
 	 */
-	protected $lyric;
+	protected $subtitle;
 
 	/**
 	 * Description

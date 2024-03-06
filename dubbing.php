@@ -133,25 +133,26 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
 
 try
 {
-    $song = new Song(array('song_id'=>@$_GET['song_id']), $database);
-    $song->select();
+    $inputGet = new InputGet();
+    $song = new Song(null, $database);
+    $song->findOneBySongId($inputGet->getSongId());
     if($song != null)
     {
-        $lyric = $song->getLyric();
+        $subtitle = $song->getSubtitle();
         if(strlen(trim($lyric)) == 0)
         {
-            $lyric = "{type here}";
+            $subtitle = "{type here}";
         }
-        if(stripos($lyric, "-->") === false)
+        if(stripos($subtitle, "-->") === false)
         {
-            $lyric = "00:00:00,000 --> 00:00:01,000\r\n".$lyric;
+            $subtitle = "00:00:00,000 --> 00:00:01,000\r\n".$subtitle;
         }
 ?>
 <script>
     let song_id = '<?php echo $song->getSongId(); ?>';
     let path = '<?php echo $cfg->getSongBaseUrl();?>/<?php echo $song->getFileName(); ?>';
-    let jsonData = <?php echo json_encode(array('lyric'=>$lyric)); ?>;
-    let rawData = jsonData.lyric;
+    let jsonData = <?php echo json_encode(array('subtitle'=>$subtitle)); ?>;
+    let rawData = jsonData.subtitle;
 </script>
 <script>
     let srt;

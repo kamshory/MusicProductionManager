@@ -109,10 +109,10 @@ class SpecificationUtil
             $spesification->addAnd($spesificationTitle);
         }
 
-        if($inputGet->getLyric() != "")
+        if($inputGet->getSubtitle() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->like('lyric', PicoPredicate::generateCenterLike($inputGet->getLyric()));
+            $predicate1->like('subtitle', PicoPredicate::generateCenterLike($inputGet->getSubtitle()));
             $spesification->addAnd($predicate1);
         }
 

@@ -293,20 +293,20 @@ class EntitySong extends MagicObject
 	protected $timeSignature;
 
 	/**
-	 * Lyric
+	 * Subtitle
 	 * 
-	 * @Column(name="lyric", type="longtext", nullable=true)
+	 * @Column(name="subtitle", type="longtext", nullable=true)
 	 * @var string
 	 */
-	protected $lyric;
+	protected $subtitle;
 
 	/**
-	 * Lyric Complete
+	 * Subtitle Complete
 	 * 
-	 * @Column(name="lyric_complete", type="tinyint(1)", length=1, nullable=true)
+	 * @Column(name="subtitle_complete", type="tinyint(1)", length=1, nullable=true)
 	 * @var bool
 	 */
-	protected $lyricComplete;
+	protected $subtitleComplete;
 
 	/**
 	 * Lyric Midi

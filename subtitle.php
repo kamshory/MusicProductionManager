@@ -156,21 +156,21 @@ require_once __DIR__ . "/inc/menu-song.php";
 
 if($song != null)
 {
-    $lyric = $song->getLyric();
-    if(strlen(trim($lyric)) == 0)
+    $subtitle = $song->getSubtitle();
+    if(strlen(trim($subtitle)) == 0)
     {
-        $lyric = "{type here}";
+        $subtitle = "{type here}";
     }
-    if(stripos($lyric, "-->") === false)
+    if(stripos($subtitle, "-->") === false)
     {
-        $lyric = "00:00:00,000 --> 00:00:01,000\r\n".$lyric;
+        $subtitle = "00:00:00,000 --> 00:00:01,000\r\n".$subtitle;
     }
 ?>
 <script>
     let song_id = '<?php echo $song->getSongId(); ?>';
     let path = '<?php echo $cfg->getSongBaseUrl();?>/<?php echo $song->getFileName(); ?>?hash=<?php echo str_replace(array(" ", "-", ":"), "", $song->getLastUploadTime());?>';
-    let jsonData = <?php echo json_encode(array('lyric'=>$lyric)); ?>;
-    let rawData = jsonData.lyric;
+    let jsonData = <?php echo json_encode(array('subtitle'=>$subtitle)); ?>;
+    let rawData = jsonData.subtitle;
 </script>
 <script>
     let srt;
@@ -224,7 +224,7 @@ if($song != null)
         document.querySelector('.button-reset-master').addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            resetLyric();
+            resetSubtitle();
         });
 
         document.querySelector('.button-sub').addEventListener('click', function(e) {
@@ -248,16 +248,16 @@ if($song != null)
             }
         };
     });
-    function resetLyric()
+    function resetSubtitle()
     {
-         $.ajax({
+        $.ajax({
             type:'GET',
-            url:'lib.ajax/lyric-load.php',
+            url:'lib.ajax/subtitle-load.php',
             data:{song_id:song_id},
             dataType:'json',
             success:function(data)
             {
-                rawData:data.lyric;
+                rawData:data.subtitle;
                 srt.initData(rawData, path)
             }
         });
@@ -271,9 +271,9 @@ if($song != null)
         srt.updateData();
         let duration = srt.duration;
         rawData = srt.getFinalResult();
-        ajax.post('lib.ajax/lyric-save.php', {
+        ajax.post('lib.ajax/subtitle-save.php', {
             song_id: song_id,
-            lyric: rawData,
+            subtitle: rawData,
             lyricComplete:complete?1:0,
             duration: duration
         }, function(response, status) {
@@ -320,8 +320,8 @@ else
         <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
     <div class="filter-group">
-        <span>Lyric</span>
-        <input class="form-control" type="text" name="lyric" id="lyric" autocomplete="off" value="<?php echo $inputGet->getLyric(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+        <span>Subtitle</span>
+        <input class="form-control" type="text" name="subtitle" id="subtitle" autocomplete="off" value="<?php echo $inputGet->getSubtitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
 
     <div class="filter-group">

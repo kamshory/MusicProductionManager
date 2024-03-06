@@ -23,7 +23,7 @@ $lyric = array('lyric' => '', 'start'=>0, 'duration'=>0, 'song_id'=>'');
 if($inputGet->getSongId() != null)
 {
     $song->findOneBySongId($inputGet->getSongId());
-    $lyric['lyric'] = $song->getLyric();
+    $lyric['subtitle'] = $song->getSubtitle();
     $lyric['duration'] = $song->getDuration() * 1000;
     $lyric['start'] = (time() * 1000) + $delay;
     $lyric['song_id'] = $song->getSongId();

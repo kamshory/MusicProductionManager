@@ -98,7 +98,7 @@ function downloadSongFiles($zip, $path, $song, $perAlbum = false)
         } else {
             $filename = $song->getName() . ".srt";
         }
-        $buff = $song->getLyric();
+        $buff = $song->getSubtitle();
         $zip->addFromString($filename, $buff);
     }
 }

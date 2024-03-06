@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 05, 2024 at 03:16 AM
+-- Generation Time: Mar 06, 2024 at 12:17 PM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `album` (
   `album_id` varchar(50) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `description` longtext,
+  `producer_id` varchar(40) DEFAULT NULL,
   `release_date` date DEFAULT NULL,
   `number_of_song` int(11) DEFAULT NULL,
   `duration` float DEFAULT NULL,
@@ -108,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `midi` (
   `random_midi_id` varchar(50) DEFAULT NULL,
   `title` text,
   `album_id` varchar(50) DEFAULT NULL,
-  `artist_vocalist` varchar(50) DEFAULT NULL,
+  `artist_vocal` varchar(50) DEFAULT NULL,
   `artist_composer` varchar(50) DEFAULT NULL,
   `artist_arranger` varchar(50) DEFAULT NULL,
   `file_path` text,
@@ -134,6 +135,37 @@ CREATE TABLE IF NOT EXISTS `midi` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `producer`
+--
+
+CREATE TABLE IF NOT EXISTS `producer` (
+  `producer_id` varchar(40) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `gender` varchar(2) DEFAULT NULL,
+  `birth_day` date DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `phone2` varchar(50) DEFAULT NULL,
+  `phone3` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `email2` varchar(100) DEFAULT NULL,
+  `email3` varchar(100) DEFAULT NULL,
+  `website` text,
+  `address` text,
+  `picture` tinyint(1) DEFAULT NULL,
+  `image_path` text,
+  `image_update` timestamp NULL DEFAULT NULL,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  `admin_create` varchar(40) DEFAULT NULL,
+  `admin_edit` varchar(40) DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL,
+  `ip_edit` varchar(50) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rating`
 --
 
@@ -142,7 +174,8 @@ CREATE TABLE IF NOT EXISTS `rating` (
   `user_id` varchar(40) DEFAULT NULL,
   `song_id` varchar(40) DEFAULT NULL,
   `rating` float DEFAULT NULL,
-  `time_create` timestamp NULL DEFAULT NULL
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -160,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `reference` (
   `year` year(4) DEFAULT NULL,
   `url` text,
   `url_provider` varchar(100) DEFAULT NULL,
-  `lyric` text,
+  `subtitle` text,
   `description` longtext,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,
@@ -184,6 +217,7 @@ CREATE TABLE IF NOT EXISTS `song` (
   `title` text,
   `album_id` varchar(50) DEFAULT NULL,
   `track_number` int(11) DEFAULT NULL,
+  `producer_id` varchar(40) DEFAULT NULL,
   `artist_vocalist` varchar(50) DEFAULT NULL,
   `artist_composer` varchar(50) DEFAULT NULL,
   `artist_arranger` varchar(50) DEFAULT NULL,
@@ -206,8 +240,8 @@ CREATE TABLE IF NOT EXISTS `song` (
   `genre_id` varchar(50) DEFAULT NULL,
   `bpm` float DEFAULT NULL,
   `time_signature` varchar(40) DEFAULT NULL,
-  `lyric` longtext,
-  `lyric_complete` tinyint(1) DEFAULT '0',
+  `subtitle` longtext,
+  `subtitle_complete` tinyint(1) DEFAULT '0',
   `lyric_midi` longtext,
   `lyric_midi_raw` longtext,
   `vocal` tinyint(1) DEFAULT '0',
@@ -283,6 +317,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(100) DEFAULT NULL,
   `user_type_id` varchar(40) DEFAULT NULL,
   `associated_artist` varchar(40) DEFAULT NULL,
+  `associated_producer` varchar(40) DEFAULT NULL,
+  `current_role` varchar(40) DEFAULT NULL,
   `image_path` text,
   `time_create` timestamp NULL DEFAULT NULL,
   `time_edit` timestamp NULL DEFAULT NULL,
@@ -362,6 +398,12 @@ ALTER TABLE `genre`
 --
 ALTER TABLE `midi`
   ADD PRIMARY KEY (`midi_id`);
+
+--
+-- Indexes for table `producer`
+--
+ALTER TABLE `producer`
+  ADD PRIMARY KEY (`producer_id`);
 
 --
 -- Indexes for table `rating`
