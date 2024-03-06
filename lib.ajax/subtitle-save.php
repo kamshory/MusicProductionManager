@@ -1,20 +1,22 @@
 <?php
 
+use MagicObject\Request\InputPost;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
-$song_id = trim(@$_POST['song_id']);
-$lyric = @$_POST['lyric'];
-$duration = trim(@$_POST['duration']);
+$inputPost = new InputPost();
+$songId = $inputPost->getSongId();
+$lyric = $inputPost->getLyric();
+$duration = $inputPost->getDuration();
 
-if(empty($song_id))
+if(empty($songId))
 {
     exit();
 }
 
 $song = new Song(null, $database);
-$song->setSongId($song_id);
+$song->setSongId($songId);
 $song->setLyric($lyric);
 
 if($duration != '')

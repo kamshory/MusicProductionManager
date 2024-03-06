@@ -3,6 +3,7 @@
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Response\Generated\JSONSelectOption;
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Request\InputGet;
 use MagicObject\Response\PicoResponse;
 
 require_once dirname(__DIR__)."/inc/auth.php";
