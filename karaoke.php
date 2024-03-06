@@ -154,7 +154,7 @@ require_once "inc/header.php";
                     piano = new Piano(document.querySelector('.piano'));
                     piano.setSong(midiSong);
                 }  
-                if(typeof data.lyric != 'undefined' && data.lyric != '')
+                if(typeof data.subtitle != 'undefined' && data.subtitle != '')
                 {
                     karaoke = new Karaoke(data, '.teleprompter-container');      
                     animate();

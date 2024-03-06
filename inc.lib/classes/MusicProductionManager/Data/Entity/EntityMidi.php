@@ -59,7 +59,7 @@ class EntityMidi extends MagicObject
      * @var string
      * @Column(name=artist_vocalist)
      */
-    protected $artistVocalId;
+    protected $artistVocalist;
     
     
     /**
@@ -68,7 +68,7 @@ class EntityMidi extends MagicObject
      * @var Artist
      * @JoinColumn (name=artist_vocalist)
      */
-    protected $artistVocalist;
+    protected $vocalist;
 
     /**
      * Artist Composer
@@ -84,7 +84,7 @@ class EntityMidi extends MagicObject
      * @var Artist
      * @JoinColumn (name=artist_composer)
      */
-    protected $artistComposer;
+    protected $composer;
 
     /**
      * Artist Arranger
@@ -92,7 +92,7 @@ class EntityMidi extends MagicObject
      * @var string
      * @Column(name=artist_arranger)
      */
-    protected $artistArrangerId;
+    protected $artistArranger;
     
     /**
      * Artist Arranger
@@ -100,7 +100,7 @@ class EntityMidi extends MagicObject
      * @var Artist
      * @JoinColumn (name=artist_arranger)
      */
-    protected $artistArranger;
+    protected $arranger;
 
     /**
      * File path

@@ -404,7 +404,7 @@ class Karaoke {
       this.start = data.start;
       this.songId = data.song_id;
       this.duration = data.duration;
-      let parsed = this.parseRawData(data.lyric);
+      let parsed = this.parseRawData(data.subtitle);
       this.subtitle = parsed;
       this.renderPrompt(parsed, elementSelector);
     };
