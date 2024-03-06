@@ -6,8 +6,9 @@ use Exception;
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
-use MagicObject\Request\PicoRequest;
+use MusicProductionManager\Constants\UserRole;
 use MusicProductionManager\Data\Entity\Artist;
+use MusicProductionManager\Data\Entity\EntityUser;
 use MusicProductionManager\Data\Entity\User;
 use MusicProductionManager\Data\Entity\UserActivity;
 use MusicProductionManager\Data\Entity\UserType;
@@ -35,6 +36,29 @@ class UserUtil
     {
         return $user->hasValueArtist() ? $user->getArtist() : new Artist(null);
     }
+    
+    /**
+     * Check if user can change producer
+     *
+     * @param EntityUser $user
+     * @return boolean
+     */
+    public static function isAllowSelectProducer($user)
+    {
+        return $user->isAdmin() || self::isUserAsProducer($user);
+    }
+    
+    /**
+     * Is user as vocalist
+     *
+     * @param EntityUser $user
+     * @return bool
+     */
+    public static function isUserAsProducer($user)
+    {
+        return $user->getCurrentRole() == UserRole::PRODUCER && $user->hasValueProducer();
+    }
+    
     /**
      * Check if user can change vocalist
      *
@@ -43,9 +67,18 @@ class UserUtil
      */
     public static function isAllowSelectVocalist($user)
     {
-        $userType = self::getUserType($user);
-        $artist = self::getArtist($user);
-        return $userType->isAdmin();
+        return $user->isAdmin() || self::isUserAsVocalist($user);
+    }
+    
+    /**
+     * Is user as vocalist
+     *
+     * @param EntityUser $user
+     * @return bool
+     */
+    public static function isUserAsVocalist($user)
+    {
+        return $user->getCurrentRole() == UserRole::VOCALIST && $user->hasValueArtist();
     }
     
     /**
@@ -56,7 +89,18 @@ class UserUtil
      */
     public static function isAllowSelectComposer($user)
     {
-        return true;
+        return $user->isAdmin() || self::isUserAsComposer($user);
+    }
+    
+    /**
+     * Is user as composer
+     *
+     * @param EntityUser $user
+     * @return bool
+     */
+    public static function isUserAsComposer($user)
+    {
+        return $user->getCurrentRole() == UserRole::COMPOSER && $user->hasValueComposer();
     }
     
     /**
@@ -67,7 +111,95 @@ class UserUtil
      */
     public static function isAllowSelectArranger($user)
     {
-        return true;
+        return $user->isAdmin() || self::isUserAsArranger($user);
+    }
+    
+    /**
+     * Is user as arranger
+     *
+     * @param EntityUser $user
+     * @return bool
+     */
+    public static function isUserAsArranger($user)
+    {
+        return $user->getCurrentRole() == UserRole::ARRANGER && $user->hasValueArtist();
+    }
+    
+    /**
+     * Get available user role
+     *
+     * @param EntityUser $user
+     * @return string[]
+     */
+    public static function getAvailableUserRole($user)
+    {
+        $role = array();
+        if($user->isAdmin())
+        {
+            $role[] = UserRole::ADMIN;
+        }
+        if($user->hasValueProducer())
+        {
+            $role[] = UserRole::PRODUCER;
+        }
+        if($user->hasValueComposer())
+        {
+            $role[] = UserRole::COMPOSER;
+        }
+        if($user->hasValueArranger())
+        {
+            $role[] = UserRole::ARRANGER;
+        }
+        if($user->hasValueVocalist())
+        {
+            $role[] = UserRole::VOCALIST;
+        }
+        return $role;
+    }
+    
+    /**
+     * Validate before user update user role
+     *
+     * @param EntityUser $user
+     * @param string $newRole
+     * @return bool
+     */
+    public static function isValidNewUserRole($user, $newRole)
+    {
+        $availableRole = self::getAvailableUserRole($user);
+        return in_array($newRole, $availableRole);
+    }
+    
+    /**
+     * Get current user role
+     *
+     * @param EntityUser $user
+     * @return string[]
+     */
+    public static function getCurrentUserRole($user)
+    {
+        $currentRole = null;
+        if($user->isAdmin() && $user->getCurrentRole() == UserRole::ADMIN)
+        {
+            $currentRole = UserRole::ADMIN;
+        }
+        else if(self::isUserAsProducer($user))
+        {
+            $currentRole = UserRole::PRODUCER;
+        }
+        else if(self::isUserAsComposer($user))
+        {
+            $currentRole = UserRole::COMPOSER;
+        }
+        else if(self::isUserAsArranger($user))
+        {
+            $currentRole = UserRole::ARRANGER;
+        }
+        else if(self::isUserAsVocalist($user))
+        {
+            $currentRole = UserRole::VOCALIST;
+        }
+        return $currentRole;
     }
     
     /**
