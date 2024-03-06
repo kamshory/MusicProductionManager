@@ -95,7 +95,7 @@ try
     
     $sql = $queryBuilder->newQuery()
         ->select("song.*, 
-        (select artist.name from artist where artist.artist_id = song.artist_vocal limit 0,1) as artist_vocal_name,
+        (select artist.name from artist where artist.artist_id = song.artist_vocalist limit 0,1) as artist_vocal_name,
         (select artist.name from artist where artist.artist_id = song.artist_composer limit 0,1) as artist_composer_name,
         (select artist.name from artist where artist.artist_id = song.artist_arranger limit 0,1) as artist_arranger_name,
         (select genre.name from genre where genre.genre_id = song.genre_id limit 0,1) as genre_name,

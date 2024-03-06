@@ -6,6 +6,9 @@ use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MagicObject\Constants\PicoHttpStatus;
 use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Data\Entity\EntityAlbum;
+use MusicProductionManager\Data\Entity\EntityMidi;
+use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -16,7 +19,7 @@ $inputPost->filterName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->filterDescription(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);
 $inputPost->checkboxActive(false);
 $inputPost->checkboxAsDraft(false);
-$album = new Album($inputPost, $database);
+$album = new EntityAlbum($inputPost, $database);
 
 try {
     $song = new Song(null, $database);
@@ -30,8 +33,19 @@ try {
     }
     catch(Exception $e)
     {
-        $album = new Album($inputPost, $database);
+        $album = new EntityAlbum($inputPost, $database);
         $producerId = $inputPost->getProducerId();
+    }
+    
+    try
+    {
+        $producer = new Producer(null, $database);
+        $producer->findOneByProducerId($producerId);
+        $producerName = $producer->getName();
+    }
+    catch(Exception $e)
+    {
+        $producerName = "";
     }
 
     try {
@@ -59,11 +73,12 @@ try {
     $album->setAdminEdit($currentLoggedInUser->getUserId());
 
     $album->update();
-
+    $album->setProducerName($producerName);
     if (!isset($inputGet)) {
         $inputGet = new InputGet();
     }
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update album " . $album->getAlbumId(), $inputGet, $inputPost);
+    
 
     $restResponse = new PicoResponse();
     $restResponse->sendResponse($album, 'json', null, PicoHttpStatus::HTTP_OK);

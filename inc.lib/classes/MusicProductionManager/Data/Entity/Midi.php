@@ -49,10 +49,10 @@ class Midi extends MagicObject
 	/**
 	 * Artist Vocal
 	 * 
-	 * @Column(name="artist_vocal", type="varchar(50)", length=50, nullable=true)
+	 * @Column(name="artist_vocalist", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
-	protected $artistVocal;
+	protected $artistVocalist;
 
 	/**
 	 * Artist Composer

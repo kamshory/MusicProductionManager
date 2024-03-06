@@ -75,19 +75,27 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $producerId;
+	
+	/**
+	 * Producer
+	 * 
+	 * @JoinColumn(name="producer_id")
+	 * @var Producer
+	 */
+	protected $producer;
 
 	/**
 	 * Artist Vocal
 	 * 
-	 * @Column(name="artist_vocal", type="varchar(50)", length=50, nullable=true)
+	 * @Column(name="artist_vocalist", type="varchar(50)", length=50, nullable=true)
 	 * @var string
 	 */
-	protected $artistVocal;
+	protected $artistVocalist;
 	
 	/**
 	 * Artist Vocal
 	 * 
-	 * @JoinColumn(name="artist_vocal")
+	 * @JoinColumn(name="artist_vocalist")
 	 * @var Artist
 	 */
 	protected $vocalist;

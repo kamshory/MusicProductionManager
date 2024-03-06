@@ -57,7 +57,7 @@ class SongDto extends SetterGetter
 	 * 
 	 * @var string
 	 */
-	protected $artistVocal;
+	protected $artistVocalist;
 
 	/**
 	 * Artist Composer
@@ -340,7 +340,7 @@ class SongDto extends SetterGetter
         $output->setTitle($input->getTitle);
         $output->setAlbumId($input->getAlbumId);
         $output->setTrackNumber($input->getTrackNumber);
-        $output->setArtistVocal($input->getArtistVocal);
+        $output->setArtistVocalist($input->getArtistVocalist);
         $output->setArtistComposer($input->getArtistComposer);
         $output->setArtistArranger($input->getArtistArranger);
         $output->setFilePath($input->getFilePath);

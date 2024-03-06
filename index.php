@@ -347,7 +347,7 @@ $inputGet = new InputGet();
     'genreId' => 'genreId',
     'genre' => 'genreId',
     'artistVocalId' => 'artistVocalId',
-    'artistVocal' => 'artistVocalId',
+    'artistVocalist' => 'artistVocalId',
     'artistComposerId' => 'artistComposerId',
     'artistComposer' => 'artistComposerId',
     'duration' => 'duration',
@@ -379,13 +379,13 @@ $inputGet = new InputGet();
     $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
 
-    <div class="col-sm-6 col-xl-3">
+<div class="col-sm-6 col-xl-3">
       <div class="card overflow-hidden rounded-2">
         <div class="card-body pt-3 p-4">
 
           <div class="d-flex align-items-center justify-content-between">
-            <h6 class="fw-semibold fs-4 col-5"><?php echo $song->getName(); ?></h6>
-            <div class="col-7 justify-content-end text-end">
+          <h6 class="fw-semibold fs-4 col-4"><?php echo $song->getName(); ?></h6>
+            <div class="col-8 justify-content-end text-end">
               <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
               <a href="javascript;" onclick="uploadFile('<?php echo $song->getSongId(); ?>'); return false" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
               <?php echo $buttonMp3;?>
@@ -395,8 +395,16 @@ $inputGet = new InputGet();
             </div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Title</div>
+            <div class="col-8"><?php echo $song->getTitle(); ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Album</div>
             <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Producer</div>
+            <div class="col-8"><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : ''; ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Genre</div>
@@ -412,7 +420,7 @@ $inputGet = new InputGet();
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Vocalist</div>
-            <div class="col-8"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></div>
+            <div class="col-8"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : ''; ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Track</div>

@@ -67,7 +67,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                                     <tr>
                                         <td>Vocal</td>
                                         <td>
-                                            <select class="form-control" name="artist_vocal" data-ajax="true" data-source="lib.ajax/artist-list.php">
+                                            <select class="form-control" name="artist_vocalist" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
                                             <button class="button-add-list button-add-general-artist">+</button>

@@ -80,7 +80,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                     <tr>
                                         <td>Vocal</td>
                                         <td>
-                                            <select class="form-control" name="artist_vocal" data-value="<?php echo $song->getArtistVocal();?>" data-ajax="true" data-source="lib.ajax/artist-list.php">
+                                            <select class="form-control" name="artist_vocalist" data-value="<?php echo $song->getArtistVocalist();?>" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
                                             <button class="button-add-list button-add-general-artist">+</button>

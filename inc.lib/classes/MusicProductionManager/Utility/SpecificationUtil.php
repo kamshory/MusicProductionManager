@@ -55,10 +55,10 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getArtistVocalId() != "")
+        if($inputGet->getArtistVocalistId() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('artistVocalId', $inputGet->getArtistVocalId());
+            $predicate1->equals('artistVocalId', $inputGet->getArtistVocalistId());
             $spesification->addAnd($predicate1);
         }
         
@@ -116,10 +116,10 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getArtistVocalId() != "")
+        if($inputGet->getArtistVocalistId() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('artistVocalId', $inputGet->getArtistVocalId());
+            $predicate1->equals('artistVocalId', $inputGet->getArtistVocalistId());
             $spesification->addAnd($predicate1);
         }
 

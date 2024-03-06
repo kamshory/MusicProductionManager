@@ -187,7 +187,7 @@ else
         <span>Artist Vocal</span>
         <select class="form-control" name="artist_vocal_id" id="artist_vocal_id">
             <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalId()); ?>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalistId()); ?>
         </select>
     </div>
     <?php
@@ -240,7 +240,7 @@ $orderMap = array(
     'genreId'=>'genreId', 
     'genre'=>'genreId',
     'artistVocalId'=>'artistVocalId',
-    'artistVocal'=>'artistVocalId',
+    'artistVocalist'=>'artistVocalId',
     'artistComposerId'=>'artistComposerId',
     'artistComposer'=>'artistComposerId',
     'duration'=>'duration',
@@ -314,7 +314,7 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
         <th scope="col" class="col-sort" data-name="track_number">Track</th>
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
-        <th scope="col" class="col-sort" data-name="artist_vocal">Vocalist</th>
+        <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="vocal">Vocal</th>

@@ -274,7 +274,7 @@ else
         <span>Artist Vocal</span>
         <select class="form-control" name="artist_vocal_id" id="artist_vocal_id">
             <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalId()); ?>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalistId()); ?>
         </select>
     </div>
     <div class="filter-group">
@@ -294,7 +294,7 @@ $orderMap = array(
     'genreId'=>'genreId', 
     'genre'=>'genreId',
     'artistVocalId'=>'artistVocalId',
-    'artistVocal'=>'artistVocalId',
+    'artistVocalist'=>'artistVocalId',
     'artistComposerId'=>'artistComposerId',
     'artistComposer'=>'artistComposerId'
 );

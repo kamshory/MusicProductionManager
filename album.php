@@ -289,6 +289,7 @@ if(!empty($result))
           let draft = data.as_draft == 1 || data.as_draft == '1';
           $('[data-id="'+dataId+'"] .text-data.text-data-name').text(name);
           $('[data-id="'+dataId+'"] .text-data.text-data-sort-order').text(data.sort_order);
+          $('[data-id="'+dataId+'"] .text-data.text-data-producer').text(data.producer_name);
           $('[data-id="'+dataId+'"] .text-data.text-data-duration').text(duration);
           $('[data-id="'+dataId+'"] .text-data.text-data-number-of-song').text(numberOfSong);
           $('[data-id="'+dataId+'"] .text-data.text-data-active').text(active?'Yes':'No');

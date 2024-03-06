@@ -57,7 +57,7 @@ class EntityMidi extends MagicObject
      * Artist Vocal
      *
      * @var string
-     * @Column(name=artist_vocal)
+     * @Column(name=artist_vocalist)
      */
     protected $artistVocalId;
     
@@ -66,9 +66,9 @@ class EntityMidi extends MagicObject
      * Artist Vocal
      *
      * @var Artist
-     * @JoinColumn (name=artist_vocal)
+     * @JoinColumn (name=artist_vocalist)
      */
-    protected $artistVocal;
+    protected $artistVocalist;
 
     /**
      * Artist Composer
