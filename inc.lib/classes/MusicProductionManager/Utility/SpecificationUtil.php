@@ -4,8 +4,6 @@ namespace MusicProductionManager\Utility;
 
 use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSpecification;
-use MagicObject\Request\InputGet;
-use MagicObject\Request\InputPost;
 use MagicObject\Request\PicoRequestTool;
 
 
@@ -69,7 +67,7 @@ class SpecificationUtil
     /**
      * Create Song specification
      * @param PicoRequestTool $inputGet
-     * @param array $$additional
+     * @param array $additional
      * @return PicoSpecification
      */
     public static function createSongSpecification($inputGet, $additional = null)
@@ -160,7 +158,7 @@ class SpecificationUtil
     /**
      * Create Song specification
      * @param PicoRequestTool $inputGet
-     * @param array $$additional
+     * @param array $additional
      * @return PicoSpecification
      */
     public static function createReferenceSpecification($inputGet, $additional = null)
