@@ -33,7 +33,8 @@ class FileUtilPdf
     }
 
     /**
-     * Add text
+     * Add text to existiong PDF file
+     * Reference https://www.webniraj.com/2016/09/12/creating-editing-a-pdf-using-php/
      *
      * @param [type] $path
      * @param PicoPdfText[] $textToInsert
@@ -61,7 +62,7 @@ class FileUtilPdf
     }
 
     /**
-     * Add text to
+     * Add specified text to PDF object
      *
      * @param Fpdi $pdf
      * @param PicoPdfText $textToInsert
