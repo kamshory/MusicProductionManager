@@ -402,6 +402,7 @@ class Midi //NOSONAR
 	 */
 	private function isMatch($tn, $ti, $ich = false, $ch = 0)
 	{
+		return ($tn == null || $tn == $ti) && (!$ich || ($ich && $ch != 10));
 	}
 
 	/**
