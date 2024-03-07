@@ -37,17 +37,19 @@ class FileUtilPdf
      * Reference https://www.webniraj.com/2016/09/12/creating-editing-a-pdf-using-php/
      *
      * @param [type] $path
-     * @param PicoPdfText[] $textToInsert
-     * @return void
+     * @param PicoPdfText|PicoPdfText[] $textToInsert
+     * @return Fpdi
      */
     public static function addText($path, $textToInsert)
     {
-        $pdf = new Fpdi("l");
-        $pdf->setSourceFile($path);
+        $pdf = new Fpdi();
+        $numberOfPage = $pdf->setSourceFile($path);
+
+  
         $tpl = $pdf->importPage(1);
         $pdf->AddPage();
         $pdf->useTemplate($tpl);
-
+        
         if(is_array($textToInsert))
         {
             foreach($textToInsert as $textData)
@@ -59,6 +61,17 @@ class FileUtilPdf
         {
             $pdf = self::addTextTo($pdf, $textToInsert);
         }
+
+        for($i = 2; $i <= $numberOfPage; $i++)
+        {
+            $tpl = $pdf->importPage($i);
+            $pdf->AddPage();
+            $pdf->useTemplate($tpl);                
+        }
+
+
+        return $pdf;
+
     }
 
     /**
@@ -78,10 +91,28 @@ class FileUtilPdf
         // set position
         $pdf->SetXY($textToInsert->x, $textToInsert->y); 
 
-        // adding a Cell 
-        $pdf->Cell( $textToInsert->width, $textToInsert->height, $textToInsert->text, $textToInsert->border, $textToInsert->fill, $textToInsert->align);
 
+
+        // adding a Cell 
+        $pdf->SetFillColor($textToInsert->fillColor->red, $textToInsert->fillColor->green, $textToInsert->fillColor->blue);
+        $pdf->Rect($textToInsert->x, $textToInsert->y, $textToInsert->width, $textToInsert->height, "F");
+        $pdf->Cell( $textToInsert->width, $textToInsert->height, $textToInsert->text, $textToInsert->border, $textToInsert->fill, $textToInsert->align);
         return $pdf;
+    }
+
+    /**
+     * Get binary data
+     *
+     * @param Fpdi $pfd
+     * @return string
+     */
+    public static function pdfToString($pdf)
+    {
+        ob_start();
+        $pdf->Output();
+        $stringdata = ob_get_contents(); // read from buffer
+        ob_end_clean(); // delete buffer
+        return $stringdata;
     }
       
 }
