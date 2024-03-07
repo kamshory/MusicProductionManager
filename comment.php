@@ -13,6 +13,7 @@ use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Artist;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Genre;
+use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Data\Entity\Song;
 
 use MusicProductionManager\Utility\SpecificationUtil;
@@ -281,15 +282,36 @@ else
         </select>
     </div>
     <div class="filter-group">
-        <span>Artist Vocal</span>
-        <select class="form-control" name="artist_vocal_id" id="artist_vocal_id">
+        <span>Producer</span>
+        <select class="form-control" name="producer_id" id="producer_id">
             <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalistId()); ?>
+            <?php echo new PicoSelectOption(new Producer(null, $database), array('value'=>'producerId', 'label'=>'name'), $inputGet->getProducerId()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
+        <span>Composer</span>
+        <select class="form-control" name="composer" id="composer">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getComposer()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
+        <span>Arranger</span>
+        <select class="form-control" name="arranger" id="arranger">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArranger()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
+        <span>Vocalist</span>
+        <select class="form-control" name="vocalist" id="vocalist">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getVocalist()); ?>
         </select>
     </div>
     <div class="filter-group">
         <span>Title</span>
-        <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+        <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
 
     <div class="filter-group">

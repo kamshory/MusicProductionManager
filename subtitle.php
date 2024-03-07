@@ -317,10 +317,24 @@ else
         </select>
     </div>
     <div class="filter-group">
-        <span>Artist Vocal</span>
-        <select class="form-control" name="artist_vocal_id" id="artist_vocal_id">
+        <span>Composer</span>
+        <select class="form-control" name="composer" id="composer">
             <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistVocalistId()); ?>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getComposer()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
+        <span>Arranger</span>
+        <select class="form-control" name="arranger" id="arranger">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArranger()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
+        <span>Vocalist</span>
+        <select class="form-control" name="vocalist" id="vocalist">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getVocalist()); ?>
         </select>
     </div>
     <div class="filter-group">
@@ -434,10 +448,12 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
+        <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
         <th scope="col" class="col-sort" data-name="track_number">Track</th>
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
+        <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
         <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
         <th scope="col" class="col-sort" data-name="subtitle_complete">Complete</th>
@@ -460,10 +476,12 @@ if(!empty($result))
         <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getTitle();?></a></td>
         <td><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
+        <td><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : "";?></td>
         <td><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
         <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
         <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
+        <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : "";?></td>
         <td><?php echo $song->getDuration();?></td>
         <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
         <td><?php echo $song->isLyricComplete() ? 'Yes':'No';?></td>

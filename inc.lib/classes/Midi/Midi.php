@@ -392,6 +392,19 @@ class Midi //NOSONAR
 	}
 
 	/**
+	 * Match index
+	 *
+	 * @param integer $tn
+	 * @param integer $ti
+	 * @param boolean $ich
+	 * @param integer $ch
+	 * @return boolean
+	 */
+	private function isMatch($tn, $ti, $ich = false, $ch = 0)
+	{
+	}
+
+	/**
 	 * Transpose track $tn and channel $ch by $dn half tone steps
 	 *
 	 * @param integer $tn
@@ -406,11 +419,10 @@ class Midi //NOSONAR
 				$mc = count($track);
 				for ($i = 0; $i < $mc; $i++) {
 					$msg = explode(' ', $track[$i]);
-
 					if ($this->isNote($msg[1])) {
 						$ch = $this->getChannel($msg[2]);
 						$n = $this->getNote($msg[3]);
-						if ($this->isMatch($cn, $ch, true)) {
+						if ($this->isMatch($cn, $ch, true, $ch)) {
 							// transpose if channel is match
 							$n = max(0, min(127, $n + $dn));
 						}
@@ -444,6 +456,7 @@ class Midi //NOSONAR
 	 */
 	private function isNote($msg)
 	{
+		$msg = trim($msg);
 		return $msg == 'On' || $msg == 'Off';
 	}
 
@@ -458,19 +471,6 @@ class Midi //NOSONAR
 		eval("\$" . $msg . ';'); // $ch
 		$n = isset($n) ? $n : 0;
 		return $n;
-	}
-
-	/**
-	 * Match index
-	 *
-	 * @param integer $v1
-	 * @param integer $v2
-	 * @param boolean $ch
-	 * @return boolean
-	 */
-	private function isMatch($v1, $v2, $ch = false)
-	{
-		return ($v1 === null || $v1 == $v2) && ($ch && $v2 != 10);
 	}
 
 	/**

@@ -186,20 +186,6 @@ else
             <?php echo new PicoSelectOption(new Producer(null, $database), array('value'=>'producerId', 'label'=>'name'), $inputGet->getProducerId()); ?>
         </select>
     </div>
-    <?php
-    if($allowChangeVocalist)
-    {
-      ?>
-    <div class="filter-group">
-        <span>Vocalist</span>
-        <select class="form-control" name="vocalist" id="vocalist">
-            <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getVocalist()); ?>
-        </select>
-    </div>
-    <?php
-    }
-    ?>
     <div class="filter-group">
         <span>Composer</span>
         <select class="form-control" name="composer" id="composer">
@@ -333,7 +319,6 @@ if(!empty($result))
     <thead>
         <tr>
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>
-        <th scope="col" width="20"><i class="ti ti-trash"></i></th>
         <th scope="col" width="20"><i class="ti ti-player-play"></i></th>
         <th scope="col" width="20"><i class="ti ti-download"></i></th>
         <th scope="col" width="20">#</th>
@@ -367,7 +352,6 @@ if(!empty($result))
         ?>
         <tr data-id="<?php echo $songId;?>">
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
-        <th scope="row"><a href="<?php echo $linkDelete;?>" class="delete-data"><i class="ti ti-trash"></i></a></th>
         <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
         <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
