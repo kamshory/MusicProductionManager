@@ -45,8 +45,17 @@ function downloadPerSong($inputGet, $song)
         $filename = $song->getName() . ".pdf";
         header(HttpHeaderConstant::CONTENT_TYPE . "application/pdf");
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
-        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathPdf()));
-        readfile($song->getFilePathPdf());
+
+        // update title if exists
+        $content = file_get_contents($song->getFilePathPdf());
+        $title = $song->getName();
+        $title = str_replace(['(', ')'], '', $title);
+        $content = preg_replace('/\/Title \(.*\)/', '/Title (' . $title . ')', $content);
+        
+        header(HttpHeaderConstant::CONTENT_LENGTH . strlen($content));
+
+        echo $content;
+
     } else if ($inputGet->equalsType('xml') && file_exists($song->getFilePathXml())) {
         compressOutput(true);
         $filename = $song->getName() . ".xml";
