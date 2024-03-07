@@ -265,7 +265,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @var string
 	 */
 	protected $databaseName = "";
-
+	
 	/**
 	 * Database schema
 	 *
@@ -339,7 +339,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @var string
 	 */
 	protected $databaseName = "";
-
+	
 	/**
 	 * Database schema
 	 *
@@ -629,9 +629,8 @@ Strategy to generate auto value:
 **1. GenerationType.UUID**
 
 Generate 20 bytes unique ID
-
-- 14 byte hexadecimal of uniqid https://www.php.net/manual/en/function.uniqid.php
-- 6 byte hexadecimal or random number
+ - 14 byte hexadecimal of uniqid https://www.php.net/manual/en/function.uniqid.php
+ - 6 byte hexadecimal or random number
 
 **2. GenerationType.IDENTITY**
 
@@ -662,17 +661,17 @@ $database = new PicoDatabase($databaseCredentials);
 try
 {
     $database->connect();
-  
+    
     // create new 
-  
+    
     $album1 = new Album(null, $database);
     $album1->setAibumId("123456");
     $album1->setName("Album 1");
     $album1->setAdminCreate("USER1");
     $album1->setDuration(300);
-  
-  
-  
+    
+    
+    
     // other way to create object
     // create object from stdClass or other object with match property (snake case or camel case)
     $data = new stdClass;
@@ -681,15 +680,15 @@ try
     $data->name = "Album 1";
     $data->admin_create = "USER1";
     $data->duration = 300;
-  
+    
     // or camel case
     $data->albumId = "123456";
     $data->name = "Album 1";
     $data->adminCreate = "USER1";
     $data->duration = 300;
-  
+    
     $album1 = new Album($data, $database); 
-  
+    
     // other way to create object
     // create object from associated array with match property (snake case or camel case)
     $data = array();
@@ -698,61 +697,61 @@ try
     $data["name"] = "Album 1";
     $data["admin_create"] = "USER1";
     $data["duration"] = 300;
-  
+    
     // or camel case
     $data["albumId"] = "123456";
     $data["name"] = "Album 1";
     $data["adminCreate"] = "USER1";
     $data["duration"] = 300;
     $album1 = new Album($data, $database);
-  
-  
+    
+    
     // get value from form
     // this way is not safe
     $album1 = new Album($_POST, $database);
-  
-  
+    
+    
     // we can use other way
     $inputPost = new InputPost();
-  
+    
     // we can apply filter
     $inputPost->filterName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);
     $inputPost->filterDescription(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);
-  
+    
     // if property not present in $inputPost, we can set default value
     // please note that user can modify form and add update any unwanted properties to be updated
     $inputPost->checkboxActive(false);
     $inputPost->checkboxAsDraft(true);
-  
+    
     // we can remove any property data from object $inputPost before apply it to entity
     // it will not saved to database
     $inputPost->setSortOrder(null);
-  
+    
     $album1 = new Album($inputPost, $database);
-  
+    
     // insert to database
     $album1->insert();
-  
+    
     // insert or update
     $album1->save();
-  
+    
     // update
     // NoRecordFoundException if ID not found
     $album1->update();
-  
+    
     // convert to JSON
     $json = $album1->toString();
     // or
     $json = $album1 . "";
-  
+    
     // send to buffer output
     // automaticaly converted to string
     echo $album1;
-  
+    
     // find one by ID
     $album2 = new Album(null, $database);
     $album2->findOneByAlbumId("123456");
-  
+    
     // find multiple
     $album2 = new Album(null, $database);
     $albums = $album2->findByAdminCreate("USER1");
@@ -760,18 +759,18 @@ try
     foreach($rows as $albumSaved)
     {
         // $albumSaved is instance of Album
-      
+        
         // we can update data
         $albumSaved->setAdminEdit("USER1");
         $albumSaved->setTimeEdit(date('Y-m-d H:i:s'));
-      
+        
         // this value will not be saved to database because has no column
         $albumSaved->setAnyValue("ANY VALUE");
-      
+        
         $albumSaved->update();
     }
-  
-  
+    
+    
 }
 catch(Exception $e)
 {
@@ -784,7 +783,453 @@ catch(Exception $e)
 
 Example parameters:
 
-`genre_id=0648d4e176da4df4472d&album_id=&artist_vocal_id=&name=&vocal=&subtitle_complete=&active=&page=2&orderby=title&ordertype=asc`
+`genre_id=0648d4e176da4df4472d&album_id=&artist_vocal_id=&name=&vocal=&lyric_complete=&active=&page=2&orderby=title&ordertype=asc`
+
+Create entity according to database
+
+```php
+<?php
+
+namespace MusicProductionManager\Data\Entity;
+
+use MagicObject\MagicObject;
+
+/**
+ * @Entity
+ * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @Table(name="song")
+ */
+class EntitySong extends MagicObject
+{
+	/**
+	 * Song ID
+	 * 
+	 * @Id
+	 * @GeneratedValue(strategy=GenerationType.UUID)
+	 * @NotNull
+	 * @Column(name="song_id", type="varchar(50)", length=50, nullable=false)
+	 * @var string
+	 */
+	protected $songId;
+
+	/**
+	 * Random Song ID
+	 * 
+	 * @Column(name="random_song_id", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $randomSongId;
+
+	/**
+	 * Name
+	 * 
+	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * Title
+	 * 
+	 * @Column(name="title", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $title;
+
+	/**
+	 * Album ID
+	 * 
+	 * @Column(name="album_id", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $albumId;
+
+	/**
+	 * @JoinColumn(name="album_id")
+	 * @var Album
+	 */
+	protected $album;
+
+	/**
+	 * Track Number
+	 * 
+	 * @Column(name="track_number", type="int(11)", length=11, nullable=true)
+	 * @var integer
+	 */
+	protected $trackNumber;
+	
+	/**
+	 * Producer ID
+	 * 
+	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $producerId;
+	
+	/**
+	 * Producer
+	 * 
+	 * @JoinColumn(name="producer_id")
+	 * @var Producer
+	 */
+	protected $producer;
+
+	/**
+	 * Artist Vocal
+	 * 
+	 * @Column(name="artist_vocalist", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $artistVocalist;
+	
+	/**
+	 * Artist Vocal
+	 * 
+	 * @JoinColumn(name="artist_vocalist")
+	 * @var Artist
+	 */
+	protected $vocalist;
+
+	/**
+	 * Artist Composer
+	 * 
+	 * @Column(name="artist_composer", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $artistComposer;
+	
+	/**
+	 * Artist Composer
+	 * 
+	 * @JoinColumn(name="artist_composer")
+	 * @var Artist
+	 */
+	protected $composer;
+
+	/**
+	 * Artist Arranger
+	 * 
+	 * @Column(name="artist_arranger", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $artistArranger;
+	
+	/**
+	 * Artist Arranger
+	 * 
+	 * @JoinColumn(name="artist_arranger")
+	 * @var Artist
+	 */
+	protected $arranger;
+
+	/**
+	 * File Path
+	 * 
+	 * @Column(name="file_path", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $filePath;
+
+	/**
+	 * File Name
+	 * 
+	 * @Column(name="file_name", type="varchar(100)", length=100, nullable=true)
+	 * @var string
+	 */
+	protected $fileName;
+
+	/**
+	 * File Type
+	 * 
+	 * @Column(name="file_type", type="varchar(100)", length=100, nullable=true)
+	 * @var string
+	 */
+	protected $fileType;
+
+	/**
+	 * File Extension
+	 * 
+	 * @Column(name="file_extension", type="varchar(20)", length=20, nullable=true)
+	 * @var string
+	 */
+	protected $fileExtension;
+
+	/**
+	 * File Size
+	 * 
+	 * @Column(name="file_size", type="bigint(20)", length=20, nullable=true)
+	 * @var integer
+	 */
+	protected $fileSize;
+
+	/**
+	 * File Md5
+	 * 
+	 * @Column(name="file_md5", type="varchar(32)", length=32, nullable=true)
+	 * @var string
+	 */
+	protected $fileMd5;
+
+	/**
+	 * File Upload Time
+	 * 
+	 * @Column(name="file_upload_time", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $fileUploadTime;
+
+	/**
+	 * First Upload Time
+	 * 
+	 * @Column(name="first_upload_time", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $firstUploadTime;
+
+	/**
+	 * Last Upload Time
+	 * 
+	 * @Column(name="last_upload_time", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTime;
+
+	/**
+	 * File Path Midi
+	 * 
+	 * @Column(name="file_path_midi", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $filePathMidi;
+
+	/**
+	 * Last Upload Time Midi
+	 * 
+	 * @Column(name="last_upload_time_midi", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeMidi;
+
+	/**
+	 * File Path Xml
+	 * 
+	 * @Column(name="file_path_xml", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $filePathXml;
+
+	/**
+	 * Last Upload Time Xml
+	 * 
+	 * @Column(name="last_upload_time_xml", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeXml;
+
+	/**
+	 * File Path Pdf
+	 * 
+	 * @Column(name="file_path_pdf", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $filePathPdf;
+
+	/**
+	 * Last Upload Time Pdf
+	 * 
+	 * @Column(name="last_upload_time_pdf", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimePdf;
+
+	/**
+	 * Duration
+	 * 
+	 * @Column(name="duration", type="float", nullable=true)
+	 * @var double
+	 */
+	protected $duration;
+
+	/**
+	 * Genre ID
+	 * 
+	 * @Column(name="genre_id", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $genreId;
+	
+	/**
+	 * Genre ID
+	 * 
+	 * @JoinColumn(name="genre_id")
+	 * @var Genre
+	 */
+	protected $genre;
+
+	/**
+	 * Bpm
+	 * 
+	 * @Column(name="bpm", type="float", nullable=true)
+	 * @var double
+	 */
+	protected $bpm;
+
+	/**
+	 * Time Signature
+	 * 
+	 * @Column(name="time_signature", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $timeSignature;
+
+	/**
+	 * Subtitle
+	 * 
+	 * @Column(name="subtitle", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $subtitle;
+
+	/**
+	 * Subtitle Complete
+	 * 
+	 * @Column(name="subtitle_complete", type="tinyint(1)", length=1, nullable=true)
+	 * @var bool
+	 */
+	protected $subtitleComplete;
+
+	/**
+	 * Lyric Midi
+	 * 
+	 * @Column(name="lyric_midi", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $lyricMidi;
+
+	/**
+	 * Lyric Midi Raw
+	 * 
+	 * @Column(name="lyric_midi_raw", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $lyricMidiRaw;
+
+	/**
+	 * Vocal
+	 * 
+	 * @Column(name="vocal", type="tinyint(1)", length=1, nullable=true)
+	 * @var bool
+	 */
+	protected $vocal;
+
+	/**
+	 * Instrument
+	 * 
+	 * @Column(name="instrument", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $instrument;
+
+	/**
+	 * Midi Vocal Channel
+	 * 
+	 * @Column(name="midi_vocal_channel", type="int(11)", length=11, nullable=true)
+	 * @var integer
+	 */
+	protected $midiVocalChannel;
+
+	/**
+	 * Rating
+	 * 
+	 * @Column(name="rating", type="float", nullable=true)
+	 * @var double
+	 */
+	protected $rating;
+
+	/**
+	 * Comment
+	 * 
+	 * @Column(name="comment", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $comment;
+
+	/**
+	 * Image Path
+	 * 
+	 * @Column(name="image_path", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $imagePath;
+
+	/**
+	 * Last Upload Time Image
+	 * 
+	 * @Column(name="last_upload_time_image", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $lastUploadTimeImage;
+
+	/**
+	 * Time Create
+	 * 
+	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @var string
+	 */
+	protected $timeCreate;
+
+	/**
+	 * Time Edit
+	 * 
+	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @var string
+	 */
+	protected $timeEdit;
+
+	/**
+	 * IP Create
+	 * 
+	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @var string
+	 */
+	protected $ipCreate;
+
+	/**
+	 * IP Edit
+	 * 
+	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $ipEdit;
+
+	/**
+	 * Admin Create
+	 * 
+	 * @Column(name="admin_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @var string
+	 */
+	protected $adminCreate;
+
+	/**
+	 * Admin Edit
+	 * 
+	 * @Column(name="admin_edit", type="varchar(50)", length=50, nullable=true)
+	 * @var string
+	 */
+	protected $adminEdit;
+
+	/**
+	 * Active
+	 * 
+	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @var bool
+	 */
+	protected $active;
+}
+```
+
+Filtering and pagination
 
 ```php
 <?php
@@ -823,9 +1268,9 @@ $database = new PicoDatabase($databaseCredentials);
 try
 {
     $database->connect();
-  
+    
     $inputGet = new InputGet();
-  
+    
     $orderMap = array(
         'name'=>'name', 
         'title'=>'title', 
@@ -835,13 +1280,12 @@ try
         'trackNumber'=>'trackNumber',
         'genreId'=>'genreId', 
         'genre'=>'genreId',
-	'producerId'=>'producerId',
         'artistVocalId'=>'artistVocalId',
         'artistVocalist'=>'artistVocalId',
-        'artistComposer'=>'artistComposer',
-        'artistArranger'=>'artistArranger',
+        'artistComposerId'=>'artistComposerId',
+        'artistComposer'=>'artistComposerId',
         'duration'=>'duration',
-        'lsubtitleComplete'=>'lsubtitleComplete',
+        'subtitleComplete'=>'subtitleComplete',
         'vocal'=>'vocal',
         'active'=>'active'
     );
@@ -870,7 +1314,7 @@ try
     $rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
 
     $result = $rowData->getResult();
-  
+    
     if(!empty($result))
     {
     ?>
@@ -902,7 +1346,7 @@ try
             <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
             <th scope="col" class="col-sort" data-name="duration">Duration</th>
             <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
-            <th scope="col" class="col-sort" data-name="subtitle_complete">Lyric</th>
+            <th scope="col" class="col-sort" data-name="lyric_complete">subtitle</th>
             <th scope="col" class="col-sort" data-name="active">Active</th>
             </tr>
         </thead>
@@ -934,13 +1378,13 @@ try
             <td class="text-data text-data-artist-composer-name"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
             <td class="text-data text-data-duration"><?php echo $song->getDuration();?></td>
             <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
-            <td class="text-data text-data-lyric-complete"><?php echo $song->isLyricComplete() ? 'Yes' : 'No';?></td>
+            <td class="text-data text-data-subtitle-complete"><?php echo $song->issubtitleComplete() ? 'Yes' : 'No';?></td>
             <td class="text-data text-data-active"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
             </tr>
             <?php
             }
             ?>
-  
+            
         </tbody>
         </table>
 
@@ -961,7 +1405,7 @@ try
 }
 catch(Exception $e)
 {
-  
+    
 }
 
 ```
@@ -1037,10 +1481,10 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getLyricComplete() != "")
+        if($inputGet->getsubtitleComplete() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('lsubtitleComplete', $inputGet->getLyricComplete());
+            $predicate1->equals('subtitleComplete', $inputGet->getsubtitleComplete());
             $spesification->addAnd($predicate1);
         }
 
@@ -1062,12 +1506,12 @@ class SpecificationUtil
         {
             foreach($additional as $key=>$value)
             {
-                $predicate2 = new PicoPredicate();        
+                $predicate2 = new PicoPredicate();          
                 $predicate2->equals($key, $value);
                 $spesification->addAnd($predicate2);
             }
         }
-      
+        
         return $spesification;
     }
 }
@@ -1098,9 +1542,9 @@ $database = new PicoDatabase($databaseCredentials);
 try
 {
     $database->connect();
-  
+    
     $queryBuilder = new PicoDatabaseQueryBuilder($database);
-  
+    
     $queryBuilder
         ->newQuery()
         ->select("u.*")
@@ -1114,10 +1558,9 @@ try
     {
         var_dump($user);
     }
-  
+    
 }
 catch(Ecxeption $e)
 {
-  
+    
 }
-```

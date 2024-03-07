@@ -394,7 +394,7 @@ class Midi //NOSONAR
 	/**
 	 * Match index
 	 *
-	 * @param integer $tn
+	 * @param integer|null $tn
 	 * @param integer $ti
 	 * @param boolean $ich
 	 * @param integer $ch
@@ -402,7 +402,7 @@ class Midi //NOSONAR
 	 */
 	private function isMatch($tn, $ti, $ich = false, $ch = 0)
 	{
-		return ($tn === null || $tn == $ti) && (!$ich || ($ich && $ch != 10));
+		return ($tn == null || $tn == $ti) && (!$ich || ($ich && $ch != 10));
 	}
 
 	/**

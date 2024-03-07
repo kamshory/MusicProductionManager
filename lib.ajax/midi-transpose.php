@@ -50,8 +50,8 @@ if ($songId != null && $tn != null && $cn != null && $dn != 0) {
 	$midi->importMid($midiPath);
     
 
-    $trackNumber = $tn == 'all' ? null : $tn;
-    $channelNumber = $cn == 'all' ? null : $cn;
+    $trackNumber = $tn == 'all' ? null : (int) $tn;
+    $channelNumber = $cn == 'all' ? null : (int) $cn;
 
     $midi->transposeTrackChannel($trackNumber, $channelNumber, $dn);
     $midi->saveMidFile($midiPath, 0777);
