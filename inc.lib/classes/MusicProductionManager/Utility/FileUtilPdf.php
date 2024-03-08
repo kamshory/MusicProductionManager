@@ -2,6 +2,7 @@
 
 namespace MusicProductionManager\Utility;
 
+use Exception;
 use MusicProductionManager\Data\Entity\EntitySong;
 use setasign\Fpdi\Fpdi;
 
@@ -95,73 +96,89 @@ class FileUtilPdf
      * @param string $name
      * @param string $title
      * @param string $composer
-     * @param string $lyric
+     * @param string $lyricMidi
      * @return Fpdi
      */
-    public static function addLyric($pdf, $name, $title, $composer, $lyric)
+    public static function addLyric($pdf, $name, $title, $composer, $lyricMidi)
     {
-        $pdf->AddPage();
-        
-        $fontName = "Times";
-        
-        $nameObj = 
-            (new PicoPdfText())
-                ->setPosition(105, 12)
-                ->setDimension(100, 8)
-                ->setStyle(0, 0, "C")
-                ->setFontName($fontName)
-                ->setFontSize(18)
-                ->setText($name)
-                ->setFillColor(new PicoColor(255, 255, 255))
-                ->setTextColor(new PicoColor(0, 0, 0))
-                ->alignCenter();
-        $itleObj =
-            (new PicoPdfText())
-                ->setPosition(105, 19.5)
-                ->setDimension(100, 6)
-                ->setStyle(0, 0, "C")
-                ->setFontName($fontName)
-                ->setFontSize(13)
-                ->setText($title)
-                ->setFillColor(new PicoColor(255, 255, 255))
-                ->setTextColor(new PicoColor(0, 0, 0))
-                ->alignCenter();
-        $composerObj =
-            (new PicoPdfText())
-                ->setPosition(197, 28)
-                ->setDimension(40, 6)
-                ->setStyle(0, 0, "R")
-                ->setFontName($fontName)
-                ->setFontSize(11)
-                ->setText($composer)
-                ->setTextColor(new PicoColor(0, 0, 0))
-                ->alignRight();
+        try
+        { 
+            $jsonObj = json_decode($lyricMidi);
+            if ($jsonObj === null && json_last_error() !== JSON_ERROR_NONE) {
+                return $pdf;
+            }
+            $lyric = "";
+            foreach($jsonObj as $value)
+            {
+                $lyric .= $value->text;
+            }
+            
+            $pdf->AddPage();
+            
+            $fontName = "Times";
+            
+            $nameObj = 
+                (new PicoPdfText())
+                    ->setPosition(105, 12)
+                    ->setDimension(100, 8)
+                    ->setStyle(0, 0, "C")
+                    ->setFontName($fontName)
+                    ->setFontSize(18)
+                    ->setText($name)
+                    ->setFillColor(new PicoColor(255, 255, 255))
+                    ->setTextColor(new PicoColor(0, 0, 0))
+                    ->alignCenter();
+            $itleObj =
+                (new PicoPdfText())
+                    ->setPosition(105, 19.5)
+                    ->setDimension(100, 6)
+                    ->setStyle(0, 0, "C")
+                    ->setFontName($fontName)
+                    ->setFontSize(13)
+                    ->setText($title)
+                    ->setFillColor(new PicoColor(255, 255, 255))
+                    ->setTextColor(new PicoColor(0, 0, 0))
+                    ->alignCenter();
+            $composerObj =
+                (new PicoPdfText())
+                    ->setPosition(197, 28)
+                    ->setDimension(40, 6)
+                    ->setStyle(0, 0, "R")
+                    ->setFontName($fontName)
+                    ->setFontSize(11)
+                    ->setText($composer)
+                    ->setTextColor(new PicoColor(0, 0, 0))
+                    ->alignRight();
 
-        $lyric = StringUtil::fixingCariageReturn($lyric);    
-        
-        $pdf = self::addTextTo($pdf, $nameObj);
-        $pdf = self::addTextTo($pdf, $itleObj);
-        $pdf = self::addTextTo($pdf, $composerObj);
-        
-        $lyrics = explode("\r\n", $lyric);
-        
-        $offset = 30;
-        foreach($lyrics as $index=>$lyricText)
-        {
-            $top = ($index * 6) + $offset;
-            $lyricObj =
-            (new PicoPdfText())
-                ->setPosition(20, $top)
-                ->setDimension(170, 8)
-                ->setStyle(0, 0, "R")
-                ->setFontName($fontName)
-                ->setFontSize(11)
-                ->setText($lyricText)
-                ->setTextColor(new PicoColor(0, 0, 0))
-                ->alignRight();
-            $pdf = self::addTextTo($pdf, $lyricObj);
+            $lyric = StringUtil::fixingCariageReturn($lyric);    
+            
+            $pdf = self::addTextTo($pdf, $nameObj);
+            $pdf = self::addTextTo($pdf, $itleObj);
+            $pdf = self::addTextTo($pdf, $composerObj);
+            
+            $lyrics = explode("\r\n", $lyric);
+            
+            $offset = 30;
+            foreach($lyrics as $index=>$lyricText)
+            {
+                $top = ($index * 6) + $offset;
+                $lyricObj =
+                (new PicoPdfText())
+                    ->setPosition(20, $top)
+                    ->setDimension(170, 8)
+                    ->setStyle(0, 0, "R")
+                    ->setFontName($fontName)
+                    ->setFontSize(11)
+                    ->setText($lyricText)
+                    ->setTextColor(new PicoColor(0, 0, 0))
+                    ->alignRight();
+                $pdf = self::addTextTo($pdf, $lyricObj);
+            }
         }
-        
+        catch(Exception $e)
+        {
+            // do nothing
+        }
         return $pdf;
     }
     

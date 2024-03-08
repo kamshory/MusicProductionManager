@@ -100,6 +100,7 @@ class FileUtil
                 ->alignCenter();
                 
             $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert, $textNextPage);
+            $pdf = FileUtilPdf::addLyric($pdf, $name, $title, $composer, $song->getLyricMidi());
             $pdf->SetTitle($songTitle);
             $content = FileUtilPdf::pdfToString($pdf);        
             $content = FileUtilPdf::replacePdfTitle($content, $song);
