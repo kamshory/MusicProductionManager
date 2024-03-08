@@ -13,6 +13,7 @@ use MagicObject\Request\PicoRequest;
 use MagicObject\Util\Dms;
 use MusicProductionManager\Data\Dto\SongFile;
 use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Data\Entity\EntityAlbum;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\EntityUserActivity;
 use MusicProductionManager\Utility\SongFileUtil;
@@ -210,7 +211,7 @@ $inputGet = new InputGet();
 
           $pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
 
-          $albumEntity = new Album(null, $database);
+          $albumEntity = new EntityAlbum(null, $database);
           $rowData = $albumEntity->findAll($spesification, $pagable, $sortable, true);
 
           $result = $rowData->getResult();
@@ -224,6 +225,9 @@ $inputGet = new InputGet();
                   </th>
                   <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Album</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Producer</h6>
                   </th>
                   <th class="border-bottom-0" width="100">
                     <h6 class="fw-semibold mb-0">Song</h6>
@@ -252,13 +256,16 @@ $inputGet = new InputGet();
                       <span class="fw-normal"><?php echo $album->getDescription(); ?></span>
                     </td>
                     <td class="border-bottom-0">
+                      <h6 class="fw-normal mb-0 fs-4"><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : ""; ?></h6>
+                    </td>
+                    <td class="border-bottom-0">
                       <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getNumberOfSong(); ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getDuration(); ?></h6>
+                      <h6 class="fw-normal mb-0 fs-4"><?php echo (new Dms())->ddToDms($album->getDuration()/3600)->printDms(true, true); ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"><?php echo date('j F Y', strtotime($album->getReleaseDate())); ?></p>
+                      <p class="mb-0 fw-normal"><?php echo !$album->hasValueReleaseDate() || $album->emptyReleaseDate() || $album->equalsReleaseDate('0000-00-00') ? "-" : date('j F Y', strtotime($album->getReleaseDate())); ?></p>
                     </td>
                   </tr>
 
