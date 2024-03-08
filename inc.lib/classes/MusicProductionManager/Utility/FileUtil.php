@@ -277,6 +277,7 @@ class FileUtil
                 ->setFontName($fontName)
                 ->setFontSize(11)
                 ->setText($composer)
+                ->setFillColor(new PicoColor(255, 255, 255))
                 ->setTextColor(new PicoColor(0, 0, 0))
                 ->alignRight()
             
