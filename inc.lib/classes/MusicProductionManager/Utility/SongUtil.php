@@ -5,6 +5,7 @@ namespace MusicProductionManager\Utility;
 use Exception;
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Exceptions\NoRecordFoundException;
+use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Rating;
 
 class SongUtil
@@ -68,5 +69,28 @@ class SongUtil
             $allRating = $sum / count($result);
         }
         return $allRating;
+    }
+    
+    /**
+     * Get title of song
+     *
+     * @param EntitySong $song
+     * @return string
+     */
+    public static function getPdfTitle($song)
+    {
+        if($song->hasValueTitle())
+        {
+            $songTitle = $song->getTitle();
+        }
+        else
+        {
+            $songTitle = $song->getName();
+        }
+        if($song->hasValueComposer())
+        {
+            $songTitle .= ' by '.$song->getComposer()->getName();
+        }
+        return $songTitle;
     }
 }

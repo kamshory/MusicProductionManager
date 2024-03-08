@@ -49,18 +49,7 @@ class FileUtil
             $title = $song->hasValueTitle() ? ("(".$song->getTitle().")") : $song->getName();
             $composer = $song->hasValueComposer() ? $song->getComposer()->getName() : "NN";
             
-            if($song->hasValueTitle())
-            {
-                $songTitle = $song->getTitle();
-            }
-            else
-            {
-                $songTitle = $song->getName();
-            }
-            if($song->hasValueComposer())
-            {
-                $songTitle .= ' by '.$song->getComposer()->getName();
-            }
+            $songTitle = SongUtil::getPdfTitle($song);
 
             $fontName = "Times";
 
