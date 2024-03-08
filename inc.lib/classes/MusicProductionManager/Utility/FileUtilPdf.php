@@ -88,6 +88,43 @@ class FileUtilPdf
         }
         return $pdf;
     }
+
+    /**
+     * Check if error JSON occured
+     *
+     * @param array $jsonObj
+     * @return boolean
+     */
+    private static function isErrorJson($jsonObj)
+    {
+        return $jsonObj === null && json_last_error() !== JSON_ERROR_NONE;
+    }
+
+    /**
+     * Join text lyric from JSON
+     *
+     * @param array $jsonObj
+     * @return string
+     */
+    private static function joinLyric($jsonObj)
+    {
+        $lyric = "";
+        foreach($jsonObj as $value)
+        {
+            $lyric .= $value->text;
+        }
+        return $lyric;
+    }
+
+    /**
+     * Check if multiple group
+     *
+     * @return boolean
+     */
+    private static function isMultipleGroup($groupLyrics)
+    {
+        return count($groupLyrics) > 1;
+    }
     
     /**
      * Add lyric
@@ -104,14 +141,11 @@ class FileUtilPdf
         try
         { 
             $jsonObj = json_decode($lyricMidi);
-            if ($jsonObj === null && json_last_error() !== JSON_ERROR_NONE) {
+            if (self::isErrorJson($jsonObj)) {
                 return $pdf;
             }
-            $lyric = "";
-            foreach($jsonObj as $value)
-            {
-                $lyric .= $value->text;
-            }
+            
+            $lyric = self::joinLyric($jsonObj);
             
             $lyric = StringUtil::fixingCariageReturn($lyric);
             $lyric = trim($lyric, "\r\n");
@@ -160,26 +194,11 @@ class FileUtilPdf
             $groupLyrics = self::splitLyric($lyrics);
             $groupLyrics = self::trimLyricGroup($groupLyrics);
             $lineHeight = 6;
-            $split = false;
-            if(count($groupLyrics) > 1)
-            {
-                $split = true;
-            }
+            $split = self::isMultipleGroup($groupLyrics);
             
             foreach($groupLyrics as $idx=>$lyrics)
             {
-                if($idx == 0)
-                {
-                    $pdf->AddPage();
-                    $pdf = self::addTextTo($pdf, $nameObj);
-                    $pdf = self::addTextTo($pdf, $itleObj);
-                    $pdf = self::addTextTo($pdf, $composerObj);
-                    if($split)
-                    {
-                        $pdf->SetDrawColor(188,188,188);
-                        $pdf->Line(105, 36, 105, 285);
-                    }
-                }
+
                 if($idx % 2 != 0)
                 {
                     $offsetX = 109;
@@ -191,11 +210,16 @@ class FileUtilPdf
                     {
                         // add page
                         $pdf->AddPage();
-                        if($split)
-                        {
-                            $pdf->SetDrawColor(188,188,188);
-                            $pdf->Line(105, 36, 105, 285);
-                        }
+                        $pdf = self::splitPage($pdf, $split);
+                        
+                    }
+                    else
+                    {
+                        $pdf->AddPage();
+                        $pdf = self::splitPage($pdf, $split);
+                        $pdf = self::addTextTo($pdf, $nameObj);
+                        $pdf = self::addTextTo($pdf, $itleObj);
+                        $pdf = self::addTextTo($pdf, $composerObj);
                     }
                 }
                 $offsetY = 36;
@@ -204,15 +228,15 @@ class FileUtilPdf
                     
                     $top = ($index * $lineHeight) + $offsetY;
                     $lyricObj =
-                    (new PicoPdfText())
-                        ->setPosition($offsetX, $top)
-                        ->setDimension(170, $lineHeight)
-                        ->setStyle(0, 0, "L")
-                        ->setFontName($fontName)
-                        ->setFontSize(10)
-                        ->setText($lyricText)
-                        ->setTextColor(new PicoColor(0, 0, 0))
-                        ->alignLeft();
+                        (new PicoPdfText())
+                            ->setPosition($offsetX, $top)
+                            ->setDimension(170, $lineHeight)
+                            ->setStyle(0, 0, "L")
+                            ->setFontName($fontName)
+                            ->setFontSize(10)
+                            ->setText($lyricText)
+                            ->setTextColor(new PicoColor(0, 0, 0))
+                            ->alignLeft();
                     $pdf = self::addTextTo($pdf, $lyricObj);
                 }
             }
@@ -220,6 +244,16 @@ class FileUtilPdf
         catch(Exception $e)
         {
             // do nothing
+        }
+        return $pdf;
+    }
+
+    public static function splitPage($pdf, $split)
+    {
+        if($split)
+        {
+            $pdf->SetDrawColor(188,188,188);
+            $pdf->Line(105, 36, 105, 285);
         }
         return $pdf;
     }
@@ -286,7 +320,7 @@ class FileUtilPdf
      * Get maximum length of lyric
      *
      * @param array $lyrics
-     * @return void
+     * @return integer
      */
     public static function getMaxLength($lyrics)
     {
