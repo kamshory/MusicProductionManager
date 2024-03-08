@@ -185,9 +185,7 @@ class FileUtilPdf
                     ->setFontSize(11)
                     ->setText($composer)
                     ->setTextColor(new PicoColor(0, 0, 0))
-                    ->alignRight();
-
-            
+                    ->alignRight();         
             
             $lyrics = explode("\r\n", $lyric);
 
