@@ -294,7 +294,7 @@ class FileUtil
             ->setFillColor(new PicoColor(255, 255, 255))
             ->setTextColor(new PicoColor(0, 0, 0))
             ->alignCenter();
-            
+
         $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert, $textNextPage);
         $pdf = FileUtilPdf::addLyric($pdf, $name, $title, $composer, $song->getLyricMidi());
         
@@ -325,9 +325,15 @@ class FileUtil
         return $zip;
     }
 
-    public static function prepareTempDir()
+    /**
+     * Prepare temporary directory
+     *
+     * @param string $baseDir
+     * @return string
+     */
+    public static function prepareTempDir($baseDir)
     {
-        $dir = __DIR__ . "/temp";
+        $dir = $baseDir . "/temp";
         if (!file_exists($dir)) {
             $created = mkdir($dir, 0755, true);
             if (!$created) {
