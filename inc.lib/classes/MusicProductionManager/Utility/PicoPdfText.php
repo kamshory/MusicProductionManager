@@ -90,7 +90,6 @@ class PicoPdfText
 
     public function __construct()
     {
-        $this->fillColor = PicoColor::valueOf(255, 255, 255);
         $this->textColor = PicoColor::valueOf(0, 0, 0);
     }
     /**

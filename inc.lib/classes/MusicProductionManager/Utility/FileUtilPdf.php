@@ -33,40 +33,65 @@ class FileUtilPdf
     }
 
     /**
-     * Add text to existiong PDF file
+     * Add text to first page existiong PDF file
      * Reference https://www.webniraj.com/2016/09/12/creating-editing-a-pdf-using-php/
      *
      * @param [type] $path
-     * @param PicoPdfText|PicoPdfText[] $textToInsert
+     * @param PicoPdfText|PicoPdfText[] $textFirstPage
+     * @param PicoPdfText|PicoPdfText[] $textNextPage
      * @return Fpdi
      */
-    public static function addText($path, $textToInsert)
+    public static function addText($path, $textFirstPage, $textNextPage)
     {
         $pdf = new Fpdi();
         $numberOfPage = $pdf->setSourceFile($path);
 
-  
         $tpl = $pdf->importPage(1);
         $pdf->AddPage();
         $pdf->useTemplate($tpl);
         
-        if(is_array($textToInsert))
+        if(is_array($textFirstPage))
         {
-            foreach($textToInsert as $textData)
+            foreach($textFirstPage as $textData)
             {
                 $pdf = self::addTextTo($pdf, $textData);
             }
         }
         else
         {
-            $pdf = self::addTextTo($pdf, $textToInsert);
+            $pdf = self::addTextTo($pdf, $textFirstPage);
         }
+
+        $fmt = null;
 
         for($i = 2; $i <= $numberOfPage; $i++)
         {
             $tpl = $pdf->importPage($i);
             $pdf->AddPage();
-            $pdf->useTemplate($tpl);                
+            $pdf->useTemplate($tpl);   
+            
+            
+            if(is_array($textNextPage))
+            {
+                foreach($textNextPage as $textData)
+                {
+                    if($fmt == null)
+                    {
+                        $fmt = $textData->getText();
+                    }
+                    $textData->setText(sprintf($fmt, $i, $numberOfPage));
+                    $pdf = self::addTextTo($pdf, $textData);
+                }
+            }
+            else
+            {
+                if($fmt == null)
+                {
+                    $fmt = $textNextPage->getText();
+                }
+                $textNextPage->setText(sprintf($fmt, $i, $numberOfPage));
+                $pdf = self::addTextTo($pdf, $textNextPage);
+            }
         }
 
 
@@ -78,25 +103,26 @@ class FileUtilPdf
      * Add specified text to PDF object
      *
      * @param Fpdi $pdf
-     * @param PicoPdfText $textToInsert
+     * @param PicoPdfText $textFirstPage
      * @return Fpdi
      */
-    private static function addTextTo($pdf, $textToInsert)
+    private static function addTextTo($pdf, $textFirstPage)
     {
         // Set the default font to use
-        $pdf->SetFont($textToInsert->fontName);
- 
+        $pdf->SetFont($textFirstPage->fontName);
+
         // set font size
-        $pdf->SetFontSize($textToInsert->fontSize); 
+        $pdf->SetFontSize($textFirstPage->fontSize); 
         // set position
-        $pdf->SetXY($textToInsert->x, $textToInsert->y); 
-
-
+        $pdf->SetXY($textFirstPage->x, $textFirstPage->y); 
 
         // adding a Cell 
-        $pdf->SetFillColor($textToInsert->fillColor->red, $textToInsert->fillColor->green, $textToInsert->fillColor->blue);
-        $pdf->Rect($textToInsert->x, $textToInsert->y, $textToInsert->width, $textToInsert->height, "F");
-        $pdf->Cell( $textToInsert->width, $textToInsert->height, $textToInsert->text, $textToInsert->border, $textToInsert->fill, $textToInsert->align);
+        if($textFirstPage->getFillColor() != null)
+        {
+            $pdf->SetFillColor($textFirstPage->fillColor->red, $textFirstPage->fillColor->green, $textFirstPage->fillColor->blue);
+            $pdf->Rect($textFirstPage->x, $textFirstPage->y, $textFirstPage->width, $textFirstPage->height, "F");
+        }
+        $pdf->Cell( $textFirstPage->width, $textFirstPage->height, $textFirstPage->text, $textFirstPage->border, $textFirstPage->fill, $textFirstPage->align);
         return $pdf;
     }
 
@@ -114,5 +140,4 @@ class FileUtilPdf
         ob_end_clean(); // delete buffer
         return $stringdata;
     }
-      
 }

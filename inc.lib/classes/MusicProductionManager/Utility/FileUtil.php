@@ -97,7 +97,20 @@ class FileUtil
                     ->alignRight()
                 
             );
-            $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert);
+            $footerFormat = str_replace(array("%s", "%d"), "", $song->getName()) . " (%d of %d)"; 
+        
+            $textNextPage = (new PicoPdfText())
+                ->setPosition(105, 12)
+                ->setDimension(40, 8)
+                ->setStyle(0, 0, "C")
+                ->setFontName($fontName)
+                ->setFontSize(11)
+                ->setText($footerFormat)
+                ->setFillColor(new PicoColor(255, 255, 255))
+                ->setTextColor(new PicoColor(0, 0, 0))
+                ->alignCenter();
+                
+            $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert, $textNextPage);
             $pdf->SetTitle($songTitle);
             $content = FileUtilPdf::pdfToString($pdf);        
             $content = FileUtilPdf::replacePdfTitle($content, $song);
@@ -272,12 +285,24 @@ class FileUtil
                 ->setFontName($fontName)
                 ->setFontSize(11)
                 ->setText($composer)
-                ->setFillColor(new PicoColor(255, 255, 255))
                 ->setTextColor(new PicoColor(0, 0, 0))
                 ->alignRight()
             
         );
-        $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert);
+        
+        $footerFormat = str_replace(array("%s", "%d"), "", $song->getName()) . " (%d of %d)"; 
+        
+        $textNextPage = (new PicoPdfText())
+            ->setPosition(105, 12)
+            ->setDimension(40, 8)
+            ->setStyle(0, 0, "C")
+            ->setFontName($fontName)
+            ->setFontSize(11)
+            ->setText($footerFormat)
+            ->setFillColor(new PicoColor(255, 255, 255))
+            ->setTextColor(new PicoColor(0, 0, 0))
+            ->alignCenter();
+        $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert, $textNextPage);
         $pdf->SetTitle($songTitle);
         $content = FileUtilPdf::pdfToString($pdf);
         
