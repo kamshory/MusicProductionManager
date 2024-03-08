@@ -151,9 +151,10 @@ Users can be given access rights according to their role in the application or m
 User roles include the following:
 
 1. administrators
-2. composer
-3. arranger
-4. vocalist
+2. producer
+3. composer
+4. arranger
+5. vocalist
 
 Users with the administrator role have more access rights than others.
 
