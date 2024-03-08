@@ -2,7 +2,7 @@
 
 namespace MusicProductionManager\Utility;
 
-class PicoPdfText
+class PicoPdfText //NOSONAR
 {
     /**
      * X coordinate
