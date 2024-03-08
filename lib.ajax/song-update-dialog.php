@@ -105,12 +105,6 @@ $song->findOneBySongId($inputGet->getSongId());
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Rating</td>
-                                        <td>
-                                            <input type="number" class="form-control" name="rating" min="0" max="5" step="any" value="<?php echo $song->hasValueRating() ? $song->getRating() : '';?>">
-                                        </td>
-                                        </tr>
-                                    <tr>
                                         <td>Vocal</td>
                                         <td><label></label><input type="checkbox" name="vocal" value="1" <?php echo $song->createCheckedVocal("1");?>> Vocal</label>
                                         </td>
