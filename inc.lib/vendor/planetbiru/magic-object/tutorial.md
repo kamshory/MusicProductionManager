@@ -1280,10 +1280,10 @@ try
         'trackNumber'=>'trackNumber',
         'genreId'=>'genreId', 
         'genre'=>'genreId',
-        'artistVocalId'=>'artistVocalId',
-        'artistVocalist'=>'artistVocalId',
-        'artistComposerId'=>'artistComposerId',
-        'artistComposer'=>'artistComposerId',
+        'producerId'=>'producerId',
+        'artistVocalist'=>'artistVocalist',
+        'artistComposer'=>'artistComposer',
+        'artistAranger'=>'artistAranger',
         'duration'=>'duration',
         'subtitleComplete'=>'subtitleComplete',
         'vocal'=>'vocal',
@@ -1344,6 +1344,7 @@ try
             <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
             <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
             <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
+            <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
             <th scope="col" class="col-sort" data-name="duration">Duration</th>
             <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
             <th scope="col" class="col-sort" data-name="lyric_complete">subtitle</th>
@@ -1376,6 +1377,7 @@ try
             <td class="text-data text-data-genre-name"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
             <td class="text-data text-data-artist-vocal-name"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
             <td class="text-data text-data-artist-composer-name"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
+            <td class="text-data text-data-artist-arranger-name"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : "";?></td>
             <td class="text-data text-data-duration"><?php echo $song->getDuration();?></td>
             <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
             <td class="text-data text-data-subtitle-complete"><?php echo $song->issubtitleComplete() ? 'Yes' : 'No';?></td>
@@ -1410,7 +1412,7 @@ catch(Exception $e)
 
 ```
 
-Define method `createSongSpecification`
+Define method `createSongSpecification`. In this example, we use predicate (`PicoPredicate`) and and specification (`PicoSpecification`)
 
 ```php
 <?php
@@ -1474,10 +1476,10 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getArtistVocalistId() != "")
+        if($inputGet->getArtistVocalist() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('artistVocalId', $inputGet->getArtistVocalistId());
+            $predicate1->equals('artistVocalist', $inputGet->getArtistVocalist());
             $spesification->addAnd($predicate1);
         }
 

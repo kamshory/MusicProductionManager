@@ -8,8 +8,8 @@
     "require": {
         "php-ffmpeg/php-ffmpeg": "^0.19.0",
         "cboden/ratchet": "^0.4.4",
-        "planetbiru/magic-object": "dev-main",
-        "james-heinrich/getid3": "^1.9"
+        "james-heinrich/getid3": "^1.9",
+        "planetbiru/magic-object": "^0.0.5"
     },
     "config": {
         "platform": {

@@ -71,14 +71,38 @@ class SecretObject extends stdClass //NOSONAR
      */
     private $readonly = false;
     
+    private $secureFunction = null;
+    
+    /**
+     * Get secure
+     *
+     * @return string
+     */
+    private function getSecure()
+    {
+        if($this->secureFunction != null && is_callable($this->secureFunction))
+        {
+            return call_user_func($this->secureFunction);
+        }
+        else
+        {
+            return PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2;
+        }
+    }
+    
     /**
      * Constructor
      *
      * @param self|array|object $data
      */
-    public function __construct($data = null)
+    public function __construct($data = null, $secureCallback = null)
     {
         $this->_objectInfo();
+        // set callback secure before load default data
+        if($secureCallback != null && is_callable($secureCallback))
+        {
+            $this->secureFunction = $secureCallback;
+        }
         if($data != null)
         {
             $this->loadData($data);
@@ -160,11 +184,11 @@ class SecretObject extends stdClass //NOSONAR
     {
         if($this->needInputEncryption($var))
         {
-            $value = $this->encryptValue($value, PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2);
+            $value = $this->encryptValue($value, $this->getSecure());
         }
         else if($this->needInputDecryption($var))
         {
-            $value = $this->decryptValue($value, PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2);
+            $value = $this->decryptValue($value, $this->getSecure());
         }
         $this->$var = $value;
     }
@@ -180,11 +204,11 @@ class SecretObject extends stdClass //NOSONAR
         $value = $this->_getValue($var);
         if($this->needOutputEncryption($var))
         {
-            $value = $this->encryptValue($value, PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2);
+            $value = $this->encryptValue($value, $this->getSecure());
         }
         else if($this->needOutputDecryption($var))
         {
-            $value = $this->decryptValue($value, PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2);
+            $value = $this->decryptValue($value, $this->getSecure());
         }
         return $value;
     }
@@ -209,7 +233,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     private function encryptValue($plaintext, $hexKey) 
     {
-        $key = hex2bin($hexKey);
+        $key = $hexKey;
         $method = "AES-256-CBC";
         $iv = openssl_random_pseudo_bytes(16);   
         $ciphertext = openssl_encrypt($plaintext, $method, $key, OPENSSL_RAW_DATA, $iv);
@@ -227,7 +251,7 @@ class SecretObject extends stdClass //NOSONAR
     private function decryptValue($ciphertext, $hexKey) 
     {
         $ivHashCiphertext = base64_decode($ciphertext);
-        $key = hex2bin($hexKey);
+        $key = $hexKey;
         $method = "AES-256-CBC";
         $iv = substr($ivHashCiphertext, 0, 16);
         $hash = substr($ivHashCiphertext, 16, 32);
@@ -714,7 +738,7 @@ class SecretObject extends stdClass //NOSONAR
             }
             else if(is_string($val))
             {
-                $array[$key] = $this->encryptValue($val, PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2);
+                $array[$key] = $this->encryptValue($val, $this->getSecure());
             }
         }
         return $array;
