@@ -113,13 +113,16 @@ class FileUtilPdf
                 $lyric .= $value->text;
             }
             
-            $pdf->AddPage();
+            $lyric = StringUtil::fixingCariageReturn($lyric);
+            $lyric = trim($lyric, "\r\n");
+            
+            
             
             $fontName = "Times";
             
             $nameObj = 
                 (new PicoPdfText())
-                    ->setPosition(105, 12)
+                    ->setPosition(105, 8)
                     ->setDimension(100, 8)
                     ->setStyle(0, 0, "C")
                     ->setFontName($fontName)
@@ -130,7 +133,7 @@ class FileUtilPdf
                     ->alignCenter();
             $itleObj =
                 (new PicoPdfText())
-                    ->setPosition(105, 19.5)
+                    ->setPosition(105, 15.5)
                     ->setDimension(100, 6)
                     ->setStyle(0, 0, "C")
                     ->setFontName($fontName)
@@ -141,7 +144,7 @@ class FileUtilPdf
                     ->alignCenter();
             $composerObj =
                 (new PicoPdfText())
-                    ->setPosition(197, 28)
+                    ->setPosition(197, 22)
                     ->setDimension(40, 6)
                     ->setStyle(0, 0, "R")
                     ->setFontName($fontName)
@@ -150,29 +153,82 @@ class FileUtilPdf
                     ->setTextColor(new PicoColor(0, 0, 0))
                     ->alignRight();
 
-            $lyric = StringUtil::fixingCariageReturn($lyric);    
-            
-            $pdf = self::addTextTo($pdf, $nameObj);
-            $pdf = self::addTextTo($pdf, $itleObj);
-            $pdf = self::addTextTo($pdf, $composerObj);
             
             $lyrics = explode("\r\n", $lyric);
-            
-            $offset = 30;
-            foreach($lyrics as $index=>$lyricText)
+            $maxLen = 0;
+            foreach($lyrics as $line)
             {
-                $top = ($index * 6) + $offset;
-                $lyricObj =
-                (new PicoPdfText())
-                    ->setPosition(20, $top)
-                    ->setDimension(170, 8)
-                    ->setStyle(0, 0, "L")
-                    ->setFontName($fontName)
-                    ->setFontSize(11)
-                    ->setText($lyricText)
-                    ->setTextColor(new PicoColor(0, 0, 0))
-                    ->alignLeft();
-                $pdf = self::addTextTo($pdf, $lyricObj);
+                $len = strlen($line);
+                if($len > $maxLen)
+                {
+                    $maxLen = $len;
+                }
+            }
+            $split = false;
+            $threshold = 50;
+            $maxLine = 50;
+            $groupLyrics = array();
+            if($split && $maxLen < $threshold && count($lyrics) > $maxLine)
+            {
+                // split into groups
+                // maximum
+                $idx = 0;
+                if(count($lyrics) < 100)
+                {
+                    // search \r\n after line 40
+                    foreach($lyrics as $ln=>$text)
+                    {
+                        if($ln > 40 && $text == "")
+                        {
+                            $idx++;
+                        }
+                        if(!isset($groupLyrics[$idx]))
+                        {
+                            $groupLyrics[$idx] = array();
+                        }
+                        $groupLyrics[$idx][] = $text;
+                    }
+                }
+            }
+            else
+            {
+                $groupLyrics = array($lyrics);
+            }
+            
+            
+            foreach($groupLyrics as $idx=>$lyrics)
+            {
+                if($idx == 0)
+                {
+                    $pdf->AddPage();
+                    $pdf = self::addTextTo($pdf, $nameObj);
+                    $pdf = self::addTextTo($pdf, $itleObj);
+                    $pdf = self::addTextTo($pdf, $composerObj);
+                }
+                if($idx % 2 != 0)
+                {
+                    $offsetX = 109;
+                }
+                else
+                {
+                    $offsetX = 14;
+                }
+                $offsetY = 30;
+                foreach($lyrics as $index=>$lyricText)
+                {
+                    $top = ($index * 4) + $offsetY;
+                    $lyricObj =
+                    (new PicoPdfText())
+                        ->setPosition($offsetX, $top)
+                        ->setDimension(170, 5)
+                        ->setStyle(0, 0, "L")
+                        ->setFontName($fontName)
+                        ->setFontSize(10)
+                        ->setText($lyricText)
+                        ->setTextColor(new PicoColor(0, 0, 0))
+                        ->alignLeft();
+                    $pdf = self::addTextTo($pdf, $lyricObj);
+                }
             }
         }
         catch(Exception $e)
