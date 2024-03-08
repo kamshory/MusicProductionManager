@@ -93,7 +93,7 @@ class FileUtilPdf
      * Check if error JSON occured
      *
      * @param array $jsonObj
-     * @return boolean
+     * @return bool
      */
     private static function isErrorJson($jsonObj)
     {
@@ -119,7 +119,7 @@ class FileUtilPdf
     /**
      * Check if multiple group
      *
-     * @return boolean
+     * @return bool
      */
     private static function isMultipleGroup($groupLyrics)
     {
@@ -248,12 +248,19 @@ class FileUtilPdf
         return $pdf;
     }
 
+    /**
+     * Split page with vertical line
+     *
+     * @param Fpdi $pdf
+     * @param bool $split
+     * @return Fpdi
+     */
     public static function splitPage($pdf, $split)
     {
         if($split)
         {
             $pdf->SetDrawColor(188,188,188);
-            $pdf->Line(105, 36, 105, 285);
+            $pdf->Line(105, 38, 105, 285);
         }
         return $pdf;
     }
