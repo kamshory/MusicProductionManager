@@ -225,8 +225,8 @@ else
         <span>Subtitle</span>
         <select class="form-control" name="subtitle_complete" id="subtitle_complete">
             <option value="">- All -</option>
-            <option value="1"<?php echo $inputGet->createSelectedSsubtitleComplete("1");?>>Yes</option>
-            <option value="0"<?php echo $inputGet->createSelectedSsubtitleComplete("0");?>>No</option>
+            <option value="1"<?php echo $inputGet->createSelectedSubtitleComplete("1");?>>Yes</option>
+            <option value="0"<?php echo $inputGet->createSelectedSubtitleComplete("0");?>>No</option>
         </select>
     </div>
 
@@ -259,7 +259,7 @@ $orderMap = array(
     'artistComposer'=>'artistComposer',
     'artistArranger'=>'artistArranger',
     'duration'=>'duration',
-    'lsubtitleComplete'=>'lsubtitleComplete',
+    'subtitleComplete'=>'subtitleComplete',
     'vocal'=>'vocal',
     'active'=>'active'
 );

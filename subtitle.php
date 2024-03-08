@@ -275,7 +275,7 @@ if($song != null)
         ajax.post('lib.ajax/subtitle-save.php', {
             song_id: song_id,
             subtitle: rawData,
-            lsubtitleComplete:complete?1:0,
+            subtitleComplete:complete?1:0,
             duration: duration
         }, function(response, status) {
         });
@@ -387,7 +387,7 @@ $orderMap = array(
     'duration'=>'duration',
     'vocal'=>'vocal',
     'active'=>'active',
-    'lsubtitleComplete'=>'lsubtitleComplete'
+    'subtitleComplete'=>'subtitleComplete'
 );
 $defaultOrderBy = 'songId';
 $defaultOrderType = 'desc';

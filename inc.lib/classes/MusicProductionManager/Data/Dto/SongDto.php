@@ -207,18 +207,18 @@ class SongDto extends SetterGetter
 	protected $timeSignature;
 
 	/**
-	 * Lyric
+	 * Subtitle
 	 * 
 	 * @var string
 	 */
-	protected $lyric;
+	protected $subtitle;
 
 	/**
-	 * Lyric Complete
+	 * Subtitle Complete
 	 * 
 	 * @var bool
 	 */
-	protected $lsubtitleComplete;
+	protected $subtitleComplete;
 
 	/**
 	 * Lyric Midi

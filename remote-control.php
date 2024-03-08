@@ -140,7 +140,7 @@ $orderMap = array(
     'artistComposer'=>'artistComposer',
     'artistArranger'=>'artistArranger',
     'duration'=>'duration',
-    'lsubtitleComplete'=>'lsubtitleComplete',
+    'subtitleComplete'=>'subtitleComplete',
     'vocal'=>'vocal',
     'active'=>'active'
 );

@@ -128,10 +128,10 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getSsubtitleComplete() != "")
+        if($inputGet->getSubtitleComplete() != "")
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->equals('lsubtitleComplete', $inputGet->getSsubtitleComplete());
+            $predicate1->equals('subtitleComplete', $inputGet->getSubtitleComplete());
             $spesification->addAnd($predicate1);
         }
 
