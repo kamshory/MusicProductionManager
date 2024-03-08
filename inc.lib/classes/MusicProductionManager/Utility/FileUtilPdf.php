@@ -154,47 +154,10 @@ class FileUtilPdf
                     ->alignRight();
 
             
-            $lyrics = explode("\r\n", $lyric);
-            $maxLen = 0;
-            foreach($lyrics as $line)
-            {
-                $len = strlen($line);
-                if($len > $maxLen)
-                {
-                    $maxLen = $len;
-                }
-            }
-            $split = false;
-            $threshold = 50;
-            $maxLine = 50;
-            $groupLyrics = array();
-            if($split && $maxLen < $threshold && count($lyrics) > $maxLine)
-            {
-                // split into groups
-                // maximum
-                $idx = 0;
-                if(count($lyrics) < 100)
-                {
-                    // search \r\n after line 40
-                    foreach($lyrics as $ln=>$text)
-                    {
-                        if($ln > 40 && $text == "")
-                        {
-                            $idx++;
-                        }
-                        if(!isset($groupLyrics[$idx]))
-                        {
-                            $groupLyrics[$idx] = array();
-                        }
-                        $groupLyrics[$idx][] = $text;
-                    }
-                }
-            }
-            else
-            {
-                $groupLyrics = array($lyrics);
-            }
             
+            $lyrics = explode("\r\n", $lyric);
+
+            $groupLyrics = self::splitLyric($lyrics);
             
             foreach($groupLyrics as $idx=>$lyrics)
             {
@@ -236,6 +199,84 @@ class FileUtilPdf
             // do nothing
         }
         return $pdf;
+    }
+    
+    /**
+     * Split lyric
+     *
+     * @param array $lyrics
+     * @return array
+     */
+    public static function splitLyric($lyrics)
+    {
+        $maxLen = self::getMaxLength($lyrics);
+        
+        $split = false;
+        $threshold = 50;
+        $maxLine = 50;
+        $groupLyrics = array();
+        if(self::mustSplit($split, $maxLen, $maxLine, $threshold, $lyrics))
+        {
+            // split into groups
+            // maximum
+            $idx = 0;
+            if(count($lyrics) < 100)
+            {
+                // search \r\n after line 40
+                foreach($lyrics as $ln=>$text)
+                {
+                    if($ln > 40 && $text == "")
+                    {
+                        $idx++;
+                    }
+                    if(!isset($groupLyrics[$idx]))
+                    {
+                        $groupLyrics[$idx] = array();
+                    }
+                    $groupLyrics[$idx][] = $text;
+                }
+            }
+        }
+        else
+        {
+            $groupLyrics = array($lyrics);
+        }
+        return $groupLyrics;
+    }
+    
+    /**
+     * Get maximum length of lyric
+     *
+     * @param array $lyrics
+     * @return void
+     */
+    public static function getMaxLength($lyrics)
+    {
+        $maxLen = 0;
+        foreach($lyrics as $line)
+        {
+            $len = strlen($line);
+            if($len > $maxLen)
+            {
+                $maxLen = $len;
+            }
+        }
+        return $maxLen;
+    }
+    
+    /**
+     * Check if lyric must be split or note
+     *
+     * @param bool $split
+     * @param integer $maxLen
+     * @param integer $maxLine
+     * @param integer $threshold
+     * @param array $lyrics
+     * @return bool
+     */
+    public static function mustSplit($split, $maxLen, $maxLine, $threshold, $lyrics)
+    {
+        return $split && $maxLen < $threshold && count($lyrics) > $maxLine;
     }
     
     /**
