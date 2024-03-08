@@ -62,7 +62,7 @@ class FileUtilPdf
             $pdf = self::addTextTo($pdf, $textFirstPage);
         }
 
-        $fmt = null;
+        $fmt = self::getFisrt($textNextPage);
 
         for($i = 2; $i <= $numberOfPage; $i++)
         {
@@ -75,28 +75,46 @@ class FileUtilPdf
             {
                 foreach($textNextPage as $textData)
                 {
-                    if($fmt == null)
-                    {
-                        $fmt = $textData->getText();
-                    }
                     $textData->setText(sprintf($fmt, $i, $numberOfPage));
                     $pdf = self::addTextTo($pdf, $textData);
                 }
             }
             else
             {
-                if($fmt == null)
-                {
-                    $fmt = $textNextPage->getText();
-                }
                 $textNextPage->setText(sprintf($fmt, $i, $numberOfPage));
                 $pdf = self::addTextTo($pdf, $textNextPage);
             }
         }
-
-
         return $pdf;
-
+    }
+    
+    /**
+     * Get fisrt text
+     *
+     * @param PicoPdfText|PicoPdfText[] $textNextPage
+     * @return string
+     */
+    public static function getFisrt($textNextPage)
+    {
+        $fmt = null;
+        if(is_array($textNextPage))
+        {
+            foreach($textNextPage as $textData)
+            {
+                if($fmt == null)
+                {
+                    $fmt = $textData->getText();
+                }
+            }
+        }
+        else
+        {
+            if($fmt == null)
+            {
+                $fmt = $textNextPage->getText();
+            }
+        }
+        return $fmt;
     }
 
     /**
