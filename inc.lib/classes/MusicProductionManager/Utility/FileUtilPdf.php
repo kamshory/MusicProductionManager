@@ -258,7 +258,7 @@ class FileUtilPdf
         if($split)
         {
             $pdf->SetDrawColor(188,188,188);
-            $pdf->Line(105, 38, 105, 285);
+            $pdf->Line(105, 37, 105, 285);
         }
         return $pdf;
     }
