@@ -177,7 +177,7 @@ class FileUtilPdf
                     if($split)
                     {
                         $pdf->SetDrawColor(188,188,188);
-                        $pdf->Line(105, 30, 105, 285);
+                        $pdf->Line(105, 36, 105, 285);
                     }
                 }
                 if($idx % 2 != 0)
@@ -191,6 +191,11 @@ class FileUtilPdf
                     {
                         // add page
                         $pdf->AddPage();
+                        if($split)
+                        {
+                            $pdf->SetDrawColor(188,188,188);
+                            $pdf->Line(105, 36, 105, 285);
+                        }
                     }
                 }
                 $offsetY = 36;
