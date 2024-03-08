@@ -122,7 +122,7 @@ class FileUtilPdf
             
             $nameObj = 
                 (new PicoPdfText())
-                    ->setPosition(105, 8)
+                    ->setPosition(105, 12)
                     ->setDimension(100, 8)
                     ->setStyle(0, 0, "C")
                     ->setFontName($fontName)
@@ -133,7 +133,7 @@ class FileUtilPdf
                     ->alignCenter();
             $itleObj =
                 (new PicoPdfText())
-                    ->setPosition(105, 15.5)
+                    ->setPosition(105, 19.5)
                     ->setDimension(100, 6)
                     ->setStyle(0, 0, "C")
                     ->setFontName($fontName)
@@ -144,7 +144,7 @@ class FileUtilPdf
                     ->alignCenter();
             $composerObj =
                 (new PicoPdfText())
-                    ->setPosition(197, 22)
+                    ->setPosition(197, 28)
                     ->setDimension(40, 6)
                     ->setStyle(0, 0, "R")
                     ->setFontName($fontName)
@@ -158,6 +158,13 @@ class FileUtilPdf
             $lyrics = explode("\r\n", $lyric);
 
             $groupLyrics = self::splitLyric($lyrics);
+            $groupLyrics = self::trimLyricGroup($groupLyrics);
+            $lineHeight = 6;
+            $split = false;
+            if(count($groupLyrics) > 1)
+            {
+                $split = true;
+            }
             
             foreach($groupLyrics as $idx=>$lyrics)
             {
@@ -167,6 +174,11 @@ class FileUtilPdf
                     $pdf = self::addTextTo($pdf, $nameObj);
                     $pdf = self::addTextTo($pdf, $itleObj);
                     $pdf = self::addTextTo($pdf, $composerObj);
+                    if($split)
+                    {
+                        $pdf->SetDrawColor(188,188,188);
+                        $pdf->Line(105, 30, 105, 285);
+                    }
                 }
                 if($idx % 2 != 0)
                 {
@@ -175,15 +187,21 @@ class FileUtilPdf
                 else
                 {
                     $offsetX = 14;
+                    if($idx > 0)
+                    {
+                        // add page
+                        $pdf->AddPage();
+                    }
                 }
-                $offsetY = 30;
+                $offsetY = 36;
                 foreach($lyrics as $index=>$lyricText)
                 {
-                    $top = ($index * 4) + $offsetY;
+                    
+                    $top = ($index * $lineHeight) + $offsetY;
                     $lyricObj =
                     (new PicoPdfText())
                         ->setPosition($offsetX, $top)
-                        ->setDimension(170, 5)
+                        ->setDimension(170, $lineHeight)
                         ->setStyle(0, 0, "L")
                         ->setFontName($fontName)
                         ->setFontSize(10)
@@ -202,6 +220,21 @@ class FileUtilPdf
     }
     
     /**
+     * Trim group lyric
+     *
+     * @param array $groupLyrics
+     * @return array
+     */
+    public static function trimLyricGroup($groupLyrics)
+    {
+        foreach($groupLyrics as $key=>$value)
+        {
+            $groupLyrics[$key] = explode("\r\n", trim(implode("\r\n", $value), "\r\n"));
+        }
+        return $groupLyrics;
+    }
+    
+    /**
      * Split lyric
      *
      * @param array $lyrics
@@ -211,30 +244,30 @@ class FileUtilPdf
     {
         $maxLen = self::getMaxLength($lyrics);
         
-        $split = false;
+        $split = true;
         $threshold = 50;
-        $maxLine = 50;
+        $maxLine = 40;
+        $startFindSpace = 30;
         $groupLyrics = array();
         if(self::mustSplit($split, $maxLen, $maxLine, $threshold, $lyrics))
         {
             // split into groups
             // maximum
+            $cnt = 0;
             $idx = 0;
-            if(count($lyrics) < 100)
+            foreach($lyrics as $text)
             {
-                // search \r\n after line 40
-                foreach($lyrics as $ln=>$text)
+                if($cnt > $startFindSpace && $text == "")
                 {
-                    if($ln > 40 && $text == "")
-                    {
-                        $idx++;
-                    }
-                    if(!isset($groupLyrics[$idx]))
-                    {
-                        $groupLyrics[$idx] = array();
-                    }
-                    $groupLyrics[$idx][] = $text;
+                    $idx++;
+                    $cnt = 0;
                 }
+                if(!isset($groupLyrics[$idx]))
+                {
+                    $groupLyrics[$idx] = array();
+                }
+                $groupLyrics[$idx][] = $text;
+                $cnt++;
             }
         }
         else

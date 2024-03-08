@@ -101,6 +101,7 @@ class FileUtil
                 
             $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert, $textNextPage);
             $pdf = FileUtilPdf::addLyric($pdf, $name, $title, $composer, $song->getLyricMidi());
+            
             $pdf->SetTitle($songTitle);
             $content = FileUtilPdf::pdfToString($pdf);        
             $content = FileUtilPdf::replacePdfTitle($content, $song);
@@ -112,6 +113,7 @@ class FileUtil
             header(HttpHeaderConstant::CONTENT_LENGTH . strlen($content));
 
             echo $content;
+            
 
         } else if ($inputGet->equalsType('xml') && file_exists($song->getFilePathXml())) {
             self::compressOutput(true);
