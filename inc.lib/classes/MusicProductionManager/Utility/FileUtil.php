@@ -44,20 +44,32 @@ class FileUtil
             header(HttpHeaderConstant::CONTENT_LENGTH . filesize($song->getFilePathMidi()));
             readfile($song->getFilePathMidi());
         } else if ($inputGet->equalsType('pdf') && file_exists($song->getFilePathPdf())) {
-            self::compressOutput(true);
-            $filename = $song->getName() . ".pdf";
-            header(HttpHeaderConstant::CONTENT_TYPE . "application/pdf");
-            header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
 
             $name = $song->getName();
             $title = $song->hasValueTitle() ? ("(".$song->getTitle().")") : $song->getName();
             $composer = $song->hasValueComposer() ? $song->getComposer()->getName() : "NN";
+            
+            if($song->hasValueTitle())
+            {
+                $songTitle = $song->getTitle();
+            }
+            else
+            {
+                $songTitle = $song->getName();
+            }
+            if($song->hasValueComposer())
+            {
+                $songTitle .= ' by '.$song->getComposer()->getName();
+            }
+
+            $fontName = "Times";
 
             $textToInsert = array(
                 (new PicoPdfText())
                     ->setPosition(105, 12)
                     ->setDimension(100, 8)
                     ->setStyle(0, 0, "C")
+                    ->setFontName($fontName)
                     ->setFontSize(18)
                     ->setText($name)
                     ->setFillColor(new PicoColor(255, 255, 255))
@@ -67,7 +79,8 @@ class FileUtil
                     ->setPosition(105, 19.5)
                     ->setDimension(100, 6)
                     ->setStyle(0, 0, "C")
-                    ->setFontSize(14)
+                    ->setFontName($fontName)
+                    ->setFontSize(13)
                     ->setText($title)
                     ->setFillColor(new PicoColor(255, 255, 255))
                     ->setTextColor(new PicoColor(0, 0, 0))
@@ -75,8 +88,9 @@ class FileUtil
                 (new PicoPdfText())
                     ->setPosition(197, 28)
                     ->setDimension(40, 6)
+                    ->setFontName($fontName)
                     ->setStyle(0, 0, "R")
-                    ->setFontSize(10)
+                    ->setFontSize(11)
                     ->setText($composer)
                     ->setFillColor(new PicoColor(255, 255, 255))
                     ->setTextColor(new PicoColor(0, 0, 0))
@@ -84,10 +98,14 @@ class FileUtil
                 
             );
             $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert);
-            $content = FileUtilPdf::pdfToString($pdf);
-            
+            $pdf->SetTitle($songTitle);
+            $content = FileUtilPdf::pdfToString($pdf);        
             $content = FileUtilPdf::replacePdfTitle($content, $song);
             
+            self::compressOutput(true);
+            $filename = $song->getName() . ".pdf";
+            header(HttpHeaderConstant::CONTENT_TYPE . "application/pdf");
+            header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
             header(HttpHeaderConstant::CONTENT_LENGTH . strlen($content));
 
             echo $content;
@@ -211,11 +229,27 @@ class FileUtil
         $title = $song->hasValueTitle() ? ("(".$song->getTitle().")") : $song->getName();
         $composer = $song->hasValueComposer() ? $song->getComposer()->getName() : "NN";
 
+        if($song->hasValueTitle())
+        {
+            $songTitle = $song->getTitle();
+        }
+        else
+        {
+            $songTitle = $song->getName();
+        }
+        if($song->hasValueComposer())
+        {
+            $songTitle .= ' by '.$song->getComposer()->getName();
+        }
+
+        $fontName = "Times";
+
         $textToInsert = array(
             (new PicoPdfText())
                 ->setPosition(105, 12)
                 ->setDimension(100, 8)
                 ->setStyle(0, 0, "C")
+                ->setFontName($fontName)
                 ->setFontSize(18)
                 ->setText($name)
                 ->setFillColor(new PicoColor(255, 255, 255))
@@ -225,7 +259,8 @@ class FileUtil
                 ->setPosition(105, 19.5)
                 ->setDimension(100, 6)
                 ->setStyle(0, 0, "C")
-                ->setFontSize(14)
+                ->setFontName($fontName)
+                ->setFontSize(13)
                 ->setText($title)
                 ->setFillColor(new PicoColor(255, 255, 255))
                 ->setTextColor(new PicoColor(0, 0, 0))
@@ -234,7 +269,8 @@ class FileUtil
                 ->setPosition(197, 28)
                 ->setDimension(40, 6)
                 ->setStyle(0, 0, "R")
-                ->setFontSize(10)
+                ->setFontName($fontName)
+                ->setFontSize(11)
                 ->setText($composer)
                 ->setFillColor(new PicoColor(255, 255, 255))
                 ->setTextColor(new PicoColor(0, 0, 0))
@@ -242,6 +278,7 @@ class FileUtil
             
         );
         $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert);
+        $pdf->SetTitle($songTitle);
         $content = FileUtilPdf::pdfToString($pdf);
         
         $content = FileUtilPdf::replacePdfTitle($content, $song);
