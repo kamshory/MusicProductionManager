@@ -294,10 +294,12 @@ class FileUtil
             ->setFillColor(new PicoColor(255, 255, 255))
             ->setTextColor(new PicoColor(0, 0, 0))
             ->alignCenter();
+            
         $pdf = FileUtilPdf::addText($song->getFilePathPdf(), $textToInsert, $textNextPage);
-        $pdf->SetTitle($songTitle);
-        $content = FileUtilPdf::pdfToString($pdf);
+        $pdf = FileUtilPdf::addLyric($pdf, $name, $title, $composer, $song->getLyricMidi());
         
+        $pdf->SetTitle($songTitle);
+        $content = FileUtilPdf::pdfToString($pdf);        
         $content = FileUtilPdf::replacePdfTitle($content, $song);
         $zip->addFromString($filename, $content);
         return $zip;
