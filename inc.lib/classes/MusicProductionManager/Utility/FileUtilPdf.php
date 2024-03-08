@@ -166,12 +166,12 @@ class FileUtilPdf
                 (new PicoPdfText())
                     ->setPosition(20, $top)
                     ->setDimension(170, 8)
-                    ->setStyle(0, 0, "R")
+                    ->setStyle(0, 0, "L")
                     ->setFontName($fontName)
                     ->setFontSize(11)
                     ->setText($lyricText)
                     ->setTextColor(new PicoColor(0, 0, 0))
-                    ->alignRight();
+                    ->alignLeft();
                 $pdf = self::addTextTo($pdf, $lyricObj);
             }
         }
