@@ -40,6 +40,11 @@ let timebase = 1;
 let timeInfo = [];
 let playerModal;
 
+String.prototype.replaceAll = function (find, replace) {
+  var str = this;
+  return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+};
+
 function updateLyricForm(value) {
   value = value.split("\n").join("\r\n");
   value = value.split("\r\r\n").join("\r\n");
@@ -48,6 +53,10 @@ function updateLyricForm(value) {
   while (value.indexOf("\r\n\r\n") > -1) {
     value = value.split("\r\n\r\n").join("\r\n");
   }
+  value = value.replaceAll('    ', ' ');
+  value = value.replaceAll('   ', ' ');
+  value = value.replaceAll('  ', ' ');
+  value = value.replaceAll('  ', ' ');
   let values = value.split("\r\n").join(" ").split(" ");
   let idx = 0;
   $(".timetable tbody")

@@ -15,9 +15,9 @@ function importLyricMidi($original)
 	$str = str_replace("\r\n\r\n", "\r\n", $str);
 	$str = str_replace("\r\n\r\n", "\r\n", $str);
 	$str = trim($str);
-	$str = str_replace("-", "_", $str);
 	$str = str_replace("\r\n", "\\\r\n", $str);
 	$str = str_replace(" ", "_ ", $str);
+	$str = str_replace("-", "_ ", $str);
 	return $str;
 }
 $inputGet = new InputGet();
