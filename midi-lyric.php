@@ -26,15 +26,15 @@ if (isset($song)) {
 	$midi = new MidiLyric();
 	if(file_exists($song->getFilePathMidi()))
 	{
-	$midi->importMid($song->getFilePathMidi());
+		$midi->importMid($song->getFilePathMidi());
 
-	$list = $midi->getLyric();
+		$list = $midi->getLyric();
 
-	$lyricMidiRaw = $song->getLyricMidiRaw();
-	if(empty($lyricMidiRaw))
-	{
-		$lyricMidiRaw = importLyricMidi($song->getLyric());
-	}
+		$lyricMidiRaw = $song->getLyricMidiRaw();
+		if(empty($lyricMidiRaw))
+		{
+			$lyricMidiRaw = importLyricMidi($song->getSubtitle());
+		}
 ?>
 
 <script>
