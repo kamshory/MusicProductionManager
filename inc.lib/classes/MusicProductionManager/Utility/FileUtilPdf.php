@@ -8,6 +8,17 @@ use setasign\Fpdi\Fpdi;
 
 class FileUtilPdf
 {
+    const LYRIC_FONT_NAME = "Times";
+    const LYRIC_FONT_SIZE = 12;
+    const LYRIC_LINE_HEIGHT = 7;
+    const LYRIC_THRESHOLD = 40;
+    const LYRIC_MAX_LINE = 35;
+    const LYRIC_START_FIND_SPACE = 25;
+
+    const LYRIC_OFFSET_X_1 = 14;
+    const LYRIC_OFFSET_X_2 = 109;
+    const LYRIC_OFFSET_Y = 36;
+
     /**
     * Download per song
     *
@@ -145,14 +156,11 @@ class FileUtilPdf
                 return $pdf;
             }
             
-            $lyric = self::joinLyric($jsonObj);
-            
+            $lyric = self::joinLyric($jsonObj);           
             $lyric = StringUtil::fixingCariageReturn($lyric);
             $lyric = trim($lyric, "\r\n");
             
-            
-            
-            $fontName = "Times";
+            $fontName = self::LYRIC_FONT_NAME;
             
             $nameObj = 
                 (new PicoPdfText())
@@ -191,7 +199,7 @@ class FileUtilPdf
 
             $groupLyrics = self::splitLyric($lyrics);
             $groupLyrics = self::trimLyricGroup($groupLyrics);
-            $lineHeight = 6;
+            $lineHeight = self::LYRIC_LINE_HEIGHT;
             $split = self::isMultipleGroup($groupLyrics);
             
             foreach($groupLyrics as $idx=>$lyrics)
@@ -199,11 +207,11 @@ class FileUtilPdf
 
                 if($idx % 2 != 0)
                 {
-                    $offsetX = 109;
+                    $offsetX = self::LYRIC_OFFSET_X_2;
                 }
                 else
                 {
-                    $offsetX = 14;
+                    $offsetX = self::LYRIC_OFFSET_X_1;
                     if($idx > 0)
                     {
                         // add page
@@ -220,18 +228,17 @@ class FileUtilPdf
                         $pdf = self::addTextTo($pdf, $composerObj);
                     }
                 }
-                $offsetY = 36;
                 foreach($lyrics as $index=>$lyricText)
                 {
                     
-                    $top = ($index * $lineHeight) + $offsetY;
+                    $top = ($index * $lineHeight) + self::LYRIC_OFFSET_Y;
                     $lyricObj =
                         (new PicoPdfText())
                             ->setPosition($offsetX, $top)
                             ->setDimension(170, $lineHeight)
                             ->setStyle(0, 0, "L")
                             ->setFontName($fontName)
-                            ->setFontSize(10)
+                            ->setFontSize(self::LYRIC_FONT_SIZE)
                             ->setText($lyricText)
                             ->setTextColor(new PicoColor(0, 0, 0))
                             ->alignLeft();
@@ -289,11 +296,8 @@ class FileUtilPdf
         $maxLen = self::getMaxLength($lyrics);
         
         $split = true;
-        $threshold = 50;
-        $maxLine = 40;
-        $startFindSpace = 30;
         $groupLyrics = array();
-        if(self::mustSplit($split, $maxLen, $maxLine, $threshold, $lyrics))
+        if(self::mustSplit($split, $maxLen, self::LYRIC_MAX_LINE, self::LYRIC_THRESHOLD, $lyrics))
         {
             // split into groups
             // maximum
@@ -301,7 +305,7 @@ class FileUtilPdf
             $idx = 0;
             foreach($lyrics as $text)
             {
-                if($cnt > $startFindSpace && $text == "")
+                if($cnt > self::LYRIC_START_FIND_SPACE && $text == "")
                 {
                     $idx++;
                     $cnt = 0;
