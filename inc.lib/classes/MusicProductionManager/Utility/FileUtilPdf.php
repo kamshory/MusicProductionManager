@@ -17,7 +17,7 @@ class FileUtilPdf
 
     const LYRIC_OFFSET_X_1 = 14;
     const LYRIC_OFFSET_X_2 = 109;
-    const LYRIC_OFFSET_Y = 36;
+    const LYRIC_OFFSET_Y = 38;
 
     /**
     * Download per song
@@ -265,7 +265,7 @@ class FileUtilPdf
         if($split)
         {
             $pdf->SetDrawColor(188,188,188);
-            $pdf->Line(105, 37, 105, 285);
+            $pdf->Line(105, self::LYRIC_OFFSET_Y, 105, 285);
         }
         return $pdf;
     }
