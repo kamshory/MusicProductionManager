@@ -11,6 +11,7 @@ use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\EntityAlbum;
 use MusicProductionManager\Data\Entity\Producer;
 use MagicObject\Response\Generated\PicoSelectOption;
+use MagicObject\Util\Dms;
 use MusicProductionManager\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";
@@ -157,9 +158,9 @@ if(!empty($result))
       <th scope="col" width="20"><i class="ti ti-download"></i></th>
       <th scope="col" width="20">#</th>
       <th scope="col" class="col-sort" data-name="name">Name</th>
+      <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
       <th scope="col" class="col-sort" data-name="duration">Duration</th>
       <th scope="col" class="col-sort" data-name="number_of_song">Song</th>
-      <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
       <th scope="col" class="col-sort" data-name="sort_order">Order</th>
       <th scope="col" class="col-sort" data-name="active">Active</th>
       <th scope="col" class="col-sort" data-name="ad_draft">Draft</th>
@@ -183,9 +184,9 @@ if(!empty($result))
       <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $album->getName();?></a></td>
-      <td class="text-data text-data-duration"><?php echo sprintf("%.3f", $album->getDuration());?></td>
-      <td class="text-data text-data-number-of-song"><?php echo $album->getNumberOfSong();?></td>
       <td class="text-data text-data-producer"><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : "";?></td>
+      <td class="text-data text-data-duration"><?php echo (new Dms())->ddToDms($album->getDuration()/3600)->printDms(true, true); ?></td>
+      <td class="text-data text-data-number-of-song"><?php echo $album->getNumberOfSong();?></td>
       <td class="text-data text-data-sort-order"><?php echo $album->getSortOrder();?></td>
       <td class="text-data text-data-active"><?php echo $album->isActive() ? 'Yes' : 'No';?></td>
       <td class="text-data text-data-ad-draft"><?php echo $album->isAsDraft() ? 'Yes' : 'No';?></td>

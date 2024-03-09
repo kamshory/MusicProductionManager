@@ -278,6 +278,12 @@ service httpd restart
 
 User must create an user account on installation. Without this, user can not create account.
 
+# For Developer
+
+```
+composer --with-all-dependencies require setasign/fpdi-fpdf
+```
+
 # Need Support
 
 Please support or YouTube channel https://www.youtube.com/@maliktamvan
