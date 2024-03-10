@@ -69,6 +69,12 @@ Users can provide comments on each song. Comments have time and duration like su
 
 Comments will be notes by the composer, arranger, vocalist or producer about parts of a song.
 
+## Sheet Music
+
+**Music Production Manager** supports scores that can be printed on paper. This score is needed by vocalists, musicians and even arrangers to understand the song written by the composer correctly. Just listening to the draft music made by the composer may cause errors in understanding both pitch, beat and tempo. The sheet music is the main reference that must be adhered to by all parties.
+
+Apart from sheet music, the Music Production Manager also provides plain lyrics for vocalists to understand the meaning of the song so that it can evoke emotions when singing it. These lyrics can be printed on a separate sheet but are still in the same PDF file as the sheet music.
+
 ## Lyric Editor
 
 When creating a song, perhaps the instruments and lyrics are created simultaneously. The lyric editor will really help both composers and arrangers in synchronizing instruments and lyrics.
@@ -98,12 +104,6 @@ This feature is very useful for repairing MIDI files so that the bar size is as 
 As an example:
 
 A song is made with a tempo of 130 bpm but in fact, the song is only 65 bpm. The song has no problems when played in either mp3 or MIDI format. However, when creating musical notes or number notes from MIDi format, the musical note reader will have difficulty because the note is too high. **Music Production Manager** can fix this problem very easily by converting it to 1/2 scale. There is no change in the song when played with a MIDI player application even though the tempo is reduced by half.
-
-## Sheet Music
-
-**Music Production Manager** supports scores that can be printed on paper. This score is needed by vocalists, musicians and even arrangers to understand the song written by the composer correctly. Just listening to the draft music made by the composer may cause errors in understanding both pitch, beat and tempo. The sheet music is the main reference that must be adhered to by all parties.
-
-Apart from sheet music, the Music Production Manager also provides plain lyrics for vocalists to understand the meaning of the song so that it can evoke emotions when singing it. These lyrics can be printed on a separate sheet but are still in the same PDF file as the sheet music.
 
 ### Transpose MIDI
 
