@@ -14,7 +14,6 @@ class FileUtilPdf
     const LYRIC_THRESHOLD = 40;
     const LYRIC_MAX_LINE = 35;
     const LYRIC_START_FIND_SPACE = 25;
-
     const LYRIC_OFFSET_X_1 = 14;
     const LYRIC_OFFSET_X_2 = 109;
     const LYRIC_OFFSET_Y = 38;
@@ -136,6 +135,44 @@ class FileUtilPdf
     {
         return count($groupLyrics) > 1;
     }
+
+    /**
+     * Get total page
+     *
+     * @param array $groupLyrics
+     * @param boolean $split
+     * @return integer
+     */
+    public static function getTotalPage($groupLyrics, $split = false)
+    {
+        if($split)
+        {
+            return ceil(count($groupLyrics)/2);
+        }
+        else
+        {
+            return count($groupLyrics);
+        }
+    }
+
+    /**
+     * Get current page
+     *
+     * @param integer $idx
+     * @param boolean $split
+     * @return integer
+     */
+    public static function getCurrentPage($idx, $split = false)
+    {
+        if($split)
+        {
+            return ceil($idx / 2) + 1;
+        }
+        else
+        {
+            return $idx + 1;
+        }
+    }
     
     /**
      * Add lyric
@@ -201,10 +238,12 @@ class FileUtilPdf
             $groupLyrics = self::trimLyricGroup($groupLyrics);
             $lineHeight = self::LYRIC_LINE_HEIGHT;
             $split = self::isMultipleGroup($groupLyrics);
+
+            $numPage = self::getTotalPage($groupLyrics, $split);
             
             foreach($groupLyrics as $idx=>$lyrics)
             {
-
+                $pageNumber = self::getCurrentPage($idx, $split);
                 if($idx % 2 != 0)
                 {
                     $offsetX = self::LYRIC_OFFSET_X_2;
@@ -212,21 +251,25 @@ class FileUtilPdf
                 else
                 {
                     $offsetX = self::LYRIC_OFFSET_X_1;
-                    if($idx > 0)
-                    {
-                        // add page
-                        $pdf->AddPage();
-                        $pdf = self::splitPage($pdf, $split);
-                        
-                    }
-                    else
-                    {
-                        $pdf->AddPage();
-                        $pdf = self::splitPage($pdf, $split);
-                        $pdf = self::addTextTo($pdf, $nameObj);
-                        $pdf = self::addTextTo($pdf, $itleObj);
-                        $pdf = self::addTextTo($pdf, $composerObj);
-                    }
+
+                    $pdf->AddPage();
+                    $pdf = self::splitPage($pdf, $split);
+                    $pdf = self::addTextTo($pdf, $nameObj);
+                    $pdf = self::addTextTo($pdf, $itleObj);
+                    $pdf = self::addTextTo($pdf, $composerObj);
+                    
+                    
+                    $headerObj =
+                    (new PicoPdfText())
+                        ->setPosition(14, 10)
+                        ->setDimension(55, 6)
+                        ->setStyle(0, 0, "L")
+                        ->setFontName($fontName)
+                        ->setFontSize(10)
+                        ->setText("Page $pageNumber of $numPage")
+                        ->setTextColor(new PicoColor(0, 0, 0))
+                        ->alignLeft();
+                    $pdf = self::addTextTo($pdf, $headerObj);
                 }
                 foreach($lyrics as $index=>$lyricText)
                 {
