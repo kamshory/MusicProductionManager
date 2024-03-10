@@ -21,12 +21,13 @@ Not all DAWs support the MusicXML format but many DAWs support the MIDI format.
 11. MIDI Player
 12. MusicXML Player
 13. Karaoke
-14. Recording Teleprompter
-15. Piano Display
-16. Download Files
-17. User Management
-18. User Role
-19. Article
+14. Sheet Music
+15. Recording Teleprompter
+16. Piano Display
+17. Download Files
+18. User Management
+19. User Role
+20. Article
 
 ## Colaboration
 
@@ -117,6 +118,12 @@ MIDI editor is useful for changing instruments on each song track. Producers may
 ## Karaoke
 
 Karaoke is a feature that vocalists can use while practicing. Features can be accessed in both desktop and mobile mode using smartphones and tablets.
+
+## Sheet Music
+
+**Music Production Manager** supports scores that can be printed on paper. This score is needed by vocalists, musicians and even arrangers to understand the song written by the composer correctly. Just listening to the draft music made by the composer may cause errors in understanding both pitch, beat and tempo. The sheet music is the main reference that must be adhered to by all parties.
+
+Apart from sheet music, the Music Production Manager also provides plain lyrics for vocalists to understand the meaning of the song so that it can evoke emotions when singing it. These lyrics can be printed on a separate sheet but are still in the same PDF file as the sheet music.
 
 ## Recording Teleprompter
 
