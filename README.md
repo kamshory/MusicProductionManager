@@ -29,18 +29,6 @@ Not all DAWs support the MusicXML format but many DAWs support the MIDI format.
 19. User Role
 20. Article
 
-* Sheet Music
-* 
-
-
-* Sheet Music
-* 
-
-
-* Sheet Music
-* 
-
-
 ## Colaboration
 
 **Music Production Manager** is used jointly by several artists involved in music production, both as composer, arranger, vocalist and even producer. Music that has been created by the arranger and given lyrics by the composer can be reviewed by other artists and then given a rating. A low rating indicates that the song still has many shortcomings. Apart from that, other artists can also provide comments on parts of the song that need improvement.
