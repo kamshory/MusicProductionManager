@@ -289,6 +289,10 @@ User must create an user account on installation. Without this, user can not cre
 
 ```
 composer --with-all-dependencies require setasign/fpdi-fpdf
+composer require planetbiru/magic-object
+composer require james-heinrich/getid3
+composer require cboden/ratchet
+composer require php-ffmpeg/php-ffmpeg
 ```
 
 # Need Support
