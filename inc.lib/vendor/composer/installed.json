@@ -569,18 +569,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "98547203a568c182d6de9d1f6a7b2c685d7444de"
+                "reference": "90b206ccb94d1a3809c02dab82c6e2bcdb69cab2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/98547203a568c182d6de9d1f6a7b2c685d7444de",
-                "reference": "98547203a568c182d6de9d1f6a7b2c685d7444de",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/90b206ccb94d1a3809c02dab82c6e2bcdb69cab2",
+                "reference": "90b206ccb94d1a3809c02dab82c6e2bcdb69cab2",
                 "shasum": ""
             },
             "require": {
                 "symfony/yaml": "^3.4"
             },
-            "time": "2024-03-09T23:55:29+00:00",
+            "time": "2024-03-10T01:01:08+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",
