@@ -16,18 +16,30 @@ Not all DAWs support the MusicXML format but many DAWs support the MIDI format.
 6. Genre Management
 7. Song Attachment
 8. Comment
-9. Lyric Editor
-10. MIDI Editor
-11. MIDI Player
-12. MusicXML Player
-13. Karaoke
-14. Sheet Music
+9. Sheet Music
+10. Lyric Editor
+11. MIDI Editor
+12. MIDI Player
+13. MusicXML Player
+14. Karaoke
 15. Recording Teleprompter
 16. Piano Display
 17. Download Files
 18. User Management
 19. User Role
 20. Article
+
+* Sheet Music
+* 
+
+
+* Sheet Music
+* 
+
+
+* Sheet Music
+* 
+
 
 ## Colaboration
 
