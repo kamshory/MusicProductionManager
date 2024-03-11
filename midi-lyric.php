@@ -74,7 +74,7 @@ require_once __DIR__ . "/inc/menu-song.php";
 											for($i = 1; $i <= 16; $i++)
 											{
 											?>	
-											<option value="<?php echo $i;?>" <?php echo $song->getMidiVocalChannel() == $i ? ' selected' : '';?>><?php echo $i;?></option>
+											<option value="<?php echo $i;?>" <?php echo $song->createSelectedMidiVocalChannel($i);?>><?php echo $i;?></option>
 											<?php
 											}
 											?>	
