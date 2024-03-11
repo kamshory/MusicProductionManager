@@ -10,6 +10,7 @@ body {
   box-sizing: border-box;
   position: relative;
   min-height: calc(100vh - 75px);
+  padding: 100px 0px 0px 0px;
 }
 
 @media screen and (min-width: 1200px) {
