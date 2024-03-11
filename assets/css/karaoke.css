@@ -1,11 +1,11 @@
 .teleprompter {
   position: relative;
-  width: calc(100% + 40px);
-  height: calc(100vh - 270px);
+  width: calc(100% + 48px);
+  height: calc(100vh - 400px);
   min-height: 200px;
   background-color: white;
   overflow: hidden;
-  margin: 30px -20px;
+  margin: 30px -24px;
   white-space: nowrap;
   text-transform: uppercase;
 }

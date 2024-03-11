@@ -5,7 +5,7 @@ body{
     font-size: 20px;
   }
   .main-page{
-    padding:100px 20px 0px 20px;
+    padding:100px 0px 0px 0px;
     box-sizing: border-box;
     position: relative;
     min-height: calc(100vh - 75px);
@@ -100,4 +100,21 @@ body{
 }
 .filter-group{
     display: inline-block;
+}
+
+.custom-card-container{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.custom-card-container .card{
+  background-color: transparent;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.app-header{
+  left: -20px;
+  box-sizing: border-box;
+  width: calc(100% + 40px);
 }

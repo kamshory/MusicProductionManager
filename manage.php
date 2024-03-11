@@ -379,7 +379,7 @@ foreach ($result as $song) {
     $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
 
-    <div class="col-sm-6 col-xl-3">
+    <div class="custom-card-container col-sm-6 col-xl-3">
       <div class="card overflow-hidden rounded-2">
         <div class="card-body pt-3 p-4">
 
