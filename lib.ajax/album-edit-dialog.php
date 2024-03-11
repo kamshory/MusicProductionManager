@@ -41,11 +41,11 @@ $album->select();
                             </tr>
                             <tr>
                                 <td>Draft</td>
-                                <td><label></label><input type="checkbox" name="as_draft" value="1" <?php echo $album->getAsDraft() == 1 ?' checked':'';?>> Draft</label></td>
+                                <td><label></label><input type="checkbox" name="as_draft" value="1" <?php echo $song->createCheckedAsDraft("1");?>> Draft</label></td>
                             </tr>
                             <tr>
                                 <td>Active</td>
-                                <td><label></label><input type="checkbox" name="active" value="1" <?php echo $album->getActive() == 1 ?' checked':'';?>> Active</label></td>
+                                <td><label></label><input type="checkbox" name="active" value="1" <?php echo $song->createCheckedActive("1");?>> Active</label></td>
                             </tr>
                         </tbody>
                         <input type="hidden" name="album_id" value="<?php echo $album->getAlbumId();?>">

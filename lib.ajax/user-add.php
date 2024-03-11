@@ -3,11 +3,9 @@
 use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
-use MagicObject\Request\PicoRequest;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserDto;
 use MusicProductionManager\Data\Entity\EntityUser;
-use MusicProductionManager\Data\Entity\User;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";

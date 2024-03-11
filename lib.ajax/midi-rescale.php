@@ -55,8 +55,6 @@ else
 $numerator = fixValue($numerator);
 $denominator = fixValue($denominator);
 
-
-
 if ($songId != null) {
 
 	$song = new Song(null, $database);

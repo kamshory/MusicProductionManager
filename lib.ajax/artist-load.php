@@ -2,6 +2,7 @@
 
 use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
+use MagicObject\Request\InputGet;
 use MagicObject\Response\Generated\JSONSelectOption;
 use MagicObject\Response\PicoResponse;
 

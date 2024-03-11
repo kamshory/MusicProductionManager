@@ -101,7 +101,7 @@ try
     else if(SongFileUtil::isImageFile($path))
     {
         // save image with original dimension
-        $jpegPath = SongFileUtil::saveImageFile($id, $targetDir, file_get_contents($path));
+        $jpegPath = SongFileUtil::saveImageFile($id, $targetDir, imagecreatefromstring(file_get_contents($path)));
         $song->setFilePathJpeg($jpegPath);
         $song->setLastUploadTimeJpeg($now);
 
