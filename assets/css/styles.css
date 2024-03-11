@@ -19726,6 +19726,7 @@ fieldset:disabled .btn {
     width: 270px;
     background-color: #fff;
     position: absolute;
+    left: 0;
     -webkit-transition: 0.2s ease-in;
     transition: 0.2s ease-in;
     height: 100%;
