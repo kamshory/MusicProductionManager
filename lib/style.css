@@ -101,20 +101,21 @@ body{
 .filter-group{
     display: inline-block;
 }
+@media screen and (max-width: 1199px) {
+  .custom-card-container{
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-.custom-card-container{
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.custom-card-container .card{
-  background-color: transparent;
-  box-shadow: none;
-  padding-left: 0;
-  padding-right: 0;
-}
-.app-header{
-  left: -20px;
-  box-sizing: border-box;
-  width: calc(100% + 40px);
+  .custom-card-container .card{
+    background-color: transparent;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .app-header{
+    left: -20px;
+    box-sizing: border-box;
+    width: calc(100% + 40px);
+  }
 }
