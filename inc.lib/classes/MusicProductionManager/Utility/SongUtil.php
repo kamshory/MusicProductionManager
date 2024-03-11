@@ -38,9 +38,15 @@ class SongUtil
             $songRating->setTimeEdit($time);
             $songRating->insert();
         }
+        
         catch(Exception $e)
         {
-            // do nothing
+            $songRating->setSongId($songId);
+            $songRating->setUserId($userId);
+            $songRating->setRating($rating);
+            $songRating->setTimeCreate($time);
+            $songRating->setTimeEdit($time);
+            $songRating->insert();
         }
     }
     /**
@@ -52,21 +58,28 @@ class SongUtil
      */
     public static function getRating($database, $songId)
     {
-        $ratings = new Rating(null, $database);
-        $ratings->findBySongId($songId);
-        $result = $ratings->getResult();
-        $sum = 0;
-        foreach($result as $row)
+        $rating = new Rating(null, $database);
+        try
         {
-            $sum += $row->getRating();
+            $ratings = $rating->findBySongId($songId);
+            $result = $ratings->getResult();
+            $sum = 0;
+            foreach($result as $row)
+            {
+                $sum += $row->getRating();
+            }
+            if(empty($result))
+            {
+                $allRating = 0.0;
+            }
+            else
+            {
+                $allRating = $sum / count($result);
+            }
         }
-        if(empty($result))
+        catch(Exception $e)
         {
-            $allRating = 0.0;
-        }
-        else
-        {
-            $allRating = $sum / count($result);
+            $allRating = 0;
         }
         return $allRating;
     }
