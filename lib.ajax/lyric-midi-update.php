@@ -4,6 +4,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use Midi\MidiLyric;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
@@ -26,11 +27,15 @@ if ($lyric != null && $songId != null) {
 	$midi->importMid($midiPath);
 	$midi->addLyric(json_decode($midiLyric));
 	$midi->saveMidFile($midiPath, 0777);
+	
+	
 
 	if(!isset($inputGet))
     {
-      	$inputGet = new InputGet();
+		$inputGet = new InputGet();
     }
+	$now = date("Y-m-d H:i:s");
+	SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, $_SERVER['REMOTE_ADDR']);
 	UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI lyric ".$song->getSongId(), $inputGet, $inputPost);
 
 	echo json_encode(array('ok' => true));

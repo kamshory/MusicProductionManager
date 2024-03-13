@@ -11,6 +11,7 @@ use MusicProductionManager\File\FileUpload;
 use MusicProductionManager\Utility\Id3Tag;
 use MusicProductionManager\Utility\ImageUtil;
 use MusicProductionManager\Utility\SongFileUtil;
+use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
@@ -52,7 +53,7 @@ try
     }
     
     $fileUpload->uploadTemporaryFile($_FILES, 'file', $tempDir, $id, mt_rand(100000, 999999));  
-      
+
     $path = $fileUpload->getFilePath();
     
     $header = SongFileUtil::getContent($path, 96);
@@ -148,6 +149,7 @@ try
     {
         $inputGet = new InputGet();
     }
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, $_SERVER['REMOTE_ADDR']);
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Upload song ".$song->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();

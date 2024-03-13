@@ -4,6 +4,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use Midi\MidiInstrument;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
@@ -55,6 +56,8 @@ if ($songId != null) {
     {
         $inputGet = new InputGet();
     }
+    $now = date("Y-m-d H:i:s");
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, $_SERVER['REMOTE_ADDR']);
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI instrument ".$song->getSongId(), $inputGet, $inputPost);
     
     if(isAjax())

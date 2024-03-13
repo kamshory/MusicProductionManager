@@ -106,4 +106,9 @@ class SongUtil
         }
         return $songTitle;
     }
+    
+    public static function updateSong($database, $songId, $userId, $action, $time, $ip)
+    {
+        
+    }
 }

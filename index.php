@@ -26,6 +26,9 @@ $inputGet = new InputGet();
 <script src="assets/libs/simplebar/dist/simplebar.js"></script>
 <script src="assets/js/dashboard.js"></script>
 
+<?php
+$query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
+?>
 <!--  Row 1 -->
 <div class="row">
   <div class="col-lg-8 d-flex align-items-strech">
@@ -33,31 +36,183 @@ $inputGet = new InputGet();
       <div class="card-body">
         <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
           <div class="mb-3 mb-sm-0">
-            <h5 class="card-title fw-semibold">Sales Overview</h5>
+            <h5 class="card-title fw-semibold">Music Production</h5>
           </div>
           <div>
             <select class="form-select">
-              <option value="1">March 2023</option>
-              <option value="2">April 2023</option>
-              <option value="3">May 2023</option>
-              <option value="4">June 2023</option>
+              <option value="1">2024</option>
+              <option value="2">2022</option>
+              <option value="3">2022</option>
             </select>
           </div>
         </div>
-        <div id="chart"></div>
+        <div id="production-chart"></div>
       </div>
     </div>
   </div>
+
+  <?php
+  // current year
+  $data1 = array();
+  $data2 = array();
+  $data3 = array();
+  $sql = $query->newQuery()
+    ->select("song.song_id, song.time_create, song.time_edit")
+    ->from("song")
+    ->where("song.time_create like ? or song.time_create like ? or song.time_edit like ? or song.time_edit like ? ", 
+    (date("Y") - 1) . "%", date("Y") . "%", (date("Y") - 1) . "%", date("Y") . "%")
+    ->orderBy("time_create asc");
+  try {
+    $rows = $database->fetchAll($sql, PDO::FETCH_ASSOC);
+    foreach ($rows as $row) {
+      $month1 = date('y/m', strtotime($row['time_create']));
+      if (!isset($data1[$month1])) {
+        $data1[$month1] = 0;
+      }     
+      $data1[$month1]++;
+    }
+    
+    foreach ($rows as $row) {
+      $month2 = date('y/m', strtotime($row['time_edit']));
+      if (!isset($data2[$month2])) {
+        $data2[$month2] = 0;
+      }
+
+      $data2[$month2]++;
+      
+    }
+    $data3 = array_merge($data1, $data2);
+    $data3 = array_unique($data3);
+  
+    ksort($data1);
+    ksort($data2);
+  } catch (Exception $e) {
+    // do nothing
+  }
+  
+  ?>
+
+  <script>
+    $(document).ready(function() {
+      var chart = {
+
+        chart: {
+          type: "bar",
+          height: 345,
+          offsetX: -15,
+          toolbar: {
+            show: true
+          },
+          foreColor: "#adb0bb",
+          fontFamily: 'inherit',
+          sparkline: {
+            enabled: false
+          },
+        },
+
+
+        colors: ["#5D87FF", "#49BEFF"],
+
+
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: "35%",
+            borderRadius: [6],
+            borderRadiusApplication: 'end',
+            borderRadiusWhenStacked: 'all'
+          },
+        },
+        markers: {
+          size: 0
+        },
+
+        dataLabels: {
+          enabled: false,
+        },
+
+
+        legend: {
+          show: false,
+        },
+
+
+        grid: {
+          borderColor: "rgba(0,0,0,0.1)",
+          strokeDashArray: 3,
+          xaxis: {
+            lines: {
+              show: false,
+            },
+          },
+        },
+
+        series: [{
+          name: "Uploaded song:",
+          data: <?php echo json_encode(array_values($data1)); ?>
+        },
+        {
+          name: "Updated song:",
+          data: <?php echo json_encode(array_values($data2)); ?>
+        }],
+
+        xaxis: {
+          type: "category",
+          categories: <?php echo json_encode(array_keys($data3)); ?>,
+          labels: {
+            style: {
+              cssClass: "grey--text lighten-2--text fill-color"
+            },
+          },
+        },
+
+
+        yaxis: {
+          show: true,
+          min: 0,
+          tickAmount: 4,
+          labels: {
+            style: {
+              cssClass: "grey--text lighten-2--text fill-color",
+            },
+          },
+        },
+        stroke: {
+          show: true,
+          width: 3,
+          lineCap: "butt",
+          colors: ["transparent"],
+        },
+
+
+        tooltip: {
+          theme: "light"
+        },
+
+        responsive: [{
+          breakpoint: 600,
+          options: {
+            plotOptions: {
+              bar: {
+                borderRadius: 3,
+              }
+            },
+          }
+        }]
+
+
+      };
+
+      var chart = new ApexCharts(document.querySelector("#production-chart"), chart);
+      chart.render();
+    });
+  </script>
+
+
   <div class="col-lg-4">
     <div class="row">
       <div class="col-lg-12">
         <!-- Yearly Breakup -->
-
-        <?php
-
-        $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
-
-        ?>
 
         <div class="card overflow-hidden">
           <div class="card-body p-4">
@@ -97,29 +252,88 @@ $inputGet = new InputGet();
         <div class="card">
           <div class="card-body">
             <div class="row alig n-items-start">
-              <div class="col-8">
-                <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
-                <h4 class="fw-semibold mb-3">$6,820</h4>
-                <div class="d-flex align-items-center pb-1">
-                  <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
-                    <i class="ti ti-arrow-down-right text-danger"></i>
-                  </span>
-                  <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                  <p class="fs-3 mb-0">last year</p>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="d-flex justify-content-end">
-                  <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
-                    <i class="ti ti-currency-dollar fs-6"></i>
-                  </div>
-                </div>
+              <div class="col-12">
+                <h5 class="card-title mb-9 fw-semibold"> Monthly Activity </h5>
               </div>
             </div>
           </div>
-          <div id="earning"></div>
+          <div id="mothly-activity"></div>
         </div>
       </div>
+
+      
+
+      <script>
+        
+        function TimeOpt() {
+          this.ts = new Date();
+          this.dateFormatter = function(ts)
+          {
+            this.ts = ts;
+            return this;
+          }
+          this.format = function(fmt)
+          {
+            let yy = this.ts.getYear();
+            let mm = this.ts.getMonth()+1;
+            if(mm < 10)
+            {
+              mm = '0'+mm;
+            }
+            return yy+'/'+mm
+          }
+        }
+        let opts = new TimeOpt();
+        
+        $(document).ready(function() {
+          var monthlyActivity = {
+            chart: {
+              id: "sparkline3",
+              type: "area",
+              height: 60,
+              sparkline: {
+                enabled: true,
+              },
+              group: "sparklines",
+              fontFamily: "Plus Jakarta Sans', sans-serif",
+              foreColor: "#adb0bb",
+            },
+            series: [{
+              name: "Updated Song",
+              color: "#49BEFF",
+              data: <?php echo json_encode(array_values($data2)); ?>,
+            }, ],
+            stroke: {
+              curve: "smooth",
+              width: 2,
+            },
+            fill: {
+              colors: ["#f3feff"],
+              type: "solid",
+              opacity: 0.05,
+            },
+            
+
+
+            markers: {
+              size: 0,
+            },
+            tooltip: {
+              theme: "dark",
+              fixed: {
+                enabled: true,
+                position: "right",
+              },
+              x: {
+                show: false,
+              },
+            },
+          };
+          new ApexCharts(document.querySelector("#mothly-activity"), monthlyActivity).render();
+        });
+      </script>
+
+
     </div>
   </div>
 </div>
@@ -259,7 +473,7 @@ $inputGet = new InputGet();
                       <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getNumberOfSong(); ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-normal mb-0 fs-4"><?php echo (new Dms())->ddToDms($album->getDuration()/3600)->printDms(true, true); ?></h6>
+                      <h6 class="fw-normal mb-0 fs-4"><?php echo (new Dms())->ddToDms($album->getDuration() / 3600)->printDms(true, true); ?></h6>
                     </td>
                     <td class="border-bottom-0">
                       <p class="mb-0 fw-normal"><?php echo !$album->hasValueReleaseDate() || $album->emptyReleaseDate() || $album->equalsReleaseDate('0000-00-00') ? "-" : date('j F Y', strtotime($album->getReleaseDate())); ?></p>
@@ -296,26 +510,25 @@ $inputGet = new InputGet();
     });
 
   });
-  
-  function setRateEvent(e, data)
-  {
+
+  function setRateEvent(e, data) {
     let songId = $(e.currentTarget).attr('data-song-id');
-      $.ajax({
-        type: 'POST',
-        url: 'lib.ajax/song-set-rating.php',
-        dataType: 'json',
-        data: {
-          song_id: songId,
-          rating: data.rating
-        },
-        success: function(response) {
-          updateRate(response);
-        }
-      });
+    $.ajax({
+      type: 'POST',
+      url: 'lib.ajax/song-set-rating.php',
+      dataType: 'json',
+      data: {
+        song_id: songId,
+        rating: data.rating
+      },
+      success: function(response) {
+        updateRate(response);
+      }
+    });
   }
-  function updateRate(response)
-  {
-    let selector = '.song-rating[data-song-id="'+response.song_id+'"]';
+
+  function updateRate(response) {
+    let selector = '.song-rating[data-song-id="' + response.song_id + '"]';
     let newRate = $('<div />');
     $(selector).replaceWith(newRate);
     newRate.addClass("song-rating");
@@ -323,7 +536,7 @@ $inputGet = new InputGet();
     newRate.attr("data-rateyo-half-star", "true");
     newRate.attr('data-song-id', response.song_id);
     newRate.attr('data-rate', response.rating);
-  
+
     $(selector).rateYo({
       rating: parseFloat(response.rating),
       starWidth: "16px"
@@ -358,7 +571,7 @@ $inputGet = new InputGet();
     'subtitleComplete' => 'subtitleComplete',
     'vocal' => 'vocal',
     'active' => 'active',
-    'producerId'=>'producerId'
+    'producerId' => 'producerId'
   );
   $defaultOrderBy = 'songId';
   $defaultOrderType = 'desc';
@@ -384,19 +597,19 @@ $inputGet = new InputGet();
     $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
 
-<div class="custom-card-container col-sm-6 col-xl-3">
+    <div class="custom-card-container col-sm-6 col-xl-3">
       <div class="card overflow-hidden rounded-2">
         <div class="card-body pt-3 p-4">
 
           <div class="d-flex align-items-center justify-content-between">
-          <h6 class="fw-semibold fs-4 col-4"><?php echo $song->getName(); ?></h6>
+            <h6 class="fw-semibold fs-4 col-4"><?php echo $song->getName(); ?></h6>
             <div class="col-8 justify-content-end text-end">
               <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
               <a href="javascript;" onclick="uploadFile('<?php echo $song->getSongId(); ?>'); return false" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
-              <?php echo $buttonMp3;?>
-              <?php echo $buttonMidi;?>
-              <?php echo $buttonXml;?>
-              <?php echo $buttonPdf;?>
+              <?php echo $buttonMp3; ?>
+              <?php echo $buttonMidi; ?>
+              <?php echo $buttonXml; ?>
+              <?php echo $buttonPdf; ?>
             </div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
@@ -429,7 +642,7 @@ $inputGet = new InputGet();
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Track</div>
-            <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->hasValueAlbum() ? "/".$song->getAlbum()->getNumberOfSong() : ''; ?></div>
+            <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->hasValueAlbum() ? "/" . $song->getAlbum()->getNumberOfSong() : ''; ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="col-4">Duration</div>
