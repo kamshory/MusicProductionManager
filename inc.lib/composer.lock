@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aba99a3a3bfefcd18e30bf2f2bd45275",
+    "content-hash": "e779721ed0d66de601c90fb1101dfe4c",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -550,12 +550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "90b206ccb94d1a3809c02dab82c6e2bcdb69cab2"
+                "reference": "30a743b0ffb2ded035f38a2507a45ed53afb5e11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/90b206ccb94d1a3809c02dab82c6e2bcdb69cab2",
-                "reference": "90b206ccb94d1a3809c02dab82c6e2bcdb69cab2",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/30a743b0ffb2ded035f38a2507a45ed53afb5e11",
+                "reference": "30a743b0ffb2ded035f38a2507a45ed53afb5e11",
                 "shasum": ""
             },
             "require": {
@@ -582,7 +582,7 @@
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
                 "source": "https://github.com/Planetbiru/MagicObject/tree/main"
             },
-            "time": "2024-03-10T01:01:08+00:00"
+            "time": "2024-03-13T04:01:34+00:00"
         },
         {
             "name": "psr/cache",

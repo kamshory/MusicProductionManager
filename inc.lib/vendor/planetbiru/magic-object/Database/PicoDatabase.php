@@ -42,20 +42,23 @@ class PicoDatabase
 	 */
 	private $databaseType = "";
 
-	private $lastQuery = "";
-
 	private $callbackExecuteQuery = null;
+	private $callbackDebugQuery = null;
 
 	/**
 	 * Constructor
 	 * @param PicoDatabaseCredentials $databaseCredentials
 	 */
-	public function __construct($databaseCredentials, $callbackExecuteQuery = null) //NOSONAR
+	public function __construct($databaseCredentials, $callbackExecuteQuery = null, $callbackDebugQuery) //NOSONAR
 	{
 		$this->databaseCredentials = $databaseCredentials;
 		if($callbackExecuteQuery != null && is_callable($callbackExecuteQuery))
 		{
 			$this->callbackExecuteQuery = $callbackExecuteQuery;
+		}
+		if($callbackDebugQuery != null && is_callable($callbackDebugQuery))
+		{
+			$this->callbackDebugQuery = $callbackDebugQuery;
 		}
 	}
 
@@ -117,7 +120,7 @@ class PicoDatabase
 			throw new NullPointerException(PicoConstants::DATABASE_NONECTION_IS_NULL);
 		}
 		$result = array();
-		$this->lastQuery = $sql;
+		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
 		try 
 		{
@@ -150,7 +153,7 @@ class PicoDatabase
 		{
 			throw new NullPointerException(PicoConstants::DATABASE_NONECTION_IS_NULL);
 		}
-		$this->lastQuery = $sql;
+		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
 		try 
 		{
@@ -178,7 +181,7 @@ class PicoDatabase
 			throw new NullPointerException(PicoConstants::DATABASE_NONECTION_IS_NULL);
 		}
 		$result = array();
-		$this->lastQuery = $sql;
+		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
 		try 
 		{
@@ -209,7 +212,7 @@ class PicoDatabase
 		{
 			throw new NullPointerException(PicoConstants::DATABASE_NONECTION_IS_NULL);
 		}
-		$this->lastQuery = $sql;
+		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
 		try 
 		{
@@ -232,7 +235,7 @@ class PicoDatabase
 		{
 			throw new NullPointerException(PicoConstants::DATABASE_NONECTION_IS_NULL);
 		}
-		$this->lastQuery = $sql;
+		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
 		try 
 		{
@@ -305,6 +308,20 @@ class PicoDatabase
 		if($this->callbackExecuteQuery != null && is_callable($this->callbackExecuteQuery))
 		{
 			call_user_func($this->callbackExecuteQuery, $query, $type);
+		}
+	}
+	
+	/**
+	 * Execute debug query function
+	 *
+	 * @param string $query SQL to be executed
+	 * @return void
+	 */
+	private function executeDebug($query)
+	{
+		if($this->callbackDebugQuery != null && is_callable($this->callbackDebugQuery))
+		{
+			call_user_func($this->callbackDebugQuery, $query);
 		}
 	}
 
@@ -400,13 +417,5 @@ class PicoDatabase
 	public function getDatabaseType()
 	{
 		return $this->databaseType;
-	}
-
-	/**
-	 * Get the value of lastQuery
-	 */ 
-	public function getLastQuery()
-	{
-		return $this->lastQuery;
 	}
 }

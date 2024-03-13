@@ -9,10 +9,10 @@
         "php-ffmpeg/php-ffmpeg": "^0.19.0",
         "cboden/ratchet": "^0.4.4",
         "james-heinrich/getid3": "^1.9",
-        "planetbiru/magic-object": "dev-main",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.6",
-        "setasign/fpdi-fpdf": "^2.3"
+        "setasign/fpdi-fpdf": "^2.3",
+        "planetbiru/magic-object": "dev-main"
     },
     "config": {
         "platform": {
