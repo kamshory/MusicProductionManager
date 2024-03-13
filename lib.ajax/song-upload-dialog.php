@@ -35,6 +35,12 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
+                                        <td>Name</td>
+                                        <td>
+                                            <input type="text" class="form-control" name="name" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>Title</td>
                                         <td>
                                             <input type="text" class="form-control" name="title">

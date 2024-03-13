@@ -82,8 +82,8 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
       <tr>
         <td>Gender</td>
         <td><select class="form-control" name="gender" id="gender">
-        <option value="M"<?php echo $user->getGender() == 'M' ? ' selected':'';?>>Man</option>
-        <option value="W"<?php echo $user->getGender() == 'W' ? ' selected':'';?>>Woman</option>
+        <option value="M"<?php echo $user->createSelectedGender('M');?>>Man</option>
+        <option value="W"<?php echo $user->createSelectedGender('W');?>>Woman</option>
         </select></td>
       </tr>
       <tr>

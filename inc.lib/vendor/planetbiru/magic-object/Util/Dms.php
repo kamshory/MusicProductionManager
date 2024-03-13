@@ -40,9 +40,18 @@ class Dms
     public function ddToDms($dec)
     {
         // Converts decimal format to DMS ( Degrees / minutes / seconds ) 
-        $vars = explode(".",$dec);
-        $deg = $vars[0];
-        $tempma = "0.".$vars[1];
+        if(stripos($dec, ".") !== false)
+        {
+            $vars = explode(".",$dec);
+            $deg = $vars[0];
+
+            $tempma = "0.".$vars[1];
+        }
+        else
+        {
+            $tempma = 0;
+            $deg = $dec;
+        }
 
         $tempma = $tempma * 3600;
         $min = floor($tempma / 60);
@@ -53,7 +62,7 @@ class Dms
         $this->sec = $sec;
         $this->dd = $dec;
         return $this;
-    }    
+    }   
     
     /**
      * Print Dms

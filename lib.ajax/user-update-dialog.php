@@ -52,7 +52,7 @@ try {
                                 </tr>
                                 <tr>
                                     <td>Admin</td>
-                                    <td><label></label><input type="checkbox" name="admin" value="1" <?php echo $user->getAdmin() == 1 ? ' checked' : ''; ?>> Admin</label></td>
+                                    <td><label></label><input type="checkbox" name="admin" value="1" <?php echo $user->createCheckeAdmin("1");?>> Admin</label></td>
                                 </tr>
                                 <tr>
                                     <td>Associated Artist</td>
@@ -65,11 +65,11 @@ try {
                                 </tr>
                                 <tr>
                                     <td>Blocked</td>
-                                    <td><label></label><input type="checkbox" name="blocked" value="1" <?php echo $user->getBlocked() == 1 ? ' checked' : ''; ?>> Blocked</label></td>
+                                    <td><label></label><input type="checkbox" name="blocked" value="1" <?php echo $user->createCheckeBlocked("1");?>> Blocked</label></td>
                                 </tr>
                                 <tr>
                                     <td>Active</td>
-                                    <td><label></label><input type="checkbox" name="active" value="1" <?php echo $user->getActive() == 1 ? ' checked' : ''; ?>> Active</label></td>
+                                    <td><label></label><input type="checkbox" name="active" value="1" <?php echo $user->createCheckedActive("1");?>> Active</label></td>
                                 </tr>
                             </tbody>
                         </table>

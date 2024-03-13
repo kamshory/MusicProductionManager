@@ -727,7 +727,7 @@ class PicoDatabasePersistent // NOSONAR
             ->into($info->tableName)
             ->fields($this->createStatementFields($fixValues))
             ->values($this->createStatementValues($fixValues));
-        $stmt = $this->database->executeQuery($sqlQuery);
+        $stmt = $this->database->executeInsert($sqlQuery);
         if(!$this->generatedValue)
         {
             $this->addGeneratedValue($info, false);
@@ -1947,7 +1947,7 @@ class PicoDatabasePersistent // NOSONAR
             ->update($info->tableName)
             ->set($set)
             ->where($where);
-        return $this->database->executeQuery($sqlQuery);
+        return $this->database->executeUpdate($sqlQuery);
     }
 
     /**
@@ -1994,6 +1994,6 @@ class PicoDatabasePersistent // NOSONAR
             ->delete()
             ->from($info->tableName)
             ->where($where);
-        return $this->database->executeQuery($sqlQuery);
+        return $this->database->executeDelete($sqlQuery);
     }
 }

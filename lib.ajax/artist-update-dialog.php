@@ -4,8 +4,6 @@ use MagicObject\Exceptions\NoRecordFoundException;
 use MagicObject\Request\InputGet;
 use MusicProductionManager\Data\Entity\Artist;
 
-
-
 require_once dirname(__DIR__)."/inc/auth.php";
 $inputGet = new InputGet();
 $artist = new Artist(null, $database);
@@ -48,7 +46,7 @@ $artist = new Artist(null, $database);
                                 </tr>
                                 <tr>
                                     <td>Active</td>
-                                    <td><label></label><input type="checkbox" name="active" value="1" <?php echo $artist->getActive() == 1 ?' checked':'';?>> Active</label></td>
+                                    <td><label></label><input type="checkbox" name="active" value="1" <?php echo $artist->createCheckedActive("1");?>> Active</label></td>
                                 </tr>
                             </tbody>
                             <input type="hidden" name="artist_id" value="<?php echo $artist->getArtistId();?>">

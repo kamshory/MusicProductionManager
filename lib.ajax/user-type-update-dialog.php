@@ -3,7 +3,6 @@
 use MagicObject\Request\InputGet;
 use MusicProductionManager\Data\Entity\UserType;
 
-
 require_once dirname(__DIR__) . "/inc/auth.php";
 
 $inputGet = new InputGet();
@@ -32,11 +31,11 @@ try {
                                 </tr>
                                 <tr>
                                     <td>Admin</td>
-                                    <td><label></label><input type="checkbox" name="admin" value="1" <?php echo $userType->getAdmin() == 1 ? ' checked' : ''; ?>> Admin</label></td>
+                                    <td><label></label><input type="checkbox" name="admin" value="1" <?php echo $user->createCheckeAdmin("1");?>> Admin</label></td>
                                 </tr>
                                 <tr>
                                     <td>Active</td>
-                                    <td><label></label><input type="checkbox" name="active" value="1" <?php echo $userType->getActive() == 1 ? ' checked' : ''; ?>> Active</label></td>
+                                    <td><label></label><input type="checkbox" name="active" value="1" <?php echo $user->createCheckedActive("1");?>> Active</label></td>
                                 </tr>
                             </tbody>
                             <input type="hidden" name="user_type_id" value="<?php echo $userType->getUserTypeId(); ?>">

@@ -77,7 +77,7 @@ if($inputPost->getUsername() != null && $inputPost->getPassword() != null)
             <div class="card mb-0">
               <div class="card-body">
                 <a href="./" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="assets/images/logos/dark-logo.png" width="220" alt="">
+                  <img src="assets/images/logos/dark-logo.png" width="205" alt="">
                 </a>
                 <form action="login.php" method="post">
                   <div class="mb-3">

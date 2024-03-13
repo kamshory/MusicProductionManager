@@ -15,9 +15,9 @@ function importLyricMidi($original)
 	$str = str_replace("\r\n\r\n", "\r\n", $str);
 	$str = str_replace("\r\n\r\n", "\r\n", $str);
 	$str = trim($str);
-	$str = str_replace("-", "_", $str);
 	$str = str_replace("\r\n", "\\\r\n", $str);
 	$str = str_replace(" ", "_ ", $str);
+	$str = str_replace("-", "_ ", $str);
 	return $str;
 }
 $inputGet = new InputGet();
@@ -26,15 +26,15 @@ if (isset($song)) {
 	$midi = new MidiLyric();
 	if(file_exists($song->getFilePathMidi()))
 	{
-	$midi->importMid($song->getFilePathMidi());
+		$midi->importMid($song->getFilePathMidi());
 
-	$list = $midi->getLyric();
+		$list = $midi->getLyric();
 
-	$lyricMidiRaw = $song->getLyricMidiRaw();
-	if(empty($lyricMidiRaw))
-	{
-		$lyricMidiRaw = importLyricMidi($song->getLyric());
-	}
+		$lyricMidiRaw = $song->getLyricMidiRaw();
+		if(empty($lyricMidiRaw))
+		{
+			$lyricMidiRaw = importLyricMidi($song->getSubtitle());
+		}
 ?>
 
 <script>
@@ -74,7 +74,7 @@ require_once __DIR__ . "/inc/menu-song.php";
 											for($i = 1; $i <= 16; $i++)
 											{
 											?>	
-											<option value="<?php echo $i;?>" <?php echo $song->getMidiVocalChannel() == $i ? ' selected' : '';?>><?php echo $i;?></option>
+											<option value="<?php echo $i;?>" <?php echo $song->createSelectedMidiVocalChannel($i);?>><?php echo $i;?></option>
 											<?php
 											}
 											?>	

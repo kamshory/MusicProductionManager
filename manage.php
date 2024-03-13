@@ -379,7 +379,7 @@ foreach ($result as $song) {
     $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
 
-    <div class="col-sm-6 col-xl-3">
+    <div class="custom-card-container col-sm-6 col-xl-3">
       <div class="card overflow-hidden rounded-2">
         <div class="card-body pt-3 p-4">
 
@@ -436,7 +436,7 @@ foreach ($result as $song) {
               <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-music"></span></a> &nbsp;
               <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-microphone"></span></a> &nbsp;
               <a href="comment.php?song_id=<?php echo $song->getSongId(); ?>&action=edit"><span class="ti ti-message"></span></a> &nbsp;
-              <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating(); ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
+              <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() * 1; ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
             </div>
           </div>
         </div>

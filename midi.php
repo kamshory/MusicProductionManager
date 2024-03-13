@@ -11,6 +11,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Request\PicoRequest;
 use MagicObject\Response\Generated\PicoSelectOption;
+use MagicObject\Util\Dms;
 use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Artist;
@@ -385,15 +386,13 @@ if(!empty($result))
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
-        <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="album_id">Album</th>
+        <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="track_number">Track</th>
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="duration">Duration</th>
-        <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
-        <th scope="col" class="col-sort" data-name="subtitle_complete">Lyric</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
     </thead>
@@ -420,15 +419,13 @@ if(!empty($result))
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $song->getName();?></a></td>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
-        <td class="text-data text-data-rating"><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td class="text-data text-data-album-name"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
+        <td class="text-data text-data-rating"><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
         <td class="text-data text-data-track-number"><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
         <td class="text-data text-data-genre-name"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
         <td class="text-data text-data-artist-vocal-name"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         <td class="text-data text-data-artist-composer-name"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
-        <td class="text-data text-data-duration"><?php echo $song->getDuration();?></td>
-        <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
-        <td class="text-data text-data-lyric-complete"><?php echo $song->isLyricComplete() ? 'Yes' : 'No';?></td>
+        <td class="text-data text-data-duration"><?php echo (new Dms())->ddToDms($song->getDuration()/3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-active"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
         </tr>
         <?php

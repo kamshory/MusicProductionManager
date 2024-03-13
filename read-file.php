@@ -23,7 +23,7 @@ if ($inputGet->getSongId() != null) {
     }
     exit();
 } else if ($inputGet->getAlbumId() != null) {
-    $tempDir = FileUtil::prepareTempDir();
+    $tempDir = FileUtil::prepareTempDir(__DIR__);
     try {
         FileUtil::compressOutput(false);
         $songs = new EntitySong(null, $database);

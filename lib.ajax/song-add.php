@@ -52,7 +52,7 @@ try
     try
     {
         $album = new Album(null, $database);
-        $album->findOneByAlbumId($inputPost->getAlbumId);
+        $album->findOneByAlbumId($inputPost->getAlbumId());
         $producerId = $album->getProducerId();
     }
     catch(Exception $e)

@@ -28,7 +28,7 @@ $genre->findOneByGenreId($inputGet->getGenreId());
                             </tr>
                             <tr>
                                 <td>Active</td>
-                                <td><label></label><input type="checkbox" name="active" value="1" <?php echo $genre->getActive() == 1 ?' checked':'';?>> Active</label></td>
+                                <td><label></label><input type="checkbox" name="active" value="1" <?php echo $genre->createCheckedActive("1");?>> Active</label></td>
                             </tr>
                         </tbody>
                         <input type="hidden" name="genre_id" value="<?php echo $genre->getGenreId();?>">

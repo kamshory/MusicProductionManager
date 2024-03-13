@@ -107,11 +107,6 @@ require_once "inc/header.php";
 <script src="assets/js/piano.js"></script>
 
 <div class="control">
-    <div class="box1">
-        <div class="box2">
-            <div class="box3"></div>
-            <div class="box4">
-                
             <?php
             
             if($inputGet->getSongId() != null)
@@ -183,15 +178,7 @@ require_once "inc/header.php";
             ?>
             
             
-            
-            </div>
-            
-        </div>
-    </div>
 </div>
-<style>
-    
-</style>
 <div class="piano-container">
     <div class="piano"></div>
 </div>

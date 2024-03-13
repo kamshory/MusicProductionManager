@@ -10,6 +10,10 @@ use MagicObject\Exceptions\NullPointerException;
 
 class PicoDatabase
 {
+	const QUERY_INSERT = "insert";
+	const QUERY_UPDATE = "update";
+	const QUERY_DELETE = "delete";
+	const QUERY_TRANSACTION = "transaction";
 
 	/**
 	 * Database credential
@@ -40,13 +44,19 @@ class PicoDatabase
 
 	private $lastQuery = "";
 
+	private $callbackExecuteQuery = null;
+
 	/**
 	 * Constructor
 	 * @param PicoDatabaseCredentials $databaseCredentials
 	 */
-	public function __construct($databaseCredentials) //NOSONAR
+	public function __construct($databaseCredentials, $callbackExecuteQuery = null) //NOSONAR
 	{
 		$this->databaseCredentials = $databaseCredentials;
+		if($callbackExecuteQuery != null && is_callable($callbackExecuteQuery))
+		{
+			$this->callbackExecuteQuery = $callbackExecuteQuery;
+		}
 	}
 
 	/**
@@ -242,7 +252,9 @@ class PicoDatabase
 	 */
 	public function executeInsert($sql)
 	{
-		return $this->executeQuery($sql);
+		$stmt = $this->executeQuery($sql);
+		$this->executeCallback($sql, self::QUERY_INSERT);
+		return $stmt;
 	}
 
 	/**
@@ -252,7 +264,9 @@ class PicoDatabase
 	 */
 	public function executeUpdate($sql)
 	{
-		return $this->executeQuery($sql);
+		$stmt = $this->executeQuery($sql);
+		$this->executeCallback($sql, self::QUERY_UPDATE);
+		return $stmt;
 	}
 
 	/**
@@ -262,7 +276,9 @@ class PicoDatabase
 	 */
 	public function executeDelete($sql)
 	{
-		return $this->executeQuery($sql);
+		$stmt = $this->executeQuery($sql);
+		$this->executeCallback($sql, self::QUERY_DELETE);
+		return $stmt;
 	}
 
 	/**
@@ -272,7 +288,24 @@ class PicoDatabase
 	 */
 	public function executeTransaction($sql)
 	{
-		return $this->executeQuery($sql);
+		$stmt = $this->executeQuery($sql);
+		$this->executeCallback($sql, self::QUERY_TRANSACTION);
+		return $stmt;
+	}
+
+	/**
+	 * Execute callback query function
+	 *
+	 * @param string $query SQL to be executed
+	 * @param string $type Query type
+	 * @return void
+	 */
+	private function executeCallback($query, $type)
+	{
+		if($this->callbackExecuteQuery != null && is_callable($this->callbackExecuteQuery))
+		{
+			call_user_func($this->callbackExecuteQuery, $query, $type);
+		}
 	}
 
 	/**
