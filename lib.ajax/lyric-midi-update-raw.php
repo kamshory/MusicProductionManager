@@ -3,6 +3,7 @@
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -23,6 +24,6 @@ if ($lyricMidiRaw != null && $songId != null) {
         $inputGet = new InputGet();
     }
     $now = date('Y-m-d H:i:s');
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, $_SERVER['REMOTE_ADDR']);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, ServerUtil::getRemoteAddress());
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update raw MIDI lyric ".$song->getSongId(), $inputGet, $inputPost);
 }

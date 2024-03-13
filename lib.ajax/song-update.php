@@ -8,6 +8,7 @@ use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -89,7 +90,7 @@ try
     {
         $inputGet = new InputGet();
     }
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, $_SERVER['REMOTE_ADDR']);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, ServerUtil::getRemoteAddress());
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update song ".$inputPost->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();    

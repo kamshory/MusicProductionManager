@@ -8,6 +8,7 @@ use MagicObject\Constants\PicoHttpStatus;
 use MusicProductionManager\Data\Entity\EntityAlbum;
 use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
@@ -67,7 +68,7 @@ try {
 
     $now = date('Y-m-d H:i:s');
     $album->setTimeEdit($now);
-    $album->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $album->setIpEdit(ServerUtil::getRemoteAddress());
     $album->setAdminEdit($currentLoggedInUser->getUserId());
 
     $album->update();

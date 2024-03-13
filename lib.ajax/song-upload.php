@@ -10,6 +10,7 @@ use MusicProductionManager\File\FileMp3;
 use MusicProductionManager\File\FileUpload;
 use MusicProductionManager\Utility\Id3Tag;
 use MusicProductionManager\Utility\ImageUtil;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\SongFileUtil;
 use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
@@ -149,7 +150,7 @@ try
     {
         $inputGet = new InputGet();
     }
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, $_SERVER['REMOTE_ADDR']);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, ServerUtil::getRemoteAddress());
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Upload song ".$song->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();

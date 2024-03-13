@@ -8,6 +8,7 @@ use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\UserDto;
 use MusicProductionManager\Data\Entity\EntityUser;
 use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
@@ -170,8 +171,8 @@ try {
     $now = date('Y-m-d H:i:s');
     $user->setTimeCreate($now);
     $user->setTimeEdit($now);
-    $user->setIpCreate($_SERVER['REMOTE_ADDR']);
-    $user->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $user->setIpCreate(ServerUtil::getRemoteAddress());
+    $user->setIpEdit(ServerUtil::getRemoteAddress());
     $user->setAdminCreate($currentLoggedInUser->getUserId());
     $user->setAdminEdit($currentLoggedInUser->getUserId());
 

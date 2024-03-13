@@ -7,6 +7,7 @@ use MagicObject\Response\PicoResponse;
 use MagicObject\Constants\PicoHttpStatus;
 use MusicProductionManager\Data\Dto\AlbumDto;
 use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
@@ -42,8 +43,8 @@ catch(Exception $e)
     $now = date('Y-m-d H:i:s');
     $album->setTimeCreate($now);
     $album->setTimeEdit($now);
-    $album->setIpCreate($_SERVER['REMOTE_ADDR']);
-    $album->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $album->setIpCreate(ServerUtil::getRemoteAddress());
+    $album->setIpEdit(ServerUtil::getRemoteAddress());
     $album->setAdminCreate($currentLoggedInUser->getUserId());
     $album->setAdminEdit($currentLoggedInUser->getUserId());
     

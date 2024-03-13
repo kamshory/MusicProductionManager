@@ -283,7 +283,7 @@ class UserUtil
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['REQUEST_URI'];
         $timeCreate = date('Y-m-d H:i:s');
-        $ipCreate = $_SERVER['REMOTE_ADDR'];
+        $ipCreate = ServerUtil::getRemoteAddress();
         
         $data = array(
             'name' => $activity,

@@ -5,8 +5,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\User;
-
-
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once "inc/auth-with-login-form.php";
@@ -48,7 +47,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT) && $inputPost->getSave() 
 
     $user->setTimeEdit(date('Y-m-d H:i:s'));
     $user->setAdminEdit($userId);
-    $user->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $user->setIpEdit(ServerUtil::getRemoteAddress());
 
     $user->update();
     header('Location: '.basename(($_SERVER['PHP_SELF'])));

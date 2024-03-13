@@ -8,6 +8,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Entity\Album;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -64,11 +65,11 @@ try
     
     $now = date('Y-m-d H:i:s');
     $song->setTimeCreate($now);
-    $song->setIpCreate($_SERVER['REMOTE_ADDR']);
+    $song->setIpCreate(ServerUtil::getRemoteAddress());
     $song->setAdminCreate($currentLoggedInUser->getUserId());
 
     $song->setTimeEdit($now);
-    $song->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $song->setIpEdit(ServerUtil::getRemoteAddress());
     $song->setAdminEdit($currentLoggedInUser->getUserId());
 
     $song->save();
@@ -77,7 +78,7 @@ try
     {
         $inputGet = new InputGet();
     }
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, $_SERVER['REMOTE_ADDR']);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, ServerUtil::getRemoteAddress());
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add song ".$song->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();    

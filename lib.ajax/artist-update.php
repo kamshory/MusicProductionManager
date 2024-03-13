@@ -6,6 +6,7 @@ use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MusicProductionManager\Data\Dto\ArtistDto;
 use MusicProductionManager\Data\Entity\Artist;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
@@ -25,8 +26,8 @@ try
     $now = date('Y-m-d H:i:s');
     $artist->setTimeCreate($now);
     $artist->setTimeEdit($now);
-    $artist->setIpCreate($_SERVER['REMOTE_ADDR']);
-    $artist->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $artist->setIpCreate(ServerUtil::getRemoteAddress());
+    $artist->setIpEdit(ServerUtil::getRemoteAddress());
     $artist->setAdminCreate($currentLoggedInUser->getUserId());
     $artist->setAdminEdit($currentLoggedInUser->getUserId());
     

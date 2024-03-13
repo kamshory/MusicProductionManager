@@ -11,6 +11,7 @@ use MagicObject\Request\PicoRequest;
 use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\EntityUser;
 use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\SpecificationUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -51,7 +52,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT) && $inputPost->getSave() 
 
     $user->setTimeEdit(date('Y-m-d H:i:s'));
     $user->setAdminEdit($userId);
-    $user->setIpEdit($_SERVER['REMOTE_ADDR']);
+    $user->setIpEdit(ServerUtil::getRemoteAddress());
 
     $user->update();
 
