@@ -6,6 +6,7 @@ use Exception;
 use GdImage;
 use getID3;
 use getid3_writetags;
+use MagicObject\MagicObject;
 use MusicProductionManager\Data\Dto\SongFile;
 use MusicProductionManager\Exceptions\Mp3FileException;
 use MusicProductionManager\File\FileMp3;
@@ -195,11 +196,6 @@ class SongFileUtil extends SongUtil
         return $targetDir."/".$songId;
     }
 
-    public static function prepareDir($targetDir, $permission = 0755)
-    {
-        return mkdir($targetDir, $permission, true);
-    }
-
     public static function addID3Tag($path, $tagData)
     {
         $getID3 = new getID3;
@@ -247,4 +243,110 @@ class SongFileUtil extends SongUtil
             return sprintf($format, $baseUrl, $type, $songId, $target, $caption);
         }
     }
+    
+    /**
+     * Get song base path
+     *
+     * @param MagicObject $cfg
+     * @param string|null $default
+     * @return string
+     */
+    public static function getSongBasePath($cfg, $default = null)
+    {
+        if($cfg->hasValueSongBasePath())
+        {
+            return $cfg->getSongBasePaty();
+        }
+        return $default;
+    }
+    
+    /**
+     * Prepare directory
+     *
+     * @param string $dir
+     * @param integer $permission
+     * @return bool
+     */
+    public static function prepareDir($dir, $permission = 0755)
+    {
+        if(!file_exists($dir))
+        {
+            return mkdir($dir, $permission, true);
+        }
+        return false;
+    }
+    
+    /**
+     * Get full path
+     *
+     * @param string $directory
+     * @param string $baseName
+     * @param string $extension
+     * @return string
+     */
+    public static function getFullPath($directory, $baseName, $extension)
+    {
+        $baseName = preg_replace('/[^a-z0-9]+/', '-', $baseName);
+        $path = trim($directory)."/".trim($baseName).".".trim($extension);
+        $path = str_replace("/", DIRECTORY_SEPARATOR, $path);
+        $path = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+        $path = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+        return $path;
+    }
+    
+    /**
+     * Get song path
+     *
+     * @param string $directory
+     * @return string
+     */
+    public static function getMp3Path($directory)
+    {
+        return self::getFullPath($directory, "song", "mp3");
+    }
+    
+    /**
+     * Get MIDI path
+     *
+     * @param string $directory
+     * @return string
+     */
+    public static function getMidiPath($directory)
+    {
+        return self::getFullPath($directory, "midi", "mid");
+    }
+    
+    /**
+     * Get scores path
+     *
+     * @param string $directory
+     * @return string
+     */
+    public static function getScoresPath($directory)
+    {
+        return self::getFullPath($directory, "scores", "pdf");
+    }
+    
+    /**
+     * Get MusicXML path
+     *
+     * @param string $directory
+     * @return string
+     */
+    public static function getMusicXmlPath($directory)
+    {
+        return self::getFullPath($directory, "musicxml", "xml");
+    }
+    
+    /**
+     * Get image path
+     *
+     * @param string $directory
+     * @return string
+     */
+    public static function getImagePath($directory)
+    {
+        return self::getFullPath($directory, "image", "jpg");
+    }
+
 }

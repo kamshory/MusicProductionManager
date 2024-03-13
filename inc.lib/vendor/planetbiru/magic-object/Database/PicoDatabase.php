@@ -49,7 +49,7 @@ class PicoDatabase
 	 * Constructor
 	 * @param PicoDatabaseCredentials $databaseCredentials
 	 */
-	public function __construct($databaseCredentials, $callbackExecuteQuery = null, $callbackDebugQuery) //NOSONAR
+	public function __construct($databaseCredentials, $callbackExecuteQuery = null, $callbackDebugQuery = null) //NOSONAR
 	{
 		$this->databaseCredentials = $databaseCredentials;
 		if($callbackExecuteQuery != null && is_callable($callbackExecuteQuery))

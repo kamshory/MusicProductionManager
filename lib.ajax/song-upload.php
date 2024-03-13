@@ -40,18 +40,12 @@ try
     
     // get uploaded file properties
     $fileUpload = new FileUpload();
-    $targetDir = dirname(__DIR__)."/files";
+    $defaultTargetDir = dirname(__DIR__)."/files/$id";
     
     $tempDir = dirname(__DIR__)."/temp";
     
-    if(!file_exists($targetDir))
-    {
-        mkdir($targetDir, 0755, true);
-    }
-    if(!file_exists($tempDir))
-    {
-        mkdir($tempDir, 0755, true);
-    }
+    
+    SongFileUtil::prepareDir($tempDir);
     
     $fileUpload->uploadTemporaryFile($_FILES, 'file', $tempDir, $id, mt_rand(100000, 999999));  
 
@@ -64,10 +58,14 @@ try
         $song->setFileUploadTime($now);
         
         // copy path to mp3Path
-        $mp3Path = $targetDir . "/" . $id . ".mp3";
+        
+        $targetDir = SongFileUtil::getSongBasePath($cfg, $defaultTargetDir);
+        
+        SongFileUtil::prepareDir($targetDir);
+        
+        $mp3Path = SongFileUtil::getMp3Path($targetDir);
         copy($path, $mp3Path);
         $song->setFilePath($mp3Path);
-        
         $song->setFileName(basename($mp3Path));
         $song->setFileSize($fileUpload->getFileSize());
         $song->setFileType($fileUpload->getFileType());
@@ -83,26 +81,32 @@ try
     }
     else if(SongFileUtil::isMidiFile($path))
     {
-        $midiPath = SongFileUtil::saveMidiFile($id, $targetDir, file_get_contents($path));
+        $midiPath = SongFileUtil::getMidiPath($targetDir);
+        copy($path, $midiPath);
         $song->setFilePathMidi($midiPath);
         $song->setLastUploadTimeMidi($now);
     }
     else if(SongFileUtil::isXmlMusicFile($path))
     {
-        $xmlMusicPath = SongFileUtil::saveXmlMusicFile($id, $targetDir, file_get_contents($path));
+        $xmlMusicPath = SongFileUtil::getMusicXmlPath($targetDir);
+        copy($path, $midiPath);
         $song->setFilePathXml($xmlMusicPath);
         $song->setLastUploadTimeXml($now);
     }  
     else if(SongFileUtil::isPdfFile($path))
     {
-        $pdfPath = SongFileUtil::savePdfFile($id, $targetDir, file_get_contents($path));
+        $pdfPath = SongFileUtil::getScoresPath($targetDir);
+        copy($path, $pdfPath);
         $song->setFilePathPdf($pdfPath);
         $song->setLastUploadTimePdf($now);
     }  
     else if(SongFileUtil::isImageFile($path))
     {
         // save image with original dimension
-        $jpegPath = SongFileUtil::saveImageFile($id, $targetDir, imagecreatefromstring(file_get_contents($path)));
+        $jpegPath = SongFileUtil::getScoresPath($targetDir);
+        copy($path, $pdfPath);
+        ImageUtil::convertToJpeg($jpegPath);
+
         $song->setFilePathJpeg($jpegPath);
         $song->setLastUploadTimeJpeg($now);
 

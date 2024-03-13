@@ -185,4 +185,16 @@ class ImageUtil
         return $stringdata;
     }
     
+    /**
+     * Convert image to JPEG
+     *
+     * @param string $path
+     * @return string
+     */
+    public static function convertToJpeg($path)
+    {
+        $gd = imagecreatefromstring(file_get_contents($path));
+        imagejpeg($gd, $path, 80);
+    }
+    
 }
