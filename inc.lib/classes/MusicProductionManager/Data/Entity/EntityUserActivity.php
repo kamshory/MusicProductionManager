@@ -38,7 +38,7 @@ class EntityUserActivity extends MagicObject
     /**
      * User
      *
-     * @var User
+     * @var EntityUser
      * @JoinColumn (name=user_id)
      */
     protected $user;
