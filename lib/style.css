@@ -17,9 +17,7 @@ body {
   .main-page {
     padding: 100px 20px 0px 20px;
   }
-
 }
-
 .modal-body .table-borderless td {
   padding: 5px 5px;
   vertical-align: middle;
@@ -36,8 +34,8 @@ body {
   height: 28px;
   right: 11px;
   top: 10px;
-  background-color: #FFFFFF;
-  border: 1px solid #DDDDDD;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
   border-radius: 50%;
 }
 
@@ -69,12 +67,9 @@ body {
   padding: 2px 0;
 }
 
-
-
 .pagination {
   text-align: center;
   padding: 10px 0;
-  ;
   width: auto;
   margin: auto;
 }
@@ -84,15 +79,14 @@ body {
   margin: auto;
 }
 
-
 .pagination .page-selector {
-  border: solid #DDDDDD;
+  border: solid #dddddd;
   border-top-width: 1px;
   border-bottom-width: 1px;
   border-left-width: 0;
   border-right-width: 1px;
   display: inline-block;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .pagination .page-selector:first-child {
@@ -112,7 +106,7 @@ body {
 }
 
 .pagination .page-selector.page-selected {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .filter-container .form-control {
@@ -129,21 +123,23 @@ body {
     padding-left: 0;
     padding-right: 0;
   }
-
   .custom-card-container .card {
     background-color: transparent;
     box-shadow: none;
     padding-left: 0;
     padding-right: 0;
   }
-  .custom-card-container .card .card-body{
+  .custom-card-container .card .card-body {
     padding-left: 12px !important;
     padding-right: 12px !important;
   }
-
   .app-header {
     left: -20px;
     box-sizing: border-box;
     width: calc(100% + 40px);
   }
-}
+  .table-responsive td {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}/*# sourceMappingURL=style.css.map */

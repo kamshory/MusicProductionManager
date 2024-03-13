@@ -36,8 +36,6 @@ try
     $song->setRandomSongId($randomSongId);
     $song->setTimeCreate($now);
     
-    
-
     // get uploaded file properties
     $fileUpload = new FileUpload();
     $targetDir = dirname(__DIR__)."/files";
@@ -53,7 +51,8 @@ try
         mkdir($tempDir, 0755, true);
     }
     
-    $fileUpload->uploadTemporaryFile($_FILES, 'file', $tempDir, $id, mt_rand(100000, 999999));    
+    $fileUpload->uploadTemporaryFile($_FILES, 'file', $tempDir, $id, mt_rand(100000, 999999));  
+      
     $path = $fileUpload->getFilePath();
     
     $header = SongFileUtil::getContent($path, 96);
@@ -126,13 +125,18 @@ try
             SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
         }
     } 
-    
+    $songId = $song->getSongId();
     $song->save();
-    $song->select();
+
+
+    $song = new EntitySong(null, $database);
+    
+    $song->findOneBySongId($songId);
+
     if($song->getFirstUploadTime() == null && $song->getLastUploadTime() != null)
     {
         $song->setFirstUploadTime($song->getLastUploadTime());
-        $song->save();
+        $song->update();
     }
     
     if(file_exists($path))
@@ -153,4 +157,5 @@ try
 catch(Exception $e)
 {
     // do nothing
+    error_log($e->getMessage());
 }
