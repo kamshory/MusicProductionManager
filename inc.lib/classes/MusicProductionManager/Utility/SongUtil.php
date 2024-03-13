@@ -7,6 +7,7 @@ use MagicObject\Database\PicoDatabase;
 use MagicObject\Exceptions\NoRecordFoundException;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Rating;
+use MusicProductionManager\Data\Entity\SongUpdateHistory;
 
 class SongUtil
 {
@@ -109,6 +110,12 @@ class SongUtil
     
     public static function updateSong($database, $songId, $userId, $action, $time, $ip)
     {
-        
+        $history = new SongUpdateHistory(null, $database);
+        $history->setSongId($songId);
+        $history->setUserId($userId);
+        $history->setAction($action);
+        $history->setTimeUpdate($time);
+        $history->setIpUpdate($ip);
+        $history->insert();
     }
 }

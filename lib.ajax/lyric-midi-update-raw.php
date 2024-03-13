@@ -24,6 +24,6 @@ if ($lyricMidiRaw != null && $songId != null) {
         $inputGet = new InputGet();
     }
     $now = date('Y-m-d H:i:s');
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, ServerUtil::getRemoteAddress());
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress());
     UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update raw MIDI lyric ".$song->getSongId(), $inputGet, $inputPost);
 }
