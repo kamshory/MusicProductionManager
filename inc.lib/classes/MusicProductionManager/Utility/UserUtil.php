@@ -271,7 +271,7 @@ class UserUtil
      * @param InputGet $inputGet
      * @param InputPost $inputPost
      * @param bool $skipRequestBody
-     * @return void
+     * @return string
      */
     public static function logUserActivity($database, $userId, $activity, $inputGet, $inputPost, $skipRequestBody = false)
     {
@@ -298,6 +298,6 @@ class UserUtil
         );
         $userActivity = new UserActivity($data, $database);
         $userActivity->insert();
-
+        return $userActivity->getUserActivityId();
     }
 }

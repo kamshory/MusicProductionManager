@@ -39,6 +39,14 @@ class SongUpdateHistory extends MagicObject
 	protected $userId;
 
 	/**
+	 * User Activity ID
+	 * 
+	 * @Column(name="user_activity_id", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $userActivityId;
+
+	/**
 	 * Action
 	 * 
 	 * @Column(name="action", type="varchar(20)", length=20, nullable=true)

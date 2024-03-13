@@ -59,7 +59,7 @@ if ($songId != null) {
     }
     $now = date("Y-m-d H:i:s");
     SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress());
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI instrument ".$song->getSongId(), $inputGet, $inputPost);
+    $userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI instrument ".$song->getSongId(), $inputGet, $inputPost);
     
     if(isAjax())
 	{

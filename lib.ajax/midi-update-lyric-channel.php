@@ -10,7 +10,6 @@ use MusicProductionManager\Utility\UserUtil;
 require_once dirname(__DIR__) . "/inc/auth.php";
 
 $inputPost = new InputPost();
-error_log($inputPost);
 $channel = $inputPost->getChannel();
 $songId = $inputPost->getSongId();
 if ($channel != null && $songId != null) {
@@ -22,11 +21,11 @@ if ($channel != null && $songId != null) {
 
 	if(!isset($inputGet))
     {
-      	$inputGet = new InputGet();
+		$inputGet = new InputGet();
     }
 	$now = date("Y-m-d H:i:s");
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress());
-	UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI lyric channel ".$song->getSongId(), $inputGet, $inputPost);
+	$userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI lyric channel ".$song->getSongId(), $inputGet, $inputPost);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress(), $userActivityId);
 
 	echo json_encode(array('ok' => true));
 }

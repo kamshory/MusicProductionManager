@@ -63,8 +63,8 @@ if ($songId != null && $tn != null && $cn != null && $dn != 0) {
         $inputGet = new InputGet();
     }
     $now = date("Y-m-d H:i:s");
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress());
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Transpose MIDI ".$song->getSongId(), $inputGet, $inputPost);
+    $userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Transpose MIDI ".$song->getSongId(), $inputGet, $inputPost);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress(), $userActivityId);
     
     if(isAjax())
 	{

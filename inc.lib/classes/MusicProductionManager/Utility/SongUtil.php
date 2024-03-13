@@ -108,7 +108,7 @@ class SongUtil
         return $songTitle;
     }
     
-    public static function updateSong($database, $songId, $userId, $action, $time, $ip)
+    public static function updateSong($database, $songId, $userId, $action, $time, $ip, $userActivityId = null)
     {
         $history = new SongUpdateHistory(null, $database);
         $history->setSongId($songId);
@@ -116,6 +116,7 @@ class SongUtil
         $history->setAction($action);
         $history->setTimeUpdate($time);
         $history->setIpUpdate($ip);
+        $history->setUserActivityId($userActivityId);
         $history->insert();
     }
 }
