@@ -102,15 +102,31 @@ class SpecificationUtil
             $spesification->addAnd($predicate1);
         }
 
-        if($inputGet->getName() != "")
+        if($inputGet->getName() != "" || $inputGet->getTitle() != "")
         {
             $spesificationTitle = new PicoSpecification();
-            $predicate1 = new PicoPredicate();
-            $predicate1->like('name', PicoPredicate::generateCenterLike($inputGet->getName()));
-            $spesificationTitle->addOr($predicate1);
-            $predicate2 = new PicoPredicate();
-            $predicate2->like('title', PicoPredicate::generateCenterLike($inputGet->getName()));
-            $spesificationTitle->addOr($predicate2);
+            
+            if($inputGet->getName() != "")
+            {
+                $predicate1 = new PicoPredicate();
+                $predicate1->like('name', PicoPredicate::generateCenterLike($inputGet->getName()));
+                $spesificationTitle->addOr($predicate1);
+                
+                $predicate2 = new PicoPredicate();
+                $predicate2->like('title', PicoPredicate::generateCenterLike($inputGet->getName()));
+                $spesificationTitle->addOr($predicate2);
+            }
+            if($inputGet->getTitle() != "")
+            {
+                $predicate3 = new PicoPredicate();
+                $predicate3->like('name', PicoPredicate::generateCenterLike($inputGet->getTitle()));
+                $spesificationTitle->addOr($predicate3);
+                
+                $predicate4 = new PicoPredicate();
+                $predicate4->like('title', PicoPredicate::generateCenterLike($inputGet->getTitle()));
+                $spesificationTitle->addOr($predicate4);
+            }
+            
             $spesification->addAnd($spesificationTitle);
         }
 

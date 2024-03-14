@@ -183,7 +183,6 @@ else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getS
       }
     </style>
     
- 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.js" integrity="sha512-VqW3FWLsKVphZNAVsUKfA5UJ9oxVamFqNtHs46UxI7UA/gQ6GGaZ37GYdotPJ27Y/C8dvOQEKjWbfiNOkkhVAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" integrity="sha512-ngQ4IGzHQ3s/Hh8kMyG4FC74wzitukRMIcTOoKT3EyzFZCILOPF0twiXOQn75eDINUfKBYmzYn2AA8DkAk8veQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -265,7 +264,7 @@ else
     </div>
     <div class="filter-group">
         <span>Title</span>
-        <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+        <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
     
     <div class="filter-group">
@@ -392,7 +391,7 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
-        <th scope="col" class="col-sort" data-name="duration">Duration</th>
+        <th scope="col" class="col-sort" data-name="duration">Length</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
     </thead>

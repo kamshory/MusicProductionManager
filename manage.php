@@ -198,16 +198,7 @@ else
     </div>
     <div class="filter-group">
         <span>Title</span>
-        <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
-    </div>
-    
-    <div class="filter-group">
-        <span>Vocal</span>
-        <select class="form-control" name="vocal" id="vocal">
-            <option value="">- All -</option>
-            <option value="1"<?php echo $inputGet->createSelectedVocal("1");?>>Yes</option>
-            <option value="0"<?php echo $inputGet->createSelectedVocal("0");?>>No</option>
-        </select>
+        <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
 
     <div class="filter-group">
@@ -216,6 +207,15 @@ else
             <option value="">- All -</option>
             <option value="1"<?php echo $inputGet->createSelectedSubtitleComplete("1");?>>Yes</option>
             <option value="0"<?php echo $inputGet->createSelectedSubtitleComplete("0");?>>No</option>
+        </select>
+    </div>
+    
+    <div class="filter-group">
+        <span>Vocal</span>
+        <select class="form-control" name="vocal" id="vocal">
+            <option value="">- All -</option>
+            <option value="1"<?php echo $inputGet->createSelectedVocal("1");?>>Yes</option>
+            <option value="0"<?php echo $inputGet->createSelectedVocal("0");?>>No</option>
         </select>
     </div>
 

@@ -26,7 +26,7 @@ try
 
     $song1 = new Song(null, $database);
     $song1->findOneBySongId($inputPost->getSongId());
-    $song1->setRating($rating);
+    $song1->setRating($allRating);
     // update average to song
     $song1->update();
     

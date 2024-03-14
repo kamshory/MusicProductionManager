@@ -8,6 +8,7 @@ use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
+use MagicObject\Util\Dms;
 use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\SongUtil;
 use MusicProductionManager\Utility\UserUtil;
@@ -111,6 +112,7 @@ try
     try
     {
         $record = $database->fetch($sql, PDO::FETCH_OBJ);
+        $record->duration = (new Dms())->ddToDms($record->duration / 3600)->printDms(true, true);
         $restResponse->sendResponseJSON($record, null, PicoHttpStatus::HTTP_OK);
     }
     catch(Exception $e)
