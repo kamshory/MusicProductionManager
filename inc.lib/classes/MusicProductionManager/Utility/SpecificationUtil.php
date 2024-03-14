@@ -6,7 +6,9 @@ use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSpecification;
 use MagicObject\Request\PicoRequestTool;
 
-
+/**
+ * Specification utility
+ */
 class SpecificationUtil
 {
     /**
@@ -63,14 +65,13 @@ class SpecificationUtil
         return $spesification;
     }
 
-
     /**
      * Create Song specification
      * @param PicoRequestTool $inputGet
      * @param array $additional
      * @return PicoSpecification
      */
-    public static function createSongSpecification($inputGet, $additional = null)
+    public static function createSongSpecification($inputGet, $additional = null) //NOSONAR
     {
         $spesification = new PicoSpecification();
 

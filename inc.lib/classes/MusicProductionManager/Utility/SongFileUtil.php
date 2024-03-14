@@ -96,51 +96,6 @@ class SongFileUtil extends SongUtil
     }
     
     /**
-     * Save MIDI file
-     *
-     * @param string $songId
-     * @param string $targetDir
-     * @param string $content
-     * @return string
-     */
-    public static function saveMidiFile($songId, $targetDir, $content)
-    {
-        $path = $targetDir . "/" . $songId . ".mid";
-        file_put_contents($path, $content);
-        return $path;
-    }
-    
-    /**
-     * Save XML file
-     *
-     * @param string $songId
-     * @param string $targetDir
-     * @param string $content
-     * @return string
-     */
-    public static function saveXmlMusicFile($songId, $targetDir, $content)
-    {
-        $path = $targetDir . "/" . $songId . ".xml";
-        file_put_contents($path, $content);
-        return $path;
-    }
-
-    /**
-     * Save PDF file
-     *
-     * @param string $songId
-     * @param string $targetDir
-     * @param string $content
-     * @return string
-     */
-    public static function savePdfFile($songId, $targetDir, $content)
-    {
-        $path = $targetDir . "/" . $songId . ".pdf";
-        file_put_contents($path, $content);
-        return $path;
-    }
-
-    /**
      * Save Image file
      *
      * @param string $songId

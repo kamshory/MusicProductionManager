@@ -52,7 +52,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT) && $inputPost->getSave() 
 
     $user->setTimeEdit(date('Y-m-d H:i:s'));
     $user->setAdminEdit($userId);
-    $user->setIpEdit(ServerUtil::getRemoteAddress());
+    $user->setIpEdit(ServerUtil::getRemoteAddress($cfg));
 
     $user->update();
 

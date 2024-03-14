@@ -171,8 +171,8 @@ try {
     $now = date('Y-m-d H:i:s');
     $user->setTimeCreate($now);
     $user->setTimeEdit($now);
-    $user->setIpCreate(ServerUtil::getRemoteAddress());
-    $user->setIpEdit(ServerUtil::getRemoteAddress());
+    $user->setIpCreate(ServerUtil::getRemoteAddress($cfg));
+    $user->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $user->setAdminCreate($currentLoggedInUser->getUserId());
     $user->setAdminEdit($currentLoggedInUser->getUserId());
 

@@ -26,8 +26,8 @@ try
     $now = date('Y-m-d H:i:s');
     $artist->setTimeCreate($now);
     $artist->setTimeEdit($now);
-    $artist->setIpCreate(ServerUtil::getRemoteAddress());
-    $artist->setIpEdit(ServerUtil::getRemoteAddress());
+    $artist->setIpCreate(ServerUtil::getRemoteAddress($cfg));
+    $artist->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $artist->setAdminCreate($currentLoggedInUser->getUserId());
     $artist->setAdminEdit($currentLoggedInUser->getUserId());
     

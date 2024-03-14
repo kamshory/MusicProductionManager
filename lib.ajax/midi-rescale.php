@@ -83,7 +83,7 @@ if ($songId != null) {
     }
     $now = date("Y-m-d H:i:s");
     $userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Rescale MIDI ".$song->getSongId(), $inputGet, $inputPost);
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress(), $userActivityId);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress($cfg), $userActivityId);
     
     if(isAjax())
 	{

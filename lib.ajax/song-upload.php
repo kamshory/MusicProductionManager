@@ -155,7 +155,7 @@ try
         $inputGet = new InputGet();
     }
     $userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Upload song ".$song->getSongId(), $inputGet, $inputPost);
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress(), $userActivityId);
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress($cfg), $userActivityId);
 
     $restResponse = new PicoResponse();
     $restResponse->sendResponse($song, 'json', null, PicoHttpStatus::HTTP_OK);

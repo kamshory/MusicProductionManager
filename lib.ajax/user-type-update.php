@@ -29,8 +29,8 @@ try
     $now = date('Y-m-d H:i:s');
     $userType->setTimeCreate($now);
     $userType->setTimeEdit($now);
-    $userType->setIpCreate(ServerUtil::getRemoteAddress());
-    $userType->setIpEdit(ServerUtil::getRemoteAddress());
+    $userType->setIpCreate(ServerUtil::getRemoteAddress($cfg));
+    $userType->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $userType->setAdminCreate($currentLoggedInUser->getUserId());
     $userType->setAdminEdit($currentLoggedInUser->getUserId());
     

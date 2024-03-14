@@ -68,7 +68,7 @@ try {
 
     $now = date('Y-m-d H:i:s');
     $album->setTimeEdit($now);
-    $album->setIpEdit(ServerUtil::getRemoteAddress());
+    $album->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $album->setAdminEdit($currentLoggedInUser->getUserId());
 
     $album->update();

@@ -92,7 +92,7 @@ try
         $inputGet = new InputGet();
     }
     $userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update song ".$inputPost->getSongId(), $inputGet, $inputPost);
-    SongUtil::updateSong($database, $inputPost->getSongId(), $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress(), $userActivityId);
+    SongUtil::updateSong($database, $inputPost->getSongId(), $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress($cfg), $userActivityId);
 
     $restResponse = new PicoResponse();    
     $queryBuilder = new PicoDatabaseQueryBuilder($database);

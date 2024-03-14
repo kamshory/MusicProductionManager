@@ -43,8 +43,8 @@ catch(Exception $e)
     $now = date('Y-m-d H:i:s');
     $album->setTimeCreate($now);
     $album->setTimeEdit($now);
-    $album->setIpCreate(ServerUtil::getRemoteAddress());
-    $album->setIpEdit(ServerUtil::getRemoteAddress());
+    $album->setIpCreate(ServerUtil::getRemoteAddress($cfg));
+    $album->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $album->setAdminCreate($currentLoggedInUser->getUserId());
     $album->setAdminEdit($currentLoggedInUser->getUserId());
     

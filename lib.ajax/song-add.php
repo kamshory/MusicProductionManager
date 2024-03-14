@@ -65,11 +65,11 @@ try
     
     $now = date('Y-m-d H:i:s');
     $song->setTimeCreate($now);
-    $song->setIpCreate(ServerUtil::getRemoteAddress());
+    $song->setIpCreate(ServerUtil::getRemoteAddress($cfg));
     $song->setAdminCreate($currentLoggedInUser->getUserId());
 
     $song->setTimeEdit($now);
-    $song->setIpEdit(ServerUtil::getRemoteAddress());
+    $song->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $song->setAdminEdit($currentLoggedInUser->getUserId());
 
     $song->save();
@@ -78,7 +78,7 @@ try
     {
         $inputGet = new InputGet();
     }
-    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, ServerUtil::getRemoteAddress());
+    SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "create", $now, ServerUtil::getRemoteAddress($cfg));
     $userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add song ".$song->getSongId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();    

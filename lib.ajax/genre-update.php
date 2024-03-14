@@ -29,8 +29,8 @@ try
     $now = date('Y-m-d H:i:s');
     $genre->setTimeCreate($now);
     $genre->setTimeEdit($now);
-    $genre->setIpCreate(ServerUtil::getRemoteAddress());
-    $genre->setIpEdit(ServerUtil::getRemoteAddress());
+    $genre->setIpCreate(ServerUtil::getRemoteAddress($cfg));
+    $genre->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $genre->setAdminCreate($currentLoggedInUser->getUserId());
     $genre->setAdminEdit($currentLoggedInUser->getUserId());
     
