@@ -7,6 +7,7 @@ use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\InputGet;
 use MagicObject\Response\Generated\PicoSelectOption;
+use MagicObject\Util\Dms;
 use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Artist;
@@ -209,24 +210,24 @@ else
     </div>
     <div class="filter-group">
         <span>Title</span>
-        <input class="form-control" type="text" name="name" id="name" autocomplete="off" value="<?php echo $inputGet->getName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+        <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
     
-    <div class="filter-group">
-        <span>Vocal</span>
-        <select class="form-control" name="vocal" id="vocal">
-            <option value="">- All -</option>
-            <option value="1"<?php echo $inputGet->createSelectedVocal("1");?>>Yes</option>
-            <option value="0"<?php echo $inputGet->createSelectedVocal("0");?>>No</option>
-        </select>
-    </div>
-
     <div class="filter-group">
         <span>Subtitle</span>
         <select class="form-control" name="subtitle_complete" id="subtitle_complete">
             <option value="">- All -</option>
             <option value="1"<?php echo $inputGet->createSelectedSubtitleComplete("1");?>>Yes</option>
             <option value="0"<?php echo $inputGet->createSelectedSubtitleComplete("0");?>>No</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <span>Vocal</span>
+        <select class="form-control" name="vocal" id="vocal">
+            <option value="">- All -</option>
+            <option value="1"<?php echo $inputGet->createSelectedVocal("1");?>>Yes</option>
+            <option value="0"<?php echo $inputGet->createSelectedVocal("0");?>>No</option>
         </select>
     </div>
 
@@ -332,7 +333,7 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
-        <th scope="col" class="col-sort" data-name="duration">Duration</th>
+        <th scope="col" class="col-sort" data-name="duration">Length</th>
         <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
         <th scope="col" class="col-sort" data-name="subtitle_complete">Sub</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
@@ -365,7 +366,7 @@ if(!empty($result))
         <td class="text-data text-data-artist-vocal-name text-nowrap"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         <td class="text-data text-data-artist-composer-name text-nowrap"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
         <td class="text-data text-data-artist-arranger-name text-nowrap"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : "";?></td>
-        <td class="text-data text-data-duration text-nowrap"><?php echo $song->getDuration();?></td>
+        <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-vocal text-nowrap"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
         <td class="text-data text-data-subtitle-complete text-nowrap"><?php echo $song->isSsubtitleComplete() ? 'Yes' : 'No';?></td>
         <td class="text-data text-data-active text-nowrap"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>

@@ -8,6 +8,7 @@ use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\InputGet;
 use MagicObject\Response\Generated\PicoSelectOption;
+use MagicObject\Util\Dms;
 use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Artist;
@@ -454,7 +455,7 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
-        <th scope="col" class="col-sort" data-name="duration">Duration</th>
+        <th scope="col" class="col-sort" data-name="duration">Length</th>
         <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
         <th scope="col" class="col-sort" data-name="subtitle_complete">Complete</th>
         </tr>
@@ -482,7 +483,7 @@ if(!empty($result))
         <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
         <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
         <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : "";?></td>
-        <td><?php echo $song->getDuration();?></td>
+        <td><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
         <td><?php echo $song->isLyricComplete() ? 'Yes':'No';?></td>
         </tr>
