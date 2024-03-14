@@ -19,7 +19,6 @@ use MusicProductionManager\Utility\SpecificationUtil;
 require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";
 
-
 $inputGet = new InputGet();
 ?>
 <script src="assets/libs/apexcharts/dist/apexcharts.min.js"></script>
@@ -59,8 +58,13 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
   $sql = $query->newQuery()
     ->select("song.song_id, song.time_create, song.time_edit")
     ->from("song")
-    ->where("song.time_create like ? or song.time_create like ? or song.time_edit like ? or song.time_edit like ? ", 
-    (date("Y") - 1) . "%", date("Y") . "%", (date("Y") - 1) . "%", date("Y") . "%")
+    ->where(
+      "song.time_create like ? or song.time_create like ? or song.time_edit like ? or song.time_edit like ? ",
+      (date("Y") - 1) . "%",
+      date("Y") . "%",
+      (date("Y") - 1) . "%",
+      date("Y") . "%"
+    )
     ->orderBy("time_create asc");
   try {
     $rows = $database->fetchAll($sql, PDO::FETCH_ASSOC);
@@ -68,10 +72,10 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
       $month1 = date('y/m', strtotime($row['time_create']));
       if (!isset($data1[$month1])) {
         $data1[$month1] = 0;
-      }     
+      }
       $data1[$month1]++;
     }
-    
+
     foreach ($rows as $row) {
       $month2 = date('y/m', strtotime($row['time_edit']));
       if (!isset($data2[$month2])) {
@@ -79,20 +83,20 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
       }
 
       $data2[$month2]++;
-      
     }
     $data3 = array_merge($data1, $data2);
     $data3 = array_unique($data3);
-  
+
     ksort($data1);
     ksort($data2);
   } catch (Exception $e) {
     // do nothing
   }
-  
+
   ?>
 
   <script>
+    let colors = ["#17B890", "#5E807F", "#082D0F", "#BBBE64", "#EAF0CE", "#C0C5C1", "#7D8491", "#443850", "#EE6055", "#60D394", "#AAF683", "#FFD97D", "#FF9B85", "#764248", "#DDA3B2", "#FFADC6", "#E3C5BB", "#DFE2CF", "#DEE5E5", "#9DC5BB"];
     $(document).ready(function() {
       var chart = {
 
@@ -110,9 +114,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
           },
         },
 
-
-        colors: ["#5D87FF", "#49BEFF"],
-
+        colors: colors,
 
         plotOptions: {
           bar: {
@@ -131,11 +133,9 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
           enabled: false,
         },
 
-
         legend: {
           show: false,
         },
-
 
         grid: {
           borderColor: "rgba(0,0,0,0.1)",
@@ -150,10 +150,6 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
         series: [{
           name: "Uploaded song:",
           data: <?php echo json_encode(array_values($data1)); ?>
-        },
-        {
-          name: "Updated song:",
-          data: <?php echo json_encode(array_values($data2)); ?>
         }],
 
         xaxis: {
@@ -165,7 +161,6 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
             },
           },
         },
-
 
         yaxis: {
           show: true,
@@ -184,7 +179,6 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
           colors: ["transparent"],
         },
 
-
         tooltip: {
           theme: "light"
         },
@@ -199,8 +193,6 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
             },
           }
         }]
-
-
       };
 
       var chart = new ApexCharts(document.querySelector("#production-chart"), chart);
@@ -208,7 +200,45 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     });
   </script>
 
+  <?php
+  $data4 = array();
+  $totalSong = 0;
+  $sql = $query->newQuery()
+    ->select("song.song_id, song.time_create, song.time_edit")
+    ->from("song")
+    ->where("song.active = true ")
+    ->orderBy("time_create asc");
+  try {
+    $rows = $database->fetchAll($sql, PDO::FETCH_ASSOC);
+    $totalSong = count($rows);
+    foreach ($rows as $row) {
+      $year = date('Y', strtotime($row['time_create']));
+      if (!isset($data4[$year])) {
+        $data4[$year] = 0;
+      }
 
+      $data4[$year]++;
+    }
+  } catch (Exception $e) {
+    // do nothing
+  }
+  $y1 = date('Y') - 1;
+  $y2 = date('Y') - 2;
+
+  if (isset($data4[$y2]) && isset($data4[$y1])) {
+    $incr = ($data4[$y1] - $data4[$y2]) / $data4[$y2];
+  } else if (isset($data4[$y1])) {
+    $incr = 100;
+  } else {
+    $incr = 0;
+  }
+
+  if ($incr > 0) {
+    $increment = "+" . sprintf("%.2f", $incr) . "%";
+  } else {
+    $increment = sprintf("%.2f", $incr) . "%";
+  }
+  ?>
   <div class="col-lg-4">
     <div class="row">
       <div class="col-lg-12">
@@ -219,36 +249,94 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
             <h5 class="card-title mb-9 fw-semibold">Yearly Breakup</h5>
             <div class="row align-items-center">
               <div class="col-8">
-                <h4 class="fw-semibold mb-3">36,358</h4>
+                <h4 class="fw-semibold mb-3"><?php $totalSong; ?></h4>
                 <div class="d-flex align-items-center mb-3">
                   <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
                     <i class="ti ti-arrow-up-left text-success"></i>
                   </span>
-                  <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+                  <p class="text-dark me-1 fs-3 mb-0"><?php echo $increment; ?></p>
                   <p class="fs-3 mb-0">last year</p>
                 </div>
                 <div class="d-flex align-items-center">
                   <div class="me-4">
                     <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
-                    <span class="fs-2">2023</span>
+                    <span class="fs-2"><?php echo $y2; ?></span>
                   </div>
                   <div>
                     <span class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
-                    <span class="fs-2">2023</span>
+                    <span class="fs-2"><?php echo $y1; ?></span>
                   </div>
                 </div>
               </div>
               <div class="col-4">
                 <div class="d-flex justify-content-center">
-                  <div id="breakup"></div>
+                  <div id="yearly-breakup"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <script>
+        $(document).ready(function() {
+          // =====================================
+          // Breakup
+          // =====================================
+          var breakup = {
+            color: "#adb5bd",
+            series: <?php echo json_encode(array_values($data4));?>,
+            labels: <?php echo json_encode(array_keys($data4));?>,
+            chart: {
+              width: 180,
+              type: "donut",
+              fontFamily: "Plus Jakarta Sans', sans-serif",
+              foreColor: "#adb0bb",
+            },
+            plotOptions: {
+              pie: {
+                startAngle: 0,
+                endAngle: 360,
+                donut: {
+                  size: '75%',
+                },
+              },
+            },
+            stroke: {
+              show: false,
+            },
+
+            dataLabels: {
+              enabled: false,
+            },
+
+            legend: {
+              show: false,
+            },
+            colors: colors,
+
+            responsive: [{
+              breakpoint: 991,
+              options: {
+                chart: {
+                  width: 150,
+                },
+              },
+            }, ],
+            tooltip: {
+              theme: "dark",
+              fillSeriesColor: false,
+            },
+          };
+
+          var chart = new ApexCharts(document.querySelector("#yearly-breakup"), breakup);
+          chart.render();
+
+        });
+      </script>
+
       <div class="col-lg-12">
-        <!-- Monthly Earnings -->
+        <!-- Monthly Activity -->
         <div class="card">
           <div class="card-body">
             <div class="row alig n-items-start">
@@ -261,30 +349,26 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
         </div>
       </div>
 
-      
+
 
       <script>
-        
         function TimeOpt() {
           this.ts = new Date();
-          this.dateFormatter = function(ts)
-          {
+          this.dateFormatter = function(ts) {
             this.ts = ts;
             return this;
           }
-          this.format = function(fmt)
-          {
+          this.format = function(fmt) {
             let yy = this.ts.getYear();
-            let mm = this.ts.getMonth()+1;
-            if(mm < 10)
-            {
-              mm = '0'+mm;
+            let mm = this.ts.getMonth() + 1;
+            if (mm < 10) {
+              mm = '0' + mm;
             }
-            return yy+'/'+mm
+            return yy + '/' + mm
           }
         }
         let opts = new TimeOpt();
-        
+
         $(document).ready(function() {
           var monthlyActivity = {
             chart: {
@@ -312,7 +396,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
               type: "solid",
               opacity: 0.05,
             },
-            
+
 
 
             markers: {
