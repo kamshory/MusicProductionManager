@@ -181,6 +181,13 @@ class SongFileUtil extends SongUtil
         return $targetDir."/".$songId;
     }
 
+    /**
+     * Add ID3 Tag
+     *
+     * @param string $path
+     * @param array $tagData
+     * @return bool
+     */
     public static function addID3Tag($path, $tagData)
     {
         $getID3 = new getID3;

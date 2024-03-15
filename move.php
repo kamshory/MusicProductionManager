@@ -34,7 +34,7 @@ try
         }
         if(file_exists($xmlPath))
         {
-            $xmlPath2 = $baseDir . "/song.xml";
+            $xmlPath2 = $baseDir . "/song.musicxml";
             copy($xmlPath, $xmlPath2);
             $song->setFilePathXml($xmlPath2);
         }

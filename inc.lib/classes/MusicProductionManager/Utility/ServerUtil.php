@@ -6,6 +6,10 @@ use MagicObject\MagicObject;
 
 class ServerUtil
 {
+    public const OS_LINUX = 1;
+    public const OS_WINDOWS = 2;
+    public const OS_OTHER = 3;
+    
     /**
      * Get remote address
      *
@@ -20,5 +24,37 @@ class ServerUtil
             return CloudflareUtil::getClientIp(false);
         }
         return $_SERVER['REMOTE_ADDR'];
+    }
+    
+    /**
+     * Is Windows
+     *
+     * @return boolean
+     */
+    public static function isWindows()
+    {
+        return strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
+    }
+    
+    /**
+     * Get OS
+     *
+     * @return integer
+     */
+    public static function getOs()
+    {
+        $os = strtolower(php_uname('s'));
+        if($os == "linux")
+        {
+            return self::OS_LINUX;
+        }        
+        else if($os == "windows nt")
+        {
+            return self::OS_WINDOWS;
+        }
+        else
+        {
+            return self::OS_OTHER;
+        }
     }
 }

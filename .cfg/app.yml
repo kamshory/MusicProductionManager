@@ -23,4 +23,4 @@ database:
   time_zone: ${APP_DATABASE_TIME_ZONE}
   salt: ${APP_DATABASE_SALT}
 
-
+proxy_provider: cloudflare
