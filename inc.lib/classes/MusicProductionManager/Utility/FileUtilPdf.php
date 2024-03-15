@@ -11,7 +11,7 @@ class FileUtilPdf
     const LYRIC_FONT_NAME = "Times";
     const LYRIC_FONT_SIZE = 12;
     const LYRIC_LINE_HEIGHT = 7;
-    const LYRIC_THRESHOLD = 40;
+    const LYRIC_THRESHOLD = 45;
     const LYRIC_MAX_LINE = 35;
     const LYRIC_START_FIND_SPACE = 25;
     const LYRIC_OFFSET_X_1 = 14;
