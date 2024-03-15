@@ -8,6 +8,7 @@ use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\File\FileMp3;
 use MusicProductionManager\File\FileUpload;
+use MusicProductionManager\Utility\FileUtilMxl;
 use MusicProductionManager\Utility\Id3Tag;
 use MusicProductionManager\Utility\ImageUtil;
 use MusicProductionManager\Utility\ServerUtil;
@@ -131,6 +132,24 @@ try
             SongFileUtil::addID3Tag($mp3Path, $tagData->getTags());
         }
     } 
+    else if(SongFileUtil::isZippedFile($path))
+    {
+        if(FileUtilMxl::isValidMusicXmlFile($path))
+        {
+            $xmlMusicPath = SongFileUtil::getMusicXmlPath($targetDir);
+            
+            $list = FileUtilMxl::getFileList($path);
+            if(isset($list))
+            {
+                $val = array_values($list);
+                file_put_contents($xmlMusicPath, $val[0]);
+                $song->setFilePathXml($xmlMusicPath);
+                $song->setLastUploadTimeXml($now);
+            }
+            
+            
+        }
+    }  
     $songId = $song->getSongId();
     $song->save();
 

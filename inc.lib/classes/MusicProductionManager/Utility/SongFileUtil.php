@@ -10,6 +10,7 @@ use MagicObject\MagicObject;
 use MusicProductionManager\Data\Dto\SongFile;
 use MusicProductionManager\Exceptions\Mp3FileException;
 use MusicProductionManager\File\FileMp3;
+use ZipArchive;
 
 class SongFileUtil extends SongUtil
 {
@@ -62,12 +63,41 @@ class SongFileUtil extends SongUtil
         return stripos($content, '%PDF') === 0;
     }
 
+    /**
+     * Check if file is image
+     *
+     * @param [type] $path
+     * @return boolean
+     */
     public static function isImageFile($path)
     {
         try
         {
             $imageSize = getimagesize($path);
             return $imageSize != null && is_array($imageSize);
+        }
+        catch(Exception $e)
+        {
+            return false;
+        }
+    }
+    
+    /**
+     * Check if file is zipped
+     *
+     * @param string $path
+     * @return boolean
+     */
+    public static function isZippedFile($path)
+    {
+        try
+        {
+            $zip = new ZipArchive;
+            if ($zip->open($path) === true) {
+                $zip->close();
+                return true;
+            }
+            return false;
         }
         catch(Exception $e)
         {
@@ -268,7 +298,7 @@ class SongFileUtil extends SongUtil
      */
     public static function getMidiPath($directory)
     {
-        return self::getFullPath($directory, "midi", "mid");
+        return self::getFullPath($directory, "song", "mid");
     }
     
     /**
@@ -290,7 +320,7 @@ class SongFileUtil extends SongUtil
      */
     public static function getMusicXmlPath($directory)
     {
-        return self::getFullPath($directory, "musicxml", "xml");
+        return self::getFullPath($directory, "song", "musicxml");
     }
     
     /**
