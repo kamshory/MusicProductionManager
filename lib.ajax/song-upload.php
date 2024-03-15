@@ -42,6 +42,11 @@ try
     // get uploaded file properties
     $fileUpload = new FileUpload();
     $defaultTargetDir = dirname(__DIR__)."/files/$id";
+    if(stripos($defaultTargetDir, ":") !== false)
+    {
+        $arr1 = explode(":", $defaultTargetDir, 2);
+        $defaultTargetDir = end($arr1);
+    }
     
     $tempDir = dirname(__DIR__)."/temp";
     
