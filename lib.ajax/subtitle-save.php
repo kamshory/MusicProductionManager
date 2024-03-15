@@ -31,7 +31,7 @@ if($duration != '')
 try
 {
     $song->update();
-    $userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Save subtitle ".$song->getSongId(), $inputGet, $inputPost);
+    $userActivityId = UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Save subtitle ".$song->getSongId(), $inputGet, $inputPost);
     SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress($cfg), $userActivityId);
 }
 catch(Exception $e)

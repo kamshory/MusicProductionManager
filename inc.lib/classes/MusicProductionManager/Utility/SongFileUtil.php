@@ -280,9 +280,23 @@ class SongFileUtil extends SongUtil
     {
         $baseName = preg_replace('/[^a-z0-9]+/', '-', $baseName);
         $path = trim($directory)."/".trim($baseName).".".trim($extension);
+        $path = self::fixDirectorySeparator($path);
+        return $path;
+    }
+
+    /**
+     * Fix directory separator
+     *
+     * @param string $path
+     * @return string
+     */
+    public static function fixDirectorySeparator($path)
+    {
+        $path = str_replace("\\", "/", $path);
         $path = str_replace("/", DIRECTORY_SEPARATOR, $path);
         $path = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
         $path = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+        $path = str_replace(DIRECTORY_SEPARATOR, "/", $path);
         return $path;
     }
     

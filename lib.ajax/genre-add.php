@@ -45,7 +45,7 @@ try
     {
         $inputGet = new InputGet();
     }
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add genre ".$genre->getGenreId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Add genre ".$genre->getGenreId(), $inputGet, $inputPost);
 }
 catch(Exception $e)
 {

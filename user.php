@@ -60,7 +60,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT) && $inputPost->getSave() 
     {
       $inputGet = new InputGet();
     }
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$user->getUserId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Update user ".$user->getUserId(), $inputGet, $inputPost);
 
     header('Location: '.basename(($_SERVER['PHP_SELF'])));
 }

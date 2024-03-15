@@ -36,7 +36,7 @@ try
     
     $userType->update();
 
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user type ".$userType->getUserTypeId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Update user type ".$userType->getUserTypeId(), $inputGet, $inputPost);
     
     $restResponse = new PicoResponse();
     $response = UserTypeDto::valueOf($userType);

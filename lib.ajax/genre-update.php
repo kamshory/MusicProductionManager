@@ -40,7 +40,7 @@ try
     {
         $inputGet = new InputGet();
     }
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update genre ".$genre->getGenreId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Update genre ".$genre->getGenreId(), $inputGet, $inputPost);
 
     $restResponse = new PicoResponse();
     $response = GenreDto::valueOf($genre);

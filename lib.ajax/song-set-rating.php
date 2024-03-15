@@ -22,7 +22,7 @@ try
     SongUtil::setRating($database, $inputPost->getSongId(), $currentLoggedInUser->getUserId(), $rating, $now);
     
     $allRating = SongUtil::getRating($database, $inputPost->getSongId());
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Set rating song ".$inputPost->getSongId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Set rating song ".$inputPost->getSongId(), $inputGet, $inputPost);
 
     $song1 = new Song(null, $database);
     $song1->findOneBySongId($inputPost->getSongId());

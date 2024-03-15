@@ -183,7 +183,7 @@ try {
         $inputGet = new InputGet();
     }
     $inputPost->unsetPassword();
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update user ".$inputPost->getUserId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Update user ".$inputPost->getUserId(), $inputGet, $inputPost);
 
 } catch (Exception $e) {
     // do nothing

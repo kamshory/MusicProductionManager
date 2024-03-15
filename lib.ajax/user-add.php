@@ -110,7 +110,7 @@ try {
             $inputGet = new InputGet();
         }
         $inputPost->unsetPassword();
-        UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add user ".$user->getUserId(), $inputGet, $inputPost);
+        UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Add user ".$user->getUserId(), $inputGet, $inputPost);
     } else {
         // do nothing
     }

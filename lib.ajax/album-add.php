@@ -54,7 +54,7 @@ catch(Exception $e)
     {
         $inputGet = new InputGet();
     }
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add album ".$album->getAlbumId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Add album ".$album->getAlbumId(), $inputGet, $inputPost);
     
     $restResponse = new PicoResponse();   
     $response = AlbumDto::valueOf($album);

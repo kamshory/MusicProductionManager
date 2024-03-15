@@ -4,6 +4,7 @@ namespace MusicProductionManager\Utility;
 
 use Exception;
 use MagicObject\Database\PicoDatabase;
+use MagicObject\MagicObject;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MusicProductionManager\Constants\UserRole;
@@ -174,7 +175,7 @@ class UserUtil
      * Get current user role
      *
      * @param EntityUser $user
-     * @return string[]
+     * @return string
      */
     public static function getCurrentUserRole($user)
     {
@@ -265,6 +266,7 @@ class UserUtil
     /**
      * Log user activity
      *
+     * @param MagicObject $cfg
      * @param PicoDatabase $database
      * @param string $userId
      * @param string $activity
@@ -273,7 +275,7 @@ class UserUtil
      * @param bool $skipRequestBody
      * @return string
      */
-    public static function logUserActivity($database, $userId, $activity, $inputGet, $inputPost, $skipRequestBody = false)
+    public static function logUserActivity($cfg, $database, $userId, $activity, $inputGet, $inputPost, $skipRequestBody = false)
     {
         $requestBody = null;
         if(!$skipRequestBody && ($inputPost == null || $inputPost->isEmpty()))

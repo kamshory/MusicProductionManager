@@ -22,7 +22,7 @@ try
     {
         $inputGet = new InputGet();
     }
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add comment ".$song->getSongId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Add comment ".$song->getSongId(), $inputGet, $inputPost);
 }
 catch(Exception $e)
 {

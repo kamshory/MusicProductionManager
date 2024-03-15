@@ -36,7 +36,7 @@ if ($lyric != null && $songId != null) {
 		$inputGet = new InputGet();
     }
 	$now = date("Y-m-d H:i:s");
-	$userActivityId = UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update MIDI lyric ".$song->getSongId(), $inputGet, $inputPost);
+	$userActivityId = UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Update MIDI lyric ".$song->getSongId(), $inputGet, $inputPost);
 	SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress($cfg), $userActivityId);
 
 	echo json_encode(array('ok' => true));

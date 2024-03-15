@@ -76,7 +76,7 @@ try {
     if (!isset($inputGet)) {
         $inputGet = new InputGet();
     }
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Update album " . $album->getAlbumId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Update album " . $album->getAlbumId(), $inputGet, $inputPost);
     
 
     $restResponse = new PicoResponse();

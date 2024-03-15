@@ -40,7 +40,7 @@ try
     {
         $userType->save();
     }  
-    UserUtil::logUserActivity($database, $currentLoggedInUser->getUserId(), "Add user type ".$userType->getUserTypeId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Add user type ".$userType->getUserTypeId(), $inputGet, $inputPost);
 }
 catch(Exception $e)
 {
