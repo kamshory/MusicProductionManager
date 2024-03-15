@@ -240,14 +240,15 @@ class SongFileUtil extends SongUtil
      * Get song base path
      *
      * @param MagicObject $cfg
+     * @param string $songIds
      * @param string|null $default
      * @return string
      */
-    public static function getSongBasePath($cfg, $default = null)
+    public static function getSongBasePath($cfg, $songId, $default = null)
     {
         if($cfg->hasValueSongBasePath())
         {
-            return $cfg->getSongBasePaty();
+            return $cfg->getSongBasePath() . "/" . $songId;
         }
         return $default;
     }

@@ -1,5 +1,7 @@
 result_per_page: 20
 song_base_url: ${SONG_BASE_UER}
+song_base_path: ${SONG_BASE_PATH}
+proxy_provider: cloudflare
 app_name: Music Production Manager
 user_image:
   width: 512
@@ -23,4 +25,4 @@ database:
   time_zone: ${APP_DATABASE_TIME_ZONE}
   salt: ${APP_DATABASE_SALT}
 
-proxy_provider: cloudflare
+

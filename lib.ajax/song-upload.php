@@ -59,19 +59,14 @@ try
     $path = $fileUpload->getFilePath();
     
     $header = SongFileUtil::getContent($path, 96);
-    
+    $targetDir = SongFileUtil::getSongBasePath($cfg, $id, $defaultTargetDir);        
+    SongFileUtil::prepareDir($targetDir);
+
     if(SongFileUtil::isMp3File($path))
     {    
-        $song->setFileUploadTime($now);
-        
-        // copy path to mp3Path
-        
-        $targetDir = SongFileUtil::getSongBasePath($cfg, $defaultTargetDir);
-        
-        SongFileUtil::prepareDir($targetDir);
-        
         $mp3Path = SongFileUtil::getMp3Path($targetDir);
         copy($path, $mp3Path);
+        $song->setFileUploadTime($now);
         $song->setFilePath($mp3Path);
         $song->setFileName(basename($mp3Path));
         $song->setFileSize($fileUpload->getFileSize());
@@ -96,7 +91,7 @@ try
     else if(SongFileUtil::isXmlMusicFile($path))
     {
         $xmlMusicPath = SongFileUtil::getMusicXmlPath($targetDir);
-        copy($path, $midiPath);
+        copy($path, $xmlMusicPath);
         $song->setFilePathXml($xmlMusicPath);
         $song->setLastUploadTimeXml($now);
     }  
@@ -111,7 +106,7 @@ try
     {
         // save image with original dimension
         $jpegPath = SongFileUtil::getScoresPath($targetDir);
-        copy($path, $pdfPath);
+        copy($path, $jpegPath);
         ImageUtil::convertToJpeg($jpegPath);
 
         $song->setFilePathJpeg($jpegPath);
@@ -152,8 +147,13 @@ try
                 $song->setFilePathXml($xmlMusicPath);
                 $song->setLastUploadTimeXml($now);
             }
-            
-            
+        }
+        else
+        {
+            if(file_exists($path))
+            {
+                unlink($path);
+            }
         }
     }  
     $songId = $song->getSongId();

@@ -6,9 +6,9 @@ use MagicObject\MagicObject;
 
 class ServerUtil
 {
-    public const OS_LINUX = 1;
-    public const OS_WINDOWS = 2;
-    public const OS_OTHER = 3;
+    const OS_LINUX = 1;
+    const OS_WINDOWS = 2;
+    const OS_OTHER = 3;
     
     /**
      * Get remote address
