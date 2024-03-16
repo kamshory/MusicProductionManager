@@ -30,12 +30,13 @@ Operating system supported **MusicProductionManager**
 12. MIDI Player
 13. MusicXML Player
 14. Karaoke
-15. Recording Teleprompter
-16. Piano Display
-17. Download Files
-18. User Management
-19. User Role
-20. Article
+15. Sound Recorder
+16. Recording Teleprompter
+17. Piano Display
+18. Download Files
+19. User Management
+20. User Role
+21. Article
 
 ## Colaboration
 
@@ -132,6 +133,14 @@ MIDI editor is useful for changing instruments on each song track. Producers may
 ## Karaoke
 
 Karaoke is a feature that vocalists can use while practicing. Features can be accessed in both desktop and mobile mode using smartphones and tablets.
+
+## Sound Recorder
+
+Sound recorder is a feature for songwriters. The song created by the songwriter is directly recorded using MusicProductionManager and can be listened to by the composer. Composers compose songs based on ideas and drafts created by the songwriter.
+
+Songwriters can also add simple music from instruments or acapella which will inspire the composer to compose a complete song.
+
+Composers can link songs created by songwriters so that both songwriters, composers, arrangers and producers know the initial idea of a song.
 
 ## Recording Teleprompter
 
