@@ -34,11 +34,11 @@ function startRecording() {
       encodingType = encodingTypeSelect.value;
 
       recorder = new WebAudioRecorder(input, {
-        workerDir: "assets/sound-recorder/", 
+        workerDir: "assets/sound-recorder/",
         encoding: encodingType,
-        numChannels: 2, 
+        numChannels: 2,
         onEncoderLoading: function (recorder, encoding) {
-           __log("Loading " + encoding + " encoder...");
+          __log("Loading " + encoding + " encoder...");
         },
         onEncoderLoaded: function (recorder, encoding) {
           __log(encoding + " encoder loaded");
@@ -113,14 +113,16 @@ function createDownloadLink(blob, encoding) {
   let _btn1 = document.createElement("button");
   _btn1.setAttribute("class", "btn btn-success button-save");
   _btn1.setAttribute("data-url", link);
+  _btn1.setAttribute("data-random-id", (new Date()).getTime());
   _btn1.textContent = "Save";
 
-  _btn1.addEventListener('click', function(e){
-	let elem = e.target;
-	audioUrl = elem.getAttribute('data-url');
-	uploadAudio(audioUrl, function(base64data){
-		console.log(base64data);
-	});
+  _btn1.addEventListener("click", function (e) {
+    let elem = e.target;
+    let audioUrl = elem.getAttribute("data-url");
+	let randomId = elem.getAttribute("data-random-id");
+    generateDataFromUrl(audioUrl, function (dt) {
+		uploadAudio(dt, randomId);
+    });
   });
 
   // download
@@ -146,21 +148,32 @@ function createDownloadLink(blob, encoding) {
   recordingsList.appendChild(li);
 }
 
-const fetchData = async url => {
-	const response = await fetch(url, {mode: 'no-cors',})
-	const blob = await response.blob()
-	return blob
+function uploadAudio(base64Data, randomId) {
+  var data = new FormData();
+  data.append("data", base64Data);
+  data.append("random_id", randomId);
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    document.getElementById("result").innerText = request.responseText;
+  };
+  request.open("POST", "lib.ajax/song-draft-add.php");
+  request.send(data);
 }
 
-async function uploadAudio(url, clbk) {
-  const audioBlob = await fetchData(url)
+const fetchData = async (url) => {
+  const response = await fetch(url, { mode: "no-cors" });
+  const blob = await response.blob();
+  return blob;
+};
+
+async function generateDataFromUrl(url, clbk) {
+  const audioBlob = await fetchData(url);
   const reader = new FileReader();
   reader.onload = (e) => {
     const base64data = reader.result;
-	if(clbk)
-	{
-		clbk(base64data);
-	}
+    if (clbk) {
+      clbk(base64data);
+    }
   };
   reader.onerror = () => {
     console.log("error");
