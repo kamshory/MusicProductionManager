@@ -58,7 +58,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="sound-record.php" aria-expanded="false">
+            <a class="sidebar-link" href="sound-recorder.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-file-description"></i>
                 </span>

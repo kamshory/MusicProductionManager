@@ -1,13 +1,13 @@
 //webkitURL is deprecated but nevertheless
 URL = window.URL || window.webkitURL;
 
-var gumStream; 						//stream from getUserMedia()
-var recorder; 						//WebAudioRecorder object
-var input; 							//MediaStreamAudioSourceNode  we'll be recording
-var encodingType; 					//holds selected encoding for resulting audio (file)
-var encodeAfterRecord = true;       // when to encode
+var gumStream; //stream from getUserMedia()
+var recorder; //WebAudioRecorder object
+var input; //MediaStreamAudioSourceNode  we'll be recording
+var encodingType; //holds selected encoding for resulting audio (file)
+var encodeAfterRecord = true; // when to encode
 
-// shim for AudioContext when it's not avb. 
+// shim for AudioContext when it's not avb.
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext; //new audio context to help us record
 
@@ -20,136 +20,154 @@ recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
 
 function startRecording() {
-	console.log("startRecording() called");
+  console.log("startRecording() called");
+  var constraints = { audio: true, video: false };
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then(function (stream) {
+      __log(
+        "getUserMedia() success, stream created, initializing WebAudioRecorder..."
+      );
+      audioContext = new AudioContext();
+      gumStream = stream;
+      input = audioContext.createMediaStreamSource(stream);
+      encodingType = encodingTypeSelect.value;
 
-	/*
-		Simple constraints object, for more advanced features see
-		https://addpipe.com/blog/audio-constraints-getusermedia/
-	*/
-    
-    var constraints = { audio: true, video:false }
+      recorder = new WebAudioRecorder(input, {
+        workerDir: "assets/sound-recorder/", 
+        encoding: encodingType,
+        numChannels: 2, 
+        onEncoderLoading: function (recorder, encoding) {
+           __log("Loading " + encoding + " encoder...");
+        },
+        onEncoderLoaded: function (recorder, encoding) {
+          __log(encoding + " encoder loaded");
+        },
+      });
 
-    /*
-    	We're using the standard promise based getUserMedia() 
-    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-	*/
+      recorder.onComplete = function (recorder, blob) {
+        __log("Encoding complete");
+        createDownloadLink(blob, recorder.encoding);
+      };
 
-	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-		__log("getUserMedia() success, stream created, initializing WebAudioRecorder...");
+      recorder.setOptions({
+        timeLimit: 120,
+        encodeAfterRecord: encodeAfterRecord,
+        ogg: { quality: 0.5 },
+        mp3: { bitRate: 160 },
+      });
 
-		/*
-			create an audio context after getUserMedia is called
-			sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-			the sampleRate defaults to the one set in your OS for your playback device
+      recorder.startRecording();
 
-		*/
-		audioContext = new AudioContext();
+      __log("Recording started");
+    })
+    .catch(function (err) {
+      recordButton.disabled = false;
+      stopButton.disabled = true;
+    });
 
-		//update the format 
-		document.getElementById("formats").innerHTML="Format: 2 channel "+encodingTypeSelect.options[encodingTypeSelect.selectedIndex].value+" @ "+audioContext.sampleRate/1000+"kHz"
-
-		//assign to gumStream for later use
-		gumStream = stream;
-		
-		/* use the stream */
-		input = audioContext.createMediaStreamSource(stream);
-		
-		//stop the input from playing back through the speakers
-		//input.connect(audioContext.destination)
-
-		//get the encoding 
-		encodingType = encodingTypeSelect.options[encodingTypeSelect.selectedIndex].value;
-		
-		//disable the encoding selector
-		encodingTypeSelect.disabled = true;
-
-		recorder = new WebAudioRecorder(input, {
-		  workerDir: "assets/sound-recorder/", // must end with slash
-		  encoding: encodingType,
-		  numChannels:2, //2 is the default, mp3 encoding supports only 2
-		  onEncoderLoading: function(recorder, encoding) {
-		    // show "loading encoder..." display
-		    __log("Loading "+encoding+" encoder...");
-		  },
-		  onEncoderLoaded: function(recorder, encoding) {
-		    // hide "loading encoder..." display
-		    __log(encoding+" encoder loaded");
-		  }
-		});
-
-		recorder.onComplete = function(recorder, blob) { 
-			__log("Encoding complete");
-			createDownloadLink(blob,recorder.encoding);
-			encodingTypeSelect.disabled = false;
-		}
-
-		recorder.setOptions({
-		  timeLimit:120,
-		  encodeAfterRecord:encodeAfterRecord,
-	      ogg: {quality: 0.5},
-	      mp3: {bitRate: 160}
-	    });
-
-		//start the recording process
-		recorder.startRecording();
-
-		 __log("Recording started");
-
-	}).catch(function(err) {
-	  	//enable the record button if getUSerMedia() fails
-    	recordButton.disabled = false;
-    	stopButton.disabled = true;
-
-	});
-
-	//disable the record button
-    recordButton.disabled = true;
-    stopButton.disabled = false;
+  //disable the record button
+  recordButton.disabled = true;
+  stopButton.disabled = false;
 }
 
 function stopRecording() {
-	console.log("stopRecording() called");
-	
-	//stop microphone access
-	gumStream.getAudioTracks()[0].stop();
+  console.log("stopRecording() called");
 
-	//disable the stop button
-	stopButton.disabled = true;
-	recordButton.disabled = false;
-	
-	//tell the recorder to finish the recording (stop recording + encode the recorded audio)
-	recorder.finishRecording();
+  gumStream.getAudioTracks()[0].stop();
 
-	__log('Recording stopped');
+  //disable the stop button
+  stopButton.disabled = true;
+  recordButton.disabled = false;
+
+  recorder.finishRecording();
+
+  __log("Recording stopped");
 }
 
-function createDownloadLink(blob,encoding) {
-	
-	var url = URL.createObjectURL(blob);
-	var au = document.createElement('audio');
-	var li = document.createElement('li');
-	var link = document.createElement('a');
+function createDownloadLink(blob, encoding) {
+  var url = URL.createObjectURL(blob);
+  var au = document.createElement("audio");
+  var li = document.createElement("li");
+  var link = document.createElement("a");
 
-	//add controls to the <audio> element
-	au.controls = true;
-	au.src = url;
+  //add controls to the <audio> element
+  au.controls = true;
+  au.src = url;
 
-	//link the a element to the blob
-	link.href = url;
-	link.download = new Date().toISOString() + '.'+encoding;
-	link.innerHTML = link.download;
+  //link the a element to the blob
+  link.href = url;
+  link.download = new Date().toISOString() + "." + encoding;
+  link.innerHTML = link.download;
 
-	//add the new audio and a elements to the li element
-	li.appendChild(au);
-	li.appendChild(link);
+  //add the new audio and a elements to the li element
+  let _au = document.createElement("div");
+  _au.classList.add("audio-container");
+  _au.appendChild(au);
 
-	//add the li element to the ordered list
-	recordingsList.appendChild(li);
+  let _link = document.createElement("div");
+  _link.classList.add("button-container");
+  _link.appendChild(link);
+
+  // save
+  let _btn1 = document.createElement("button");
+  _btn1.setAttribute("class", "btn btn-success button-save");
+  _btn1.setAttribute("data-url", link);
+  _btn1.textContent = "Save";
+
+  _btn1.addEventListener('click', function(e){
+	let elem = e.target;
+	audioUrl = elem.getAttribute('data-url');
+	uploadAudio(audioUrl, function(base64data){
+		console.log(base64data);
+	});
+  });
+
+  // download
+  let _btn2 = document.createElement("button");
+  _btn2.setAttribute("class", "btn btn-primary button-download");
+  _btn2.setAttribute("data-url", link);
+  _btn2.textContent = "Download";
+
+  // delete
+  let _btn3 = document.createElement("button");
+  _btn3.setAttribute("class", "btn btn-danger button-delete");
+  _btn3.setAttribute("data-url", link);
+  _btn3.textContent = "Delete";
+
+  li.appendChild(_au);
+  li.appendChild(_btn1);
+  li.appendChild(document.createTextNode(" "));
+  li.appendChild(_btn2);
+  li.appendChild(document.createTextNode(" "));
+  li.appendChild(_btn3);
+
+  //add the li element to the ordered list
+  recordingsList.appendChild(li);
 }
 
+const fetchData = async url => {
+	const response = await fetch(url, {mode: 'no-cors',})
+	const blob = await response.blob()
+	return blob
+}
 
+async function uploadAudio(url, clbk) {
+  const audioBlob = await fetchData(url)
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const base64data = reader.result;
+	if(clbk)
+	{
+		clbk(base64data);
+	}
+  };
+  reader.onerror = () => {
+    console.log("error");
+  };
+  reader.readAsDataURL(audioBlob);
+}
 
-//helper function
 function __log(e, data) {
-	log.innerHTML += "\n" + e + " " + (data || '');
+  log.innerHTML += "\n" + e + " " + (data || "");
 }
