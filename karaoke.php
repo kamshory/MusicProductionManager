@@ -117,7 +117,7 @@ require_once "inc/header.php";
                 $song->findOneBySongId($inputGet->getSongId());
                 
             ?>
-            <audio class="player" src="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>" controls></audio>
+            <audio class="player" src="<?php echo $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>" controls></audio>
             <script>
             let piano = null;
             let karaoke = null;

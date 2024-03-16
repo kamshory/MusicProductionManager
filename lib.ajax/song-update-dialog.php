@@ -127,7 +127,7 @@ $song->findOneBySongId($inputGet->getSongId());
                     </fieldset>
                     
                 </div>
-                <audio style="width: 100%; height: 40px;" src="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>" controls></audio>
+                <audio style="width: 100%; height: 40px;" src="<?php echo $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>" controls></audio>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success save-update-song">OK</button>

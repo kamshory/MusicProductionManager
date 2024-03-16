@@ -258,7 +258,7 @@ if(!empty($result))
         $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_id=".$songId;
         $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_id=".$songId;
         ?>
-            <div class="song-wrapper" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getFileName();?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>">
+            <div class="song-wrapper" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>">
             <button class="btn btn-success" onclick="push('<?php echo $songId;?>')">Push</button>
             <button class="btn btn-primary" onclick="start('<?php echo $songId;?>', this)">Start</button>          
             <?php echo $song->getName();?>
