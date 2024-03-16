@@ -270,8 +270,8 @@ class UserUtil
      * @param PicoDatabase $database
      * @param string $userId
      * @param string $activity
-     * @param InputGet $inputGet
-     * @param InputPost $inputPost
+     * @param InputGet|null $inputGet
+     * @param InputPost|null $inputPost
      * @param bool $skipRequestBody
      * @return string
      */
