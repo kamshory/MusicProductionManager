@@ -6,6 +6,14 @@ MIDI files are one of the focuses in **Music Production Manager**. MIDI files ca
 
 Not all DAWs support the MusicXML format but many DAWs support the MIDI format.
 
+## Operating System
+
+Operating system supported **MusicProductionManager**
+
+1. Linux (CentOS, RedHat, Ubuntu)
+2. Windows
+3. Macintosh
+
 ## Features
 
 1. Colaboration
