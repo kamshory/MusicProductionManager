@@ -47,6 +47,14 @@ class SongDraft extends MagicObject
 	protected $title;
 
 	/**
+	 * Lyric
+	 * 
+	 * @Column(name="lyric", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $lyric;
+
+	/**
 	 * Duration
 	 * 
 	 * @Column(name="duration", type="float", nullable=true)
@@ -136,5 +144,4 @@ class SongDraft extends MagicObject
 	 * @var bool
 	 */
 	protected $active;
-
 }
