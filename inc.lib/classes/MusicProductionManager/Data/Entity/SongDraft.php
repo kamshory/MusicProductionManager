@@ -31,6 +31,14 @@ class SongDraft extends MagicObject
 	protected $randomId;
 
 	/**
+	 * Artist ID
+	 * 
+	 * @Column(name="artist_id", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $artistId;
+
+	/**
 	 * Name
 	 * 
 	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
