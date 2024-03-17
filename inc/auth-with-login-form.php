@@ -1,11 +1,11 @@
 <?php
 
-use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Data\Entity\EntityUser;
 
 require_once __DIR__."/app.php";
 require_once __DIR__."/session.php";
 
-$currentLoggedInUser = new User(null, $database);
+$currentLoggedInUser = new EntityUser(null, $database);
 if(isset($_SESSION) && isset($_SESSION['suser']) && isset($_SESSION['spass']))
 {
     try

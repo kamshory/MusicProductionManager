@@ -39,6 +39,14 @@ class EntitySongDraft extends MagicObject
 	protected $artistId;
 
     /**
+	 * Artist
+	 * 
+	 * @JoinColumn(name="artist_id")
+	 * @var Artist
+	 */
+	protected $artist;
+
+    /**
      * Name
      * 
      * @Column(name="name", type="varchar(100)", length=100, nullable=true)

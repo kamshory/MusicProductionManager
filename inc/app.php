@@ -10,8 +10,12 @@ $cfg = new ConfigApp(null, true);
 $cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
-$database = new PicoDatabase($databaseCredentials, null, function($sql){
-    error_log($sql);
+$database = new PicoDatabase($databaseCredentials, 
+function($sql, $type){
+    // callback when execute query that modify data
+}, 
+function($sql){
+    // callback when execute all query
 });
 try
 {

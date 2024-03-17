@@ -289,6 +289,13 @@ class SpecificationUtil
             $spesification->addAnd($spesificationTitle);
         }
 
+        if($inputGet->getArtistId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->equals('artistId', $inputGet->getArtistId());
+            $spesification->addAnd($predicate1);
+        }
+
         if($inputGet->getActive() != "")
         {
             $predicate1 = new PicoPredicate();

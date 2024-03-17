@@ -6,8 +6,10 @@ use MagicObject\Database\PicoSortable;
 use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\InputGet;
+use MagicObject\Response\Generated\PicoSelectOption;
 use MagicObject\Util\Dms;
 use MusicProductionManager\Constants\ParamConstant;
+use MusicProductionManager\Data\Entity\Artist;
 use MusicProductionManager\Data\Entity\EntitySongDraft;
 use MusicProductionManager\Data\Entity\EntitySongDraftComment;
 use MusicProductionManager\Utility\SpecificationUtil;
@@ -142,6 +144,13 @@ else
     <div class="filter-container">
     <form action="" method="get">
     <div class="filter-group">
+        <span>Artist</span>
+        <select class="form-control" name="artist_id" id="artist_id">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArtistId()); ?>
+        </select>
+    </div>
+    <div class="filter-group">
         <span>From</span>
         <input class="form-control" type="date" name="from" id="from" autocomplete="off" value="<?php echo $inputGet->getFrom(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
@@ -236,7 +245,7 @@ if(!empty($result))
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
-        <th scope="col" class="col-sort" data-name="admin_create">Creator</th>
+        <th scope="col" class="col-sort" data-name="artist_id">Artist</th>
         <th scope="col" class="col-sort" data-name="time_create">Created</th>
         <th scope="col" class="col-sort" data-name="size">File Size</th>
         <th scope="col" class="col-sort" data-name="duration">Length</th>
@@ -262,7 +271,7 @@ if(!empty($result))
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $song->getName();?></a></td>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
-        <td class="text-data text-data-time-creator text-nowrap"><?php echo $song->hasValueCreator() ? $song->getCreator()->getName() : "";?></td>
+        <td class="text-data text-data-time-artist text-nowrap"><?php echo $song->hasValueArtist() ? $song->getArtist()->getName() : "";?></td>
         <td class="text-data text-data-time-create text-nowrap"><?php echo $song->getTimeCreate();?></td>
         <td class="text-data text-data-size text-nowrap"><?php echo (int) ($song->getFileSize() / 1024); ?> k</td>
         <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>

@@ -65,6 +65,14 @@ if($inputPost->getData() != "")
         $songDraft->setIpCreate($ip);
         $songDraft->setIpEdit($ip);
 
+        error_log($currentLoggedInUser);
+
+        if($currentLoggedInUser->hasValueArtist())
+        {
+            // set artist ID if exists
+            $songDraft->setArtistId($currentLoggedInUser->getArtist()->getArtistId());
+        }
+
         // get MP3 duration
         $mp3file = new FileMp3($path); 
         $duration = $mp3file->getDuration(); 

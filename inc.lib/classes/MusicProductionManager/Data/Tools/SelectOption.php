@@ -6,7 +6,7 @@ use Exception;
 use MagicObject\Database\PicoSortable;
 use MagicObject\MagicObject;
 
-class PicoSelectOption
+class SelectOption
 {
     /**
      * Object
