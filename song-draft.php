@@ -173,6 +173,10 @@ else
         <span>Title</span>
         <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
+    <div class="filter-group">
+        <span>Lyric</span>
+        <input class="form-control" type="text" name="lyric" id="lyric" autocomplete="off" value="<?php echo $inputGet->getLyric(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+    </div>
     
     <div class="filter-group">
         <span>Active</span>
@@ -254,6 +258,7 @@ if(!empty($result))
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
+        <th scope="col" class="col-sort" data-name="lyric">Lyric</th>
         <th scope="col" class="col-sort" data-name="time_create">Created</th>
         <th scope="col" class="col-sort" data-name="duration">Length</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
