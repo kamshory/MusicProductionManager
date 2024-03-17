@@ -19,16 +19,24 @@ if ($inputGet->getSongDraftId() != null) {
                             <h5 class="modal-title" id="updateSongDraftDialogLabel">Update Song Draft</h5>
                             <button type="button" class="btn-primary btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body song-dialog" style="position:relative">
+                        <div class="modal-body song-draft-dialog" style="position:relative">
                             <audio style="width: 100%; height: 40px;" src="<?php echo $cfg->getSongDraftBaseUrl() . "/" . $song->getSongDraftId() . "/" . basename($song->getFilePath()); ?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime()); ?>" controls></audio>
 
                             <form>
-                                <textarea name="lyric" class="form-control"><?php echo nl2br($song->getLyric(), true);?></textarea>
+                                <div style="padding: 5px 0">
+                                    <input type="text" name="name" class="form-control" value="<?php echo $song->getName();?>" placeholder="Name">
+                                </div>
+                                <div style="padding: 5px 0">
+                                    <input type="text" name="title" class="form-control" value="<?php echo $song->getTitle();?>" placeholder="Title">
+                                </div>
+                                <div style="padding: 5px 0">
+                                <textarea name="lyric" class="form-control" style="height:180px"><?php echo nl2br($song->getLyric(), true);?></textarea>
+                                </div>                               
                             </form>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success save-update-song">Save</button>
+                            <button type="button" class="btn btn-success save-update-song-draft">Save</button>
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </div>

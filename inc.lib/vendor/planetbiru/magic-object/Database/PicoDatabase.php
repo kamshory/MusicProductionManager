@@ -7,6 +7,7 @@ use PDOException;
 use PDOStatement;
 use MagicObject\Constants\PicoConstants;
 use MagicObject\Exceptions\NullPointerException;
+use stdClass;
 
 class PicoDatabase
 {
@@ -111,7 +112,7 @@ class PicoDatabase
 	 * @param string $sql
 	 * @param integer $tentativeType
 	 * @param array $defaultValue
-	 * @return array|null
+	 * @return array|object|stdClass|null
 	 */
 	public function fetch($sql, $tentativeType = PDO::FETCH_ASSOC, $defaultValue = null)
 	{

@@ -380,17 +380,17 @@ if(!empty($result))
       })
     });
 
-    $(document).on('click', '.save-update-song', function(){
-      if($('.song-dialog audio').length > 0)
+    $(document).on('click', '.save-update-song-draft', function(){
+      if($('.song-draft-dialog audio').length > 0)
       {
-        $('.song-dialog audio').each(function(){
+        $('.song-draft-dialog audio').each(function(){
           $(this)[0].pause();
         });
       }
       let dataSet = $(this).closest('form').serializeArray();
       $.ajax({
         type:'POST',
-        url:'lib.ajax/song-update.php',
+        url:'lib.ajax/song-draft-update.php',
         data:dataSet, 
         dataType:'json',
         success: function(data)
@@ -400,7 +400,6 @@ if(!empty($result))
           let dataId = data.song_draft_id;
           $('[data-id="'+dataId+'"] .text-data.text-data-name').text(data.name);
           $('[data-id="'+dataId+'"] .text-data.text-data-title').text(data.title);
-          $('[data-id="'+dataId+'"] .text-data.text-data-duration').text(data.duration);
           $('[data-id="'+dataId+'"] .text-data.text-data-active').text(data.active === true || data.active == 1 || data.active == "1" ?'Yes':'No');
         }
       })
