@@ -217,10 +217,8 @@ else
 }
 
 $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
-
 $songDraftEntity = new EntitySongDraft(null, $database);
 $rowData = $songDraftEntity->findAll($spesification, $pagable, $sortable, true);
-
 $result = $rowData->getResult();
 
 ?>
@@ -258,7 +256,6 @@ if(!empty($result))
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
-        <th scope="col" class="col-sort" data-name="lyric">Lyric</th>
         <th scope="col" class="col-sort" data-name="time_create">Created</th>
         <th scope="col" class="col-sort" data-name="duration">Length</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
@@ -271,10 +268,10 @@ if(!empty($result))
         {
         $no++;
         $songId = $song->getSongDraftId();
-        $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&song_id=".$songId;
-        $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_id=".$songId;
-        $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_id=".$songId;
-        $linkDownload = "read-file.php?type=draft&song_id=".$songId;
+        $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&song_draft_id=".$songId;
+        $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_draft_id=".$songId;
+        $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_draft_id=".$songId;
+        $linkDownload = "read-file.php?type=draft&song_draft_id=".$songId;
         ?>
         <tr data-id="<?php echo $songId;?>">
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
@@ -351,7 +348,7 @@ if(!empty($result))
   </div>
 </div>
 
-<div class="lazy-dom modal-container modal-update-data" data-url="lib.ajax/song-update-dialog.php"></div>
+<div class="lazy-dom modal-container modal-update-data" data-url="lib.ajax/song-draft-update-dialog.php"></div>
 
 <script>
   let updateSongModal;
@@ -364,9 +361,9 @@ if(!empty($result))
       
       let songId = $(this).closest('tr').attr('data-id') || '';
       let dialogSelector = $('.modal-update-data');
-      dialogSelector.load(dialogSelector.attr('data-url')+'?song_id='+songId, function(data){
+      dialogSelector.load(dialogSelector.attr('data-url')+'?song_draft_id='+songId, function(data){
         
-        let updateSongModalElem = document.querySelector('#updateSongDialog');
+        let updateSongModalElem = document.querySelector('#updateSongDraftDialog');
         updateSongModal = new bootstrap.Modal(updateSongModalElem, {
           keyboard: false
         });
@@ -400,18 +397,10 @@ if(!empty($result))
         {
           updateSongModal.hide();
           let formData = getFormData(dataSet);
-          let dataId = data.song_id;
+          let dataId = data.song_draft_id;
           $('[data-id="'+dataId+'"] .text-data.text-data-name').text(data.name);
           $('[data-id="'+dataId+'"] .text-data.text-data-title').text(data.title);
-          $('[data-id="'+dataId+'"] .text-data.text-data-rating').text(data.rating);
-          $('[data-id="'+dataId+'"] .text-data.text-data-track-number').text(data.track_number);
-          $('[data-id="'+dataId+'"] .text-data.text-data-artist-vocal-name').text(data.artist_vocal_name);
-          $('[data-id="'+dataId+'"] .text-data.text-data-artist-composer-name').text(data.artist_composer_name);
-          $('[data-id="'+dataId+'"] .text-data.text-data-artist-arranger-name').text(data.artist_arranger_name);
-          $('[data-id="'+dataId+'"] .text-data.text-data-album-name').text(data.album_name);
-          $('[data-id="'+dataId+'"] .text-data.text-data-genre-name').text(data.genre_name);
           $('[data-id="'+dataId+'"] .text-data.text-data-duration').text(data.duration);
-          $('[data-id="'+dataId+'"] .text-data.text-data-vocal').text(data.vocal === true || data.vocal == 1 || data.vocal == "1" ?'Yes':'No');
           $('[data-id="'+dataId+'"] .text-data.text-data-active').text(data.active === true || data.active == 1 || data.active == "1" ?'Yes':'No');
         }
       })

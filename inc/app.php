@@ -10,7 +10,9 @@ $cfg = new ConfigApp(null, true);
 $cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
-$database = new PicoDatabase($databaseCredentials);
+$database = new PicoDatabase($databaseCredentials, null, function($sql){
+    error_log($sql);
+});
 try
 {
     $database->connect();
