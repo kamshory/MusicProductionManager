@@ -24,7 +24,9 @@ require_once "inc/header.php";
 
 <pre>Recordings</pre>
 <ol class="recording-result" id="recordingsList"></ol>
+<pre id="result"></pre>
 <pre>Log</pre>
+
 <pre id="log"></pre>
 
 <script src="assets/sound-recorder/WebAudioRecorder.min.js"></script>

@@ -9,7 +9,7 @@ use MagicObject\MagicObject;
  * @JSON(property-naming-strategy=SNAKE_CASE)
  * @Table(name="song_draft")
  */
-class SongDraft extends MagicObject
+class EntitySongDraft extends MagicObject
 {
 	/**
 	 * Song Draft ID
@@ -46,7 +46,7 @@ class SongDraft extends MagicObject
 	 */
 	protected $title;
 
-	/**
+    /**
 	 * Duration
 	 * 
 	 * @Column(name="duration", type="float", nullable=true)

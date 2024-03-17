@@ -64,6 +64,14 @@
                 </span>
                 <span class="hide-menu">Karaoke</span>
             </a>
+        </li>      
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="song-draft.php" aria-expanded="false">
+                <span>
+                    <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu">Song Draft</span>
+            </a>
         </li>       
         <li class="sidebar-item">
             <a class="sidebar-link" href="comment.php" aria-expanded="false">

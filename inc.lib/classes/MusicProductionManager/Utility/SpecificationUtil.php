@@ -68,7 +68,7 @@ class SpecificationUtil
     /**
      * Create Song specification
      * @param PicoRequestTool $inputGet
-     * @param array $additional
+     * $@param array|null $additional
      * @return PicoSpecification
      */
     public static function createSongSpecification($inputGet, $additional = null) //NOSONAR
@@ -182,7 +182,7 @@ class SpecificationUtil
     /**
      * Create Song specification
      * @param PicoRequestTool $inputGet
-     * @param array $additional
+     * $@param array|null $additional
      * @return PicoSpecification
      */
     public static function createReferenceSpecification($inputGet, $additional = null)
@@ -229,6 +229,104 @@ class SpecificationUtil
             $predicate1 = new PicoPredicate();
             $predicate1->equals('active', $inputGet->getActive());
             $spesification->addAnd($predicate1);
+        }
+
+        if(isset($additional) && is_array($additional))
+        {
+            foreach($additional as $key=>$value)
+            {
+                $predicate2 = new PicoPredicate();          
+                $predicate2->equals($key, $value);
+                $spesification->addAnd($predicate2);
+            }
+        }
+        
+        return $spesification;
+    }
+
+    /**
+     * Create Song specification
+     * @param PicoRequestTool $inputGet
+     * $@param array|null $additional
+     * @return PicoSpecification
+     */
+    public static function createSongDraftSpecification($inputGet, $additional = null) //NOSONAR
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet->getSongId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->equals('songId', $inputGet->getSongId());
+            $spesification->addAnd($predicate1);
+        }
+
+        if($inputGet->getName() != "" || $inputGet->getTitle() != "")
+        {
+            $spesificationTitle = new PicoSpecification();
+            
+            if($inputGet->getName() != "")
+            {
+                $predicate1 = new PicoPredicate();
+                $predicate1->like('name', PicoPredicate::generateCenterLike($inputGet->getName()));
+                $spesificationTitle->addOr($predicate1);
+                
+                $predicate2 = new PicoPredicate();
+                $predicate2->like('title', PicoPredicate::generateCenterLike($inputGet->getName()));
+                $spesificationTitle->addOr($predicate2);
+            }
+            if($inputGet->getTitle() != "")
+            {
+                $predicate3 = new PicoPredicate();
+                $predicate3->like('name', PicoPredicate::generateCenterLike($inputGet->getTitle()));
+                $spesificationTitle->addOr($predicate3);
+                
+                $predicate4 = new PicoPredicate();
+                $predicate4->like('title', PicoPredicate::generateCenterLike($inputGet->getTitle()));
+                $spesificationTitle->addOr($predicate4);
+            }
+            
+            $spesification->addAnd($spesificationTitle);
+        }
+
+        if($inputGet->getActive() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->equals('active', $inputGet->getActive());
+            $spesification->addAnd($predicate1);
+        }
+
+        if($inputGet->getFrom() != "" && $inputGet->getTo() != "")
+        {
+            $to = $inputGet->getTo();
+            if(strlen($to) < 11)
+            {
+                $to = $to . " 23:59:59";
+            }
+            $predicate1 = new PicoPredicate();
+            $predicate1->greaterThanOrEquals('time_create', $inputGet->getFrom());
+            $spesification->addAnd($predicate1);
+
+            $predicate2 = new PicoPredicate();
+            $predicate2->lessThanOrEquals('time_create', $to);
+            $spesification->addAnd($predicate2);
+        }
+        else if($inputGet->getFrom())
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->greaterThanOrEquals('time_create', $inputGet->getFrom());
+            $spesification->addAnd($predicate1);
+        }
+        else if($inputGet->getTo() != "")
+        {
+            $to = $inputGet->getTo();
+            if(strlen($to) < 11)
+            {
+                $to = $to . " 23:59:59";
+            }
+            $predicate2 = new PicoPredicate();
+            $predicate2->lessThanOrEquals('time_create', $to);
+            $spesification->addAnd($predicate2);
         }
 
         if(isset($additional) && is_array($additional))

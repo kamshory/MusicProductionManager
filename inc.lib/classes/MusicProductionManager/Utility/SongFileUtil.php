@@ -252,6 +252,23 @@ class SongFileUtil extends SongUtil
         }
         return $default;
     }
+
+    /**
+     * Get song draft base path
+     *
+     * @param MagicObject $cfg
+     * @param string $songIds
+     * @param string|null $default
+     * @return string
+     */
+    public static function getSongDraftBasePath($cfg, $songId, $default = null)
+    {
+        if($cfg->hasValueSongDraftBasePath())
+        {
+            return $cfg->getSongDraftBasePath() . "/" . $songId;
+        }
+        return $default;
+    }
     
     /**
      * Prepare directory
@@ -355,5 +372,20 @@ class SongFileUtil extends SongUtil
     {
         return self::getFullPath($directory, "image", "jpg");
     }
+    
+    /**
+	 * Generate 20 bytes unique ID
+     * @param integer $timestamp
+	 * @return string 20 bytes
+	 */
+	public static function generateNewId($timestamp)
+	{
+		$uuid = sprintf("%x", $timestamp * 1000000);
+		if ((strlen($uuid) % 2) == 1) {
+			$uuid = '0' . $uuid;
+		}
+		$random = sprintf('%06x', mt_rand(0, 16777215));
+		return sprintf('%s%s', $uuid, $random);
+	}
 
 }

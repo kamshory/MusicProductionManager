@@ -1,6 +1,8 @@
 result_per_page: 20
 song_base_url: ${SONG_BASE_URL}
 song_base_path: ${SONG_BASE_PATH}
+song_draft_base_url: ${SONG_DRAFT_BASE_URL}
+song_draft_base_path: ${SONG_DRAFT_BASE_PATH}
 proxy_provider: cloudflare
 app_name: Music Production Manager
 user_image:

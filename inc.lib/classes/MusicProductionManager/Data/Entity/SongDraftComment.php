@@ -7,78 +7,36 @@ use MagicObject\MagicObject;
 /**
  * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE)
- * @Table(name="song_draft")
+ * @Table(name="song_draft_comment")
  */
-class SongDraft extends MagicObject
+class SongDraftComment extends MagicObject
 {
 	/**
-	 * Song Draft ID
+	 * Song Draft Comment ID
 	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
-	 * @Column(name="song_draft_id", type="varchar(40)", length=40, nullable=false)
+	 * @Column(name="song_draft_comment_id", type="varchar(40)", length=40, nullable=false)
+	 * @var string
+	 */
+	protected $songDraftCommentId;
+
+	/**
+	 * Song Draft ID
+	 * 
+	 * @Column(name="song_draft_id", type="varchar(40)", length=40, nullable=true)
 	 * @var string
 	 */
 	protected $songDraftId;
 
 	/**
-	 * Random ID
+	 * Comment
 	 * 
-	 * @Column(name="random_id", type="varchar(40)", length=40, nullable=true)
+	 * @Column(name="comment", type="longtext", nullable=true)
 	 * @var string
 	 */
-	protected $randomId;
-
-	/**
-	 * Name
-	 * 
-	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
-	 * @var string
-	 */
-	protected $name;
-
-	/**
-	 * Title
-	 * 
-	 * @Column(name="title", type="text", nullable=true)
-	 * @var string
-	 */
-	protected $title;
-
-	/**
-	 * Duration
-	 * 
-	 * @Column(name="duration", type="float", nullable=true)
-	 * @var double
-	 */
-	protected $duration;
-
-	/**
-	 * File Path
-	 * 
-	 * @Column(name="file_path", type="text", nullable=true)
-	 * @var string
-	 */
-	protected $filePath;
-
-	/**
-	 * Sha1 File
-	 * 
-	 * @NotNull
-	 * @Column(name="sha1_file", type="varchar(40)", length=40, nullable=false)
-	 * @var string
-	 */
-	protected $sha1File;
-
-	/**
-	 * Read Count
-	 * 
-	 * @NotNull
-	 * @Column(name="read_count", type="int(11)", length=11, nullable=false)
-	 * @var integer
-	 */
-	protected $readCount;
+	protected $comment;
 
 	/**
 	 * Time Create

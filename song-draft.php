@@ -11,8 +11,8 @@ use MagicObject\Util\Dms;
 use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\Artist;
-use MusicProductionManager\Data\Entity\EntitySong;
-use MusicProductionManager\Data\Entity\EntitySongComment;
+use MusicProductionManager\Data\Entity\EntitySongDraft;
+use MusicProductionManager\Data\Entity\EntitySongDraftComment;
 use MusicProductionManager\Data\Entity\Genre;
 use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Utility\SpecificationUtil;
@@ -22,18 +22,18 @@ require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";
 
 $inputGet = new InputGet();
-if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId() != null)
+if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDraftId() != null)
 {
   try
   {
-    $song = new EntitySong(null, $database);
-    $song->findOneBySongId($inputGet->getSongId());
+    $song = new EntitySongDraft(null, $database);
+    $song->findOneBySongId($inputGet->getSongDraftId());
     ?>
     <table class="table table-responsive">
       <tbody>
         <tr>
           <td>Song ID</td>
-          <td><?php echo $song->getSongId();?></td>
+          <td><?php echo $song->getSongDraftId();?></td>
         </tr>
         <tr>
           <td>Name</td>
@@ -125,10 +125,10 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
     
     <?php
     
-    $songComment = new EntitySongComment(null, $database);
+    $songComment = new EntitySongDraftComment(null, $database);
     try
     {
-      $result = $songComment->findDescBySongId($inputGet->getSongId());
+      $result = $songComment->findDescBySongId($inputGet->getSongDraftId());
       $comments = $result->getResult();
       foreach($comments as $comment)
       {
@@ -167,70 +167,18 @@ else
     <div class="filter-container">
     <form action="" method="get">
     <div class="filter-group">
-        <span>Genre</span>
-        <select class="form-control" name="genre_id" id="genre_id">
-            <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Genre(null, $database), array('value'=>'genreId', 'label'=>'name'), $inputGet->getGenreId()); ?>
-        </select>
+        <span>From</span>
+        <input class="form-control" type="date" name="from" id="from" autocomplete="off" value="<?php echo $inputGet->getFrom(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
     <div class="filter-group">
-        <span>Album</span>
-        <select class="form-control" name="album_id" id="album_id">
-            <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
-        </select>
-    </div>
-    <div class="filter-group">
-        <span>Producer</span>
-        <select class="form-control" name="producer_id" id="producer_id">
-            <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Producer(null, $database), array('value'=>'producerId', 'label'=>'name'), $inputGet->getProducerId()); ?>
-        </select>
-    </div>
-    <div class="filter-group">
-        <span>Composer</span>
-        <select class="form-control" name="composer" id="composer">
-            <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getComposer()); ?>
-        </select>
-    </div>
-    <div class="filter-group">
-        <span>Arranger</span>
-        <select class="form-control" name="arranger" id="arranger">
-            <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getArranger()); ?>
-        </select>
-    </div>
-    <div class="filter-group">
-        <span>Vocalist</span>
-        <select class="form-control" name="vocalist" id="vocalist">
-            <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Artist(null, $database), array('value'=>'artistId', 'label'=>'name'), $inputGet->getVocalist()); ?>
-        </select>
+        <span>To</span>
+        <input class="form-control" type="date" name="to" id="to" autocomplete="off" value="<?php echo $inputGet->getTo(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
     <div class="filter-group">
         <span>Title</span>
         <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
     
-    <div class="filter-group">
-        <span>Subtitle</span>
-        <select class="form-control" name="subtitle_complete" id="subtitle_complete">
-            <option value="">- All -</option>
-            <option value="1"<?php echo $inputGet->createSelectedSubtitleComplete("1");?>>Yes</option>
-            <option value="0"<?php echo $inputGet->createSelectedSubtitleComplete("0");?>>No</option>
-        </select>
-    </div>
-
-    <div class="filter-group">
-        <span>Vocal</span>
-        <select class="form-control" name="vocal" id="vocal">
-            <option value="">- All -</option>
-            <option value="1"<?php echo $inputGet->createSelectedVocal("1");?>>Yes</option>
-            <option value="0"<?php echo $inputGet->createSelectedVocal("0");?>>No</option>
-        </select>
-    </div>
-
     <div class="filter-group">
         <span>Active</span>
         <select class="form-control" name="active" id="active">
@@ -248,35 +196,21 @@ else
 $orderMap = array(
     'name'=>'name', 
     'title'=>'title', 
-    'rating'=>'rating',
-    'albumId'=>'albumId', 
-    'album'=>'albumId', 
-    'trackNumber'=>'trackNumber',
-    'genreId'=>'genreId', 
-    'genre'=>'genreId',
-    'producerId'=>'producerId',
-    'artistVocalId'=>'artistVocalId',
-    'artistVocalist'=>'artistVocalId',
-    'artistComposer'=>'artistComposer',
-    'artistArranger'=>'artistArranger',
-    'duration'=>'duration',
-    'subtitleComplete'=>'subtitleComplete',
-    'vocal'=>'vocal',
-    'active'=>'active'
+    'time_create'=>'time_create',
+    'time_edit'=>'time_edit',
+    'admin_create'=>'admin_create'
 );
-$defaultOrderBy = 'albumId';
+$defaultOrderBy = 'timeCreate';
 $defaultOrderType = 'desc';
 $pagination = new PicoPagination($cfg->getResultPerPage());
 
-$spesification = SpecificationUtil::createSongSpecification($inputGet);
+$spesification = SpecificationUtil::createSongDraftSpecification($inputGet);
 
 if($pagination->getOrderBy() == '')
 {
   $sortable = new PicoSortable();
-  $sort1 = new PicoSort('albumId', PicoSortable::ORDER_TYPE_DESC);
+  $sort1 = new PicoSort('timeCreate', PicoSortable::ORDER_TYPE_DESC);
   $sortable->addSortable($sort1);
-  $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
-  $sortable->addSortable($sort2);
 }
 else
 {
@@ -285,8 +219,8 @@ else
 
 $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
-$songEntity = new EntitySong(null, $database);
-$rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
+$songDraftEntity = new EntitySongDraft(null, $database);
+$rowData = $songDraftEntity->findAll($spesification, $pagable, $sortable, true);
 
 $result = $rowData->getResult();
 
@@ -325,17 +259,8 @@ if(!empty($result))
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
-        <th scope="col" class="col-sort" data-name="rating">Rate</th>
-        <th scope="col" class="col-sort" data-name="album_id">Album</th>
-        <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
-        <th scope="col" class="col-sort" data-name="track_number">Trk</th>
-        <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
-        <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
-        <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
-        <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
+        <th scope="col" class="col-sort" data-name="time_create">Created</th>
         <th scope="col" class="col-sort" data-name="duration">Length</th>
-        <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
-        <th scope="col" class="col-sort" data-name="subtitle_complete">Sub</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
     </thead>
@@ -345,7 +270,7 @@ if(!empty($result))
         foreach($result as $song)
         {
         $no++;
-        $songId = $song->getSongId();
+        $songId = $song->getSongDraftId();
         $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&song_id=".$songId;
         $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_id=".$songId;
         $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_id=".$songId;
@@ -353,22 +278,13 @@ if(!empty($result))
         ?>
         <tr data-id="<?php echo $songId;?>">
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
-        <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
+        <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongDraftBaseUrl()."/".$song->getSongDraftId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
         <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $song->getName();?></a></td>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
-        <td class="text-data text-data-rating text-nowrap"><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
-        <td class="text-data text-data-album-name text-nowrap"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
-        <td class="text-data text-data-producer-name text-nowrap"><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : "";?></td>
-        <td class="text-data text-data-track-number text-nowrap"><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
-        <td class="text-data text-data-genre-name text-nowrap"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
-        <td class="text-data text-data-artist-vocal-name text-nowrap"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
-        <td class="text-data text-data-artist-composer-name text-nowrap"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
-        <td class="text-data text-data-artist-arranger-name text-nowrap"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : "";?></td>
+        <td class="text-data text-data-time-create text-nowrap"><?php echo $song->getTimeCreate();?></td>
         <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>
-        <td class="text-data text-data-vocal text-nowrap"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
-        <td class="text-data text-data-subtitle-complete text-nowrap"><?php echo $song->isSsubtitleComplete() ? 'Yes' : 'No';?></td>
         <td class="text-data text-data-active text-nowrap"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
         </tr>
         <?php

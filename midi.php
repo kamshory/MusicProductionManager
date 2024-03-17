@@ -213,7 +213,7 @@ else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getS
       {
         ?>
         <div class="comment-wrapper">
-        <div class="comment-creator"><?php echo $comment->hasValueCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->hasValueTimeCreate()));?></div>
+        <div class="comment-creator"><?php echo $comment->hasValueCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->getTimeCreate()));?></div>
         <div class="comment-content"><?php echo $comment->getComment();?></div>
         <div class="comment-controller"><a class="comment-edit" href="javascript:">Edit</a> &nbsp; <a class="comment-delete" href="javascript:">Delete</a></div>
         </div>
