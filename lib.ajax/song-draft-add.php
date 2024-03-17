@@ -53,6 +53,7 @@ if($inputPost->getData() != "")
         $path = $targetDir."/".$fileName.".mp3";
         file_put_contents($path, $data);
 
+        $songDraft->setName($now);
         $songDraft->setFileSize(filesize($path));
         $songDraft->setSongDraftId($id);
         $songDraft->setSha1File(sha1_file($path));
@@ -64,8 +65,6 @@ if($inputPost->getData() != "")
         $songDraft->setTimeEdit($now);
         $songDraft->setIpCreate($ip);
         $songDraft->setIpEdit($ip);
-
-        error_log($currentLoggedInUser);
 
         if($currentLoggedInUser->hasValueArtist())
         {
