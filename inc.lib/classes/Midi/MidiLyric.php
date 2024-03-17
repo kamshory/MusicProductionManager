@@ -6,6 +6,11 @@ use stdClass;
 
 class MidiLyric extends Midi
 {
+	/**
+	 * Array contains lyric
+	 *
+	 * @var array
+	 */
 	protected $lyric = array();
 
 	/**
@@ -54,8 +59,14 @@ class MidiLyric extends Midi
 		$lyric->timebase = $this->getTimebase();
 		return $lyric;
 	}
-	
-	public function getSong($channel)
+
+	/**
+	 * Get song
+	 *
+	 * @param integer $channel
+	 * @return array
+	 */
+	public function getSong($channel) //NOSONAR
 	{
 		$midi = $this;
 		$lyric = new stdClass();
@@ -66,11 +77,11 @@ class MidiLyric extends Midi
 		$lyric->time->tracks = array();
 		$lyric->note = new stdClass();
 		$lyric->note->track = array();
-		
+
 		$f = 1 / $this->getTimebase() / 1000000;
-		
+
 		$currentTempo = 0;
-		
+
 		$song = array();
 
 		foreach ($midi->tracks as $i => $track) {
@@ -83,29 +94,26 @@ class MidiLyric extends Midi
 				$arr = explode(' ', $raw, 3);
 				$type = $arr[1];
 				$data = $arr[2];
-				
+
 				$dt = (int)$arr[0] - $t;
-				
-				
-				
+
+
+
 				if ($type == 'Tempo') {
 					$currentTempo = $arr[2] * 1;
 				}
 				if ($type == 'On') {
-					
-
 					$arr2 = explode(' ', $arr[2]);
-					eval("\$" . $arr2[0].";");
-					eval("\$" . $arr2[1].";");
-					eval("\$" . $arr2[2].";");
+					eval("\$" . $arr2[0] . ";");
+					eval("\$" . $arr2[1] . ";");
+					eval("\$" . $arr2[2] . ";");
 					$n = isset($n) ? $n : 0;
 					$ch = isset($ch) ? $ch : 0;
 					$v = isset($v) ? $v : 0;
-					if($ch == $channel)
-					{
+					if ($ch == $channel) {
 						$tm = (int) $arr[0];
 						$song[$tm] = array();
-						
+
 						$lyric->note->tracks[$i][$l] = $raw;
 						$lastNote[$n] = $arr[0];
 						$time = $dt * $currentTempo * $f;
@@ -114,9 +122,9 @@ class MidiLyric extends Midi
 						$song[$tm]['end'] = $time;
 						$song[$tm]['note'] = $n;
 						$l++;
-					}				
+					}
 				}
-				
+
 				if ($type == 'Meta' && stripos($data, 'Lyric ') === 0) {
 					$lyric->lyric->tracks[$i][$k] = $raw;
 					$arr3 = explode(' ', $raw);
@@ -124,22 +132,20 @@ class MidiLyric extends Midi
 					$song[(int) $arr[0]]['lyric'] = $result[0];
 					$k++;
 				}
-				
+
 				if ($type == 'Off') {
 					$arr2 = explode(' ', $arr[2]);
-					eval("\$" . $arr2[0].";");
-					eval("\$" . $arr2[1].";");
-					eval("\$" . $arr2[2].";");
+					eval("\$" . $arr2[0] . ";");
+					eval("\$" . $arr2[1] . ";");
+					eval("\$" . $arr2[2] . ";");
 					$n = isset($n) ? $n : 0;
 					$ch = isset($ch) ? $ch : 0;
 					$v = isset($v) ? $v : 0;
-					if($ch == $channel)
-					{
+					if ($ch == $channel) {
 						$time = $dt * $currentTempo * $f;
 						$tm = (int) $lastNote[$n];
 						$song[$tm]['end'] = $time;
 					}
-					
 				}
 			}
 		}
@@ -159,10 +165,8 @@ class MidiLyric extends Midi
 		$values = array_values($song);
 		$count = count($values);
 		$count2 = $count - 2;
-		foreach($values as $index=>$value)
-		{
-			if($value['start'] == $value['end'] && $index < $count2 && $value['note'] == $values[$index + 1]['note'])
-			{
+		foreach ($values as $index => $value) {
+			if ($value['start'] == $value['end'] && $index < $count2 && $value['note'] == $values[$index + 1]['note']) {
 				$values[$index]['end'] = $values[$index + 1]['start'];
 			}
 		}
@@ -231,31 +235,47 @@ class MidiLyric extends Midi
 		$duration += $dt * $currentTempo * $f;
 		return $duration * 1000;
 	}
+
+	/**
+	 * Add lyric
+	 *
+	 * @param object|stdClass $lyric
+	 * @return self
+	 */
 	public function addLyric($lyric)
 	{
 		$this->lyric = $lyric;
+		return $this;
 	}
-	//---------------------------------------------------------------
-	// saves MIDI song as Standard MIDI File
-	//---------------------------------------------------------------
-	public function saveMidFile($mid_path, $chmod = false)
+	
+	/**
+	 * Save MIDI song as Standard MIDI File
+	 *
+	 * @param string $midPath
+	 * @param integer|bool $chmod
+	 * @return self
+	 */
+	public function saveMidFile($midPath, $chmod = false)
 	{
-		if (count($this->tracks) < 1) 
-		{
+		if (count($this->tracks) < 1) {
 			$this->_err('MIDI song has no tracks');
 		}
-		$SMF = fopen($mid_path, "wb"); // SMF
+		$SMF = fopen($midPath, "wb"); // SMF
 		$data = $this->getMidWithLyric($this->lyric);
 		fwrite($SMF, $data);
 		fclose($SMF);
-		if ($chmod !== false) 
-		{
-			@chmod($mid_path, $chmod);
+		if ($chmod !== false) {
+			@chmod($midPath, $chmod);
 		}
+		return $this;
 	}
-	//---------------------------------------------------------------
-	// returns binary MIDI string
-	//---------------------------------------------------------------
+	
+	/**
+	 * Get binary MIDI string with lyric
+	 *
+	 * @param object|stdClass $lyric
+	 * @return string
+	 */
 	public function getMidWithLyric($lyric)
 	{
 		$tracks = $this->tracks;
@@ -285,8 +305,7 @@ class MidiLyric extends Midi
 				// repetition, same event, same channel, omit first byte (smaller file size)
 				$str = $this->_getMsgStr($line);
 				$start = ord($str[0]);
-				if ($start >= 0x80 && $start <= 0xEF && $start == $last) 
-				{
+				if ($start >= 0x80 && $start <= 0xEF && $start == $last) {
 					$str = substr($str, 1);
 				}
 				$last = $start;
@@ -297,6 +316,14 @@ class MidiLyric extends Midi
 		}
 		return $midStr;
 	}
+
+	/**
+	 * Update lyric
+	 *
+	 * @param array $tracks
+	 * @param object|stdClass $lyric
+	 * @return array
+	 */
 	public function updateLyric($tracks, $lyric)
 	{
 		$tc = count($tracks);
@@ -319,6 +346,14 @@ class MidiLyric extends Midi
 		}
 		return $tracks;
 	}
+
+	/**
+	 * Insert MIDI
+	 *
+	 * @param array $tracks
+	 * @param object|stdClass $lyric
+	 * @return array
+	 */
 	public function insertMid($track, $lyric)
 	{
 		$trackResult = array();
