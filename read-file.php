@@ -9,11 +9,8 @@ use MusicProductionManager\Utility\FileUtil;
 
 require_once "inc/auth-with-login-form.php";
 
-
-
 $inputGet = new InputGet();
-if($inputGet->getType() == "draft")
-{
+if ($inputGet->getType() == "draft") {
     try {
         $songDraft = new EntitySongDraft(null, $database);
         $songDraft->findOneBySongDraftId($inputGet->getSongId());
@@ -23,14 +20,12 @@ if($inputGet->getType() == "draft")
         header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
         header(HttpHeaderConstant::CONTENT_LENGTH . filesize($songDraft->getFilePath()));
         readfile($songDraft->getFilePath());
-
     } catch (Exception $e) {
         // do nothing
         echo $e->getMessage();
     }
     exit();
-}
-else if ($inputGet->getSongId() != null) {
+} else if ($inputGet->getSongId() != null) {
     try {
         $song = new EntitySong(null, $database);
         $song->findOneBySongId($inputGet->getSongId());
