@@ -64,7 +64,7 @@ if($inputPost->getData() != "")
         $songDraft->setIpEdit($ip);
 
         // get MP3 duration
-        $mp3file = new FileMp3($mp3Path); 
+        $mp3file = new FileMp3($path); 
         $duration = $mp3file->getDuration(); 
         $songDraft->setDuration($duration);
 

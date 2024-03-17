@@ -6,15 +6,10 @@ use MagicObject\Database\PicoSortable;
 use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;
 use MagicObject\Request\InputGet;
-use MagicObject\Response\Generated\PicoSelectOption;
 use MagicObject\Util\Dms;
 use MusicProductionManager\Constants\ParamConstant;
-use MusicProductionManager\Data\Entity\Album;
-use MusicProductionManager\Data\Entity\Artist;
 use MusicProductionManager\Data\Entity\EntitySongDraft;
 use MusicProductionManager\Data\Entity\EntitySongDraftComment;
-use MusicProductionManager\Data\Entity\Genre;
-use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Utility\SpecificationUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -274,7 +269,7 @@ if(!empty($result))
         $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&song_id=".$songId;
         $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_id=".$songId;
         $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_id=".$songId;
-        $linkDownload = "read-file.php?type=all&song_id=".$songId;
+        $linkDownload = "read-file.php?type=draft&song_id=".$songId;
         ?>
         <tr data-id="<?php echo $songId;?>">
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>

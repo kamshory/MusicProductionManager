@@ -4,6 +4,7 @@ use MagicObject\Request\InputGet;
 use MusicProductionManager\Constants\HttpHeaderConstant;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\EntitySong;
+use MusicProductionManager\Data\Entity\EntitySongDraft;
 use MusicProductionManager\Utility\FileUtil;
 
 require_once "inc/auth-with-login-form.php";
@@ -11,7 +12,25 @@ require_once "inc/auth-with-login-form.php";
 
 
 $inputGet = new InputGet();
-if ($inputGet->getSongId() != null) {
+if($inputGet->getType() == "draft")
+{
+    try {
+        $songDraft = new EntitySongDraft(null, $database);
+        $songDraft->findOneBySongDraftId($inputGet->getSongId());
+
+        $filename = $songDraft->getSongDraftId() . ".mp3";
+        header(HttpHeaderConstant::CONTENT_TYPE . "audio/mp3");
+        header(HttpHeaderConstant::CONTENT_DISPOSITION . "attachment; filename=\"$filename\"");
+        header(HttpHeaderConstant::CONTENT_LENGTH . filesize($songDraft->getFilePath()));
+        readfile($songDraft->getFilePath());
+
+    } catch (Exception $e) {
+        // do nothing
+        echo $e->getMessage();
+    }
+    exit();
+}
+else if ($inputGet->getSongId() != null) {
     try {
         $song = new EntitySong(null, $database);
         $song->findOneBySongId($inputGet->getSongId());
