@@ -140,7 +140,7 @@ Sound recorder is a feature for songwriters. The song created by the songwriter 
 
 Songwriters can also add simple music from instruments or acapella which will inspire the composer to compose a complete song.
 
-Composers can link songs created by songwriters so that both songwriters, composers, arrangers and producers know the initial idea of a song.
+Users can listen to and download song drafts from the Song Draft menu. Composers can link songs created by songwriters so that both songwriters, composers, arrangers and producers know the initial idea of a song.
 
 ## Recording Teleprompter
 
