@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 09, 2024 at 12:00 AM
+-- Generation Time: Mar 17, 2024 at 07:09 PM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -42,8 +42,9 @@ CREATE TABLE IF NOT EXISTS `album` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1',
-  `as_draft` tinyint(1) DEFAULT '1'
+  `locked` tinyint(1) DEFAULT '0',
+  `as_draft` tinyint(1) DEFAULT '1',
+  `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -303,6 +304,124 @@ CREATE TABLE IF NOT EXISTS `song_comment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `song_copy`
+--
+
+CREATE TABLE IF NOT EXISTS `song_copy` (
+  `song_id` varchar(50) NOT NULL,
+  `random_song_id` varchar(50) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `title` text,
+  `album_id` varchar(50) DEFAULT NULL,
+  `track_number` int(11) DEFAULT NULL,
+  `producer_id` varchar(40) DEFAULT NULL,
+  `artist_vocalist` varchar(50) DEFAULT NULL,
+  `artist_composer` varchar(50) DEFAULT NULL,
+  `artist_arranger` varchar(50) DEFAULT NULL,
+  `file_path` text,
+  `file_name` varchar(100) DEFAULT NULL,
+  `file_type` varchar(100) DEFAULT NULL,
+  `file_extension` varchar(20) DEFAULT NULL,
+  `file_size` bigint(20) DEFAULT NULL,
+  `file_md5` varchar(32) DEFAULT NULL,
+  `file_upload_time` timestamp NULL DEFAULT NULL,
+  `first_upload_time` timestamp NULL DEFAULT NULL,
+  `last_upload_time` timestamp NULL DEFAULT NULL,
+  `file_path_midi` text,
+  `last_upload_time_midi` timestamp NULL DEFAULT NULL,
+  `file_path_xml` text,
+  `last_upload_time_xml` timestamp NULL DEFAULT NULL,
+  `file_path_pdf` text,
+  `last_upload_time_pdf` timestamp NULL DEFAULT NULL,
+  `duration` float DEFAULT NULL,
+  `genre_id` varchar(50) DEFAULT NULL,
+  `bpm` float DEFAULT NULL,
+  `time_signature` varchar(40) DEFAULT NULL,
+  `subtitle` longtext,
+  `subtitle_complete` tinyint(1) DEFAULT '0',
+  `lyric_midi` longtext,
+  `lyric_midi_raw` longtext,
+  `vocal` tinyint(1) DEFAULT '0',
+  `instrument` longtext,
+  `midi_vocal_channel` int(11) DEFAULT NULL,
+  `rating` float DEFAULT NULL,
+  `comment` longtext,
+  `image_path` text,
+  `last_upload_time_image` timestamp NULL DEFAULT NULL,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL,
+  `ip_edit` varchar(50) DEFAULT NULL,
+  `admin_create` varchar(50) DEFAULT NULL,
+  `admin_edit` varchar(50) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `song_draft`
+--
+
+CREATE TABLE IF NOT EXISTS `song_draft` (
+  `song_draft_id` varchar(40) NOT NULL,
+  `random_id` varchar(40) DEFAULT NULL,
+  `artist_id` varchar(40) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `title` text,
+  `lyric` longtext,
+  `duration` float DEFAULT NULL,
+  `file_path` text,
+  `file_size` bigint(20) DEFAULT NULL,
+  `sha1_file` varchar(40) NOT NULL,
+  `read_count` int(11) NOT NULL DEFAULT '0',
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  `admin_create` varchar(40) DEFAULT NULL,
+  `admin_edit` varchar(40) DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL,
+  `ip_edit` varchar(50) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `song_draft_comment`
+--
+
+CREATE TABLE IF NOT EXISTS `song_draft_comment` (
+  `song_draft_comment_id` varchar(40) NOT NULL,
+  `song_draft_id` varchar(40) DEFAULT NULL,
+  `comment` longtext,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  `admin_create` varchar(40) DEFAULT NULL,
+  `admin_edit` varchar(40) DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL,
+  `ip_edit` varchar(50) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `song_update_history`
+--
+
+CREATE TABLE IF NOT EXISTS `song_update_history` (
+  `song_update_history` varchar(40) NOT NULL,
+  `song_id` varchar(40) DEFAULT NULL,
+  `user_id` varchar(40) DEFAULT NULL,
+  `user_activity_id` varchar(40) DEFAULT NULL,
+  `action` varchar(20) DEFAULT NULL,
+  `time_update` timestamp NULL DEFAULT NULL,
+  `ip_update` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -428,6 +547,30 @@ ALTER TABLE `song_attachment`
 --
 ALTER TABLE `song_comment`
   ADD PRIMARY KEY (`song_comment_id`);
+
+--
+-- Indexes for table `song_copy`
+--
+ALTER TABLE `song_copy`
+  ADD PRIMARY KEY (`song_id`);
+
+--
+-- Indexes for table `song_draft`
+--
+ALTER TABLE `song_draft`
+  ADD PRIMARY KEY (`song_draft_id`);
+
+--
+-- Indexes for table `song_draft_comment`
+--
+ALTER TABLE `song_draft_comment`
+  ADD PRIMARY KEY (`song_draft_comment_id`);
+
+--
+-- Indexes for table `song_update_history`
+--
+ALTER TABLE `song_update_history`
+  ADD PRIMARY KEY (`song_update_history`);
 
 --
 -- Indexes for table `user`
