@@ -2,6 +2,7 @@
 
 use MagicObject\Request\InputPost;
 use MusicProductionManager\Data\Entity\EntityUser;
+use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once "inc/app.php";
@@ -26,16 +27,24 @@ if($inputPost->getUsername() != null && $inputPost->getPassword() != null)
       {
         $_SESSION['suser'] = $username;
         $_SESSION['spass'] = $password;
+        UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Login to system", null, null, true);
         if($inputPost->getReferer() != null)
         {
           $referer = trim($inputPost->getReferer());
-          if(!empty($referer) && stripos($referer, 'login.php'))
+          if(!empty($referer) && stripos($referer, 'login.php') === false)
           {
             $url = $referer;        
           }
         }
+        else
+        {
+          $referer = ServerUtil::getHttpReferer();
+          if($referer != null)
+          {
+            $url = $referer;
+          }
+        }
       }
-      UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Login to system", null, null, true);
       header("Location: ".$url);
       exit();
     }

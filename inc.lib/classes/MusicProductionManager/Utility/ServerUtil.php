@@ -57,4 +57,14 @@ class ServerUtil
             return self::OS_OTHER;
         }
     }
+
+    /**
+     * Get HTTP referer
+     *
+     * @return string|null
+     */
+    public static function getHttpReferer()
+    {
+        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+    }
 }
