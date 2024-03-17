@@ -4,6 +4,7 @@ use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
+use Midi\MidiDuration;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\File\FileMp3;
@@ -87,6 +88,32 @@ try
         copy($path, $midiPath);
         $song->setFilePathMidi($midiPath);
         $song->setLastUploadTimeMidi($now);
+
+        try
+        {
+            $midi = new MidiDuration();
+            $midi->importMid($song->getFilePathMidi());
+            $bpm = $midi->getBpm();
+            $song->setBpm($bpm);
+
+            $ts = $midi->getTimeSignature();
+            $timeSignature = 'n/a';
+            if (isset($ts) && is_array($ts) && !empty($ts)) {
+                $arr0 = $ts[0];
+                if(!empty($arr0))
+                {
+                    $ts2 = explode(' ', $arr0[0]['time_signature']);
+                    $timeSignature = $ts2[0];
+                }
+            }
+            $song->setTimeSignature($timeSignature);
+        }
+        catch(Exception $e)
+        {
+            // do nothing
+        }
+
+
     }
     else if(SongFileUtil::isXmlMusicFile($path))
     {

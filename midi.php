@@ -391,7 +391,7 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
-        <th scope="col" class="col-sort" data-name="duration">Length</th>
+        <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
     </thead>

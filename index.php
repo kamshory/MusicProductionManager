@@ -733,6 +733,14 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
             <div class="col-8"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">BPM</div>
+            <div class="col-8"><?php echo $song->getBpm(); ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="col-4">Time Signature</div>
+            <div class="col-8"><?php echo $song->getTimeSignature(); ?></div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
             <div class="col-5"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>
             <div class="list-unstyled d-flex align-items-center mb-0 me-1">
               <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-music"></span></a> &nbsp;

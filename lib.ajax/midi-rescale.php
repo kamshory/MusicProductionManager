@@ -73,8 +73,25 @@ if ($songId != null) {
     // reload file to get real BPM
     $midi = new MidiScale();
     $midi->importMid($midiPath);
+
+
     $song->setBpm($midi->getBpm());
+
+    $ts = $midi->getTimeSignature();
+    $timeSignature = 'n/a';
+    if (isset($ts) && is_array($ts) && !empty($ts)) {
+        $arr0 = $ts[0];
+        if(!empty($arr0))
+        {
+            $ts2 = explode(' ', $arr0[0]['time_signature']);
+            $timeSignature = $ts2[0];
+        }
+    }
+    $song->setTimeSignature($timeSignature);
+
     $song->update();
+
+
     
     
     if(!isset($inputGet))

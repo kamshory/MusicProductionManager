@@ -333,7 +333,7 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
-        <th scope="col" class="col-sort" data-name="duration">Length</th>
+        <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="vocal">Vocal</th>
         <th scope="col" class="col-sort" data-name="subtitle_complete">Sub</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>

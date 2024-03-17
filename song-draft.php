@@ -247,8 +247,8 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="artist_id">Artist</th>
         <th scope="col" class="col-sort" data-name="time_create">Created</th>
-        <th scope="col" class="col-sort" data-name="size">File Size</th>
-        <th scope="col" class="col-sort" data-name="duration">Length</th>
+        <th scope="col" class="col-sort" data-name="size" nowrap>File Size</th>
+        <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
     </thead>
