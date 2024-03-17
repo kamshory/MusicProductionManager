@@ -71,6 +71,14 @@ class EntitySongDraft extends MagicObject
     protected $filePath;
 
     /**
+	 * File Size
+	 * 
+	 * @Column(name="file_size", type="bigint(20)", length=20, nullable=true)
+	 * @var integer
+	 */
+	protected $fileSize;
+
+    /**
      * Sha1 File
      * 
      * @NotNull
@@ -111,6 +119,14 @@ class EntitySongDraft extends MagicObject
      * @var string
      */
     protected $adminCreate;
+
+    /**
+     * Creator
+     * 
+     * @JoinColumn(name="admin_create")
+     * @var User
+     */
+    protected $creator;
 
     /**
      * Admin Edit

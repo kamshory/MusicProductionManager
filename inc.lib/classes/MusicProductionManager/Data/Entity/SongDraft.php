@@ -71,6 +71,14 @@ class SongDraft extends MagicObject
 	protected $filePath;
 
 	/**
+	 * File Size
+	 * 
+	 * @Column(name="file_size", type="bigint(20)", length=20, nullable=true)
+	 * @var integer
+	 */
+	protected $fileSize;
+
+	/**
 	 * Sha1 File
 	 * 
 	 * @NotNull
@@ -144,4 +152,5 @@ class SongDraft extends MagicObject
 	 * @var bool
 	 */
 	protected $active;
+
 }

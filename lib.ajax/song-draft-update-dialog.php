@@ -30,8 +30,12 @@ if ($inputGet->getSongDraftId() != null) {
                                     <input type="text" name="title" class="form-control" value="<?php echo $song->getTitle();?>" placeholder="Title">
                                 </div>
                                 <div style="padding: 5px 0">
-                                <textarea name="lyric" class="form-control" style="height:180px"><?php echo nl2br($song->getLyric(), true);?></textarea>
+                                <textarea name="lyric" class="form-control" style="height:180px" spellcheck="false"><?php echo $song->getLyric();?></textarea>
                                 </div>                               
+                                <div style="padding: 5px 0">
+                                <label><input type="checkbox" name="active" value="1" <?php echo $song->createCheckedActive("1");?>> Active</label>
+                                </div> 
+                                <input type="hidden" name="song_draft_id" value="<?php echo $song->getSongDraftId();?>">                              
                             </form>
 
                         </div>

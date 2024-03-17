@@ -22,12 +22,12 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
   try
   {
     $song = new EntitySongDraft(null, $database);
-    $song->findOneBySongId($inputGet->getSongDraftId());
+    $song->findOneBySongDraftId($inputGet->getSongDraftId());
     ?>
     <table class="table table-responsive">
       <tbody>
         <tr>
-          <td>Song ID</td>
+          <td>Song Draft ID</td>
           <td><?php echo $song->getSongDraftId();?></td>
         </tr>
         <tr>
@@ -41,26 +41,6 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
         <tr>
           <td>Duration</td>
           <td><?php echo $song->getDuration();?></td>
-        </tr>
-        <tr>
-          <td>Genre</td>
-          <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : '';?></td>
-        </tr>
-        <tr>
-          <td>Album</td>
-          <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : '';?></td>
-        </tr>
-        <tr>
-          <td>Vocal</td>
-          <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
-        </tr>
-        <tr>
-          <td>Composer</td>
-          <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : '';?></td>
-        </tr>
-        <tr>
-          <td>Arranger</td>
-          <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : '';?></td>
         </tr>
         <tr>
           <td>File Size</td>
@@ -123,7 +103,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
     $songComment = new EntitySongDraftComment(null, $database);
     try
     {
-      $result = $songComment->findDescBySongId($inputGet->getSongDraftId());
+      $result = $songComment->findDescBySongDraftId($inputGet->getSongDraftId());
       $comments = $result->getResult();
       foreach($comments as $comment)
       {
@@ -256,7 +236,9 @@ if(!empty($result))
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
+        <th scope="col" class="col-sort" data-name="admin_create">Creator</th>
         <th scope="col" class="col-sort" data-name="time_create">Created</th>
+        <th scope="col" class="col-sort" data-name="size">File Size</th>
         <th scope="col" class="col-sort" data-name="duration">Length</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
@@ -280,7 +262,9 @@ if(!empty($result))
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $song->getName();?></a></td>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
+        <td class="text-data text-data-time-creator text-nowrap"><?php echo $song->hasValueCreator() ? $song->getCreator()->getName() : "";?></td>
         <td class="text-data text-data-time-create text-nowrap"><?php echo $song->getTimeCreate();?></td>
+        <td class="text-data text-data-size text-nowrap"><?php echo (int) ($song->getFileSize() / 1024); ?> k</td>
         <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-active text-nowrap"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
         </tr>

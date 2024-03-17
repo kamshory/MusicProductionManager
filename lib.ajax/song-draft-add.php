@@ -52,6 +52,8 @@ if($inputPost->getData() != "")
         $songDraft = new SongDraft(null, $database);
         $path = $targetDir."/".$fileName.".mp3";
         file_put_contents($path, $data);
+
+        $songDraft->setFileSize(filesize($path));
         $songDraft->setSongDraftId($id);
         $songDraft->setSha1File(sha1_file($path));
         $songDraft->setRandomId($randomId);

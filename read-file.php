@@ -13,7 +13,7 @@ $inputGet = new InputGet();
 if ($inputGet->getType() == "draft") {
     try {
         $songDraft = new EntitySongDraft(null, $database);
-        $songDraft->findOneBySongDraftId($inputGet->getSongId());
+        $songDraft->findOneBySongDraftId($inputGet->getSongDraftId());
 
         $filename = $songDraft->getSongDraftId() . ".mp3";
         header(HttpHeaderConstant::CONTENT_TYPE . "audio/mp3");
