@@ -67,14 +67,6 @@
         </li>
         
         <li class="sidebar-item">
-            <a class="sidebar-link" href="song-draft.php" aria-expanded="false">
-                <span>
-                    <i class="ti ti-file-description"></i>
-                </span>
-                <span class="hide-menu">Song Draft</span>
-            </a>
-        </li>       
-        <li class="sidebar-item">
             <a class="sidebar-link" href="comment.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-file-description"></i>
@@ -82,6 +74,14 @@
                 <span class="hide-menu">Comment</span>
             </a>
         </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="song-draft.php" aria-expanded="false">
+                <span>
+                    <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu">Song Draft</span>
+            </a>
+        </li>       
         <li class="sidebar-item">
             <a class="sidebar-link" href="album.php" aria-expanded="false">
                 <span>
