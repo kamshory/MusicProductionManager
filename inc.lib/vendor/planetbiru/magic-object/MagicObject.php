@@ -292,7 +292,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function saveQuery($includeNull = false)
     {
-        if($this->database != null && ($this->database->getDatabaseType() == null || $this->database->getDatabaseType() == ""))
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
         {
             $persist = new PicoDatabasePersistent($this->database, $this);
             return $persist->saveQuery($includeNull);
@@ -336,7 +336,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function selectQuery()
     {
-        if($this->database != null && ($this->database->getDatabaseType() == null || $this->database->getDatabaseType() == ""))
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
         {
             $persist = new PicoDatabasePersistent($this->database, $this);
             return $persist->selectQuery();
@@ -376,7 +376,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function insertQuery($includeNull = false)
     {
-        if($this->database != null && ($this->database->getDatabaseType() == null || $this->database->getDatabaseType() == ""))
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
         {
             $persist = new PicoDatabasePersistent($this->database, $this);
             return $persist->insertQuery($includeNull);
@@ -416,7 +416,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function updateQuery($includeNull = false)
     {
-        if($this->database != null && ($this->database->getDatabaseType() == null || $this->database->getDatabaseType() == ""))
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
         {
             $persist = new PicoDatabasePersistent($this->database, $this);
             return $persist->updateQuery($includeNull);
@@ -454,7 +454,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function deleteQuery()
     {
-        if($this->database != null && ($this->database->getDatabaseType() == null || $this->database->getDatabaseType() == ""))
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
         {
             $persist = new PicoDatabasePersistent($this->database, $this);
             return $persist->deleteQuery();

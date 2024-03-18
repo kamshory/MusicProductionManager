@@ -817,7 +817,7 @@ class PicoDatabasePersistent // NOSONAR
         }
         $this->addGeneratedValue($info, true);
         $values = $this->getValues($info, $queryBuilder);
-        $fixValues = $this->fixInsertableValues($values, $info);       
+        $fixValues = $this->fixInsertableValues($values, $info);    
         
         return $queryBuilder
             ->newQuery()
