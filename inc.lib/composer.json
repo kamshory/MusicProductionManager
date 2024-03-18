@@ -2,7 +2,8 @@
     "autoload": {
         "psr-0": {
             "MusicProductionManager\\": "classes/",
-            "Midi\\": "classes/"
+            "Midi\\": "classes/",
+            "Mp3\\": "classes/"
         }
     },
     "require": {
