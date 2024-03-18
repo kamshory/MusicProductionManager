@@ -1,0 +1,14 @@
+/* Summernote Additional CSS */
+.note-editable{
+   background: #fff;
+}
+.note-btn.dropdown-toggle:after {
+   content: none;
+}
+.note-btn[aria-label="Help"]{
+   display: none;
+}
+
+.note-editor .note-toolbar .note-color-all .note-dropdown-menu, .note-popover .popover-content .note-color-all .note-dropdown-menu{
+   min-width: 185px;
+}

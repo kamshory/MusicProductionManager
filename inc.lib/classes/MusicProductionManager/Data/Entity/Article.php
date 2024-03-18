@@ -21,6 +21,14 @@ class Article extends MagicObject
 	protected $articleId;
 
 	/**
+	 * Type
+	 * 
+	 * @Column(name="type", type="varchar(20)", length=20, nullable=true)
+	 * @var string
+	 */
+	protected $type;
+
+	/**
 	 * Title
 	 * 
 	 * @Column(name="title", type="text", nullable=true)
