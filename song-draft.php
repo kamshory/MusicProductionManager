@@ -247,7 +247,6 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="artist_id">Artist</th>
         <th scope="col" class="col-sort" data-name="time_create">Created</th>
-        <th scope="col" class="col-sort" data-name="size" nowrap>File Size</th>
         <th scope="col" class="col-sort" data-name="duration">Duration</th>
         <th scope="col" class="col-sort" data-name="active">Active</th>
         </tr>
@@ -273,7 +272,6 @@ if(!empty($result))
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
         <td class="text-data text-data-time-artist text-nowrap"><?php echo $song->hasValueArtist() ? $song->getArtist()->getName() : "";?></td>
         <td class="text-data text-data-time-create text-nowrap"><?php echo $song->getTimeCreate();?></td>
-        <td class="text-data text-data-size text-nowrap"><?php echo (int) ($song->getFileSize() / 1024); ?> k</td>
         <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-active text-nowrap"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
         </tr>
