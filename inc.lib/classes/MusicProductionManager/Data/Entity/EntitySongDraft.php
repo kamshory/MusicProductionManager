@@ -21,6 +21,14 @@ class EntitySongDraft extends MagicObject
      * @var string
      */
     protected $songDraftId;
+    
+    /**
+     * Parent ID
+     * 
+     * @Column(name="parent_id", type="varchar(40)", length=40, nullable=true)
+     * @var string
+     */
+    protected $parentId;
 
     /**
      * Random ID
