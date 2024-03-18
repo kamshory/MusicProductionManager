@@ -42,4 +42,44 @@ class StringUtil
             $glue
         );
     }
+    
+    /**
+     * Check if string is starts with substring
+     *
+     * @param string $haystack
+     * @param string $value
+     * @param bool $caseSensitive
+     * @return bool
+     */
+    public static function startsWith($haystack, $value, $caseSensitive = false)
+    {
+        if($caseSensitive)
+        {
+            return isset($haystack) && str_starts_with(strtolower($haystack), strtolower($value));
+        }
+        else
+        {
+            return isset($haystack) && str_starts_with($haystack, $value);
+        }
+    }
+    
+    /**
+     * Check if string is ends with substring
+     *
+     * @param string $haystack
+     * @param string $value
+     * @param bool $caseSensitive
+     * @return bool
+     */
+    public static function endsWith($haystack, $value, $caseSensitive = false)
+    {
+        if($caseSensitive)
+        {
+            return isset($haystack) && str_ends_with(strtolower($haystack), strtolower($value));
+        }
+        else
+        {
+            return isset($haystack) && str_ends_with($haystack, $value);
+        }
+    }
 }
