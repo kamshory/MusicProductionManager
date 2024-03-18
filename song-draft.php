@@ -192,7 +192,7 @@ $defaultOrderBy = 'timeCreate';
 $defaultOrderType = 'desc';
 $pagination = new PicoPagination($cfg->getResultPerPage());
 
-$spesification = SpecificationUtil::createSongDraftSpecification($inputGet);
+$spesification = SpecificationUtil::createSongDraftSpecification($inputGet, array("parent_id"=>null));
 
 if($pagination->getOrderBy() == '')
 {
