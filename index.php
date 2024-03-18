@@ -55,6 +55,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
   $data1 = array();
   $data2 = array();
   $data3 = array();
+  
   $sql = $query->newQuery()
     ->select("song.song_id, song.time_create, song.time_edit")
     ->from("song")
@@ -65,7 +66,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
       (date("Y") - 1) . "%",
       date("Y") . "%"
     )
-    ->orderBy("time_create asc");
+    ->orderBy("song.time_create asc");
   try {
     $rows = $database->fetchAll($sql, PDO::FETCH_ASSOC);
     foreach ($rows as $row) {
@@ -73,26 +74,53 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
       if (!isset($data1[$month1])) {
         $data1[$month1] = 0;
       }
+      if (!isset($data2[$month1])) {
+        $data2[$month1] = 0;
+      }
       $data1[$month1]++;
     }
 
+
+
+  } catch (Exception $e) {
+    // do nothing
+  }
+  
+  $sql = $query->newQuery()
+    ->select("song_draft.song_draft_id, song_draft.time_create, song_draft.time_edit")
+    ->from("song_draft")
+    ->where(
+      "song_draft.time_create like ? or song_draft.time_create like ? or song_draft.time_edit like ? or song_draft.time_edit like ? ",
+      (date("Y") - 1) . "%",
+      date("Y") . "%",
+      (date("Y") - 1) . "%",
+      date("Y") . "%"
+    )
+    ->orderBy("song_draft.time_create asc");
+  try {
+    $rows = $database->fetchAll($sql, PDO::FETCH_ASSOC);
+
     foreach ($rows as $row) {
-      $month2 = date('y/m', strtotime($row['time_edit']));
+      $month2 = date('y/m', strtotime($row['time_create']));
       if (!isset($data2[$month2])) {
         $data2[$month2] = 0;
+      }
+      if (!isset($data1[$month2])) {
+        $data1[$month2] = 0;
       }
 
       $data2[$month2]++;
     }
-    $data3 = array_merge($data1, $data2);
-    $data3 = array_unique($data3);
 
-    ksort($data1);
-    ksort($data2);
   } catch (Exception $e) {
     // do nothing
   }
 
+  ksort($data1);
+  ksort($data2);
+  $data3 = array_merge($data1, $data2);
+  $data3 = array_unique($data3);
+  
   ?>
 
   <script>
@@ -148,7 +176,11 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
         },
 
         series: [{
-          name: "Uploaded song:",
+          name: "Draft:",
+          data: <?php echo json_encode(array_values($data2)); ?>
+        },
+        {
+          name: "Complete:",
           data: <?php echo json_encode(array_values($data1)); ?>
         }],
 
