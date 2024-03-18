@@ -16,17 +16,21 @@ require_once "inc/header.php";
 </main>
 
 <!-- Summernote CSS -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-
-
+<link href="assets/summernote/css/summernote-lite.min.css" rel="stylesheet">
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/summernote/css/style.css">
-
 <!-- Summernote JS -->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-<!-- Script JS -->
-<script src="assets/summernote/js/script.js"></script>
-<!--$%analytics%$-->
+<script src="assets/summernote/js/summernote-lite.min.js"></script>
+
+<script>
+   $(document).ready(function() {
+      $('#summernote').summernote({
+         placeholder: 'Type here',
+         tabsize: 2,
+         height: 400
+      });
+   })
+</script>
 
 <?php
 require_once "inc/footer.php";

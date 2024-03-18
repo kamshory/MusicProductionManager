@@ -103,7 +103,22 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
       }
     </style>
     
- 
+    <!-- Summernote CSS -->
+    <link href="assets/summernote/css/summernote-lite.min.css" rel="stylesheet">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="assets/summernote/css/style.css">
+    <!-- Summernote JS -->
+    <script src="assets/summernote/js/summernote-lite.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $('.summernote').summernote({
+            placeholder: 'Type here',
+            tabsize: 2,
+            height: 120
+        });
+      })
+    </script>
 
 
     <form action="">
@@ -114,11 +129,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
       <input type="button" class="btn btn-secondary" name="cancel" value="Cancel">
     </div>
     </form>
-    <script>
-      $(document).ready(function() {
-        $('.summernote').summernote({});
-      });
-    </script>
+
     
     <?php
     
