@@ -108,15 +108,6 @@
         </li>
 
         <li class="sidebar-item">
-            <a class="sidebar-link" href="reference.php" aria-expanded="false">
-                <span>
-                    <i class="ti ti-article"></i>
-                </span>
-                <span class="hide-menu">Reference</span>
-            </a>
-        </li>
-
-        <li class="sidebar-item">
             <a class="sidebar-link" href="user-type.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-user"></i>
