@@ -334,6 +334,7 @@ class PicoDatabasePersistent // NOSONAR
         $this->flagIncludeNull = $includeNull;
         $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
         $info = $this->getTableInfo();
+        $stmt = null;
         try
         {
             $where = $this->getWhere($info, $queryBuilder);
@@ -366,6 +367,52 @@ class PicoDatabasePersistent // NOSONAR
         }     
         return $stmt;
     }
+
+    /**
+     * Query of save data
+     *
+     * @param bool $includeNull
+     * @return PicoDatabaseQueryBuilder
+     */
+    public function saveQuery($includeNull = false)
+    {
+        $this->flagIncludeNull = $includeNull;
+        $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        $query = new PicoDatabaseQueryBuilder($this->database);
+        $info = $this->getTableInfo();
+        try
+        {
+            $where = $this->getWhere($info, $queryBuilder);
+            if(!$this->isValidFilter($where))
+            {
+                throw new InvalidFilterException(self::MESSAGE_INVALID_FILTER);
+            }
+            $data2saved = clone $this->object->value();
+            $data = $this->_select($info, $queryBuilder, $where);
+            if($data != null)
+            {
+                // save current data
+                foreach($data2saved as $prop=>$value)
+                {
+                    if($value != null)
+                    {
+                        $this->object->set($prop, $value);
+                    }
+                }
+                $query = $this->_updateQuery($info, $queryBuilder, $where);
+            }
+            else
+            {
+                $query = $this->_insertQuery($info, $queryBuilder);
+            }
+        }
+        catch(Exception $e)
+        {
+            $query = $this->_insertQuery($info, $queryBuilder);
+        }     
+        return $query;
+    }
+
 
     /**
      * Get object values
@@ -699,6 +746,20 @@ class PicoDatabasePersistent // NOSONAR
     }
 
     /**
+     * Query of insert data
+     *
+     * @param bool $includeNull
+     * @return PicoDatabaseQueryBuilder
+     */
+    public function insertQuery($includeNull = false)
+    {
+        $this->flagIncludeNull = $includeNull;
+        $info = $this->getTableInfo();
+        $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        return $this->_insertQuery($info, $queryBuilder);
+    }
+
+    /**
      * Insert data
      *
      * @param stdClass $info
@@ -734,6 +795,36 @@ class PicoDatabasePersistent // NOSONAR
             $this->object->update();
         }
         return $stmt;
+    }
+
+    /**
+     * Insert data
+     *
+     * @param stdClass $info
+     * @param PicoDatabaseQueryBuilder $queryBuilder
+     * @return PicoDatabaseQueryBuilder
+     */
+    private function _insertQuery($info = null, $queryBuilder = null)
+    {
+        $this->generatedValue = false;
+        if($queryBuilder == null)
+        {
+            $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        }
+        if($info == null)
+        {
+            $info = $this->getTableInfo();
+        }
+        $this->addGeneratedValue($info, true);
+        $values = $this->getValues($info, $queryBuilder);
+        $fixValues = $this->fixInsertableValues($values, $info);    
+        
+        return $queryBuilder
+            ->newQuery()
+            ->insert()
+            ->into($info->tableName)
+            ->fields($this->createStatementFields($fixValues))
+            ->values($this->createStatementValues($fixValues));
     }
     
     /**
@@ -1848,6 +1939,19 @@ class PicoDatabasePersistent // NOSONAR
     }
 
     /**
+     * Query of select data
+     *
+     * @return PicoDatabaseQueryBuilder
+     */
+    public function selectQuery()
+    {
+        $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        $info = $this->getTableInfo();
+        $where = $this->getWhere($info, $queryBuilder);
+        return $this->_selectQuery($info, $queryBuilder, $where);
+    }
+
+    /**
      * Select record from database with primary keys given
      *
      * @param stdClass $info
@@ -1901,7 +2005,40 @@ class PicoDatabasePersistent // NOSONAR
     }
 
     /**
-     * Update
+     * Select record from database with primary keys given
+     *
+     * @param stdClass $info
+     * @param PicoDatabaseQueryBuilder $queryBuilder
+     * @param string $where
+     * @return PicoDatabaseQueryBuilder
+     */
+    private function _selectQuery($info = null, $queryBuilder = null, $where = null)
+    {
+        if($queryBuilder == null)
+        {
+            $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        }
+        if($info == null)
+        {
+            $info = $this->getTableInfo();
+        }
+        if($where == null)
+        {
+            $where = $this->getWhere($info, $queryBuilder);
+        }
+        if(!$this->isValidFilter($where))
+        {
+            throw new InvalidFilterException(self::MESSAGE_INVALID_FILTER);
+        }
+        return $queryBuilder
+            ->newQuery()
+            ->select($info->tableName.".*")
+            ->from($info->tableName)
+            ->where($where);
+    }
+
+    /**
+     * Update data
      *
      * @param bool $includeNull
      * @return PDOStatement
@@ -1916,12 +2053,28 @@ class PicoDatabasePersistent // NOSONAR
     }
 
     /**
+     * Query of update data
+     *
+     * @param bool $includeNull
+     * @return PicoDatabaseQueryBuilder
+     */
+    public function updateQuery($includeNull = false)
+    {
+        $this->flagIncludeNull = $includeNull;
+        $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        $info = $this->getTableInfo();
+        $where = $this->getWhere($info, $queryBuilder);
+        return $this->_updateQuery($info, $queryBuilder, $where);
+    }
+
+    /**
      * Update record on database with primary keys given
      *
      * @param stdClass $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @param string $where
      * @return PDOStatement
+     * @throws InvalidFilterException
      */
     private function _update($info = null, $queryBuilder = null, $where = null)
     {
@@ -1951,6 +2104,41 @@ class PicoDatabasePersistent // NOSONAR
     }
 
     /**
+     * Update record on database with primary keys given
+     *
+     * @param stdClass $info
+     * @param PicoDatabaseQueryBuilder $queryBuilder
+     * @param string $where
+     * @return PicoDatabaseQueryBuilder
+     * @throws InvalidFilterException
+     */
+    private function _updateQuery($info = null, $queryBuilder = null, $where = null)
+    {
+        if($queryBuilder == null)
+        {
+            $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        }
+        if($info == null)
+        {
+            $info = $this->getTableInfo();
+        }
+        if($where == null)
+        {
+            $where = $this->getWhere($info, $queryBuilder);
+        }
+        if(!$this->isValidFilter($where))
+        {
+            throw new InvalidFilterException(self::MESSAGE_INVALID_FILTER);
+        }
+        $set = $this->getSet($info, $queryBuilder);
+        return $queryBuilder
+            ->newQuery()
+            ->update($info->tableName)
+            ->set($set)
+            ->where($where);
+    }
+
+    /**
      * Delete record from database
      *
      * @return PDOStatement
@@ -1961,6 +2149,19 @@ class PicoDatabasePersistent // NOSONAR
         $info = $this->getTableInfo();
         $where = $this->getWhere($info, $queryBuilder);
         return $this->_delete($info, $queryBuilder, $where);
+    }
+
+    /**
+     * Query of delete record
+     *
+     * @return PicoDatabaseQueryBuilder
+     */
+    public function deleteQuery()
+    {
+        $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        $info = $this->getTableInfo();
+        $where = $this->getWhere($info, $queryBuilder);
+        return $this->_deleteQuery($info, $queryBuilder, $where);
     }
 
     /**
@@ -1995,5 +2196,39 @@ class PicoDatabasePersistent // NOSONAR
             ->from($info->tableName)
             ->where($where);
         return $this->database->executeDelete($sqlQuery);
+    }
+
+    /**
+     * Delete record from database with primary keys given
+     *
+     * @param stdClass $info
+     * @param PicoDatabaseQueryBuilder $queryBuilder
+     * @param string $where
+     * @return PicoDatabaseQueryBuilder
+     * @throws InvalidFilterException
+     */
+    private function _deleteQuery($info = null, $queryBuilder = null, $where = null)
+    {
+        if($queryBuilder == null)
+        {
+            $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+        }
+        if($info == null)
+        {
+            $info = $this->getTableInfo();
+        }
+        if($where == null)
+        {
+            $where = $this->getWhere($info, $queryBuilder);
+        }
+        if(!$this->isValidFilter($where))
+        {
+            throw new InvalidFilterException(self::MESSAGE_INVALID_FILTER);
+        }              
+        return $queryBuilder
+            ->newQuery()
+            ->delete()
+            ->from($info->tableName)
+            ->where($where);
     }
 }

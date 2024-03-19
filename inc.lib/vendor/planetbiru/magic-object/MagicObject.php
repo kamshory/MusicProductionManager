@@ -7,6 +7,7 @@ use PDOException;
 use PDOStatement;
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabasePersistent;
+use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Database\PicoDatabaseStructure;
 use MagicObject\Database\PicoPagable;
 use MagicObject\Database\PicoPageData;
@@ -15,7 +16,9 @@ use MagicObject\Database\PicoSpecification;
 use MagicObject\Exceptions\NoDatabaseConnectionException;
 use MagicObject\Exceptions\NoRecordFoundException;
 use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\PicoDatabaseUtil;
 use MagicObject\Util\PicoEnvironmentVariable;
+use MagicObject\Util\StringUtil;
 use ReflectionClass;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
@@ -25,6 +28,7 @@ use Symfony\Component\Yaml\Yaml;
  * Magic object is an object created from any class so that user can add any property with any name and value, load data from INI file, Yaml file, JSON file and database. 
  * User can create entity from a table of database, insert, select, update and delete record from database. 
  * User can also create property from other entity with full name of class (namespace + class name)
+ * @link https://github.com/Planetbiru/MagicObject
  */
 class MagicObject extends stdClass // NOSONAR
 {
@@ -110,13 +114,13 @@ class MagicObject extends stdClass // NOSONAR
             {
                 $values = $data->value();
                 foreach ($values as $key => $value) {
-                    $key2 = $this->camelize($key);
+                    $key2 = StringUtil::camelize($key);
                     $this->set($key2, $value, true);
                 }
             }
             else if (is_array($data) || is_object($data)) {
                 foreach ($data as $key => $value) {
-                    $key2 = $this->camelize($key);
+                    $key2 = StringUtil::camelize($key);
                     $this->set($key2, $value, true);
                 }
             }
@@ -281,6 +285,25 @@ class MagicObject extends stdClass // NOSONAR
     }
 
     /**
+     * Query of save data
+     * @param bool $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
+     * @return PicoDatabaseQueryBuilder
+     * NoDatabaseConnectionException|NoRecordFoundException
+     */
+    public function saveQuery($includeNull = false)
+    {
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
+        {
+            $persist = new PicoDatabasePersistent($this->database, $this);
+            return $persist->saveQuery($includeNull);
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
+
+    /**
      * Select data from database
      *
      * @return self
@@ -298,6 +321,25 @@ class MagicObject extends stdClass // NOSONAR
             }
             $this->loadData($data);
             return $this;
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
+
+    /**
+     * Query of select data
+     *
+     * @return PicoDatabaseQueryBuilder
+     * @throws NoDatabaseConnectionException|NoRecordFoundException|PDOException
+     */
+    public function selectQuery()
+    {
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
+        {
+            $persist = new PicoDatabasePersistent($this->database, $this);
+            return $persist->selectQuery();
         }
         else
         {
@@ -326,6 +368,26 @@ class MagicObject extends stdClass // NOSONAR
     }
 
     /**
+     * Get query of insert data
+     *
+     * @param bool $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
+     * @return PicoDatabaseQueryBuilder
+     * @throws NoDatabaseConnectionException
+     */
+    public function insertQuery($includeNull = false)
+    {
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
+        {
+            $persist = new PicoDatabasePersistent($this->database, $this);
+            return $persist->insertQuery($includeNull);
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
+
+    /**
      * Update data on database
      *
      * @param bool $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
@@ -338,6 +400,26 @@ class MagicObject extends stdClass // NOSONAR
         {
             $persist = new PicoDatabasePersistent($this->database, $this);
             return $persist->update($includeNull);
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
+
+    /**
+     * Get query of update data
+     *
+     * @param bool $includeNull If TRUE, all column will be saved to database include null. If FALSE, only column with not null value will be saved to database
+     * @return PicoDatabaseQueryBuilder
+     * @throws NoDatabaseConnectionException
+     */
+    public function updateQuery($includeNull = false)
+    {
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
+        {
+            $persist = new PicoDatabasePersistent($this->database, $this);
+            return $persist->updateQuery($includeNull);
         }
         else
         {
@@ -363,40 +445,31 @@ class MagicObject extends stdClass // NOSONAR
             throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
         }
     }
+
+    /**
+     * Query of delete dat
+     *
+     * @return PicoDatabaseQueryBuilder
+     * @throws NoDatabaseConnectionException
+     */
+    public function deleteQuery()
+    {
+        if($this->database != null && ($this->database->getDatabaseType() != null && $this->database->getDatabaseType() != ""))
+        {
+            $persist = new PicoDatabasePersistent($this->database, $this);
+            return $persist->deleteQuery();
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
     
     public function showCreateTable($databaseType, $tableName = null)
     {
         $structure = new PicoDatabaseStructure($this);
         return $structure->showCreateTable($databaseType, $tableName);
     }
-
-    /**
-     * Convert snake case to camel case
-     *
-     * @param string $input
-     * @param string $separator
-     * @return string
-     */
-    protected function camelize($input, $separator = '_')
-    {
-        return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
-    }
-
-    /**
-     * Convert camel case to snake case
-     *
-     * @param string $input
-     * @param string $glue
-     * @return string
-     */
-    protected function snakeize($input, $glue = '_') {
-        return ltrim(
-            preg_replace_callback('/[A-Z]/', function ($matches) use ($glue) {
-                return $glue . strtolower($matches[0]);
-            }, $input),
-            $glue
-        );
-    } 
 
     /**
      * Modify null properties
@@ -428,7 +501,7 @@ class MagicObject extends stdClass // NOSONAR
     public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = StringUtil::camelize($var);
         $this->{$var} = $propertyValue;
         if(!$skipModifyNullProperties && $propertyValue === null)
         {
@@ -446,7 +519,7 @@ class MagicObject extends stdClass // NOSONAR
     public function get($propertyName)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = StringUtil::camelize($var);
         return isset($this->$var) ? $this->$var : null;
     }
     
@@ -454,15 +527,39 @@ class MagicObject extends stdClass // NOSONAR
      * Get property value 
      *
      * @param string $propertyName
+     * @param mixed|null $defaultValue
      * @return mixed|null
      */
     public function getOrDefault($propertyName, $defaultValue = null)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = StringUtil::camelize($var);
         return isset($this->$var) ? $this->$var : $defaultValue;
     }
     
+    /**
+     * Set property value
+     *
+     * @param string $propertyName
+     * @param mixed|null
+     */
+    public function __set($propertyName, $propertyValue)
+    {
+        $this->set($propertyName, $propertyValue);
+    }
+
+    /**
+     * Get property value 
+     *
+     * @param string $propertyName
+     * @return mixed|null
+     */
+    public function __get($propertyName)
+    {
+        return $this->get($propertyName);
+    }
+    
+
     /**
      * Copy value from other object
      *
@@ -479,7 +576,7 @@ class MagicObject extends stdClass // NOSONAR
             $index = 0;
             foreach($filter as $val)
             {
-                $tmp[$index] = trim($this->camelize($val));               
+                $tmp[$index] = trim(StringUtil::camelize($val));               
                 $index++;
             }
             $filter = $tmp;
@@ -530,7 +627,7 @@ class MagicObject extends stdClass // NOSONAR
                     $columnName = trim($column[self::KEY_NAME]);
                     if($snakeCase)
                     {
-                        $col = $this->snakeize($columnName);
+                        $col = StringUtil::snakeize($columnName);
                     }
                     else
                     {
@@ -541,37 +638,6 @@ class MagicObject extends stdClass // NOSONAR
             }
         }
         return $defaultValue;
-    }
-    
-    /**
-     * Fix value
-     *
-     * @param string $value
-     * @param string $type
-     * @return mixed
-     */
-    protected function fixValue($value, $type) // NOSONAR
-    {
-        if(strtolower($value) === 'true')
-        {
-            return true;
-        }
-        else if(strtolower($value) === 'false')
-        {
-            return false;
-        }
-        else if(strtolower($value) === 'null')
-        {
-            return false;
-        }
-        else if(is_numeric($value) && strtolower($type) != 'string')
-        {
-            return $value + 0;
-        }
-        else 
-        {
-            return $value;
-        }
     }
 
     /**
@@ -592,7 +658,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             $value2 = new stdClass;
             foreach ($value as $key => $val) {
-                $key2 = $this->snakeize($key);
+                $key2 = StringUtil::snakeize($key);
                 $value2->$key2 = $val;
             }
             return $value2;
@@ -1078,9 +1144,9 @@ class MagicObject extends stdClass // NOSONAR
         }
         else if (strncasecmp($method, "findOneBy", 9) === 0) {
             $var = lcfirst(substr($method, 9));
-            $sortable = $this->sortableFromParams($params);
+            $sortable = PicoDatabaseUtil::sortableFromParams($params);
             // filter param
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findOneBy($var, $parameters, $sortable);
         }
         else if (strncasecmp($method, "findFirstBy", 11) === 0) {
@@ -1094,72 +1160,72 @@ class MagicObject extends stdClass // NOSONAR
         else if (strncasecmp($method, "findBy", 6) === 0) {
             $var = lcfirst(substr($method, 6));
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             // get sortable
-            $sortable = $this->sortableFromParams($params);
+            $sortable = PicoDatabaseUtil::sortableFromParams($params);
             // filter param
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findBy($var, $parameters, $pagable, $sortable);
         }
         else if (strncasecmp($method, "findAscBy", 9) === 0) {
             $var = lcfirst(substr($method, 9));
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             // filter param
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findBy($var, $parameters, $pagable, PicoDatabasePersistent::ORDER_ASC);
         }
         else if (strncasecmp($method, "findDescBy", 10) === 0) {
             $var = lcfirst(substr($method, 10));
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             // filter param
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findBy($var, $parameters, $pagable, PicoDatabasePersistent::ORDER_DESC);
         }
         else if (strncasecmp($method, "listBy", 6) === 0) {
             $var = lcfirst(substr($method, 6));
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             // get sortable
-            $sortable = $this->sortableFromParams($params);
+            $sortable = PicoDatabaseUtil::sortableFromParams($params);
             // filter param
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findBy($var, $parameters, $pagable, $sortable, true);
         }
         else if (strncasecmp($method, "listAscBy", 9) === 0) {
             $var = lcfirst(substr($method, 9));
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             // filter param
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findBy($var, $parameters, $pagable, PicoDatabasePersistent::ORDER_ASC, true);
         }
         else if (strncasecmp($method, "listDescBy", 10) === 0) {
             $var = lcfirst(substr($method, 10));
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             // filter param
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findBy($var, $parameters, $pagable, PicoDatabasePersistent::ORDER_DESC, true);
         }
         else if ($method == "listAllAsc") {
             // get spefification
-            $specification = $this->specificationFromParams($params);
+            $specification = PicoDatabaseUtil::specificationFromParams($params);
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             return $this->findAll($specification, $pagable, PicoDatabasePersistent::ORDER_ASC, true);
         }
         else if ($method == "listAllDesc") {
             // get spefification
-            $specification = $this->specificationFromParams($params);
+            $specification = PicoDatabaseUtil::specificationFromParams($params);
             // get pagable
-            $pagable = $this->pagableFromParams($params);
+            $pagable = PicoDatabaseUtil::pagableFromParams($params);
             return $this->findAll($specification, $pagable, PicoDatabasePersistent::ORDER_DESC, true);
         }
         else if (strncasecmp($method, "countBy", 6) === 0) {
             $var = lcfirst(substr($method, 6));
-            $parameters = $this->valuesFromParams($params);
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->countBy($var, $parameters);
         }
         else if (strncasecmp($method, "existsBy", 8) === 0) {
@@ -1201,137 +1267,15 @@ class MagicObject extends stdClass // NOSONAR
             $value = $params[0];
             $caseSensitive = isset($params[1]) && $params[1];    
             $haystack = $this->$var;
-            return $this->startsWith($haystack, $value, $caseSensitive);
+            return StringUtil::startsWith($haystack, $value, $caseSensitive);
         }  
         else if (strncasecmp($method, "endsWith", 8) === 0) {
             $var = lcfirst(substr($method, 13));
             $value = $params[0];
             $caseSensitive = isset($params[1]) && $params[1];  
             $haystack = $this->$var;
-            return $this->endsWith($haystack, $value, $caseSensitive);
+            return StringUtil::endsWith($haystack, $value, $caseSensitive);
         } 
-    }
-    
-    /**
-     * Check if string is starts with substring
-     *
-     * @param string $haystack
-     * @param string $value
-     * @param bool $caseSensitive
-     * @return bool
-     */
-    private function startsWith($haystack, $value, $caseSensitive = false)
-    {
-        if($caseSensitive)
-        {
-            return isset($haystack) && str_starts_with(strtolower($haystack), strtolower($value));
-        }
-        else
-        {
-            return isset($haystack) && str_starts_with($haystack, $value);
-        }
-    }
-    
-    /**
-     * Check if string is ends with substring
-     *
-     * @param string $haystack
-     * @param string $value
-     * @param bool $caseSensitive
-     * @return bool
-     */
-    private function endsWith($haystack, $value, $caseSensitive = false)
-    {
-        if($caseSensitive)
-        {
-            return isset($haystack) && str_ends_with(strtolower($haystack), strtolower($value));
-        }
-        else
-        {
-            return isset($haystack) && str_ends_with($haystack, $value);
-        }
-    }
-    
-    /**
-     * Get specification from parameters
-     * @param array $params
-     * @return PicoSpecification|null
-     */
-    private function specificationFromParams($params)
-    {
-        if(isset($params) && is_array($params))
-        {
-            foreach($params as $param)
-            {
-                if($param instanceof PicoSpecification)
-                {
-                    return $param;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Get pagable from parameters
-     * @param array $params
-     * @return PicoPagable|null
-     */
-    private function pagableFromParams($params)
-    {
-        if(isset($params) && is_array($params))
-        {
-            foreach($params as $param)
-            {
-                if($param instanceof PicoPagable)
-                {
-                    return $param;
-                }
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * Get sortable from parameters
-     * @param array $params
-     * @return PicoSortable|null
-     */
-    private function sortableFromParams($params)
-    {
-        if(isset($params) && is_array($params))
-        {
-            foreach($params as $param)
-            {
-                if($param instanceof PicoSortable)
-                {
-                    return $param;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Get pagable from parameters
-     * @param array $params
-     * @return array
-     */
-    private function valuesFromParams($params)
-    {
-        $ret = array();
-        if(isset($params) && is_array($params))
-        {
-            foreach($params as $param)
-            {
-                if($param instanceof PicoPagable)
-                {
-                    break;
-                }
-                $ret[] = $param;
-            }
-        }
-        return $ret;
     }
 
     /**

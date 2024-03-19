@@ -9,7 +9,12 @@ use MagicObject\Constants\PicoConstants;
 use MagicObject\Exceptions\NullPointerException;
 use stdClass;
 
-class PicoDatabase
+/**
+ * Database connection for MagicObject
+ * Developer: Kamshory
+ * @link https://github.com/Planetbiru/MagicObject
+ */
+class PicoDatabase //NOSONAR
 {
 	const QUERY_INSERT = "insert";
 	const QUERY_UPDATE = "update";
@@ -29,6 +34,13 @@ class PicoDatabase
 	 * @var boolean
 	 */
 	private $connected = false;
+	
+	/**
+	 * Autocommit
+	 *
+	 * @var boo
+	 */
+	private $autocommit = true;
 
 	/**
 	 * Database connection
@@ -95,6 +107,39 @@ class PicoDatabase
 			// Do nothing
 		}
 		return $connected;
+	}
+	
+	/**
+	 * Set autocommit ON of OFF
+	 * When it set to OFF, user MUST call commit or rollback manualy. Default action is rollback
+	 *
+	 * @param bool $autocommit
+	 * @return bool
+	 */
+	public function setAudoCommit($autocommit)
+	{
+		$this->autocommit = $autocommit;
+		return $this->databaseConnection->setAttribute(PDO::ATTR_AUTOCOMMIT, $autocommit ? 1 : 0);
+	}
+	
+	/**
+	 * Commit
+	 *
+	 * @return bool
+	 */
+	public function commit()
+	{
+		return $this->databaseConnection->commit();
+	}
+	
+	/**
+	 * Rollback
+	 *
+	 * @return bool
+	 */
+	public function rollback()
+	{
+		return $this->databaseConnection->rollback();
 	}
 
 	/**
@@ -341,57 +386,6 @@ class PicoDatabase
 	}
 
 	/**
-	 * Get system variable
-	 * @param string $variableName Variable name
-	 * @param mixed $defaultValue Default value
-	 * @return mixed System variable value of return default value if not exists
-	 */
-	public function getSystemVariable($variableName, $defaultValue = null)
-	{
-		$variableName = addslashes($variableName);
-		$sql = "SELECT * FROM `pico_system_variable` 
-		WHERE `system_variable_id` = '$variableName' ";
-		$data = $this->executeQuery($sql)->fetch(PDO::FETCH_ASSOC);
-		if (isset($data) && is_array($data) && !empty($data)) 
-		{
-			return $data['system_value'];
-		} 
-		else 
-		{
-			return $defaultValue;
-		}
-	}
-
-	/**
-	 * Set system variable
-	 * @param string $variableName Variable name
-	 * @param mixed $value Value to be set
-	 */
-	public function setSystemVariable($variableName, $value)
-	{
-		$currentTime = date('Y-m-d H:i:s');
-		$variableName = addslashes($variableName);
-		$value = addslashes($value);
-		$sql = "SELECT * FROM `pico_system_variable` 
-		WHERE `system_variable_id` = '$variableName' ";
-		if ($this->executeQuery($sql)->rowCount() > 0) 
-		{
-			$sql = "UPDATE `pico_system_variable` 
-			SET `system_value` = '$value', `time_edit` = '$currentTime' 
-			WHERE `system_variable_id` = '$variableName' ";
-			$this->executeUpdate($sql);
-		} 
-		else 
-		{
-			$sql = "INSERT INTO `pico_system_variable` 
-			(`system_variable_id`, `system_value`, `time_create`, `time_edit`) VALUES
-			('$variableName', '$value', '$currentTime' , '$currentTime')
-			";
-			$this->executeInsert($sql);
-		}
-	}
-
-	/**
 	 * Get the value of databaseCredentials
 	 * @return PicoDatabaseCredentials
 	 */
@@ -418,5 +412,19 @@ class PicoDatabase
 	public function getDatabaseType()
 	{
 		return $this->databaseType;
+	}
+	
+	/**
+	 * Convert object to string for debug
+	 *
+	 * @return string
+	 */
+	public function __toString()
+	{
+		$val = new stdClass;
+		$val->databaseType = $this->databaseType;
+		$val->autocommit = $this->autocommit;
+		$val->connected = $this->connected;
+		return json_encode($val);
 	}
 }

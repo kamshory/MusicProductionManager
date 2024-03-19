@@ -490,37 +490,6 @@ class SecretObject extends stdClass //NOSONAR
             }
         }
     }
-    
-    /**
-     * Fix value
-     *
-     * @param string $value
-     * @param string $type
-     * @return mixed
-     */
-    protected function fixValue($value, $type) // NOSONAR
-    {
-        if(strtolower($value) === 'true')
-        {
-            return true;
-        }
-        else if(strtolower($value) === 'false')
-        {
-            return false;
-        }
-        else if(strtolower($value) === 'null')
-        {
-            return false;
-        }
-        else if(is_numeric($value) && strtolower($type) != 'string')
-        {
-            return $value + 0;
-        }
-        else 
-        {
-            return $value;
-        }
-    }
 
     /**
      * Get object value
