@@ -790,7 +790,7 @@ class PicoDatabasePersistent // NOSONAR
             ->fields($this->createStatementFields($fixValues))
             ->values($this->createStatementValues($fixValues));
         */
-        $sqlQuery = $this->insertQuery($info, $queryBuilder);
+        $sqlQuery = $this->_insertQuery($info, $queryBuilder);
         $stmt = $this->database->executeInsert($sqlQuery);
         if(!$this->generatedValue)
         {

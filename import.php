@@ -48,10 +48,7 @@ function insertSongDraft($database, $path)
         }
         catch(Exception $e)
         {
-            if(!file_exists(dirname($tempMath)))
-            {
-                mkdir(dirname($tempMath), 0755, true);
-            }
+            
             $songDraft = new SongDraft(null, $database);
             $songDraft->setSongDraftId($songDraftId);
             $songDraft->setRandomId($randomId);
@@ -69,8 +66,14 @@ function insertSongDraft($database, $path)
             $songDraft->setActive(true);
 
             $query = $songDraft->insertQuery();
-            
-            //copy($path, $tempMath);
+            $database->execute($query);
+            /*
+            if(!file_exists(dirname($tempMath)))
+            {
+                mkdir(dirname($tempMath), 0755, true);
+            }
+            copy($path, $tempMath);
+            */
             
             return $query;
             
