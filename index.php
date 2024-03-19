@@ -54,7 +54,6 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
   // current year
   $data1 = array();
   $data2 = array();
-  $data3 = array();
   
   $sql = $query->newQuery()
     ->select("song.song_id, song.time_create, song.time_edit")
@@ -114,11 +113,24 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     // do nothing
   }
 
+  
+  $keysMerge = array_merge(array_keys($data1), array_keys($data2));
+  sort($keysMerge);
+  foreach($keysMerge as $key)
+  {
+    if(!isset($data1[$key]))
+    {
+      $data1[$key] = 0;
+    }
+    if(!isset($data2[$key]))
+    {
+      $data2[$key] = 0;
+    }
+  }
+  
   ksort($data1);
   ksort($data2);
-  $data3 = array_merge($data1, $data2);
-  $data3 = array_unique($data3);
-  
+    
   ?>
 
   <script>
@@ -184,7 +196,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
 
         xaxis: {
           type: "category",
-          categories: <?php echo json_encode(array_keys($data3)); ?>,
+          categories: <?php echo json_encode(array_keys($data1)); ?>,
           labels: {
             style: {
               cssClass: "grey--text lighten-2--text fill-color"
