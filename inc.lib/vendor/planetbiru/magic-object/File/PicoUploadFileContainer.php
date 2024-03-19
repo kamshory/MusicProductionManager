@@ -2,7 +2,7 @@
 
 namespace MagicObject\File;
 
-class UploadFileContainer
+class PicoUploadFileContainer
 {
     private $values = array();
     public function __construct($file = null)
@@ -37,7 +37,7 @@ class UploadFileContainer
     /**
      * Get total file with similar key
      *
-     * @return void
+     * @return integer
      */
     public function getFileCount()
     {
@@ -51,7 +51,7 @@ class UploadFileContainer
     /**
      * Get all file
      *
-     * @return UploadFileItem[]
+     * @return PicoUploadFileItem[]
      */
     public function getAll()
     {
@@ -62,13 +62,13 @@ class UploadFileContainer
             $count = $this->getFileCount();
             for($i = 0; $i < $count; $i++)
             {
-                $result[] = new UploadFileItem($this->getItem($i));
+                $result[] = new PicoUploadFileItem($this->getItem($i));
             }
         }
         else
         {
             // single file
-            $result[] = new UploadFileItem($this->values);
+            $result[] = new PicoUploadFileItem($this->values);
         }
         return $result;
     }

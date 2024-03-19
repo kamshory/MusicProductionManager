@@ -2,7 +2,7 @@
 
 namespace MagicObject\File;
 
-class UploadFileItem
+class PicoUploadFileItem
 {
     private $value = array();
     public function __construct($file)

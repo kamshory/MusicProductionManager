@@ -4,14 +4,14 @@ namespace MagicObject\File;
 
 use MagicObject\Util\StringUtil;
 
-class UplodFile
+class PicoUplodFile
 {
     private $map = array();
 
     /**
      * Uploaded file
      *
-     * @var UploadFileContainer[]
+     * @var PicoUploadFileContainer[]
      */
     private $values = array();
 
@@ -30,13 +30,13 @@ class UplodFile
         $this->initMap();
     }
 
-    public function __call($method, $arguments)
+    public function __call($method, $arguments) //NOSONAR
     {
         if (strncasecmp($method, "get", 3) === 0) {
             $var = lcfirst(substr($method, 3));
             $camel = StringUtil::camelize($var);
             $key = $this->map[$camel];
-            return isset($this->values[$key]) ? new UploadFileContainer($this->values[$key]) : new UploadFileContainer();
+            return isset($this->values[$key]) ? new PicoUploadFileContainer($this->values[$key]) : new PicoUploadFileContainer();
         }
     }
     
@@ -44,7 +44,7 @@ class UplodFile
      * Get uploaded file
      *
      * @param string $name
-     * @return UploadFileContainer|mixed
+     * @return PicoUploadFileContainer|mixed
      */
     public function get($name)
     {
@@ -55,7 +55,7 @@ class UplodFile
      * Get uploaded file by key
      *
      * @param string $name
-     * @return UploadFileContainer|mixed
+     * @return PicoUploadFileContainer|mixed
      */
     public function __get($name)
     {
@@ -66,7 +66,7 @@ class UplodFile
                 return $this->values[$key];
             }
         }
-        return new UploadFileContainer();
+        return new PicoUploadFileContainer();
     }
 
     /**
@@ -80,7 +80,7 @@ class UplodFile
         foreach ($keys as $key) {
             $camel = StringUtil::camelize($key);
             $this->map[$camel] = $key;
-            $this->values[$key] = new UploadFileContainer($_FILES[$key]);
+            $this->values[$key] = new PicoUploadFileContainer($_FILES[$key]);
         }
     }
 }
