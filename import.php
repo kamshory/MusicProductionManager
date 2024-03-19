@@ -30,17 +30,31 @@ function insertSongDraft($database, $path)
         $filePath = "/var/www/html/studio/production/files/draft/$songDraftId/$songDraftId".".mp3";
         
         $tempMath = __DIR__ . "/files/draft/$songDraftId/$songDraftId".".mp3";
-        if(!file_exists(dirname($tempMath)))
-        {
-            mkdir(dirname($tempMath), 0755, true);
-        }
+        
 
         $songDraft = new SongDraft(null, $database);
+        $randomId = $timestamp * 1000;
         try
         {
+            $songDraft->findOneByRandomId($randomId);
+
             
+            
+            $query = $songDraft->saveQuery();
+            
+            //copy($path, $tempMath);
+            
+            return $query;
+        }
+        catch(Exception $e)
+        {
+            if(!file_exists(dirname($tempMath)))
+            {
+                mkdir(dirname($tempMath), 0755, true);
+            }
+            $songDraft = new SongDraft(null, $database);
             $songDraft->setSongDraftId($songDraftId);
-            $songDraft->setRandomId($timestamp * 1000);
+            $songDraft->setRandomId($randomId);
             $songDraft->setName($now);
             $songDraft->setTimeCreate($now);
             $songDraft->setTimeEdit($now);
@@ -53,16 +67,12 @@ function insertSongDraft($database, $path)
             $duration = $mp3file->getDuration(); 
             $songDraft->setDuration($duration);
             $songDraft->setActive(true);
-            
-            $query = $songDraft->saveQuery();
+
+            $query = $songDraft->insertQuery();
             
             //copy($path, $tempMath);
             
             return $query;
-        }
-        catch(Exception $e)
-        {
-            // do nothing
             
         }
     }
