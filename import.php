@@ -1,10 +1,19 @@
 <?php
 
+use MagicObject\Database\PicoDatabase;
+use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MusicProductionManager\Data\Entity\SongDraft;
 use MusicProductionManager\Utility\SongFileUtil;
 
 require_once "inc/app.php";
 
+/**
+ * Insert song draft
+ *
+ * @param PicoDatabase $database
+ * @param string $path
+ * @return PicoDatabaseQueryBuilder
+ */
 function insertSongDraft($database, $path)
 {
     $baseName = basename($path);
@@ -21,6 +30,7 @@ function insertSongDraft($database, $path)
             $songDraftId = SongFileUtil::generateNewId($timestamp);
             $songDraft->setSongDraftId($songDraftId);
             $query = $songDraft->insertQuery();
+            $database->execute($query);
             return $query;
         }
         catch(Exception $e)
