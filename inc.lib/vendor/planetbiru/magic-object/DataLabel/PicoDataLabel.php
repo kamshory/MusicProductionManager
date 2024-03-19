@@ -6,7 +6,7 @@ use MagicObject\SetterGetter;
 use MagicObject\Util\PicoAnnotationParser;
 use stdClass;
 
-class DataLabel extends SetterGetter
+class PicoDataLabel extends SetterGetter
 {
     const ANNOTATION_PROPERTIES = "Properties";
     const ANNOTATION_TABLE = "Table";
@@ -62,13 +62,13 @@ class DataLabel extends SetterGetter
                 $values = $data->value();
                 foreach ($values as $key => $value) {
                     $key2 = $this->camelize($key);
-                    $this->set($key2, $value, true);
+                    $this->set($key2, $value);
                 }
             }
             else if (is_array($data) || is_object($data)) {
                 foreach ($data as $key => $value) {
                     $key2 = $this->camelize($key);
-                    $this->set($key2, $value, true);
+                    $this->set($key2, $value);
                 }
             }
         }

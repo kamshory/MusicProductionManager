@@ -1,12 +1,20 @@
 <?php
 
-use MagicObject\DataLabel\DataLabel;
+use MagicObject\File\UplodFile;
 
-class Label extends DataLabel
+require_once "vendor/autoload.php";
+
+$files = new UplodFile();
+$file1 = $files->get('test');
+
+// or 
+// $file1 = $files->test;
+
+foreach($file1->getAll() as $fileItem)
 {
-    /**
-     * @Properties(name="name" label="Name")
-     * @var string
-     */
-    protected $name;
+    $temporaryName = $fileItem->getTmpName();
+    $name = $fileItem->getName();
+    $size = $fileItem->getSize();
+    echo "$name | $temporaryName\r\n";
 }
+

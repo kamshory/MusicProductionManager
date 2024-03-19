@@ -49,5 +49,5 @@ try
 }
 catch(Exception $e)
 {
-    
+    // do nothing
 }

@@ -1,29 +1,28 @@
 <?php
 
-namespace MagicObject\DataLabel;
+namespace MagicObject\PicoDataLabel;
 
-use MagicObject\SetterGetter;
-use MagicObject\Util\PicoAnnotationParser;
-use stdClass;
+use MagicObject\DataLabel\PicoDataLabel;
 
-class DataLabel 
+class PicoDataLabels 
 {
     /**
      * Data
      *
-     * @var DataLabel[]
+     * @var PicoDataLabel[]
      */
     private $data = array();
     
     /**
      * Append data
      *
-     * @param DataLabel $data
+     * @param PicoDataLabel $data
      * @return self
      */
     public function append($data)
     {
         $this->data[] = $data;
+        return $this;
     }
     
     public function generate()
