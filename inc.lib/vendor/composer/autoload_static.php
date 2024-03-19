@@ -180,6 +180,10 @@ class ComposerStaticInit2219d434bd9928e433eb450fe0d2c608
             array (
                 0 => __DIR__ . '/../..' . '/classes',
             ),
+            'Mp3\\' => 
+            array (
+                0 => __DIR__ . '/../..' . '/classes',
+            ),
             'Midi\\' => 
             array (
                 0 => __DIR__ . '/../..' . '/classes',

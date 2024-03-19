@@ -768,6 +768,8 @@ class PicoDatabasePersistent // NOSONAR
      */
     private function _insert($info = null, $queryBuilder = null)
     {
+        /*
+        Original code
         $this->generatedValue = false;
         if($queryBuilder == null)
         {
@@ -779,8 +781,7 @@ class PicoDatabasePersistent // NOSONAR
         }
         $this->addGeneratedValue($info, true);
         $values = $this->getValues($info, $queryBuilder);
-        $fixValues = $this->fixInsertableValues($values, $info);
-        
+        $fixValues = $this->fixInsertableValues($values, $info);      
         
         $sqlQuery = $queryBuilder
             ->newQuery()
@@ -788,6 +789,8 @@ class PicoDatabasePersistent // NOSONAR
             ->into($info->tableName)
             ->fields($this->createStatementFields($fixValues))
             ->values($this->createStatementValues($fixValues));
+        */
+        $sqlQuery = $this->insertQuery($info, $queryBuilder);
         $stmt = $this->database->executeInsert($sqlQuery);
         if(!$this->generatedValue)
         {
@@ -817,7 +820,7 @@ class PicoDatabasePersistent // NOSONAR
         }
         $this->addGeneratedValue($info, true);
         $values = $this->getValues($info, $queryBuilder);
-        $fixValues = $this->fixInsertableValues($values, $info);    
+        $fixValues = $this->fixInsertableValues($values, $info);       
         
         return $queryBuilder
             ->newQuery()
@@ -1443,7 +1446,7 @@ class PicoDatabasePersistent // NOSONAR
     }
     
     /**
-     * Check if data is exists or not
+     * Check if record is exists or not
      *
      * @param string $propertyName
      * @param mixed $propertyValue
@@ -1533,7 +1536,7 @@ class PicoDatabasePersistent // NOSONAR
     }
     
     /**
-     * Delete data from database without read it first
+     * Delete record from database without read it first
      *
      * @param string $propertyName
      * @param mixed $propertyValue
@@ -2078,6 +2081,8 @@ class PicoDatabasePersistent // NOSONAR
      */
     private function _update($info = null, $queryBuilder = null, $where = null)
     {
+        /*
+        Original code
         if($queryBuilder == null)
         {
             $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
@@ -2100,6 +2105,8 @@ class PicoDatabasePersistent // NOSONAR
             ->update($info->tableName)
             ->set($set)
             ->where($where);
+        */
+        $sqlQuery = $this->_updateQuery($info, $queryBuilder, $where);
         return $this->database->executeUpdate($sqlQuery);
     }
 
@@ -2174,6 +2181,8 @@ class PicoDatabasePersistent // NOSONAR
      */
     private function _delete($info = null, $queryBuilder = null, $where = null)
     {
+        /*
+        Original code
         if($queryBuilder == null)
         {
             $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
@@ -2195,6 +2204,8 @@ class PicoDatabasePersistent // NOSONAR
             ->delete()
             ->from($info->tableName)
             ->where($where);
+        */
+        $sqlQuery = $this->_deleteQuery($info, $queryBuilder, $where);
         return $this->database->executeDelete($sqlQuery);
     }
 

@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Neutron' => array($vendorDir . '/neutron/temporary-filesystem/src'),
     'MusicProductionManager\\' => array($baseDir . '/classes'),
+    'Mp3\\' => array($baseDir . '/classes'),
     'Midi\\' => array($baseDir . '/classes'),
     'FFMpeg' => array($vendorDir . '/php-ffmpeg/php-ffmpeg/src'),
     'Evenement' => array($vendorDir . '/evenement/evenement/src'),
