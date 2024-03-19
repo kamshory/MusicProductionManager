@@ -90,9 +90,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     ->select("song_draft.song_draft_id, song_draft.time_create, song_draft.time_edit")
     ->from("song_draft")
     ->where(
-      "song_draft.time_create like ? or song_draft.time_create like ? or song_draft.time_edit like ? or song_draft.time_edit like ? ",
-      (date("Y") - 1) . "%",
-      date("Y") . "%",
+      "song_draft.time_create like ? or song_draft.time_create like ? ",
       (date("Y") - 1) . "%",
       date("Y") . "%"
     )
