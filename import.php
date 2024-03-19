@@ -3,6 +3,7 @@
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MusicProductionManager\Data\Entity\SongDraft;
+use MusicProductionManager\File\FileMp3;
 use MusicProductionManager\Utility\SongFileUtil;
 
 require_once "inc/app.php";
@@ -23,14 +24,40 @@ function insertSongDraft($database, $path)
     {
 
         $timestamp = strtotime($arr[0]."-".$arr[1]."-".$arr[2]." ".$arr[3].":".$arr[4].":".$arr[5]);
+        $now = date("Y-m-d H:i:s", $timestamp);
+        
+        $songDraftId = SongFileUtil::generateNewId($timestamp);
+        $filePath = "/var/www/html/studio/production/files/draft/$songDraftId/$songDraftId".".mp3";
+        
+        $tempMath = __DIR__ . "/files/draft/$songDraftId/$songDraftId".".mp3";
+        if(!file_exists(dirname($tempMath)))
+        {
+            mkdir(dirname($tempMath), 0755, true);
+        }
 
         $songDraft = new SongDraft(null, $database);
         try
         {
-            $songDraftId = SongFileUtil::generateNewId($timestamp);
+            
             $songDraft->setSongDraftId($songDraftId);
-            $query = $songDraft->insertQuery();
-            $database->execute($query);
+            $songDraft->setRandomId($timestamp * 1000);
+            $songDraft->setName($now);
+            $songDraft->setTimeCreate($now);
+            $songDraft->setTimeEdit($now);
+            $songDraft->setFileSize(filesize($path));
+            $songDraft->setFilePath($filePath);
+            $songDraft->setSha1File(sha1_file($path));
+            
+            // get MP3 duration
+            $mp3file = new FileMp3($path); 
+            $duration = $mp3file->getDuration(); 
+            $songDraft->setDuration($duration);
+            $songDraft->setActive(true);
+            
+            $query = $songDraft->saveQuery();
+            
+            copy($path, $tempMath);
+            
             return $query;
         }
         catch(Exception $e)
