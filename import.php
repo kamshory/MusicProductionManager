@@ -56,15 +56,17 @@ function insertSongDraft($database, $path)
             
             $query = $songDraft->saveQuery();
             
-            copy($path, $tempMath);
+            //copy($path, $tempMath);
             
             return $query;
         }
         catch(Exception $e)
         {
             // do nothing
+            
         }
     }
+    return new PicoDatabaseQueryBuilder($database);
 }
 $files = glob(dirname(__DIR__)."/raw/*.mp3");
 
