@@ -41,6 +41,10 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
           <td><?php echo $songDraft->getTitle();?></td>
         </tr>
         <tr>
+          <td>Rating</td>
+          <td><?php echo $songDraft->getRating();?></td>
+        </tr>
+        <tr>
           <td>Duration</td>
           <td><?php echo $songDraft->getDuration();?></td>
         </tr>
