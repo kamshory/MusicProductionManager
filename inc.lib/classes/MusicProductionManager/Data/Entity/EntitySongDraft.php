@@ -79,6 +79,14 @@ class EntitySongDraft extends MagicObject
     protected $lyric;
 
     /**
+	 * Rating
+	 * 
+	 * @Column(name="rating", type="float", nullable=true)
+	 * @var double
+	 */
+	protected $rating;
+
+    /**
      * Duration
      * 
      * @Column(name="duration", type="float", nullable=true)

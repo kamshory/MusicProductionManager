@@ -21,14 +21,14 @@ class SongDraft extends MagicObject
 	 * @var string
 	 */
 	protected $songDraftId;
-	
+
 	/**
-     * Parent ID
-     * 
-     * @Column(name="parent_id", type="varchar(40)", length=40, nullable=true)
-     * @var string
-     */
-    protected $parentId;
+	 * Parent ID
+	 * 
+	 * @Column(name="parent_id", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $parentId;
 
 	/**
 	 * Random ID
@@ -69,6 +69,14 @@ class SongDraft extends MagicObject
 	 * @var string
 	 */
 	protected $lyric;
+
+	/**
+	 * Rating
+	 * 
+	 * @Column(name="rating", type="float", nullable=true)
+	 * @var double
+	 */
+	protected $rating;
 
 	/**
 	 * Duration

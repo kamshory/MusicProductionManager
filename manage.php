@@ -200,6 +200,10 @@ else
         <span>Title</span>
         <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
+    <div class="filter-group">
+        <span>Subtitle</span>
+        <input class="form-control" type="text" name="subtitle" id="subtitle" autocomplete="off" value="<?php echo $inputGet->getSubtitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+    </div>
 
     <div class="filter-group">
         <span>Subtitle</span>

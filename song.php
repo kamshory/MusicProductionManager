@@ -220,9 +220,13 @@ else
         <span>Title</span>
         <input class="form-control" type="text" name="title" id="title" autocomplete="off" value="<?php echo $inputGet->getTitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
     </div>
-    
     <div class="filter-group">
         <span>Subtitle</span>
+        <input class="form-control" type="text" name="subtitle" id="subtitle" autocomplete="off" value="<?php echo $inputGet->getSubtitle(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);?>">
+    </div>
+    
+    <div class="filter-group">
+        <span>Subtitle Complete</span>
         <select class="form-control" name="subtitle_complete" id="subtitle_complete">
             <option value="">- All -</option>
             <option value="1"<?php echo $inputGet->createSelectedSubtitleComplete("1");?>>Yes</option>

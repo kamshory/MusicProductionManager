@@ -23,42 +23,42 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
 {
   try
   {
-    $song = new EntitySongDraft(null, $database);
-    $song->findOneBySongDraftId($inputGet->getSongDraftId());
+    $songDraft = new EntitySongDraft(null, $database);
+    $songDraft->findOneBySongDraftId($inputGet->getSongDraftId());
     ?>
     <table class="table table-responsive">
       <tbody>
         <tr>
           <td>Song Draft ID</td>
-          <td><?php echo $song->getSongDraftId();?></td>
+          <td><?php echo $songDraft->getSongDraftId();?></td>
         </tr>
         <tr>
           <td>Name</td>
-          <td><?php echo $song->getName();?></td>
+          <td><?php echo $songDraft->getName();?></td>
         </tr>
         <tr>
           <td>Title</td>
-          <td><?php echo $song->getTitle();?></td>
+          <td><?php echo $songDraft->getTitle();?></td>
         </tr>
         <tr>
           <td>Duration</td>
-          <td><?php echo $song->getDuration();?></td>
+          <td><?php echo $songDraft->getDuration();?></td>
         </tr>
         <tr>
           <td>File Size</td>
-          <td><?php echo $song->getFileSize();?></td>
+          <td><?php echo $songDraft->getFileSize();?></td>
         </tr>
         <tr>
           <td>Created</td>
-          <td><?php echo $song->getTimeCreate();?></td>
+          <td><?php echo $songDraft->getTimeCreate();?></td>
         </tr>
         <tr>
           <td>Last Update</td>
-          <td><?php echo $song->getTimeEdit();?></td>
+          <td><?php echo $songDraft->getTimeEdit();?></td>
         </tr>
         <tr>
           <td>Active</td>
-          <td><?php echo $song->booleanToTextByActive('Yes', 'No');?></td>
+          <td><?php echo $songDraft->booleanToTextByActive('Yes', 'No');?></td>
         </tr>
       </tbody>
     </table>
@@ -254,26 +254,26 @@ if(!empty($result))
     <tbody>
         <?php
         $no = $pagination->getOffset();
-        foreach($result as $song)
+        foreach($result as $songDraft)
         {
         $no++;
-        $songId = $song->getSongDraftId();
-        $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&song_draft_id=".$songId;
-        $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_draft_id=".$songId;
-        $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_draft_id=".$songId;
-        $linkDownload = "read-file.php?type=draft&song_draft_id=".$songId;
+        $songDraftId = $songDraft->getSongDraftId();
+        $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&song_draft_id=".$songDraftId;
+        $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&song_draft_id=".$songDraftId;
+        $linkDelete = basename($_SERVER['PHP_SELF'])."?action=delete&song_draft_id=".$songDraftId;
+        $linkDownload = "read-file.php?type=draft&song_draft_id=".$songDraftId;
         ?>
-        <tr data-id="<?php echo $songId;?>">
+        <tr data-id="<?php echo $songDraftId;?>">
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
-        <th scope="row"><a href="#" class="play-data" data-url="<?php echo $cfg->getSongDraftBaseUrl()."/".$song->getSongDraftId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
+        <th scope="row"><a href="#" class="play-data" data-song-draft-id="<?php echo $songDraftId;?>" data-url="<?php echo $cfg->getSongDraftBaseUrl()."/".$songDraft->getSongDraftId()."/".basename($songDraft->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $songDraft->getLastUploadTime());?>"><i class="ti ti-player-play"></i></a></th>
         <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
-        <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $song->getName();?></a></td>
-        <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
-        <td class="text-data text-data-time-artist text-nowrap"><?php echo $song->hasValueArtist() ? $song->getArtist()->getName() : "";?></td>
-        <td class="text-data text-data-time-create text-nowrap"><?php echo $song->getTimeCreate();?></td>
-        <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>
-        <td class="text-data text-data-active text-nowrap"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
+        <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $songDraft->getName();?></a></td>
+        <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $songDraft->getTitle();?></a></td>
+        <td class="text-data text-data-time-artist text-nowrap"><?php echo $songDraft->hasValueArtist() ? $songDraft->getArtist()->getName() : "";?></td>
+        <td class="text-data text-data-time-create text-nowrap"><?php echo $songDraft->getTimeCreate();?></td>
+        <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($songDraft->getDuration() / 3600)->printDms(true, true); ?></td>
+        <td class="text-data text-data-active text-nowrap"><?php echo $songDraft->isActive() ? 'Yes' : 'No';?></td>
         </tr>
         <?php
         }
@@ -297,6 +297,8 @@ if(!empty($result))
 <?php
 }
 ?>
+<link rel="stylesheet" href="assets/rateyo/rateyo.css">
+<script src="assets/rateyo/rateyo.js"></script>
 
 <script>
   let playerModal;
@@ -310,8 +312,24 @@ if(!empty($result))
     
     $('a.play-data').on('click', function(e2){
       e2.preventDefault();
+      let song_draft_id = $(this).attr('data-song-draft-id');
       $('#songPlayer').find('audio').attr('src', $(this).attr('data-url'));
+      $('#songPlayer').find('.song-rating').attr('data-song-draft-id', song_draft_id);
+      $.ajax({
+        type:'GET',
+        url:'lib.ajax/song-draft-get-rating.php',
+        data:{song_draft_id:song_draft_id},
+        success:function(response)
+        {
+          updateRate(response);
+        }
+      });
+
       playerModal.show();
+
+
+
+
     });
     $('.close-player').on('click', function(e2){
       e2.preventDefault();
@@ -319,8 +337,60 @@ if(!empty($result))
       playerModal.hide();
     });
   });
+  
 </script>
+<script>
+  $(document).ready(function() {
+    $('.song-rating').each(function(e) {
+      let rate = parseFloat($(this).attr('data-rate'));
+      $(this).rateYo({
+        rating: rate,
+        starWidth: "16px"
+      });
+    });
 
+    $('.song-rating').rateYo().on('rateyo.set', function(e, data) {
+      setRateEvent(e, data);
+    });
+
+  });
+  
+  function setRateEvent(e, data)
+  {
+    let songDraftId = $(e.currentTarget).attr('data-song-draft-id');
+      $.ajax({
+        type: 'POST',
+        url: 'lib.ajax/song-draft-set-rating.php',
+        dataType: 'json',
+        data: {
+          song_draft_id: songDraftId,
+          rating: data.rating
+        },
+        success: function(response) {
+          updateRate(response);
+        }
+      });
+  }
+  function updateRate(response)
+  {
+    let selector = '.song-rating[data-song-draft-id="'+response.song_draft_id+'"]';
+    let newRate = $('<div />');
+    $(selector).replaceWith(newRate);
+    newRate.addClass("song-rating");
+    newRate.addClass("half-star-ratings");
+    newRate.attr("data-rateyo-half-star", "true");
+    newRate.attr('data-song-draft-id', response.song_draft_id);
+    newRate.attr('data-rate', response.rating);
+  
+    $(selector).rateYo({
+      rating: parseFloat(response.rating),
+      starWidth: "16px"
+    });
+    $(selector).rateYo().on('rateyo.set', function(e, data) {
+      setRateEvent(e, data);
+    });
+  }
+</script>
 <div style="background-color: rgba(0, 0, 0, 0.11);" class="modal fade" id="songPlayer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="songPlayerLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -329,7 +399,10 @@ if(!empty($result))
               <button type="button" class="btn-primary btn-close close-player" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+              <div class="audio-player">
               <audio style="width: 100%; height: 40px;" controls></audio>
+              </div>
+              <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="0" data-song-draft-id=""></div>
           </div>
           
           <div class="modal-footer">
@@ -350,9 +423,9 @@ if(!empty($result))
       e2.preventDefault();
       e2.stopPropagation();
       
-      let songId = $(this).closest('tr').attr('data-id') || '';
+      let songDraftId = $(this).closest('tr').attr('data-id') || '';
       let dialogSelector = $('.modal-update-data');
-      dialogSelector.load(dialogSelector.attr('data-url')+'?song_draft_id='+songId, function(data){
+      dialogSelector.load(dialogSelector.attr('data-url')+'?song_draft_id='+songDraftId, function(data){
         
         let updateSongModalElem = document.querySelector('#updateSongDraftDialog');
         updateSongModal = new bootstrap.Modal(updateSongModalElem, {
