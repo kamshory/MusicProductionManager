@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Request\InputGet;
 use MagicObject\Response\Generated\JSONSelectOption;

@@ -4,6 +4,7 @@ use MagicObject\Database\PicoDatabaseQueryBuilder;
 
 use MagicObject\Response\PicoResponse;
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Request\InputGet;
 use MagicObject\Response\Generated\JSONSelectOption;
 

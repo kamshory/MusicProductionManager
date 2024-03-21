@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Database\PicoPageData;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
