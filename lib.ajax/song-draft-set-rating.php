@@ -34,6 +34,7 @@ try
 }
 catch(Exception $e)
 {
+    // do nothing
 }
 $data = new stdClass;
 $data->song_draft_id = $songDraft->getSongDraftId();
