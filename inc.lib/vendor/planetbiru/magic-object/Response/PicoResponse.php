@@ -2,7 +2,6 @@
 
 namespace MagicObject\Response;
 
-use MagicObject\Constants\PicoConstants;
 use MagicObject\Constants\PicoHttpStatus;
 use MagicObject\Constants\PicoMime;
 use \stdClass;
