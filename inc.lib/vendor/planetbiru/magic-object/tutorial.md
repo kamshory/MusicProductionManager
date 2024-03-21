@@ -265,7 +265,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @var string
 	 */
 	protected $databaseName = "";
-	
+
 	/**
 	 * Database schema
 	 *
@@ -339,7 +339,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @var string
 	 */
 	protected $databaseName = "";
-	
+
 	/**
 	 * Database schema
 	 *
@@ -629,8 +629,9 @@ Strategy to generate auto value:
 **1. GenerationType.UUID**
 
 Generate 20 bytes unique ID
- - 14 byte hexadecimal of uniqid https://www.php.net/manual/en/function.uniqid.php
- - 6 byte hexadecimal or random number
+
+- 14 byte hexadecimal of uniqid https://www.php.net/manual/en/function.uniqid.php
+- 6 byte hexadecimal or random number
 
 **2. GenerationType.IDENTITY**
 
@@ -661,17 +662,17 @@ $database = new PicoDatabase($databaseCredentials);
 try
 {
     $database->connect();
-    
+  
     // create new 
-    
+  
     $album1 = new Album(null, $database);
     $album1->setAibumId("123456");
     $album1->setName("Album 1");
     $album1->setAdminCreate("USER1");
     $album1->setDuration(300);
-    
-    
-    
+  
+  
+  
     // other way to create object
     // create object from stdClass or other object with match property (snake case or camel case)
     $data = new stdClass;
@@ -680,15 +681,15 @@ try
     $data->name = "Album 1";
     $data->admin_create = "USER1";
     $data->duration = 300;
-    
+  
     // or camel case
     $data->albumId = "123456";
     $data->name = "Album 1";
     $data->adminCreate = "USER1";
     $data->duration = 300;
-    
+  
     $album1 = new Album($data, $database); 
-    
+  
     // other way to create object
     // create object from associated array with match property (snake case or camel case)
     $data = array();
@@ -697,61 +698,61 @@ try
     $data["name"] = "Album 1";
     $data["admin_create"] = "USER1";
     $data["duration"] = 300;
-    
+  
     // or camel case
     $data["albumId"] = "123456";
     $data["name"] = "Album 1";
     $data["adminCreate"] = "USER1";
     $data["duration"] = 300;
     $album1 = new Album($data, $database);
-    
-    
+  
+  
     // get value from form
     // this way is not safe
     $album1 = new Album($_POST, $database);
-    
-    
+  
+  
     // we can use other way
     $inputPost = new InputPost();
-    
+  
     // we can apply filter
     $inputPost->filterName(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);
     $inputPost->filterDescription(PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS);
-    
+  
     // if property not present in $inputPost, we can set default value
     // please note that user can modify form and add update any unwanted properties to be updated
     $inputPost->checkboxActive(false);
     $inputPost->checkboxAsDraft(true);
-    
+  
     // we can remove any property data from object $inputPost before apply it to entity
     // it will not saved to database
     $inputPost->setSortOrder(null);
-    
+  
     $album1 = new Album($inputPost, $database);
-    
+  
     // insert to database
     $album1->insert();
-    
+  
     // insert or update
     $album1->save();
-    
+  
     // update
     // NoRecordFoundException if ID not found
     $album1->update();
-    
+  
     // convert to JSON
     $json = $album1->toString();
     // or
     $json = $album1 . "";
-    
+  
     // send to buffer output
     // automaticaly converted to string
     echo $album1;
-    
+  
     // find one by ID
     $album2 = new Album(null, $database);
     $album2->findOneByAlbumId("123456");
-    
+  
     // find multiple
     $album2 = new Album(null, $database);
     $albums = $album2->findByAdminCreate("USER1");
@@ -759,18 +760,18 @@ try
     foreach($rows as $albumSaved)
     {
         // $albumSaved is instance of Album
-        
+      
         // we can update data
         $albumSaved->setAdminEdit("USER1");
         $albumSaved->setTimeEdit(date('Y-m-d H:i:s'));
-        
+      
         // this value will not be saved to database because has no column
         $albumSaved->setAnyValue("ANY VALUE");
-        
+      
         $albumSaved->update();
     }
-    
-    
+  
+  
 }
 catch(Exception $e)
 {
@@ -857,7 +858,7 @@ class EntitySong extends MagicObject
 	 * @var integer
 	 */
 	protected $trackNumber;
-	
+
 	/**
 	 * Producer ID
 	 * 
@@ -865,7 +866,7 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $producerId;
-	
+
 	/**
 	 * Producer
 	 * 
@@ -881,7 +882,7 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $artistVocalist;
-	
+
 	/**
 	 * Artist Vocal
 	 * 
@@ -897,7 +898,7 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $artistComposer;
-	
+
 	/**
 	 * Artist Composer
 	 * 
@@ -913,7 +914,7 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $artistArranger;
-	
+
 	/**
 	 * Artist Arranger
 	 * 
@@ -1057,7 +1058,7 @@ class EntitySong extends MagicObject
 	 * @var string
 	 */
 	protected $genreId;
-	
+
 	/**
 	 * Genre ID
 	 * 
@@ -1268,9 +1269,9 @@ $database = new PicoDatabase($databaseCredentials);
 try
 {
     $database->connect();
-    
+  
     $inputGet = new InputGet();
-    
+  
     $orderMap = array(
         'name'=>'name', 
         'title'=>'title', 
@@ -1314,7 +1315,7 @@ try
     $rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
 
     $result = $rowData->getResult();
-    
+  
     if(!empty($result))
     {
     ?>
@@ -1386,7 +1387,7 @@ try
             <?php
             }
             ?>
-            
+          
         </tbody>
         </table>
 
@@ -1407,7 +1408,7 @@ try
 }
 catch(Exception $e)
 {
-    
+  
 }
 
 ```
@@ -1508,12 +1509,12 @@ class SpecificationUtil
         {
             foreach($additional as $key=>$value)
             {
-                $predicate2 = new PicoPredicate();          
+                $predicate2 = new PicoPredicate();        
                 $predicate2->equals($key, $value);
                 $spesification->addAnd($predicate2);
             }
         }
-        
+      
         return $spesification;
     }
 }
@@ -1544,9 +1545,9 @@ $database = new PicoDatabase($databaseCredentials);
 try
 {
     $database->connect();
-    
+  
     $queryBuilder = new PicoDatabaseQueryBuilder($database);
-    
+  
     $queryBuilder
         ->newQuery()
         ->select("u.*")
@@ -1560,11 +1561,11 @@ try
     {
         var_dump($user);
     }
-    
+  
 }
 catch(Ecxeption $e)
 {
-    
+  
 }
 ```
 
@@ -1582,7 +1583,6 @@ When the developer decides to change the form from single file to multiple files
 </form>
 ```
 
-
 ```html
 <!-- multiple files -->
 <form action="" method="post" enctype="multipart/form-data">
@@ -1594,7 +1594,7 @@ When the developer decides to change the form from single file to multiple files
 ```php
 <?php
 
-use MagicObject\File\UplodFile;
+use MagicObject\File\PicoUplodFile;
 
 require_once "vendor/autoload.php";
 

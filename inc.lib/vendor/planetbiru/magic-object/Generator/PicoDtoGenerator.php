@@ -5,7 +5,7 @@ namespace MagicObject\Geneator;
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Util\StringUtil;
 
-class EntityGenerator
+class PicoDtoGenerator
 {
     /**
      * Database
@@ -166,7 +166,7 @@ class EntityGenerator
         $picoTableName = $this->tableName;
         $className = ucfirst(StringUtil::camelize($picoTableName));
         $fileName = $this->baseNamespace."/".$className;
-        $path = __DIR__ . "/inc.lib/classes/".$fileName."Dto.php";
+        $path = $this->baseDir."/".$fileName."Dto.php";
         $path = str_replace("\\", "/", $path);
 
         $sql = "SHOW COLUMNS FROM $picoTableName";

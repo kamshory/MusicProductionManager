@@ -5,6 +5,12 @@ namespace MagicObject\File;
 class PicoUploadFileContainer
 {
     private $values = array();
+    
+    /**
+     * Constructor
+     *
+     * @param array $file
+     */
     public function __construct($file = null)
     {
         if($file != null)

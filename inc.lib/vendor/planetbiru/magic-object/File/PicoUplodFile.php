@@ -15,6 +15,9 @@ class PicoUplodFile
      */
     private $values = array();
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         /*
@@ -30,6 +33,13 @@ class PicoUplodFile
         $this->initMap();
     }
 
+    /**
+     * Magic method
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return mixed
+     */
     public function __call($method, $arguments) //NOSONAR
     {
         if (strncasecmp($method, "get", 3) === 0) {

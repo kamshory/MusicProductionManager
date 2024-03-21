@@ -20,4 +20,4 @@ $queryBuilder
     ->orderBy("producer.name asc");
 $response = new JSONSelectOption($database, $queryBuilder, $defautValue);
 $restResponse = new PicoResponse();
-$restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
+$restResponse->sendResponse($response, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);

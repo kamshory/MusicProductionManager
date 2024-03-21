@@ -117,7 +117,7 @@ try {
 
     $restResponse = new PicoResponse();
     $response = UserDto::valueOf($user);
-    $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
+    $restResponse->sendResponse($response, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);
 } catch (Exception $e) {
     // do nothing
 }

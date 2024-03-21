@@ -5,7 +5,7 @@ namespace MagicObject\Geneator;
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Util\StringUtil;
 
-class EntityGenerator
+class PicoEntityGenerator
 {
     /**
      * Database

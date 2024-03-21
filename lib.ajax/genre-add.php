@@ -53,4 +53,4 @@ catch(Exception $e)
 }
 $restResponse = new PicoResponse();
 $response = GenreDto::valueOf($genre);
-$restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
+$restResponse->sendResponse($response, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);
