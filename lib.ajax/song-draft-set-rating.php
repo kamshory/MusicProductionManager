@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
@@ -39,4 +40,4 @@ $data->song_draft_id = $songDraft->getSongDraftId();
 $data->rating = $allRating;
 $result = json_encode($data);
 $restResponse = new PicoResponse();
-$restResponse->sendResponse($result, 'json', null, PicoHttpStatus::HTTP_OK);
+$restResponse->sendResponse($result, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);

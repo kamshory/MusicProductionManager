@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Request\InputGet;
 use MagicObject\Response\Generated\JSONSelectOption;
@@ -18,4 +19,4 @@ $queryBuilder
     ->where("genre.active = ? ", true);
 $data = new JSONSelectOption($database, $queryBuilder, $defautValue);
 $restResponse = new PicoResponse();
-$restResponse->sendResponse($data, 'json', null, PicoHttpStatus::HTTP_OK);
+$restResponse->sendResponse($data, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);

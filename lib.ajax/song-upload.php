@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
@@ -210,7 +211,7 @@ try
     SongUtil::updateSong($database, $songId, $currentLoggedInUser->getUserId(), "update", $now, ServerUtil::getRemoteAddress($cfg), $userActivityId);
 
     $restResponse = new PicoResponse();
-    $restResponse->sendResponse($song, 'json', null, PicoHttpStatus::HTTP_OK);
+    $restResponse->sendResponse($song, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);
 
 }
 catch(Exception $e)
