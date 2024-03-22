@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Request\InputGet;
 use MagicObject\Response\Generated\JSONSelectOption;
@@ -19,4 +20,4 @@ $queryBuilder
     ->where("artist.active = ? ", true);
 $response = new JSONSelectOption($database, $queryBuilder, $defautValue);
 $restResponse = new PicoResponse();
-$restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
+$restResponse->sendResponse($response, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);

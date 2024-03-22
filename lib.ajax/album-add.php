@@ -5,6 +5,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MusicProductionManager\Data\Dto\AlbumDto;
 use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Utility\ServerUtil;
@@ -30,7 +31,7 @@ try
     }
     $restResponse = new PicoResponse();   
     $response = AlbumDto::valueOf($album);
-    $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
+    $restResponse->sendResponse($response, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);
 }
 catch(Exception $e)
 {
@@ -58,5 +59,5 @@ catch(Exception $e)
     
     $restResponse = new PicoResponse();   
     $response = AlbumDto::valueOf($album);
-    $restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
+    $restResponse->sendResponse($response, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);
 }

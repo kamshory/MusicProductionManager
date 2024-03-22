@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MagicObject\Database\PicoPageData;
 use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
@@ -190,4 +191,4 @@ try {
 }
 $restResponse = new PicoResponse();
 $response = UserDto::valueOf($user);
-$restResponse->sendResponse($response, 'json', null, PicoHttpStatus::HTTP_OK);
+$restResponse->sendResponse($response, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);

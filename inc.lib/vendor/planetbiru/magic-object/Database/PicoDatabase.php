@@ -82,7 +82,7 @@ class PicoDatabase //NOSONAR
 	public function connect()
 	{
 		date_default_timezone_set($this->databaseCredentials->getTimeZone());
-		$timezoneOffset = date("P");
+		$timeZoneOffset = date("P");
 		$connected = true;
 		try 
 		{
@@ -93,7 +93,7 @@ class PicoDatabase //NOSONAR
 				$this->databaseCredentials->getUsername(),
 				$this->databaseCredentials->getPassword(),
 				array(
-					PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '$timezoneOffset';",
+					PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '$timeZoneOffset';",
 					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 					PDO::MYSQL_ATTR_FOUND_ROWS => true
 				)
@@ -107,6 +107,20 @@ class PicoDatabase //NOSONAR
 			// Do nothing
 		}
 		return $connected;
+	}
+	
+	/**
+	 * Set time zone offset
+	 * Time zone offset is difference to Greenwich time (GMT) with colon between hours and minutes. See date("P") on PHP manual
+	 *
+	 * @param string $timeZoneOffset
+	 * @return self
+	 */
+	public function setTimeZoneOffset($timeZoneOffset)
+	{
+		$sql = "SET time_zone = '$timeZoneOffset';";
+		$this->execute($sql);
+		return $this;
 	}
 	
 	/**

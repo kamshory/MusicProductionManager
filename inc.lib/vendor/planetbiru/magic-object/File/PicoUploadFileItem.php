@@ -2,12 +2,58 @@
 
 namespace MagicObject\File;
 
+use MagicObject\Exceptions\FileNotFoundException;
+
 class PicoUploadFileItem
 {
     private $value = array();
+    
+    /**
+     * Constructor
+     *
+     * @param array $file
+     */
     public function __construct($file)
     {
         $this->value = $file;
+    }
+    
+    /**
+     * Copy file to destination path
+     *
+     * @param string $path
+     * @return bool
+     * @throws FileNotFoundException
+     */
+    public function copyTo($path)
+    {
+        if(isset($this->value['tmp_name']))
+        {
+            return copy($this->value['tmp_name'], $path);
+        }
+        else
+        {
+            throw new FileNotFoundException("Temporary file not found");
+        }
+    }
+    
+    /**
+     * Move uploaded file to destination path
+     *
+     * @param string $path
+     * @return bool
+     * @throws FileNotFoundException
+     */
+    public function copyMoveTo($path)
+    {
+        if(isset($this->value['tmp_name']))
+        {
+            return move_uploaded_file($this->value['tmp_name'], $path);
+        }
+        else
+        {
+            throw new FileNotFoundException("Temporary file not found");
+        }
     }
     
     /**

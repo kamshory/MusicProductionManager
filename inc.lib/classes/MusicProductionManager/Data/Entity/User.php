@@ -77,6 +77,14 @@ class User extends MagicObject
 	 * @var string
 	 */
 	protected $email;
+	
+	/**
+	 * Time Zone
+	 * 
+	 * @Column(name="time_zone", type="varchar(255)", length=255, nullable=true)
+	 * @var string
+	 */
+	protected $timeZone;
 
 	/**
 	 * User Type ID

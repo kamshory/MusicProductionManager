@@ -5,6 +5,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MagicObject\Response\PicoResponse;
 use MagicObject\Constants\PicoHttpStatus;
+use MagicObject\Constants\PicoMime;
 use MusicProductionManager\Data\Entity\EntityAlbum;
 use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Data\Entity\Song;
@@ -80,7 +81,7 @@ try {
     
 
     $restResponse = new PicoResponse();
-    $restResponse->sendResponse($album, 'json', null, PicoHttpStatus::HTTP_OK);
+    $restResponse->sendResponse($album, PicoMime::APPLICATION_JSON, null, PicoHttpStatus::HTTP_OK);
 } catch (Exception $e) {
     // do nothing
 }

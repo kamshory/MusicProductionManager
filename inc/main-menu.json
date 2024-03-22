@@ -1,0 +1,75 @@
+[
+    {
+        "caption":"HOME",
+        "menu":[
+            {
+                "caption": "Dashboard",
+                "link": "index.php",
+                "target": "_self",
+                "icon": "layout-dashboard",
+                "active": true
+            },
+            {
+                "caption": "Karaoke",
+                "link": "karaoke.php",
+                "target": "_self",
+                "icon": "microphone",
+                "active": true
+            },
+            {
+                "caption": "Sound Recorder",
+                "link": "sound-recorder.php",
+                "target": "_self",
+                "icon": "microphone",
+                "active": true
+            }
+        ]
+    },
+    {
+        "caption":"DATA",
+        "menu":[
+            {
+                "caption": "Song",
+                "link": "song.php",
+                "target": "_self",
+                "icon": "music",
+                "active": true
+            },
+            {
+                "caption": "Manage",
+                "link": "manage.php",
+                "target": "_self",
+                "icon": "music",
+                "active": true
+            },
+            {
+                "caption": "Subtitle",
+                "link": "subtitle.php",
+                "target": "_self",
+                "icon": "file-description",
+                "active": true
+            },
+            {
+                "caption": "Midi",
+                "link": "midi.php",
+                "target": "_self",
+                "icon": "music",
+                "active": true
+            },
+            {
+                "caption": "Song Draft",
+                "link": "song-draft.php",
+                "target": "_self",
+                "icon": "file-description",
+                "active": true
+            },
+            {
+                "caption": "Comment",
+                "link": "comment.php",
+                "target": "_self",
+                "icon": "message",
+                "active": true
+            }
+        ]
+    }
+]
