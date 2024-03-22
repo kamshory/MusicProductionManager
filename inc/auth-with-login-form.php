@@ -13,6 +13,14 @@ if(isset($_SESSION) && isset($_SESSION['suser']) && isset($_SESSION['spass']))
         $username = $_SESSION['suser'];
         $password = $_SESSION['spass'];
         $currentLoggedInUser->findOneByUsernameAndPasswordAndBlockedAndActive($username, $password, false, true);
+        
+        // Set time zone
+        if($currentLoggedInUser->hasValueTimeZone() && $currentLoggedInUser->getTimeZone() != "")
+        {
+            date_default_timezone_set($currentLoggedInUser->hasValueTimeZone());
+		    $timeZoneOffset = date("P");
+            $database->setTimeZoneOffset($timeZoneOffset);
+        }
     }
     catch(Exception $e)
     {

@@ -31,6 +31,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT) && $inputPost->getSave() 
     $user->setName($inputPost->getName());
     $user->setBirthDay($inputPost->getBirthDay());
     $user->setGender($inputPost->getGender());
+    $user->setTimeZone($inputPost->getTimeZone());
 
     $username = $inputPost->getUsername();
     if(!empty($username) && !UserUtil::isDuplicatedUsername($database, $userId, $username))
@@ -91,12 +92,33 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
         <td>Password</td>
         <td><input type="password" class="form-control" name="password" id="password" value="" autocomplete="off"></td>
       </tr>
+      <tr>
+        <td>Time Zone</td>
+        <td><select class="form-control" name="time_zone" id="time_zone" data-value="<?php echo $user->getTimeZone();?>"></select></td>
+      </tr>
     </tbody>
   </table>
   <input type="hidden" name="save" value="save">
   <button type="submit" class="btn btn-success">Update</button>
   <button type="button" class="btn btn-primary" onclick="window.location='profile.php'">Cancel</button>
     </form>
+    
+    <script type="text/javascript">
+      $(document).ready(function(e1){
+        $('#time_zone').load('lib.ajax/time-zone.php', function(responseTxt, statusTxt, xhr){
+          if(statusTxt == "success")
+          {
+            $('#time_zone').val($('#time_zone').attr('data-value') );
+          }
+          if(statusTxt == "error")
+          {
+
+          }
+        });
+      });
+    </script>
+
+
     <?php
     }
     catch(Exception $e)
@@ -138,6 +160,10 @@ else
       <tr>
         <td>Email</td>
         <td><?php echo $user->getEmail();?></td>
+      </tr>
+      <tr>
+        <td>Time Zone</td>
+        <td><?php echo $user->getTimeZone();?></td>
       </tr>
     </tbody>
   </table>
