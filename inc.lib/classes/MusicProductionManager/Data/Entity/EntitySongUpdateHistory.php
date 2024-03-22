@@ -9,18 +9,18 @@ use MagicObject\MagicObject;
  * @JSON(property-naming-strategy=SNAKE_CASE)
  * @Table(name="song_update_history")
  */
-class SongUpdateHistory extends MagicObject
+class EntitySongUpdateHistory extends MagicObject
 {
 	/**
-	 * Song Update History
+	 * Song Update History ID
 	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
-	 * @Column(name="song_update_history", type="varchar(40)", length=40, nullable=false)
+	 * @Column(name="song_update_history_id", type="varchar(40)", length=40, nullable=false)
 	 * @var string
 	 */
-	protected $songUpdateHistory;
+	protected $songUpdateHistoryId;
 
 	/**
 	 * Song ID

@@ -320,6 +320,37 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
         </div>
       </div>
 
+      <?php
+      $monthly_activity = array();
+      $sql = $query->newQuery()
+      ->select("song_update_history.song_update_history_id, song_update_history.time_update")
+      ->from("song_update_history")
+      ->where(
+        "song_update_history.time_update like ? or song_update_history.time_update like ? ",
+        (date("Y") - 1) . "%",
+        date("Y") . "%"
+      )
+      ->orderBy("song_update_history.time_update asc");
+      try {
+      $rows = $database->fetchAll($sql, PDO::FETCH_ASSOC);
+
+      foreach ($rows as $row) {
+        $month2 = date('y/m', strtotime($row['time_update']));
+        if (!isset($monthly_activity[$month2])) {
+          $monthly_activity[$month2] = 0;
+        }
+        if (!isset($data1[$month2])) {
+          $data1[$month2] = 0;
+        }
+
+        $monthly_activity[$month2]++;
+      }
+
+      } catch (Exception $e) {
+      // do nothing
+      }
+      ?>
+
       <script>
         $(document).ready(function() {
           // =====================================
@@ -427,7 +458,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
             series: [{
               name: "Updated Song",
               color: "#49BEFF",
-              data: <?php echo json_encode(array_values($data2)); ?>,
+              data: <?php echo json_encode(array_values($monthly_activity)); ?>,
             }, ],
             stroke: {
               curve: "smooth",
@@ -438,8 +469,6 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
               type: "solid",
               opacity: 0.05,
             },
-
-
 
             markers: {
               size: 0,

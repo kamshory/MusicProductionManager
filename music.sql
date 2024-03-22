@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2024 at 07:09 PM
+-- Generation Time: Mar 22, 2024 at 05:58 PM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -50,6 +50,27 @@ CREATE TABLE IF NOT EXISTS `album` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `article`
+--
+
+CREATE TABLE IF NOT EXISTS `article` (
+  `article_id` varchar(40) NOT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `title` text,
+  `content` longtext,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  `admin_create` varchar(40) DEFAULT NULL,
+  `admin_edit` varchar(40) DEFAULT NULL,
+  `ip_create` varchar(50) DEFAULT NULL,
+  `ip_edit` varchar(50) DEFAULT NULL,
+  `draft` tinyint(1) DEFAULT '1',
+  `active` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `artist`
 --
 
@@ -78,6 +99,21 @@ CREATE TABLE IF NOT EXISTS `artist` (
   `ip_edit` varchar(50) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `draft_rating`
+--
+
+CREATE TABLE IF NOT EXISTS `draft_rating` (
+  `draft_rating_id` varchar(40) NOT NULL,
+  `user_id` varchar(40) DEFAULT NULL,
+  `song_draft_id` varchar(40) DEFAULT NULL,
+  `rating` float DEFAULT NULL,
+  `time_create` timestamp NULL DEFAULT NULL,
+  `time_edit` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -365,11 +401,13 @@ CREATE TABLE IF NOT EXISTS `song_copy` (
 
 CREATE TABLE IF NOT EXISTS `song_draft` (
   `song_draft_id` varchar(40) NOT NULL,
+  `parent_id` varchar(40) DEFAULT NULL,
   `random_id` varchar(40) DEFAULT NULL,
   `artist_id` varchar(40) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `title` text,
   `lyric` longtext,
+  `rating` float DEFAULT NULL,
   `duration` float DEFAULT NULL,
   `file_path` text,
   `file_size` bigint(20) DEFAULT NULL,
@@ -410,7 +448,7 @@ CREATE TABLE IF NOT EXISTS `song_draft_comment` (
 --
 
 CREATE TABLE IF NOT EXISTS `song_update_history` (
-  `song_update_history` varchar(40) NOT NULL,
+  `song_update_history_id` varchar(40) NOT NULL,
   `song_id` varchar(40) DEFAULT NULL,
   `user_id` varchar(40) DEFAULT NULL,
   `user_activity_id` varchar(40) DEFAULT NULL,
@@ -434,6 +472,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `birth_day` varchar(100) DEFAULT NULL,
   `gender` varchar(2) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
+  `time_zone` varchar(255) DEFAULT NULL,
   `user_type_id` varchar(40) DEFAULT NULL,
   `associated_artist` varchar(40) DEFAULT NULL,
   `associated_producer` varchar(40) DEFAULT NULL,
@@ -507,6 +546,12 @@ ALTER TABLE `artist`
   ADD PRIMARY KEY (`artist_id`);
 
 --
+-- Indexes for table `draft_rating`
+--
+ALTER TABLE `draft_rating`
+  ADD PRIMARY KEY (`draft_rating_id`);
+
+--
 -- Indexes for table `genre`
 --
 ALTER TABLE `genre`
@@ -570,7 +615,7 @@ ALTER TABLE `song_draft_comment`
 -- Indexes for table `song_update_history`
 --
 ALTER TABLE `song_update_history`
-  ADD PRIMARY KEY (`song_update_history`);
+  ADD PRIMARY KEY (`song_update_history_id`);
 
 --
 -- Indexes for table `user`

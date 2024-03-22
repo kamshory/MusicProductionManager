@@ -17,7 +17,7 @@ if(isset($_SESSION) && isset($_SESSION['suser']) && isset($_SESSION['spass']))
         // Set time zone
         if($currentLoggedInUser->hasValueTimeZone() && $currentLoggedInUser->getTimeZone() != "")
         {
-            date_default_timezone_set($currentLoggedInUser->hasValueTimeZone());
+            date_default_timezone_set($currentLoggedInUser->getTimeZone());
 		    $timeZoneOffset = date("P");
             $database->setTimeZoneOffset($timeZoneOffset);
         }

@@ -12,15 +12,15 @@ use MagicObject\MagicObject;
 class SongUpdateHistory extends MagicObject
 {
 	/**
-	 * Song Update History
+	 * Song Update History ID
 	 * 
 	 * @Id
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
-	 * @Column(name="song_update_history", type="varchar(40)", length=40, nullable=false)
+	 * @Column(name="song_update_history_id", type="varchar(40)", length=40, nullable=false)
 	 * @var string
 	 */
-	protected $songUpdateHistory;
+	protected $songUpdateHistoryId;
 
 	/**
 	 * Song ID
