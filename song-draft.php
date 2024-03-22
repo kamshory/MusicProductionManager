@@ -84,11 +84,13 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
       }
     </style>
     
+    <!-- Summernote CSS -->
+    <link href="assets/summernote/css/summernote-lite.min.css" rel="stylesheet">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="assets/summernote/css/style.css">
+    <!-- Summernote JS -->
+    <script src="assets/summernote/js/summernote-lite.min.js"></script>
  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.js" integrity="sha512-VqW3FWLsKVphZNAVsUKfA5UJ9oxVamFqNtHs46UxI7UA/gQ6GGaZ37GYdotPJ27Y/C8dvOQEKjWbfiNOkkhVAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" integrity="sha512-ngQ4IGzHQ3s/Hh8kMyG4FC74wzitukRMIcTOoKT3EyzFZCILOPF0twiXOQn75eDINUfKBYmzYn2AA8DkAk8veQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
 
     <form action="">
       <h4>Comment</h4>
@@ -100,8 +102,12 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
     </form>
     <script>
       $(document).ready(function() {
-        $('.summernote').summernote({});
-      });
+        $('.summernote').summernote({
+            placeholder: 'Type here',
+            tabsize: 2,
+            height: 120
+        });
+      })
     </script>
     
     <?php
