@@ -20,16 +20,6 @@ class PicoUplodFile
      */
     public function __construct()
     {
-        /*
-        Debug
-        $_FILES = array(
-            'test' => array(
-                'error' => 1, 
-                'tmp_name' => 'apa saja',
-                'name' => 'coba.mp3'
-            )
-        );
-        */
         $this->initMap();
     }
 
@@ -46,7 +36,7 @@ class PicoUplodFile
             $var = lcfirst(substr($method, 3));
             $camel = StringUtil::camelize($var);
             $key = $this->map[$camel];
-            return isset($this->values[$key]) ? new PicoUploadFileContainer($this->values[$key]) : new PicoUploadFileContainer();
+            return isset($this->values[$key]) ? $this->values[$key] : new PicoUploadFileContainer();
         }
     }
     

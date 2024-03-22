@@ -4,6 +4,11 @@ namespace MagicObject\File;
 
 class PicoUploadFileContainer
 {
+    /**
+     * Array to store uploaded file information
+     *
+     * @var array
+     */
     private $values = array();
     
     /**

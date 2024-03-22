@@ -3,9 +3,15 @@
 namespace MagicObject\File;
 
 use MagicObject\Exceptions\FileNotFoundException;
+use MagicObject\Exceptions\InvalidParameterException;
 
 class PicoUploadFileItem
 {
+    /**
+     * Variable to store uploade file information
+     *
+     * @var array
+     */
     private $value = array();
     
     /**
@@ -15,6 +21,10 @@ class PicoUploadFileItem
      */
     public function __construct($file)
     {
+        if(!isset($file) || !is_array($file) || empty($file))
+        {
+            throw new InvalidParameterException("Invalid constructor");
+        }
         $this->value = $file;
     }
     
