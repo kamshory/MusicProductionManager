@@ -5,6 +5,7 @@ body {
 .icon-size-20 {
     font-size: 20px;
 }
+/*
 .main-page {
     box-sizing: border-box;
     position: relative;
@@ -13,9 +14,10 @@ body {
 }
 @media screen and (min-width: 1200px) {
     .main-page {
-        padding: 100px 20px 0px 20px;
+        padding: 100px 0px 0px 0px;
     }
 }
+*/
 .modal-body .table-borderless td {
     padding: 5px 5px;
     vertical-align: middle;
@@ -96,7 +98,10 @@ body {
 }
 .filter-group {
     display: inline-block;
+    padding: 5px 0;
+    vertical-align: middle;
 }
+
 @media screen and (max-width: 1199px) {
     .custom-card-container {
         padding-left: 0;
