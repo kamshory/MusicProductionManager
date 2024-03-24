@@ -29,7 +29,7 @@ try
     // update average to song
     $song1->update();
 
-    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Set rating song draft ".$inputPost->getSongDraftId(), $inputGet, $inputPost);
+    UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Give rating song draft ".$inputPost->getSongDraftId(), $inputGet, $inputPost);
     
 }
 catch(Exception $e)

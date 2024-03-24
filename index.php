@@ -737,7 +737,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
 
   $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 
-  $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+  $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), 10), $sortable);
 
   $songEntity = new EntitySong(null, $database);
   $rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
@@ -752,78 +752,85 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
 
-    <div class="custom-card-container col-sm-6 col-xl-3">
-      <div class="card overflow-hidden rounded-2">
-        <div class="card-body pt-3 p-4">
+<div class="custom-card-container col-sm-12 col-xl-6">
+    <div class="card overflow-hidden rounded-2">
+      <div class="card-body pt-3 p-4">
 
-          <div class="d-flex align-items-center justify-content-between">
-            <h6 class="fw-semibold fs-4 col-4"><?php echo $song->getName(); ?></h6>
-            <div class="col-8 justify-content-end text-end">
-              <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
-              <a href="javascript;" onclick="uploadFile('<?php echo $song->getSongId(); ?>'); return false" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
-              <?php echo $buttonMp3; ?>
-              <?php echo $buttonMidi; ?>
-              <?php echo $buttonXml; ?>
-              <?php echo $buttonPdf; ?>
-            </div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Title</div>
-            <div class="col-8"><?php echo $song->getTitle(); ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Album</div>
-            <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Producer</div>
-            <div class="col-8"><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : ''; ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Genre</div>
-            <div class="col-8"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : ''; ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Composer</div>
-            <div class="col-8"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : ''; ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Arranger</div>
-            <div class="col-8"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : ''; ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Vocalist</div>
-            <div class="col-8"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : ''; ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Track</div>
-            <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->hasValueAlbum() ? "/" . $song->getAlbum()->getNumberOfSong() : ''; ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Duration</div>
-            <div class="col-8"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">BPM</div>
-            <div class="col-8"><?php echo $song->getBpm(); ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-4">Time Signature</div>
-            <div class="col-8"><?php echo $song->getTimeSignature(); ?></div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="col-5"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>
-            <div class="list-unstyled d-flex align-items-center mb-0 me-1">
+        <div class="d-flex align-items-center justify-content-between">
+          <h6 class="fw-semibold fs-4 col-4"><?php echo $song->getName(); ?></h6>
+          <div class="list-unstyled d-flex align-items-center col-8 mb-0 me-1 justify-content-end text-end">
+            <div class="d-inline-block">
               <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-music"></span></a> &nbsp;
               <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-microphone"></span></a> &nbsp;
               <a href="comment.php?song_id=<?php echo $song->getSongId(); ?>&action=edit"><span class="ti ti-message"></span></a> &nbsp;
-              <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() * 1; ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
-            </div>
+              <div class="d-inline-block">
+                <div class="song-rating half-star-ratings" data-rateyo-half-star="true" data-rate="<?php echo $song->getRating() * 1; ?>" data-song-id="<?php echo $song->getSongId(); ?>"></div>
+              </div>
+          </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Title</div>
+          <div class="col-8"><?php echo $song->getTitle(); ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Album</div>
+          <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Producer</div>
+          <div class="col-8"><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : ''; ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Genre</div>
+          <div class="col-8"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : ''; ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Composer</div>
+          <div class="col-8"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : ''; ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Arranger</div>
+          <div class="col-8"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : ''; ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Vocalist</div>
+          <div class="col-8"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : ''; ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Track</div>
+          <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->hasValueAlbum() ? "/" . $song->getAlbum()->getNumberOfSong() : ''; ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Duration</div>
+          <div class="col-8"><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">BPM</div>
+          <div class="col-8"><?php echo $song->getBpm(); ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Time Signature</div>
+          <div class="col-8"><?php echo $song->getTimeSignature(); ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="col-4">Last Update</div>
+          <div class="col-8"><?php echo date('M j<\s\u\p>S</\s\u\p> Y H:i:s', strtotime($song->getTimeEdit())); ?></div>
+        </div>
+        <div class="d-flex align-items-center justify-content-end text-end pt-4">
+          <div class="list-unstyled align-items-center mb-0 me-1 d-inline">
+            <a href="subtitle.php?action=edit&song_id=<?php echo $song->getSongId(); ?>" class="btn btn-sm btn-tn btn-success"><span class="ti ti-edit"></span> EDIT</a>
+            <a href="javascript;" onclick="uploadFile('<?php echo $song->getSongId(); ?>'); return false" class="btn btn-sm btn-tn btn-success"><span class="ti ti-upload"></span> UPLOAD</a>
+            <?php echo $buttonMp3; ?>
+            <?php echo $buttonMidi; ?>
+            <?php echo $buttonXml; ?>
+            <?php echo $buttonPdf; ?>
+
           </div>
         </div>
       </div>
     </div>
-
+</div>
   <?php
   }
   ?>
