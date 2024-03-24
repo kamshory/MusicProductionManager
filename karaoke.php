@@ -122,11 +122,10 @@ require_once "inc/header.php";
             let piano = null;
             let karaoke = null;
             let data = <?php echo $song;?>;
-            let midiSong = [];
-            let hasMidiSong = false;
-            
+            let hasMidiSong = <?php echo $song->hasValueVocalGuide() ? 'true' : 'false';?>;
+            let midiSong = <?php echo $song->hasValueVocalGuide() ? $song->getVocalGuide() : '[]';?>;
             <?php
-
+            /*
             $midi = new MidiLyric();
             if(file_exists($song->getFilePathMidi()))
             {
@@ -141,6 +140,7 @@ require_once "inc/header.php";
                     // do nothing
                 }
             }
+            */
             ?>
             
             $(document).ready(function(){           

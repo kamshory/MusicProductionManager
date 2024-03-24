@@ -279,6 +279,14 @@ class Song extends MagicObject
 	protected $lyricMidiRaw;
 
 	/**
+	 * Vocal Guide
+	 * 
+	 * @Column(name="vocal_guide", type="longtext", nullable=true)
+	 * @var string
+	 */
+	protected $vocalGuide;
+
+	/**
 	 * Vocal
 	 * 
 	 * @Column(name="vocal", type="tinyint(1)", length=1, nullable=true)

@@ -20,7 +20,6 @@ if ($lyric != null && $songId != null) {
 	$song->findOneBySongId($songId);
 
 	$song->setLyricMidi($lyric);
-	$song->update();
 
 	$midiPath = $song->getFilePathMidi();
 
@@ -29,7 +28,11 @@ if ($lyric != null && $songId != null) {
 	$midi->addLyric(json_decode($midiLyric));
 	$midi->saveMidFile($midiPath, 0777);
 	
-	
+	$vocalGuide = json_encode(array_values($midi->getSong($song->getMidiVocalChannel())));
+
+	$song->setVocalGuide($vocalGuide);
+
+	$song->update();
 
 	if(!isset($inputGet))
     {
