@@ -28,3 +28,4 @@ database:
   salt: ${APP_DATABASE_SALT}
 session:
   name: MUSICPRODUCTIONMANAGER
+  max_life_time: 86400

@@ -11,35 +11,59 @@ class PicoSession
     const SAME_SITE_STRICT = "Strict";
     const SAME_SIZE_NONE = "None";
 
-    // The state of the session
+    /**
+     * The state of the session
+     *
+     * @var bool
+     */
     private $sessionState = self::SESSION_NOT_STARTED;
-    private $sessionStarted = false;
-
-    // THE only instance of the class
+ 
+    /**
+     * The instance of the object
+     *
+     * @var self
+     */
     private static $instance;
 
 
-    private function __construct()
+    /**
+     * Use this constructor if you want set other parameter before start sessiion
+     */
+    public function __construct($name = null, $maxLifeTime = 0)
     {
-        // private constructor
+        if(isset($name))
+        {
+            $this->setSessionName($name);
+        }
+        if($maxLifeTime > 0)
+        {
+            $this->setSessionMaxLifeTime($maxLifeTime);
+        }
     }
 
     /**
-     * Returns THE instance of 'Session'.
+     * Returns the instance of 'PicoSession'.
      * The session is automatically initialized if it wasn't.
      * 
      * @param string $name
-     * @return object
+     * @param integer $maxLifeTime
+     * @return self
      **/
-    public static function getInstance($name = null)
+    public static function getInstance($name = null, $maxLifeTime = 0)
     {
         if (!isset(self::$instance)) {
             self::$instance = new self();
-            self::$instance->setSessionName($name);
+            if(isset($name))
+            {
+                self::$instance->setSessionName($name);
+            }
+            if($maxLifeTime > 0)
+            {
+                self::$instance->setSessionMaxLifeTime($maxLifeTime);
+            }
         }
 
         self::$instance->startSession();
-
         return self::$instance;
     }
 
@@ -61,11 +85,11 @@ class PicoSession
     /**
      * Check if session has been started or not
      *
-     * @return boolean
+     * @return bool
      */
     public function isSessionStarted()
     {
-        return $this->sessionStarted;
+        return $this->sessionState;
     }
 
     /**

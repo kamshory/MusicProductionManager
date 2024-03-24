@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '08768ed9c4ff8acdc0118fccc26ffd3853a27416',
+        'reference' => '2903581d84fec835cb955a88f993cd5c9bfcb97f',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '08768ed9c4ff8acdc0118fccc26ffd3853a27416',
+            'reference' => '2903581d84fec835cb955a88f993cd5c9bfcb97f',
             'dev_requirement' => false,
         ),
         'alchemy/binary-driver' => array(
@@ -99,7 +99,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => '9289cd3045062557964f11295f33f71846d0d948',
+            'reference' => 'c7d884591db490e7c0aec729b2f90c778a53bb78',
             'dev_requirement' => false,
         ),
         'psr/cache' => array(

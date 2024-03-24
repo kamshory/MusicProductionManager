@@ -5,19 +5,22 @@ body {
 .icon-size-20 {
     font-size: 20px;
 }
-/*
 .main-page {
     box-sizing: border-box;
     position: relative;
     min-height: calc(100vh - 75px);
-    padding: 100px 0px 0px 0px;
+    padding: 100px 20px 0px 20px;
 }
 @media screen and (min-width: 1200px) {
+    .main-page {
+        padding: 100px 20px 0px 20px;
+    }
+}
+@media screen and (max-width: 199px) {
     .main-page {
         padding: 100px 0px 0px 0px;
     }
 }
-*/
 .modal-body .table-borderless td {
     padding: 5px 5px;
     vertical-align: middle;
@@ -100,8 +103,13 @@ body {
     display: inline-block;
     padding: 5px 0;
     vertical-align: middle;
+    padding-right: 10px;
 }
+.filter-group span{
+    display: inline-block;
+    padding-right: 5px;
 
+}
 @media screen and (max-width: 1199px) {
     .custom-card-container {
         padding-left: 0;

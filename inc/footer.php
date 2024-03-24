@@ -2,37 +2,6 @@
 <div class="px-6 text-center">
 </div>
 
-
-<style>
-    body {
-    margin: 24px;
-    }
-
-
-    .upload-drop-zone-add {
-    color: #0f3c4b;
-    background-color: var(--colorPrimaryPale, #c8dadf);
-    outline: 2px dashed var(--colorPrimaryHalf, #c1ddef);
-    outline-offset: -12px;
-    transition:
-        outline-offset 0.2s ease-out,
-        outline-color 0.3s ease-in-out,
-        background-color 0.2s ease-out;
-    }
-    .upload-drop-zone-add.highlight {
-    outline-offset: -4px;
-    outline-color: var(--colorPrimaryNormal, #0576bd);
-    background-color: var(--colorPrimaryEighth, #c8dadf);
-    }
-    .upload_svg {
-    fill: var(--colorPrimaryNormal, #0576bd);
-    }
-    
-    .upload_img {
-    width: calc(33.333% - (2rem / 3));
-    object-fit: contain;
-    }
-</style>
 <script src="lib/upload-song.js">
     
 
