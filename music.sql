@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2024 at 05:58 PM
+-- Generation Time: Mar 24, 2024 at 11:51 PM
 -- Server version: 5.5.68-MariaDB
 -- PHP Version: 5.6.40
 
@@ -281,6 +281,7 @@ CREATE TABLE IF NOT EXISTS `song` (
   `subtitle_complete` tinyint(1) DEFAULT '0',
   `lyric_midi` longtext,
   `lyric_midi_raw` longtext,
+  `vocal_guide` longtext,
   `vocal` tinyint(1) DEFAULT '0',
   `instrument` longtext,
   `midi_vocal_channel` int(11) DEFAULT NULL,
