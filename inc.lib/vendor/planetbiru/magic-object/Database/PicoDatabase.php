@@ -38,7 +38,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Autocommit
 	 *
-	 * @var boo
+	 * @var bool
 	 */
 	private $autocommit = true;
 
@@ -60,7 +60,10 @@ class PicoDatabase //NOSONAR
 
 	/**
 	 * Constructor
+	 * 
 	 * @param PicoDatabaseCredentials $databaseCredentials
+	 * @param callable $callbackExecuteQuery Callback when execute query that modify data. Parameter 1 is SQL, parameter 2 is one of query type (PicoDatabase::QUERY_INSERT, PicoDatabase::QUERY_UPDATE, PicoDatabase::QUERY_DELETE, PicoDatabase::QUERY_TRANSACTION)
+	 * @param callable $callbackDebugQuery Callback when execute all queries. Parameter 1 is SQL
 	 */
 	public function __construct($databaseCredentials, $callbackExecuteQuery = null, $callbackDebugQuery = null) //NOSONAR
 	{
