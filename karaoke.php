@@ -2,6 +2,8 @@
 
 use MagicObject\Request\InputGet;
 use Midi\MidiLyric;
+use MusicProductionManager\Data\Dto\Karaoke;
+use MusicProductionManager\Data\Dto\SongDto;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Song;
 
@@ -115,13 +117,14 @@ require_once "inc/header.php";
               {
                 $song = new EntitySong(null, $database);
                 $song->findOneBySongId($inputGet->getSongId());
+                $songDto = Karaoke::valueOf($song);
                 
             ?>
             <audio class="player" src="<?php echo $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>" controls></audio>
             <script>
             let piano = null;
             let karaoke = null;
-            let data = <?php echo $song;?>;
+            let data = <?php echo $songDto;?>;
             let hasMidiSong = <?php echo $song->hasValueVocalGuide() ? 'true' : 'false';?>;
             let midiSong = <?php echo $song->hasValueVocalGuide() ? $song->getVocalGuide() : '[]';?>;
             <?php
