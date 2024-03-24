@@ -97,8 +97,6 @@ class MidiLyric extends Midi
 
 				$dt = (int)$arr[0] - $t;
 
-
-
 				if ($type == 'Tempo') {
 					$currentTempo = $arr[2] * 1;
 				}
@@ -169,6 +167,9 @@ class MidiLyric extends Midi
 			if ($value['start'] == $value['end'] && $index < $count2 && $value['note'] == $values[$index + 1]['note']) {
 				$values[$index]['end'] = $values[$index + 1]['start'];
 			}
+		}
+		foreach ($values as $index => $value) {
+			$values[$index]['duration'] = $values[$index]['end'] - $values[$index]['start'];
 		}
 		return array_combine($keys, $values);
 	}
