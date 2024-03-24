@@ -67,19 +67,22 @@ class PicoUploadFileContainer
     public function getAll()
     {
         $result = array();
-        if($this->isMultiple())
+        if(!empty($this->values))
         {
-            // multiple file
-            $count = $this->getFileCount();
-            for($i = 0; $i < $count; $i++)
+            if($this->isMultiple())
             {
-                $result[] = new PicoUploadFileItem($this->getItem($i));
+                // multiple file
+                $count = $this->getFileCount();
+                for($i = 0; $i < $count; $i++)
+                {
+                    $result[] = new PicoUploadFileItem($this->getItem($i));
+                }
             }
-        }
-        else
-        {
-            // single file
-            $result[] = new PicoUploadFileItem($this->values);
+            else
+            {
+                // single file
+                $result[] = new PicoUploadFileItem($this->values);
+            }
         }
         return $result;
     }

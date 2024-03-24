@@ -25,8 +25,8 @@ if($inputPost->getUsername() != null && $inputPost->getPassword() != null)
       $currentLoggedInUser->findOneByUsernameAndPasswordAndBlockedAndActive($username, $password, false, true);
       if($currentLoggedInUser->hasValueUserId())
       {
-        $_SESSION['suser'] = $username;
-        $_SESSION['spass'] = $password;
+        $sessions->suser = $username;
+        $sessions->spass = $password;
         UserUtil::logUserActivity($cfg, $database, $currentLoggedInUser->getUserId(), "Login to system", null, null, true);
         if($inputPost->getReferer() != null)
         {
