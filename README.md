@@ -37,6 +37,7 @@ Operating system supported **MusicProductionManager**
 19. User Management
 20. User Role
 21. Article
+22. Multiple Time Zone
 
 ## Colaboration
 
@@ -197,6 +198,12 @@ Users with the role of vocalist cannot edit lyrics and subtitles on MP3 or MIDI 
 3. tips and tricks for making songs
 
 Any user can publish articles. This article may be modified by other users. Each change will be saved in a log so that changes can be tracked.
+
+## Multiple Time Zone
+
+Users can use their time zone where they logged in. This will help the system display the relevant time when they see all data that contains time information such as when a data was created or changed. When the system creates or changes data carried out by a user with a certain time zone, the system takes the time zone information from the user's profile and then sets the time zone for that activity. Thus, even though the data is read by different applications, the system can still display relevant time information.
+
+Please pay attention when dumping the database to a file to be recovered again. Note that the time zone used when performing data recovery is the same as the time zone used when dumping data.
 
 # Programming Language
 
