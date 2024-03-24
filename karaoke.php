@@ -128,7 +128,8 @@ require_once "inc/header.php";
             let hasMidiSong = <?php echo $song->hasValueVocalGuide() ? 'true' : 'false';?>;
             let midiSong = <?php echo $song->hasValueVocalGuide() ? $song->getVocalGuide() : '[]';?>;
             <?php
-            /*
+            /**
+            Old code
             $midi = new MidiLyric();
             if(file_exists($song->getFilePathMidi()))
             {
