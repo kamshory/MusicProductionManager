@@ -201,7 +201,7 @@ Any user can publish articles. This article may be modified by other users. Each
 
 ## Multiple Time Zone
 
-Users can use their time zone where they logged in. This will help the system display the relevant time when they see all data that contains time information such as when a data was created or changed. When the system creates or changes data carried out by a user with a certain time zone, the system takes the time zone information from the user's profile and then sets the time zone for that activity. Thus, even though the data is read by different applications, the system can still display relevant time information.
+Users can use their time zone where they logged in. This will help the system display the relevant time when they see all data that contains time information such as when a data was created or updated. When the system creates or updates data carried out by a user with a certain time zone, the system takes the time zone information from the user's profile and then sets the time zone for that activity. Thus, even though the data is read by different applications, the system can still display relevant time information.
 
 Please pay attention when dumping the database to a file to be recovered again. Note that the time zone used when performing data recovery is the same as the time zone used when dumping data.
 
