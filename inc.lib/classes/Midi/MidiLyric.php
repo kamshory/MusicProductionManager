@@ -115,6 +115,7 @@ class MidiLyric extends Midi
 						$lyric->note->tracks[$i][$l] = $raw;
 						$lastNote[$n] = $arr[0];
 						$time = $dt * $currentTempo * $f;
+						$song[$tm]['velocity'] = $v * 1;
 						$song[$tm]['time'] = $arr[0] * 1;
 						$song[$tm]['start'] = $time;
 						$song[$tm]['end'] = $time;
