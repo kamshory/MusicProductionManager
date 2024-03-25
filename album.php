@@ -37,6 +37,10 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getAlbumI
         <td><?php echo $album->getName();?></td>
       </tr>
       <tr>
+        <td>Title</td>
+        <td><?php echo $album->getTitle();?></td>
+      </tr>
+      <tr>
         <td>Description</td>
         <td><?php echo $album->getDescription();?></td>
       </tr>
@@ -101,11 +105,12 @@ else
 </div>
 <?php
 $orderMap = array(
+  'album_id'=>'album_id', 
+  'album'=>'album_id',
   'name'=>'name', 
-  'albumId'=>'albumId', 
-  'album'=>'albumId',
-  'sortOrder'=>'sortOrder',
-  'numberOfSong'=>'numberOfSong',
+  'title'=>'title',
+  'sort_order'=>'sort_order',
+  'number_of_Song'=>'number_of_Song',
   'duration'=>'duration',
   'active'=>'active',
   'ad_draft'=>'ad_draft',
@@ -158,6 +163,7 @@ if(!empty($result))
       <th scope="col" width="20"><i class="ti ti-download"></i></th>
       <th scope="col" width="20">#</th>
       <th scope="col" class="col-sort" data-name="name">Name</th>
+      <th scope="col" class="col-sort" data-name="title">Title</th>
       <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
       <th scope="col" class="col-sort" data-name="duration">Duration</th>
       <th scope="col" class="col-sort" data-name="number_of_song">Song</th>
@@ -184,6 +190,7 @@ if(!empty($result))
       <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $album->getName();?></a></td>
+      <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $album->getTitle();?></a></td>
       <td class="text-data text-data-producer"><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : "";?></td>
       <td class="text-data text-data-duration"><?php echo (new Dms())->ddToDms($album->getDuration()/3600)->printDms(true, true); ?></td>
       <td class="text-data text-data-number-of-song"><?php echo $album->getNumberOfSong();?></td>
@@ -284,11 +291,13 @@ if(!empty($result))
           let formData = getFormData(dataSet);
           let dataId = data.album_id;
           let name = data.name;
+          let title = data.title;
           let duration = data.duration.toFixed(3);
           let numberOfSong = data.number_of_song;
           let active = data.active == 1 || data.active == '1';
           let draft = data.as_draft == 1 || data.as_draft == '1';
           $('[data-id="'+dataId+'"] .text-data.text-data-name').text(name);
+          $('[data-id="'+dataId+'"] .text-data.text-data-title').text(title);
           $('[data-id="'+dataId+'"] .text-data.text-data-sort-order').text(data.sort_order);
           $('[data-id="'+dataId+'"] .text-data.text-data-producer').text(data.producer_name);
           $('[data-id="'+dataId+'"] .text-data.text-data-duration').text(duration);

@@ -18,9 +18,13 @@ $album->select();
                 <div class="modal-body">
                     <table class="dialog-table">
                         <tbody>
-                        <tr>
-                                <td>Album Name</td>
+                            <tr>
+                            <td>Album Name</td>
                                 <td><input type="text" class="form-control" name="name" value="<?php echo $album->getName();?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Album Title</td>
+                                <td><input type="text" class="form-control" name="title" value="<?php echo $album->getTitle();?>"></td>
                             </tr>
                             <tr>
                                 <td>Description</td>

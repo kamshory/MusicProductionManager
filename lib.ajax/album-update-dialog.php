@@ -26,16 +26,20 @@ $album = new Album(null, $database);
                     ?>
                     <table class="dialog-table">
                         <tbody>
-                            <tr>
-                                <td>Album Name</td>
+                        <tr>
+                            <td>Album Name</td>
                                 <td><input type="text" class="form-control" name="name" value="<?php echo $album->getName();?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Album Title</td>
+                                <td><input type="text" class="form-control" name="title" value="<?php echo $album->getTitle();?>"></td>
                             </tr>
                             <tr>
                                 <td>Description</td>
                                 <td><textarea class="form-control" name="description" id="description" rows="3"><?php echo $album->getDescription();?></textarea></td>
                             </tr>
                             <tr>
-                            <td>Producer</td>
+                                <td>Producer</td>
                                 <td>
                                     <select class="form-control" name="producer_id" data-value="<?php echo $album->getProducerId();?>" data-ajax="true" data-source="lib.ajax/producer-list.php">
                                         <option value="">- select -</option>
