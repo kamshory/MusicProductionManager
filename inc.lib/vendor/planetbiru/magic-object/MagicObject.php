@@ -556,9 +556,36 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function __get($propertyName)
     {
-        return $this->get($propertyName);
+        $propertyName = lcfirst($propertyName);
+        if($this->__isset($propertyName))
+        {
+            return $this->get($propertyName);
+        }
     }
-    
+
+    /**
+     * Check if property has been set or not or has null value
+     *
+     * @param string $propertyName
+     * @return boolean
+     */
+    public function __isset($propertyName)
+    {
+        $propertyName = lcfirst($propertyName);
+        return isset($this->$propertyName) ? $this->$propertyName : null;
+    }
+
+    /**
+     * Unset property value
+     *
+     * @param string $propertyName
+     * @return void
+     */
+    public function __unset($propertyName)
+    {
+        $propertyName = lcfirst($propertyName);
+        unset($this->$propertyName);
+    }   
 
     /**
      * Copy value from other object

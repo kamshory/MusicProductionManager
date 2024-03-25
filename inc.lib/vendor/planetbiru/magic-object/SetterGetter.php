@@ -85,6 +85,57 @@ class SetterGetter
         $var = $this->camelize($var);
         return isset($this->$var) ? $this->$var : null;
     }
+    
+    /**
+     * Stores datas in the property.
+     * Example: $instance->foo = 'bar';
+     * 
+     * @param $name Name of the property.
+     * @param $value Value of the property.
+     * @return void 
+     **/
+    public function __set($name, $value)
+    {
+        $this->set($name, $value);
+    }
+
+
+    /**
+     * Gets datas from the property.
+     * Example: echo $instance->foo;
+     * 
+     * @param $name Name of the property to get.
+     * @return mixed Datas stored in property.
+     **/
+    public function __get($name)
+    {
+        if($this->__isset($name))
+        {
+            return $this->get($name);
+        }
+    }
+
+    /**
+     * Check if property has been set or not or has null value
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function __isset($name)
+    {
+        return isset($this->$name) ? $this->$name : null;
+    }
+
+    /**
+     * Unset property value
+     *
+     * @param string $name
+     * @return void
+     */
+    public function __unset($name)
+    {
+        unset($this->$name);
+    }
 
     /**
      * Get value

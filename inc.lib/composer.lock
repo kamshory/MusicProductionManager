@@ -550,12 +550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "c7d884591db490e7c0aec729b2f90c778a53bb78"
+                "reference": "8df1e14f941e8e6fb29e5a4ef5fb451c08ff146f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/c7d884591db490e7c0aec729b2f90c778a53bb78",
-                "reference": "c7d884591db490e7c0aec729b2f90c778a53bb78",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/8df1e14f941e8e6fb29e5a4ef5fb451c08ff146f",
+                "reference": "8df1e14f941e8e6fb29e5a4ef5fb451c08ff146f",
                 "shasum": ""
             },
             "require": {
@@ -582,7 +582,7 @@
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
                 "source": "https://github.com/Planetbiru/MagicObject/tree/main"
             },
-            "time": "2024-03-24T06:14:18+00:00"
+            "time": "2024-03-25T05:52:37+00:00"
         },
         {
             "name": "psr/cache",
