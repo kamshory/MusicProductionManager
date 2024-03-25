@@ -2,6 +2,7 @@
 
 namespace MusicProductionManager\Utility;
 
+use Exception;
 use MagicObject\Database\PicoDatabase;
 use MusicProductionManager\Data\Entity\Song;
 
@@ -18,13 +19,20 @@ class AlbumUtil
     public static function getSongDuration($database, $albumId)
     {
         $song = new Song(null, $database);
-        $pageData = $song->findByAlbumId($albumId);
-        $rows = $pageData->getResult();
-        $duration = 0;
-        foreach($rows as $row)
+        try
         {
-            $duration += $row->getDuration();
+            $pageData = $song->findByAlbumId($albumId);
+            $rows = $pageData->getResult();
+            $duration = 0;
+            foreach($rows as $row)
+            {
+                $duration += $row->getDuration();
+            }
+            return $duration;
         }
-        return $duration;
+        catch(Exception $e)
+        {
+            return 0;
+        }      
     }
 }

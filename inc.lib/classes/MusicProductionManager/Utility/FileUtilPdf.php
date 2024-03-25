@@ -17,6 +17,9 @@ class FileUtilPdf
     const LYRIC_OFFSET_X_1 = 14;
     const LYRIC_OFFSET_X_2 = 109;
     const LYRIC_OFFSET_Y = 38;
+    const PDF_ALIGN_LEFT = "L";
+    const PDF_ALIGN_RIGHT = "R";
+    const PDF_ALIGN_CENTER = "C";
 
     /**
     * Download per song
@@ -203,7 +206,7 @@ class FileUtilPdf
                 (new PicoPdfText())
                     ->setPosition(105, 12)
                     ->setDimension(100, 8)
-                    ->setStyle(0, 0, "C")
+                    ->setStyle(0, 0, self::PDF_ALIGN_CENTER)
                     ->setFontName($fontName)
                     ->setFontSize(18)
                     ->setText($name)
@@ -214,7 +217,7 @@ class FileUtilPdf
                 (new PicoPdfText())
                     ->setPosition(105, 19.5)
                     ->setDimension(100, 6)
-                    ->setStyle(0, 0, "C")
+                    ->setStyle(0, 0, self::PDF_ALIGN_CENTER)
                     ->setFontName($fontName)
                     ->setFontSize(13)
                     ->setText($title)
@@ -225,7 +228,7 @@ class FileUtilPdf
                 (new PicoPdfText())
                     ->setPosition(197, 28)
                     ->setDimension(40, 6)
-                    ->setStyle(0, 0, "R")
+                    ->setStyle(0, 0, self::PDF_ALIGN_RIGHT)
                     ->setFontName($fontName)
                     ->setFontSize(11)
                     ->setText($composer)
@@ -279,7 +282,7 @@ class FileUtilPdf
                         (new PicoPdfText())
                             ->setPosition($offsetX, $top)
                             ->setDimension(170, $lineHeight)
-                            ->setStyle(0, 0, "L")
+                            ->setStyle(0, 0, self::PDF_ALIGN_LEFT)
                             ->setFontName($fontName)
                             ->setFontSize(self::LYRIC_FONT_SIZE)
                             ->setText($lyricText)
