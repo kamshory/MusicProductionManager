@@ -3,23 +3,17 @@
     function o(i, f) {
       if (!n[i]) {
         if (!e[i]) {
-          let c = "function" == typeof require && require;
-          if (!f && c) 
-          {
-            return c(i, !0);
-          }
-          if (u) 
-          {
-            return u(i, !0);
-          }
-          let a = new Error("Cannot find module '" + i + "'");
+          var c = "function" == typeof require && require;
+          if (!f && c) return c(i, !0);
+          if (u) return u(i, !0);
+          var a = new Error("Cannot find module '" + i + "'");
           throw ((a.code = "MODULE_NOT_FOUND"), a);
         }
-        let p = (n[i] = { exports: {} });
+        var p = (n[i] = { exports: {} });
         e[i][0].call(
           p.exports,
           function (r) {
-            let n = e[i][1][r];
+            var n = e[i][1][r];
             return o(n || r);
           },
           p,
@@ -33,7 +27,7 @@
       return n[i].exports;
     }
     for (
-      let u = "function" == typeof require && require, i = 0;
+      var u = "function" == typeof require && require, i = 0;
       i < t.length;
       i++
     )
@@ -46,22 +40,22 @@
     1: [
       function (require, module, exports) {
         "use strict";
-        let load = require("audio-loader");
-        let player = require("sample-player");
+        var load = require("audio-loader");
+        var player = require("sample-player");
         function instrument(ac, name, options) {
           if (arguments.length === 1)
             return function (n, o) {
               return instrument(ac, n, o);
             };
-          let opts = options || {};
-          let isUrl = opts.isSoundfontURL || isSoundfontURL;
-          let toUrl = opts.nameToUrl || nameToUrl;
-          let url = isUrl(name)
+          var opts = options || {};
+          var isUrl = opts.isSoundfontURL || isSoundfontURL;
+          var toUrl = opts.nameToUrl || nameToUrl;
+          var url = isUrl(name)
             ? name
             : toUrl(name, opts.soundfont, opts.format);
           return load(ac, url, { only: opts.only || opts.notes }).then(
             function (buffers) {
-              let p = player(ac, buffers, opts).connect(
+              var p = player(ac, buffers, opts).connect(
                 opts.destination ? opts.destination : ac.destination
               );
               p.url = url;
@@ -77,7 +71,7 @@
           format = format === "ogg" ? format : "mp3";
           sf = sf === "FluidR3_GM" ? sf : "MusyngKite";
           return (
-            baseSoundFontUrl +
+            "https://gleitz.github.io/midi-js-soundfonts/" +
             sf +
             "/" +
             name +
@@ -86,7 +80,7 @@
             ".js"
           );
         }
-        let Soundfont = require("./legacy");
+        var Soundfont = require("./legacy");
         Soundfont.instrument = instrument;
         Soundfont.nameToUrl = nameToUrl;
         if (typeof module === "object" && module.exports)
@@ -98,7 +92,7 @@
     2: [
       function (require, module, exports) {
         "use strict";
-        let parser = require("note-parser");
+        var parser = require("note-parser");
         function Soundfont(ctx, nameToUrl) {
           console.warn("new Soundfont() is deprected");
           console.log(
@@ -120,13 +114,13 @@
         Soundfont.prototype.instrument = function (name, options) {
           console.warn("new Soundfont().instrument() is deprecated.");
           console.log("Please use Soundfont.instrument() instead.");
-          let ctx = this.ctx;
+          var ctx = this.ctx;
           name = name || "default";
           if (name in this.instruments) return this.instruments[name];
-          let inst = { name: name, play: oscillatorPlayer(ctx, options) };
+          var inst = { name: name, play: oscillatorPlayer(ctx, options) };
           this.instruments[name] = inst;
           if (name !== "default") {
-            let promise = Soundfont.instrument(ctx, name, options).then(
+            var promise = Soundfont.instrument(ctx, name, options).then(
               function (instrument) {
                 inst.play = instrument.play;
                 return inst;
@@ -166,21 +160,21 @@
             console.log(
               "Starting with version 0.9.0 you will have to wait until the soundfont is loaded to play sounds."
             );
-            let midi = note > 0 && note < 129 ? +note : parser.midi(note);
-            let freq = midi ? parser.midiToFreq(midi, 440) : null;
+            var midi = note > 0 && note < 129 ? +note : parser.midi(note);
+            var freq = midi ? parser.midiToFreq(midi, 440) : null;
             if (!freq) return;
             duration = duration || 0.2;
             options = options || {};
-            let destination =
+            var destination =
               options.destination ||
               defaultOptions.destination ||
               ctx.destination;
-            let vcoType = options.vcoType || defaultOptions.vcoType || "sine";
-            let gain = options.gain || defaultOptions.gain || 0.4;
-            let vco = ctx.createOscillator();
+            var vcoType = options.vcoType || defaultOptions.vcoType || "sine";
+            var gain = options.gain || defaultOptions.gain || 0.4;
+            var vco = ctx.createOscillator();
             vco.type = vcoType;
             vco.frequency.value = freq;
-            let vca = ctx.createGain();
+            var vca = ctx.createGain();
             vca.gain.value = gain;
             vco.connect(vca);
             vca.connect(destination);
@@ -198,11 +192,11 @@
       function (require, module, exports) {
         module.exports = ADSR;
         function ADSR(audioContext) {
-          let node = audioContext.createGain();
-          let voltage = (node._voltage = getVoltage(audioContext));
-          let value = scale(voltage);
-          let startValue = scale(voltage);
-          let endValue = scale(voltage);
+          var node = audioContext.createGain();
+          var voltage = (node._voltage = getVoltage(audioContext));
+          var value = scale(voltage);
+          var startValue = scale(voltage);
+          var endValue = scale(voltage);
           node._startAmount = scale(startValue);
           node._endAmount = scale(endValue);
           node._multiplier = scale(value);
@@ -217,7 +211,7 @@
           Object.defineProperties(node, props);
           return node;
         }
-        let props = {
+        var props = {
           attack: { value: 0, writable: true },
           decay: { value: 0, writable: true },
           sustain: { value: 1, writable: true },
@@ -229,13 +223,13 @@
           },
           start: {
             value: function (at) {
-              let target = this._multiplier.gain;
-              let startAmount = this._startAmount.gain;
-              let endAmount = this._endAmount.gain;
+              var target = this._multiplier.gain;
+              var startAmount = this._startAmount.gain;
+              var endAmount = this._endAmount.gain;
               this._voltage.start(at);
               this._decayFrom = this._decayFrom = at + this.attack;
               this._startedAt = at;
-              let sustain = this.sustain;
+              var sustain = this.sustain;
               target.cancelScheduledValues(at);
               startAmount.cancelScheduledValues(at);
               endAmount.cancelScheduledValues(at);
@@ -263,17 +257,17 @@
               if (isTarget) {
                 at = at - this.release;
               }
-              let endTime = at + this.release;
+              var endTime = at + this.release;
               if (this.release) {
-                let target = this._multiplier.gain;
-                let startAmount = this._startAmount.gain;
-                let endAmount = this._endAmount.gain;
+                var target = this._multiplier.gain;
+                var startAmount = this._startAmount.gain;
+                var endAmount = this._endAmount.gain;
                 target.cancelScheduledValues(at);
                 startAmount.cancelScheduledValues(at);
                 endAmount.cancelScheduledValues(at);
-                let expFalloff = getTimeConstant(this.release);
+                var expFalloff = getTimeConstant(this.release);
                 if (this.attack && at < this._decayFrom) {
-                  let valueAtTime = getValue(
+                  var valueAtTime = getValue(
                     0,
                     1,
                     this._startedAt,
@@ -300,17 +294,17 @@
             },
           },
         };
-        let flat = new Float32Array([1, 1]);
+        var flat = new Float32Array([1, 1]);
         function getVoltage(context) {
-          let voltage = context.createBufferSource();
-          let buffer = context.createBuffer(1, 2, context.sampleRate);
+          var voltage = context.createBufferSource();
+          var buffer = context.createBuffer(1, 2, context.sampleRate);
           buffer.getChannelData(0).set(flat);
           voltage.buffer = buffer;
           voltage.loop = true;
           return voltage;
         }
         function scale(node) {
-          let gain = node.context.createGain();
+          var gain = node.context.createGain();
           node.connect(gain);
           return gain;
         }
@@ -318,11 +312,11 @@
           return Math.log(time + 1) / Math.log(100);
         }
         function getValue(start, end, fromTime, toTime, at) {
-          let difference = end - start;
-          let time = toTime - fromTime;
-          let truncateTime = at - fromTime;
-          let phase = truncateTime / time;
-          let value = start + phase * difference;
+          var difference = end - start;
+          var time = toTime - fromTime;
+          var truncateTime = at - fromTime;
+          var phase = truncateTime / time;
+          var value = start + phase * difference;
           if (value <= start) {
             value = start;
           }
@@ -351,14 +345,14 @@
             : 0;
         }
         function decode(sBase64, nBlocksSize) {
-          let sB64Enc = sBase64.replace(/[^A-Za-z0-9\+\/]/g, "");
-          let nInLen = sB64Enc.length;
-          let nOutLen = nBlocksSize
+          var sB64Enc = sBase64.replace(/[^A-Za-z0-9\+\/]/g, "");
+          var nInLen = sB64Enc.length;
+          var nOutLen = nBlocksSize
             ? Math.ceil(((nInLen * 3 + 1) >> 2) / nBlocksSize) * nBlocksSize
             : (nInLen * 3 + 1) >> 2;
-          let taBytes = new Uint8Array(nOutLen);
+          var taBytes = new Uint8Array(nOutLen);
           for (
-            let nMod3, nMod4, nUint24 = 0, nOutIdx = 0, nInIdx = 0;
+            var nMod3, nMod4, nUint24 = 0, nOutIdx = 0, nInIdx = 0;
             nInIdx < nInLen;
             nInIdx++
           ) {
@@ -387,7 +381,7 @@
         "use strict";
         module.exports = function (url, type) {
           return new Promise(function (done, reject) {
-            let req = new XMLHttpRequest();
+            var req = new XMLHttpRequest();
             if (type) req.responseType = type;
             req.open("GET", url);
             req.onload = function () {
@@ -407,8 +401,8 @@
     6: [
       function (require, module, exports) {
         "use strict";
-        let base64 = require("./base64");
-        let fetch = require("./fetch");
+        var base64 = require("./base64");
+        var fetch = require("./fetch");
         function fromRegex(r) {
           return function (o) {
             return typeof o === "string" && r.test(o);
@@ -422,7 +416,7 @@
             : name;
         }
         function load(ac, source, options, defVal) {
-          let loader = isArrayBuffer(source)
+          var loader = isArrayBuffer(source)
             ? loadArrayBuffer
             : isAudioFileName(source)
             ? loadAudioFile
@@ -439,7 +433,7 @@
             : isJsFileName(source)
             ? loadMidiJSFile
             : null;
-          let opts = options || {};
+          var opts = options || {};
           return loader
             ? loader(ac, source, opts)
             : defVal
@@ -465,9 +459,9 @@
             );
           });
         }
-        let isAudioFileName = fromRegex(/\.(mp3|wav|ogg)(\?.*)?$/i);
+        var isAudioFileName = fromRegex(/\.(mp3|wav|ogg)(\?.*)?$/i);
         function loadAudioFile(ac, name, options) {
-          let url = prefix(options.from, name);
+          var url = prefix(options.from, name);
           return load(ac, load.fetch(url, "arraybuffer"), options);
         }
         function isPromise(o) {
@@ -478,7 +472,7 @@
             return load(ac, value, options);
           });
         }
-        let isArray = Array.isArray;
+        var isArray = Array.isArray;
         function loadArrayData(ac, array, options) {
           return Promise.all(
             array.map(function (data) {
@@ -490,10 +484,10 @@
           return o && typeof o === "object";
         }
         function loadObjectData(ac, obj, options) {
-          let dest = {};
-          let promises = Object.keys(obj).map(function (key) {
+          var dest = {};
+          var promises = Object.keys(obj).map(function (key) {
             if (options.only && options.only.indexOf(key) === -1) return null;
-            let value = obj[key];
+            var value = obj[key];
             return load(ac, value, options, value).then(function (audio) {
               dest[key] = audio;
             });
@@ -502,26 +496,26 @@
             return dest;
           });
         }
-        let isJsonFileName = fromRegex(/\.json(\?.*)?$/i);
+        var isJsonFileName = fromRegex(/\.json(\?.*)?$/i);
         function loadJsonFile(ac, name, options) {
-          let url = prefix(options.from, name);
+          var url = prefix(options.from, name);
           return load(ac, load.fetch(url, "text").then(JSON.parse), options);
         }
-        let isBase64Audio = fromRegex(/^data:audio/);
+        var isBase64Audio = fromRegex(/^data:audio/);
         function loadBase64Audio(ac, source, options) {
-          let i = source.indexOf(",");
+          var i = source.indexOf(",");
           return load(ac, base64.decode(source.slice(i + 1)).buffer, options);
         }
-        let isJsFileName = fromRegex(/\.js(\?.*)?$/i);
+        var isJsFileName = fromRegex(/\.js(\?.*)?$/i);
         function loadMidiJSFile(ac, name, options) {
-          let url = prefix(options.from, name);
+          var url = prefix(options.from, name);
           return load(ac, load.fetch(url, "text").then(midiJsToJson), options);
         }
         function midiJsToJson(data) {
-          let begin = data.indexOf("MIDI.Soundfont.");
+          var begin = data.indexOf("MIDI.Soundfont.");
           if (begin < 0) throw Error("Invalid MIDI.js Soundfont format");
           begin = data.indexOf("=", begin) + 2;
-          let end = data.lastIndexOf(",");
+          var end = data.lastIndexOf(",");
           return JSON.parse(data.slice(begin, end) + "}");
         }
         if (typeof module === "object" && module.exports) module.exports = load;
@@ -538,7 +532,7 @@
             } else if (typeof define === "function" && define.amd) {
               define([], e);
             } else {
-              let t;
+              var t;
               if (typeof window !== "undefined") {
                 t = window;
               } else if (typeof global !== "undefined") {
@@ -551,22 +545,22 @@
               t.midimessage = e();
             }
           })(function () {
-            let e, t, s;
+            var e, t, s;
             return (function o(e, t, s) {
               function a(n, i) {
                 if (!t[n]) {
                   if (!e[n]) {
-                    let l = typeof require == "function" && require;
+                    var l = typeof require == "function" && require;
                     if (!i && l) return l(n, !0);
                     if (r) return r(n, !0);
-                    let h = new Error("Cannot find module '" + n + "'");
+                    var h = new Error("Cannot find module '" + n + "'");
                     throw ((h.code = "MODULE_NOT_FOUND"), h);
                   }
-                  let c = (t[n] = { exports: {} });
+                  var c = (t[n] = { exports: {} });
                   e[n][0].call(
                     c.exports,
                     function (t) {
-                      let s = e[n][1][t];
+                      var s = e[n][1][t];
                       return a(s ? s : t);
                     },
                     c,
@@ -579,8 +573,8 @@
                 }
                 return t[n].exports;
               }
-              let r = typeof require == "function" && require;
-              for (let n = 0; n < s.length; n++) a(s[n]);
+              var r = typeof require == "function" && require;
+              for (var n = 0; n < s.length; n++) a(s[n]);
               return a;
             })(
               {
@@ -666,8 +660,8 @@
                             break;
                           case 224:
                             this.messageType = "pitchbendchange";
-                            let t = e.data[2] & 127;
-                            let s = e.data[1] & 127;
+                            var t = e.data[2] & 127;
+                            var s = e.data[1] & 127;
                             this.pitchBend = (t << 8) + s;
                             break;
                         }
@@ -726,16 +720,16 @@
           }
           function i(t, n, r) {
             if ("string" != typeof t) return null;
-            let e = b.exec(t);
+            var e = b.exec(t);
             if (!e || (!n && e[4])) return null;
-            let u = {
+            var u = {
               letter: e[1].toUpperCase(),
               acc: e[2].replace(/x/g, "##"),
             };
             (u.pc = u.letter + u.acc),
               (u.step = (u.letter.charCodeAt(0) + 3) % 7),
               (u.alt = "b" === u.acc[0] ? -u.acc.length : u.acc.length);
-            let o = A[u.step] + u.alt;
+            var o = A[u.step] + u.alt;
             return (
               (u.chroma = o < 0 ? 12 + o : o % 12),
               e[3] &&
@@ -763,11 +757,11 @@
           }
           function p(t) {
             if ((r(t) || e(t)) && t >= 0 && t < 128) return +t;
-            let n = i(t);
+            var n = i(t);
             return n && u(n.midi) ? n.midi : null;
           }
           function s(t, n) {
-            let r = p(t);
+            var r = p(t);
             return null === r ? null : c(r, n);
           }
           function d(t) {
@@ -791,7 +785,7 @@
           function y(t) {
             return (i(t) || {}).oct;
           }
-          let b = /^([a-gA-G])(#{1,}|b{1,}|x{1,}|)(-?\d*)\s*(.*)\s*$/,
+          var b = /^([a-gA-G])(#{1,}|b{1,}|x{1,}|)(-?\d*)\s*(.*)\s*$/,
             A = [0, 2, 4, 5, 7, 9, 11],
             C = "CDEFGAB";
           (t.regex = o),
@@ -816,8 +810,8 @@
           player.on = function (event, cb) {
             if (arguments.length === 1 && typeof event === "function")
               return player.on("event", event);
-            let prop = "on" + event;
-            let old = player[prop];
+            var prop = "on" + event;
+            var old = player[prop];
             player[prop] = old ? chain(old, cb) : cb;
             return player;
           };
@@ -835,11 +829,11 @@
     10: [
       function (require, module, exports) {
         "use strict";
-        let player = require("./player");
-        let events = require("./events");
-        let notes = require("./notes");
-        let scheduler = require("./scheduler");
-        let midi = require("./midi");
+        var player = require("./player");
+        var events = require("./events");
+        var notes = require("./notes");
+        var scheduler = require("./scheduler");
+        var midi = require("./midi");
         function SamplePlayer(ac, source, options) {
           return midi(scheduler(notes(events(player(ac, source, options)))));
         }
@@ -857,18 +851,18 @@
     ],
     11: [
       function (require, module, exports) {
-        let midimessage = require("midimessage");
+        var midimessage = require("midimessage");
         module.exports = function (player) {
           player.listenToMidi = function (input, options) {
-            let started = {};
-            let opts = options || {};
-            let gain =
+            var started = {};
+            var opts = options || {};
+            var gain =
               opts.gain ||
               function (vel) {
                 return vel / 127;
               };
             input.onmidimessage = function (msg) {
-              let mm = msg.messageType ? msg : midimessage(msg);
+              var mm = msg.messageType ? msg : midimessage(msg);
               if (mm.messageType === "noteon" && mm.velocity === 0) {
                 mm.messageType = "noteoff";
               }
@@ -897,25 +891,25 @@
     12: [
       function (require, module, exports) {
         "use strict";
-        let note = require("note-parser");
-        let isMidi = function (n) {
+        var note = require("note-parser");
+        var isMidi = function (n) {
           return n !== null && n !== [] && n >= 0 && n < 129;
         };
-        let toMidi = function (n) {
+        var toMidi = function (n) {
           return isMidi(n) ? +n : note.midi(n);
         };
         module.exports = function (player) {
           if (player.buffers) {
-            let map = player.opts.map;
-            let toKey = typeof map === "function" ? map : toMidi;
-            let mapper = function (name) {
+            var map = player.opts.map;
+            var toKey = typeof map === "function" ? map : toMidi;
+            var mapper = function (name) {
               return name ? toKey(name) || name : null;
             };
             player.buffers = mapBuffers(player.buffers, mapper);
-            let start = player.start;
+            var start = player.start;
             player.start = function (name, when, options) {
-              let key = mapper(name);
-              let dec = key % 1;
+              var key = mapper(name);
+              var dec = key % 1;
               if (dec) {
                 key = Math.floor(key);
                 options = Object.assign(options || {}, {
@@ -939,9 +933,9 @@
     13: [
       function (require, module, exports) {
         "use strict";
-        let ADSR = require("adsr");
-        let EMPTY = {};
-        let DEFAULTS = {
+        var ADSR = require("adsr");
+        var EMPTY = {};
+        var DEFAULTS = {
           gain: 1,
           attack: 0.01,
           decay: 0.1,
@@ -953,19 +947,19 @@
           loopEnd: 0,
         };
         function SamplePlayer(ac, source, options) {
-          let connected = false;
-          let nextId = 0;
-          let tracked = {};
-          let out = ac.createGain();
+          var connected = false;
+          var nextId = 0;
+          var tracked = {};
+          var out = ac.createGain();
           out.gain.value = 1;
-          let opts = Object.assign({}, DEFAULTS, options);
-          let player = { context: ac, out: out, opts: opts };
+          var opts = Object.assign({}, DEFAULTS, options);
+          var player = { context: ac, out: out, opts: opts };
           if (source instanceof AudioBuffer) player.buffer = source;
           else player.buffers = source;
           player.start = function (name, when, options) {
             if (player.buffer && name !== null)
               return player.start(null, name, when);
-            let buffer = name ? player.buffers[name] : player.buffer;
+            var buffer = name ? player.buffers[name] : player.buffer;
             if (!buffer) {
               console.warn("Buffer " + name + " not found.");
               return;
@@ -973,10 +967,10 @@
               console.warn("SamplePlayer not connected to any node.");
               return;
             }
-            let opts = options || EMPTY;
+            var opts = options || EMPTY;
             when = Math.max(ac.currentTime, when || 0);
             player.emit("start", when, name, opts);
-            let node = createNode(name, buffer, opts);
+            var node = createNode(name, buffer, opts);
             node.id = track(name, node);
             node.env.start(when);
             node.source.start(when);
@@ -988,7 +982,7 @@
             return player.start(name, when, options);
           };
           player.stop = function (when, ids) {
-            let node;
+            var node;
             ids = ids || Object.keys(tracked);
             return ids.map(function (id) {
               node = tracked[id];
@@ -1004,7 +998,7 @@
           };
           player.emit = function (event, when, obj, opts) {
             if (player.onevent) player.onevent(event, when, obj, opts);
-            let fn = player["on" + event];
+            var fn = player["on" + event];
             if (fn) fn(when, obj, opts);
           };
           return player;
@@ -1012,7 +1006,7 @@
             node.id = nextId++;
             tracked[node.id] = node;
             node.source.onended = function () {
-              let now = ac.currentTime;
+              var now = ac.currentTime;
               node.source.disconnect();
               node.env.disconnect();
               node.disconnect();
@@ -1021,7 +1015,7 @@
             return node.id;
           }
           function createNode(name, buffer, options) {
-            let node = ac.createGain();
+            var node = ac.createGain();
             node.gain.value = 0;
             node.connect(out);
             node.env = envelope(ac, options, opts);
@@ -1036,9 +1030,9 @@
             node.source.loopStart = options.loopStart || opts.loopStart;
             node.source.loopEnd = options.loopEnd || opts.loopEnd;
             node.stop = function (when) {
-              let time = when || ac.currentTime;
+              var time = when || ac.currentTime;
               player.emit("stop", time, name);
-              let stopAt = node.env.stop(time);
+              var stopAt = node.env.stop(time);
               node.source.stop(stopAt);
             };
             return node;
@@ -1047,10 +1041,10 @@
         function isNum(x) {
           return typeof x === "number";
         }
-        let PARAMS = ["attack", "decay", "sustain", "release"];
+        var PARAMS = ["attack", "decay", "sustain", "release"];
         function envelope(ac, options, opts) {
-          let env = ADSR(ac);
-          let adsr = options.adsr || opts.adsr;
+          var env = ADSR(ac);
+          var adsr = options.adsr || opts.adsr;
           PARAMS.forEach(function (name, i) {
             if (adsr) env[name] = adsr[i];
             else env[name] = options[name] || opts[name];
@@ -1072,17 +1066,17 @@
     14: [
       function (require, module, exports) {
         "use strict";
-        let isArr = Array.isArray;
-        let isObj = function (o) {
+        var isArr = Array.isArray;
+        var isObj = function (o) {
           return o && typeof o === "object";
         };
-        let OPTS = {};
+        var OPTS = {};
         module.exports = function (player) {
           player.schedule = function (time, events) {
-            let now = player.context.currentTime;
-            let when = time < now ? now : time;
+            var now = player.context.currentTime;
+            var when = time < now ? now : time;
             player.emit("schedule", when, events);
-            let t, o, note, opts;
+            var t, o, note, opts;
             return events.map(function (event) {
               if (!event) return null;
               else if (isArr(event)) {
@@ -1110,16 +1104,16 @@
     15: [
       function (require, module, exports) {
         "use strict";
-        let REGEX = /^([a-gA-G])(#{1,}|b{1,}|x{1,}|)(-?\d*)\s*(.*)\s*$/;
+        var REGEX = /^([a-gA-G])(#{1,}|b{1,}|x{1,}|)(-?\d*)\s*(.*)\s*$/;
         function regex() {
           return REGEX;
         }
-        let SEMITONES = [0, 2, 4, 5, 7, 9, 11];
+        var SEMITONES = [0, 2, 4, 5, 7, 9, 11];
         function parse(str, isTonic, tuning) {
           if (typeof str !== "string") return null;
-          let m = REGEX.exec(str);
+          var m = REGEX.exec(str);
           if (!m || (!isTonic && m[4])) return null;
-          let p = { letter: m[1].toUpperCase(), acc: m[2].replace(/x/g, "##") };
+          var p = { letter: m[1].toUpperCase(), acc: m[2].replace(/x/g, "##") };
           p.pc = p.letter + p.acc;
           p.step = (p.letter.charCodeAt(0) + 3) % 7;
           p.alt = p.acc[0] === "b" ? -p.acc.length : p.acc.length;
@@ -1135,8 +1129,8 @@
         function midiToFreq(midi, tuning) {
           return Math.pow(2, (midi - 69) / 12) * (tuning || 440);
         }
-        let parser = { parse: parse, regex: regex, midiToFreq: midiToFreq };
-        let FNS = [
+        var parser = { parse: parse, regex: regex, midiToFreq: midiToFreq };
+        var FNS = [
           "letter",
           "acc",
           "pc",
@@ -1149,7 +1143,7 @@
         ];
         FNS.forEach(function (name) {
           parser[name] = function (src) {
-            let p = parse(src);
+            var p = parse(src);
             return p && typeof p[name] !== "undefined" ? p[name] : null;
           };
         });

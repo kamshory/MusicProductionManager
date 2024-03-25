@@ -1,7 +1,6 @@
 <?php
 
 use MagicObject\Request\InputGet;
-use Midi\MidiLyric;
 use MusicProductionManager\Data\Dto\Karaoke;
 use MusicProductionManager\Data\Dto\SongDto;
 use MusicProductionManager\Data\Entity\EntitySong;
@@ -37,7 +36,7 @@ require_once "inc/header.php";
 
 <div class="filter-container">
   <form action="" method="get">
-  <div class="filter-group">
+  
       <?php
       $inputGet = new InputGet();
       $sql = "select song.song_id, song.name, song.title, song.track_number, album.album_id, album.name as album_name
@@ -89,23 +88,29 @@ require_once "inc/header.php";
         echo $e->getMessage();   
       }
       ?>
-      <select class="form-control" name="song_id" id="song_id">
+    <style>
+    .song-control{
+        padding: 5px 0px;
+        vertical-align: middle;
+    }
+    .song-select{
+        width: 135px !important;
+        margin-right: 5px;
+    }
+    .btn.solo{
+        width:90px;
+    }
+    </style>
+    <div class="song-control">
+      <select class="form-control song-select" name="song_id" id="song_id">
         <?php
         echo implode("\r\n", $arr1);
         
         ?>
       </select>
-      
-  </div>
-  <style>
-    .btn.solo{
-        width:100px;
-    }
-  </style>
-  
   <input class="btn btn-primary open" type="submit" name="open" value="Open">
   <input class="btn btn-success solo" type="button" value="Solo Off">
-
+  </div>
   </form>
 </div>
 
@@ -115,7 +120,7 @@ require_once "inc/header.php";
 <link rel="stylesheet" href="assets/css/piano.css">
 <script src="assets/js/karaoke.js"></script>
 <script src="assets/js/piano.js"></script>
-<script src="assets/soundfont/soundfont-player.js"></script>
+<script src="assets/soundfont/soundfont-player.min.js"></script>
 <script src="assets/soundfont/soundfont-midi-player.js"></script>
 
 <div class="control">
@@ -171,11 +176,13 @@ require_once "inc/header.php";
 
                 let midiPlayer = new SoundfontMidiPlayer();
                 audioContent = new AudioContext();
+                /*
                 let source = audioContent.createBufferSource();
                 var gainNode = audioContent.createGain()
                 gainNode.gain.value = 1;
                 gainNode.connect(audioContent.destination)
                 source.connect(gainNode)
+                */
 
                 let instrumentName = 'clavinet';
                 midiPlayer.setAudioContext(audioContent);
