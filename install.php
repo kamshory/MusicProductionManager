@@ -27,40 +27,48 @@ if($inputPost->hasValueInstall())
  */
 function installWindows($input)
 {
+    $commands = array();
     if($input->hasValueDatabaseType())
     {
         $dbType = $input->getDatabaseType();
-        shell_exec("SETX APP_DATABASE_TYPE \"$dbType\"");
+        $commands[] = "SETX APP_DATABASE_TYPE \"$dbType\"";
     }
     if($input->hasValueDatabaseHost())
     {
         $dbHost = $input->getDatabaseHost();
-        shell_exec("SETX APP_DATABASE_HOST \"$dbHost\"");
+        $commands[] = "SETX APP_DATABASE_HOST \"$dbHost\"";
     }
     if($input->hasValueDatabasePort())
     {
         $dbPort = $input->getDatabasePort();
-        shell_exec("SETX APP_DATABASE_PORT \"$dbPort\"");
+        $commands[] = "SETX APP_DATABASE_PORT \"$dbPort\"";
     }
     if($input->hasValueDatabaseSchema())
     {
         $dbSchema = $input->getDatabaseSchema();
-        shell_exec("SETX APP_DATABASE_SCHEMA \"$dbSchema\"");
+        $commands[] = "SETX APP_DATABASE_SCHEMA \"$dbSchema\"";
     }
     if($input->hasValueDatabaseUser())
     {
         $dbUser = $input->getDatabaseUser();
-        shell_exec("SETX APP_DATABASE_USER \"$dbUser\"");
+        $commands[] = "SETX APP_DATABASE_USER \"$dbUser\"";
     }
     if($input->hasValueDatabasePassword())
     {
         $dbPass = $input->getDatabasePassword();
-        shell_exec("SETX APP_DATABASE_PASSWORD \"$dbPass\"");
+        $commands[] = "SETX APP_DATABASE_PASSWORD \"$dbPass\"";
     }
     if($input->hasValueDatabaseSalt())
     {
         $dbSalt = $input->getDatabaseSalt();
-        shell_exec("SETX APP_DATABASE_SALT \"$dbSalt\"");
+        $commands[] = "SETX APP_DATABASE_SALT \"$dbSalt\"";
+    }
+    if(validateVariables($commands))
+    {
+        foreach($commands as $command)
+        {
+            shell_exec($command);
+        }
     }
 }
 /**
@@ -72,48 +80,76 @@ function installWindows($input)
 function installLinux($input)
 {
     $path = "/etc/httpd/conf.d/music.conf";
+    $commands = array();
     truncateFile($path);
     if($input->hasValueDatabaseType())
     {
         $dbType = $input->getDatabaseType();
-        appendFile($path, "SETENV APP_DATABASE_TYPE \"$dbType\"");
+        $commands[] = "SETENV APP_DATABASE_TYPE \"$dbType\"";
     }
     if($input->hasValueDatabaseHost())
     {
         $dbHost = $input->getDatabaseHost();
-        appendFile($path, "SETENV APP_DATABASE_HOST \"$dbHost\"");
+        $commands[] = "SETENV APP_DATABASE_HOST \"$dbHost\"";
     }
     if($input->hasValueDatabasePort())
     {
         $dbPort = $input->getDatabasePort();
-        appendFile($path, "SETENV APP_DATABASE_PORT \"$dbPort\"");
+        $commands[] = "SETENV APP_DATABASE_PORT \"$dbPort\"";
     }
     if($input->hasValueDatabaseSchema())
     {
         $dbSchema = $input->getDatabaseSchema();
-        appendFile($path, "SETENV APP_DATABASE_SCHEMA \"$dbSchema\"");
+        $commands[] = "SETENV APP_DATABASE_SCHEMA \"$dbSchema\"";
     }
     if($input->hasValueDatabaseUser())
     {
         $dbUser = $input->getDatabaseUser();
-        appendFile($path, "SETENV APP_DATABASE_USER \"$dbUser\"");
+        $commands[] = "SETENV APP_DATABASE_USER \"$dbUser\"";
     }
     if($input->hasValueDatabasePassword())
     {
         $dbPass = $input->getDatabasePassword();
-        appendFile($path, "SETENV APP_DATABASE_PASSWORD \"$dbPass\"");
+        $commands[] = "SETENV APP_DATABASE_PASSWORD \"$dbPass\"";
     }
     if($input->hasValueDatabaseSalt())
     {
         $dbSalt = $input->getDatabaseSalt();
-        appendFile($path, "SETENV APP_DATABASE_SALT \"$dbSalt\"");
+        $commands[] = "SETENV APP_DATABASE_SALT \"$dbSalt\"";
     }
+    if(validateVariables($commands))
+    {
+        foreach($commands as $command)
+        {
+            appendFile($path, $command);
+        }
+    }
+}
+
+/**
+ * Validate commands
+ *
+ * @param string[] $commands
+ * @return bool
+ */
+function validateVariables($commands)
+{
+    foreach($commands as $command)
+    {
+        $arr = explode(" ", $command);
+        if(count($arr) < 3)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 function truncateFile($path)
 {
     file_put_contents($path, "");
 }
+
 function appendFile($path, $content)
 {
     $fp = fopen($path, "w+");
