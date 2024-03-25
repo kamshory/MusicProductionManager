@@ -255,7 +255,6 @@ if(!empty($result))
         <th scope="col" width="20"><i class="ti ti-download"></i></th>
         <th scope="col" width="20">#</th>
         <th scope="col" class="col-sort" data-name="name">Name</th>
-        <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="rating">Rating</th>
         <th scope="col" class="col-sort" data-name="artist_id">Artist</th>
         <th scope="col" class="col-sort" data-name="time_create">Created</th>
@@ -281,7 +280,6 @@ if(!empty($result))
         <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $songDraft->getName();?></a></td>
-        <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $songDraft->getTitle();?></a></td>
         <td class="text-data text-data-time-create text-nowrap"><?php echo number_format($songDraft->getRating(), 1);?></td>
         <td class="text-data text-data-time-artist text-nowrap"><?php echo $songDraft->hasValueArtist() ? $songDraft->getArtist()->getName() : "";?></td>
         <td class="text-data text-data-time-create text-nowrap"><?php echo $songDraft->getTimeCreate();?></td>
