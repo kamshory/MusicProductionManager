@@ -29,6 +29,14 @@ class Album extends MagicObject
 	 * @var string
 	 */
 	protected $name;
+	
+	/**
+	 * Title
+	 * 
+	 * @Column(name="title", type="text", nullable=true)
+	 * @var string
+	 */
+	protected $title;
 
 	/**
 	 * Description
