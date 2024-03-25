@@ -151,7 +151,7 @@ require_once "inc/header.php";
             let midiPlayer = new SoundfontMidiPlayer();
             let ac = new AudioContext();
             let instrumentName = 'clavinet';
-            let active = true;
+            let active = false;
             midiPlayer.setAudioContext(ac);
             midiPlayer.loadInstrument(instrumentName);
             midiPlayer.loadNote(midiSong);
