@@ -97,16 +97,26 @@ require_once "inc/header.php";
       </select>
       
   </div>
+  <style>
+    .btn.solo{
+        width:100px;
+    }
+  </style>
   
   <input class="btn btn-primary open" type="submit" name="open" value="Open">
+  <input class="btn btn-success solo" type="button" value="Solo Off">
 
   </form>
 </div>
+
+
 
 <link rel="stylesheet" href="assets/css/karaoke.css">
 <link rel="stylesheet" href="assets/css/piano.css">
 <script src="assets/js/karaoke.js"></script>
 <script src="assets/js/piano.js"></script>
+<script src="assets/soundfont/soundfont-player.js"></script>
+<script src="assets/soundfont/soundfont-midi-player.js"></script>
 
 <div class="control">
             <?php
@@ -121,40 +131,32 @@ require_once "inc/header.php";
                 
             ?>
             <audio class="player" src="<?php echo $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>" controls></audio>
-            <script src="assets/soundfont/soundfont-player.js"></script>
-            <script src="assets/soundfont/soundfont-midi-player.js"></script>
             <script>
             let piano = null;
             let karaoke = null;
             let data = <?php echo $songDto;?>;
             let hasMidiSong = <?php echo $song->hasValueVocalGuide() ? 'true' : 'false';?>;
             let midiSong = <?php echo $song->hasValueVocalGuide() ? $song->getVocalGuide() : '[]';?>;
-            <?php
-            /**
-            Old code
-            $midi = new MidiLyric();
-            if(file_exists($song->getFilePathMidi()))
+            let playInterval = setInterval('', 1000000);
+            let timeInterval = 5;
+            let audioContent = null;
+            let active = false;
+       
+            function toggleSolo()
             {
-                try
+                if(active)
                 {
-                    $midi->importMid($song->getFilePathMidi());
-                    echo "midiSong = ".json_encode(array_values($midi->getSong($song->getMidiVocalChannel()))).";\r\n";
-                    echo "hasMidiSong = true;\r\n";
+                    document.querySelector('.solo').value = 'Solo Off';
+                    active = false;
+                    document.querySelector('.player').muted = false;
                 }
-                catch(Exception $e)
+                else
                 {
-                    // do nothing
+                    document.querySelector('.solo').value = 'Solo On';
+                    active = true;
+                    document.querySelector('.player').muted = true;
                 }
             }
-            */
-            ?>
-            let midiPlayer = new SoundfontMidiPlayer();
-            let ac = new AudioContext();
-            let instrumentName = 'clavinet';
-            let active = false;
-            midiPlayer.setAudioContext(ac);
-            midiPlayer.loadInstrument(instrumentName);
-            midiPlayer.loadNote(midiSong);
             $(document).ready(function(){      
                 if(hasMidiSong)
                 {
@@ -165,7 +167,36 @@ require_once "inc/header.php";
                 {
                     karaoke = new Karaoke(data, '.teleprompter-container');      
                     animate();
-                }              
+                }   
+
+                let midiPlayer = new SoundfontMidiPlayer();
+                audioContent = new AudioContext();
+                let source = audioContent.createBufferSource();
+                var gainNode = audioContent.createGain()
+                gainNode.gain.value = 1;
+                gainNode.connect(audioContent.destination)
+                source.connect(gainNode)
+
+                let instrumentName = 'clavinet';
+                midiPlayer.setAudioContext(audioContent);
+                midiPlayer.loadInstrument(instrumentName);
+                midiPlayer.loadNote(midiSong);
+                document.querySelector('.solo').addEventListener('click', function(){
+                    toggleSolo();
+                })
+                document.querySelector('.player').addEventListener('play', function(){
+                    clearInterval(playInterval);
+                    playInterval = setInterval(function(){
+                        let pos = document.querySelector('.player').currentTime;
+                        midiPlayer.play(instrumentName, pos, active);
+                    })
+                }); 
+                document.querySelector('.player').addEventListener('pause', function(){
+                    clearInterval(playInterval);
+                });   
+                document.querySelector('.player').addEventListener('ended', function(){
+                    clearInterval(playInterval);
+                });       
             });
             function animate()
             {
@@ -176,7 +207,6 @@ require_once "inc/header.php";
                     piano.draw();
                 }
                 karaoke.updatePosition(pos * 1000);
-                midiPlayer.play(instrumentName, pos, active);
                 requestAnimationFrame(animate);
             }
             </script>

@@ -61,7 +61,7 @@ function SoundfontMidiPlayer() {
     }
     this.loadInstrument = function(instrumentName)
     {
-        Soundfont.instrument(ac, instrumentName).then(function (instrument) {
+        Soundfont.instrument(this.audioContext, instrumentName).then(function (instrument) {
             _this.instrument[instrumentName] = instrument;            
         })
     }
