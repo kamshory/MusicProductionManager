@@ -121,6 +121,8 @@ require_once "inc/header.php";
                 
             ?>
             <audio class="player" src="<?php echo $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath());?>?hash=<?php echo str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());?>" controls></audio>
+            <script src="assets/soundfont/soundfont-player.js"></script>
+            <script src="assets/soundfont/soundfont-midi-player.js"></script>
             <script>
             let piano = null;
             let karaoke = null;
@@ -146,8 +148,14 @@ require_once "inc/header.php";
             }
             */
             ?>
-            
-            $(document).ready(function(){           
+            let midiPlayer = new SoundfontMidiPlayer();
+            let ac = new AudioContext();
+            let instrumentName = 'clavinet';
+            let active = true;
+            midiPlayer.setAudioContext(ac);
+            midiPlayer.loadInstrument(instrumentName);
+            midiPlayer.loadNote(midiSong);
+            $(document).ready(function(){      
                 if(hasMidiSong)
                 {
                     piano = new Piano(document.querySelector('.piano'));
@@ -157,8 +165,7 @@ require_once "inc/header.php";
                 {
                     karaoke = new Karaoke(data, '.teleprompter-container');      
                     animate();
-                }
-                
+                }              
             });
             function animate()
             {
@@ -168,7 +175,8 @@ require_once "inc/header.php";
                     piano.setTime(pos);
                     piano.draw();
                 }
-                karaoke.updatePosition(pos*1000);
+                karaoke.updatePosition(pos * 1000);
+                midiPlayer.play(instrumentName, pos, active);
                 requestAnimationFrame(animate);
             }
             </script>

@@ -346,18 +346,13 @@ if(!empty($result))
   
     $(selector).rateYo({
       rating: parseFloat(response.rating),
-      starWidth: "16px"
+      starWidth: "12px"
     });
     $(selector).rateYo().on('rateyo.set', function(e, data) {
       setRateEvent(e, data);
     });
   }
 </script>
-<style>
-  .btn-tn {
-    font-size: 0.7em;
-  }
-</style>
 
 <div class="pagination">
     <div class="pagination-number">
@@ -378,7 +373,7 @@ if(!empty($result))
 foreach ($result as $song) {
     $songFile = new SongFile($song);
     $buttonMp3 = SongFileUtil::createDownloadButton($songFile, 'mp3', 'MP3', 'read-file.php', '_blank');
-    $buttonMidi = SongFileUtil::createDownloadButton($songFile, 'midi', 'MIDI', 'read-file.php', '_blank');
+    $buttonMidi = SongFileUtil::createDownloadButton($songFile, 'midi', 'MID', 'read-file.php', '_blank');
     $buttonXml = SongFileUtil::createDownloadButton($songFile, 'xml', 'XML', 'read-file.php', '_blank');
     $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
@@ -389,7 +384,7 @@ foreach ($result as $song) {
 
         <div class="d-flex align-items-center justify-content-between">
           <h6 class="fw-semibold fs-4 col-4"><?php echo $song->getName(); ?></h6>
-          <div class="list-unstyled d-flex align-items-center col-8 mb-0 me-1 justify-content-end text-end">
+          <div class="song-tools list-unstyled d-flex align-items-center col-8 mb-0 me-1 justify-content-end text-end">
             <div class="d-inline-block">
               <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-music"></span></a> &nbsp;
               <a href="karaoke.php?song_id=<?php echo $song->getSongId(); ?>&action=open"><span class="ti ti-microphone"></span></a> &nbsp;
