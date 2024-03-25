@@ -94,4 +94,14 @@ class PicoColor
 
         return $this;
     }
+    
+    /**
+     * Convert object to string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return sprintf("#%2X%2X%2X", $this->red, $this->green, $this->blue);
+    }
 }
