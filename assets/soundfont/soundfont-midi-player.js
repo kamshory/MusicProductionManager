@@ -15,23 +15,18 @@ function SoundfontMidiPlayer() {
     this.play = function (instrumentName, time, active) {
         if (active) {
             let note = this.getNote(time);
-            if (note != null && !this.inList(note.time)) {
-                this.timeList.push(time);
+            if (note != null) {
                 let start = this.audioContext.currentTime;
                 if(start >= 0)
                 {
                     // remaining
                     let remaining = (note.duration + note.start - time) * 1000;
-                    if(remaining > 0 && /*!_this.inList(note.time) &&*/ _this.lastTime != note.time)
+                    if(remaining > 0 && _this.lastTime != note.time)
                     {
-                        /*_this.addList(note.time);*/
                         _this.lastTime = note.time;
                         _this.lastNote = note.note;
                         let inst = this.instrument[instrumentName];
                         inst.play(note.note, start, { duration: remaining });
-                        setTimeout(function () {
-                            _this.removeTimeFromList(note.time);
-                        }, remaining);
                     }
                 }
             }
