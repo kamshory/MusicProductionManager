@@ -22,9 +22,9 @@ function SoundfontMidiPlayer() {
                 {
                     // remaining
                     let remaining = (note.duration + note.start - time) * 1000;
-                    if(remaining > 0 && !_this.inList(note.time) && _this.lastTime != note.time)
+                    if(remaining > 0 && /*!_this.inList(note.time) &&*/ _this.lastTime != note.time)
                     {
-                        _this.addList(note.time);
+                        /*_this.addList(note.time);*/
                         _this.lastTime = note.time;
                         _this.lastNote = note.note;
                         let inst = this.instrument[instrumentName];
@@ -51,10 +51,18 @@ function SoundfontMidiPlayer() {
     this.addList = function (time) {
         this.timeList.push(time);
     }
-    this.getNote = function (time) {
-        for (let i in this.noteList) {
-            if (this.noteList[i].start <= time && this.noteList[i].end >= time) {
-                return this.noteList[i];
+    this.lastIndex = 0;
+    this.lastTimeSecond = 0;
+    this.getStartIndex = function(time)
+    {
+        return time > this.lastTimeSecond ? this.lastIndex : 0;
+    }
+    this.getNote = function (timeSecond) {
+        let startIndex = this.getStartIndex();
+        for (let index = startIndex; index < this.noteList.length; index++) {
+            if (this.noteList[index].start <= timeSecond && this.noteList[index].end >= timeSecond) {
+                this.lastIndex = index;
+                return this.noteList[index];
             }
         }
         return null;

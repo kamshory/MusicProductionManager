@@ -35,6 +35,13 @@ require_once "inc/header.php";
 ?>
 
 <div class="filter-container">
+<link rel="stylesheet" href="assets/css/karaoke.css">
+<link rel="stylesheet" href="assets/css/piano.css">
+<script src="assets/js/karaoke.js"></script>
+<script src="assets/js/piano.js"></script>
+<script src="assets/soundfont/soundfont-player.min.js"></script>
+<script src="assets/soundfont/soundfont-midi-player.js?rand=<?php echo mt_rand(1, 999999);?>"></script>
+
   <form action="" method="get">
   
       <?php
@@ -100,6 +107,11 @@ require_once "inc/header.php";
     .btn.solo{
         width:90px;
     }
+    .teleprompter {
+        height: calc(100vh - 420px);
+        width: calc(100% + 40px);
+        min-height: 180px;
+    }
     </style>
     <div class="song-control">
       <select class="form-control song-select" name="song_id" id="song_id">
@@ -116,12 +128,6 @@ require_once "inc/header.php";
 
 
 
-<link rel="stylesheet" href="assets/css/karaoke.css">
-<link rel="stylesheet" href="assets/css/piano.css">
-<script src="assets/js/karaoke.js"></script>
-<script src="assets/js/piano.js"></script>
-<script src="assets/soundfont/soundfont-player.min.js"></script>
-<script src="assets/soundfont/soundfont-midi-player.js"></script>
 
 <div class="control">
             <?php
@@ -143,9 +149,11 @@ require_once "inc/header.php";
             let hasMidiSong = <?php echo $song->hasValueVocalGuide() ? 'true' : 'false';?>;
             let midiSong = <?php echo $song->hasValueVocalGuide() ? $song->getVocalGuide() : '[]';?>;
             let playInterval = setInterval('', 1000000);
-            let timeInterval = 5;
+            let timeInterval = 2;
             let audioContent = null;
             let active = false;
+            let trimmer = 0.005;
+            let instrumentName = 'acoustic_grand_piano';
        
             function toggleSolo()
             {
@@ -184,7 +192,7 @@ require_once "inc/header.php";
                 source.connect(gainNode)
                 */
 
-                let instrumentName = 'clavinet';
+                
                 midiPlayer.setAudioContext(audioContent);
                 midiPlayer.loadInstrument(instrumentName);
                 midiPlayer.loadNote(midiSong);
@@ -194,7 +202,8 @@ require_once "inc/header.php";
                 document.querySelector('.player').addEventListener('play', function(){
                     clearInterval(playInterval);
                     playInterval = setInterval(function(){
-                        let pos = document.querySelector('.player').currentTime;
+                        let pos = document.querySelector('.player').currentTime + trimmer;
+                        
                         midiPlayer.play(instrumentName, pos, active);
                     })
                 }); 
