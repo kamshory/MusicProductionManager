@@ -42,7 +42,7 @@ require_once "inc/header.php";
 <link rel="stylesheet" href="assets/css/piano.css">
 <script src="assets/js/karaoke.js"></script>
 <script src="assets/js/piano.js"></script>
-<script src="assets/soundfont/soundfont-player.js"></script>
+<script src="assets/soundfont/soundfont-player.js?rand=<?php echo mt_rand(1, 999999);?>"></script>
 <script src="assets/soundfont/soundfont-midi-player.js?rand=<?php echo mt_rand(1, 999999);?>"></script>
 
   <form action="" method="get">
@@ -100,7 +100,7 @@ require_once "inc/header.php";
       ?>
     <style>
     .song-control{
-        padding: 5px 0px;
+        padding: 0px 0px 10px 0px;
         vertical-align: middle;
         white-space: nowrap;
     }
