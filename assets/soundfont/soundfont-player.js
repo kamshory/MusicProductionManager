@@ -517,8 +517,8 @@
           begin = data.indexOf("=", begin);
           begin = data.indexOf("{", begin);
           var end = data.lastIndexOf(",");
+          end = data.indexOf("}", end);
           let dataStr = data.slice(begin, end) + "}";
-          console.log(dataStr);
           return JSON.parse(dataStr.trim());
         }
         if (typeof module === "object" && module.exports) module.exports = load;
