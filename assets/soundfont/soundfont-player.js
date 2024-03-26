@@ -518,6 +518,7 @@
           begin = data.indexOf("{", begin);
           var end = data.lastIndexOf(",");
           let dataStr = data.slice(begin, end) + "}";
+          console.log(dataStr);
           return JSON.parse(dataStr.trim());
         }
         if (typeof module === "object" && module.exports) module.exports = load;
