@@ -99,10 +99,11 @@ require_once "inc/header.php";
     .song-control{
         padding: 5px 0px;
         vertical-align: middle;
+        white-space: nowrap;
     }
     .song-select{
-        width: 135px !important;
-        margin-right: 5px;
+        width: 145px !important;
+        margin-right: 2px;
     }
     .btn.solo{
         width:90px;
@@ -152,7 +153,7 @@ require_once "inc/header.php";
             let timeInterval = 2;
             let audioContent = null;
             let active = false;
-            let trimmer = 0.005;
+            let trimmer = 0.05;
             let instrumentName = 'acoustic_grand_piano';
        
             function toggleSolo()
