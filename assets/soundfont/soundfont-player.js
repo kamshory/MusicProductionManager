@@ -517,7 +517,6 @@
           begin = data.indexOf("=", begin);
           begin = data.indexOf("{", begin);
           var end = data.lastIndexOf(",");
-          end = data.indexOf("}", end);
           let dataStr = data.slice(begin, end) + "}";
           return JSON.parse(dataStr.trim());
         }
