@@ -35,7 +35,7 @@ require_once "inc/header.php";
 ?>
 <script>
     let baseSoundFontUrl = "assets/soundfont/";
-    let instrumentName = 'piano';
+    let instrumentName = 'guitar';
 </script>
 <div class="filter-container">
 <link rel="stylesheet" href="assets/css/karaoke.css">
