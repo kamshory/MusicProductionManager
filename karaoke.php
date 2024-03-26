@@ -33,7 +33,10 @@ if($inputGet->getSongId() != null)
 
 require_once "inc/header.php";
 ?>
-
+<script>
+    let baseSoundFontUrl = "assets/soundfont/";
+    let instrumentName = 'piano';
+</script>
 <div class="filter-container">
 <link rel="stylesheet" href="assets/css/karaoke.css">
 <link rel="stylesheet" href="assets/css/piano.css">
@@ -154,7 +157,6 @@ require_once "inc/header.php";
             let audioContent = null;
             let active = false;
             let trimmer = 0.05;
-            let instrumentName = 'acoustic_grand_piano';
        
             function toggleSolo()
             {

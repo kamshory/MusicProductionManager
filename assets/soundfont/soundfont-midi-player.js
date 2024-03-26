@@ -1,4 +1,3 @@
-let baseSoundFontUrl = "assets/soundfont/";
 function SoundfontMidiPlayer() {
     this.timeList = [];
     this.noteList = [];
@@ -65,7 +64,7 @@ function SoundfontMidiPlayer() {
     this.loadInstrument = function(instrumentName)
     {
         Soundfont.instrument(this.audioContext, instrumentName).then(function (instrument) {
-            _this.instrument[instrumentName] = instrument;            
+            _this.instrument[instrumentName] = instrument;   
         })
     }
     let _this = this;
