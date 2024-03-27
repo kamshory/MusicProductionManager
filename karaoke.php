@@ -52,10 +52,10 @@ $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->get
 <div class="filter-container">
 <link rel="stylesheet" href="assets/css/karaoke.css">
 <link rel="stylesheet" href="assets/css/piano.css">
-<script src="assets/js/karaoke.js"></script>
-<script src="assets/js/piano.js"></script>
-<script src="assets/soundfont/soundfont-player.js?rand=<?php echo mt_rand(1, 999999);?>"></script>
-<script src="assets/soundfont/soundfont-midi-player.js?rand=<?php echo mt_rand(1, 999999);?>"></script>
+<script src="assets/js/karaoke.min.js"></script>
+<script src="assets/js/piano.min.js"></script>
+<script src="assets/soundfont/soundfont-player.min.js"></script>
+<script src="assets/soundfont/soundfont-midi-player.min.js"></script>
 
   <form action="" method="get">
   
@@ -209,7 +209,7 @@ $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->get
 
                 
                 midiPlayer.setAudioContext(audioContent);
-                midiPlayer.loadInstrument(instrumentName);
+                midiPlayer.loadInstrument(baseSoundFontUrl, instrumentName);
                 midiPlayer.loadNote(midiSong);
                 document.querySelector('.solo').addEventListener('click', function(){
                     toggleSolo();

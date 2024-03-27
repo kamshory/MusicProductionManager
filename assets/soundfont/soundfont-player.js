@@ -69,9 +69,9 @@
         }
         function nameToUrl(name, sf, format) {
           format = format === "ogg" ? format : "mp3";
-          sf = sf === "FluidR3_GM" ? sf : "Planetbiru";
+          sf = sf === "FluidR3_GM" ? sf : "MusyngKite";
           return (
-            baseSoundFontUrl +
+            'https://gleitz.github.io/midi-js-soundfonts/' +
             sf +
             "/" +
             name +
@@ -335,14 +335,14 @@
           return nChr > 64 && nChr < 91
             ? nChr - 65
             : nChr > 96 && nChr < 123
-            ? nChr - 71
-            : nChr > 47 && nChr < 58
-            ? nChr + 4
-            : nChr === 43
-            ? 62
-            : nChr === 47
-            ? 63
-            : 0;
+              ? nChr - 71
+              : nChr > 47 && nChr < 58
+                ? nChr + 4
+                : nChr === 43
+                  ? 62
+                  : nChr === 47
+                    ? 63
+                    : 0;
         }
         function decode(sBase64, nBlocksSize) {
           var sB64Enc = sBase64.replace(/[^A-Za-z0-9\+\/]/g, "");
@@ -412,33 +412,33 @@
           return typeof pre === "string"
             ? pre + name
             : typeof pre === "function"
-            ? pre(name)
-            : name;
+              ? pre(name)
+              : name;
         }
         function load(ac, source, options, defVal) {
           var loader = isArrayBuffer(source)
             ? loadArrayBuffer
             : isAudioFileName(source)
-            ? loadAudioFile
-            : isPromise(source)
-            ? loadPromise
-            : isArray(source)
-            ? loadArrayData
-            : isObject(source)
-            ? loadObjectData
-            : isJsonFileName(source)
-            ? loadJsonFile
-            : isBase64Audio(source)
-            ? loadBase64Audio
-            : isJsFileName(source)
-            ? loadMidiJSFile
-            : null;
+              ? loadAudioFile
+              : isPromise(source)
+                ? loadPromise
+                : isArray(source)
+                  ? loadArrayData
+                  : isObject(source)
+                    ? loadObjectData
+                    : isJsonFileName(source)
+                      ? loadJsonFile
+                      : isBase64Audio(source)
+                        ? loadBase64Audio
+                        : isJsFileName(source)
+                          ? loadMidiJSFile
+                          : null;
           var opts = options || {};
           return loader
             ? loader(ac, source, opts)
             : defVal
-            ? Promise.resolve(defVal)
-            : Promise.reject("Source not valid (" + source + ")");
+              ? Promise.resolve(defVal)
+              : Promise.reject("Source not valid (" + source + ")");
         }
         load.fetch = fetch;
         function isArrayBuffer(o) {
@@ -518,8 +518,7 @@
           begin = data.indexOf("{", begin);
           var end = data.lastIndexOf("}");
           let dataStr = data.slice(begin, end).trim();
-          if(dataStr.substring(dataStr.length - 1) == ",")
-          {
+          if (dataStr.substring(dataStr.length - 1) == ",") {
             dataStr = dataStr.substring(0, dataStr.length - 1);
           }
           dataStr += "}";
@@ -689,10 +688,10 @@
           typeof global !== "undefined"
             ? global
             : typeof self !== "undefined"
-            ? self
-            : typeof window !== "undefined"
-            ? window
-            : {}
+              ? self
+              : typeof window !== "undefined"
+                ? window
+                : {}
         );
       },
       {},
@@ -703,8 +702,8 @@
           "object" == typeof exports && "undefined" != typeof module
             ? n(exports)
             : "function" == typeof define && define.amd
-            ? define(["exports"], n)
-            : n((t.NoteParser = t.NoteParser || {}));
+              ? define(["exports"], n)
+              : n((t.NoteParser = t.NoteParser || {}));
         })(this, function (t) {
           "use strict";
           function n(t, n) {
@@ -740,7 +739,7 @@
             return (
               (u.chroma = o < 0 ? 12 + o : o % 12),
               e[3] &&
-                ((u.oct = +e[3]),
+              ((u.oct = +e[3]),
                 (u.midi = o + 12 * (u.oct + 1)),
                 (u.freq = c(u.midi, r))),
               n && (u.tonicOf = e[4]),
@@ -757,10 +756,10 @@
             return null === t || void 0 === t
               ? null
               : t.step
-              ? l(t.step, t.alt, t.oct)
-              : t < 0 || t > 6
-              ? null
-              : C.charAt(t) + f(n) + a(r);
+                ? l(t.step, t.alt, t.oct)
+                : t < 0 || t > 6
+                  ? null
+                  : C.charAt(t) + f(n) + a(r);
           }
           function p(t) {
             if ((r(t) || e(t)) && t >= 0 && t < 128) return +t;
@@ -900,7 +899,7 @@
         "use strict";
         var note = require("note-parser");
         var isMidi = function (n) {
-          return n !== null && n !== [] && n >= 0 && n < 129;
+          return n !== null && typeof n != "object" && n >= 0 && n < 129;
         };
         var toMidi = function (n) {
           return isMidi(n) ? +n : note.midi(n);
@@ -1059,8 +1058,8 @@
           env.value.value = isNum(options.gain)
             ? options.gain
             : isNum(opts.gain)
-            ? opts.gain
-            : 1;
+              ? opts.gain
+              : 1;
           return env;
         }
         function centsToRate(cents) {
