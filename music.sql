@@ -1,34 +1,31 @@
--- phpMyAdmin SQL Dump
--- version 4.4.5
--- http://www.phpmyadmin.net
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
--- Host: localhost
--- Generation Time: Mar 24, 2024 at 11:51 PM
--- Server version: 5.5.68-MariaDB
--- PHP Version: 5.6.40
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: server1.planetbiru.com    Database: music
+-- ------------------------------------------------------
+-- Server version	5.5.68-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Database: `music`
---
-
--- --------------------------------------------------------
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `album`
 --
 
-CREATE TABLE IF NOT EXISTS `album` (
+DROP TABLE IF EXISTS `album`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `album` (
   `album_id` varchar(50) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
+  `title` text,
   `description` longtext,
   `producer_id` varchar(40) DEFAULT NULL,
   `release_date` date DEFAULT NULL,
@@ -44,16 +41,19 @@ CREATE TABLE IF NOT EXISTS `album` (
   `ip_edit` varchar(50) DEFAULT NULL,
   `locked` tinyint(1) DEFAULT '0',
   `as_draft` tinyint(1) DEFAULT '1',
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`album_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `article`
 --
 
-CREATE TABLE IF NOT EXISTS `article` (
+DROP TABLE IF EXISTS `article`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `article` (
   `article_id` varchar(40) NOT NULL,
   `type` varchar(20) DEFAULT NULL,
   `title` text,
@@ -67,14 +67,16 @@ CREATE TABLE IF NOT EXISTS `article` (
   `draft` tinyint(1) DEFAULT '1',
   `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `artist`
 --
 
-CREATE TABLE IF NOT EXISTS `artist` (
+DROP TABLE IF EXISTS `artist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `artist` (
   `artist_id` varchar(40) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `stage_name` varchar(100) DEFAULT NULL,
@@ -97,31 +99,37 @@ CREATE TABLE IF NOT EXISTS `artist` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`artist_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `draft_rating`
 --
 
-CREATE TABLE IF NOT EXISTS `draft_rating` (
+DROP TABLE IF EXISTS `draft_rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `draft_rating` (
   `draft_rating_id` varchar(40) NOT NULL,
   `user_id` varchar(40) DEFAULT NULL,
   `song_draft_id` varchar(40) DEFAULT NULL,
   `rating` float DEFAULT NULL,
   `time_create` timestamp NULL DEFAULT NULL,
-  `time_edit` timestamp NULL DEFAULT NULL
+  `time_edit` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`draft_rating_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `genre`
 --
 
-CREATE TABLE IF NOT EXISTS `genre` (
+DROP TABLE IF EXISTS `genre`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `genre` (
   `genre_id` varchar(50) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `image_path` text,
@@ -132,16 +140,19 @@ CREATE TABLE IF NOT EXISTS `genre` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`genre_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `midi`
 --
 
-CREATE TABLE IF NOT EXISTS `midi` (
+DROP TABLE IF EXISTS `midi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `midi` (
   `midi_id` varchar(50) NOT NULL,
   `random_midi_id` varchar(50) DEFAULT NULL,
   `title` text,
@@ -166,16 +177,19 @@ CREATE TABLE IF NOT EXISTS `midi` (
   `ip_edit` varchar(50) DEFAULT NULL,
   `admin_create` varchar(50) DEFAULT NULL,
   `admin_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`midi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `producer`
 --
 
-CREATE TABLE IF NOT EXISTS `producer` (
+DROP TABLE IF EXISTS `producer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `producer` (
   `producer_id` varchar(40) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `gender` varchar(2) DEFAULT NULL,
@@ -197,31 +211,37 @@ CREATE TABLE IF NOT EXISTS `producer` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`producer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `rating`
 --
 
-CREATE TABLE IF NOT EXISTS `rating` (
+DROP TABLE IF EXISTS `rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rating` (
   `rating_id` varchar(40) NOT NULL,
   `user_id` varchar(40) DEFAULT NULL,
   `song_id` varchar(40) DEFAULT NULL,
   `rating` float DEFAULT NULL,
   `time_create` timestamp NULL DEFAULT NULL,
-  `time_edit` timestamp NULL DEFAULT NULL
+  `time_edit` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`rating_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `reference`
 --
 
-CREATE TABLE IF NOT EXISTS `reference` (
+DROP TABLE IF EXISTS `reference`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `reference` (
   `reference_id` varchar(50) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `genre_id` varchar(50) DEFAULT NULL,
@@ -240,14 +260,16 @@ CREATE TABLE IF NOT EXISTS `reference` (
   `admin_edit` varchar(50) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `song`
 --
 
-CREATE TABLE IF NOT EXISTS `song` (
+DROP TABLE IF EXISTS `song`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `song` (
   `song_id` varchar(50) NOT NULL,
   `random_song_id` varchar(50) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
@@ -295,16 +317,19 @@ CREATE TABLE IF NOT EXISTS `song` (
   `ip_edit` varchar(50) DEFAULT NULL,
   `admin_create` varchar(50) DEFAULT NULL,
   `admin_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`song_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `song_attachment`
 --
 
-CREATE TABLE IF NOT EXISTS `song_attachment` (
+DROP TABLE IF EXISTS `song_attachment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `song_attachment` (
   `song_attachment_id` varchar(40) NOT NULL,
   `song_id` varchar(40) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -316,16 +341,19 @@ CREATE TABLE IF NOT EXISTS `song_attachment` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`song_attachment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `song_comment`
 --
 
-CREATE TABLE IF NOT EXISTS `song_comment` (
+DROP TABLE IF EXISTS `song_comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `song_comment` (
   `song_comment_id` varchar(40) NOT NULL,
   `song_id` varchar(40) DEFAULT NULL,
   `comment` longtext,
@@ -335,16 +363,19 @@ CREATE TABLE IF NOT EXISTS `song_comment` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`song_comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `song_copy`
 --
 
-CREATE TABLE IF NOT EXISTS `song_copy` (
+DROP TABLE IF EXISTS `song_copy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `song_copy` (
   `song_id` varchar(50) NOT NULL,
   `random_song_id` varchar(50) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
@@ -391,16 +422,19 @@ CREATE TABLE IF NOT EXISTS `song_copy` (
   `ip_edit` varchar(50) DEFAULT NULL,
   `admin_create` varchar(50) DEFAULT NULL,
   `admin_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`song_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `song_draft`
 --
 
-CREATE TABLE IF NOT EXISTS `song_draft` (
+DROP TABLE IF EXISTS `song_draft`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `song_draft` (
   `song_draft_id` varchar(40) NOT NULL,
   `parent_id` varchar(40) DEFAULT NULL,
   `random_id` varchar(40) DEFAULT NULL,
@@ -420,16 +454,19 @@ CREATE TABLE IF NOT EXISTS `song_draft` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`song_draft_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `song_draft_comment`
 --
 
-CREATE TABLE IF NOT EXISTS `song_draft_comment` (
+DROP TABLE IF EXISTS `song_draft_comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `song_draft_comment` (
   `song_draft_comment_id` varchar(40) NOT NULL,
   `song_draft_id` varchar(40) DEFAULT NULL,
   `comment` longtext,
@@ -439,32 +476,38 @@ CREATE TABLE IF NOT EXISTS `song_draft_comment` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`song_draft_comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `song_update_history`
 --
 
-CREATE TABLE IF NOT EXISTS `song_update_history` (
+DROP TABLE IF EXISTS `song_update_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `song_update_history` (
   `song_update_history_id` varchar(40) NOT NULL,
   `song_id` varchar(40) DEFAULT NULL,
   `user_id` varchar(40) DEFAULT NULL,
   `user_activity_id` varchar(40) DEFAULT NULL,
   `action` varchar(20) DEFAULT NULL,
   `time_update` timestamp NULL DEFAULT NULL,
-  `ip_update` varchar(50) DEFAULT NULL
+  `ip_update` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`song_update_history_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
   `user_id` varchar(40) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
@@ -488,16 +531,21 @@ CREATE TABLE IF NOT EXISTS `user` (
   `reset_password_hash` varchar(256) DEFAULT NULL,
   `last_reset_password` timestamp NULL DEFAULT NULL,
   `blocked` tinyint(1) DEFAULT '0',
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user_activity`
 --
 
-CREATE TABLE IF NOT EXISTS `user_activity` (
+DROP TABLE IF EXISTS `user_activity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_activity` (
   `user_activity_id` varchar(40) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `user_id` varchar(40) DEFAULT NULL,
@@ -507,16 +555,36 @@ CREATE TABLE IF NOT EXISTS `user_activity` (
   `post_data` longtext,
   `request_body` longtext,
   `time_create` timestamp NULL DEFAULT NULL,
-  `ip_create` varchar(50) DEFAULT NULL
+  `ip_create` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`user_activity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
+--
+-- Table structure for table `user_profile`
+--
+
+DROP TABLE IF EXISTS `user_profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_profile` (
+  `user_profile_id` varchar(40) NOT NULL,
+  `user_id` varchar(40) DEFAULT NULL,
+  `profile_name` varchar(100) DEFAULT NULL,
+  `profile_value` text,
+  `time_edit` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_profile_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user_type`
 --
 
-CREATE TABLE IF NOT EXISTS `user_type` (
+DROP TABLE IF EXISTS `user_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_type` (
   `user_type_id` varchar(50) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `admin` tinyint(1) DEFAULT '0',
@@ -527,117 +595,22 @@ CREATE TABLE IF NOT EXISTS `user_type` (
   `admin_edit` varchar(40) DEFAULT NULL,
   `ip_create` varchar(50) DEFAULT NULL,
   `ip_edit` varchar(50) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1'
+  `active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`user_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Indexes for dumped tables
+-- Dumping routines for database 'music'
 --
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Indexes for table `album`
---
-ALTER TABLE `album`
-  ADD PRIMARY KEY (`album_id`);
-
---
--- Indexes for table `artist`
---
-ALTER TABLE `artist`
-  ADD PRIMARY KEY (`artist_id`);
-
---
--- Indexes for table `draft_rating`
---
-ALTER TABLE `draft_rating`
-  ADD PRIMARY KEY (`draft_rating_id`);
-
---
--- Indexes for table `genre`
---
-ALTER TABLE `genre`
-  ADD PRIMARY KEY (`genre_id`);
-
---
--- Indexes for table `midi`
---
-ALTER TABLE `midi`
-  ADD PRIMARY KEY (`midi_id`);
-
---
--- Indexes for table `producer`
---
-ALTER TABLE `producer`
-  ADD PRIMARY KEY (`producer_id`);
-
---
--- Indexes for table `rating`
---
-ALTER TABLE `rating`
-  ADD PRIMARY KEY (`rating_id`);
-
---
--- Indexes for table `song`
---
-ALTER TABLE `song`
-  ADD PRIMARY KEY (`song_id`);
-
---
--- Indexes for table `song_attachment`
---
-ALTER TABLE `song_attachment`
-  ADD PRIMARY KEY (`song_attachment_id`);
-
---
--- Indexes for table `song_comment`
---
-ALTER TABLE `song_comment`
-  ADD PRIMARY KEY (`song_comment_id`);
-
---
--- Indexes for table `song_copy`
---
-ALTER TABLE `song_copy`
-  ADD PRIMARY KEY (`song_id`);
-
---
--- Indexes for table `song_draft`
---
-ALTER TABLE `song_draft`
-  ADD PRIMARY KEY (`song_draft_id`);
-
---
--- Indexes for table `song_draft_comment`
---
-ALTER TABLE `song_draft_comment`
-  ADD PRIMARY KEY (`song_draft_comment_id`);
-
---
--- Indexes for table `song_update_history`
---
-ALTER TABLE `song_update_history`
-  ADD PRIMARY KEY (`song_update_history_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `user_activity`
---
-ALTER TABLE `user_activity`
-  ADD PRIMARY KEY (`user_activity_id`);
-
---
--- Indexes for table `user_type`
---
-ALTER TABLE `user_type`
-  ADD PRIMARY KEY (`user_type_id`);
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-03-27 14:25:16
