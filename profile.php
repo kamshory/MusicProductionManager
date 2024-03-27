@@ -7,6 +7,7 @@ use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\User;
 use MusicProductionManager\Data\Entity\UserProfile;
 use MusicProductionManager\Utility\ServerUtil;
+use MusicProductionManager\Utility\StringUtil;
 use MusicProductionManager\Utility\UserUtil;
 
 require_once "inc/auth-with-login-form.php";
@@ -126,10 +127,17 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
       <tr>
         <td>Vocal Guide Instrument</td>
         <td><select class="form-control" name="vocal_guide_instrument" id="vocal_guide_instrument">
-        <option value="piano"<?php echo $vocalGuideInstrument=='piano' ? ' selected':'';?>>Piano</option>
-        <option value="acoustic_grand_piano"<?php echo $vocalGuideInstrument=='acoustic_grand_piano' ? ' selected':'';?>>Acoustic Grand Piano</option>
-        <option value="clavinet"<?php echo $vocalGuideInstrument=='guitar' ? ' selected':'';?>>Clavinet</option>
-        <option value="guitar"<?php echo $vocalGuideInstrument=='guitar' ? ' selected':'';?>>Guitar</option>
+        <option value="piano"<?php echo StringUtil::formSelected($vocalGuideInstrument=='piano');?>>Piano</option>
+        <option value="acoustic_grand_piano"<?php echo StringUtil::formSelected($vocalGuideInstrument=='acoustic_grand_piano');?>>Acoustic Grand Piano</option>
+        <option value="electric_piano_1"<?php echo StringUtil::formSelected($vocalGuideInstrument=='electric_piano_1');?>>Electric Piano 1</option>
+        <option value="electric_piano_2"<?php echo StringUtil::formSelected($vocalGuideInstrument=='electric_piano_2');?>>Electric Piano 2</option>
+        <option value="clavinet"<?php echo StringUtil::formSelected($vocalGuideInstrument=='guitar');?>>Clavinet</option>
+        <option value="guitar"<?php echo StringUtil::formSelected($vocalGuideInstrument=='guitar');?>>Guitar</option>
+        <option value="acoustic_guitar_nylon"<?php echo StringUtil::formSelected($vocalGuideInstrument=='acoustic_guitar_nylon');?>>Acoustic Guitar Nylon</option>
+        <option value="acoustic_guitar_steel"<?php echo StringUtil::formSelected($vocalGuideInstrument=='acoustic_guitar_steel');?>>Acoustic Guitar Steel</option>
+        <option value="acoustic_bass"<?php echo StringUtil::formSelected($vocalGuideInstrument=='acoustic_bass');?>>Acoustic Bass</option>
+        <option value="celesta"<?php echo StringUtil::formSelected($vocalGuideInstrument=='celesta');?>>Celesta</option>
+        <option value="voice_oohs"<?php echo StringUtil::formSelected($vocalGuideInstrument=='voice_oohs');?>>Voice Oohs</option>
       </select></td>
       </tr>
       <tr>

@@ -1,7 +1,7 @@
 <?php
 
 
-use MusicProductionManager\Util\StringUtil;
+use MusicProductionManager\Utility\StringUtil;
 
 require_once __DIR__ . "/inc/app.php";
 
