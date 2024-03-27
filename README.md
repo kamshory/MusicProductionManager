@@ -133,7 +133,7 @@ MIDI editor is useful for changing instruments on each song track. Producers may
 
 ## Karaoke
 
-Karaoke is a feature that vocalists can use while practicing. Features can be accessed in both desktop and mobile mode using smartphones and tablets.
+Karaoke is a feature that vocalists can use while practicing. Features can be accessed in both desktop and mobile mode using smartphones and tablets. Users can choose to listen to music in its entirety in mp3 format or just vocal tones. In parts where vocal tones cannot be heard clearly when listened to in mp3 format, this feature is very helpful for vocalists when practicing vocals.
 
 ## Sound Recorder
 
