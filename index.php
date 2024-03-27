@@ -493,13 +493,13 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-4 d-flex align-items-stretch">
+  <div class="col-md-12 col-lg-5 d-flex align-items-stretch">
     <div class="card w-100">
       <div class="card-body p-4">
         <div class="mb-4">
           <h5 class="card-title fw-semibold">Recent Activity</h5>
         </div>
-        <ul class="timeline-widget mb-0 position-relative mb-n5">
+        <ul class="timeline-widget mb-0 pb-5 position-relative mb-n5">
 
           <?php
 
@@ -528,12 +528,12 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
             if (date('Y-m-d', strtotime($uActivity->getTimeCreate())) == $currentDay) {
               $dateFormat = '\T\o\d\a\y H:i:s';
             } else {
-              $dateFormat = 'M j<\s\u\p>S</\s\u\p> Y H:i:s';
+              $dateFormat = 'M j<\s\u\p>S</\s\u\p> H:i:s';
             }
 
           ?>
             <li class="timeline-item d-flex position-relative overflow-hidden">
-              <div class="timeline-time text-dark flex-shrink-0 text-end"><?php echo date($dateFormat, strtotime($uActivity->getTimeCreate())); ?></div>
+              <div class="timeline-time text-dark flex-shrink-0 text-end" title="<?php echo $uActivity->getTimeCreate();?>"><?php echo date($dateFormat, strtotime($uActivity->getTimeCreate())); ?></div>
               <div class="timeline-badge-wrap d-flex flex-column align-items-center">
                 <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
                 <span class="timeline-badge-border d-block flex-shrink-0"></span>
@@ -554,7 +554,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
   </div>
 
 
-  <div class="col-lg-8 d-flex align-items-stretch">
+  <div class="col-md-12 col-lg-7 d-flex align-items-stretch">
     <div class="card w-100">
       <div class="card-body p-4">
         <h5 class="card-title fw-semibold mb-4">Recent Album</h5>
@@ -631,7 +631,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
                       <h6 class="fw-normal mb-0 fs-4"><?php echo (new Dms())->ddToDms($album->getDuration() / 3600)->printDms(true, true); ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"><?php echo !$album->hasValueReleaseDate() || $album->emptyReleaseDate() || $album->equalsReleaseDate('0000-00-00') ? "-" : date('j F Y', strtotime($album->getReleaseDate())); ?></p>
+                      <p class="mb-0 fw-normal"><?php echo !$album->hasValueReleaseDate() || $album->emptyReleaseDate() || $album->equalsReleaseDate('0000-00-00') ? "-" : date('j M Y', strtotime($album->getReleaseDate())); ?></p>
                     </td>
                   </tr>
 
@@ -748,7 +748,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     $buttonPdf = SongFileUtil::createDownloadButton($songFile, 'pdf', 'PDF', 'read-file.php', '_blank');
   ?>
 
-<div class="custom-card-container col-sm-12 col-xl-6">
+<div class="custom-card-container col-md-12 col-lg-6">
     <div class="card overflow-hidden rounded-2">
       <div class="card-body pt-3 p-4">
 
