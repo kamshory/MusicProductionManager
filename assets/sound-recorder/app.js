@@ -113,15 +113,15 @@ function createDownloadLink(blob, encoding) {
   let _btn1 = document.createElement("button");
   _btn1.setAttribute("class", "btn btn-success button-save");
   _btn1.setAttribute("data-url", link);
-  _btn1.setAttribute("data-random-id", (new Date()).getTime());
+  _btn1.setAttribute("data-random-id", new Date().getTime());
   _btn1.textContent = "Save";
 
   _btn1.addEventListener("click", function (e) {
     let elem = e.target;
     let audioUrl = elem.getAttribute("data-url");
-	let randomId = elem.getAttribute("data-random-id");
+    let randomId = elem.getAttribute("data-random-id");
     generateDataFromUrl(audioUrl, function (dt) {
-		uploadAudio(dt, randomId);
+      uploadAudio(dt, randomId);
     });
   });
 
@@ -152,12 +152,24 @@ function uploadAudio(base64Data, randomId) {
   var data = new FormData();
   data.append("data", base64Data);
   data.append("random_id", randomId);
-  var request = new XMLHttpRequest();
-  request.onreadystatechange = function () {
-    document.getElementById("result").innerText = request.responseText;
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    document.getElementById("result").innerText = xhr.responseText;
   };
-  request.open("POST", "lib.ajax/song-draft-add.php");
-  request.send(data);
+  xhr.open("POST", "lib.ajax/song-draft-add.php");
+
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.upload.addEventListener("load", function () {
+    $(".meter").addClass("done");
+  });
+  xhr.upload.addEventListener("progress", function (event) {
+    if (event.lengthComputable) {
+      var complete = ((event.loaded / event.total) * 100) | 0;
+      $(".meter").css("width", complete + "%");
+    }
+  });
+
+  xhr.send(data);
 }
 
 const fetchData = async (url) => {

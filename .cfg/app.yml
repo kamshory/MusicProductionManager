@@ -29,3 +29,4 @@ database:
 session:
   name: MUSICPRODUCTIONMANAGER
   max_life_time: 86400
+vocal_guide_instrument: piano

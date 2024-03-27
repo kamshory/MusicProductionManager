@@ -20,14 +20,10 @@ require_once "inc/header.php";
     <button class="btn btn-success" id="recordButton">Record</button>
     <button class="btn btn-danger" id="stopButton" disabled>Stop</button>
 </div>
-<div id="formats"></div>
-
-<pre>Recordings</pre>
 <ol class="recording-result" id="recordingsList"></ol>
-<pre id="result"></pre>
-<pre>Log</pre>
 
-<pre id="log"></pre>
+<pre id="result"></pre>
+<pre style="display:none" id="log"></pre>
 
 <script src="assets/sound-recorder/WebAudioRecorder.min.js"></script>
 <script src="assets/sound-recorder/app.js"></script>

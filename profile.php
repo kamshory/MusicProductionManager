@@ -5,6 +5,7 @@ use MagicObject\Request\InputGet;
 use MagicObject\Request\InputPost;
 use MusicProductionManager\Constants\ParamConstant;
 use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Data\Entity\UserProfile;
 use MusicProductionManager\Utility\ServerUtil;
 use MusicProductionManager\Utility\UserUtil;
 
@@ -51,6 +52,24 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT) && $inputPost->getSave() 
     $user->setIpEdit(ServerUtil::getRemoteAddress($cfg));
 
     $user->update();
+
+    if($inputPost->getVocalGuideInstrument() != "")
+    {
+      $userProfile = new UserProfile(null, $database);
+      try
+      {
+        $userProfile->findOneByUserIdAndProfileName($user->getUserId(), "vocal-guide-intrument");
+      }
+      catch(Exception $e)
+      {
+        $userProfile = new UserProfile(null, $database);
+        $userProfile->setUserId($user->getUserId());
+        $userProfile->setProfileName("vocal-guide-intrument");
+      }
+      $userProfile->setProfileValue($inputPost->getVocalGuideInstrument());
+      $userProfile->setTimeEdit(date('Y-m-d H:i:s'));
+      $userProfile->save();
+    }
     header('Location: '.basename(($_SERVER['PHP_SELF'])));
 }
 
@@ -61,6 +80,18 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
     try
     {
     $user->findOneByUserId($currentLoggedInUser->getUserId());
+
+    $userProfile = new UserProfile(null, $database);
+    try
+    {
+      $userProfile->findOneByUserIdAndProfileName($user->getUserId(), "vocal-guide-intrument");
+    }
+    catch(Exception $e)
+    {
+      // do nothing
+    }
+    $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
+
     ?>
     <form action="" method="post">
     <table class="table table-responsive">
@@ -91,6 +122,15 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
       <tr>
         <td>Password</td>
         <td><input type="password" class="form-control" name="password" id="password" value="" autocomplete="off"></td>
+      </tr>
+      <tr>
+        <td>Vocal Guide Instrument</td>
+        <td><select class="form-control" name="vocal_guide_instrument" id="vocal_guide_instrument">
+        <option value="piano"<?php echo $vocalGuideInstrument=='piano' ? ' selected':'';?>>Piano</option>
+        <option value="acoustic_grand_piano"<?php echo $vocalGuideInstrument=='acoustic_grand_piano' ? ' selected':'';?>>Acoustic Grand Piano</option>
+        <option value="clavinet"<?php echo $vocalGuideInstrument=='guitar' ? ' selected':'';?>>Clavinet</option>
+        <option value="guitar"<?php echo $vocalGuideInstrument=='guitar' ? ' selected':'';?>>Guitar</option>
+      </select></td>
       </tr>
       <tr>
         <td>Time Zone</td>
@@ -134,6 +174,16 @@ else
     try
     {
     $user->findOneByUserId($currentLoggedInUser->getUserId());
+    $userProfile = new UserProfile(null, $database);
+    try
+    {
+      $userProfile->findOneByUserIdAndProfileName($user->getUserId(), "vocal-guide-intrument");
+    }
+    catch(Exception $e)
+    {
+      // do nothing
+    }
+    $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
     ?>
     <table class="table table-responsive">
     <tbody>
@@ -161,6 +211,9 @@ else
         <td>Email</td>
         <td><?php echo $user->getEmail();?></td>
       </tr>
+      <tr>
+        <td>Vocal Guide Instrument</td>
+        <td><?php echo $vocalGuideInstrument;?></td>
       <tr>
         <td>Time Zone</td>
         <td><?php echo $user->getTimeZone();?></td>

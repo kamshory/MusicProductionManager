@@ -5,6 +5,7 @@ use MusicProductionManager\Data\Dto\Karaoke;
 use MusicProductionManager\Data\Dto\SongDto;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Song;
+use MusicProductionManager\Data\Entity\UserProfile;
 
 require_once "inc/auth-with-login-form.php";
 
@@ -32,10 +33,21 @@ if($inputGet->getSongId() != null)
 
 
 require_once "inc/header.php";
+
+$userProfile = new UserProfile(null, $database);
+try
+{
+    $userProfile->findOneByUserIdAndProfileName($currentLoggedInUser->getUserId(), "vocal-guide-intrument");
+}
+catch(Exception $e)
+{
+    // do nothing
+}
+$vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
 ?>
 <script>
     let baseSoundFontUrl = "assets/soundfont/";
-    let instrumentName = 'piano';
+    let instrumentName = '<?php echo $vocalGuideInstrument;?>';
 </script>
 <div class="filter-container">
 <link rel="stylesheet" href="assets/css/karaoke.css">

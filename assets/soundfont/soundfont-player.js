@@ -516,8 +516,13 @@
           if (begin < 0) throw Error("Invalid MIDI.js Soundfont format");
           begin = data.indexOf("=", begin);
           begin = data.indexOf("{", begin);
-          var end = data.lastIndexOf(",");
-          let dataStr = data.slice(begin, end) + "}";
+          var end = data.lastIndexOf("}");
+          let dataStr = data.slice(begin, end).trim();
+          if(dataStr.substring(dataStr.length - 1) == ",")
+          {
+            dataStr = dataStr.substring(0, dataStr.length - 1);
+          }
+          dataStr += "}";
           return JSON.parse(dataStr.trim());
         }
         if (typeof module === "object" && module.exports) module.exports = load;
