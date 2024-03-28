@@ -239,7 +239,11 @@ User must setup application configuration.
 
 ```yaml
 result_per_page: 20
-song_base_url: ${SONG_BASE_UER}
+song_base_url: ${SONG_BASE_URL}
+song_base_path: ${SONG_BASE_PATH}
+song_draft_base_url: ${SONG_DRAFT_BASE_URL}
+song_draft_base_path: ${SONG_DRAFT_BASE_PATH}
+proxy_provider: cloudflare
 app_name: Music Production Manager
 user_image:
   width: 512
@@ -262,6 +266,10 @@ database:
   database_schema: public
   time_zone: ${APP_DATABASE_TIME_ZONE}
   salt: ${APP_DATABASE_SALT}
+session:
+  name: MUSICPRODUCTIONMANAGER
+  max_life_time: 86400
+vocal_guide_instrument: piano
 ```
 
 ## Environment Variable
