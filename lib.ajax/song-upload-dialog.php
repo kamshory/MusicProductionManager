@@ -1,6 +1,6 @@
 <?php
 
-use MusicProductionManager\Util\PicoHttpCache;
+use MagicObject\Util\PicoHttpCache;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 

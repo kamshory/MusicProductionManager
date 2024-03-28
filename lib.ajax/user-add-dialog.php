@@ -2,7 +2,7 @@
 
 use MagicObject\Response\Generated\PicoSelectOption;
 use MusicProductionManager\Data\Entity\Artist;
-use MusicProductionManager\Util\PicoHttpCache;
+use MagicObject\Util\PicoHttpCache;
 
 require_once dirname(__DIR__) . "/inc/auth.php";
 PicoHttpCache::cacheLifetime(3600 * 12);
