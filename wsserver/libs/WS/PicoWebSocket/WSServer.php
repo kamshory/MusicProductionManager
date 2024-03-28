@@ -14,13 +14,11 @@ class WSServer implements WSInterface
 	protected $dataChunk = 128;
 	protected $maxHeaderSize = 2048;
 
-	protected $sessionSavePath = '/';
-	protected $sessionFilePrefix = 'sess_';
-	protected $sessionCookieName = 'PHPSESSID';
+	protected $sessionConfig = null;
 
 	private $changed;
 	
-	public function __construct($host = '127.0.0.1', $port = 8888, $sessionSavePath = "/", $sessionFilePrefix = "sess_", $sessionCookieName = "PHPSESSID")
+	public function __construct($host = '127.0.0.1', $port = 8888, $sessionConfig = null)
 	{
 		$this->host = $host;
 		$this->port = $port;
@@ -34,10 +32,7 @@ class WSServer implements WSInterface
 		// listen to port
 		socket_listen($this->masterSocket);
 		$this->clientSockets = array($this->masterSocket);
-		$this->sessionSavePath = $sessionSavePath;
-		$this->sessionFilePrefix = $sessionFilePrefix;
-		$this->sessionCookieName = $sessionCookieName;
-		
+		$this->sessionConfig = $sessionConfig;	
 	}
 	
 	/**
@@ -92,7 +87,7 @@ class WSServer implements WSInterface
 				{
 					$resourceId++;
 					socket_getpeername($clientSocket, $remoteAddress, $remotePort); //get ip address of connected socket
-					$chatClient = new WSClient($resourceId, $clientSocket, $header, $remoteAddress, $remotePort, $this->sessionCookieName, $this->sessionSavePath, $this->sessionFilePrefix, $this, 'onClientLogin');
+					$chatClient = new WSClient($resourceId, $clientSocket, $header, new WSAddress($remoteAddress, $remotePort), $this->sessionConfig, $this, 'onClientLogin');
 					$this->clientSockets[$resourceId] = $clientSocket; //add socket to client array
 					$this->chatClients[$resourceId] = $chatClient;
 					$this->onOpen($chatClient);

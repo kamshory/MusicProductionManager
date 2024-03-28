@@ -2,6 +2,8 @@
 
 namespace WS\PicoWebSocket;
 
+use Socket;
+
 class WSClient
 {
 	private $socket;
@@ -27,27 +29,39 @@ class WSClient
 	private $obj = null;
 	private $loginCallback = null;
 	
-	public function __construct($resourceId, $socket, $headers, $remoteAddress = null, $remotePort = null, $sessionCookieName = 'PHPSESSID', $sessionSavePath = null, $sessionFilePrefix = 'sess_', $obj = null, $loginCallback = null)
+	/**
+	 * Undocumented function
+	 *
+	 * @param resource $resourceId
+	 * @param resource|Socket|false $socket
+	 * @param array $headers
+	 * @param WSAddress $address
+	 * @param WSSessionConfig $sessionConfig
+	 * @param mixed|object $obj
+	 * @param callable $loginCallback
+	 */
+	public function __construct($resourceId, $socket, $headers, $address = null, $sessionConfig = null, $obj = null, $loginCallback = null)
 	{
 		$this->resourceId = $resourceId;
 		$this->socket = $socket;
-		$this->remoteAddress = $remoteAddress;
-		$this->remotePort = $remotePort;
-		if($sessionSavePath === null)
+		$this->remoteAddress = $address->getAddress();
+		$this->remotePort = $address->getPort();
+		
+		if($sessionConfig != null && $sessionConfig->getSessionSavePath() !== null)
 		{
-			$this->sessionSavePath = session_save_path();
+			$this->sessionSavePath = $sessionConfig->getSessionSavePath();
 		}
 		else
 		{
-			$this->sessionSavePath = $sessionSavePath;
+			$this->sessionSavePath = session_save_path();
 		}
-		if($sessionCookieName !== null)
+		if($sessionConfig != null && $sessionConfig->getSessionCookieName() !== null)
 		{
-			$this->sessionCookieName = $sessionCookieName;
+			$this->sessionCookieName = $sessionConfig->getSessionCookieName();
 		}
-		if($sessionFilePrefix !== null)
+		if($sessionConfig != null && $sessionConfig->getSessionFilePrefix() !== null)
 		{
-			$this->sessionFilePrefix = $sessionFilePrefix;
+			$this->sessionFilePrefix = $sessionConfig->getSessionFilePrefix();
 		}
 		$headerInfo = WSUtility::parseHeaders($headers);
 		$this->headers = $headerInfo['headers'];
