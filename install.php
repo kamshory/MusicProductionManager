@@ -61,6 +61,7 @@ function createUser($input)
         $user = new User(null, $database);
         $user->setUsername($input->getAppUsername());
         $user->setName($input->getAppUsername());       
+        $user->setEmail($input->getAppUserEmail());       
         $password = hash('sha256', $input->getAppUserPassword());
         $user->setPassword($password);       
         $user->setAdmin(true);
@@ -98,6 +99,29 @@ function createUser($input)
 function installWindows($input)
 {
     $commands = array();
+    
+    if($input->hasValueBaseSongUrl())
+    {
+        $val = $input->getBaseSongUrl();
+        $commands[] = "SETX SONG_BASE_URL \"$val\"";
+    }
+    if($input->hasValueDatabaseType())
+    {
+        $val = $input->getBaseSongPath();
+        $commands[] = "SETX SONG_BASE_PATH \"$val\"";
+    }
+    if($input->hasValueBaseSongDraftUrl())
+    {
+        $val = $input->getBaseSongDraftUrl();
+        $commands[] = "SETX SONG_DRAFT_BASE_URL \"$val\"";
+    }
+    if($input->hasValueBaseSongDraftPath())
+    {
+        $val = $input->getBaseSongDraftPath();
+        $commands[] = "SETX SONG_DRAFT_BASE_PATH \"$val\"";
+    }
+    
+    
     if($input->hasValueDatabaseType())
     {
         $dbType = $input->getDatabaseType();
@@ -160,6 +184,28 @@ function installLinux($input)
     $path = "/etc/httpd/conf.d/music.conf";
     $commands = array();
     truncateFile($path);
+    
+    if($input->hasValueBaseSongUrl())
+    {
+        $val = $input->getBaseSongUrl();
+        $commands[] = "SETENV SONG_BASE_URL \"$val\"";
+    }
+    if($input->hasValueDatabaseType())
+    {
+        $val = $input->getBaseSongPath();
+        $commands[] = "SETENV SONG_BASE_PATH \"$val\"";
+    }
+    if($input->hasValueBaseSongDraftUrl())
+    {
+        $val = $input->getBaseSongDraftUrl();
+        $commands[] = "SETENV SONG_DRAFT_BASE_URL \"$val\"";
+    }
+    if($input->hasValueBaseSongDraftPath())
+    {
+        $val = $input->getBaseSongDraftPath();
+        $commands[] = "SETENV SONG_DRAFT_BASE_PATH \"$val\"";
+    }
+    
     if($input->hasValueDatabaseType())
     {
         $dbType = $input->getDatabaseType();
@@ -255,6 +301,11 @@ function appendFile($path, $content)
     return $written;
 }
 
+$baseSongUrl = sprintf("%s://%s%s%s%s", "http", $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'] == 80 ? "" : ":".$_SERVER['SERVER_PORT'], dirname($_SERVER['REQUEST_URI']), "/files/song");
+$baseSongDraftUrl = sprintf("%s://%s%s%s%s", "http", $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'] == 80 ? "" : ":".$_SERVER['SERVER_PORT'], dirname($_SERVER['REQUEST_URI']), "/files/song-draft");
+
+$baseSongPath = __DIR__ . "/files/song";
+$baseSongDraftPath = __DIR__ . "/files/song-draft";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -263,6 +314,69 @@ function appendFile($path, $content)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Install</title>
+    <style>
+        body, .all{
+            position: relative;
+            margin: 0;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 12px;
+            color: #333333;
+        }
+        .all{
+            padding: 10px;
+        }
+        .form{
+            margin: 0 auto;
+            max-width: 900px;
+            width: 100%;
+            padding: 20px 0 0 0;
+        }
+        .table{
+            width: 100%;
+        }
+        .table td{
+            padding: 5px 0;
+        }
+        .table tr > td:nth-child(1)
+        {
+            width: 35%;
+        }
+        @media screen and (max-width: 600px)
+        {
+            .table tr > td{
+                display: block;
+            }
+            .table tr > td:nth-child(1)
+            {
+                width: 100%;
+            }
+            .table tr > td:empty{
+                display: none;
+            }
+        }
+        .table tr td input[type="text"],
+        .table tr td input[type="url"],
+        .table tr td input[type="email"],
+        .table tr td input[type="number"],
+        .table tr td select
+        {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            border: 1px solid #DDDDDD;
+            background-color: #FFFFFF;
+            color: #333333;
+        }
+        button, input[type="submit"], input[type="reset"]
+        {
+            padding: 8px 14px;
+            border: 1px solid #DDDDDD;
+            background-color: #FFFFFF; 
+            color: #333333;           
+        }
+    </style>
 </head>
 
 <body>
@@ -274,11 +388,35 @@ function appendFile($path, $content)
                     <tbody>
                         <tr>
                             <td>Application Name</td>
-                            <td><input type="text" name="application_name" id="application_name" required></td>
+                            <td><input type="text" name="application_name" id="application_name" value="Music Production Manager" required></td>
                         </tr>
                         <tr>
-                            <td>Base URL</td>
-                            <td><input type="url" name="base_url" id="base_url"></td>
+                            <td>Base Song URL</td>
+                            <td><input type="url" name="base_song_url" id="base_song_url" value="<?php echo $baseSongUrl;?>" required></td>
+                        </tr>
+                        <tr>
+                            <td>Base Song Draft URL</td>
+                            <td><input type="url" name="base_song_draft_url" id="base_song_draft_url" value="<?php echo $baseSongDraftUrl;?>" required></td>
+                        </tr>
+                        <tr>
+                            <td>Base Song Path</td>
+                            <td><input type="text" name="base_song_path" id="base_song_path" value="<?php echo $baseSongPath;?>" required></td>
+                        </tr>
+                        <tr>
+                            <td>Base Song Draft Path</td>
+                            <td><input type="text" name="base_song_draft_path" id="base_song_draft_path" value="<?php echo $baseSongDraftPath;?>" required></td>
+                        </tr>
+                        <tr>
+                            <td>Admin Username</td>
+                            <td><input type="text" name="app_username" id="get_app_username" value="admin" required></td>
+                        </tr>
+                        <tr>
+                            <td>Admin Password</td>
+                            <td><input type="text" name="app_user_password" id="app_user_password" value="password" required></td>
+                        </tr>
+                        <tr>
+                            <td>Admin Email</td>
+                            <td><input type="email" name="app_user_email" id="app_user_email" value="" required></td>
                         </tr>
                         <tr>
                             <td>Database Type</td>
@@ -291,11 +429,11 @@ function appendFile($path, $content)
                         </tr>
                         <tr>
                             <td>Database Host</td>
-                            <td><input type="text" name="database_host" id="database_host" required></td>
+                            <td><input type="text" name="database_host" id="database_host" value="" required></td>
                         </tr>
                         <tr>
                             <td>Database Port</td>
-                            <td><input type="number" step="1" min="0" max="65535" name="database_port" id="database_port" required></td>
+                            <td><input type="number" step="1" min="0" max="65535" name="database_port" id="database_port" value="" required></td>
                         </tr>
                         <tr>
                             <td>Database Schema</td>
@@ -307,15 +445,11 @@ function appendFile($path, $content)
                         </tr>
                         <tr>
                             <td>Database Username</td>
-                            <td><input type="text" name="database_usernname" id="database_usernname" required></td>
+                            <td><input type="text" name="database_usernname" id="database_usernname" value="" required></td>
                         </tr>
                         <tr>
-                            <td>Admin Username</td>
-                            <td><input type="text" name="app_username" id="get_app_username" required></td>
-                        </tr>
-                        <tr>
-                            <td>Admin Password</td>
-                            <td><input type="text" name="app_user_password" id="app_user_password" required></td>
+                            <td>Database Password</td>
+                            <td><input type="text" name="database_password" id="database_password" required></td>
                         </tr>
                         <tr>
                             <td>Time Zone</td>
