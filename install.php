@@ -274,7 +274,7 @@ function appendFile($path, $content)
                     <tbody>
                         <tr>
                             <td>Application Name</td>
-                            <td><input type="text" name="application_name" id="application_name"></td>
+                            <td><input type="text" name="application_name" id="application_name" required></td>
                         </tr>
                         <tr>
                             <td>Base URL</td>
@@ -291,11 +291,11 @@ function appendFile($path, $content)
                         </tr>
                         <tr>
                             <td>Database Host</td>
-                            <td><input type="text" name="database_host" id="database_host"></td>
+                            <td><input type="text" name="database_host" id="database_host" required></td>
                         </tr>
                         <tr>
                             <td>Database Port</td>
-                            <td><input type="number" step="1" min="0" max="65535" name="database_port" id="database_port"></td>
+                            <td><input type="number" step="1" min="0" max="65535" name="database_port" id="database_port" required></td>
                         </tr>
                         <tr>
                             <td>Database Schema</td>
@@ -303,23 +303,23 @@ function appendFile($path, $content)
                         </tr>
                         <tr>
                             <td>Database Name</td>
-                            <td><input type="text" name="database_name" id="database_name"></td>
+                            <td><input type="text" name="database_name" id="database_name" required></td>
                         </tr>
                         <tr>
                             <td>Database Username</td>
-                            <td><input type="text" name="database_usernname" id="database_usernname"></td>
+                            <td><input type="text" name="database_usernname" id="database_usernname" required></td>
                         </tr>
                         <tr>
                             <td>Admin Username</td>
-                            <td><input type="text" name="app_username" id="get_app_username"></td>
+                            <td><input type="text" name="app_username" id="get_app_username" required></td>
                         </tr>
                         <tr>
                             <td>Admin Password</td>
-                            <td><input type="text" name="app_user_password" id="app_user_password"></td>
+                            <td><input type="text" name="app_user_password" id="app_user_password" required></td>
                         </tr>
                         <tr>
                             <td>Time Zone</td>
-                            <td><select name="time_zone" id="time_zone">
+                            <td><select name="time_zone" id="time_zone" required>
                             <optgroup label="Indonesia">
                                 <option value="Asia/Jakarta" selected>Waktu Indonesia Barat</option>
                                 <option value="Asia/Makassar">Waktu Indonesia Tengah</option>
