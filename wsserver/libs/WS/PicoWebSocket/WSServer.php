@@ -88,19 +88,16 @@ class WSServer implements WSInterface
 				// stream_set_blocking($clientSocket, 0);
 				$header = socket_read($clientSocket, $this->maxHeaderSize); //read data sent by the socket
 				$header = trim($header, " \r\n ");
-				if(strlen($header) > 2)
+				if(strlen($header) > 2 && stripos($header, 'Sec-WebSocket-Key') !== false)
 				{
-					if(stripos($header, 'Sec-WebSocket-Key') !== false)
-					{
-						$resourceId++;
-						socket_getpeername($clientSocket, $remoteAddress, $remotePort); //get ip address of connected socket
-						$chatClient = new WSClient($resourceId, $clientSocket, $header, $remoteAddress, $remotePort, $this->sessionCookieName, $this->sessionSavePath, $this->sessionFilePrefix, $this, 'onClientLogin');
-						$this->clientSockets[$resourceId] = $clientSocket; //add socket to client array
-						$this->chatClients[$resourceId] = $chatClient;
-						$this->onOpen($chatClient);
-						$foundSocket = array_search($this->masterSocket, $this->changed);
-						unset($this->changed[$foundSocket]);
-					}
+					$resourceId++;
+					socket_getpeername($clientSocket, $remoteAddress, $remotePort); //get ip address of connected socket
+					$chatClient = new WSClient($resourceId, $clientSocket, $header, $remoteAddress, $remotePort, $this->sessionCookieName, $this->sessionSavePath, $this->sessionFilePrefix, $this, 'onClientLogin');
+					$this->clientSockets[$resourceId] = $clientSocket; //add socket to client array
+					$this->chatClients[$resourceId] = $chatClient;
+					$this->onOpen($chatClient);
+					$foundSocket = array_search($this->masterSocket, $this->changed);
+					unset($this->changed[$foundSocket]);
 				}
 			}
 			if(is_array($this->changed))
@@ -132,28 +129,25 @@ class WSServer implements WSInterface
 					}
 					while($recv > 0);
 						
-					if($nread > 0)
+					if($nread > 0 && strlen($buffer) > 0)
 					{
-						if(strlen($buffer) > 0)
+						@socket_getpeername($changeSocket, $ip, $port); 
+						$decodedData = WSUtility::unmask($buffer); 
+						if(isset($decodedData['type']))
 						{
-							@socket_getpeername($changeSocket, $ip, $port); 
-							$decodedData = WSUtility::unmask($buffer); 
-							if(isset($decodedData['type']))
-							{
-								if($decodedData['type'] == 'close')
-								{
-									break;
-								}
-								else
-								{
-									$this->onMessage($this->chatClients[$resourceId], $decodedData['payload']);
-									break;
-								}
-							}
-							else
+							if($decodedData['type'] == 'close')
 							{
 								break;
 							}
+							else
+							{
+								$this->onMessage($this->chatClients[$resourceId], $decodedData['payload']);
+								break;
+							}
+						}
+						else
+						{
+							break;
 						}
 					}
 					$buf2 = @socket_read($changeSocket, $this->dataChunk, PHP_NORMAL_READ);
