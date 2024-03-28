@@ -26,5 +26,5 @@ if(!$wss->isRunning())
 }
 else
 {
-    echo "Server already running";
+    echo "Server already running at port ".$conf->getServerPortTeller()."\r\n";
 }

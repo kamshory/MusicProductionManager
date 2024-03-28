@@ -71,7 +71,7 @@ class WSServer implements WSInterface
 	{
 		$resourceId = 0;
 		$null = null; //null var
-		echo "Server started at ".$this->port."\r\n";
+		echo "Server started at port ".$this->port."\r\n";
 		while (true) 
 		{
 			// manage multiple connections
