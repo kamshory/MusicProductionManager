@@ -254,14 +254,15 @@ class WSDashboardServerTeller extends WSServer implements WSInterface
 		{
 			$database = new PicoDatabase($this->dbconf);
 			$database->connect();		
-			$queryBuilder = new PicoDatabaseQueryBuilder($database);			
+			$queryBuilder = new PicoDatabaseQueryBuilder($database);	
+			$hashPassword = hash('sha512', $password);		
 			$sqlCommand = $queryBuilder->newQuery()
                     ->select("teller.*")
                     ->from("teller")
                     ->where("teller.aktif = true
                         and teller.blokir = false
                         and teller.username like ?
-                        and teller.pass_key = sha2(?, 512) ", $username, $password)
+                        and teller.pass_key = ? ", $username, $hashPassword)
                     ->toString();
 			try
 			{
