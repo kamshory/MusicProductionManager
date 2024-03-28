@@ -19,5 +19,5 @@ if ($conf->getSessionSavePath() == null || $conf->getSessionSavePath() == "") {
 }
 $conf->setIniWebPath($baseConfigDir . "/config.cfg");
 
-$wss = new WSDashboardServerAdmin($conf->getServerHostAdmin(), $conf->getServerPortAdmin(), $conf, $dbconf);
+$wss = new WSDashboardServerAdmin($conf, $dbconf, $conf->getServerHostAdmin(), $conf->getServerPortAdmin());
 $wss->run();

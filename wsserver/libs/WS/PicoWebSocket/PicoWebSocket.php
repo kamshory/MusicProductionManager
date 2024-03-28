@@ -15,7 +15,7 @@ class PlanetWebSocket
 	/**
 	 * Socket
 	 */
-	private $socket = NULL;
+	private $socket = null;
 	/**
 	 * Client ports
 	 */
@@ -26,9 +26,9 @@ class PlanetWebSocket
 	private $chatClients = array();
 	private $maxDataSize = 65536;
 	
-	private $application = NULL;
+	private $application = null;
 	
-	private $clientObject = NULL;
+	private $clientObject = null;
 	
 	/**
 	* Constructor
@@ -122,13 +122,6 @@ class PlanetWebSocket
 	 */
 	public function onOpen($clientChat, $ip = '', $port = 0)
 	{
-		/*
-		echo "onOpen();\r\n";
-		echo "IP      = $ip;\r\n";
-		echo "Client  = ";
-		echo json_encode($clientChat, JSON_PRETTY_PRINT);
-		echo "\r\n\r\n";
-		*/
 		$response = json_encode(array('type' => 'system', 'message' => ' connected'));
 		$this->sendBroadcast($response);
 	}
@@ -141,13 +134,6 @@ class PlanetWebSocket
 	 */
 	public function onClose($clientChat, $ip = '', $port = 0)
 	{
-		/*
-		echo "onClose();\r\n";
-		echo "IP      = $ip;\r\n";
-		echo "Client  = ";
-		echo json_encode($clientChat, JSON_PRETTY_PRINT);
-		echo "\r\n\r\n";
-		*/
 		$response = json_encode(array('type' => 'system', 'message' => ' disconnected'));
 		$this->sendBroadcast($response);
 	}
@@ -161,14 +147,6 @@ class PlanetWebSocket
 	 */
 	public function onMessage($clientChat, $receivedText, $ip = '', $port = 0)
 	{
-		/*
-		echo "onMessage();\r\n";
-		echo "Message = $receivedText;\r\n";
-		echo "IP      = $ip;\r\n";
-		echo "Client  = ";
-		echo json_encode($clientChat, JSON_PRETTY_PRINT);
-		echo "\r\n\r\n";
-		*/
 		$tst_msg = json_decode($receivedText, true); //json decode
 		if(count($tst_msg))
 		{

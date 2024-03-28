@@ -159,6 +159,7 @@ class WSServer implements WSInterface
 
 	public function onClientLogin($clientChat)
 	{
+		// do nothing
 	}
 	
 	/**

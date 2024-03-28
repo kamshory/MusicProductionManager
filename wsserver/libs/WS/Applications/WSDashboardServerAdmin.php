@@ -33,7 +33,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 	 * @param string $host
 	 * @param integer $port
 	 */
-	public function __construct($host = '127.0.0.1', $port = 8080, $conf, $dbconf)
+	public function __construct($conf, $dbconf, $host = '127.0.0.1', $port = 8080)
 	{
 		parent::__construct($host, $port, $conf->getSessionSavePath(), $conf->getSessionFilePrefix(), $conf->getSessionCookieName());
 		$this->conf = $conf;
@@ -151,20 +151,21 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 	/**
 	 * Method when a new client is login
 	 * @param WSClient $clientChat Chat client
+	 * @return array
 	 */
 	public function onClientLogin($clientChat)
 	{
 		// Here are the client data
 		// You can define it yourself
-		$clientData = array(
+		return array(
 			'login_time'=>date('Y-m-d H:i:s')
 		);
-		return $clientData;
 	}
 	
 	/**
 	 * Method when a new client is disconnected
 	 * @param WSClient $clientChat Chat client
+	 * @return void
 	 */
 	public function onClose($clientChat)
 	{
@@ -208,7 +209,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 		}
 		catch(Exception $e)
 		{
-			
+			// do nothing
 		}
 
 	}
@@ -260,7 +261,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 		{
 			return false;
 		}
-		
+		$result = false;
 		try
 		{
 			$salt = $this->dbconf->getSalt();
@@ -278,17 +279,18 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 					;
 			try
 			{
-				return $database->isRecordExists($sqlCommand);
+				$result = $database->isRecordExists($sqlCommand);
 			}
 			catch(Exception $e)
 			{
-				return false;
+				$result = false;
 			}
 		}
 		catch(Exception $e)
 		{
-			return false;
+			$result = false;
 		}
+		return $result;
 	}
 
 }

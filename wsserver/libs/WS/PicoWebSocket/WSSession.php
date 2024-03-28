@@ -2,6 +2,8 @@
 
 namespace WS\PicoWebSocket;
 
+use WS\PicoWebSocket\Exceptions\WSException;
+
 class WSSession
 {
     /**

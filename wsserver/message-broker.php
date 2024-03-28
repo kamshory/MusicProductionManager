@@ -19,5 +19,5 @@ if ($conf->getSessionSavePath() == null || $conf->getSessionSavePath() == "") {
 }
 $conf->setIniWebPath($baseConfigDir . "/config.cfg");
 
-$wss = new PHPMessageBroker($conf->getServerHost(), $conf->getServerPort(), $conf, $dbconf);
+$wss = new PHPMessageBroker($conf, $dbconf, $conf->getServerHost(), $conf->getServerPort());
 $wss->run();
