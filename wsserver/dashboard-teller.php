@@ -11,7 +11,7 @@ $baseConfigDir = dirname(__DIR__) . "/.cfg";
 
 $cfg = new ConfigApp(null, true);
 $cfg->loadYamlFile($baseConfigDir . "/app.yml", true, true);
-$conf = new ConfigApp(null, true);
+$conf = new ConfigApp(null, false);
 $conf->loadIniFile(__DIR__ . "/.cfg/dashboard.ini", true, true);
 $dbconf = new PicoDatabaseCredentials($cfg->getDatabase());
 if ($conf->getSessionSavePath() == null || $conf->getSessionSavePath() == "") {
@@ -20,4 +20,11 @@ if ($conf->getSessionSavePath() == null || $conf->getSessionSavePath() == "") {
 $conf->setIniWebPath($baseConfigDir . "/config.cfg");
 
 $wss = new WSDashboardServerTeller($conf, $dbconf, $conf->getServerHostTeller(), $conf->getServerPortTeller());
-$wss->run();
+if(!$wss->isRunning())
+{
+    $wss->run();
+}
+else
+{
+    echo "Server already running";
+}

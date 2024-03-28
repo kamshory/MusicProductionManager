@@ -2,6 +2,8 @@
 
 namespace WS\PicoWebSocket;
 
+use WS\PicoWebSocket\Util\WebsocketClient;
+
 class WSServer implements WSInterface
 {
 	protected $chatClients = array();
@@ -36,13 +38,40 @@ class WSServer implements WSInterface
 		$this->sessionFilePrefix = $sessionFilePrefix;
 		$this->sessionCookieName = $sessionCookieName;
 		
-		echo "Server started at ".$this->port."\r\n";
 	}
 	
+	/**
+	 * Check if web socket is running or not
+	 *
+	 * @return boolean
+	 */
+	public function isRunning()
+	{
+		$headers = array();
+		$timeout = 1;
+		$ssl = false;
+		$persistant = false;
+		$path = "/";
+		$persistant = false;
+		$context = null;
+		$websocketAdmin = WebsocketClient::websocketOpen($this->host, $this->port, $headers, $error_string, $timeout, $ssl, $persistant, $path, $context);
+		if($websocketAdmin !== false)
+		{
+			fclose($websocketAdmin);
+		}
+		return $websocketAdmin !== false;
+	}
+	
+	/**
+	 * Rinning server
+	 *
+	 * @return void
+	 */
 	public function run() // NOSONAR
 	{
 		$resourceId = 0;
 		$null = null; //null var
+		echo "Server started at ".$this->port."\r\n";
 		while (true) 
 		{
 			// manage multiple connections

@@ -1,6 +1,6 @@
 <?php
 
-namespace MusicProductionManager\Util;
+namespace WS\PicoWebSocket\Util;
 
 /*----------------------------------------------------------------------------*\
   Websocket client

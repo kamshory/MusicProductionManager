@@ -46,9 +46,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 	 */
 	public function onOpen($clientChat)
 	{
-		echo "NEW\r\n";
 		$loggedIn = false;
-
 		$iniWeb = parse_ini_file($this->conf->getIniWebPath());
 		$cookieName = $iniWeb['app_cookie_name'];
 		// Replace session cookie name
