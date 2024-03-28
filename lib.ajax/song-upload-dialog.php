@@ -32,7 +32,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                         <legend class="visually-hidden">Song Information</legend>
                         <form>
 
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-responsive-two-side">
                                 <tbody>
                                     <tr>
                                         <td>Name</td>
@@ -52,7 +52,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                                             <select class="form-control" name="album_id" data-ajax="true" data-source="lib.ajax/album-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-album">+</button>
+                                            <button class="button-add-list button-add-general-album" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -67,7 +67,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                                             <select class="form-control" name="genre_id" data-ajax="true" data-source="lib.ajax/genre-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-genre">+</button>
+                                            <button class="button-add-list button-add-general-genre" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -76,7 +76,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                                             <select class="form-control" name="artist_vocalist" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-artist">+</button>
+                                            <button class="button-add-list button-add-general-artist" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -85,7 +85,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                                             <select class="form-control" name="artist_composer" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-artist">+</button>
+                                            <button class="button-add-list button-add-general-artist" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -94,7 +94,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                                             <select class="form-control" name="artist_arranger" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-artist">+</button>
+                                            <button class="button-add-list button-add-general-artist" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>

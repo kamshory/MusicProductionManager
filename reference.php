@@ -25,7 +25,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getRefere
   {
     $reference->findOneByReferenceId($inputGet->getReferenceId());
     ?>
-    <table class="table table-responsive">
+    <table class="table table-responsive table-responsive-two-side">
       <tbody>
         <tr>
           <td>Reference ID</td>

@@ -22,7 +22,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getArtist
   {
   $artist->findOneByArtistId($inputGet->getArtistId());
   ?>
-  <table class="table table-responsive">
+  <table class="table table-responsive table-responsive-two-side table-borderless ">
     <tbody>
       <tr>
         <td>Artist ID</td>

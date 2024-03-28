@@ -26,7 +26,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getAlbumI
   $album->findOneByAlbumId($inputGet->getAlbumId());
   ?>
   
-  <table class="table table-responsive">
+  <table class="table table-responsive table-responsive-two-side">
     <tbody>
       <tr>
         <td>Album ID</td>

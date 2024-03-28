@@ -74,7 +74,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
     $user->findOneByUserId($currentLoggedInUser->getUserId());
     ?>
     <form action="" method="post">
-    <table class="table table-responsive">
+    <table class="table table-responsive table-responsive-two-side">
     <tbody>
       <tr>
         <td>Name</td>
@@ -148,7 +148,7 @@ else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL))
     {
     $user->findOneByUserId($currentLoggedInUser->getUserId());
     ?>
-    <table class="table table-responsive">
+    <table class="table table-responsive table-responsive-two-side">
     <tbody>
     <tr>
         <td>User ID</td>

@@ -22,7 +22,7 @@ $artist = new Artist(null, $database);
                         {                     
                         $artist->findOneByArtistId($inputGet->getArtistId());
                         ?>
-                        <table class="dialog-table">
+                        <table class="table table-responsive table-responsive-two-side table-borderless ">
                             <tbody>
                                 <tr>
                                     <td>Real Name</td>

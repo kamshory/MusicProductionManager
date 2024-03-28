@@ -39,7 +39,7 @@ $song->findOneBySongId($inputGet->getSongId());
                     <fieldset class="song-info">
                         <legend class="visually-hidden">Song Information</legend>
                         <form>
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-responsive-two-side">
                                 <tbody>
                                     <tr>
                                         <td>Name</td>
@@ -59,7 +59,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                             <select class="form-control" name="album_id" data-value="<?php echo $song->getAlbumId();?>" data-ajax="true" data-source="lib.ajax/album-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-album">+</button>
+                                            <button class="button-add-list button-add-general-album" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -74,7 +74,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                             <select class="form-control" name="genre_id" data-value="<?php echo $song->getGenreId();?>" data-ajax="true" data-source="lib.ajax/genre-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-genre">+</button>
+                                            <button class="button-add-list button-add-general-genre" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -83,7 +83,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                             <select class="form-control" name="artist_vocalist" data-value="<?php echo $song->getArtistVocalist();?>" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-artist">+</button>
+                                            <button class="button-add-list button-add-general-artist" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -92,7 +92,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                             <select class="form-control" name="artist_composer" data-value="<?php echo $song->getArtistComposer();?>" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-artist">+</button>
+                                            <button class="button-add-list button-add-general-artist" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -101,7 +101,7 @@ $song->findOneBySongId($inputGet->getSongId());
                                             <select class="form-control" name="artist_arranger" data-value="<?php echo $song->getArtistComposer();?>" data-ajax="true" data-source="lib.ajax/artist-list.php">
                                                 <option value="">- select -</option>
                                             </select>
-                                            <button class="button-add-list button-add-general-artist">+</button>
+                                            <button class="button-add-list button-add-general-artist" data-content="plus-sign">+</button>
                                         </td>
                                     </tr>
                                     <tr>

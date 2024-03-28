@@ -26,7 +26,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
     $songDraft = new EntitySongDraft(null, $database);
     $songDraft->findOneBySongDraftId($inputGet->getSongDraftId());
     ?>
-    <table class="table table-responsive">
+    <table class="table table-responsive table-responsive-two-side">
       <tbody>
         <tr>
           <td>Song Draft ID</td>

@@ -109,7 +109,7 @@ else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getS
     $song = new EntitySong(null, $database);
     $song->findOneBySongId($inputGet->getSongId());
     ?>
-    <table class="table table-responsive">
+    <table class="table table-responsive table-responsive-two-side">
       <tbody>
         <tr>
           <td>Song ID</td>

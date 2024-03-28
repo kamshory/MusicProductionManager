@@ -558,7 +558,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     <div class="card w-100">
       <div class="card-body p-4">
         <h5 class="card-title fw-semibold mb-4">Recent Album</h5>
-        <div class="table-responsive">
+        <div class="table-responsive table-responsive-two-side">
 
           <?php
 

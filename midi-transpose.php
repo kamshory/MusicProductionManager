@@ -40,7 +40,7 @@ require_once __DIR__ . "/inc/menu-song.php";
 
         <div class="main-content">
             <form action="" method="post" onsubmit="return confirm('Are you sure to transpose MIDI?');">
-                <table class="table table-responsive">
+                <table class="table table-responsive table-responsive-two-side">
                     <tbody>
                         <tr>
                             <td>Title</td>

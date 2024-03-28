@@ -14,7 +14,7 @@ PicoHttpCache::cacheLifetime(3600*12);
                     <button type="button" class="btn-primary btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table class="dialog-table">
+                    <table class="table table-responsive table-responsive-two-side table-borderless ">
                         <tbody>
                         <tr>
                         <td>Album Name</td>
@@ -30,7 +30,7 @@ PicoHttpCache::cacheLifetime(3600*12);
                                 <select class="form-control" name="producer_id" data-value="" data-ajax="true" data-source="lib.ajax/producer-list.php">
                                     <option value="">- select -</option>
                                 </select>
-                                <button class="button-add-list button-add-general-producer">+</button>
+                                <button class="button-add-list button-add-general-producer" data-content="plus-sign">+</button>
                             </td>
                         </tr>
                         <tr>

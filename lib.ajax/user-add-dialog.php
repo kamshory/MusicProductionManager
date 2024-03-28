@@ -16,7 +16,7 @@ PicoHttpCache::cacheLifetime(3600 * 12);
                     <button type="button" class="btn-primary btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table class="dialog-table">
+                    <table class="table table-responsive table-responsive-two-side table-borderless ">
                         <tbody>
                             <tr>
                                 <td>Real Name</td>

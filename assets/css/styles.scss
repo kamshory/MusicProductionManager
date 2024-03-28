@@ -19924,7 +19924,7 @@ fieldset:disabled .btn {
 .app-header {
     position: relative;
     z-index: 50;
-    width: calc(100% - 40px);
+    width: calc(100% + 40px);
     background: #fff;
     padding: 0 25px;
 }
@@ -20455,4 +20455,44 @@ ul {
 
 .progress-bar-container .progress-upload {
     margin: 2px 0;
+}
+
+.table-responsive-two-side tr > td{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.table-responsive-two-side tr > td:nth-child(1){
+    width: 35%;
+}
+@media screen and (max-width: 600px) {
+    .table-responsive-two-side tr > td{
+        display: block;
+        width: 100%;
+    }
+    .table-responsive-two-side tr > td:nth-child(1){
+        width: 100%;
+        font-weight: bold;
+    }
+}
+
+button[data-content="plus-sign"]{
+    text-indent: -1000px;
+}
+button[data-content="plus-sign"]:before{
+    content: "";
+    width: 12px;
+    height: 2px;
+    position: absolute;
+    left: 7px;
+    top: 12px;
+    background-color: #333;
+}
+button[data-content="plus-sign"]:after{
+    content: "";
+    width: 2px;
+    height: 12px;
+    position: absolute;
+    left: 12px;
+    top: 7px;
+    background-color: #333;
 }

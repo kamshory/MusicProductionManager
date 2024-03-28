@@ -95,7 +95,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
 
     ?>
     <form action="" method="post">
-    <table class="table table-responsive">
+    <table class="table table-responsive table-responsive-two-side">
     <tbody>
       <tr>
         <td>Name</td>
@@ -193,7 +193,7 @@ else
     }
     $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
     ?>
-    <table class="table table-responsive">
+    <table class="table table-responsive table-responsive-two-side">
     <tbody>
     <tr>
         <td>User ID</td>
