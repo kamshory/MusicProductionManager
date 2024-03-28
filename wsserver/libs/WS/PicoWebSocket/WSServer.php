@@ -14,6 +14,11 @@ class WSServer implements WSInterface
 	protected $dataChunk = 128;
 	protected $maxHeaderSize = 2048;
 
+	/**
+	 * Sesion config
+	 *
+	 * @var WSSessionConfig
+	 */
 	protected $sessionConfig = null;
 
 	private $changed;

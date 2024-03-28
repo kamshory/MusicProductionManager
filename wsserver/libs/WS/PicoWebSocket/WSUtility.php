@@ -108,11 +108,26 @@ class WSUtility
 	/**
 	 * Set session data
 	 * @param string $sessionID Session ID
+	 * @param string $sessionSaveHandler Session save handler
 	 * @param string $sessionSavePath Session save path
 	 * @param string $prefix Prefix of the session file name
 	 * @return array contain session
 	 */
-	public static function getSessions($sessionID, $sessionSavePath = null, $prefix = "sess_")
+	public static function getSessions($sessionID, $sessionSaveHandler = "files", $sessionSavePath = null, $prefix = "sess_")
+	{
+		
+		if($sessionSaveHandler == "files")
+		{
+			return self::getSessionFromFiles($sessionID, $sessionSavePath, $prefix);
+		}
+		else if($sessionSaveHandler == "redis")
+		{
+			// get session from redis
+		}
+		
+	}
+	
+	public static function getSessionFromFiles($sessionID, $sessionSavePath = null, $prefix = "sess_")
 	{
 		$sessions = array();
 		if ($sessionSavePath === null) {

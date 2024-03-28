@@ -72,7 +72,7 @@ class WSSession
             } else {
                 $raw .= serialize( $value ) ;
             }
-            $array[$key] = Array( 'huge_recursion_blocker_we_hope' => $line ) ;
+            $array[$key] = array( 'huge_recursion_blocker_we_hope' => $line ) ;
         }
 
         return $raw;

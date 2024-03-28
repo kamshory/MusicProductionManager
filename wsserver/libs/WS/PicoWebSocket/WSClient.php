@@ -12,6 +12,7 @@ class WSClient
 	private $headers = array();
 	private $cookies = array();
 	private $sessions = array();
+	private $sessionSaveHandler = "files";
 	private $sessionSavePath = '/';
 	private $sessionFilePrefix = 'sess_';
 	private $sessionCookieName = 'PHPSESSID';
@@ -46,7 +47,7 @@ class WSClient
 		$this->socket = $socket;
 		$this->remoteAddress = $address->getAddress();
 		$this->remotePort = $address->getPort();
-		
+				
 		if($sessionConfig != null && $sessionConfig->getSessionSavePath() !== null)
 		{
 			$this->sessionSavePath = $sessionConfig->getSessionSavePath();
@@ -54,6 +55,14 @@ class WSClient
 		else
 		{
 			$this->sessionSavePath = session_save_path();
+		}
+		if($sessionConfig != null && $sessionConfig->getSessionSaveHandler() !== null)
+		{
+			$this->sessionSaveHandler = $sessionConfig->getSessionSaveHandler();
+		}
+		else
+		{
+			$this->sessionSaveHandler = "files";
 		}
 		if($sessionConfig != null && $sessionConfig->getSessionCookieName() !== null)
 		{
@@ -110,7 +119,7 @@ class WSClient
 		if(isset($this->cookies[$this->sessionCookieName]))
 		{
 			$this->sessionId = $this->cookies[$this->sessionCookieName];
-			$this->sessions = WSUtility::getSessions($this->getSessionId(), $this->getSessionSavePath(), $this->getSessionFilePrefix());
+			$this->sessions = WSUtility::getSessions($this->getSessionId(), $this->getSessionSaveHandler(), $this->getSessionSavePath(), $this->getSessionFilePrefix());
 			$this->clientData = call_user_func(array($this->obj, $this->loginCallback), $this); 
 		}
 
@@ -348,6 +357,26 @@ class WSClient
 	public function setSessionFilePrefix($sessionFilePrefix)
 	{
 		$this->sessionFilePrefix = $sessionFilePrefix;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of sessionSaveHandler
+	 */ 
+	public function getSessionSaveHandler()
+	{
+		return $this->sessionSaveHandler;
+	}
+
+	/**
+	 * Set the value of sessionSaveHandler
+	 *
+	 * @return  self
+	 */ 
+	public function setSessionSaveHandler($sessionSaveHandler)
+	{
+		$this->sessionSaveHandler = $sessionSaveHandler;
 
 		return $this;
 	}

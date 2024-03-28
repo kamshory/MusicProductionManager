@@ -28,6 +28,7 @@ class WSSessionConfig
 
     /**
      * Get the value of sessionCookieName
+     * @return string
      */ 
     public function getSessionCookieName()
     {
@@ -48,6 +49,7 @@ class WSSessionConfig
 
     /**
      * Get the value of sessionSavePath
+     * @return string
      */ 
     public function getSessionSavePath()
     {
@@ -68,6 +70,7 @@ class WSSessionConfig
 
     /**
      * Get the value of sessionSaveHandler
+     * @return string
      */ 
     public function getSessionSaveHandler()
     {
@@ -88,6 +91,7 @@ class WSSessionConfig
 
     /**
      * Get the value of sessionFilePrefix
+     * @return string
      */ 
     public function getSessionFilePrefix()
     {

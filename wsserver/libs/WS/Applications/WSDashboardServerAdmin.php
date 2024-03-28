@@ -9,6 +9,7 @@ use WS\PicoWebSocket\AuthorizationBasic;
 use WS\PicoWebSocket\WSClient;
 use WS\PicoWebSocket\WSInterface;
 use WS\PicoWebSocket\WSServer;
+use WS\PicoWebSocket\WSSessionConfig;
 use WS\PicoWebSocket\WSUtility;
 
 class WSDashboardServerAdmin extends WSServer implements WSInterface
@@ -35,7 +36,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 	 */
 	public function __construct($conf, $dbconf, $host = '127.0.0.1', $port = 8080)
 	{
-		parent::__construct($host, $port, $conf->getSessionSavePath(), $conf->getSessionFilePrefix(), $conf->getSessionCookieName());
+		parent::__construct($host, $port, new WSSessionConfig($conf->getSessionCookieName(), $conf->getSessionSaveHandler(), $conf->getSessionSavePath(), $conf->getSessionFilePrefix()));
 		$this->conf = $conf;
 		$this->dbconf = $dbconf;
 	}
