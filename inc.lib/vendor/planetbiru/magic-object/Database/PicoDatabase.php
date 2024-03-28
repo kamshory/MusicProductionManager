@@ -167,6 +167,32 @@ class PicoDatabase //NOSONAR
 	{
 		return $this->databaseConnection;
 	}
+	
+	/**
+	 * Execute query
+	 *
+	 * @param string $sql
+	 * @return PDOStatement|false
+	 * @throws PDOException
+	 */
+	public function query($sql)
+	{
+		if($this->databaseConnection == null)
+		{
+			throw new NullPointerException(PicoConstants::DATABASE_NONECTION_IS_NULL);
+		}
+		$this->executeDebug($sql);
+		$stmt = $this->databaseConnection->prepare($sql);
+		try 
+		{
+			$stmt->execute();
+		} 
+		catch (PDOException $e) 
+		{
+			throw new PDOException($e);
+		}
+		return $stmt;
+	}
 
 	/**
 	 * Fetch result

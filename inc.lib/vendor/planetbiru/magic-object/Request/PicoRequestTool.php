@@ -175,6 +175,40 @@ class PicoRequestTool extends stdClass
             return $properties;
         }
     }
+
+    /**
+     * Filter input
+     *
+     * @param integer $type
+     * @param string $variable_name
+     * @param integer $filter
+     * @param bool $escapeSQL
+     * @return mixed
+     */
+    public function filterInput($type, $variable_name, $filter = FILTER_DEFAULT, $escapeSQL=false) // NOSONAR
+    {
+        $var = array();
+        switch ($type) {
+            case INPUT_GET:
+                $var = $_GET;
+                break;
+            case INPUT_POST:
+                $var = $_POST;
+                break;
+            case INPUT_COOKIE:
+                $var = $_COOKIE;
+                break;
+            case INPUT_SERVER:
+                $var = $_SERVER;
+                break;
+            case INPUT_ENV:
+                $var = $_ENV;
+                break;
+            default:
+                $var = $_GET;
+        }
+        return $this->filterValue(isset($var[$variable_name])?$var[$variable_name]:null, $filter, $escapeSQL);
+    }
     
     public function filterValue($val, $filter=FILTER_DEFAULT, $escapeSQL=false, $nullIfEmpty=false) // NOSONAR
     {

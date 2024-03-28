@@ -4,17 +4,6 @@ namespace MagicObject\Request;
 
 class PicoFilterConstant
 {
-    const NEW_LINE = "\r\n";
-    const DATABASE_CONNECTION_IS_NULL = "Database connection is null";
-    const APPLICATION_JSON = 'application/json';
-    const X_API_KEY = 'X_API_KEY';
-    const X_TIMESTAMP = 'X_TIMESTAMP';
-    const X_SIGNATURE = 'X_SIGNATURE';
-    const X_TELLER_UNIQUE_ID = 'X_TELLER_UNIQUE_ID';
-    const X_ADMIN_UNIQUE_ID = 'X_ADMIN_UNIQUE_ID';
-    const DAY_TO_SECOND = 86400;
-    const DUPLICATED_TRANSACTION = "Duplicated transaction";
-
 	const FILTER_SANITIZE_NO_DOUBLE_SPACE = 512;
 	const FILTER_SANITIZE_PASSWORD = 511;
 	const FILTER_SANITIZE_ALPHA = 510;
