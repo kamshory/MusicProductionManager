@@ -1,49 +1,23 @@
 <?php
 
-use WS\Applications\Config;
+use MagicObject\Database\PicoDatabaseCredentials;
 use WS\Applications\WSDashboardServerTeller;
-use WS\Database\PicoDatabaseCredentials;
-use WS\Utils\PicoEnvironmentVariable;
+use WS\Config\ConfigApp;
 
 date_default_timezone_set("Asia/Jakarta");
 require_once "vendor/autoload.php";
 
-$env = new PicoEnvironmentVariable();
+$baseConfigDir = dirname(__DIR__) . "/.cfg";
 
-// Prepare app configuration
-$iniApp = parse_ini_file(__DIR__."/dashboard.ini");
-$conf = new Config();
-
-foreach($iniApp as $key=>$val)
-{
-    $value = $env->replaceWithEnvironmentVariable($val);
-    $conf->set($key, $value);
-}
-
-// Prepare app configuration
-$iniDb = parse_ini_file(__DIR__."/db.ini");
-$dbconf = new PicoDatabaseCredentials();
-
-foreach($iniDb as $key=>$val)
-{
-    $value = $env->replaceWithEnvironmentVariable($val);
-    $dbconf->set($key, $value);
-}
-
-// time_zone_system=Asia/Jakarta
-$timeZone = $dbconf->getTimeZoneSystem();
-if($timeZone != null && !empty($timeZone))
-{
-    // Update time zone
-    date_default_timezone_set($timeZone);
-}
-
-if($conf->getSessionSavePath() == null || $conf->getSessionSavePath() == "")
-{
+$cfg = new ConfigApp(null, true);
+$cfg->loadYamlFile($baseConfigDir . "/app.yml", true, true);
+$conf = new ConfigApp(null, true);
+$conf->loadIniFile(__DIR__ . "/.cfg/dashboard.ini", true, true);
+$dbconf = new PicoDatabaseCredentials($cfg->getDatabase());
+if ($conf->getSessionSavePath() == null || $conf->getSessionSavePath() == "") {
     $conf->setSessionSavePath(session_save_path());
 }
-
-$conf->setIniWebPath(dirname(__DIR__)."/.cfg/config.cfg");
+$conf->setIniWebPath($baseConfigDir . "/config.cfg");
 
 $wss = new WSDashboardServerTeller($conf->getServerHostTeller(), $conf->getServerPortTeller(), $conf, $dbconf);
 $wss->run();
