@@ -648,15 +648,15 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     </div>
   </div>
 </div>
-<link rel="stylesheet" href="assets/rateyo/rateyo.css">
-<script src="assets/rateyo/rateyo.js"></script>
+<link rel="stylesheet" href="assets/rateyo/rateyo.min.css">
+<script src="assets/rateyo/rateyo.min.js"></script>
 <script>
   $(document).ready(function() {
     $('.song-rating').each(function(e) {
       let rate = parseFloat($(this).attr('data-rate'));
       $(this).rateYo({
         rating: rate,
-        starWidth: "16px"
+        starWidth: "14px"
       });
     });
 
@@ -694,7 +694,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
 
     $(selector).rateYo({
       rating: parseFloat(response.rating),
-      starWidth: "12px"
+      starWidth: "14px"
     });
     $(selector).rateYo().on('rateyo.set', function(e, data) {
       setRateEvent(e, data);

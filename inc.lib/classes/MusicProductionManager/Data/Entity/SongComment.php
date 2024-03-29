@@ -31,6 +31,30 @@ class SongComment extends MagicObject
 	protected $songId;
 
 	/**
+	 * User ID
+	 * 
+	 * @Column(name="user_id", type="varchar(40)", length=40, nullable=true)
+	 * @var string
+	 */
+	protected $userId;
+
+	/**
+	 * Time Start
+	 * 
+	 * @Column(name="time_start", type="decimal(10,3)", length=103, nullable=true)
+	 * @var string
+	 */
+	protected $timeStart;
+
+	/**
+	 * Time End
+	 * 
+	 * @Column(name="time_end", type="decimal(10,3)", length=103, nullable=true)
+	 * @var string
+	 */
+	protected $timeEnd;
+
+	/**
 	 * Comment
 	 * 
 	 * @Column(name="comment", type="longtext", nullable=true)
