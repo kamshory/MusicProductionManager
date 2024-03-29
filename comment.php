@@ -397,6 +397,7 @@ if(!empty($result))
     ?>
     </div>
 </div>
+<div class="table-list-container" style="overflow-x:auto">
 <table class="table">
     <thead>
         <tr>
@@ -444,7 +445,7 @@ if(!empty($result))
         
     </tbody>
     </table>
-
+</div>
 
     <div class="pagination">
     <div class="pagination-number">
