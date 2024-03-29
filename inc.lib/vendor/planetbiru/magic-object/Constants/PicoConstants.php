@@ -5,7 +5,6 @@ class PicoConstants
 {
     const NEW_LINE = "\r\n";
     const DATABASE_NONECTION_IS_NULL = "Database connection is null";
-    const APPLICATION_JSON = 'application/json';
     const X_API_KEY = 'X_API_KEY';
     const X_TIMESTAMP = 'X_TIMESTAMP';
     const X_SIGNATURE = 'X_SIGNATURE';

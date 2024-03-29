@@ -3,6 +3,7 @@
 namespace MagicObject\Database;
 
 use MagicObject\SecretObject;
+use MagicObject\Util\StringUtil;
 
 class PicoDatabaseCredentials extends SecretObject
 {
@@ -70,4 +71,28 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @var string
 	 */
 	protected $timeZone = "Asia/Jakarta";
+
+	/**
+	 * Magic method __get
+	 *
+	 * @param string $name Property name
+	 * @return mixed
+	 */
+	public function __get($name)
+	{
+		$name = StringUtil::camelize($name);
+		return $this->_get($name);
+	}
+
+	/**
+	 * Magic method __set
+	 *
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public function __set($name, $value)
+	{
+		$name = StringUtil::camelize($name);
+		$this->_set($name, $value);
+	}
 }

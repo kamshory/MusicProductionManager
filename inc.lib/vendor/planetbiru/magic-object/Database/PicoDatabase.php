@@ -177,21 +177,7 @@ class PicoDatabase //NOSONAR
 	 */
 	public function query($sql)
 	{
-		if($this->databaseConnection == null)
-		{
-			throw new NullPointerException(PicoConstants::DATABASE_NONECTION_IS_NULL);
-		}
-		$this->executeDebug($sql);
-		$stmt = $this->databaseConnection->prepare($sql);
-		try 
-		{
-			$stmt->execute();
-		} 
-		catch (PDOException $e) 
-		{
-			throw new PDOException($e);
-		}
-		return $stmt;
+		return $this->executeQuery($sql);
 	}
 
 	/**
@@ -426,6 +412,17 @@ class PicoDatabase //NOSONAR
 		}
 		$random = sprintf('%06x', mt_rand(0, 16777215));
 		return sprintf('%s%s', $uuid, $random);
+	}
+
+	/**
+	 * Get last insert ID
+	 *
+	 * @param string $name
+	 * @return string|false
+	 */
+	public function lastInsertId($name = null)
+	{
+		return $this->databaseConnection->lastInsertId($name);
 	}
 
 	/**
