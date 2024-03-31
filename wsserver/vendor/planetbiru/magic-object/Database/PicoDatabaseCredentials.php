@@ -3,6 +3,7 @@
 namespace MagicObject\Database;
 
 use MagicObject\SecretObject;
+use MagicObject\Util\StringUtil;
 
 class PicoDatabaseCredentials extends SecretObject
 {

@@ -228,4 +228,9 @@ class PicoResponse
     {
         return isset(PicoHttpStatus::$httpStatus[$code]) ? PicoHttpStatus::$httpStatus[$code] : null;
     }
+
+    public function redirectToItself()
+    {
+        header("Location: ".$_SERVER['REQUEST_URI']);
+    }
 }

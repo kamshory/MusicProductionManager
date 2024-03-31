@@ -54,7 +54,7 @@ class PicoUploadFileItem
      * @return bool
      * @throws FileNotFoundException
      */
-    public function copyMoveTo($path)
+    public function moveTo($path)
     {
         if(isset($this->value['tmp_name']))
         {
