@@ -5,9 +5,13 @@ use MagicObject\Session\PicoSession;
 
 require_once "vendor/autoload.php";
 
+$systemSession = PicoSession::getInstance("TEST");
+$systemSession->startSession();
 
 $files = new PicoUplodFile();
-$file1 = $files->get('test');
+$file1 = $files->get('file_uploaded');
+
+echo $files;
 
 // or 
 // $file1 = $files->test;
@@ -21,8 +25,6 @@ foreach($file1->getAll() as $fileItem)
 }
 
 
-$systemSession = PicoSession::getInstance("TEST");
-$systemSession->startSession();
 if(!isset($systemSession->coba))
 {
     $systemSession->coba = 0;

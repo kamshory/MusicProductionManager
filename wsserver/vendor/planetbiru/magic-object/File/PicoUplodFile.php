@@ -83,4 +83,6 @@ class PicoUplodFile
             $this->values[$key] = new PicoUploadFileContainer($_FILES[$key]);
         }
     }
+
+    
 }

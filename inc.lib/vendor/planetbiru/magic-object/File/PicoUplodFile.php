@@ -70,6 +70,18 @@ class PicoUplodFile
     }
 
     /**
+     * Check if file is exists
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function __isset($name)
+    {
+        $camel = StringUtil::camelize($name);
+        return isset($this->map[$camel]);
+    }
+
+    /**
      * Init map
      *
      * @return void
@@ -82,5 +94,20 @@ class PicoUplodFile
             $this->map[$camel] = $key;
             $this->values[$key] = new PicoUploadFileContainer($_FILES[$key]);
         }
+    }
+
+    /**
+     * Method to debug object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $arr = array();
+        foreach($this->values as $key=>$value)
+        {
+            $arr[$key] = json_decode($value);
+        }
+        return json_encode($arr);
     }
 }

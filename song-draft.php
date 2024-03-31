@@ -187,6 +187,9 @@ else
     </div>
 
     <input class="btn btn-success" type="submit" value="Show">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadFile">
+      Upload
+    </button>
     
     </form>
 </div>
@@ -309,12 +312,10 @@ if(!empty($result))
 <?php
 }
 ?>
-<link rel="stylesheet" href="assets/rateyo/rateyo.css">
-<script src="assets/rateyo/rateyo.js"></script>
-
+<link rel="stylesheet" href="assets/rateyo/rateyo.min.css">
+<script src="assets/rateyo/rateyo.min.js"></script>
 <script>
   let playerModal;
-  
   
   $(document).ready(function(e){
     let playerModalSelector = document.querySelector('#songPlayer');
@@ -336,12 +337,7 @@ if(!empty($result))
           updateRate(response);
         }
       });
-
       playerModal.show();
-
-
-
-
     });
     $('.close-player').on('click', function(e2){
       e2.preventDefault();
@@ -360,10 +356,81 @@ if(!empty($result))
         starWidth: "16px"
       });
     });
-
     $('.song-rating').rateYo().on('rateyo.set', function(e, data) {
       setRateEvent(e, data);
     });
+
+    $(document).on(
+      "change",
+      'input#upload_song_draft[type="file"]',
+      function(e) {
+        let files = e.target.files;
+ 
+        for (let i in files) {
+          let file = files[i];
+          console.log(file)
+          let formData = new FormData();
+          formData.append("file", file);
+          let toastIndex = getToastIndex();
+          let toastBody = $('<div />');
+          toastBody.addClass('upload-area');
+          let fileName = $('<div />');
+          fileName.addClass('file-name');
+          fileName.text(file.name);
+          toastBody.append(fileName);
+          let toast = createToast(toastIndex, '', 'upload', 'Upload File', toastBody);
+          showToast(toast);
+          setToastIndex(toastIndex + 1);
+          let progressBar = createProgressBar(toast.find('.upload-area'));
+
+          $.ajax({
+            xhr: function() {
+              let xhr = new window.XMLHttpRequest();
+              xhr.upload.addEventListener(
+                "progress",
+                function(evt) {
+                  if (evt.lengthComputable) {
+                    let val = parseInt((evt.loaded / evt.total) * 100);
+                    let pb = progressBar.find('.progress-bar');
+                    pb.css("width", val + "%");
+                    pb.attr("aria-valuenow", val);
+                    pb.html(val + "%");
+                    if (val == 100) {
+                      setTimeout(function() {
+                        pb.closest('.toast').fadeOut('fast', function() {
+                          $(this).remove();
+                        });
+                      }, 2000);
+                    }
+                  }
+                },
+                false
+              );
+              return xhr;
+            },
+            type: "POST",
+            url: "lib.ajax/song-draft-upload.php",
+            data: formData,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+              
+            },
+            error: function(e1, e2) {
+              
+            },
+            success: function(response) {
+              
+            },
+          });
+        }
+      }
+    );
+
+
+
 
   });
   
@@ -419,6 +486,33 @@ if(!empty($result))
           
           <div class="modal-footer">
               <button type="button" class="btn btn-success close-player">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div style="background-color: rgba(0, 0, 0, 0.11);" class="modal fade" id="uploadFile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="uploadFile" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="addAlbumDialogLabel">Upload File</h5>
+              <button type="button" class="btn-primary btn-close close-upload-file" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <fieldset class="file-upload-zone upload-drop-zone-draft text-center mb-3 p-4">
+                <legend class="visually-hidden">Song Uploader</legend>
+                <svg class="upload_svg" width="60" height="60" aria-hidden="true">
+                    <use href="#icon-imageUpload"></use>
+                </svg>
+                <p class="small my-2">Drag &amp; drop song into this region<br><i>or</i></p>
+                <input id="upload_song_draft" data-post-name="image_background" class="position-absolute invisible" type="file" accept="audio/mp3" multiple="">
+                <label class="btn btn-primary mb-3" for="upload_song_draft">Choose File</label>
+                <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
+            </fieldset>
+          </div>
+          
+          <div class="modal-footer">
+              <button type="button" class="btn btn-success close-upload-file" data-bs-dismiss="modal">Close</button>
           </div>
       </div>
   </div>
