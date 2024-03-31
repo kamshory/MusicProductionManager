@@ -12,8 +12,6 @@ use MusicProductionManager\Utility\SongFileUtil;
 
 require_once dirname(__DIR__)."/inc/auth.php";
 
-error_log(json_encode($_FILES));
-
 $uploadedFile = new PicoUplodFile();
 
 /**
