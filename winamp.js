@@ -64,6 +64,7 @@ class Winamp {
                 this.trackInfo[this.trackLoaded].classList.toggle('highlighted-track');
                 this.audio.src = this.tracks[this.trackLoaded].url;
                 this.audio.play();
+                this.loadVuMeter();
                 this.updateTrackInfo();
                 if (!this.play) {
                     this.playBtn.classList.toggle('highlighted');
@@ -78,6 +79,38 @@ class Winamp {
             this.audio.src = this.tracks[this.trackLoaded].url;
         };
 
+        this.loadVuMeter = function()
+        {
+            let context = new AudioContext();
+
+            var source = context.createMediaElementSource(this.audio);
+        
+            
+            let analyserLeft = context.createAnalyser();
+            let analyserRight = context.createAnalyser();
+
+            //source.buffer = a;
+            
+                 
+           
+            var splitter = context.createChannelSplitter(2);
+            source.connect(splitter);
+            
+            
+            splitter.connect(analyserLeft, 1);
+            splitter.connect(analyserRight, 0)
+            
+            source.connect(context.destination);
+            
+            setInterval(function(){ 
+                _this.checkVolume(analyserLeft,"meterLeft");
+                _this.checkVolume(analyserRight, "meterRight") 
+            }, 50);
+            
+        
+            
+        }
+
         this.updateTrackInfo = function () {
             let tNumber = this.tracks[this.trackLoaded].trackNumber;
             if (tNumber < 10) {
@@ -85,6 +118,20 @@ class Winamp {
             }
             this.trackInfoDisplayer.textContent = tNumber + '. ' + this.tracks[this.trackLoaded].name + ' (' + this.trackDuration(this.trackLoaded) + ')';
         };
+
+        this.checkVolume = function(analyser, meter){
+            let frequencyData = new Uint8Array(1);
+            analyser.getByteFrequencyData(frequencyData);
+            let volume=frequencyData[0];
+            
+            //min=20deg   max=160deg
+            //.54 is conversion ration + minimum angle
+            let rotation=(parseInt(volume*.54))+20; 
+            let needles = document.getElementById(meter).getElementsByClassName('needle');
+            let needle=needles[0];
+            needle.style.transform="rotate("+rotation+"deg)";
+            
+        }
 
         this.trackDuration = function (place) {
             return (

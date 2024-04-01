@@ -67,6 +67,189 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
 
+    <style>
+      body {
+    background:#222;
+    font-family:orbitron, sans-serif;
+}
+
+h1 {
+    color:white;
+    font-size:1.5em;
+    font-weight:normal;
+}
+
+.meter {
+  width:300px;
+  height:150px;
+  background:#dfc68d;
+  position:relative;
+  overflow:hidden;
+}
+
+.needle {
+  background: black;
+  width:120px;
+  height:2px;
+  transform: rotate(20deg);
+  transform-origin:100%  0%;
+  position:absolute;
+  bottom: 10px; 
+  left: 30px; 
+  transition: transform .05s;
+  z-index:9;
+}
+
+.shadow {
+    border-top:solid 40px rgba(0,0,0,.3);
+    border-left:solid 30px rgba(0,0,0,.3);
+    width:100%;
+    height:100%;
+    top:-10px;
+    left:-10px;
+    position:absolute;
+    filter:blur(5px);
+}
+
+.label {
+    text-align:center;
+    position:absolute;
+    width:100%;
+    top:55%;
+}
+
+.meter .indicator{
+    position:absolute;
+    top:20px;
+    left:20px;
+    font-size:1.5em
+}
+
+.meter .indicator.plus {
+    left:auto;
+    right:20px;
+    color:#aa0000;
+}
+
+.needleBase {
+    width:75px;
+    height:32px;
+    position:absolute;
+    bottom:9px;
+    left:110px;
+    z-index:1;
+    overflow:hidden;
+}
+
+.needleBase span {
+    display:black;
+    width:100%;
+    height:100%;
+    border-radius:100%;
+    background:#333;
+    position:absolute;
+    top:50%;
+}
+
+.meterLine {
+    width:250px;
+    height:97px;
+    position:absolute;
+    top:8px;
+    left:30px;   
+    overflow:hidden;
+    z-index:1;
+}
+.meterLine span.base {
+    width:180px;
+    height:180px;
+    position:absolute;
+    left:25px;
+    top:32px;
+    border-radius:100%;
+    border:solid 1px black;
+}
+
+.meterLine .danger {
+    width:30%;
+    position:absolute;
+   height:75px;
+     
+    left:145px;
+    top:22px;
+    overflow:hidden;
+    
+}
+
+.meterLine .danger  span.base {
+    position:absolute;
+    left:-128px;
+    top:0px;
+    border:solid 10px #a00;
+}
+
+#meters{
+    display:flex;
+}
+.meter {
+    margin-right:20px;
+}
+
+button {
+    clear:both;
+    margin-top:20px;
+    background:#006;
+    border:#007;
+    color:#eee;
+    padding:5px 20px;
+    border:solid 1px #bbb;
+}
+
+button.disabled {
+    background:#888;
+}
+    </style>
+
+    <div id='meters'>
+    <div id='meterRight' class='meter'>
+       <span class='indicator minus'>-</span>
+       <span class='indicator plus'>+</span>
+       <div class='needle'></div>
+
+
+       <div class='label'>VU</div>
+        <div class='meterLine'>
+            <span class='base'></span>
+            <div class='danger'>
+                <span class='base'></span>
+            </div>    
+        </div>
+       <div class='shadow'></div>
+       <div class='needleBase'><span></span></div>
+    </div> 
+
+    <div id='meterLeft' class='meter'>
+       <span class='indicator minus'>-</span>
+       <span class='indicator plus'>+</span>
+       <div class='needle'></div>
+
+
+       <div class='label'>VU</div>
+        <div class='meterLine'>
+            <span class='base'></span>
+            <div class='danger'>
+                <span class='base'></span>
+            </div>    
+        </div>
+       <div class='shadow'></div>
+       <div class='needleBase'><span></span></div>
+    </div> 
+</div>    
+
+<nav>
+<button id="play" >PLAY</button>
+</nav>
+
     <div class="winamp-container">
 
 
