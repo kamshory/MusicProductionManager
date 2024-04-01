@@ -134,10 +134,10 @@ font-family: 'VT323', monospace;
     overflow-x: hidden;
 }
 
-.track-info .track-id{
+.track-info .track-id {
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 /* input type range */
@@ -350,14 +350,16 @@ font-family: 'VT323', monospace;
     font-size: 20px;
     font-weight: bold;
 }
+
 .logo {
     color: orange;
     transform: rotate(20deg);
     transform-origin: center;
     font-size: 24px;
 }
+
 @media screen and (max-width: 600px) {
-    .logo{
+    .logo {
         display: none;
     }
 }
@@ -378,7 +380,10 @@ font-family: 'VT323', monospace;
     color: lime;
     font-size: 18px;
 }
-.cmd-container, .playlist, .img-container {
+
+.cmd-container,
+.playlist,
+.img-container {
     width: calc(100% - 20px);
 }
 
@@ -392,17 +397,19 @@ font-family: 'VT323', monospace;
     text-align: center;
     margin: 0;
 }
-.winamp-container .line-first, .winamp-container .line.line-other {
+
+.winamp-container .line-first,
+.winamp-container .line.line-other {
     width: calc(50% - 120px);
     height: 0.75em;
 }
-.maxamp-container h2
-{
+
+.maxamp-container h2 {
     width: 220px;
 }
 
 
-[data-minimized="true"]{
+[data-minimized="true"] {
     height: 48px;
 }
 
@@ -443,14 +450,14 @@ font-family: 'VT323', monospace;
     object-fit: cover;
 }
 
-.maxamp-container{
+.maxamp-container {
     font-size: 12px;
     width: 100vw;
     margin-top: 0;
 }
 
 @media screen and (max-width : 540px) {
-    .time-displayer{
+    .time-displayer {
         font-size: 20px;
         padding-left: 4px;
     }
