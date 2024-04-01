@@ -63,51 +63,115 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     ?>
     
     <h3><?php echo $album->getName();?></h3>
-    <style>
-      .song-list li audio{
-        width: 100%;
-        box-sizing: border-box;
-      }
-    </style>
+    <link rel="stylesheet" href="winamp.css?<?php echo mt_rand(1111, 999999);?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="winamp.js"></script>
 
-    <ul class="song-list">
-      <?php
-      foreach($songList as $song)
-      {
-      ?>
-      <li>
-        <audio data-song-id="<?php echo $song->song_id;?>" src="<?php echo $song->songUrl;?>" controls></audio>
-      </li>
-      <?php
-      }
-      ?>
-    </ul>
+<div class="winamp-container">
+
+
+    <div class="maxamp-container">
+
+        <!-- first section : commands-->
+        <div class="top-container">
+
+            <div class="title">
+                <div class="line line-first">
+                </div>
+                <h1> WINAMP </h1>
+                <div class="line line-first">
+                </div>
+            </div>
+
+            <div class="cmd-container">
+
+                <div class="time-container">
+                    <div class="time-container--left">
+                        <div class="time-displayer">00:00</div>
+                    </div>
+                    <div class="time-container--right">
+                        <div class="track-info-displayer">
+                        </div>
+                        <div class="volume">
+                            <input class="volume-controller" type="range" min="0" max="100" value="100"
+                                step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <input class="progress-bar" type="range" min="0" max="1" value="0" step=".000001">
+                </div>
+
+                <div class="btn-container">
+                    <div class="btn-container--1">
+                        <button class='nav-btn' data-nav='prev'>
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class='play-btn'>
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class='pause-btn'>
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button class='stop-btn highlighted'>
+                            <i class="fas fa-stop"></i>
+                        </button>
+                        <button class='nav-btn' data-nav='next'>
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                    </div>
+                    <div class="btn-container--2">
+                        <button class='shuffle-btn'>
+                            SHUFFLE
+                        </button>
+                        <button class='repeat-btn'>
+                            <i class="fas fa-retweet"></i>
+                        </button>
+                    </div>
+                    <div class="logo"><i class="fas fa-bolt"></i></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- second section : playlist-->
+
+        <div class="playlist-container">
+            <div class="title resizable">
+                <div class="line line-other">
+                </div>
+                <h2> WINAMP PLAYLIST</h2>
+                <div class="line line-other">
+                </div>
+            </div>
+            <div class="playlist">
+            </div>
+        </div>
+
+        <!-- third section : visualisation-->
+
+        <div class="visualisation-container">
+            <div class="title resizable">
+                <div class="line line-other">
+                </div>
+                <h2> VISUALISATION </h2>
+                <div class="line line-other">
+                </div>
+            </div>
+            <div class="img-container">
+                <img src="https://c.tenor.com/BDN0GwbpmcYAAAAC/yas-banana.gif" class="visualisation"
+                    alt="dancing banana" />
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
       let albumEntry = <?php echo json_encode($json);?>;
       $(document).ready(function(){
-        let songs = document.querySelectorAll('.song-list li audio');
-        songs.forEach(song => {
-          song.addEventListener('play', (e2) => {
-            let audio = e2.target;         
-            $(audio).closest('li').siblings().find('audio').each(function(e3){
-              $(this)[0].pause();
-              $(this)[0].currentTime = 0;
-            });
-          });
-        }); 
-        
-        songs.forEach(song => {
-          song.addEventListener('ended', (e2) => {
-            let audio = e2.target;         
-            let nextAudio = $(audio).closest('li').next().find('audio');
-            if(nextAudio.length > 0)
-            {
-              nextAudio[0].play();
-            }
-          });
-        }); 
-
+        let wa = new Winamp(albumEntry);
       });
       
     </script>

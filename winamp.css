@@ -6,7 +6,7 @@ font-family: 'VT323', monospace;
 */
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Source+Sans+Pro&display=swap&family=Aldrich&family=VT323&display=swap');
 
-* {
+.winamp-container {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,7 +20,8 @@ font-family: 'VT323', monospace;
 
 
 .maxamp-container {
-    width: 560px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .top-container,
@@ -54,7 +55,7 @@ font-family: 'VT323', monospace;
   height: 2rem;*/
 }
 
-.title {
+.winamp-container .title {
     width: 100%;
     padding: .5rem 0;
     display: flex;
@@ -62,11 +63,11 @@ font-family: 'VT323', monospace;
     align-items: center;
 }
 
-.resizable {
+.winamp-container .resizable {
     cursor: pointer;
 }
 
-h1 {
+.winamp-container h1 {
     width: 20%;
     font-size: 1.5rem;
     letter-spacing: .5rem;
@@ -75,14 +76,14 @@ h1 {
     padding: 0 .5rem;
 }
 
-.line {
+.winamp-container .line {
     border: 1px solid black;
     border-radius: 3px;
     display: inline-block;
     background: linear-gradient(#87785A, #635A42 35%, #202024 50%, #635A42 65%, #87785A);
 }
 
-.line-first {
+.winamp-container .line-first {
     width: 37.5%;
     height: .75em;
 }
@@ -116,8 +117,10 @@ h1 {
     color: lime;
     background: black;
     width: 100%;
-    font-size: 3rem;
+    font-size: 2rem;
     border: 2px inset #555265;
+    padding-top: 0.2rem;;
+    padding-left: 0.8rem;
 }
 
 .track-info-displayer {
@@ -127,14 +130,17 @@ h1 {
     font-size: 1.5rem;
     color: lime;
     border: 2px inset #555265;
-    padding-left: .25rem;
+    padding-left: .45rem;
+    padding-top: .25rem;
+    font-size: 1.05rem;
 }
 
 /* input type range */
 
 /* avalaible for all range input*/
-input[type=range] {
+.winamp-container input[type=range] {
     -webkit-appearance: none;
+    appearance: none;
     /*nécessaire pour Chrome */
     padding: 0;
     /* nécessaire pour IE */
@@ -144,18 +150,20 @@ input[type=range] {
     cursor: pointer;
 }
 
-input[type=range]::-webkit-slider-thumb {
+.winamp-container input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     /* également nécessaire sur le curseur */
 }
 
-input[type=range]::-moz-range-thumb {
+.winamp-container input[type=range]::-moz-range-thumb {
     -webkit-appearance: none;
+    appearance: none;
     /* également nécessaire sur le curseur */
 }
 
-input[type=range]::-ms-thumb {
+.winamp-container input[type=range]::-ms-thumb {
     -webkit-appearance: none;
+    appearance: none;
     /* également nécessaire sur le curseur */
 }
 
@@ -204,7 +212,7 @@ input[type=range]::-ms-thumb {
 
 /* IE Edge */
 
-input[type=range]::-ms-thumb {
+.winamp-container input[type=range]::-ms-thumb {
     width: 1.75rem;
     height: 1.25rem;
     background: var(--btn-color);
@@ -284,20 +292,20 @@ input[type=range]::-ms-thumb {
     justify-content: space-between;
 }
 
-button {
+.winamp-container button {
     position: relative;
     cursor: pointer;
-    width: 3rem;
-    height: 2rem;
+    min-width: 2.6rem;
+    height: 3rem;
     padding: 0;
     margin: 0;
     font-size: 1.25rem;
     font-weight: bold;
     background: var(--btn-color);
-    border: 5px outset #ADBAC7;
+    border: 1px outset #ADBAC7;
 }
 
-button:after {
+.winamp-containerbutton:after {
     content: '';
     position: absolute;
     top: -5px;
@@ -332,17 +340,22 @@ button:after {
     font-size: 1.25rem;
     font-weight: bold;
 }
-
 .logo {
     color: orange;
     transform: rotate(20deg);
     transform-origin: center;
     font-size: 1.75rem;
 }
+@media screen and (max-width: 600px) {
+    .logo{
+        display: none;
+    }
+}
+
 
 .highlighted {
     color: lime;
-    border: 5px inset #ADBAC7;
+    border: 0px inset #ADBAC7;
 }
 
 /* here i am */

@@ -1,7 +1,7 @@
 
-function Winamp() {
+function Winamp(list) {
     let _this = this;
-    this.trackname = ["Lagu 0066", "Lagu 0067"];
+    this.trackname = [];
     this.qsall = null; 
     this.qs = null; 
     this.root = null; 
@@ -23,10 +23,16 @@ function Winamp() {
     this.audio = null; 
     this.tracks = []; 
     this.tracksNb = 2; 
+    this.albumEntry = {};
     
     this.createPlaylistItem = function(i)
     {
-        return '<div class = "track-info' + (i === 0 ? ' highlighted-track' : '') + '" data-id = "' + i + '"><div class = "track-id">' + (i + 1) + ' ' + this.tracks[i].artist + ' - ' + this.tracks[i].name + '</div><div class = "track-duration">' + this.trackDuration(i) + '</div></div>';
+        let tNumber = i;
+        if(i < 10)
+        {
+            tNumber = '0'+i;
+        }
+        return '<div class = "track-info' + (i === 0 ? ' highlighted-track' : '') + '" data-id = "' + i + '"><div class = "track-id">' + tNumber + ' ' + this.tracks[i].title + ' - ' + this.tracks[i].name + '</div><div class = "track-duration">' + this.trackDuration(i) + '</div></div>';
     }
 
     this.createPlaylist = function () {
@@ -74,8 +80,6 @@ function Winamp() {
         this.audio.src = this.tracks[this.trackLoaded].url;
     }
 
-
-
     this.updateTrackInfo = function () {
         this.trackInfoDisplayer.textContent = (parseInt(this.trackLoaded, 10) + 1) + '. ' + this.tracks[this.trackLoaded].name + ' (' + this.trackDuration(this.trackLoaded) + ')'
     }
@@ -93,8 +97,35 @@ function Winamp() {
             this.visualisation.style.display = 'block';
         }
     }
+    this.hilightCurrentTrack = function(trackNumber)
+    {
+        let i = 0;
+        this.trackInfo.forEach(track => {
+            track.classList.remove('highlighted-track');
+            if(i == trackNumber)
+            {
+                track.classList.add('highlighted-track');
+            }
+            i++;
+        })
+    }
+    this.nextTrack = function() {
+        if(this.shuffle)
+        {
+            this.trackLoaded = Math.floor(Math.random() * this.tracks.length);    
+        }
+        else
+        {
+            this.trackLoaded++;
+        }
+        this.hilightCurrentTrack(this.trackLoaded);
+        this.audio.src = this.tracks[this.trackLoaded].url;
+        this.audio.play();
+        this.updateTrackInfo();
+    }
 
-    this.init = function () {
+    this.init = function (list) {
+        this.songList = list;
         this.qsall = document.querySelectorAll.bind(document); //shortcut for querySelectorAll
         this.qs = document.querySelector.bind(document); //shortcut for querySelector
         this.root = document.querySelector(':root');
@@ -114,10 +145,10 @@ function Winamp() {
         this.repeatBtn = this.qs('.repeat-btn');
         this.playlist = this.qs('.playlist');
         this.audio = new Audio;
-        this.tracks = []; // array with tracks info : name, artist, duration and url
-        this.tracksNb = 2;// number of tracks
+        this.tracks = []; // array with tracks info : name, title, duration and url
+        this.tracksNb = this.songList.songList.length;// number of tracks
         this.tracksCreated = 0;
-        this.trackInfo; //will store the track-info div after their creation
+        this.trackInfo = []; //will store the track-info div after their creation
         this.trackLoaded = 0; //track that will be played
         this.play = false;
         this.pause = false;
@@ -199,11 +230,25 @@ function Winamp() {
         // display time elapsed
         this.audio.addEventListener('timeupdate', (e) => {
             this.timeDisplayer.textContent = (e.target.currentTime / 60 < 10 ? '0' : '') + Math.floor(e.target.currentTime / 60) + ':' + (e.target.currentTime % 60 < 10 ? '0' : '') + Math.floor(e.target.currentTime % 60);
-            this.progressBar.value = e.target.currentTime / e.target.duration;
+            if(e.target.duration > 0)
+            {
+                this.progressBar.value = e.target.currentTime / e.target.duration;
+            }
+            else
+            {
+                this.progressBar.value = 0;
+            }
         })
         //progressBar interaction
         this.progressBar.addEventListener('input', (e) => {
-            this.audio.currentTime = this.audio.duration * e.target.value;
+            if(this.audio.duration > 0)
+            {
+                this.audio.currentTime = this.audio.duration * e.target.value;
+            }
+            else
+            {
+                this.audio.currentTime = 0;
+            }
         })
 
         //volume controller
@@ -234,15 +279,7 @@ function Winamp() {
         })
 
         this.audio.addEventListener('ended', () => {
-            this.repeat ? (this.audio.currentTime = 0, this.audio.play()) : this.trackLoaded < (this.tracks.length - 1) ? nextTrack() : this.shuffle ? nextTrack() : console.log('fin')
-            function nextTrack() {
-                this.trackInfo[this.trackLoaded].classList.toggle('highlighted');
-                this.shuffle ? this.trackLoaded = Math.floor(Math.random() * this.tracks.length) : this.trackLoaded++;
-                this.audio.src = this.tracks[this.trackLoaded].url;
-                this.audio.play();
-                this.trackInfo[this.trackLoaded].classList.toggle('highlighted');
-                this.updateTrackInfo();
-            }
+            this.repeat ? (this.audio.currentTime = 0, this.audio.play()) : this.trackLoaded < (this.tracks.length - 1) ? this.nextTrack() : this.shuffle ? this.nextTrack() : console.log('fin')
         })
 
         // expand the playlist or the visualisation
@@ -261,23 +298,22 @@ function Winamp() {
             this.tracks.push(
                 {
                     name: '',
-                    artist: '',
+                    title: '',
                     duration: '',
                     url: ''
                 })
 
-            this.tracks[i].name = 'track-' + (i + 1);
-            this.tracks[i].artist = "Ornatos Violeta";
-            this.tracks[i].url = this.trackname[i] + '.mp3';
-            this.audioForDuration = document.createElement('this.audio');
-            this.audioForDuration.src = this.tracks[i].url;
+            
+            this.tracks[i].name = 'Track ' + this.songList.songList[i].track_number;
+            this.tracks[i].title = this.songList.songList[i].title;
+            this.tracks[i].url = this.songList.songList[i].song_url;
+            this.tracks[i].duration = this.songList.songList[i].duration;
+            this.audioForDuration = document.createElement('audio');
+            this.audioForDuration.src = this.tracks[i].url;           
+            
             this.audioForDuration.dataset.id = i;
             this.audioForDuration.addEventListener('loadedmetadata', function (e) {
-                let duration = _this.audioForDuration.duration;
-                let rank = parseInt((e.target.dataset.id), 10);
-                _this.tracks[rank].duration = duration;
                 _this.tracksCreated++;
-
                 //once my tracks array is fill I have to add my tracks info in the playlist container
                 _this.tracksCreated === _this.tracksNb ? _this.createPlaylist() : console.log('tracks created: ' + _this.tracksCreated);
             })
@@ -285,13 +321,11 @@ function Winamp() {
 
     }
 
-    this.init();
-    this.createPlaylist();
+    this.init(list);
 
 
 }
 
-let wa = new Winamp();
 
 
 
