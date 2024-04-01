@@ -4,6 +4,10 @@ namespace MagicObject\File;
 
 use MagicObject\Util\StringUtil;
 
+/**
+ * Upload file tool
+ * All atribute in this class is readonly
+ */
 class PicoUplodFile
 {
     private $map = array();

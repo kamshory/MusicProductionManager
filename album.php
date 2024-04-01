@@ -2,7 +2,10 @@
 
 use MagicObject\Database\PicoPagable;
 use MagicObject\Database\PicoPage;
+use MagicObject\Database\PicoPredicate;
+use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
+use MagicObject\Database\PicoSpecification;
 use MagicObject\Exceptions\NoRecordFoundException;
 use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;
@@ -12,13 +15,111 @@ use MusicProductionManager\Data\Entity\EntityAlbum;
 use MusicProductionManager\Data\Entity\Producer;
 use MagicObject\Response\Generated\PicoSelectOption;
 use MagicObject\Util\Dms;
+use MusicProductionManager\Data\Entity\AlbumPlayer;
+use MusicProductionManager\Data\Entity\AlbumPublic;
 use MusicProductionManager\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";
 require_once "inc/header.php";
 
 $inputGet = new InputGet();
-if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getAlbumId() != null)
+if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
+{
+  $player = new AlbumPlayer(null, $database);
+  $album = new AlbumPublic(null, $database);
+  try
+  {
+    $album->findOneByAlbumId($inputGet->getAlbumId());
+
+    $sortable = new PicoSortable();
+    $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+    $sortable->addSortable($sort2);
+
+    $spesification = new PicoSpecification();
+
+    $predicate1 = new PicoPredicate();
+    $predicate1->equals('albumId', $inputGet->getAlbumId());
+    $spesification->addAnd($predicate1);
+
+    $predicate2 = new PicoPredicate();
+    $predicate2->equals('active', true);
+    $spesification->addAnd($predicate2);
+
+    $pageData = $player->findAll($spesification, null, $sortable, true);
+    $rowData = $pageData->getResult();
+    $songList = array();
+    foreach($rowData as $song)
+    {
+      $songList[$song->getSongId()] = $song->valueObject();
+      // set song URL
+      $songList[$song->getSongId()]->songUrl = $cfg->getSongBaseUrl()."/".$song->getSongId()."/".basename($song->getFilePath()).'?hash='.str_replace(array(' ', '-', ':'), '', $song->getLastUploadTime());
+    }
+    $json = array(
+      "album"=>$album->valueObject(),
+      "songList"=>$songList
+    );
+    ?>
+    
+    <h3><?php echo $album->getName();?></h3>
+    <style>
+      .song-list li audio{
+        width: 100%;
+        box-sizing: border-box;
+      }
+    </style>
+
+    <ul class="song-list">
+      <?php
+      foreach($songList as $song)
+      {
+      ?>
+      <li>
+        <audio src="<?php echo $song->songUrl;?>" controls></audio>
+      </li>
+      <?php
+      }
+      ?>
+    </ul>
+
+    <script>
+      $(document).ready(function(){
+        let songs = document.querySelectorAll('.song-list li audio');
+        songs.forEach(song => {
+          song.addEventListener('play', (e2) => {
+            let audio = e2.target;         
+            $(audio).closest('li').siblings().find('audio').each(function(e3){
+              $(this)[0].pause();
+              $(this)[0].currentTime = 0;
+            });
+          });
+        }); 
+        
+        songs.forEach(song => {
+          song.addEventListener('ended', (e2) => {
+            let audio = e2.target;         
+            let nextAudio = $(audio).closest('li').next().find('audio');
+            if(nextAudio.length > 0)
+            {
+              nextAudio[0].play();
+            }
+          });
+        }); 
+
+      });
+      
+    </script>
+
+
+    <?php
+    
+  }
+  catch(Exception $e)
+  {
+    // do nothing
+    echo $e->getMessage();
+  }
+}
+else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getAlbumId() != null)
 {
   $album = new EntityAlbum(null, $database);
   try
@@ -161,6 +262,7 @@ if(!empty($result))
     <tr>
       <th scope="col" width="20"><i class="ti ti-edit"></i></th>
       <th scope="col" width="20"><i class="ti ti-trash"></i></th>
+      <th scope="col" width="20"><i class="ti ti-player-play"></i></th>
       <th scope="col" width="20"><i class="ti ti-download"></i></th>
       <th scope="col" width="20">#</th>
       <th scope="col" class="col-sort" data-name="name">Name</th>
@@ -182,12 +284,14 @@ if(!empty($result))
       $albumId = $album->getAlbumId();
       $linkEdit = basename($_SERVER['PHP_SELF'])."?action=edit&album_id=".$albumId;
       $linkdDelete = basename($_SERVER['PHP_SELF'])."?action=delete&album_id=".$albumId;
+      $linkdPlay = basename($_SERVER['PHP_SELF'])."?action=play&album_id=".$albumId;
       $linkDetail = basename($_SERVER['PHP_SELF'])."?action=detail&album_id=".$albumId;
       $linkDownload = "read-file.php?type=all&album_id=".$albumId;
     ?>
       <tr data-id="<?php echo $albumId;?>">
       <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
       <th scope="row"><a href="<?php echo $linkdDelete;?>" class="delete-data"><i class="ti ti-trash"></i></a></th>
+      <th scope="row"><a href="<?php echo $linkdPlay;?>" class="play-album"><i class="ti ti-player-play"></i></a></th>
       <th scope="row"><a href="<?php echo $linkDownload;?>"><i class="ti ti-download"></i></a></th>
       <th scope="row"><?php echo $no;?></th>
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $album->getName();?></a></td>

@@ -16,7 +16,7 @@ use MagicObject\Util\ExtendedReflectionClass;
 use MagicObject\Util\PicoAnnotationParser;
 use stdClass;
 
-class PicoDatabasePersistent // NOSONAR
+class PicoDatabasePersistence // NOSONAR
 {
     const ANNOTATION_TABLE = "Table";
     const ANNOTATION_COLUMN = "Column";
