@@ -82,6 +82,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     </ul>
 
     <script>
+      let albumEntry = <?php echo json_encode($json);?>;
       $(document).ready(function(){
         let songs = document.querySelectorAll('.song-list li audio');
         songs.forEach(song => {

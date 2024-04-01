@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winamp</title>
+    <link rel="stylesheet" href="winamp.css">
+
+</head>
+
+<body>
+    <div class="winamp-container">
+
+        <div class="container">
+            <div class="maxamp-container">
+
+                <!-- first section : commands-->
+                <div class="top-container">
+
+                    <div class="title">
+                        <div class="line line-first">
+                        </div>
+                        <h1> WINAMP </h1>
+                        <div class="line line-first">
+                        </div>
+                    </div>
+
+                    <div class="cmd-container">
+
+                        <div class="time-container">
+                            <div class="time-container--left">
+                                <div class="time-displayer">00:00</div>
+                            </div>
+                            <div class="time-container--right">
+                                <div class="track-info-displayer">
+                                </div>
+                                <div class="volume">
+                                    <input class="volume-controller" type="range" min="0" max="100" value="100"
+                                        step="1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <input class="progress-bar" type="range" min="0" max="1" value="0" step=".000001">
+                        </div>
+
+                        <div class="btn-container">
+                            <div class="btn-container--1">
+                                <button class='nav-btn' data-nav='prev'>
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                                <button class='play-btn'>
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button class='pause-btn'>
+                                    <i class="fas fa-pause"></i>
+                                </button>
+                                <button class='stop-btn highlighted'>
+                                    <i class="fas fa-stop"></i>
+                                </button>
+                                <button class='nav-btn' data-nav='next'>
+                                    <i class="fas fa-step-forward"></i>
+                                </button>
+                            </div>
+                            <div class="btn-container--2">
+                                <button class='shuffle-btn'>
+                                    SHUFFLE
+                                </button>
+                                <button class='repeat-btn'>
+                                    <i class="fas fa-retweet"></i>
+                                </button>
+                            </div>
+                            <div class="logo"><i class="fas fa-bolt"></i></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- second section : playlist-->
+
+                <div class="playlist-container">
+                    <div class="title resizable">
+                        <div class="line line-other">
+                        </div>
+                        <h2> WINAMP PLAYLIST</h2>
+                        <div class="line line-other">
+                        </div>
+                    </div>
+                    <div class="playlist">
+                    </div>
+                </div>
+
+                <!-- third section : visualisation-->
+
+                <div class="visualisation-container">
+                    <div class="title resizable">
+                        <div class="line line-other">
+                        </div>
+                        <h2> VISUALISATION </h2>
+                        <div class="line line-other">
+                        </div>
+                    </div>
+                    <div class="img-container">
+                        <img src="https://c.tenor.com/BDN0GwbpmcYAAAAC/yas-banana.gif" class="visualisation"
+                            alt="dancing banana" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="winamp.js"></script>
+
+</html>
