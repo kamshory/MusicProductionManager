@@ -82,16 +82,12 @@ class Winamp {
         this.loadVuMeter = function()
         {
             let context = new AudioContext();
-
-            var source = context.createMediaElementSource(this.audio);
-        
             
+            var source = context.createBufferSource();
+            source.connect(context.destination);
+                       
             let analyserLeft = context.createAnalyser();
-            let analyserRight = context.createAnalyser();
-
-            //source.buffer = a;
-            
-                 
+            let analyserRight = context.createAnalyser();               
            
             var splitter = context.createChannelSplitter(2);
             source.connect(splitter);
@@ -100,14 +96,30 @@ class Winamp {
             splitter.connect(analyserLeft, 1);
             splitter.connect(analyserRight, 0)
             
-            source.connect(context.destination);
+            context.resume();
             
             setInterval(function(){ 
                 _this.checkVolume(analyserLeft,"meterLeft");
                 _this.checkVolume(analyserRight, "meterRight") 
             }, 50);
             
+            
         
+            
+        }
+
+        this.checkVolume = function(analyser, meter){
+            let frequencyData = new Uint8Array(1);
+            analyser.getByteFrequencyData(frequencyData);
+            let volume=frequencyData[0];
+            
+            //min=20deg   max=160deg
+            //.54 is conversion ration + minimum angle
+            let rotation=(parseInt(volume*.54))+20; 
+            console.log(rotation)
+            let needles = document.getElementById(meter).getElementsByClassName('needle');
+            let needle=needles[0];
+            needle.style.transform="rotate("+rotation+"deg)";
             
         }
 
@@ -119,19 +131,7 @@ class Winamp {
             this.trackInfoDisplayer.textContent = tNumber + '. ' + this.tracks[this.trackLoaded].name + ' (' + this.trackDuration(this.trackLoaded) + ')';
         };
 
-        this.checkVolume = function(analyser, meter){
-            let frequencyData = new Uint8Array(1);
-            analyser.getByteFrequencyData(frequencyData);
-            let volume=frequencyData[0];
-            
-            //min=20deg   max=160deg
-            //.54 is conversion ration + minimum angle
-            let rotation=(parseInt(volume*.54))+20; 
-            let needles = document.getElementById(meter).getElementsByClassName('needle');
-            let needle=needles[0];
-            needle.style.transform="rotate("+rotation+"deg)";
-            
-        }
+        
 
         this.trackDuration = function (place) {
             return (
