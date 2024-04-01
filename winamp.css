@@ -70,6 +70,7 @@ font-family: 'VT323', monospace;
 .winamp-container h1 {
     width: 20%;
     font-size: 1.5rem;
+    text-align: center;
     letter-spacing: .5rem;
     font-family: 'VT323', monospace;
     color: #8A8BA0;
@@ -83,13 +84,9 @@ font-family: 'VT323', monospace;
     background: linear-gradient(#87785A, #635A42 35%, #202024 50%, #635A42 65%, #87785A);
 }
 
-.winamp-container .line-first {
-    width: 37.5%;
-    height: .75em;
-}
+
 
 .cmd-container {
-    width: 95%;
     padding: .75rem;
     border: 2px solid #555265;
     margin: 0 .5rem .5rem .5rem;
@@ -119,7 +116,7 @@ font-family: 'VT323', monospace;
     width: 100%;
     font-size: 2rem;
     border: 2px inset #555265;
-    padding-top: 0.2rem;;
+    padding-top: 0.2rem;
     padding-left: 0.8rem;
 }
 
@@ -127,7 +124,6 @@ font-family: 'VT323', monospace;
     width: 100%;
     height: 2rem;
     background: black;
-    font-size: 1.5rem;
     color: lime;
     border: 2px inset #555265;
     padding-left: .45rem;
@@ -243,7 +239,7 @@ font-family: 'VT323', monospace;
 /* Chrome */
 
 .progress-bar::-webkit-slider-thumb {
-    width: 3.5rem;
+    width: 2rem;
     height: 1.5rem;
     background: #B39D66;
     border: 5px outset #DDCBA2;
@@ -256,7 +252,7 @@ font-family: 'VT323', monospace;
 /* firefox */
 
 .progress-bar::-moz-range-thumb {
-    width: 3.5rem;
+    width: 2rem;
     height: 1.5rem;
     background: #B39D66;
     border: 5px outset #DDCBA2;
@@ -272,7 +268,7 @@ font-family: 'VT323', monospace;
 /* IE Edge */
 
 .volume-controller::-ms-thumb {
-    width: 3.5rem;
+    width: 2rem;
     height: 1.5rem;
     background: #B39D66;
     border: 5px outset #DDCBA2;
@@ -361,28 +357,40 @@ font-family: 'VT323', monospace;
 /* here i am */
 
 .playlist {
-    width: 95%;
     margin: 0 .5rem .5rem .5rem;
     padding: .75rem;
     border: 2px solid #555265;
     background: black;
     color: lime;
+    font-size: 1.1rem;
+}
+.cmd-container, .playlist, .img-container {
+    width: calc(100% - 40px);
 }
 
-h2 {
-    width: 27.5%;
-    font-size: .75rem;
+
+.maxamp-container h2 {
+    font-size: 1.4rem;
     letter-spacing: .25rem;
     font-family: 'VT323', monospace;
     color: #8A8BA0;
     padding: 0 .5rem;
     text-align: center;
 }
-
-.line-other {
-    width: 33.75%;
-    height: .5rem;
+.winamp-container .line-first, .winamp-container .line.line-other {
+    width: calc(50% - 160px);
+    height: .75em;
 }
+.maxamp-container h2
+{
+    width: 280px;
+}
+
+
+[data-minimized="true"]{
+    height: 3rem;
+}
+
 
 .highlighted-track {
     color: whitesmoke;
@@ -402,7 +410,6 @@ h2 {
 }
 
 .img-container {
-    width: 95%;
     height: 600px;
     margin: 0 .5rem .5rem .5rem;
     padding: .75rem;
@@ -421,13 +428,8 @@ h2 {
     object-fit: cover;
 }
 
-@media (max-width: 560px) {
-    html {
-        font-size: 12px;
-    }
-
-    .maxamp-container {
-        width: 100vw;
-        margin-top: 0;
-    }
+.maxamp-container{
+    font-size: 12px;
+    width: 100vw;
+    margin-top: 0;
 }

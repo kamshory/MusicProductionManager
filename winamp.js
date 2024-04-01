@@ -25,14 +25,14 @@ function Winamp(list) {
     this.tracksNb = 2; 
     this.albumEntry = {};
     
-    this.createPlaylistItem = function(i)
+    this.createPlaylistItem = function(index)
     {
-        let tNumber = i;
-        if(i < 10)
+        let tNumber = this.tracks[index].trackNumber
+        if(tNumber < 10)
         {
-            tNumber = '0'+i;
+            tNumber = '0'+tNumber;
         }
-        return '<div class = "track-info' + (i === 0 ? ' highlighted-track' : '') + '" data-id = "' + i + '"><div class = "track-id">' + tNumber + ' ' + this.tracks[i].title + ' - ' + this.tracks[i].name + '</div><div class = "track-duration">' + this.trackDuration(i) + '</div></div>';
+        return '<div class = "track-info' + (index === 0 ? ' highlighted-track' : '') + '" data-id = "' + index + '"><div class = "track-id">' + tNumber + ' ' + this.tracks[index].title + ' - ' + this.tracks[index].name + '</div><div class = "track-duration">' + this.trackDuration(index) + '</div></div>';
     }
 
     this.createPlaylist = function () {
@@ -81,7 +81,12 @@ function Winamp(list) {
     }
 
     this.updateTrackInfo = function () {
-        this.trackInfoDisplayer.textContent = (parseInt(this.trackLoaded, 10) + 1) + '. ' + this.tracks[this.trackLoaded].name + ' (' + this.trackDuration(this.trackLoaded) + ')'
+        let tNumber = this.tracks[this.trackLoaded].trackNumber;
+        if(tNumber < 10)
+        {
+            tNumber = '0'+tNumber;
+        }
+        this.trackInfoDisplayer.textContent = tNumber + '. ' + this.tracks[this.trackLoaded].name + ' (' + this.trackDuration(this.trackLoaded) + ')'
     }
 
     this.trackDuration = function (place) {
@@ -254,7 +259,7 @@ function Winamp(list) {
         //volume controller
         this.volumeController.addEventListener('input', (e) => {
             this.audio.volume = (e.target.value / 100);
-            lightness = (100 - (e.target.value / 2)) + '%';
+            let lightness = (100 - (e.target.value / 2)) + '%';
             document.documentElement.style.setProperty('--volume-track-lightness', lightness);
         })
 
@@ -287,7 +292,12 @@ function Winamp(list) {
         this.resizable.forEach(resize => {
             resize.addEventListener('click', () => {
                 let resizeParent = this.qs('.' + resize.parentNode.className);
-                resizeParent.style.height === 'auto' ? resizeParent.style.height = '2rem' : resizeParent.style.height = 'auto';
+                if(resizeParent != null)
+                {
+                    let minimized = resizeParent.getAttribute('data-minimized') || 'false';
+                    resizeParent.setAttribute('data-minimized', minimized == 'true' ? 'false': 'true')
+                }
+                
             })
         });
 
@@ -297,17 +307,18 @@ function Winamp(list) {
 
             this.tracks.push(
                 {
-                    name: '',
-                    title: '',
-                    duration: '',
-                    url: ''
+                    name: 'Track ' + this.songList.songList[i].track_number,
+                    title: this.songList.songList[i].title,
+                    duration: this.songList.songList[i].duration,
+                    trackNumber: this.songList.songList[i].track_number,
+                    url: this.songList.songList[i].song_url
                 })
 
             
-            this.tracks[i].name = 'Track ' + this.songList.songList[i].track_number;
-            this.tracks[i].title = this.songList.songList[i].title;
-            this.tracks[i].url = this.songList.songList[i].song_url;
-            this.tracks[i].duration = this.songList.songList[i].duration;
+            // this.tracks[i].name = 'Track ' + this.songList.songList[i].track_number;
+            //this.tracks[i].title = this.songList.songList[i].title;
+            //this.tracks[i].url = this.songList.songList[i].song_url;
+            //this.tracks[i].duration = this.songList.songList[i].duration;
             this.audioForDuration = document.createElement('audio');
             this.audioForDuration.src = this.tracks[i].url;           
             
