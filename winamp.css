@@ -61,6 +61,7 @@ font-family: 'VT323', monospace;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: -6px;
 }
 
 .winamp-container .resizable {
@@ -410,7 +411,7 @@ font-family: 'VT323', monospace;
 
 
 [data-minimized="true"] {
-    height: 48px;
+    height: 38px;
 }
 
 
