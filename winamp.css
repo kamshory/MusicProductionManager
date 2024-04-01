@@ -52,12 +52,12 @@ font-family: 'VT323', monospace;
 .visualisation-container {
     height: auto
         /*  overflow: hidden;
-  height: 2rem;*/
+  height: 32px;*/
 }
 
 .winamp-container .title {
     width: 100%;
-    padding: .5rem 0;
+    padding: 2px 0 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,12 +69,12 @@ font-family: 'VT323', monospace;
 
 .winamp-container h1 {
     width: 20%;
-    font-size: 1.5rem;
+    font-size: 24px;
     text-align: center;
-    letter-spacing: .5rem;
+    letter-spacing: 8px;
     font-family: 'VT323', monospace;
     color: #8A8BA0;
-    padding: 0 .5rem;
+    padding: 8px;
 }
 
 .winamp-container .line {
@@ -87,9 +87,9 @@ font-family: 'VT323', monospace;
 
 
 .cmd-container {
-    padding: .75rem;
+    padding: 12px;
     border: 2px solid #555265;
-    margin: 0 .5rem .5rem .5rem;
+    margin: 8px 8px;
 }
 
 .time-container {
@@ -105,7 +105,7 @@ font-family: 'VT323', monospace;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-left: .5rem;
+    margin-left: 8px;
 }
 
 .time-displayer {
@@ -114,21 +114,21 @@ font-family: 'VT323', monospace;
     color: lime;
     background: black;
     width: 100%;
-    font-size: 1.8rem;
+    font-size: 30px;
     border: 2px inset #555265;
-    padding-top: 0.2rem;
-    padding-left: 0.6rem;
+    padding-top: 3px;
+    padding-left: 10px;
 }
 
 .track-info-displayer {
     width: 100%;
-    height: 2rem;
+    height: 32px;
     background: black;
     color: lime;
     border: 2px inset #555265;
-    padding-left: .45rem;
-    padding-top: .25rem;
-    font-size: 1.05rem;
+    padding-left: 7px;
+    padding-top: 4px;
+    font-size: 17px;
 }
 
 /* input type range */
@@ -165,7 +165,7 @@ font-family: 'VT323', monospace;
 
 .volume-controller {
     width: 100%;
-    height: .75rem;
+    height: 12px;
     border-radius: 25px;
     border: 2px inset #555265;
 }
@@ -173,8 +173,8 @@ font-family: 'VT323', monospace;
 /* Chrome */
 
 .volume-controller::-webkit-slider-thumb {
-    width: 1.75rem;
-    height: 1.25rem;
+    width: 28px;
+    height: 20px;
     background: var(--btn-color);
     border: 2px inset #555265;
     position: relative;
@@ -191,10 +191,11 @@ font-family: 'VT323', monospace;
 /* firefox */
 
 .volume-controller::-moz-range-thumb {
-    width: 1.75rem;
-    height: 1.25rem;
+    width: 28px;
+    height: 20px;
     background: var(--btn-color);
-    border: 2px inset #555265;
+    border: 0px inset #555265;
+    border-radius: 0px;
     position: relative;
     top: calc(-2px - 50%);
 }
@@ -203,16 +204,17 @@ font-family: 'VT323', monospace;
     height: 100%;
     width: 100%;
     background: hsl(0, 100%, var(--volume-track-lightness));
-    border-radius: 25px;
+    border-radius: 0px;
 }
 
 /* IE Edge */
 
 .winamp-container input[type=range]::-ms-thumb {
-    width: 1.75rem;
-    height: 1.25rem;
+    width: 28px;
+    height: 20px;
     background: var(--btn-color);
-    border: 2px inset #555265;
+    border: 0px inset #555265;
+    border-radius: 0px;
     position: relative;
     top: calc(-2px - 50%);
 }
@@ -227,9 +229,9 @@ font-family: 'VT323', monospace;
 /* progress bar */
 
 .progress-bar {
-    margin: .75rem 0;
+    margin: 12px 0;
     width: 100%;
-    height: 1.5rem;
+    height: 20px;
     background: transparent;
     border: 2px inset #555265;
     overflow: hidden;
@@ -239,10 +241,11 @@ font-family: 'VT323', monospace;
 /* Chrome */
 
 .progress-bar::-webkit-slider-thumb {
-    width: 2rem;
-    height: 1.5rem;
+    width: 32px;
+    height: 20px;
     background: #B39D66;
-    border: 5px outset #DDCBA2;
+    border: 0px outset #DDCBA2;
+    border-radius: 0px;
     position: relative;
     top: calc(-2px - 50%);
     box-shadow: -600px 0 0 600px #F9EBBC;
@@ -252,10 +255,11 @@ font-family: 'VT323', monospace;
 /* firefox */
 
 .progress-bar::-moz-range-thumb {
-    width: 2rem;
-    height: 1.5rem;
+    width: 32px;
+    height: 20px;
     background: #B39D66;
-    border: 5px outset #DDCBA2;
+    border: 0px outset #DDCBA2;
+    border-radius: 0px;
     position: relative;
     top: calc(-2px - 50%);
 }
@@ -268,10 +272,11 @@ font-family: 'VT323', monospace;
 /* IE Edge */
 
 .volume-controller::-ms-thumb {
-    width: 2rem;
-    height: 1.5rem;
+    width: 32px;
+    height: 24px;
     background: #B39D66;
-    border: 5px outset #DDCBA2;
+    border: 0px outset #DDCBA2;
+    border-radius: 0px;
     position: relative;
     top: calc(-2px - 50%);
 }
@@ -291,11 +296,11 @@ font-family: 'VT323', monospace;
 .winamp-container button {
     position: relative;
     cursor: pointer;
-    min-width: 2.2rem;
-    height: 2.4rem;
+    min-width: 32px;
+    height: 32px;
     padding: 0;
     margin: 0;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: bold;
     background: var(--btn-color);
     border: 1px outset #ADBAC7;
@@ -306,41 +311,41 @@ font-family: 'VT323', monospace;
     position: absolute;
     top: -5px;
     left: -5px;
-    height: 2rem;
-    width: 3rem;
+    height: 16px;
+    width: 48px;
     border: 2px solid #202033;
 }
 
 .btn-container--1 {
-    width: 15rem;
+    width: 240px;
     display: flex;
 }
 
 .btn-container--2 {
-    width: 10rem;
+    width: 160px;
     display: flex;
 }
 
 .shuffle-btn {
-    width: 7rem;
-    font-size: 1.25rem;
+    width: 80px;
+    font-size: 20px;
     font-weight: bold;
 }
 
 .shuffle-btn:after {
-    width: 7rem;
+    width: 80px;
 }
 
 .repeat-btn {
-    width: 3rem;
-    font-size: 1.25rem;
+    width: 48px;
+    font-size: 20px;
     font-weight: bold;
 }
 .logo {
     color: orange;
     transform: rotate(20deg);
     transform-origin: center;
-    font-size: 1.75rem;
+    font-size: 24px;
 }
 @media screen and (max-width: 600px) {
     .logo{
@@ -357,12 +362,12 @@ font-family: 'VT323', monospace;
 /* here i am */
 
 .playlist {
-    margin: 0 .5rem .5rem .5rem;
-    padding: .75rem;
+    margin: 8px 8px 8px;
+    padding: 12px;
     border: 2px solid #555265;
     background: black;
     color: lime;
-    font-size: 1.1rem;
+    font-size: 18px;
 }
 .cmd-container, .playlist, .img-container {
     width: calc(100% - 40px);
@@ -370,16 +375,16 @@ font-family: 'VT323', monospace;
 
 
 .maxamp-container h2 {
-    font-size: 1.2rem;
-    letter-spacing: .25rem;
+    font-size: 19px;
+    letter-spacing: 4px;
     font-family: 'VT323', monospace;
     color: #8A8BA0;
-    padding: 0 .5rem;
+    padding: 8px;
     text-align: center;
 }
 .winamp-container .line-first, .winamp-container .line.line-other {
     width: calc(50% - 160px);
-    height: .75em;
+    height: 0.75em;
 }
 .maxamp-container h2
 {
@@ -388,7 +393,7 @@ font-family: 'VT323', monospace;
 
 
 [data-minimized="true"]{
-    height: 3rem;
+    height: 48px;
 }
 
 
@@ -401,7 +406,7 @@ font-family: 'VT323', monospace;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-    line-height: 1.25;
+    line-height: 1.45;
 }
 
 .track-id,
@@ -411,8 +416,8 @@ font-family: 'VT323', monospace;
 
 .img-container {
     height: 600px;
-    margin: 0 .5rem .5rem .5rem;
-    padding: .75rem;
+    margin: 8px 8px 8px;
+    padding: 12px;
     border: 2px solid #555265;
     background: black;
     display: flex;
