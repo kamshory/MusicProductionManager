@@ -30,14 +30,15 @@ Operating system supported **MusicProductionManager**
 12. MIDI Player
 13. MusicXML Player
 14. Karaoke
-15. Sound Recorder
-16. Recording Teleprompter
-17. Piano Display
-18. Download Files
-19. User Management
-20. User Role
-21. Article
-22. Multiple Time Zone
+15. Album Player
+16. Sound Recorder
+17. Recording Teleprompter
+18. Piano Display
+19. Download Files
+20. User Management
+21. User Role
+22. Article
+23. Multiple Time Zone
 
 ## Colaboration
 
@@ -134,6 +135,10 @@ MIDI editor is useful for changing instruments on each song track. Producers may
 ## Karaoke
 
 Karaoke is a feature that vocalists can use while practicing. The Music Production Manager will display the song lyrics that must be sung. Music Production Manager also displays the piano keys that are active when a note is played along with information on which octact. Users can choose to listen to music in its entirety in mp3 format or vocal tunes only. In parts where the vocal tone cannot be heard clearly when listened to in mp3 format, this feature is very helpful for vocalists when practicing vocals. Features can be accessed in desktop and mobile mode using smartphones and tablets.
+
+## Album Player
+
+ALbum Player is a song player that can play all the songs in an album sequentially instead of playing songs one by one like the karaoke feature. This feature is very useful for listening to songs in the album as a whole. Users may want to pay attention to the level of each song to ensure that no song is too loud or too quiet. Apart from that, users can also pay attention to the relationship between songs in an album, both from the lyrics and from other angles.
 
 ## Sound Recorder
 
