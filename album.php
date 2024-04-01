@@ -78,7 +78,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
             <div class="title">
                 <div class="line line-first">
                 </div>
-                <h2> WINAMP </h2>
+                <h2>ALBUM PLAYER</h2>
                 <div class="line line-first">
                 </div>
             </div>
@@ -142,7 +142,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
             <div class="title resizable">
                 <div class="line line-other">
                 </div>
-                <h2> WINAMP PLAYLIST</h2>
+                <h2> PLAYLIST</h2>
                 <div class="line line-other">
                 </div>
             </div>

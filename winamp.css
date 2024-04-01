@@ -128,7 +128,7 @@ font-family: 'VT323', monospace;
     border: 2px inset #555265;
     padding-left: 7px;
     padding-top: 4px;
-    font-size: 17px;
+    font-size: 16px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: hidden;
@@ -378,7 +378,7 @@ font-family: 'VT323', monospace;
     border: 2px solid #555265;
     background: black;
     color: lime;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .cmd-container,
