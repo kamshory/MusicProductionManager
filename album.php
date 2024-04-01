@@ -74,7 +74,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
       {
       ?>
       <li>
-        <audio src="<?php echo $song->songUrl;?>" controls></audio>
+        <audio data-song-id="<?php echo $song->song_id;?>" src="<?php echo $song->songUrl;?>" controls></audio>
       </li>
       <?php
       }
