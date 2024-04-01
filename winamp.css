@@ -114,10 +114,10 @@ font-family: 'VT323', monospace;
     color: lime;
     background: black;
     width: 100%;
-    font-size: 2rem;
+    font-size: 1.8rem;
     border: 2px inset #555265;
     padding-top: 0.2rem;
-    padding-left: 0.8rem;
+    padding-left: 0.6rem;
 }
 
 .track-info-displayer {
@@ -291,11 +291,11 @@ font-family: 'VT323', monospace;
 .winamp-container button {
     position: relative;
     cursor: pointer;
-    min-width: 2.6rem;
-    height: 3rem;
+    min-width: 2.2rem;
+    height: 2.4rem;
     padding: 0;
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: bold;
     background: var(--btn-color);
     border: 1px outset #ADBAC7;
@@ -370,7 +370,7 @@ font-family: 'VT323', monospace;
 
 
 .maxamp-container h2 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     letter-spacing: .25rem;
     font-family: 'VT323', monospace;
     color: #8A8BA0;
