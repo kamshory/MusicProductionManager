@@ -129,6 +129,15 @@ font-family: 'VT323', monospace;
     padding-left: 7px;
     padding-top: 4px;
     font-size: 17px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+.track-info .track-id{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden; 
 }
 
 /* input type range */
@@ -296,7 +305,7 @@ font-family: 'VT323', monospace;
 .winamp-container button {
     position: relative;
     cursor: pointer;
-    min-width: 32px;
+    min-width: 28px;
     height: 32px;
     padding: 0;
     margin: 0;
@@ -370,7 +379,7 @@ font-family: 'VT323', monospace;
     font-size: 18px;
 }
 .cmd-container, .playlist, .img-container {
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
 }
 
 
@@ -381,14 +390,15 @@ font-family: 'VT323', monospace;
     color: #8A8BA0;
     padding: 8px;
     text-align: center;
+    margin: 0;
 }
 .winamp-container .line-first, .winamp-container .line.line-other {
-    width: calc(50% - 160px);
+    width: calc(50% - 120px);
     height: 0.75em;
 }
 .maxamp-container h2
 {
-    width: 280px;
+    width: 220px;
 }
 
 
@@ -437,4 +447,11 @@ font-family: 'VT323', monospace;
     font-size: 12px;
     width: 100vw;
     margin-top: 0;
+}
+
+@media screen and (max-width : 540px) {
+    .time-displayer{
+        font-size: 20px;
+        padding-left: 4px;
+    }
 }
