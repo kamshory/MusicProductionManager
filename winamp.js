@@ -36,7 +36,7 @@ class Winamp {
 
         this.createPlaylist = function () {
             //first I fill the playlist with the tracks infos
-            for (i = 0; i < this.tracks.length; i++) {
+            for (let i = 0; i < this.tracks.length; i++) {
                 this.playlist.innerHTML += this.createPlaylistItem(i);
             }
 
@@ -291,7 +291,7 @@ class Winamp {
             });
 
             // creation of the playlist, because I'm a little bit lazy, JS create the array for me :D
-            for (i = 0; i < this.tracksNb; i++) {
+            for (let i = 0; i < this.tracksNb; i++) {
 
                 this.tracks.push(
                     {
