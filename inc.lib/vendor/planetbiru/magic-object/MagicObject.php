@@ -15,6 +15,7 @@ use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
 use MagicObject\Exceptions\NoDatabaseConnectionException;
 use MagicObject\Exceptions\NoRecordFoundException;
+use MagicObject\Util\ObjectParser;
 use MagicObject\Util\PicoAnnotationParser;
 use MagicObject\Util\PicoDatabaseUtil;
 use MagicObject\Util\PicoEnvironmentVariable;
@@ -191,7 +192,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($obj));
+                $this->loadData(ObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -202,7 +203,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($data));
+                $this->loadData(ObjectParser::parseRecursive($data));
             }
             else
             {
@@ -235,7 +236,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($obj));
+                $this->loadData(ObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -246,7 +247,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($data));
+                $this->loadData(ObjectParser::parseRecursive($data));
             }
             else
             {
@@ -278,7 +279,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($obj));
+                $this->loadData(ObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -289,7 +290,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($data));
+                $this->loadData(ObjectParser::parseRecursive($data));
             }
             else
             {
@@ -321,7 +322,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($obj));
+                $this->loadData(ObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -332,7 +333,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(self::parseRecursive($data));
+                $this->loadData(ObjectParser::parseRecursive($data));
             }
             else
             {
@@ -1532,43 +1533,5 @@ class MagicObject extends stdClass // NOSONAR
         return $value->value($snake);
     }
     
-    /**
-     * Parse recursive
-     */
-    private static function parseRecursive($data)
-    {
-        $magicObject = new self();
-        if($data != null)
-        {
-            if($data instanceof self)
-            {
-                $values = $data->value();
-                foreach ($values as $key => $value) {
-                    $key2 = StringUtil::camelize($key);
-                    if(is_scalar($value))
-                    {
-                        $magicObject->set($key2, $value, true);
-                    }
-                    else
-                    {
-                        $magicObject->set($key2, self::parseRecursive($value), true);
-                    }
-                }
-            }
-            else if (is_array($data) || is_object($data)) {
-                foreach ($data as $key => $value) {
-                    $key2 = StringUtil::camelize($key);
-                    if(is_scalar($value))
-                    {
-                        $magicObject->set($key2, $value, true);
-                    }
-                    else
-                    {
-                        $magicObject->set($key2, self::parseRecursive($value), true);
-                    }
-                }
-            }
-        }
-        return $magicObject;
-    }
+    
 }
