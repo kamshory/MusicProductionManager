@@ -25,6 +25,12 @@ class Winamp {
         this.tracks = [];
         this.tracksNb = 2;
         this.albumEntry = {};
+        this.audioContext = null;
+        this.source = null;
+        this.analyserLeft = null;
+        this.analyserRight = null;
+        this.splitter = null;
+        this.drawInterval = setInterval(function(){}, 10000000);
 
         this.createPlaylistItem = function (index) {
             let tNumber = this.tracks[index].trackNumber;
@@ -81,12 +87,6 @@ class Winamp {
             this.updateTrackInfo();
             this.audio.src = this.tracks[this.trackLoaded].url;
         };
-        this.audioContext = null;
-        this.source = null;
-        this.analyserLeft = null;
-        this.analyserRight = null;
-        this.splitter = null;
-        this.drawInterval = setInterval(function(){}, 10000000);
         
         this.beforePlay = function()
         {
@@ -103,53 +103,34 @@ class Winamp {
             
             this.source = this.audioContext.createMediaElementSource(this.audio);
             this.source.connect(this.audioContext.destination);
-            
-            
-                       
             this.analyserLeft = this.audioContext.createAnalyser();
             this.analyserLeft.fftSize = 2048;
             let bufferLength = this.analyserLeft.frequencyBinCount;
             let dataArrayLeft = new Uint8Array(bufferLength);
             this.analyserLeft.getByteTimeDomainData(dataArrayLeft);
-            
-            
             this.analyserRight = this.audioContext.createAnalyser(); 
             this.analyserRight.fftSize = 2048;
             let dataArrayRight = new Uint8Array(bufferLength);
             this.analyserRight.getByteTimeDomainData(dataArrayRight);         
-           
             this.splitter = this.audioContext.createChannelSplitter(2);
             this.source.connect(this.splitter);
-            
-            
             this.splitter.connect(this.analyserLeft, 1);
             this.splitter.connect(this.analyserRight, 0)
-            
-            
             clearInterval(this.drawInterval);
-            
             this.drawInterval = setInterval(function(){ 
                 _this.checkVolume(_this.analyserLeft,"meterLeft");
                 _this.checkVolume(_this.analyserRight, "meterRight") 
             }, 50);
-            
-            
-        
-            
         }
 
         this.checkVolume = function(analyser, meter){
             let frequencyData = new Uint8Array(1);
             analyser.getByteFrequencyData(frequencyData);
             let volume = frequencyData[0];
-            
-            //min=20deg   max=160deg
-            //.54 is conversion ration + minimum angle
             let rotation=(parseInt(volume*.54))+20; 
             let needles = document.getElementById(meter).getElementsByClassName('needle');
             let needle=needles[0];
-            needle.style.transform = "rotate("+rotation+"deg)";
-            
+            needle.style.transform = "rotate("+rotation+"deg)";           
         }
 
         this.updateTrackInfo = function () {
@@ -158,9 +139,7 @@ class Winamp {
                 tNumber = '0' + tNumber;
             }
             this.trackInfoDisplayer.textContent = tNumber + '. ' + this.tracks[this.trackLoaded].name + ' (' + this.trackDuration(this.trackLoaded) + ')';
-        };
-
-        
+        };      
 
         this.trackDuration = function (place) {
             return (
@@ -175,6 +154,7 @@ class Winamp {
                 this.visualisation.style.display = 'block';
             }
         };
+
         this.hilightCurrentTrack = function (trackNumber) {
             let i = 0;
             this.trackInfo.forEach(track => {
@@ -185,6 +165,7 @@ class Winamp {
                 i++;
             });
         };
+
         this.nextTrack = function () {
             if (this.shuffle) {
                 this.trackLoaded = Math.floor(Math.random() * this.tracks.length);
@@ -315,8 +296,6 @@ class Winamp {
                     }
                 }
             });
-
-
 
             // display time elapsed
             this.audio.addEventListener('timeupdate', (e) => {
