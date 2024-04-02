@@ -68,16 +68,6 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
 
     <style>
-      body {
-    background:#222;
-    font-family:orbitron, sans-serif;
-}
-
-h1 {
-    color:white;
-    font-size:1.5em;
-    font-weight:normal;
-}
 
 .meter {
   width:300px;
@@ -246,9 +236,6 @@ button.disabled {
     </div> 
 </div>    
 
-<nav>
-<button id="play" >PLAY</button>
-</nav>
 
     <div class="winamp-container">
 
