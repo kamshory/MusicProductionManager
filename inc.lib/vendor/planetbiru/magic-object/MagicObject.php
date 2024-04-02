@@ -15,6 +15,7 @@ use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
 use MagicObject\Exceptions\NoDatabaseConnectionException;
 use MagicObject\Exceptions\NoRecordFoundException;
+use MagicObject\Util\ObjectParser;
 use MagicObject\Util\PicoAnnotationParser;
 use MagicObject\Util\PicoDatabaseUtil;
 use MagicObject\Util\PicoEnvironmentVariable;
@@ -127,6 +128,26 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $this;
     }
+    
+    /**
+     * Load data from INI string
+     *
+     * @param string $rawData
+     * @param bool $systemEnv
+     * @return self
+     */
+    public function loadIniString($rawData, $systemEnv = false)
+    {
+        // Parse without sections
+        $data = parse_ini_string($rawData);
+        if($systemEnv)
+        {
+            $env = new PicoEnvironmentVariable();
+            $data = $env->replaceSysEnvAll($data, true);
+        }
+        $this->loadData($data);
+        return $this;
+    }
 
     /**
      * Load data from INI file
@@ -149,13 +170,59 @@ class MagicObject extends stdClass // NOSONAR
     }
 
     /**
+     * Load data from Yaml string
+     *
+     * @param string $rawData
+     * @param bool $systemEnv
+     * @param bool $asObject
+     * @param bool $recursive
+     * @return self
+     */
+    public function loadYamlString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
+    {
+        $data = Yaml::parse($rawData);
+        if($systemEnv)
+        {
+            $env = new PicoEnvironmentVariable();
+            $data = $env->replaceSysEnvAll($data, true);
+        }
+        if($asObject)
+        {
+            // convert to object
+            $obj = json_decode(json_encode((object) $data), false);
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
+        }
+        else
+        {
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
+        }
+        return $this;
+    }
+    
+    /**
      * Load data from Yaml file
      *
      * @param string $path
      * @param bool $systemEnv
+     * @param bool $asObject
+     * @param bool $recursive
      * @return self
      */
-    public function loadYamlFile($path, $systemEnv = false, $asObject = false)
+    public function loadYamlFile($path, $systemEnv = false, $asObject = false, $recursive = false)
     {
         $data = Yaml::parseFile($path);
         if($systemEnv)
@@ -167,23 +234,81 @@ class MagicObject extends stdClass // NOSONAR
         {
             // convert to object
             $obj = json_decode(json_encode((object) $data), false);
-            $this->loadData($obj);
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
         }
         else
         {
-            $this->loadData($data);
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
         }
         return $this;
     }
 
     /**
+     * Load data from JSON string
+     *
+     * @param string $rawData
+     * @param bool $systemEnv
+     * @param bool $recursive
+     * @return self
+     */
+    public function loadJsonString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
+    {
+        $data = json_decode($rawData);
+        if($systemEnv)
+        {
+            $env = new PicoEnvironmentVariable();
+            $data = $env->replaceSysEnvAll($data, true);
+        }
+        if($asObject)
+        {
+            // convert to object
+            $obj = json_decode(json_encode((object) $data), false);
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
+        }
+        else
+        {
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
+        }
+        return $this;
+    }
+    
+    /**
      * Load data from JSON file
      *
      * @param string $path
      * @param bool $systemEnv
+     * @param bool $recursive
      * @return self
      */
-    public function loadJsonFile($path, $systemEnv = false, $asObject = false)
+    public function loadJsonFile($path, $systemEnv = false, $asObject = false, $recursive = false)
     {
         $data = json_decode(file_get_contents($path));
         if($systemEnv)
@@ -195,11 +320,25 @@ class MagicObject extends stdClass // NOSONAR
         {
             // convert to object
             $obj = json_decode(json_encode((object) $data), false);
-            $this->loadData($obj);
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
         }
         else
         {
-            $this->loadData($data);
+            if($recursive)
+            {
+                $this->loadData(ObjectParser::parseRecursive($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
         }
         return $this;
     }
@@ -1393,4 +1532,6 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $value->value($snake);
     }
+    
+    
 }

@@ -59,9 +59,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     ->select("song.song_id, song.time_create, song.time_edit")
     ->from("song")
     ->where(
-      "song.time_create like ? or song.time_create like ? or song.time_edit like ? or song.time_edit like ? ",
-      (date("Y") - 1) . "%",
-      date("Y") . "%",
+      "song.time_create like ? or song.time_create like ? ",
       (date("Y") - 1) . "%",
       date("Y") . "%"
     )
@@ -84,7 +82,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
   } catch (Exception $e) {
     // do nothing
   }
-  
+
   $sql = $query->newQuery()
     ->select("song_draft.song_draft_id, song_draft.time_create, song_draft.time_edit")
     ->from("song_draft")

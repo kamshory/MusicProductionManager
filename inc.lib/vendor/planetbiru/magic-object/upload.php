@@ -1,6 +1,7 @@
 <?php
 
 use MagicObject\File\PicoUplodFile;
+use MagicObject\MagicObject;
 use MagicObject\Session\PicoSession;
 
 require_once "vendor/autoload.php";
@@ -32,3 +33,5 @@ if(!isset($systemSession->coba))
 $systemSession->coba++;
 
 echo $systemSession->coba;
+
+$magicObject = new MagicObject(MagicObject::parseRecursive($data));
