@@ -31,7 +31,7 @@ class Winamp {
             if (tNumber < 10) {
                 tNumber = '0' + tNumber;
             }
-            return '<div class = "track-info' + (index === 0 ? ' highlighted-track' : '') + '" data-id = "' + index + '"><div class = "track-id">' + tNumber + ' ' + this.tracks[index].title + ' - ' + this.tracks[index].name + '</div><div class = "track-duration">' + this.trackDuration(index) + '</div></div>';
+            return '<div class = "prevent-select track-info' + (index === 0 ? ' highlighted-track' : '') + '" data-id = "' + index + '"><div class = "track-id">' + tNumber + '. ' + this.tracks[index].name + ' - ' + this.tracks[index].title + '</div><div class = "track-duration">' + this.trackDuration(index) + '</div></div>';
         };
 
         this.createPlaylist = function () {
