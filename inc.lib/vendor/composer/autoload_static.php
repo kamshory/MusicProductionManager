@@ -158,7 +158,7 @@ class ComposerStaticInit2219d434bd9928e433eb450fe0d2c608
         ),
         'MagicObject\\' => 
         array (
-            0 => __DIR__ . '/..' . '/planetbiru/magic-object',
+            0 => __DIR__ . '/..' . '/planetbiru/magic-object/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

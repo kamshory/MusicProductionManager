@@ -556,7 +556,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
     <div class="card w-100">
       <div class="card-body p-4">
         <h5 class="card-title fw-semibold mb-4">Recent Album</h5>
-        <div class="table-responsive table-responsive-two-side">
+        <div class="">
 
           <?php
 
@@ -581,6 +581,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
           $result = $rowData->getResult();
           if (!empty($result)) {
           ?>
+            <div class="table-contai" style="overflow-x:auto">
             <table class="table text-nowrap mb-0 align-middle">
               <thead class="text-dark fs-4">
                 <tr>
@@ -638,6 +639,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
                 ?>
               </tbody>
             </table>
+            </div>
           <?php
           }
           ?>

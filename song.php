@@ -329,7 +329,7 @@ if(!empty($result))
     </div>
 </div>
 <div class="table-list-container" style="overflow-x:auto">
-<table class="table">
+<table class="table text-nowrap">
     <thead>
         <tr>
         <th scope="col" width="20"><i class="ti ti-edit"></i></th>

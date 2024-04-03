@@ -569,24 +569,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "aab575e825a0e770728c7bea94d7df8af18da369"
+                "reference": "25efbccc5665c5f58da647b97c3e9e19475e5e94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/aab575e825a0e770728c7bea94d7df8af18da369",
-                "reference": "aab575e825a0e770728c7bea94d7df8af18da369",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/25efbccc5665c5f58da647b97c3e9e19475e5e94",
+                "reference": "25efbccc5665c5f58da647b97c3e9e19475e5e94",
                 "shasum": ""
             },
             "require": {
                 "symfony/yaml": "^3.4"
             },
-            "time": "2024-04-02T09:06:41+00:00",
+            "time": "2024-04-03T15:06:08+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "MagicObject\\": ""
+                    "MagicObject\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
