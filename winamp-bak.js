@@ -69,6 +69,7 @@ class Winamp {
                 this.trackLoaded = e.target.dataset.id;
                 this.trackInfo[this.trackLoaded].classList.toggle('highlighted-track');
                 this.audio.src = this.tracks[this.trackLoaded].url;
+                this.audio.setAttribute('crossorigin', 'anonymous');
                 
                 this.beforePlay();
                 this.audio.play();
@@ -86,6 +87,7 @@ class Winamp {
 
             this.updateTrackInfo();
             this.audio.src = this.tracks[this.trackLoaded].url;
+            this.audio.setAttribute('crossorigin', 'anonymous');
         };
         
         this.beforePlay = function()
@@ -176,6 +178,7 @@ class Winamp {
             }
             this.hilightCurrentTrack(this.trackLoaded);
             this.audio.src = this.tracks[this.trackLoaded].url;
+            this.audio.setAttribute('crossorigin', 'anonymous');
             
             this.beforePlay();
             this.audio.play();
@@ -220,6 +223,7 @@ class Winamp {
             this.playBtn.addEventListener('click', () => {
                 if (!this.play) {
                     this.audio.src = this.tracks[this.trackLoaded].url;
+                    this.audio.setAttribute('crossorigin', 'anonymous');
                     
                     this.beforePlay();
                     this.audio.play();
@@ -266,6 +270,7 @@ class Winamp {
                         console.error('there is a ball in the soup (a french expression)');
                     }
                     this.audio.src = this.tracks[this.trackLoaded].url;
+                    this.audio.setAttribute('crossorigin', 'anonymous');
                     this.trackInfo[this.trackLoaded].classList.toggle('highlighted-track');
                     if(this.play)
                     {

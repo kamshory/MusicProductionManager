@@ -1,6 +1,6 @@
-# <FilesMatch "\.(eot|ttf|otf|woff|mp3)$">
-    Header set Access-Control-Allow-Origin "*"
-    Header set Access-Control-Allow-Methods "GET,PUT,POST,DELETE"
-    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+<FilesMatch "\.(eot|ttf|otf|woff|mp3|pdf|musicxml|xml|css|js)$">
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET,PUT,POST,DELETE"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"
 
-# </FilesMatch>
+</FilesMatch>
