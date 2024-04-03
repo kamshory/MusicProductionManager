@@ -13,16 +13,12 @@
   <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
   <script src="lib/pagination.js"></script>
-
-
 </head>
 
 <body>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-
     <?php require_once "inc/sidebar.php"; ?>
-
     <!--  Main wrapper -->
     <div class="body-wrapper">
       <?php
