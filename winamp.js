@@ -94,7 +94,6 @@ class Winamp {
         this.trackLoaded = e.target.dataset.id;
         this.trackInfo[this.trackLoaded].classList.toggle("highlighted-track");
         this.audio.src = this.tracks[this.trackLoaded].url;
-        
 
         this.playAudio();
 

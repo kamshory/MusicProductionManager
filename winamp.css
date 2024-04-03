@@ -137,6 +137,7 @@ font-family: 'VT323', monospace;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: hidden;
+    padding-right: 10px;
 }
 
 /* input type range */
