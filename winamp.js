@@ -26,6 +26,13 @@ class Winamp {
         this.tracksNb = 2;
         this.albumEntry = {};
 
+
+        this.context = null;
+        this.source = null;
+        this.analyserLeft = null;
+        this.analyserRight = null;
+        this.splitter = null;
+
         this.createPlaylistItem = function (index) {
             let tNumber = this.tracks[index].trackNumber;
             if (tNumber < 10) {
@@ -63,7 +70,7 @@ class Winamp {
                 this.trackLoaded = e.target.dataset.id;
                 this.trackInfo[this.trackLoaded].classList.toggle('highlighted-track');
                 this.audio.src = this.tracks[this.trackLoaded].url;
-                this.audio.play();
+                this.audioPlay();
                 this.updateTrackInfo();
                 if (!this.play) {
                     this.playBtn.classList.toggle('highlighted');
@@ -119,9 +126,83 @@ class Winamp {
             }
             this.hilightCurrentTrack(this.trackLoaded);
             this.audio.src = this.tracks[this.trackLoaded].url;
-            this.audio.play();
+            this.audioPlay();
             this.updateTrackInfo();
         };
+
+        this.beforePlay = function()
+        {
+            this.audioContext = new AudioContext;
+            
+            this.source = this.audioContext.createMediaElementSource(this.audio);
+            this.source.connect(this.audioContext.destination);
+            /*
+            
+
+            this.analyserLeft = this.audioContext.createAnalyser();
+            this.analyserRight = this.audioContext.createAnalyser();
+
+
+            const bufferLength = this.analyserLeft.frequencyBinCount;
+
+            this.analyserLeft.fftSize = bufferLength;
+            this.analyserRight.fftSize = bufferLength;
+
+
+            const dataArrayLeft = new Uint8Array(bufferLength);
+            this.analyserLeft.getByteTimeDomainData(dataArrayLeft);
+
+            const dataArrayRight = new Uint8Array(bufferLength);
+            this.analyserRight.getByteTimeDomainData(dataArrayRight);
+
+
+            this.splitter = this.audioContext.createChannelSplitter(2);
+            this.source.connect(this.splitter);
+            
+            this.splitter.connect(this.analyserLeft, 1);
+            this.splitter.connect(this.analyserRight, 0)
+            
+            this.source.connect(this.audioContext.destination);
+            */
+   
+            //this.source.start();
+        }
+
+        this.afterPlay = function()
+        {
+            /*
+            this.audioContext.resume();
+            setInterval(function(){ 
+                _this.checkVolume(_this.analyserLeft,"meterLeft");
+                _this.checkVolume(_this.analyserRight, "meterRight") 
+            }, 50);
+            */
+        }
+
+        this.checkVolume = function(analyser, meter)
+        {
+        
+            let frequencyData = new Uint8Array(1);
+            analyser.getByteFrequencyData(frequencyData);
+            let volume=frequencyData[0];
+            
+            //min=20deg   max=160deg
+            //.54 is conversion ration + minimum angle
+            let rotation=(parseInt(volume*.54))+20; 
+            //let needles = document.getElementById(meter).getElementsByClassName('needle');
+            //let needle=needles[0];
+            
+            //needle.style.transform="rotate("+rotation+"deg)";
+            console.log(rotation);
+            
+        }
+
+        this.audioPlay = function()
+        {
+            this.beforePlay();
+            this.audio.play();
+            this.afterPlay();
+        }
 
         this.init = function (list) {
             this.songList = list;
@@ -155,11 +236,14 @@ class Winamp {
             this.repeat = false;
             this.lightness = '50%';
 
+
+            
+
             //Now the playlist is created, let handle the buttons
             this.playBtn.addEventListener('click', () => {
                 if (!this.play) {
                     this.audio.src = this.tracks[this.trackLoaded].url;
-                    this.audio.play();
+                    
                     this.play = true;
                     this.playBtn.classList.toggle('highlighted');
                     this.stopBtn.classList.toggle('highlighted');
@@ -202,7 +286,7 @@ class Winamp {
                     }
                     this.audio.src = this.tracks[this.trackLoaded].url;
                     this.trackInfo[this.trackLoaded].classList.toggle('highlighted-track');
-                    this.play ? this.audio.play() : null;
+                    this.play ? this.audioPlay() : null;
                     this.isaudioPaused();
                     this.updateTrackInfo();
                 });
@@ -217,7 +301,7 @@ class Winamp {
                         this.visualisation.style.display = 'none';
                     }
                     else {
-                        this.audio.play();
+                        this.audioPlay();
                         this.pause = false;
                         this.visualisation.style.display = 'block';
                     }
@@ -275,7 +359,7 @@ class Winamp {
             });
 
             this.audio.addEventListener('ended', () => {
-                this.repeat ? (this.audio.currentTime = 0, this.audio.play()) : this.trackLoaded < (this.tracks.length - 1) ? this.nextTrack() : this.shuffle ? this.nextTrack() : console.log('fin');
+                this.repeat ? (this.audio.currentTime = 0, this.audioPlay()) : this.trackLoaded < (this.tracks.length - 1) ? this.nextTrack() : this.shuffle ? this.nextTrack() : console.log('fin');
             });
 
             // expand the playlist or the visualisation
@@ -319,7 +403,7 @@ class Winamp {
             }
 
         };
-
+   
         this.init(list);
 
 
