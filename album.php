@@ -66,7 +66,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     <link rel="stylesheet" href="winamp.css?<?php echo mt_rand(1111, 999999);?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
-
+    <link rel="stylesheet" href="vu-meter.css">
     <style>
 
 
