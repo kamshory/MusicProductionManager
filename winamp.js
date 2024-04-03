@@ -31,6 +31,14 @@ class Winamp {
     this.splitter = null;
     this.drawInterval = setInterval(function () {}, 10000000);
 
+    this.isPlaying = false;
+
+    this.onPlay = function () {};
+
+    this.onPaused = function () {};
+
+    this.onEnded = function () {};
+
     this.createPlaylistItem = function (index) {
       let tNumber = this.tracks[index].trackNumber;
       if (tNumber < 10) {
@@ -88,9 +96,7 @@ class Winamp {
         this.audio.src = this.tracks[this.trackLoaded].url;
         this.audio.setAttribute("crossorigin", "anonymous");
 
-        this.beforePlay();
-        this.audio.play();
-        this.afterPlay();
+        this.playAudio();
 
         this.updateTrackInfo();
         if (!this.play) {
@@ -112,6 +118,11 @@ class Winamp {
     };
     this.afterPlay = function () {
       this.audioContext.resume();
+    };
+    this.playAudio = function () {
+      this.beforePlay();
+      this.audio.play();
+      this.afterPlay();
     };
 
     this.loadVuMeter = function () {
@@ -203,9 +214,7 @@ class Winamp {
       this.audio.src = this.tracks[this.trackLoaded].url;
       this.audio.setAttribute("crossorigin", "anonymous");
 
-      this.beforePlay();
-      this.audio.play();
-      this.afterPlay();
+      this.playAudio();
 
       this.updateTrackInfo();
     };
@@ -236,23 +245,21 @@ class Winamp {
       this.tracksCreated = 0;
       this.trackInfo = []; //will store the track-info div after their creation
       this.trackLoaded = 0; //track that will be played
-      this.play = false;
-      this.pause = false;
+      this.isPlaying = false;
+      this.isPaused = false;
       this.shuffle = false;
       this.repeat = false;
       this.lightness = "50%";
 
       //Now the playlist is created, let handle the buttons
       this.playBtn.addEventListener("click", () => {
-        if (!this.play) {
+        if (!this.isPlaying) {
           this.audio.src = this.tracks[this.trackLoaded].url;
           this.audio.setAttribute("crossorigin", "anonymous");
 
-          this.beforePlay();
-          this.audio.play();
-          this.afterPlay();
+          this.playAudio();
 
-          this.play = true;
+          this.isPlaying = true;
           this.playBtn.classList.toggle("highlighted");
           this.stopBtn.classList.toggle("highlighted");
           this.visualisation.style.display = "block";
@@ -260,10 +267,10 @@ class Winamp {
       });
 
       this.stopBtn.addEventListener("click", () => {
-        if (this.play) {
+        if (this.isPlaying) {
           this.audio.pause();
           this.audio.currentTime = 0;
-          this.play = false;
+          this.isPlaying = false;
           this.isaudioPaused();
           this.playBtn.classList.toggle("highlighted");
           this.stopBtn.classList.toggle("highlighted");
@@ -285,25 +292,27 @@ class Winamp {
             "highlighted-track"
           );
           if (navigation.dataset.nav === "prev") {
-            this.trackLoaded === 0
-              ? (this.trackLoaded = this.tracks.length - 1)
-              : this.trackLoaded--;
+            if (this.trackLoaded === 0) {
+              this.trackLoaded = this.tracks.length - 1;
+            } else {
+              this.trackLoaded--;
+            }
           } else if (navigation.dataset.nav === "next") {
-            this.trackLoaded === this.tracks.length - 1
-              ? (this.trackLoaded = 0)
-              : this.trackLoaded++;
+            if (this.trackLoaded === this.tracks.length - 1) {
+              this.trackLoaded = 0;
+            } else {
+              this.trackLoaded++;
+            }
           } else {
-            console.error("there is a ball in the soup (a french expression)");
+            console.error("Unexpected error");
           }
           this.audio.src = this.tracks[this.trackLoaded].url;
           this.audio.setAttribute("crossorigin", "anonymous");
           this.trackInfo[this.trackLoaded].classList.toggle(
             "highlighted-track"
           );
-          if (this.play) {
-            this.beforePlay();
-            this.audio.play();
-            this.afterPlay();
+          if (this.isPlaying) {
+            this.playAudio();
           }
           this.isaudioPaused();
           this.updateTrackInfo();
@@ -313,16 +322,14 @@ class Winamp {
       this.pauseBtn.addEventListener("click", () => {
         if (this.tracks) {
           this.pauseBtn.classList.toggle("highlighted");
-          if (!this.pause) {
+          if (!this.isPaused) {
             this.audio.pause();
-            this.pause = true;
+            this.isPaused = true;
             this.visualisation.style.display = "none";
           } else {
-            this.beforePlay();
-            this.audio.play();
-            this.afterPlay();
+            this.playAudio();
 
-            this.pause = false;
+            this.isPaused = false;
             this.visualisation.style.display = "block";
           }
         }
@@ -391,9 +398,7 @@ class Winamp {
       this.audio.addEventListener("ended", () => {
         if (this.repeat) {
           this.audio.currentTime = 0;
-          this.beforePlay();
-          this.audio.play();
-          this.afterPlay();
+          this.playAudio();
         } else if (this.trackLoaded < this.tracks.length - 1) {
           this.nextTrack();
         } else if (this.shuffle) {
@@ -434,10 +439,11 @@ class Winamp {
         this.audioForDuration.dataset.id = i;
         this.audioForDuration.addEventListener("loadedmetadata", function (e) {
           _this.tracksCreated++;
-          //once my tracks array is fill I have to add my tracks info in the playlist container
-          _this.tracksCreated === _this.tracksNb
-            ? _this.createPlaylist()
-            : console.log("tracks created: " + _this.tracksCreated);
+          if (_this.tracksCreated === _this.tracksNb) {
+            _this.createPlaylist();
+          } else {
+            console.log("tracks created: " + _this.tracksCreated);
+          }
         });
       }
     };
