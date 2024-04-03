@@ -15,6 +15,7 @@ use MusicProductionManager\Data\Entity\EntityAlbum;
 use MusicProductionManager\Data\Entity\Producer;
 use MagicObject\Response\Generated\PicoSelectOption;
 use MagicObject\Util\Dms;
+use MusicProductionManager\Data\Entity\Album;
 use MusicProductionManager\Data\Entity\AlbumPlayer;
 use MusicProductionManager\Data\Entity\AlbumPublic;
 use MusicProductionManager\Utility\SpecificationUtil;
@@ -62,7 +63,6 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     );
     ?>
     
-    <h3><?php echo $album->getName();?></h3>
     <link rel="stylesheet" href="winamp.css?<?php echo mt_rand(1111, 999999);?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
@@ -108,6 +108,14 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     </div> 
 </div>    
 
+
+    <form id="albumselect" action="" style="padding-bottom: 10px;">
+        <input type="hidden" name="action" value="play">
+        <select class="form-control" name="album_id" id="album_id" onchange="albumselect.submit()">
+            <option value="">- All -</option>
+            <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
+        </select>
+    </form>
 
     <div class="winamp-container">
 
