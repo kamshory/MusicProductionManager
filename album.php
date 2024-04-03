@@ -212,9 +212,40 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
 
     <script>
       let albumEntry = <?php echo json_encode($json);?>;
+
+      let wa = new Winamp();
       $(document).ready(function(){
-        let wa = new Winamp(albumEntry);
+        wa.init(albumEntry);
+        wa.onPlay = function()
+        {
+          draw();
+        }
       });
+
+      function draw()
+      {
+        if(wa.isPlaying)
+        {
+          drawVuMeter(wa.analyserLeft, 0);
+          drawVuMeter(wa.analyserRight, 1);
+        }
+        requestAnimationFrame(() => draw());
+      }
+
+      function drawVuMeter(analyser, channel)
+      {
+        let meter = channel == 0 ? "meterLeft" : "meterRight";
+
+        let frequencyData = new Uint8Array(1);
+        analyser.getByteFrequencyData(frequencyData);
+        let volume = frequencyData[0];
+        let rotation = parseInt(volume * 0.54) + 20;
+        let needles = document
+          .getElementById(meter)
+          .getElementsByClassName("needle");
+        let needle = needles[0];
+        needle.style.transform = "rotate(" + rotation + "deg)";
+      }
       
     </script>
 

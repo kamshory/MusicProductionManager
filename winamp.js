@@ -94,23 +94,23 @@ class Winamp {
         this.trackLoaded = e.target.dataset.id;
         this.trackInfo[this.trackLoaded].classList.toggle("highlighted-track");
         this.audio.src = this.tracks[this.trackLoaded].url;
-        this.audio.setAttribute("crossorigin", "anonymous");
+        
 
         this.playAudio();
 
         this.updateTrackInfo();
-        if (!this.play) {
+        if (!this.isPlaying) {
           this.playBtn.classList.toggle("highlighted");
           this.stopBtn.classList.toggle("highlighted");
         }
         this.isaudioPaused();
-        this.play = true;
+        this.isPlaying = true;
         this.visualisation.style.display = "block";
       };
 
       this.updateTrackInfo();
       this.audio.src = this.tracks[this.trackLoaded].url;
-      this.audio.setAttribute("crossorigin", "anonymous");
+      
     };
 
     this.beforePlay = function () {
@@ -122,6 +122,7 @@ class Winamp {
     this.playAudio = function () {
       this.beforePlay();
       this.audio.play();
+      this.onPlay();
       this.afterPlay();
     };
 
@@ -144,22 +145,7 @@ class Winamp {
       this.splitter.connect(this.analyserLeft, 1);
       this.splitter.connect(this.analyserRight, 0);
       clearInterval(this.drawInterval);
-      this.drawInterval = setInterval(function () {
-        _this.checkVolume(_this.analyserLeft, "meterLeft");
-        _this.checkVolume(_this.analyserRight, "meterRight");
-      }, 50);
-    };
-
-    this.checkVolume = function (analyser, meter) {
-      let frequencyData = new Uint8Array(1);
-      analyser.getByteFrequencyData(frequencyData);
-      let volume = frequencyData[0];
-      let rotation = parseInt(volume * 0.54) + 20;
-      let needles = document
-        .getElementById(meter)
-        .getElementsByClassName("needle");
-      let needle = needles[0];
-      needle.style.transform = "rotate(" + rotation + "deg)";
+      
     };
 
     this.updateTrackInfo = function () {
@@ -212,9 +198,10 @@ class Winamp {
       }
       this.hilightCurrentTrack(this.trackLoaded);
       this.audio.src = this.tracks[this.trackLoaded].url;
-      this.audio.setAttribute("crossorigin", "anonymous");
+      
 
       this.playAudio();
+      this.isPlaying = true;
 
       this.updateTrackInfo();
     };
@@ -239,27 +226,33 @@ class Winamp {
       this.shuffleBtn = this.qs(".shuffle-btn");
       this.repeatBtn = this.qs(".repeat-btn");
       this.playlist = this.qs(".playlist");
+      
       this.audio = new Audio();
+      this.audio.setAttribute("crossorigin", "anonymous");
+
       this.tracks = []; // array with tracks info : name, title, duration and url
       this.tracksNb = this.songList.songList.length; // number of tracks
       this.tracksCreated = 0;
       this.trackInfo = []; //will store the track-info div after their creation
       this.trackLoaded = 0; //track that will be played
+
       this.isPlaying = false;
       this.isPaused = false;
-      this.shuffle = false;
-      this.repeat = false;
+      this.isShuffle = false;
+      this.isRepeat = false;
+
       this.lightness = "50%";
 
       //Now the playlist is created, let handle the buttons
       this.playBtn.addEventListener("click", () => {
         if (!this.isPlaying) {
           this.audio.src = this.tracks[this.trackLoaded].url;
-          this.audio.setAttribute("crossorigin", "anonymous");
+          
 
           this.playAudio();
 
           this.isPlaying = true;
+
           this.playBtn.classList.toggle("highlighted");
           this.stopBtn.classList.toggle("highlighted");
           this.visualisation.style.display = "block";
@@ -307,12 +300,13 @@ class Winamp {
             console.error("Unexpected error");
           }
           this.audio.src = this.tracks[this.trackLoaded].url;
-          this.audio.setAttribute("crossorigin", "anonymous");
+          
           this.trackInfo[this.trackLoaded].classList.toggle(
             "highlighted-track"
           );
           if (this.isPlaying) {
             this.playAudio();
+            this.isPlaying = true;
           }
           this.isaudioPaused();
           this.updateTrackInfo();
@@ -328,6 +322,7 @@ class Winamp {
             this.visualisation.style.display = "none";
           } else {
             this.playAudio();
+            this.isPlaying = true;
 
             this.isPaused = false;
             this.visualisation.style.display = "block";
@@ -370,38 +365,39 @@ class Winamp {
 
       // when the track ends, move to the next track or a random one
       this.shuffleBtn.addEventListener("click", () => {
-        if (this.repeat) {
+        if (this.isRepeat) {
           this.repeatBtn.classList.toggle("highlighted");
-          this.repeat = false;
+          this.isRepeat = false;
         }
         this.shuffleBtn.classList.toggle("highlighted");
-        if (this.shuffle) {
-          this.shuffle = false;
+        if (this.isShuffle) {
+          this.isShuffle = false;
         } else {
-          this.shuffle = true;
+          this.isShuffle = true;
         }
       });
 
       this.repeatBtn.addEventListener("click", () => {
-        if (this.shuffle) {
+        if (this.isShuffle) {
           this.shuffleBtn.classList.toggle("highlighted");
-          this.shuffle = false;
+          this.isShuffle = false;
         }
         this.repeatBtn.classList.toggle("highlighted");
-        if (this.repeat) {
-          this.repeat = false;
+        if (this.isRepeat) {
+          this.isRepeat = false;
         } else {
-          this.repeat = true;
+          this.isRepeat = true;
         }
       });
 
       this.audio.addEventListener("ended", () => {
-        if (this.repeat) {
+        if (this.isRepeat) {
           this.audio.currentTime = 0;
           this.playAudio();
+          this.isPlaying = true;
         } else if (this.trackLoaded < this.tracks.length - 1) {
           this.nextTrack();
-        } else if (this.shuffle) {
+        } else if (this.isShuffle) {
           this.nextTrack();
         } else {
           console.log("fin");
@@ -447,7 +443,9 @@ class Winamp {
         });
       }
     };
-
-    this.init(list);
+    if(typeof list != 'undefined')
+    {
+        this.init(list);
+    }
   }
 }
