@@ -85,8 +85,6 @@ font-family: 'VT323', monospace;
     background: linear-gradient(#87785A, #635A42 35%, #202024 50%, #635A42 65%, #87785A);
 }
 
-
-
 .cmd-container {
     padding: 12px;
     border: 2px solid #555265;
@@ -139,6 +137,7 @@ font-family: 'VT323', monospace;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: hidden;
+    padding-right: 10px;
 }
 
 /* input type range */
