@@ -13,7 +13,7 @@
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.6",
         "setasign/fpdi-fpdf": "^2.3",
-        "planetbiru/magic-object": "dev-main"
+        "planetbiru/magic-object": "^1.0"
     },
     "config": {
         "platform": {
