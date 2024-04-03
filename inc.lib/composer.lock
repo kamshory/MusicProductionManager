@@ -550,12 +550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "aab575e825a0e770728c7bea94d7df8af18da369"
+                "reference": "3e157c1faafc3cd2fec5d6ba1f5b0e7b48c5380d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/aab575e825a0e770728c7bea94d7df8af18da369",
-                "reference": "aab575e825a0e770728c7bea94d7df8af18da369",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/3e157c1faafc3cd2fec5d6ba1f5b0e7b48c5380d",
+                "reference": "3e157c1faafc3cd2fec5d6ba1f5b0e7b48c5380d",
                 "shasum": ""
             },
             "require": {
@@ -565,7 +565,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "MagicObject\\": ""
+                    "MagicObject\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -582,7 +582,7 @@
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
                 "source": "https://github.com/Planetbiru/MagicObject/tree/main"
             },
-            "time": "2024-04-02T09:06:41+00:00"
+            "time": "2024-04-03T14:54:35+00:00"
         },
         {
             "name": "psr/cache",

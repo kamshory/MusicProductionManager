@@ -12,7 +12,7 @@ class ObjectParser
      * @param MagicObject $data
      * @return MagicObject
      */
-    private function parseMagicObject($data)
+    private static function parseMagicObject($data)
     {
         $magicObject = new MagicObject();
         $values = $data->value();
@@ -35,7 +35,7 @@ class ObjectParser
      * @param stdClass|array $data
      * @return MagicObject
      */
-    private function parseObject($data)
+    private static function parseObject($data)
     {
         $magicObject = new MagicObject();
         foreach ($data as $key => $value) {

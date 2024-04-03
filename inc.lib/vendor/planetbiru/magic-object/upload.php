@@ -12,7 +12,6 @@ $systemSession->startSession();
 $files = new PicoUplodFile();
 $file1 = $files->get('file_uploaded');
 
-echo $files;
 
 // or 
 // $file1 = $files->test;
@@ -32,6 +31,15 @@ if(!isset($systemSession->coba))
 }
 $systemSession->coba++;
 
-echo $systemSession->coba;
 
-$magicObject = new MagicObject(MagicObject::parseRecursive($data));
+$magicObject = new MagicObject();
+
+$magicObject->loadYamlString("
+data1:
+  data2:
+    data3:
+      data4: apa
+      data5: 6666
+", true, true, true);
+
+echo $magicObject->getData1()->getData2()->getData3();
