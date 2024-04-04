@@ -12,3 +12,13 @@
 .note-editor .note-toolbar .note-color-all .note-dropdown-menu, .note-popover .popover-content .note-color-all .note-dropdown-menu{
    min-width: 185px;
 }
+
+.note-current-fontname{
+   display: inline-block;
+   min-width: 123px;
+   text-align: left;
+}
+button[type="button"][data-toggle="dropdown"].note-btn dropdown-toggle
+{
+   
+}
