@@ -1,24 +1,28 @@
 /* Summernote Additional CSS */
-.note-editable{
+.note-editable {
    background: #fff;
 }
+
 .note-btn.dropdown-toggle:after {
    content: none;
 }
-.note-btn[aria-label="Help"]{
+
+.note-btn[aria-label="Help"] {
    display: none;
 }
 
-.note-editor .note-toolbar .note-color-all .note-dropdown-menu, .note-popover .popover-content .note-color-all .note-dropdown-menu{
+.note-editor .note-toolbar .note-color-all .note-dropdown-menu,
+.note-popover .popover-content .note-color-all .note-dropdown-menu {
    min-width: 185px;
 }
 
-.note-current-fontname{
+.note-current-fontname {
    display: inline-block;
    min-width: 123px;
    text-align: left;
 }
-button[type="button"][data-toggle="dropdown"].note-btn dropdown-toggle
-{
-   
+
+.note-dropdown-menu.note-check.dropdown-fontname,
+button[type="button"][data-toggle="dropdown"].note-btn dropdown-toggle {
+   min-width: 160px;
 }

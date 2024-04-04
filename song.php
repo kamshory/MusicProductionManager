@@ -106,7 +106,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
     <!-- Summernote CSS -->
     <link href="assets/summernote/css/summernote-lite.min.css" rel="stylesheet">
     <!-- Style CSS -->
-    <link rel="stylesheet" href="assets/summernote/css/style.css">
+    <link rel="stylesheet" href="assets/summernote/css/style.min.css">
     <!-- Summernote JS -->
     <script src="assets/summernote/js/summernote-lite.min.js"></script>
 
