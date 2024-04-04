@@ -33,7 +33,7 @@ class ComposerStaticInit4077b4408c28941b79966be628be7891
         ),
         'MagicObject\\' => 
         array (
-            0 => __DIR__ . '/..' . '/planetbiru/magic-object',
+            0 => __DIR__ . '/..' . '/planetbiru/magic-object/src',
         ),
     );
 
