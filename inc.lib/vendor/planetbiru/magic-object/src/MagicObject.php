@@ -711,7 +711,7 @@ class MagicObject extends stdClass // NOSONAR
     public function __isset($propertyName)
     {
         $propertyName = lcfirst($propertyName);
-        return isset($this->$propertyName) ? $this->$propertyName : null;
+        return isset($this->$propertyName);
     }
 
     /**
@@ -779,7 +779,7 @@ class MagicObject extends stdClass // NOSONAR
      * @param bool $snakeCase
      * @return stdClass
      */
-    public function defatultValue($snakeCase = false)
+    public function defaultValue($snakeCase = false)
     {
         $persist = new PicoDatabasePersistence($this->database, $this);
         $tableInfo = $persist->getTableInfo();
