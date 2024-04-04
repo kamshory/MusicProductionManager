@@ -112,7 +112,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     <form id="albumselect" action="" style="padding-bottom: 10px;">
         <input type="hidden" name="action" value="play">
         <select class="form-control" name="album_id" id="album_id" onchange="albumselect.submit()">
-            <option value="">- All -</option>
+            <option value="">- Select One -</option>
             <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
         </select>
     </form>
