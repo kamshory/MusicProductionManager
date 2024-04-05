@@ -45,7 +45,7 @@ class TableUtil
      * Set identity
      *
      * @param DOMElement $node
-     * @param ParameterObject $identity
+     * @param PicoGenericObject $identity
      * @return DOMElement
      */
     public static function setIdentity($node, $identity)

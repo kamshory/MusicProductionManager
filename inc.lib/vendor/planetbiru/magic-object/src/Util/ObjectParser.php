@@ -6,6 +6,9 @@ use MagicObject\MagicObject;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Object parser
+ */
 class ObjectParser
 {
     /**
