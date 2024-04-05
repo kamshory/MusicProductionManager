@@ -25,6 +25,10 @@ function updateBody($body)
     foreach($arr as $key=>$line)
     {
         $arr[$key] = rtrim($line);
+        if(substr($arr[$key], strlen($arr[$key]) - 1) == "*")
+        {
+            $arr[$key] = $arr[$key]." ";
+        }
     }
     $body = implode("\r\n", $arr);
     
