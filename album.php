@@ -68,45 +68,31 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
     <link rel="stylesheet" href="vu-meter.css">
     <style>
+      .vu-meter{
+        padding-bottom: 10px;
+      }
+      .vu-meter-container{
+        padding:1px 0;
+      }
+    .vu-meter-inner{
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#2fbc25+0,e5af00+71,e5af00+71,e5af00+87,e00000+100 */
+    background: linear-gradient(to right,  #2fbc25 0%,#e5af00 71%,#e5af00 71%,#e5af00 87%,#e00000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    position: relative;
+    }
+    .vu-meter-bar{
+      background-color:rgba(0,0,0, 0.6);
+      width: 100%;
+      height: 8px;
+      margin: 0px 0px 0px auto;
 
+    }
 
     </style>
 
-    <div id='meters'>
-    <div id='meterRight' class='meter'>
-       <span class='indicator minus'>-</span>
-       <span class='indicator plus'>+</span>
-       <div class='needle'></div>
+    
 
-
-       <div class='label'>VU</div>
-        <div class='meterLine'>
-            <span class='base'></span>
-            <div class='danger'>
-                <span class='base'></span>
-            </div>    
-        </div>
-       <div class='shadow'></div>
-       <div class='needleBase'><span></span></div>
-    </div> 
-
-    <div id='meterLeft' class='meter'>
-       <span class='indicator minus'>-</span>
-       <span class='indicator plus'>+</span>
-       <div class='needle'></div>
-
-
-       <div class='label'>VU</div>
-        <div class='meterLine'>
-            <span class='base'></span>
-            <div class='danger'>
-                <span class='base'></span>
-            </div>    
-        </div>
-       <div class='shadow'></div>
-       <div class='needleBase'><span></span></div>
-    </div> 
-</div>    
+    
+ 
 
 
     <form id="albumselect" action="" style="padding-bottom: 10px;">
@@ -151,6 +137,19 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
 
                 <div class="progress-container">
                     <input class="progress-bar" type="range" min="0" max="1" value="0" step=".000001">
+                </div>
+
+                <div class="vu-meter">
+                  <div class="vu-meter-container vu-meter-left">
+                    <div class="vu-meter-inner">
+                      <div class="vu-meter-bar" id="meterLeft"></div>
+                    </div>
+                  </div>
+                  <div class="vu-meter-container vu-meter-right">
+                    <div class="vu-meter-inner">
+                      <div class="vu-meter-bar" id="meterRight"></div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="btn-container">
@@ -226,7 +225,10 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
         wa.init(albumEntry);
         wa.onPlay = function()
         {
-          draw();
+          if(wa.sourceConnected)
+          {
+            draw();
+          }
         }
       });
 
@@ -248,11 +250,11 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
         analyser.getByteFrequencyData(frequencyData);
         let volume = frequencyData[0];
         let rotation = parseInt(volume * 0.54) + 20;
-        let needles = document
-          .getElementById(meter)
-          .getElementsByClassName("needle");
-        let needle = needles[0];
-        needle.style.transform = "rotate(" + rotation + "deg)";
+        let max = 100;
+        let cqmin = max - (max*volume/256);
+        
+        let needle = document.querySelector('#'+meter);
+        needle.style.width = cqmin+"%";
       }
       
     </script>

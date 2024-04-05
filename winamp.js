@@ -1,3 +1,5 @@
+
+
 class Winamp {
   constructor(list) {
     let _this = this;
@@ -116,7 +118,12 @@ class Winamp {
       this.loadVuMeter();
     };
     this.afterPlay = function () {
-      this.audioContext.resume();
+      //this.loadVuMeter();
+      if(this.sourceConnected)
+      {
+        this.audioContext.resume();
+      }
+      
     };
     this.playAudio = function () {
       this.beforePlay();
@@ -125,24 +132,38 @@ class Winamp {
       this.afterPlay();
     };
 
-    this.loadVuMeter = function () {
-      this.audioContext = new AudioContext();
+    this.sourceConnected = false;
 
-      this.source = this.audioContext.createMediaElementSource(this.audio);
-      this.source.connect(this.audioContext.destination);
-      this.analyserLeft = this.audioContext.createAnalyser();
-      this.analyserLeft.fftSize = 2048;
-      let bufferLength = this.analyserLeft.frequencyBinCount;
-      let dataArrayLeft = new Uint8Array(bufferLength);
-      this.analyserLeft.getByteTimeDomainData(dataArrayLeft);
-      this.analyserRight = this.audioContext.createAnalyser();
-      this.analyserRight.fftSize = 2048;
-      let dataArrayRight = new Uint8Array(bufferLength);
-      this.analyserRight.getByteTimeDomainData(dataArrayRight);
-      this.splitter = this.audioContext.createChannelSplitter(2);
-      this.source.connect(this.splitter);
-      this.splitter.connect(this.analyserLeft, 1);
-      this.splitter.connect(this.analyserRight, 0);
+    this.loadVuMeter = function () {
+      if(!this.sourceConnected)
+      {
+        try
+        {
+        this.audioContext = new AudioContext();
+        this.source = this.audioContext.createMediaElementSource(this.audio);
+        this.source.connect(this.audioContext.destination);
+        this.analyserLeft = this.audioContext.createAnalyser();
+        this.analyserLeft.fftSize = 2048;
+        let bufferLength = this.analyserLeft.frequencyBinCount;
+        let dataArrayLeft = new Uint8Array(bufferLength);
+        this.analyserLeft.getByteTimeDomainData(dataArrayLeft);
+        this.analyserRight = this.audioContext.createAnalyser();
+        this.analyserRight.fftSize = 2048;
+        let dataArrayRight = new Uint8Array(bufferLength);
+        this.analyserRight.getByteTimeDomainData(dataArrayRight);
+        this.splitter = this.audioContext.createChannelSplitter(2);
+        this.source.connect(this.splitter);
+        this.splitter.connect(this.analyserLeft, 1);
+        this.splitter.connect(this.analyserRight, 0);
+        this.sourceConnected = true;
+        }
+        catch(ex)
+        {
+          console.error(ex)
+        }
+  
+        
+      }
       clearInterval(this.drawInterval);
       
     };
