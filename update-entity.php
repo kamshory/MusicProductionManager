@@ -78,7 +78,5 @@ foreach($files as $file)
     
     $updatedBody = updateBody($body);
     
-    echo $header;
-    echo $updatedBody;
-    echo $footer;
+    file_put_contents($file, $header.$updatedBody.$footer);
 }
