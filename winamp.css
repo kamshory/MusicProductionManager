@@ -396,16 +396,13 @@ font-family: 'VT323', monospace;
     padding: 8px;
     text-align: center;
     margin: 0;
+    width: 220px;
 }
 
 .winamp-container .line-first,
 .winamp-container .line.line-other {
     width: calc(50% - 120px);
     height: 0.75em;
-}
-
-.maxamp-container h2 {
-    width: 220px;
 }
 
 .prevent-select {
