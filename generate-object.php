@@ -71,12 +71,13 @@ $typeMap = array(
 function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra)
 {
     $propertyName = StringUtil::camelize($columnName);
+    $description = getPropertyName($columnName);
     $docs = array();
     $docStart = "\t/**";
     $docEnd = "\t */";
 
     $docs[] = $docStart;
-    $docs[] = "\t * ".getPropertyName($columnName);
+    $docs[] = "\t * ".$description;
     $docs[] = "\t * ";
 
     if(!empty($columnKey) && stripos($columnKey, "PRI") === 0)
@@ -135,6 +136,7 @@ function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnN
 
     $type = getDataType($typeMap, $columnType);
 
+    $docs[] = "\t * @Label(content=\"$description\")";
     $docs[] = "\t * @var $type";
     $docs[] = $docEnd;
     $prop = "\tprotected \$$propertyName;";
