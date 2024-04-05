@@ -14,21 +14,24 @@ class UserTypeDto extends SetterGetter
 {
     /**
      * User Type ID
-     *
+     * 
+     * @Label(content="User Type ID")
      * @var string
      */
     protected $userTypeId;
 
     /**
      * Name
-     *
+     * 
+     * @Label(content="Name")
      * @var string
      */
     protected $name;
 
     /**
      * Sort order
-     *
+     * 
+     * @Label(content="Sort order")
      * @var integer
      * @Column(name=sort_order)
      */
@@ -36,7 +39,8 @@ class UserTypeDto extends SetterGetter
 
     /**
      * Default data
-     *
+     * 
+     * @Label(content="Default data")
      * @var bool
      * @Column(name=default_data)
      */
@@ -44,14 +48,15 @@ class UserTypeDto extends SetterGetter
 
     /**
      * Active
-     *
+     * 
+     * @Label(content="Active")
      * @var bool
      */
     protected $active;
 
     /**
      * Construct UserTypeDto from UserType and not copy other properties
-     *
+     * 
      * @param UserType $input
      * @return self
      */
@@ -62,7 +67,7 @@ class UserTypeDto extends SetterGetter
         $output->setName($input->getName());
         $output->setSortOrder($input->getSortOrder());
         $output->setDefaultData($input->getDefaultData());
-        $output->setActive($input->getActive());        
+        $output->setActive($input->getActive());
         return $output;
-    } 
+    }
 }

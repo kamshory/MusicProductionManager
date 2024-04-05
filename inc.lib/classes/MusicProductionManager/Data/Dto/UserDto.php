@@ -13,6 +13,7 @@ class UserDto extends SetterGetter
 	/**
 	 * User ID
 	 * 
+	 * @Label(content="User ID")
 	 * @var string
 	 */
 	protected $userId;
@@ -20,6 +21,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Username
 	 * 
+	 * @Label(content="Username")
 	 * @var string
 	 */
 	protected $username;
@@ -27,6 +29,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Password
 	 * 
+	 * @Label(content="Password")
 	 * @var string
 	 */
 	protected $password;
@@ -34,6 +37,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Admin
 	 * 
+	 * @Label(content="Admin")
 	 * @var bool
 	 */
 	protected $admin;
@@ -41,6 +45,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Name
 	 * 
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -48,6 +53,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Birth Day
 	 * 
+	 * @Label(content="Birth Day")
 	 * @var string
 	 */
 	protected $birthDay;
@@ -55,6 +61,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Gender
 	 * 
+	 * @Label(content="Gender")
 	 * @var string
 	 */
 	protected $gender;
@@ -62,6 +69,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Email
 	 * 
+	 * @Label(content="Email")
 	 * @var string
 	 */
 	protected $email;
@@ -69,13 +77,15 @@ class UserDto extends SetterGetter
 	/**
 	 * User Type ID
 	 * 
+	 * @Label(content="User Type ID")
 	 * @var string
 	 */
 	protected $userTypeId;
-    
+
     /**
 	 * User Type
 	 * 
+	 * @Label(content="User Type")
 	 * @var string
 	 */
 	protected $userType;
@@ -83,13 +93,15 @@ class UserDto extends SetterGetter
 	/**
 	 * Associated Artist
 	 * 
+	 * @Label(content="Associated Artist")
 	 * @var string
 	 */
 	protected $associatedArtist;
-    
+
     /**
 	 * Artist
 	 * 
+	 * @Label(content="Artist")
 	 * @var string
 	 */
 	protected $artist;
@@ -97,6 +109,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Image Path
 	 * 
+	 * @Label(content="Image Path")
 	 * @var string
 	 */
 	protected $imagePath;
@@ -104,6 +117,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Time Create
 	 * 
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -111,6 +125,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Time Edit
 	 * 
+	 * @Label(content="Time Edit")
 	 * @var string
 	 */
 	protected $timeEdit;
@@ -118,6 +133,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Admin Create
 	 * 
+	 * @Label(content="Admin Create")
 	 * @var string
 	 */
 	protected $adminCreate;
@@ -125,6 +141,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Admin Edit
 	 * 
+	 * @Label(content="Admin Edit")
 	 * @var string
 	 */
 	protected $adminEdit;
@@ -132,6 +149,7 @@ class UserDto extends SetterGetter
 	/**
 	 * IP Create
 	 * 
+	 * @Label(content="IP Create")
 	 * @var string
 	 */
 	protected $ipCreate;
@@ -139,6 +157,7 @@ class UserDto extends SetterGetter
 	/**
 	 * IP Edit
 	 * 
+	 * @Label(content="IP Edit")
 	 * @var string
 	 */
 	protected $ipEdit;
@@ -146,6 +165,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Reset Password Hash
 	 * 
+	 * @Label(content="Reset Password Hash")
 	 * @var string
 	 */
 	protected $resetPasswordHash;
@@ -153,6 +173,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Last Reset Password
 	 * 
+	 * @Label(content="Last Reset Password")
 	 * @var string
 	 */
 	protected $lastResetPassword;
@@ -160,6 +181,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Blocked
 	 * 
+	 * @Label(content="Blocked")
 	 * @var bool
 	 */
 	protected $blocked;
@@ -167,6 +189,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Active
 	 * 
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;
@@ -204,7 +227,7 @@ class UserDto extends SetterGetter
         $output->setBlocked($input->getBlocked());
         $output->setActive($input->getActive());
         return $output;
-    }
+	}
 
 
 }
