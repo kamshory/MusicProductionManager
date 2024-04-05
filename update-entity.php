@@ -25,6 +25,10 @@ function updateBody($body)
     foreach($arr as $key=>$line)
     {
         $arr[$key] = rtrim($line);
+        if(substr($arr[$key], strlen($arr[$key]) - 2) != "**" && substr($arr[$key], strlen($arr[$key]) - 1) == "*")
+        {
+            $arr[$key] = $arr[$key]." ";
+        }
     }
     $body = implode("\r\n", $arr);
     
@@ -53,7 +57,7 @@ function updateBlock($block)
             $firstLine = trim(str_replace(array('/', '*'), '', $line2));
         }
     }
-    if($lineVar != "" && $firstLine != "")
+    if($lineVar != "" && $firstLine != "" && stripos($block, "@Label(content=") === false)
     {
         $trailer = substr($lineVar, 0, strpos($lineVar, "@"));
         
@@ -74,7 +78,5 @@ foreach($files as $file)
     
     $updatedBody = updateBody($body);
     
-    echo $header;
-    echo $updatedBody;
-    echo $footer;
+    file_put_contents($file, $header.$updatedBody.$footer);
 }
