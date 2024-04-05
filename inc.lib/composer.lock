@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08bad83fce0a5443f952fef3055578fe",
+    "content-hash": "e779721ed0d66de601c90fb1101dfe4c",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -546,21 +546,22 @@
         },
         {
             "name": "planetbiru/magic-object",
-            "version": "1.0.2",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "ac046f8d921279f8b4bc601d16614fc86b0f5136"
+                "reference": "5fc706a3fbbc2f279f403d6405344450fbf443c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/ac046f8d921279f8b4bc601d16614fc86b0f5136",
-                "reference": "ac046f8d921279f8b4bc601d16614fc86b0f5136",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/5fc706a3fbbc2f279f403d6405344450fbf443c8",
+                "reference": "5fc706a3fbbc2f279f403d6405344450fbf443c8",
                 "shasum": ""
             },
             "require": {
                 "symfony/yaml": "^3.4"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -579,9 +580,9 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/1.0.2"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/main"
             },
-            "time": "2024-04-05T06:32:33+00:00"
+            "time": "2024-04-05T09:38:32+00:00"
         },
         {
             "name": "psr/cache",
@@ -2248,7 +2249,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "planetbiru/magic-object": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
