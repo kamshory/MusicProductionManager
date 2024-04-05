@@ -12,17 +12,19 @@ class EntityMidi extends MagicObject
 {
     /**
      * Midi ID
-     *
+     * 
+     * @Label(content="Midi ID")
      * @var string
      * @Column(name=midi_id)
      * @Id
      * @NotNull
      */
-    protected $midiId;    
+    protected $midiId;
 
     /**
      * Random midi ID
-     *
+     * 
+     * @Label(content="Random midi ID")
      * @var string
      * @Column(name=random_midi_id)
      */
@@ -30,7 +32,8 @@ class EntityMidi extends MagicObject
 
     /**
      * Title
-     *
+     * 
+     * @Label(content="Title")
      * @var string
      * @Column(name=title)
      */
@@ -38,15 +41,17 @@ class EntityMidi extends MagicObject
 
     /**
      * Album ID
-     *
+     * 
+     * @Label(content="Album ID")
      * @var string
      * @Column(name=album_id)
      */
-    protected $albumId;    
-    
+    protected $albumId;
+
     /**
      * Album
-     *
+     * 
+     * @Label(content="Album")
      * @var Album
      * @JoinColumn (name=album_id)
      */
@@ -55,16 +60,18 @@ class EntityMidi extends MagicObject
 
     /**
      * Artist Vocal
-     *
+     * 
+     * @Label(content="Artist Vocal")
      * @var string
      * @Column(name=artist_vocalist)
      */
     protected $artistVocalist;
-    
-    
+
+
     /**
      * Artist Vocal
-     *
+     * 
+     * @Label(content="Artist Vocal")
      * @var Artist
      * @JoinColumn (name=artist_vocalist)
      */
@@ -72,15 +79,17 @@ class EntityMidi extends MagicObject
 
     /**
      * Artist Composer
-     *
+     * 
+     * @Label(content="Artist Composer")
      * @var string
      * @Column(name=artist_composer)
      */
     protected $artistComposer;
-    
+
     /**
      * Artist Composer
-     *
+     * 
+     * @Label(content="Artist Composer")
      * @var Artist
      * @JoinColumn (name=artist_composer)
      */
@@ -88,15 +97,17 @@ class EntityMidi extends MagicObject
 
     /**
      * Artist Arranger
-     *
+     * 
+     * @Label(content="Artist Arranger")
      * @var string
      * @Column(name=artist_arranger)
      */
     protected $artistArranger;
-    
+
     /**
      * Artist Arranger
-     *
+     * 
+     * @Label(content="Artist Arranger")
      * @var Artist
      * @JoinColumn (name=artist_arranger)
      */
@@ -104,7 +115,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File path
-     *
+     * 
+     * @Label(content="File path")
      * @var string
      * @Column(name=file_path)
      */
@@ -112,7 +124,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File base name
-     *
+     * 
+     * @Label(content="File base name")
      * @var string
      * @Column(name=file_name)
      */
@@ -120,7 +133,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File type
-     *
+     * 
+     * @Label(content="File type")
      * @var string
      * @Column(name=file_type)
      */
@@ -128,7 +142,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File extension
-     *
+     * 
+     * @Label(content="File extension")
      * @var string
      * @Column(name=file_extension)
      */
@@ -136,7 +151,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File size
-     *
+     * 
+     * @Label(content="File size")
      * @var integer
      * @Column(name=file_size)
      */
@@ -144,7 +160,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File MD5
-     *
+     * 
+     * @Label(content="File MD5")
      * @var string
      * @Column(name=file_md5)
      */
@@ -152,7 +169,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File upload time
-     *
+     * 
+     * @Label(content="File upload time")
      * @var string
      * @Column(name=file_upload_time)
      */
@@ -160,7 +178,8 @@ class EntityMidi extends MagicObject
 
     /**
      * File size
-     *
+     * 
+     * @Label(content="File size")
      * @var float
      * @Column(name=duration)
      */
@@ -168,15 +187,17 @@ class EntityMidi extends MagicObject
 
     /**
      * Genre ID
-     *
+     * 
+     * @Label(content="Genre ID")
      * @var string
      * @Column(name=genre_id)
      */
     protected $genreId;
-    
+
     /**
      * Genre
-     *
+     * 
+     * @Label(content="Genre")
      * @var Genre
      * @JoinColumn (name=genre_id)
      */
@@ -184,7 +205,8 @@ class EntityMidi extends MagicObject
 
     /**
      * Lyric
-     *
+     * 
+     * @Label(content="Lyric")
      * @var string
      * @Column(name=lyric)
      */
@@ -192,7 +214,8 @@ class EntityMidi extends MagicObject
 
     /**
      * Comment
-     *
+     * 
+     * @Label(content="Comment")
      * @var string
      * @Column(name=comment)
      */
@@ -200,7 +223,8 @@ class EntityMidi extends MagicObject
 
     /**
      * Rate
-     *
+     * 
+     * @Label(content="Rate")
      * @var float
      * @Column(name=rate)
      */
@@ -208,7 +232,8 @@ class EntityMidi extends MagicObject
 
     /**
      * Time create
-     *
+     * 
+     * @Label(content="Time create")
      * @var string
      * @Column(name=time_create)
      */
@@ -216,7 +241,8 @@ class EntityMidi extends MagicObject
 
     /**
      * Time edit
-     *
+     * 
+     * @Label(content="Time edit")
      * @var string
      * @Column(name=time_edit)
      */
@@ -224,7 +250,8 @@ class EntityMidi extends MagicObject
 
     /**
      * IP create
-     *
+     * 
+     * @Label(content="IP create")
      * @var string
      * @Column(name=ip_create)
      */
@@ -232,7 +259,8 @@ class EntityMidi extends MagicObject
 
     /**
      * IP edit
-     *
+     * 
+     * @Label(content="IP edit")
      * @var string
      * @Column(name=ip_edit)
      */
@@ -240,15 +268,17 @@ class EntityMidi extends MagicObject
 
     /**
      * Admin create
-     *
+     * 
+     * @Label(content="Admin create")
      * @var string
      * @Column(name=admin_create)
      */
     protected $adminCreateId;
-    
+
     /**
      * Admin create
-     *
+     * 
+     * @Label(content="Admin create")
      * @var User
      * @JoinColumn (name=admin_create)
      */
@@ -256,15 +286,17 @@ class EntityMidi extends MagicObject
 
     /**
      * Admin edit
-     *
+     * 
+     * @Label(content="Admin edit")
      * @var string
      * @Column(name=admin_edit)
      */
     protected $adminEditId;
-    
+
     /**
      * Admin edit
-     *
+     * 
+     * @Label(content="Admin edit")
      * @var User
      * @JoinColumn (name=admin_edit)
      */
@@ -272,6 +304,7 @@ class EntityMidi extends MagicObject
 
     /**
      * Active
+     * @Label(content="Active")
      * @var bool
      * @Column(name=active)
      */

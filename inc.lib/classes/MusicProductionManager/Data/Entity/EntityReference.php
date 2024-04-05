@@ -16,6 +16,7 @@ class EntityReference extends MagicObject
 	 * 
 	 * @NotNull
 	 * @Column(name="reference_id", type="varchar(50)", length=50, nullable=false)
+	 * @Label(content="Reference ID")
 	 * @var string
 	 */
 	protected $referenceId;
@@ -24,6 +25,7 @@ class EntityReference extends MagicObject
 	 * Title
 	 * 
 	 * @Column(name="title", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Title")
 	 * @var string
 	 */
 	protected $title;
@@ -32,6 +34,7 @@ class EntityReference extends MagicObject
 	 * Genre ID
 	 * 
 	 * @Column(name="genre_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Genre ID")
 	 * @var string
 	 */
 	protected $genreId;
@@ -40,6 +43,7 @@ class EntityReference extends MagicObject
 	 * Genre
 	 * 
 	 * @JoinColumn(name="genre_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Genre")
 	 * @var Genre
 	 */
 	protected $genre;
@@ -48,6 +52,7 @@ class EntityReference extends MagicObject
 	 * Album
 	 * 
 	 * @Column(name="album", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Album")
 	 * @var string
 	 */
 	protected $album;
@@ -55,6 +60,7 @@ class EntityReference extends MagicObject
 	/**
 	 * Artist ID
 	 * @Column(name="artist_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Artist ID")
 	 * @var string
 	 */
 	protected $artistId;
@@ -63,6 +69,7 @@ class EntityReference extends MagicObject
 	 * Artist
 	 * 
 	 * @JoinColumn(name="artist_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Artist")
 	 * @var Artist
 	 */
 	protected $artist;
@@ -71,6 +78,7 @@ class EntityReference extends MagicObject
 	 * Year
 	 * 
 	 * @Column(name="year", type="year(4)", length=4, nullable=true)
+	 * @Label(content="Year")
 	 * @var string
 	 */
 	protected $year;
@@ -79,12 +87,14 @@ class EntityReference extends MagicObject
 	 * URL
 	 * 
 	 * @Column(name="url", type="text", nullable=true)
+	 * @Label(content="URL")
 	 * @var string
 	 */
 	protected $url;
 
 	/**
 	 * @Column(name="url_provider", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="@Column(name="url_provider", type="varchar(100)", length=100, nullable=true)")
 	 * @var string
 	 */
 	protected $urlProvider;
@@ -93,6 +103,7 @@ class EntityReference extends MagicObject
 	 * Subtitle
 	 * 
 	 * @Column(name="subtitle", type="text", nullable=true)
+	 * @Label(content="Subtitle")
 	 * @var string
 	 */
 	protected $subtitle;
@@ -101,6 +112,7 @@ class EntityReference extends MagicObject
 	 * Description
 	 * 
 	 * @Column(name="description", type="longtext", nullable=true)
+	 * @Label(content="Description")
 	 * @var string
 	 */
 	protected $description;
@@ -109,6 +121,7 @@ class EntityReference extends MagicObject
 	 * Time Create
 	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -117,6 +130,7 @@ class EntityReference extends MagicObject
 	 * Time Edit
 	 * 
 	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
 	 * @var string
 	 */
 	protected $timeEdit;
@@ -125,6 +139,7 @@ class EntityReference extends MagicObject
 	 * IP Create
 	 * 
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
 	 * @var string
 	 */
 	protected $ipCreate;
@@ -133,6 +148,7 @@ class EntityReference extends MagicObject
 	 * IP Edit
 	 * 
 	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
 	 * @var string
 	 */
 	protected $ipEdit;
@@ -141,6 +157,7 @@ class EntityReference extends MagicObject
 	 * Admin Create
 	 * 
 	 * @Column(name="admin_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
 	 * @var string
 	 */
 	protected $adminCreate;
@@ -149,6 +166,7 @@ class EntityReference extends MagicObject
 	 * Admin Edit
 	 * 
 	 * @Column(name="admin_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Admin Edit")
 	 * @var string
 	 */
 	protected $adminEdit;
@@ -158,6 +176,7 @@ class EntityReference extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;
