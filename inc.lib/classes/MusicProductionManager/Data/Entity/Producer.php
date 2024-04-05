@@ -18,6 +18,7 @@ class Producer extends MagicObject
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
 	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=false)
+	 * @Label(content="Producer ID")
 	 * @var string
 	 */
 	protected $producerId;
@@ -26,6 +27,7 @@ class Producer extends MagicObject
 	 * Name
 	 * 
 	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -34,6 +36,7 @@ class Producer extends MagicObject
 	 * Gender
 	 * 
 	 * @Column(name="gender", type="varchar(2)", length=2, nullable=true)
+	 * @Label(content="Gender")
 	 * @var string
 	 */
 	protected $gender;
@@ -42,6 +45,7 @@ class Producer extends MagicObject
 	 * Birth Day
 	 * 
 	 * @Column(name="birth_day", type="date", nullable=true)
+	 * @Label(content="Birth Day")
 	 * @var string
 	 */
 	protected $birthDay;
@@ -50,6 +54,7 @@ class Producer extends MagicObject
 	 * Phone
 	 * 
 	 * @Column(name="phone", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone")
 	 * @var string
 	 */
 	protected $phone;
@@ -58,6 +63,7 @@ class Producer extends MagicObject
 	 * Phone2
 	 * 
 	 * @Column(name="phone2", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone2")
 	 * @var string
 	 */
 	protected $phone2;
@@ -66,6 +72,7 @@ class Producer extends MagicObject
 	 * Phone3
 	 * 
 	 * @Column(name="phone3", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone3")
 	 * @var string
 	 */
 	protected $phone3;
@@ -74,6 +81,7 @@ class Producer extends MagicObject
 	 * Email
 	 * 
 	 * @Column(name="email", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email")
 	 * @var string
 	 */
 	protected $email;
@@ -82,6 +90,7 @@ class Producer extends MagicObject
 	 * Email2
 	 * 
 	 * @Column(name="email2", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email2")
 	 * @var string
 	 */
 	protected $email2;
@@ -90,6 +99,7 @@ class Producer extends MagicObject
 	 * Email3
 	 * 
 	 * @Column(name="email3", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email3")
 	 * @var string
 	 */
 	protected $email3;
@@ -98,6 +108,7 @@ class Producer extends MagicObject
 	 * Website
 	 * 
 	 * @Column(name="website", type="text", nullable=true)
+	 * @Label(content="Website")
 	 * @var string
 	 */
 	protected $website;
@@ -106,6 +117,7 @@ class Producer extends MagicObject
 	 * Address
 	 * 
 	 * @Column(name="address", type="text", nullable=true)
+	 * @Label(content="Address")
 	 * @var string
 	 */
 	protected $address;
@@ -114,6 +126,7 @@ class Producer extends MagicObject
 	 * Picture
 	 * 
 	 * @Column(name="picture", type="tinyint(1)", length=1, nullable=true)
+	 * @Label(content="Picture")
 	 * @var bool
 	 */
 	protected $picture;
@@ -122,6 +135,7 @@ class Producer extends MagicObject
 	 * Image Path
 	 * 
 	 * @Column(name="image_path", type="text", nullable=true)
+	 * @Label(content="Image Path")
 	 * @var string
 	 */
 	protected $imagePath;
@@ -130,6 +144,7 @@ class Producer extends MagicObject
 	 * Image Update
 	 * 
 	 * @Column(name="image_update", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Image Update")
 	 * @var string
 	 */
 	protected $imageUpdate;
@@ -138,6 +153,7 @@ class Producer extends MagicObject
 	 * Time Create
 	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -146,6 +162,7 @@ class Producer extends MagicObject
 	 * Time Edit
 	 * 
 	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
 	 * @var string
 	 */
 	protected $timeEdit;
@@ -154,6 +171,7 @@ class Producer extends MagicObject
 	 * Admin Create
 	 * 
 	 * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
 	 * @var string
 	 */
 	protected $adminCreate;
@@ -162,6 +180,7 @@ class Producer extends MagicObject
 	 * Admin Edit
 	 * 
 	 * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Admin Edit")
 	 * @var string
 	 */
 	protected $adminEdit;
@@ -170,6 +189,7 @@ class Producer extends MagicObject
 	 * IP Create
 	 * 
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
 	 * @var string
 	 */
 	protected $ipCreate;
@@ -178,6 +198,7 @@ class Producer extends MagicObject
 	 * IP Edit
 	 * 
 	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
 	 * @var string
 	 */
 	protected $ipEdit;
@@ -187,6 +208,7 @@ class Producer extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;

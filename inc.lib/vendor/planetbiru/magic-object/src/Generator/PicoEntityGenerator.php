@@ -48,12 +48,13 @@ class PicoEntityGenerator
     private function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra)
     {
         $propertyName = StringUtil::camelize($columnName);
+        $description = $this->getPropertyName($columnName);
         $docs = array();
         $docStart = "\t/**";
         $docEnd = "\t */";
 
         $docs[] = $docStart;
-        $docs[] = "\t * ".$this->getPropertyName($columnName);
+        $docs[] = "\t * ".$description;
         $docs[] = "\t * ";
 
         if(!empty($columnKey) && stripos($columnKey, "PRI") === 0)
@@ -112,6 +113,7 @@ class PicoEntityGenerator
 
         $type = $this->getDataType($typeMap, $columnType);
 
+        $docs[] = "\t * @Label(content=\"$description\")";
         $docs[] = "\t * @var $type";
         $docs[] = $docEnd;
         $prop = "\tprotected \$$propertyName;";

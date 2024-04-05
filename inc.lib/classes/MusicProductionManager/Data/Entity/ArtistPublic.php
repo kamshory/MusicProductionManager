@@ -18,6 +18,7 @@ class ArtistPublic extends MagicObject
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
 	 * @Column(name="artist_id", type="varchar(40)", length=40, nullable=false)
+	 * @Label(content="Artist ID")
 	 * @var string
 	 */
 	protected $artistId;
@@ -26,6 +27,7 @@ class ArtistPublic extends MagicObject
 	 * Name
 	 * 
 	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -34,6 +36,7 @@ class ArtistPublic extends MagicObject
 	 * Stage Name
 	 * 
 	 * @Column(name="stage_name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Stage Name")
 	 * @var string
 	 */
 	protected $stageName;
@@ -42,6 +45,7 @@ class ArtistPublic extends MagicObject
 	 * Gender
 	 * 
 	 * @Column(name="gender", type="varchar(2)", length=2, nullable=true)
+	 * @Label(content="Gender")
 	 * @var string
 	 */
 	protected $gender;
@@ -50,6 +54,7 @@ class ArtistPublic extends MagicObject
 	 * Website
 	 * 
 	 * @Column(name="website", type="text", nullable=true)
+	 * @Label(content="Website")
 	 * @var string
 	 */
 	protected $website;
@@ -58,6 +63,7 @@ class ArtistPublic extends MagicObject
 	 * Picture
 	 * 
 	 * @Column(name="picture", type="tinyint(1)", length=1, nullable=true)
+	 * @Label(content="Picture")
 	 * @var bool
 	 */
 	protected $picture;
@@ -66,6 +72,7 @@ class ArtistPublic extends MagicObject
 	 * Image Update
 	 * 
 	 * @Column(name="image_update", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Image Update")
 	 * @var string
 	 */
 	protected $imageUpdate;
@@ -74,6 +81,7 @@ class ArtistPublic extends MagicObject
 	 * Time Create
 	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -82,6 +90,7 @@ class ArtistPublic extends MagicObject
 	 * Time Edit
 	 * 
 	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
 	 * @var string
 	 */
 	protected $timeEdit;
@@ -91,6 +100,7 @@ class ArtistPublic extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;

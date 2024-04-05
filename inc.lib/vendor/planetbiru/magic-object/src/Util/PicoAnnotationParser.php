@@ -90,14 +90,29 @@ class PicoAnnotationParser
     }
 
     /**
+     * Check if value is null or empty
+     *
+     * @param string $value
+     * @return boolean
+     */
+    private function isNullOrEmpty($value)
+    {
+        return !isset($value) || empty($value);
+    }
+
+    /**
      * Parse single annotation
      *
      * @param string $key
-     * @return array
+     * @return array|null
      */
     private function parseSingle($key)
     {
         $ret = null;
+        if($this->isNullOrEmpty($key))
+        {
+            return array();
+        }
         if (isset($this->parameters[$key])) {
             $ret = $this->parameters[$key];
         } else {
@@ -244,6 +259,20 @@ class PicoAnnotationParser
     }
 
     /**
+     * Get parameters
+     * 
+     * @return PicoGenericObject
+     */
+    public function getParametersAsObject()
+    {
+        if (!$this->parsedAll) {
+            $this->parse();
+            $this->parsedAll = true;
+        }
+        return new PicoGenericObject($this->parameters);
+    }
+
+    /**
      * Get parameter
      *
      * @param string $key
@@ -304,5 +333,19 @@ class PicoAnnotationParser
         
         // merge $pair3 and $pair4 into result
         return array_merge($pair3, $pair4);
+    }
+    /**
+     * Parse parameters as object. Note that all numeric attributes will be started with underscore (_). Do not use it as is
+     *
+     * @param string $queryString
+     * @return PicoGenericObject
+     */
+    public function parseKeyValueAsObject($queryString)
+    {
+        if(StringUtil::isNullOrEmpty($queryString))
+        {
+            return new PicoGenericObject();
+        }
+        return new PicoGenericObject($this->parseKeyValue($queryString));
     }
 }

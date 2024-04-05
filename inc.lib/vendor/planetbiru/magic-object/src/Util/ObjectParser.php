@@ -4,7 +4,11 @@ namespace MagicObject\Util;
 
 use MagicObject\MagicObject;
 use stdClass;
+use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Object parser
+ */
 class ObjectParser
 {
     /**
@@ -64,6 +68,36 @@ class ObjectParser
                 return self::parseMagicObject($data);
             }
             else if (is_array($data) || is_object($data)) {
+                return self::parseObject($data);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Parse from Yaml recursively
+     */
+    public static function parseYamlRecursive($yamlString)
+    {
+        if($yamlString != null)
+        {
+            $data = Yaml::parse($yamlString);
+            if (is_array($data) || is_object($data)) {
+                return self::parseObject($data);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Parse from JSON recursively
+     */
+    public static function parseJsonRecursive($jsonString)
+    {
+        if($jsonString != null)
+        {
+            $data = json_decode($jsonString);
+            if (is_array($data) || is_object($data)) {
                 return self::parseObject($data);
             }
         }

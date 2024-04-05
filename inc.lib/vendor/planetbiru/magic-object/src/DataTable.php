@@ -2,151 +2,355 @@
 
 namespace MagicObject;
 
+use DOMDocument;
+use MagicObject\Util\PicoGenericObject;
 use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\StringUtil;
+use MagicObject\Util\TableUtil;
+use ReflectionClass;
+use stdClass;
 
 class DataTable extends SetterGetter
 {
-    /*
-    const ATTRIBUTES = "@Attributes";
-    const CLASS_LIST = "@ClassList";
-    const ID = "@Id";
-    private $className = "";
-    public function getTableInfo() // NOSONAR
+    const ANNOTATION_TABLE = "Table";
+    const ANNOTATION_ATTRIBUTES = "Attributes";
+    const CLASS_LIST = "ClassList";
+    const ANNOTATION_ID = "Id";
+    const ANNOTATION_COLUMN = "Column";
+    const ANNOTATION_VAR = "var";
+    const ANNOTATION_GENERATED_VALUE = "GeneratedValue";
+    const ANNOTATION_NOT_NULL = "NotNull";
+    const ANNOTATION_DEFAULT_COLUMN = "DefaultColumn";
+    const ANNOTATION_DEFAULT_COLUMN_LABEL = "DefaultColumnLabel";
+    const ANNOTATION_LANGUAGE = "Language";
+    const KEY_PROPERTY_TYPE = "property_type";
+    const KEY_PROPERTY_NAME = "property_name";
+    
+    const KEY_NAME = "name";
+    const KEY_CLASS = "class";
+    const KEY_VALUE = "value";
+    const SQL_DATE_TIME_FORMAT = "Y-m-d H:i:s";
+    const DATE_TIME_FORMAT = "datetimeformat";
+    
+    const TAG_TABLE = "table";
+    const TAG_THEAD = "thead";
+    const TAG_TBODY = "tbody";
+    const TAG_TR = "tr";
+    const TAG_TH = "th";
+    const TAG_TD = "td";
+    
+    const TD_LABEL = "td-label";
+    const TD_VALUE = "td-value";
+    
+    private $attributes = array();
+    private $classList = array();
+    private $defaultColumnName = "key";
+    
+    /**
+     * Current language
+     *
+     * @var string
+     */
+    private $currentLanguage;
+    /**
+     * Language
+     *
+     * @var PicoLanguage[]
+     */
+    private $lableLanguage = array();
+    
+    /**
+     * Table identity
+     *
+     * @var PicoGenericObject
+     */
+    private $tableIdentity;
+      
+    /**
+     * Constructor
+     *
+     * @param MagicObject|self|stdClass|array $data
+     */
+    public function __construct($data = null)
     {
-        $reflexClass = new PicoAnnotationParser($this->className);
-        $attributesAnnotation = $reflexClass->getParameter(self::ATTRIBUTES);
-
-        $attributes = $reflexClass->parseKeyValue($attributesAnnotation);
-        
-        
-
-        $columns = array();
-        $joinColumns = array();
-        $primaryKeys = array();
-        $autoIncrementKeys = array();
-        $notNullColumns = array();
-        $props = $reflexClass->getProperties();
-        $defaultValue = array();
-
-        // iterate each properties of the class
-        foreach($props as $prop)
+        if(isset($data))
         {
-            $reflexProp = new PicoAnnotationParser($this->className, $prop->name, PicoAnnotationParser::PROPERTY);
-            $parameters = $reflexProp->getParameters();
-
-            // get column name of each parameters
-            foreach($parameters as $param=>$val)
+            $this->loadData($data);
+        }
+        $this->init();
+    }
+    
+    /**
+     * Load data to object
+     * @param mixed $data
+     * @return self
+     */
+    public function loadData($data)
+    {
+        if($data != null)
+        {
+            if($data instanceof MagicObject)
             {
-                if(strcasecmp($param, self::ANNOTATION_COLUMN) == 0)
-                {
-                    $values = $reflexProp->parseKeyValue($val);
-                    if(!empty($values))
-                    {
-                        $columns[$prop->name] = $values;
-                    }
+                $values = $data->value();
+                foreach ($values as $key => $value) {
+                    $key2 = StringUtil::camelize($key);
+                    $this->set($key2, $value);
                 }
             }
-            // set column type
-            foreach($parameters as $param=>$val)
-            {
-                if(strcasecmp($param, self::ANNOTATION_VAR) == 0 && isset($columns[$prop->name]))
-                {
-                    $type = explode(' ', trim($val, " \r\n\t "))[0];
-                    $columns[$prop->name][self::KEY_PROPERTY_TYPE] = $type;
-                }
-                if(strcasecmp($param, self::SQL_DATE_TIME_FORMAT) == 0)
-                {
-                    $values = $reflexProp->parseKeyValue($val);
-                    if(isset($values['pattern']))
-                    {
-                        $columns[$prop->name][self::DATE_TIME_FORMAT] = $values['pattern'];
-                    }
-                }
-            }
-            
-            // get join column name of each parameters
-            foreach($parameters as $param=>$val)
-            {
-                if(strcasecmp($param, self::ANNOTATION_JOIN_COLUMN) == 0)
-                {
-                    $values = $reflexProp->parseKeyValue($val);
-                    if(!empty($values))
-                    {
-                        $joinColumns[$prop->name] = $values;
-                    }
-                }
-            }
-            
-            // set join column type
-            foreach($parameters as $param=>$val)
-            {
-                if(strcasecmp($param, self::ANNOTATION_VAR) == 0 && isset($joinColumns[$prop->name]))
-                {
-                    $type = explode(' ', trim($val, " \r\n\t "))[0];
-                    $joinColumns[$prop->name][self::KEY_PROPERTY_TYPE] = $type;
-                    $joinColumns[$prop->name][self::KEY_ENTITY_OBJECT] = true;
-                }
-            }          
-
-            // list primary key
-            foreach($parameters as $param=>$val)
-            {
-                if(strcasecmp($param, self::ANNOTATION_ID) == 0 && isset($columns[$prop->name]))
-                {
-                    $primaryKeys[$prop->name] = array(self::KEY_NAME=>$columns[$prop->name][self::KEY_NAME]);
-                }
-            }
-
-            // list autogenerated column
-            foreach($parameters as $param=>$val)
-            {
-                if(strcasecmp($param, self::ANNOTATION_GENERATED_VALUE) == 0 && isset($columns[$prop->name]))
-                {
-                    $vals = $reflexClass->parseKeyValue($val);
-                    $autoIncrementKeys[$prop->name] = array(
-                        self::KEY_NAME=>isset($columns[$prop->name][self::KEY_NAME])?$columns[$prop->name][self::KEY_NAME]:null,
-                        self::KEY_STRATEGY=>isset($vals[self::KEY_STRATEGY])?$vals[self::KEY_STRATEGY]:null,
-                        self::KEY_GENERATOR=>isset($vals[self::KEY_GENERATOR])?$vals[self::KEY_GENERATOR]:null
-                    );
-                }
-            }
-            
-            // define default column value
-            foreach($parameters as $param=>$val)
-            {
-                if(strcasecmp($param, self::ANNOTATION_DEFAULT_COLUMN) == 0)
-                {
-                    $vals = $reflexClass->parseKeyValue($val);
-                    if(isset($vals[self::KEY_VALUE]))
-                    {
-                        $defaultValue[$prop->name] = array(
-                            self::KEY_NAME=>isset($columns[$prop->name][self::KEY_NAME])?$columns[$prop->name][self::KEY_NAME]:null,
-                            self::KEY_VALUE=>$vals[self::KEY_VALUE],
-                            self::KEY_PROPERTY_TYPE=>$columns[$prop->name][self::KEY_PROPERTY_TYPE]
-                        );
-                    }
-                }
-            }
-
-            // list not null column
-            foreach($parameters as $param=>$val)
-            {
-                if(strcasecmp($param, self::ANNOTATION_NOT_NULL) == 0 && isset($columns[$prop->name]))
-                {
-                    $notNullColumns[$prop->name] = array(self::KEY_NAME=>$columns[$prop->name][self::KEY_NAME]);
+            else if (is_array($data) || is_object($data)) {
+                foreach ($data as $key => $value) {
+                    $key2 = StringUtil::camelize($key);
+                    $this->set($key2, $value);
                 }
             }
         }
-        // bring it together
-        $info = new stdClass;
-        $info->tableName = $picoTableName;
-        $info->columns = $columns;
-        $info->joinColumns = $joinColumns;
-        $info->primaryKeys = $primaryKeys;
-        $info->autoIncrementKeys = $autoIncrementKeys;
-        $info->defaultValue = $defaultValue;
-        $info->notNullColumns = $notNullColumns;
-        return $info;
+        return $this;
     }
-    */
+    /**
+     * Add language
+     *
+     * @param string $code
+     * @param stdClass|array $reference
+     * @return self
+     */
+    public function addLanguage($code, $reference)
+    {
+        $this->lableLanguage[$code] = new PicoLanguage($reference);
+        return $this;
+    }
+    
+    /**
+     * Add language
+     *
+     * @param string $code
+     * @return self
+     */
+    public function selectLanguage($code)
+    {
+        $this->currentLanguage = $code;
+        return $this;
+    }
+    
+    private function init()
+    {
+        $className = get_class($this);
+        $reflexClass = new PicoAnnotationParser($className);
+        $this->attributes = TableUtil::parseElementAttributes($reflexClass->getParameter(self::ANNOTATION_ATTRIBUTES));    
+        $classList = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::CLASS_LIST));
+        $prefLanguage = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::ANNOTATION_LANGUAGE));
+        $defaultColumnName = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::ANNOTATION_DEFAULT_COLUMN_LABEL));
+        if($defaultColumnName->issetContent())
+        {
+            $this->defaultColumnName = $defaultColumnName->getContent();
+        }    
+        if($classList->issetContent())
+        {
+            $this->classList = explode(" ", preg_replace('/\s+/', ' ', $classList->getContent()));
+            $this->classList = array_unique($this->classList);
+        }
+        if($prefLanguage->issetContent())
+        {
+            $this->currentLanguage = $prefLanguage->getContent();
+        }  
+        $this->tableIdentity = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::ANNOTATION_TABLE));
+    }
+    
+    /**
+     * Add class to table
+     *
+     * @param string $className
+     * @return self
+     */
+    public function addClass($className)
+    {
+        if(TableUtil::isValidClassName($className))
+        {
+            $this->classList[] = $className;
+            $this->classList = array_unique($this->classList);
+        }
+        return $this;
+    }
+    
+    /**
+     * Remove class from table
+     *
+     * @param string $className
+     * @return self
+     */
+    public function removeClass($className)
+    {
+        if(TableUtil::isValidClassName($className))
+        {
+            $tmp = array();
+            foreach($this->classList as $cls)
+            {
+                if($cls != $className)
+                {
+                    $tmp[] = $cls;
+                }
+            }
+            $this->classList = $tmp;
+        }
+        return $this;
+    }
+    
+    /**
+     * Replace class of the table
+     *
+     * @param string $search
+     * @param string $replace
+     * @return self
+     */
+    public function replaceClass($search, $replace)
+    {
+        $this->removeClass($search);
+        $this->addClass($replace);
+        return $this;
+    }
+    
+    /**
+     * Property list
+     * @var bool $reflectSelf
+     * @var bool $asArrayProps
+     * @return array
+     */
+    protected function propertyList($reflectSelf = false, $asArrayProps = false)
+    {
+        $reflectionClass = $reflectSelf ? self::class : get_called_class();
+        $class = new ReflectionClass($reflectionClass);
+
+        // filter only the calling class properties
+        // skip parent properties
+        $properties = array_filter(
+            $class->getProperties(),
+            function($property) use($class) {
+                return $property->getDeclaringClass()->getName() == $class->getName();
+            }
+        );
+        if($asArrayProps)
+        {
+            $result = array();
+            $index = 0;
+            foreach ($properties as $key) {
+                $prop = $key->name;
+                $result[$index] = $prop;
+                
+                $index++;
+            }
+            return $result;
+        }
+        else
+        {
+            return $properties;
+        }
+    }
+    
+    /**
+     * Define label
+     *
+     * @param PicoAnnotationParser $reflexProp
+     * @param PicoGenericObject $parameters
+     * @param string $key
+     * @param string $defaultLabel
+     * @return string
+     */
+    private function label($reflexProp, $parameters, $key, $defaultLabel)
+    {
+        $label = $defaultLabel;
+        if(stripos($this->defaultColumnName, "->"))
+        {
+            $cn = explode("->", $this->defaultColumnName);
+            $lbl = $this->annotationContent($reflexProp, $parameters, trim($cn[0]), trim($cn[1]));
+            $label = StringUtil::selectNotNull($lbl, $defaultLabel);
+            
+        }
+        else if($this->defaultColumnName == self::ANNOTATION_LANGUAGE)
+        {
+            if(isset($this->lableLanguage) && isset($this->lableLanguage[$this->currentLanguage]))
+            {
+                $label = $this->lableLanguage[$this->currentLanguage]->isset($key) ? $this->lableLanguage[$this->currentLanguage]->get($key) : $defaultLabel;
+            }
+            else
+            {
+                $lbl = $this->annotationContent($reflexProp, $parameters, "Label", "content");
+                $label = StringUtil::selectNotNull($lbl, $defaultLabel);
+            }
+            
+        }
+        return $label;
+    }
+    
+    /**
+     * Annotation content
+     *
+     * @param PicoAnnotationParser $reflexProp
+     * @param PicoGenericObject $parameters
+     * @param string $key
+     * @param string $defaultLabel
+     * @return mixed|null
+     */
+    private function annotationContent($reflexProp, $parameters, $annotation, $attribute)
+    {
+        if($parameters->get($annotation) != null)
+        {
+            $attrs = $reflexProp->parseKeyValueAsObject($parameters->get($annotation));
+            if($attrs->get($attribute) != null)
+            {
+                return $attrs->get($attribute);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Magic method to string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $className = get_class($this);
+        $doc = new DOMDocument();
+        $table = $doc->appendChild($doc->createElement(self::TAG_TABLE));
+
+        TableUtil::setAttributes($table, $this->attributes);
+        TableUtil::setClassList($table, $this->classList);
+        TableUtil::setIdentity($table, $this->tableIdentity);
+       
+        $tbody = $table->appendChild($doc->createElement(self::TAG_TBODY));
+        $doc->formatOutput = true;
+        
+        $props = $this->propertyList();
+        
+        foreach($props as $prop)
+        {
+            $key = $prop->name;
+            $label = $key;
+            $value = $this->get($key);
+            $tr = $tbody->appendChild($doc->createElement(self::TAG_TR));
+            
+            $reflexProp = new PicoAnnotationParser($className, $key, PicoAnnotationParser::PROPERTY);
+            
+            if($reflexProp != null)
+            {
+                $parameters = $reflexProp->getParametersAsObject();
+                if($parameters->issetLabel())
+                {
+                    $label = $this->label($reflexProp, $parameters, $key, $label);
+                }
+            }
+
+            $td1 = $tr->appendChild($doc->createElement(self::TAG_TD));
+            $td1->setAttribute(self::KEY_CLASS, self::TD_LABEL);
+            $td1->textContent = $label;
+            
+            $td2 = $tr->appendChild($doc->createElement(self::TAG_TD));         
+            $td2->setAttribute(self::KEY_CLASS, self::TD_VALUE);
+            $td2->textContent = isset($value) ? $value : "";
+        }
+        return $doc->saveHTML();
+    }
+    
+    
+    
 }

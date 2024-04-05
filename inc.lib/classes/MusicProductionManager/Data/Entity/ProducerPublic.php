@@ -18,6 +18,7 @@ class ProducerPublic extends MagicObject
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
 	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=false)
+	 * @Label(content="Producer ID")
 	 * @var string
 	 */
 	protected $producerId;
@@ -26,6 +27,7 @@ class ProducerPublic extends MagicObject
 	 * Name
 	 * 
 	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -34,6 +36,7 @@ class ProducerPublic extends MagicObject
 	 * Gender
 	 * 
 	 * @Column(name="gender", type="varchar(2)", length=2, nullable=true)
+	 * @Label(content="Gender")
 	 * @var string
 	 */
 	protected $gender;
@@ -43,6 +46,7 @@ class ProducerPublic extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;

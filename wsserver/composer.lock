@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "planetbiru/magic-object",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "6cb1ac474e2596416f741e076b944e4824790b7f"
+                "reference": "ac046f8d921279f8b4bc601d16614fc86b0f5136"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/6cb1ac474e2596416f741e076b944e4824790b7f",
-                "reference": "6cb1ac474e2596416f741e076b944e4824790b7f",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/ac046f8d921279f8b4bc601d16614fc86b0f5136",
+                "reference": "ac046f8d921279f8b4bc601d16614fc86b0f5136",
                 "shasum": ""
             },
             "require": {
@@ -41,9 +41,9 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/1.0.1"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/1.0.2"
             },
-            "time": "2024-04-04T08:31:48+00:00"
+            "time": "2024-04-05T06:32:33+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",

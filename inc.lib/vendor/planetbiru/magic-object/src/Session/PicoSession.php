@@ -28,17 +28,33 @@ class PicoSession
 
     /**
      * Use this constructor if you want set other parameter before start sessiion
+     * @param SecretObject $sessConf
      */
-    public function __construct($name = null, $maxLifeTime = 0)
+    public function __construct($sessConf = null)
     {
-        if(isset($name))
+
+        if($sessConf->getName() != "")
         {
-            $this->setSessionName($name);
+            $this->setSessionName($sessConf->getName());
         }
-        if($maxLifeTime > 0)
+        
+        if($sessConf->getMaxLifeTime() > 0)
         {
-            $this->setSessionMaxLifeTime($maxLifeTime);
+            $this->setSessionMaxLifeTime($sessConf->getMaxLifeTime());
         }
+        
+        if($sessConf->getSaveHandler() == "redis")
+        {
+            $path = $sessConf->getSaveHandler();
+            $parsed = parse_url($path);
+            parse_str($parsed['query'], $parsedStr);
+            $this->saveToRedis($parsed['host'], $parsed['port'], $parsedStr['auth']);
+        }
+        else if($sessConf->getSaveHandler() == "files" && $sessConf->getSavePath() != "")
+        {
+            $this->saveToFiles($sessConf->getSavePath());
+        }
+        
     }
 
     /**

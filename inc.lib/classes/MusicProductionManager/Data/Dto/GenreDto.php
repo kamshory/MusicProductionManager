@@ -14,21 +14,24 @@ class GenreDto extends SetterGetter
 {
     /**
      * Genre ID
-     *
+     * 
+     * @Label(content="Genre ID")
      * @var string
      */
     protected $genreId;
 
     /**
      * Title
-     *
+     * 
+     * @Label(content="Title")
      * @var string
      */
     protected $name;
 
     /**
      * Sort order
-     *
+     * 
+     * @Label(content="Sort order")
      * @var integer
      * @Column(name=sort_order)
      */
@@ -36,7 +39,8 @@ class GenreDto extends SetterGetter
 
     /**
      * Default data
-     *
+     * 
+     * @Label(content="Default data")
      * @var bool
      * @Column(name=default_data)
      */
@@ -44,21 +48,23 @@ class GenreDto extends SetterGetter
 
     /**
      * Admin
-     *
+     * 
+     * @Label(content="Admin")
      * @var bool
      */
     protected $admin;
-    
+
     /**
      * Active
-     *
+     * 
+     * @Label(content="Active")
      * @var bool
      */
     protected $active;
 
     /**
      * Construct GenreDto from Genre and not copy other properties
-     *
+     * 
      * @param Genre $input
      * @return self
      */
@@ -69,8 +75,8 @@ class GenreDto extends SetterGetter
         $output->setName($input->getName());
         $output->setSortOrder($input->getSortOrder());
         $output->setDefaultData($input->getDefaultData());
-        $output->setAdmin($input->getAdmin());        
-        $output->setActive($input->getActive());        
+        $output->setAdmin($input->getAdmin());
+        $output->setActive($input->getActive());
         return $output;
-    } 
+    }
 }

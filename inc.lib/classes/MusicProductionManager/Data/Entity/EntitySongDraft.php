@@ -18,14 +18,16 @@ class EntitySongDraft extends MagicObject
      * @GeneratedValue(strategy=GenerationType.UUID)
      * @NotNull
      * @Column(name="song_draft_id", type="varchar(40)", length=40, nullable=false)
+     * @Label(content="Song Draft ID")
      * @var string
      */
     protected $songDraftId;
-    
+
     /**
      * Parent ID
      * 
      * @Column(name="parent_id", type="varchar(40)", length=40, nullable=true)
+     * @Label(content="Parent ID")
      * @var string
      */
     protected $parentId;
@@ -34,6 +36,7 @@ class EntitySongDraft extends MagicObject
      * Random ID
      * 
      * @Column(name="random_id", type="varchar(40)", length=40, nullable=true)
+     * @Label(content="Random ID")
      * @var string
      */
     protected $randomId;
@@ -42,6 +45,7 @@ class EntitySongDraft extends MagicObject
 	 * Artist ID
 	 * 
 	 * @Column(name="artist_id", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Artist ID")
 	 * @var string
 	 */
 	protected $artistId;
@@ -50,6 +54,7 @@ class EntitySongDraft extends MagicObject
 	 * Artist
 	 * 
 	 * @JoinColumn(name="artist_id")
+	 * @Label(content="Artist")
 	 * @var Artist
 	 */
 	protected $artist;
@@ -58,6 +63,7 @@ class EntitySongDraft extends MagicObject
      * Name
      * 
      * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+     * @Label(content="Name")
      * @var string
      */
     protected $name;
@@ -66,6 +72,7 @@ class EntitySongDraft extends MagicObject
      * Title
      * 
      * @Column(name="title", type="text", nullable=true)
+     * @Label(content="Title")
      * @var string
      */
     protected $title;
@@ -74,6 +81,7 @@ class EntitySongDraft extends MagicObject
      * Lyric
      * 
      * @Column(name="lyric", type="longtext", nullable=true)
+     * @Label(content="Lyric")
      * @var string
      */
     protected $lyric;
@@ -82,6 +90,7 @@ class EntitySongDraft extends MagicObject
 	 * Rating
 	 * 
 	 * @Column(name="rating", type="float", nullable=true)
+	 * @Label(content="Rating")
 	 * @var double
 	 */
 	protected $rating;
@@ -90,6 +99,7 @@ class EntitySongDraft extends MagicObject
      * Duration
      * 
      * @Column(name="duration", type="float", nullable=true)
+     * @Label(content="Duration")
      * @var double
      */
     protected $duration;
@@ -98,6 +108,7 @@ class EntitySongDraft extends MagicObject
      * File Path
      * 
      * @Column(name="file_path", type="text", nullable=true)
+     * @Label(content="File Path")
      * @var string
      */
     protected $filePath;
@@ -106,6 +117,7 @@ class EntitySongDraft extends MagicObject
 	 * File Size
 	 * 
 	 * @Column(name="file_size", type="bigint(20)", length=20, nullable=true)
+	 * @Label(content="File Size")
 	 * @var integer
 	 */
 	protected $fileSize;
@@ -115,6 +127,7 @@ class EntitySongDraft extends MagicObject
      * 
      * @NotNull
      * @Column(name="sha1_file", type="varchar(40)", length=40, nullable=false)
+     * @Label(content="Sha1 File")
      * @var string
      */
     protected $sha1File;
@@ -124,6 +137,7 @@ class EntitySongDraft extends MagicObject
      * 
      * @NotNull
      * @Column(name="read_count", type="int(11)", length=11, nullable=false)
+     * @Label(content="Read Count")
      * @var integer
      */
     protected $readCount;
@@ -132,6 +146,7 @@ class EntitySongDraft extends MagicObject
      * Time Create
      * 
      * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+     * @Label(content="Time Create")
      * @var string
      */
     protected $timeCreate;
@@ -140,6 +155,7 @@ class EntitySongDraft extends MagicObject
      * Time Edit
      * 
      * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+     * @Label(content="Time Edit")
      * @var string
      */
     protected $timeEdit;
@@ -148,6 +164,7 @@ class EntitySongDraft extends MagicObject
      * Admin Create
      * 
      * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+     * @Label(content="Admin Create")
      * @var string
      */
     protected $adminCreate;
@@ -156,6 +173,7 @@ class EntitySongDraft extends MagicObject
      * Creator
      * 
      * @JoinColumn(name="admin_create")
+     * @Label(content="Creator")
      * @var User
      */
     protected $creator;
@@ -164,6 +182,7 @@ class EntitySongDraft extends MagicObject
      * Admin Edit
      * 
      * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+     * @Label(content="Admin Edit")
      * @var string
      */
     protected $adminEdit;
@@ -172,6 +191,7 @@ class EntitySongDraft extends MagicObject
      * IP Create
      * 
      * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+     * @Label(content="IP Create")
      * @var string
      */
     protected $ipCreate;
@@ -180,6 +200,7 @@ class EntitySongDraft extends MagicObject
      * IP Edit
      * 
      * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+     * @Label(content="IP Edit")
      * @var string
      */
     protected $ipEdit;
@@ -189,6 +210,7 @@ class EntitySongDraft extends MagicObject
      * 
      * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
      * @DefaultColumn(value="1")
+     * @Label(content="Active")
      * @var bool
      */
     protected $active;
