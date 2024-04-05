@@ -57,7 +57,7 @@ function updateBlock($block)
             $firstLine = trim(str_replace(array('/', '*'), '', $line2));
         }
     }
-    if($lineVar != "" && $firstLine != "")
+    if($lineVar != "" && $firstLine != "" && stripos($block, "@Label(content=") === false)
     {
         $trailer = substr($lineVar, 0, strpos($lineVar, "@"));
         
