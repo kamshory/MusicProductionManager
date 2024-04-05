@@ -212,7 +212,12 @@ class SetterGetter
      */
     public function __call($method, $params) //NOSONAR
     {
-        if (strncasecmp($method, "is", 2) === 0) 
+        if (strncasecmp($method, "isset", 5) === 0) 
+        {
+            $var = lcfirst(substr($method, 5));
+            return isset($this->$var);
+        } 
+        else if (strncasecmp($method, "is", 2) === 0) 
         {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) ? $this->$var == 1 : false;
