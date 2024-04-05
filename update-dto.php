@@ -1,6 +1,6 @@
 <?php
 
-$files = glob("inc.lib/classes/MusicProductionManager/Data/Entity/*.php");
+$files = glob("inc.lib/classes/MusicProductionManager/Data/Dto/*.php");
 function getLast($haystack, $needle)
 {
     $lastFound = false;
@@ -17,6 +17,11 @@ function getLast($haystack, $needle)
     }
     while($lastFound !== false);
     return $found;
+}
+
+function getFirst($haystack, $needle)
+{
+    return strpos($haystack, $needle);
 }
 
 function updateBody($body)
@@ -69,8 +74,8 @@ function updateBlock($block)
 foreach($files as $file)
 {
     $content = file_get_contents($file);
-    $start = getLast($content, "{") + 1;
-    $end = getLast($content, "}");
+    $start = getFirst($content, "{") + 1;
+    $end = getFirst($content, "}");
     $body = substr($content, $start, $end-$start);
     $header = substr($content, 0, $start);
     $footer = substr($content, $end);
