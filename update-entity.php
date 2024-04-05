@@ -25,7 +25,7 @@ function updateBody($body)
     foreach($arr as $key=>$line)
     {
         $arr[$key] = rtrim($line);
-        if(substr($arr[$key], strlen($arr[$key]) - 1) == "*")
+        if(substr($arr[$key], strlen($arr[$key]) - 2) != "**" && substr($arr[$key], strlen($arr[$key]) - 1) == "*")
         {
             $arr[$key] = $arr[$key]." ";
         }
