@@ -261,7 +261,7 @@ class PicoAnnotationParser
     /**
      * Get parameters
      * 
-     * @return ParameterObject
+     * @return PicoGenericObject
      */
     public function getParametersAsObject()
     {
@@ -269,7 +269,7 @@ class PicoAnnotationParser
             $this->parse();
             $this->parsedAll = true;
         }
-        return new ParameterObject($this->parameters);
+        return new PicoGenericObject($this->parameters);
     }
 
     /**
@@ -338,14 +338,14 @@ class PicoAnnotationParser
      * Parse parameters as object. Note that all numeric attributes will be started with underscore (_). Do not use it as is
      *
      * @param string $queryString
-     * @return ParameterObject
+     * @return PicoGenericObject
      */
     public function parseKeyValueAsObject($queryString)
     {
         if(StringUtil::isNullOrEmpty($queryString))
         {
-            return new ParameterObject();
+            return new PicoGenericObject();
         }
-        return new ParameterObject($this->parseKeyValue($queryString));
+        return new PicoGenericObject($this->parseKeyValue($queryString));
     }
 }

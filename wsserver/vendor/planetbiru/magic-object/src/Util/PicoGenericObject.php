@@ -1,10 +1,9 @@
 <?php
 
 namespace MagicObject\Util;
-use MagicObject\SetterGetter;
 use stdClass;
 
-class ParameterObject
+class PicoGenericObject extends stdClass
 {
     /**
      * Constructor
@@ -150,5 +149,4 @@ class ParameterObject
             return $this;
         }
     }
-
 }
