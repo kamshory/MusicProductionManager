@@ -2,6 +2,8 @@
 
 namespace WS\PicoWebSocket;
 
+use Socket;
+
 class WSClient
 {
 	private $socket;
@@ -10,6 +12,7 @@ class WSClient
 	private $headers = array();
 	private $cookies = array();
 	private $sessions = array();
+	private $sessionSaveHandler = "files";
 	private $sessionSavePath = '/';
 	private $sessionFilePrefix = 'sess_';
 	private $sessionCookieName = 'PHPSESSID';
@@ -27,27 +30,47 @@ class WSClient
 	private $obj = null;
 	private $loginCallback = null;
 	
-	public function __construct($resourceId, $socket, $headers, $remoteAddress = null, $remotePort = null, $sessionCookieName = 'PHPSESSID', $sessionSavePath = null, $sessionFilePrefix = 'sess_', $obj = null, $loginCallback = null)
+	/**
+	 * Undocumented function
+	 *
+	 * @param resource $resourceId
+	 * @param resource|Socket|false $socket
+	 * @param array $headers
+	 * @param WSAddress $address
+	 * @param WSSessionConfig $sessionConfig
+	 * @param mixed|object $obj
+	 * @param callable $loginCallback
+	 */
+	public function __construct($resourceId, $socket, $headers, $address = null, $sessionConfig = null, $obj = null, $loginCallback = null)
 	{
 		$this->resourceId = $resourceId;
 		$this->socket = $socket;
-		$this->remoteAddress = $remoteAddress;
-		$this->remotePort = $remotePort;
-		if($sessionSavePath === null)
+		$this->remoteAddress = $address->getAddress();
+		$this->remotePort = $address->getPort();
+				
+		if($sessionConfig != null && $sessionConfig->getSessionSavePath() !== null)
 		{
-			$this->sessionSavePath = session_save_path();
+			$this->sessionSavePath = $sessionConfig->getSessionSavePath();
 		}
 		else
 		{
-			$this->sessionSavePath = $sessionSavePath;
+			$this->sessionSavePath = session_save_path();
 		}
-		if($sessionCookieName !== null)
+		if($sessionConfig != null && $sessionConfig->getSessionSaveHandler() !== null)
 		{
-			$this->sessionCookieName = $sessionCookieName;
+			$this->sessionSaveHandler = $sessionConfig->getSessionSaveHandler();
 		}
-		if($sessionFilePrefix !== null)
+		else
 		{
-			$this->sessionFilePrefix = $sessionFilePrefix;
+			$this->sessionSaveHandler = "files";
+		}
+		if($sessionConfig != null && $sessionConfig->getSessionCookieName() !== null)
+		{
+			$this->sessionCookieName = $sessionConfig->getSessionCookieName();
+		}
+		if($sessionConfig != null && $sessionConfig->getSessionFilePrefix() !== null)
+		{
+			$this->sessionFilePrefix = $sessionConfig->getSessionFilePrefix();
 		}
 		$headerInfo = WSUtility::parseHeaders($headers);
 		$this->headers = $headerInfo['headers'];
@@ -96,7 +119,7 @@ class WSClient
 		if(isset($this->cookies[$this->sessionCookieName]))
 		{
 			$this->sessionId = $this->cookies[$this->sessionCookieName];
-			$this->sessions = WSUtility::getSessions($this->getSessionId(), $this->getSessionSavePath(), $this->getSessionFilePrefix());
+			$this->sessions = WSUtility::getSessions($this->getSessionId(), $this->getSessionSaveHandler(), $this->getSessionSavePath(), $this->getSessionFilePrefix());
 			$this->clientData = call_user_func(array($this->obj, $this->loginCallback), $this); 
 		}
 
@@ -334,6 +357,26 @@ class WSClient
 	public function setSessionFilePrefix($sessionFilePrefix)
 	{
 		$this->sessionFilePrefix = $sessionFilePrefix;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of sessionSaveHandler
+	 */ 
+	public function getSessionSaveHandler()
+	{
+		return $this->sessionSaveHandler;
+	}
+
+	/**
+	 * Set the value of sessionSaveHandler
+	 *
+	 * @return  self
+	 */ 
+	public function setSessionSaveHandler($sessionSaveHandler)
+	{
+		$this->sessionSaveHandler = $sessionSaveHandler;
 
 		return $this;
 	}
