@@ -67,16 +67,19 @@ $typeMap = array(
 function createProperty($typeMap, $columnName, $columnType)
 {
     $propertyName = StringUtil::camelize($columnName);
+    $description = getPropertyName($columnName);
+
     $docs = array();
     $docStart = "\t/**";
     $docEnd = "\t */";
 
     $docs[] = $docStart;
-    $docs[] = "\t * ".getPropertyName($columnName);
+    $docs[] = "\t * ".$description;
     $docs[] = "\t * ";
 
     $type = getDataType($typeMap, $columnType);
 
+    $docs[] = "\t * @Label(content=\"$description\")";
     $docs[] = "\t * @var $type";
     $docs[] = $docEnd;
     $prop = "\tprotected \$$propertyName;";

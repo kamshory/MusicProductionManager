@@ -14,49 +14,55 @@ class AlbumDto extends SetterGetter
 {
     /**
      * Album ID
-     *
+     * 
+     * @Label(content="Album ID")
      * @var string
      */
     protected $albumId;
 
     /**
      * Title
-     *
+     * 
+     * @Label(content="Title")
      * @var string
      */
     protected $name;
 
     /**
      * Release date
-     *
+     * 
+     * @Label(content="Release date")
      * @var string
      */
     protected $releaseDate;
 
     /**
      * Number of song
-     *
+     * 
+     * @Label(content="Number of song")
      * @var integer
      */
     protected $numberOfSong;
 
     /**
      * Total duration
-     *
+     * 
+     * @Label(content="Total duration")
      * @var float
      */
     protected $duration;
 
     /**
      * Active
-     *
+     * 
+     * @Label(content="Active")
      * @var bool
      */
     protected $active;
 
     /**
      * Construct AlbumDto from Album and not copy other properties
-     *
+     * 
      * @param Album $input
      * @return self
      */
@@ -68,7 +74,7 @@ class AlbumDto extends SetterGetter
         $output->setReleaseDate($input->getReleaseDate());
         $output->setNumberOfSong($input->getNumberOfSong());
         $output->setDuration(round($input->getDuration(), 3));
-        $output->setActive($input->getActive());        
+        $output->setActive($input->getActive());
         return $output;
     }
 }

@@ -13,6 +13,7 @@ class RatingDto extends SetterGetter
 	/**
 	 * Rating ID
 	 * 
+	 * @Label(content="Rating ID")
 	 * @var string
 	 */
 	protected $ratingId;
@@ -20,13 +21,15 @@ class RatingDto extends SetterGetter
 	/**
 	 * User ID
 	 * 
+	 * @Label(content="User ID")
 	 * @var string
 	 */
 	protected $userId;
-	
+
 	/**
 	 * User
-	 *
+	 * 
+	 * @Label(content="User")
 	 * @var string
 	 */
 	protected $user;
@@ -34,6 +37,7 @@ class RatingDto extends SetterGetter
 	/**
 	 * Song ID
 	 * 
+	 * @Label(content="Song ID")
 	 * @var string
 	 */
 	protected $songId;
@@ -41,6 +45,7 @@ class RatingDto extends SetterGetter
 	/**
 	 * Rating
 	 * 
+	 * @Label(content="Rating")
 	 * @var double
 	 */
 	protected $rating;
@@ -48,6 +53,7 @@ class RatingDto extends SetterGetter
 	/**
 	 * Time Create
 	 * 
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -68,5 +74,5 @@ class RatingDto extends SetterGetter
         $output->setRating($input->getRating());
         $output->setTimeCreate($input->getTimeCreate());
         return $output;
-    }
+	}
 }

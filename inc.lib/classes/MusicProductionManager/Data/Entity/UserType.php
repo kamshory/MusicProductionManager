@@ -18,6 +18,7 @@ class UserType extends MagicObject
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
 	 * @Column(name="user_type_id", type="varchar(50)", length=50, nullable=false)
+	 * @Label(content="User Type ID")
 	 * @var string
 	 */
 	protected $userTypeId;
@@ -26,6 +27,7 @@ class UserType extends MagicObject
 	 * Name
 	 * 
 	 * @Column(name="name", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -34,6 +36,7 @@ class UserType extends MagicObject
 	 * Admin
 	 * 
 	 * @Column(name="admin", type="tinyint(1)", length=1, nullable=true)
+	 * @Label(content="Admin")
 	 * @var bool
 	 */
 	protected $admin;
@@ -42,6 +45,7 @@ class UserType extends MagicObject
 	 * Sort Order
 	 * 
 	 * @Column(name="sort_order", type="int(11)", length=11, nullable=true)
+	 * @Label(content="Sort Order")
 	 * @var integer
 	 */
 	protected $sortOrder;
@@ -50,6 +54,7 @@ class UserType extends MagicObject
 	 * Time Create
 	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -58,6 +63,7 @@ class UserType extends MagicObject
 	 * Time Edit
 	 * 
 	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
 	 * @var string
 	 */
 	protected $timeEdit;
@@ -66,6 +72,7 @@ class UserType extends MagicObject
 	 * Admin Create
 	 * 
 	 * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
 	 * @var string
 	 */
 	protected $adminCreate;
@@ -74,6 +81,7 @@ class UserType extends MagicObject
 	 * Admin Edit
 	 * 
 	 * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Admin Edit")
 	 * @var string
 	 */
 	protected $adminEdit;
@@ -82,6 +90,7 @@ class UserType extends MagicObject
 	 * IP Create
 	 * 
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
 	 * @var string
 	 */
 	protected $ipCreate;
@@ -90,6 +99,7 @@ class UserType extends MagicObject
 	 * IP Edit
 	 * 
 	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
 	 * @var string
 	 */
 	protected $ipEdit;
@@ -99,6 +109,7 @@ class UserType extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;

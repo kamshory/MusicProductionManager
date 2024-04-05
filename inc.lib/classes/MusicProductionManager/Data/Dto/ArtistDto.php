@@ -14,42 +14,47 @@ class ArtistDto extends SetterGetter
 {
     /**
      * Artist ID
-     *
+     * 
+     * @Label(content="Artist ID")
      * @var string
      */
     protected $artistId;
 
     /**
      * Title
-     *
+     * 
+     * @Label(content="Title")
      * @var string
      */
     protected $name;
 
     /**
      * Gender
-     *
+     * 
+     * @Label(content="Gender")
      * @var string
      */
     protected $gender;
 
     /**
      * Birth day
-     *
+     * 
+     * @Label(content="Birth day")
      * @var string
      */
     protected $birthDay;
 
     /**
      * Active
-     *
+     * 
+     * @Label(content="Active")
      * @var bool
      */
     protected $active;
 
     /**
      * Construct ArtistDto from Artist and not copy other properties
-     *
+     * 
      * @param Artist $input
      * @return self
      */
@@ -60,7 +65,7 @@ class ArtistDto extends SetterGetter
         $output->setName($input->getName());
         $output->setGender($input->getGender());
         $output->setBirthDay($input->getBirthDay());
-        $output->setActive($input->getActive());        
+        $output->setActive($input->getActive());
         return $output;
     }
 }

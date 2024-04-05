@@ -17,6 +17,7 @@ class EntityUserActivity extends MagicObject
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
 	 * @Column(name="user_activity_id", type="varchar(40)", length=40, nullable=false)
+	 * @Label(content="User Activity ID")
 	 * @var string
 	 */
 	protected $userActivityId;
@@ -24,6 +25,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Name
 	 * @Column(name="name", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -31,13 +33,15 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * User ID
 	 * @Column(name="user_id", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="User ID")
 	 * @var string
 	 */
 	protected $userId;
 
     /**
      * User
-     *
+     * 
+     * @Label(content="User")
      * @var EntityUser
      * @JoinColumn (name=user_id)
      */
@@ -46,6 +50,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Path
 	 * @Column(name="path", type="text", nullable=true)
+	 * @Label(content="Path")
 	 * @var string
 	 */
 	protected $path;
@@ -53,6 +58,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Method
 	 * @Column(name="method", type="varchar(10)", length=10, nullable=true)
+	 * @Label(content="Method")
 	 * @var string
 	 */
 	protected $method;
@@ -60,6 +66,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Get Data
 	 * @Column(name="get_data", type="longtext", nullable=true)
+	 * @Label(content="Get Data")
 	 * @var string
 	 */
 	protected $getData;
@@ -67,6 +74,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Post Data
 	 * @Column(name="post_data", type="longtext", nullable=true)
+	 * @Label(content="Post Data")
 	 * @var string
 	 */
 	protected $postData;
@@ -74,6 +82,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Request Body
 	 * @Column(name="request_body", type="longtext", nullable=true)
+	 * @Label(content="Request Body")
 	 * @var string
 	 */
 	protected $requestBody;
@@ -81,6 +90,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Time Create
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -88,6 +98,7 @@ class EntityUserActivity extends MagicObject
 	/**
 	 * Ip Create
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="Ip Create")
 	 * @var string
 	 */
 	protected $ipCreate;

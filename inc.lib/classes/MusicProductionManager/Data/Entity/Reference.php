@@ -16,6 +16,7 @@ class Reference extends MagicObject
 	 * 
 	 * @NotNull
 	 * @Column(name="reference_id", type="varchar(50)", length=50, nullable=false)
+	 * @Label(content="Reference ID")
 	 * @var string
 	 */
 	protected $referenceId;
@@ -24,6 +25,7 @@ class Reference extends MagicObject
 	 * Title
 	 * 
 	 * @Column(name="title", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Title")
 	 * @var string
 	 */
 	protected $title;
@@ -32,6 +34,7 @@ class Reference extends MagicObject
 	 * Genre ID
 	 * 
 	 * @Column(name="genre_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Genre ID")
 	 * @var string
 	 */
 	protected $genreId;
@@ -40,6 +43,7 @@ class Reference extends MagicObject
 	 * Album
 	 * 
 	 * @Column(name="album", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Album")
 	 * @var string
 	 */
 	protected $album;
@@ -48,6 +52,7 @@ class Reference extends MagicObject
 	 * Artist ID
 	 * 
 	 * @Column(name="artist_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Artist ID")
 	 * @var string
 	 */
 	protected $artistId;
@@ -56,6 +61,7 @@ class Reference extends MagicObject
 	 * Year
 	 * 
 	 * @Column(name="year", type="year(4)", length=4, nullable=true)
+	 * @Label(content="Year")
 	 * @var string
 	 */
 	protected $year;
@@ -64,6 +70,7 @@ class Reference extends MagicObject
 	 * Url
 	 * 
 	 * @Column(name="url", type="text", nullable=true)
+	 * @Label(content="Url")
 	 * @var string
 	 */
 	protected $url;
@@ -72,6 +79,7 @@ class Reference extends MagicObject
 	 * Url Provider
 	 * 
 	 * @Column(name="url_provider", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Url Provider")
 	 * @var string
 	 */
 	protected $urlProvider;
@@ -80,6 +88,7 @@ class Reference extends MagicObject
 	 * Subtitle
 	 * 
 	 * @Column(name="subtitle", type="text", nullable=true)
+	 * @Label(content="Subtitle")
 	 * @var string
 	 */
 	protected $subtitle;
@@ -88,6 +97,7 @@ class Reference extends MagicObject
 	 * Description
 	 * 
 	 * @Column(name="description", type="longtext", nullable=true)
+	 * @Label(content="Description")
 	 * @var string
 	 */
 	protected $description;
@@ -96,6 +106,7 @@ class Reference extends MagicObject
 	 * Time Create
 	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -104,6 +115,7 @@ class Reference extends MagicObject
 	 * Time Edit
 	 * 
 	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
 	 * @var string
 	 */
 	protected $timeEdit;
@@ -112,6 +124,7 @@ class Reference extends MagicObject
 	 * IP Create
 	 * 
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
 	 * @var string
 	 */
 	protected $ipCreate;
@@ -120,6 +133,7 @@ class Reference extends MagicObject
 	 * IP Edit
 	 * 
 	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
 	 * @var string
 	 */
 	protected $ipEdit;
@@ -128,6 +142,7 @@ class Reference extends MagicObject
 	 * Admin Create
 	 * 
 	 * @Column(name="admin_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
 	 * @var string
 	 */
 	protected $adminCreate;
@@ -136,6 +151,7 @@ class Reference extends MagicObject
 	 * Admin Edit
 	 * 
 	 * @Column(name="admin_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Admin Edit")
 	 * @var string
 	 */
 	protected $adminEdit;
@@ -145,6 +161,7 @@ class Reference extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;

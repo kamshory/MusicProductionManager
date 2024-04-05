@@ -14,6 +14,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Song ID
 	 * 
+	 * @Label(content="Song ID")
 	 * @var string
 	 */
 	protected $songId;
@@ -21,6 +22,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Random Song ID
 	 * 
+	 * @Label(content="Random Song ID")
 	 * @var string
 	 */
 	protected $randomSongId;
@@ -28,6 +30,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Name
 	 * 
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -35,6 +38,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Title
 	 * 
+	 * @Label(content="Title")
 	 * @var string
 	 */
 	protected $title;
@@ -42,6 +46,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Album ID
 	 * 
+	 * @Label(content="Album ID")
 	 * @var string
 	 */
 	protected $albumId;
@@ -49,6 +54,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Track Number
 	 * 
+	 * @Label(content="Track Number")
 	 * @var integer
 	 */
 	protected $trackNumber;
@@ -56,6 +62,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Artist Vocal
 	 * 
+	 * @Label(content="Artist Vocal")
 	 * @var string
 	 */
 	protected $artistVocalist;
@@ -63,6 +70,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Artist Composer
 	 * 
+	 * @Label(content="Artist Composer")
 	 * @var string
 	 */
 	protected $artistComposer;
@@ -70,6 +78,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Artist Arranger
 	 * 
+	 * @Label(content="Artist Arranger")
 	 * @var string
 	 */
 	protected $artistArranger;
@@ -77,6 +86,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Path
 	 * 
+	 * @Label(content="File Path")
 	 * @var string
 	 */
 	protected $filePath;
@@ -84,6 +94,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Name
 	 * 
+	 * @Label(content="File Name")
 	 * @var string
 	 */
 	protected $fileName;
@@ -91,6 +102,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Type
 	 * 
+	 * @Label(content="File Type")
 	 * @var string
 	 */
 	protected $fileType;
@@ -98,6 +110,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Extension
 	 * 
+	 * @Label(content="File Extension")
 	 * @var string
 	 */
 	protected $fileExtension;
@@ -105,6 +118,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Size
 	 * 
+	 * @Label(content="File Size")
 	 * @var integer
 	 */
 	protected $fileSize;
@@ -112,6 +126,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Md5
 	 * 
+	 * @Label(content="File Md5")
 	 * @var string
 	 */
 	protected $fileMd5;
@@ -119,6 +134,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Upload Time
 	 * 
+	 * @Label(content="File Upload Time")
 	 * @var string
 	 */
 	protected $fileUploadTime;
@@ -126,6 +142,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * First Upload Time
 	 * 
+	 * @Label(content="First Upload Time")
 	 * @var string
 	 */
 	protected $firstUploadTime;
@@ -133,6 +150,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Last Upload Time
 	 * 
+	 * @Label(content="Last Upload Time")
 	 * @var string
 	 */
 	protected $lastUploadTime;
@@ -140,6 +158,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Last Upload Time Midi
 	 * 
+	 * @Label(content="Last Upload Time Midi")
 	 * @var string
 	 */
 	protected $lastUploadTimeMidi;
@@ -147,6 +166,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Last Upload Time Xml
 	 * 
+	 * @Label(content="Last Upload Time Xml")
 	 * @var string
 	 */
 	protected $lastUploadTimeXml;
@@ -154,6 +174,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Last Upload Time Pdf
 	 * 
+	 * @Label(content="Last Upload Time Pdf")
 	 * @var string
 	 */
 	protected $lastUploadTimePdf;
@@ -161,6 +182,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Path Midi
 	 * 
+	 * @Label(content="File Path Midi")
 	 * @var string
 	 */
 	protected $filePathMidi;
@@ -168,6 +190,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Path Xml
 	 * 
+	 * @Label(content="File Path Xml")
 	 * @var string
 	 */
 	protected $filePathXml;
@@ -175,6 +198,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * File Path Pdf
 	 * 
+	 * @Label(content="File Path Pdf")
 	 * @var string
 	 */
 	protected $filePathPdf;
@@ -182,6 +206,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Duration
 	 * 
+	 * @Label(content="Duration")
 	 * @var double
 	 */
 	protected $duration;
@@ -189,6 +214,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Genre ID
 	 * 
+	 * @Label(content="Genre ID")
 	 * @var string
 	 */
 	protected $genreId;
@@ -196,6 +222,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Bpm
 	 * 
+	 * @Label(content="Bpm")
 	 * @var double
 	 */
 	protected $bpm;
@@ -203,6 +230,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Time Signature
 	 * 
+	 * @Label(content="Time Signature")
 	 * @var string
 	 */
 	protected $timeSignature;
@@ -210,6 +238,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Subtitle
 	 * 
+	 * @Label(content="Subtitle")
 	 * @var string
 	 */
 	protected $subtitle;
@@ -217,6 +246,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Subtitle Complete
 	 * 
+	 * @Label(content="Subtitle Complete")
 	 * @var bool
 	 */
 	protected $subtitleComplete;
@@ -224,6 +254,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Lyric Midi
 	 * 
+	 * @Label(content="Lyric Midi")
 	 * @var string
 	 */
 	protected $lyricMidi;
@@ -231,6 +262,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Lyric Midi Raw
 	 * 
+	 * @Label(content="Lyric Midi Raw")
 	 * @var string
 	 */
 	protected $lyricMidiRaw;
@@ -238,6 +270,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Vocal
 	 * 
+	 * @Label(content="Vocal")
 	 * @var bool
 	 */
 	protected $vocal;
@@ -245,6 +278,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Instrument
 	 * 
+	 * @Label(content="Instrument")
 	 * @var string
 	 */
 	protected $instrument;
@@ -252,6 +286,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Midi Vocal Channel
 	 * 
+	 * @Label(content="Midi Vocal Channel")
 	 * @var integer
 	 */
 	protected $midiVocalChannel;
@@ -259,6 +294,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Rating
 	 * 
+	 * @Label(content="Rating")
 	 * @var double
 	 */
 	protected $rating;
@@ -266,6 +302,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Comment
 	 * 
+	 * @Label(content="Comment")
 	 * @var string
 	 */
 	protected $comment;
@@ -273,6 +310,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Image Path
 	 * 
+	 * @Label(content="Image Path")
 	 * @var string
 	 */
 	protected $imagePath;
@@ -280,6 +318,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Time Create
 	 * 
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -287,6 +326,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Time Edit
 	 * 
+	 * @Label(content="Time Edit")
 	 * @var string
 	 */
 	protected $timeEdit;
@@ -294,6 +334,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * IP Create
 	 * 
+	 * @Label(content="IP Create")
 	 * @var string
 	 */
 	protected $ipCreate;
@@ -301,6 +342,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * IP Edit
 	 * 
+	 * @Label(content="IP Edit")
 	 * @var string
 	 */
 	protected $ipEdit;
@@ -308,6 +350,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Admin Create
 	 * 
+	 * @Label(content="Admin Create")
 	 * @var string
 	 */
 	protected $adminCreate;
@@ -315,6 +358,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Admin Edit
 	 * 
+	 * @Label(content="Admin Edit")
 	 * @var string
 	 */
 	protected $adminEdit;
@@ -322,6 +366,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Active
 	 * 
+	 * @Label(content="Active")
 	 * @var bool
 	 */
 	protected $active;
@@ -375,7 +420,7 @@ class Karaoke extends SetterGetter
         $output->setAdminEdit($input->getAdminEdit());
         $output->setActive($input->getActive());
         return $output;
-    }
+	}
 
 
 }

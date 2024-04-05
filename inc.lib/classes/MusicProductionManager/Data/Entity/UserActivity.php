@@ -18,6 +18,7 @@ class UserActivity extends MagicObject
 	 * @GeneratedValue(strategy=GenerationType.UUID)
 	 * @NotNull
 	 * @Column(name="user_activity_id", type="varchar(40)", length=40, nullable=false)
+	 * @Label(content="User Activity ID")
 	 * @var string
 	 */
 	protected $userActivityId;
@@ -26,6 +27,7 @@ class UserActivity extends MagicObject
 	 * Name
 	 * 
 	 * @Column(name="name", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Name")
 	 * @var string
 	 */
 	protected $name;
@@ -34,6 +36,7 @@ class UserActivity extends MagicObject
 	 * User ID
 	 * 
 	 * @Column(name="user_id", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="User ID")
 	 * @var string
 	 */
 	protected $userId;
@@ -42,6 +45,7 @@ class UserActivity extends MagicObject
 	 * Path
 	 * 
 	 * @Column(name="path", type="text", nullable=true)
+	 * @Label(content="Path")
 	 * @var string
 	 */
 	protected $path;
@@ -50,6 +54,7 @@ class UserActivity extends MagicObject
 	 * Method
 	 * 
 	 * @Column(name="method", type="varchar(10)", length=10, nullable=true)
+	 * @Label(content="Method")
 	 * @var string
 	 */
 	protected $method;
@@ -58,6 +63,7 @@ class UserActivity extends MagicObject
 	 * Get Data
 	 * 
 	 * @Column(name="get_data", type="longtext", nullable=true)
+	 * @Label(content="Get Data")
 	 * @var string
 	 */
 	protected $getData;
@@ -66,6 +72,7 @@ class UserActivity extends MagicObject
 	 * Post Data
 	 * 
 	 * @Column(name="post_data", type="longtext", nullable=true)
+	 * @Label(content="Post Data")
 	 * @var string
 	 */
 	protected $postData;
@@ -74,6 +81,7 @@ class UserActivity extends MagicObject
 	 * Request Body
 	 * 
 	 * @Column(name="request_body", type="longtext", nullable=true)
+	 * @Label(content="Request Body")
 	 * @var string
 	 */
 	protected $requestBody;
@@ -82,6 +90,7 @@ class UserActivity extends MagicObject
 	 * Time Create
 	 * 
 	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
 	 * @var string
 	 */
 	protected $timeCreate;
@@ -90,6 +99,7 @@ class UserActivity extends MagicObject
 	 * IP Create
 	 * 
 	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
 	 * @var string
 	 */
 	protected $ipCreate;
