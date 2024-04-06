@@ -60,8 +60,9 @@ class EntitySong extends MagicObject
 	protected $albumId;
 
 	/**
+	 * Album
 	 * @JoinColumn(name="album_id")
-	 * @Label(content="@JoinColumn(name="album_id")")
+	 * @Label(content="Album")
 	 * @var Album
 	 */
 	protected $album;

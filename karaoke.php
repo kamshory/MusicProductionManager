@@ -2,7 +2,6 @@
 
 use MagicObject\Request\InputGet;
 use MusicProductionManager\Data\Dto\Karaoke;
-use MusicProductionManager\Data\Dto\SongDto;
 use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Song;
 use MusicProductionManager\Data\Entity\UserProfile;
@@ -30,7 +29,6 @@ if($inputGet->getSongId() != null)
     $lyric['start'] = (time() * 1000) + $delay;
     $lyric['song_id'] = $song->getSongId();
 }
-
 
 require_once "inc/header.php";
 

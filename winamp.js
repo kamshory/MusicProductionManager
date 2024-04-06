@@ -11,7 +11,7 @@ class Winamp {
     this.trackInfoDisplayer = null;
     this.volumeController = null;
     this.progressBar = null;
-    this.visualisation = null;
+    //this.visualisation = null;
     this.resizable = null;
     this.navBtn = null;
     this.prevBtn = null;
@@ -40,6 +40,15 @@ class Winamp {
     this.onPaused = function () {};
 
     this.onEnded = function () {};
+
+    
+
+    this.buildSubtitle = function(index)
+    {
+      let songProp = this.songList.songList[index];
+      let subtitle = songProp.subtitle;
+      console.log(subtitle)
+    }
 
     this.createPlaylistItem = function (index) {
       let tNumber = this.tracks[index].trackNumber;
@@ -96,7 +105,7 @@ class Winamp {
         this.trackLoaded = e.target.dataset.id;
         this.trackInfo[this.trackLoaded].classList.toggle("highlighted-track");
         this.audio.src = this.tracks[this.trackLoaded].url;
-
+        this.buildSubtitle(this.trackLoaded);
         this.playAudio();
 
         this.updateTrackInfo();
@@ -106,12 +115,12 @@ class Winamp {
         }
         this.isaudioPaused();
         this.isPlaying = true;
-        this.visualisation.style.display = "block";
+        //this.visualisation.style.display = "block";
       };
 
       this.updateTrackInfo();
       this.audio.src = this.tracks[this.trackLoaded].url;
-      
+      this.buildSubtitle(this.trackLoaded);
     };
 
     this.beforePlay = function () {
@@ -195,7 +204,7 @@ class Winamp {
       if (this.pause) {
         this.pause = false;
         this.pauseBtn.classList.toggle("highlighted");
-        this.visualisation.style.display = "block";
+        //this.visualisation.style.display = "block";
       }
     };
 
@@ -235,7 +244,7 @@ class Winamp {
       this.trackInfoDisplayer = this.qs(".track-info-displayer");
       this.volumeController = this.qs(".volume-controller");
       this.progressBar = this.qs(".progress-bar");
-      this.visualisation = this.qs(".visualisation");
+      //this.visualisation = this.qs(".visualisation");
       this.resizable = this.qsall(".resizable");
       this.navBtn = this.qsall(".nav-btn");
       this.prevBtn = this.qs(".prev-btn");
@@ -268,6 +277,7 @@ class Winamp {
         if (!this.isPlaying) {
           this.audio.src = this.tracks[this.trackLoaded].url;
           
+          this.buildSubtitle(this.trackLoaded);
 
           this.playAudio();
 
@@ -275,7 +285,7 @@ class Winamp {
 
           this.playBtn.classList.toggle("highlighted");
           this.stopBtn.classList.toggle("highlighted");
-          this.visualisation.style.display = "block";
+          //this.visualisation.style.display = "block";
         }
       });
 
@@ -287,7 +297,7 @@ class Winamp {
           this.isaudioPaused();
           this.playBtn.classList.toggle("highlighted");
           this.stopBtn.classList.toggle("highlighted");
-          this.visualisation.style.display = "none";
+          //this.visualisation.style.display = "none";
         }
       });
 
@@ -320,7 +330,7 @@ class Winamp {
             console.error("Unexpected error");
           }
           this.audio.src = this.tracks[this.trackLoaded].url;
-          
+          this.buildSubtitle(this.trackLoaded);
           this.trackInfo[this.trackLoaded].classList.toggle(
             "highlighted-track"
           );
@@ -339,13 +349,13 @@ class Winamp {
           if (!this.isPaused) {
             this.audio.pause();
             this.isPaused = true;
-            this.visualisation.style.display = "none";
+            //this.visualisation.style.display = "none";
           } else {
             this.playAudio();
             this.isPlaying = true;
 
             this.isPaused = false;
-            this.visualisation.style.display = "block";
+            //this.visualisation.style.display = "block";
           }
         }
       });

@@ -291,6 +291,11 @@ class PicoAnnotationParser
      */
     public function parseKeyValue($queryString)
     {
+        if(!isset($queryString) || empty($queryString) || is_array($queryString))
+        {
+            return array();
+        }
+
         // For every modification, please test regular expression with https://regex101.com/
     
         // parse attributes with quotes
@@ -301,10 +306,18 @@ class PicoAnnotationParser
         // parse attributes without quotes
         $regex2 = '/([_\-\w+]+)\=([a-zA-Z0-9._]+)/m'; // NOSONAR
         preg_match_all($regex2, $queryString, $matches2);
-        $pair2 = array_combine($matches2[1], $matches2[2]);
+        if(isset($matches2[1]) && isset($matches2[2]) && is_array($matches2[1]) && is_array($matches2[2]))
+        {
+            $pair2 = array_combine($matches2[1], $matches2[2]);
+            // merge $pair1 and $pair2 into $pair3
+            $pair3 = array_merge($pair1, $pair2);
+        }
+        else
+        {
+            $pair3 = $pair1;
+        }
+
         
-        // merge $pair1 and $pair2 into $pair3
-        $pair3 = array_merge($pair1, $pair2);
         
         // parse attributes without any value
         $regex3 = '/([\w\=\-\_"]+)/m'; // NOSONAR
