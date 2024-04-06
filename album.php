@@ -68,43 +68,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
     <link rel="stylesheet" href="vu-meter.css">
     <style>
-      .vu-meter{
-        padding-bottom: 10px;
-      }
-      .vu-meter-container{
-        padding:1px 0;
-      }
-    .vu-meter-inner{
-    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#2fbc25+0,e5af00+71,e5af00+71,e5af00+87,e00000+100 */
-    background: linear-gradient(to right,  #2fbc25 0%,#e5af00 71%,#e5af00 71%,#e5af00 87%,#e00000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    position: relative;
-    }
-    .vu-meter-bar{
-      background-color:rgba(0,0,0, 0.6);
-      width: 100%;
-      height: 8px;
-      margin: 0px 0px 0px auto;
-
-    }
-
-    form.albumselect{
-      padding: 10px 0 0px 0;
-      display: block;
-      width: 100%;
-
-    }
-    .album-selector{
-      padding: 5px 6px;
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
-      font-size: 14px;
-      background-color: transparent;
-      border: none;
-      border: 2px inset #555265;
-      color: lime;
-    }
-
+      
     </style>
 
     <div class="winamp-container">
