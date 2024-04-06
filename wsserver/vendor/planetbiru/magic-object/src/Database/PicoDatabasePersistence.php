@@ -7,7 +7,9 @@ use PDO;
 use PDOException;
 use PDOStatement;
 use MagicObject\Exceptions\EmptyResultException;
+use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidFilterException;
+use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\NoInsertableColumnException;
 use MagicObject\Exceptions\NoColumnMatchException;
 use MagicObject\Exceptions\NoUpdatableColumnException;
@@ -168,6 +170,26 @@ class PicoDatabasePersistence // NOSONAR
     }
 
     /**
+     * Parse key value string
+     *
+     * @param PicoAnnotationParser $reflexClass
+     * @param string $queryString
+     * @param string $parameter
+     * @return array
+     */
+    private function parseKeyValue($reflexClass, $queryString, $parameter)
+    {
+        try
+        {
+            return $reflexClass->parseKeyValue($queryString);
+        }
+        catch(InvalidQueryInputException $e)
+        {
+            throw new InvalidAnnotationException("Invalid annootation @".$parameter);
+        } 
+    }
+
+    /**
      * Get table information by parsing class and property annotation
      *
      * @return stdClass
@@ -176,7 +198,9 @@ class PicoDatabasePersistence // NOSONAR
     {
         $reflexClass = new PicoAnnotationParser($this->className);
         $table = $reflexClass->getParameter(self::ANNOTATION_TABLE);
-        $values = $reflexClass->parseKeyValue($table);
+
+        $values = $this->parseKeyValue($reflexClass, $table, self::ANNOTATION_TABLE);
+
         $picoTableName = $values[self::KEY_NAME];
         $columns = array();
         $joinColumns = array();
@@ -197,7 +221,7 @@ class PicoDatabasePersistence // NOSONAR
             {
                 if(strcasecmp($param, self::ANNOTATION_COLUMN) == 0)
                 {
-                    $values = $reflexProp->parseKeyValue($val);
+                    $values = $this->parseKeyValue($reflexProp, $val, $param);
                     if(!empty($values))
                     {
                         $columns[$prop->name] = $values;
@@ -214,7 +238,7 @@ class PicoDatabasePersistence // NOSONAR
                 }
                 if(strcasecmp($param, self::SQL_DATE_TIME_FORMAT) == 0)
                 {
-                    $values = $reflexProp->parseKeyValue($val);
+                    $values = $this->parseKeyValue($reflexProp, $val, $param);
                     if(isset($values['pattern']))
                     {
                         $columns[$prop->name][self::DATE_TIME_FORMAT] = $values['pattern'];
@@ -227,7 +251,7 @@ class PicoDatabasePersistence // NOSONAR
             {
                 if(strcasecmp($param, self::ANNOTATION_JOIN_COLUMN) == 0)
                 {
-                    $values = $reflexProp->parseKeyValue($val);
+                    $values = $this->parseKeyValue($reflexProp, $val, $param);
                     if(!empty($values))
                     {
                         $joinColumns[$prop->name] = $values;
@@ -260,7 +284,7 @@ class PicoDatabasePersistence // NOSONAR
             {
                 if(strcasecmp($param, self::ANNOTATION_GENERATED_VALUE) == 0 && isset($columns[$prop->name]))
                 {
-                    $vals = $reflexClass->parseKeyValue($val);
+                    $vals = $this->parseKeyValue($reflexClass, $val, $param);
                     $autoIncrementKeys[$prop->name] = array(
                         self::KEY_NAME=>isset($columns[$prop->name][self::KEY_NAME])?$columns[$prop->name][self::KEY_NAME]:null,
                         self::KEY_STRATEGY=>isset($vals[self::KEY_STRATEGY])?$vals[self::KEY_STRATEGY]:null,
@@ -274,7 +298,7 @@ class PicoDatabasePersistence // NOSONAR
             {
                 if(strcasecmp($param, self::ANNOTATION_DEFAULT_COLUMN) == 0)
                 {
-                    $vals = $reflexClass->parseKeyValue($val);
+                    $vals = $this->parseKeyValue($reflexClass, $val, $param);
                     if(isset($vals[self::KEY_VALUE]))
                     {
                         $defaultValue[$prop->name] = array(

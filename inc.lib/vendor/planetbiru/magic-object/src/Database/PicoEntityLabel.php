@@ -2,6 +2,8 @@
 
 namespace MagicObject\Database;
 
+use MagicObject\Exceptions\InvalidAnnotationException;
+use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\MagicObject;
 use MagicObject\Util\PicoAnnotationParser;
 use stdClass;
@@ -137,6 +139,26 @@ class PicoEntityLabel
     }
 
     /**
+     * Parse key value string
+     *
+     * @param PicoAnnotationParser $reflexClass
+     * @param string $queryString
+     * @param string $parameter
+     * @return array
+     */
+    private function parseKeyValue($reflexClass, $queryString, $parameter)
+    {
+        try
+        {
+            return $reflexClass->parseKeyValue($queryString);
+        }
+        catch(InvalidQueryInputException $e)
+        {
+            throw new InvalidAnnotationException("Invalid annootation @".$parameter);
+        } 
+    }
+
+    /**
      * Get object information
      *
      * @return stdClass
@@ -145,7 +167,7 @@ class PicoEntityLabel
     {
         $reflexClass = new PicoAnnotationParser($this->className);
         $table = $reflexClass->getParameter(self::ANNOTATION_TABLE);
-        $values = $reflexClass->parseKeyValue($table);
+        $values = $this->parseKeyValue($reflexClass, $table, self::ANNOTATION_TABLE);
         $picoTableName = $values[self::KEY_NAME];
         $columns = array();
         $joinColumns = array();
@@ -168,7 +190,7 @@ class PicoEntityLabel
             {
                 if(strcasecmp($param, self::ANNOTATION_LABEL) == 0)
                 {
-                    $values = $reflexProp->parseKeyValue($val);
+                    $values = $this->parseKeyValue($reflexProp, $val, $param);
                     if(!empty($values))
                     {
                         foreach($values as $k1=>$v1)
@@ -184,7 +206,7 @@ class PicoEntityLabel
 
                 if(strcasecmp($param, self::ANNOTATION_COLUMN) == 0)
                 {
-                    $values = $reflexProp->parseKeyValue($val);
+                    $values = $this->parseKeyValue($reflexProp, $val, $param);
                     if(!empty($values))
                     {
                         $columns[$prop->name] = $values;
@@ -206,7 +228,7 @@ class PicoEntityLabel
             {
                 if(strcasecmp($param, self::ANNOTATION_JOIN_COLUMN) == 0)
                 {
-                    $values = $reflexProp->parseKeyValue($val);
+                    $values = $this->parseKeyValue($reflexProp, $val, $param);
                     if(!empty($values))
                     {
                         $joinColumns[$prop->name] = $values;
@@ -238,7 +260,7 @@ class PicoEntityLabel
             {
                 if(strcasecmp($param, self::ANNOTATION_GENERATED_VALUE) == 0 && isset($columns[$prop->name]))
                 {
-                    $vals = $reflexClass->parseKeyValue($val);
+                    $vals = $this->parseKeyValue($reflexProp, $val, $param);
                     $autoIncrementKeys[$prop->name] = array(
                         self::KEY_NAME=>isset($columns[$prop->name][self::KEY_NAME])?$columns[$prop->name][self::KEY_NAME]:null,
                         self::KEY_STRATEGY=>isset($vals[self::KEY_STRATEGY])?$vals[self::KEY_STRATEGY]:null,
@@ -252,7 +274,7 @@ class PicoEntityLabel
             {
                 if(strcasecmp($param, self::ANNOTATION_DEFAULT_COLUMN) == 0)
                 {
-                    $vals = $reflexClass->parseKeyValue($val);
+                    $vals = $this->parseKeyValue($reflexProp, $val, $param);
                     if(isset($vals[self::KEY_VALUE]))
                     {
                         $defaultValue[$prop->name] = array(

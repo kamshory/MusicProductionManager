@@ -2,6 +2,7 @@
 
 namespace MagicObject\Request;
 
+use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Util\PicoAnnotationParser;
 use ReflectionClass;
 use stdClass;
@@ -24,6 +25,10 @@ class PicoRequestTool extends stdClass
         $params = $jsonAnnot->getParameters();
         foreach($params as $paramName=>$paramValue)
         {
+            if(is_array($paramValue))
+            {
+                throw new InvalidAnnotationException("Invalid annootation @".$paramName);
+            }
             $vals = $jsonAnnot->parseKeyValue($paramValue);
             $this->classParams[$paramName] = $vals;
         }

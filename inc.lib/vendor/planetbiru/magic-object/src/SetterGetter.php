@@ -2,6 +2,8 @@
 
 namespace MagicObject;
 
+use MagicObject\Exceptions\InvalidAnnotationException;
+use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Util\PicoAnnotationParser;
 use ReflectionClass;
 use stdClass;
@@ -24,8 +26,15 @@ class SetterGetter
         $params = $jsonAnnot->getParameters();
         foreach($params as $paramName=>$paramValue)
         {
-            $vals = $jsonAnnot->parseKeyValue($paramValue);
-            $this->classParams[$paramName] = $vals;
+            try
+            {
+                $vals = $jsonAnnot->parseKeyValue($paramValue);
+                $this->classParams[$paramName] = $vals;
+            }
+            catch(InvalidQueryInputException $e)
+            {
+                throw new InvalidAnnotationException("Invalid annootation @".$paramName);
+            }  
         }
     }
 

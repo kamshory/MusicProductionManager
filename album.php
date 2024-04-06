@@ -87,25 +87,27 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
 
     }
 
+    form.albumselect{
+      padding: 10px 0 0px 0;
+      display: block;
+      width: 100%;
+
+    }
+    .album-selector{
+      padding: 5px 6px;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 14px;
+      background-color: transparent;
+      border: none;
+      border: 2px inset #555265;
+      color: lime;
+    }
+
     </style>
 
-    
-
-    
- 
-
-
-    <form id="albumselect" action="" style="padding-bottom: 10px;">
-        <input type="hidden" name="action" value="play">
-        <select class="form-control" name="album_id" id="album_id" onchange="albumselect.submit()">
-            <option value="">- Select One -</option>
-            <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
-        </select>
-    </form>
-
     <div class="winamp-container">
-
-
     <div class="maxamp-container">
 
         <!-- first section : commands-->
@@ -181,7 +183,15 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
                     <div class="logo"><i class="fas fa-bolt"></i></div>
                 </div>
 
-            </div>
+                
+                <form class="albumselect" id="albumselect" action="">
+                    <input type="hidden" name="action" value="play">
+                    <select class="album-selector" name="album_id" id="album_id" onchange="albumselect.submit()">
+                        <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
+                    </select>
+                </form>
+
+                </div>
 
         </div>
 
@@ -205,11 +215,11 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
             <div class="title resizable">
                 <div class="line line-other">
                 </div>
-                <h2> VISUALISATION </h2>
+                <h2> LYRIC </h2>
                 <div class="line line-other">
                 </div>
             </div>
-            <div class="img-container">
+            <div class="lyric-container img-container">
                 <img src="https://c.tenor.com/BDN0GwbpmcYAAAAC/yas-banana.gif" class="visualisation"
                     alt="dancing banana" />
             </div>
