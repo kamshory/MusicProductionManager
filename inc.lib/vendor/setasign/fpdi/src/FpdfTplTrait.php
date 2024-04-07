@@ -95,7 +95,7 @@ trait FpdfTplTrait
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param bool $adjustPageSize
+     * @param boolean $adjustPageSize
      * @return array The size
      * @see FpdfTplTrait::getTemplateSize()
      */
@@ -184,7 +184,7 @@ trait FpdfTplTrait
      *
      * @param float|int|null $width The width of the template. If null, the current page width is used.
      * @param float|int|null $height The height of the template. If null, the current page height is used.
-     * @param bool $groupXObject Define the form XObject as a group XObject to support transparency (if used).
+     * @param boolean $groupXObject Define the form XObject as a group XObject to support transparency (if used).
      * @return int A template identifier.
      */
     public function beginTemplate($width = null, $height = null, $groupXObject = false)
@@ -266,7 +266,7 @@ trait FpdfTplTrait
     /**
      * Ends a template.
      *
-     * @return bool|int|null A template identifier.
+     * @return boolean|int|null A template identifier.
      */
     public function endTemplate()
     {

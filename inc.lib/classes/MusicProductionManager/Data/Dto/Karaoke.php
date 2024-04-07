@@ -246,8 +246,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Subtitle Complete
 	 * 
-	 * @Label(content="Subtitle Complete")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $subtitleComplete;
 
@@ -270,8 +269,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Vocal
 	 * 
-	 * @Label(content="Vocal")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $vocal;
 
@@ -366,8 +364,7 @@ class Karaoke extends SetterGetter
 	/**
 	 * Active
 	 * 
-	 * @Label(content="Active")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

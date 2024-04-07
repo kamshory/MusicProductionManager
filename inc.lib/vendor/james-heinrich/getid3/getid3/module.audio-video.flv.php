@@ -91,7 +91,7 @@ class getid3_flv extends getid3_handler
 	public $max_frames = 100000;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -650,7 +650,7 @@ class AMFReader
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function readBoolean() {
 		return $this->stream->readByte() == 1;

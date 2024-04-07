@@ -220,7 +220,7 @@ class getID3_cached_sqlite3 extends getID3
 	 * create data base table
 	 * this is almost the same as MySQL, with the exception of the dirname being added
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function create_table() {
 		$db = $this->db;

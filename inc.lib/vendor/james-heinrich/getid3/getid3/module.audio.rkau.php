@@ -21,7 +21,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_rkau extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -84,7 +84,7 @@ class getid3_rkau extends getid3_handler
 	/**
 	 * @param array $RKAUdata
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function RKAUqualityLookup(&$RKAUdata) {
 		$level   = ($RKAUdata['raw']['quality'] & 0xF0) >> 4;

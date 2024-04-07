@@ -174,7 +174,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
      * Returns the parameter value converted to boolean.
      *
      * @param string $key     The parameter key
-     * @param bool   $default The default value if the parameter key does not exist
+     * @param boolean   $default The default value if the parameter key does not exist
      *
      * @return boolean The filtered value
      */

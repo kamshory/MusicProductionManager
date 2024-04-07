@@ -37,7 +37,7 @@ class JsonResponse extends Response
      * @param mixed $data    The response data
      * @param int   $status  The response status code
      * @param array $headers An array of response headers
-     * @param bool  $json    If the data is already a JSON string
+     * @param boolean  $json    If the data is already a JSON string
      */
     public function __construct($data = null, $status = 200, $headers = [], $json = false)
     {

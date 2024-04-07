@@ -159,7 +159,7 @@ final class Message
     public $id = 0;
 
     /**
-     * @var bool Query/Response flag, query=false or response=true
+     * @var boolean Query/Response flag, query=false or response=true
      */
     public $qr = false;
 
@@ -171,22 +171,22 @@ final class Message
 
     /**
      *
-     * @var bool Authoritative Answer
+     * @var boolean Authoritative Answer
      */
     public $aa = false;
 
     /**
-     * @var bool TrunCation
+     * @var boolean TrunCation
      */
     public $tc = false;
 
     /**
-     * @var bool Recursion Desired
+     * @var boolean Recursion Desired
      */
     public $rd = false;
 
     /**
-     * @var bool Recursion Available
+     * @var boolean Recursion Available
      */
     public $ra = false;
 

@@ -25,7 +25,7 @@ class PdfDictionary extends PdfType
      * @param Tokenizer $tokenizer
      * @param StreamReader $streamReader
      * @param PdfParser $parser
-     * @return bool|self
+     * @return boolean|self
      * @throws PdfTypeException
      */
     public static function parse(Tokenizer $tokenizer, StreamReader $streamReader, PdfParser $parser)

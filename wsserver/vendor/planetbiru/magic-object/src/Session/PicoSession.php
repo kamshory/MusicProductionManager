@@ -14,7 +14,11 @@ class PicoSession
     /**
      * The state of the session
      *
-     * @var bool
+<<<<<<< HEAD
+     * @var boolean
+=======
+     * @var boolean
+>>>>>>> id3-tag
      */
     private $sessionState = self::SESSION_NOT_STARTED;
  
@@ -87,7 +91,11 @@ class PicoSession
     /**
      * (Re)starts the session.
      * 
+<<<<<<< HEAD
      * @return bool true if the session has been initialized, else false.
+=======
+     * @return boolean true if the session has been initialized, else false.
+>>>>>>> id3-tag
      **/
     public function startSession()
     {
@@ -101,7 +109,11 @@ class PicoSession
     /**
      * Check if session has been started or not
      *
+<<<<<<< HEAD
      * @return bool
+=======
+     * @return boolean
+>>>>>>> id3-tag
      */
     public function isSessionStarted()
     {
@@ -149,7 +161,11 @@ class PicoSession
     /**
      * Destroys the current session.
      * 
+<<<<<<< HEAD
      * @return bool true is session has been deleted, else false.
+=======
+     * @return boolean true is session has been deleted, else false.
+>>>>>>> id3-tag
      **/
     public function destroy()
     {
@@ -166,8 +182,13 @@ class PicoSession
      * Set cookie params
      *
      * @param integer $maxlifetime
+<<<<<<< HEAD
      * @param bool $secure
      * @param bool $httponly
+=======
+     * @param boolean $secure
+     * @param boolean $httponly
+>>>>>>> id3-tag
      * @param string $samesite
      * @return self
      */
@@ -199,8 +220,13 @@ class PicoSession
      * @param int $expire
      * @param string $path
      * @param string $domain
+<<<<<<< HEAD
      * @param bool $secure
      * @param bool $httponly
+=======
+     * @param boolean $secure
+     * @param boolean $httponly
+>>>>>>> id3-tag
      * @param string $samesite
      * @return self
      */

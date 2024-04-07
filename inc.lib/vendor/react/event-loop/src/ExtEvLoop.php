@@ -49,7 +49,7 @@ class ExtEvLoop implements LoopInterface
     private $writeStreams = array();
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $running;
 

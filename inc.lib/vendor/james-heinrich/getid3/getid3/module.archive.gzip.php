@@ -29,12 +29,12 @@ class getid3_gzip extends getid3_handler
 	 * Optional file list - disable for speed.
 	 * Decode gzipped files, if possible, and parse recursively (.tar.gz for example).
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $parse_contents = false;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

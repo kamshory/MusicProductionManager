@@ -90,7 +90,7 @@ class LimitingServer extends EventEmitter implements ServerInterface
      *
      * @param ServerInterface $server
      * @param int|null        $connectionLimit
-     * @param bool            $pauseOnLimit
+     * @param boolean            $pauseOnLimit
      */
     public function __construct(ServerInterface $server, $connectionLimit, $pauseOnLimit = false)
     {

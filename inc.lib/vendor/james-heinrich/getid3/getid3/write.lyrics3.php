@@ -46,7 +46,7 @@ class getid3_write_lyrics3
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteLyrics3() {
 		$this->errors[] = 'WriteLyrics3() not yet functional - cannot write Lyrics3';
@@ -54,7 +54,7 @@ class getid3_write_lyrics3
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function DeleteLyrics3() {
 		// Initialize getID3 engine

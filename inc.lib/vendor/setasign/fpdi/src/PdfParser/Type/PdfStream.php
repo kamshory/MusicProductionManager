@@ -123,8 +123,8 @@ class PdfStream extends PdfType
     /**
      * Get the stream data.
      *
-     * @param bool $cache Whether cache the stream data or not.
-     * @return bool|string
+     * @param boolean $cache Whether cache the stream data or not.
+     * @return boolean|string
      * @throws PdfTypeException
      * @throws CrossReferenceException
      * @throws PdfParserException

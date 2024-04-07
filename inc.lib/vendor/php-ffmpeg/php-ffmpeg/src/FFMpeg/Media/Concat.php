@@ -73,7 +73,7 @@ class Concat extends AbstractMediaType
      * Saves the concatenated video in the given array, considering that the sources videos are all encoded with the same codec.
      *
      * @param string  $outputPathfile
-     * @param bool    $streamCopy
+     * @param boolean    $streamCopy
      *
      * @return Concat
      *

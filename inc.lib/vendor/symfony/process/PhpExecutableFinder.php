@@ -29,7 +29,7 @@ class PhpExecutableFinder
     /**
      * Finds The PHP executable.
      *
-     * @param bool $includeArgs Whether or not include command arguments
+     * @param boolean $includeArgs Whether or not include command arguments
      *
      * @return string|false The PHP executable path or false if it cannot be found
      */

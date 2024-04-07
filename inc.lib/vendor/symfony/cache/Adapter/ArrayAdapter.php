@@ -29,7 +29,7 @@ class ArrayAdapter implements AdapterInterface, LoggerAwareInterface, Resettable
 
     /**
      * @param int  $defaultLifetime
-     * @param bool $storeSerialized Disabling serialization can lead to cache corruptions when storing mutable values but increases performance otherwise
+     * @param boolean $storeSerialized Disabling serialization can lead to cache corruptions when storing mutable values but increases performance otherwise
      */
     public function __construct($defaultLifetime = 0, $storeSerialized = true)
     {

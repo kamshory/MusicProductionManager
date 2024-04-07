@@ -21,7 +21,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_nsv extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -66,7 +66,7 @@ class getid3_nsv extends getid3_handler
 	/**
 	 * @param int $fileoffset
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getNSVsHeaderFilepointer($fileoffset) {
 		$info = &$this->getid3->info;
@@ -143,9 +143,9 @@ class getid3_nsv extends getid3_handler
 
 	/**
 	 * @param int  $fileoffset
-	 * @param bool $getTOCoffsets
+	 * @param boolean $getTOCoffsets
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getNSVfHeaderFilepointer($fileoffset, $getTOCoffsets=false) {
 		$info = &$this->getid3->info;

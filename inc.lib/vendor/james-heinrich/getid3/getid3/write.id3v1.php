@@ -54,7 +54,7 @@ class getid3_write_id3v1
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteID3v1() {
 		// File MUST be writeable - CHMOD(646) at least
@@ -96,7 +96,7 @@ class getid3_write_id3v1
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function FixID3v1Padding() {
 		// ID3v1 data is supposed to be padded with NULL characters, but some taggers incorrectly use spaces
@@ -122,7 +122,7 @@ class getid3_write_id3v1
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function RemoveID3v1() {
 		// File MUST be writeable - CHMOD(646) at least
@@ -153,7 +153,7 @@ class getid3_write_id3v1
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function setRealFileSize() {
 		if (PHP_INT_MAX > 2147483647) {

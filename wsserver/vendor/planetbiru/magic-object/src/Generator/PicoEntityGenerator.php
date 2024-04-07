@@ -201,7 +201,11 @@ class PicoEntityGenerator
             "float" => "double",
             "bigint" => "integer",
             "smallint" => "integer",
+<<<<<<< HEAD
             "tinyint(1)" => "bool",
+=======
+            "tinyint(1)" => "boolean",
+>>>>>>> id3-tag
             "tinyint" => "integer",
             "int" => "integer",
             "varchar" => "string",
@@ -211,8 +215,13 @@ class PicoEntityGenerator
             "longtext" => "string",
             "text" => "string",
             "enum" => "string",
+<<<<<<< HEAD
             "boolean" => "bool",
             "bool" => "bool",
+=======
+            "bool" => "boolean",
+            "boolean" => "boolean",
+>>>>>>> id3-tag
             "timestamp" => "string",
             "datetime" => "string",
             "date" => "string",

@@ -46,7 +46,7 @@ class getid3_write_vorbiscomment
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteVorbisComment() {
 
@@ -122,7 +122,7 @@ class getid3_write_vorbiscomment
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function DeleteVorbisComment() {
 		$this->tag_data = array(array());

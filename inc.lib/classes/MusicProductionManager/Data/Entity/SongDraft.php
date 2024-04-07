@@ -192,8 +192,12 @@ class SongDraft extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+<<<<<<< HEAD
 	 * @Label(content="Active")
-	 * @var bool
+	 * @var boolean
+=======
+	 * @var boolean
+>>>>>>> id3-tag
 	 */
 	protected $active;
 

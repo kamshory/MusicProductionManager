@@ -39,18 +39,16 @@ class UserTypeDto extends SetterGetter
 
     /**
      * Default data
-     * 
-     * @Label(content="Default data")
-     * @var bool
+     *
+     * @var boolean
      * @Column(name=default_data)
      */
     protected $defaultData;
 
     /**
      * Active
-     * 
-     * @Label(content="Active")
-     * @var bool
+     *
+     * @var boolean
      */
     protected $active;
 

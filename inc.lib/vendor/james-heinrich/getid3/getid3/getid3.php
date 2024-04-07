@@ -98,7 +98,7 @@ class getID3
 	/**
 	 * ID3v1 should always be 'ISO-8859-1', but some tags may be written in other encodings such as 'Windows-1251' or 'KOI8-R'. If true attempt to detect these encodings, but may return incorrect values for some tags actually in ISO-8859-1 encoding
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $encoding_id3v1_autodetect  = false;
 
@@ -109,42 +109,42 @@ class getID3
 	/**
 	 * Read and process ID3v1 tags
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_tag_id3v1         = true;
 
 	/**
 	 * Read and process ID3v2 tags
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_tag_id3v2         = true;
 
 	/**
 	 * Read and process Lyrics3 tags
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_tag_lyrics3       = true;
 
 	/**
 	 * Read and process APE tags
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_tag_apetag        = true;
 
 	/**
 	 * Copy tags to root key 'tags' and encode to $this->encoding
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_tags_process      = true;
 
 	/**
 	 * Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_tags_html         = true;
 
@@ -155,7 +155,7 @@ class getID3
 	/**
 	 * Calculate additional info such as bitrate, channelmode etc
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_extra_info        = true;
 
@@ -166,7 +166,7 @@ class getID3
 	/**
 	 * Defaults to true (ATTACHMENTS_INLINE) for backward compatibility
 	 *
-	 * @var bool|string
+	 * @var boolean|string
 	 */
 	public $option_save_attachments  = true;
 
@@ -177,21 +177,21 @@ class getID3
 	/**
 	 * Get MD5 sum of data part - slow
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_md5_data          = false;
 
 	/**
 	 * Use MD5 of source file if available - only FLAC and OptimFROG
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_md5_data_source   = false;
 
 	/**
 	 * Get SHA1 sum of data part - slow
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $option_sha1_data         = false;
 
@@ -199,7 +199,7 @@ class getID3
 	 * Check whether file is larger than 2GB and thus not supported by 32-bit PHP (null: auto-detect based on
 	 * PHP_INT_MAX)
 	 *
-	 * @var bool|null
+	 * @var boolean|null
 	 */
 	public $option_max_2gb_check;
 
@@ -217,7 +217,7 @@ class getID3
 	/** archive.rar
 	 * if true use PHP RarArchive extension, if false (non-extension parsing not yet written in getID3)
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_archive_rar_use_php_rar_extension = true;
 
@@ -225,14 +225,14 @@ class getID3
 	 * Optional file list - disable for speed.
 	 * Decode gzipped files, if possible, and parse recursively (.tar.gz for example).
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_archive_gzip_parse_contents = false;
 
 	/** audio.midi
 	 * if false only parse most basic information, much faster for some files but may be inaccurate
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audio_midi_scanwholefile = true;
 
@@ -240,7 +240,7 @@ class getID3
 	 * Forces getID3() to scan the file byte-by-byte and log all the valid audio frame headers - extremely slow,
 	 * unrecommended, but may provide data from otherwise-unusable files.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audio_mp3_allow_bruteforce = false;
 
@@ -257,7 +257,7 @@ class getID3
 	 * Avoid scanning all frames (break after finding ID_RIFF_HEADER and ID_CONFIG_BLOCK,
 	 * significantly faster for very large files but other data may be missed
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audio_wavpack_quick_parsing = false;
 
@@ -273,49 +273,49 @@ class getID3
 	 * If true, do not return information about CLUSTER chunks, since there's a lot of them
 	 * and they're not usually useful [default: TRUE].
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audiovideo_matroska_hide_clusters    = true;
 
 	/** audio-video.matroska
 	 * True to parse the whole file, not only header [default: FALSE].
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audiovideo_matroska_parse_whole_file = false;
 
 	/** audio-video.quicktime
 	 * return all parsed data from all atoms if true, otherwise just returned parsed metadata
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audiovideo_quicktime_ReturnAtomData  = false;
 
 	/** audio-video.quicktime
 	 * return all parsed data from all atoms if true, otherwise just returned parsed metadata
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audiovideo_quicktime_ParseAllPossibleAtoms = false;
 
 	/** audio-video.swf
 	 * return all parsed tags if true, otherwise do not return tags not parsed by getID3
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_audiovideo_swf_ReturnAllTagData = false;
 
 	/** graphic.bmp
 	 * return BMP palette
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_graphic_bmp_ExtractPalette = false;
 
 	/** graphic.bmp
 	 * return image data
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_graphic_bmp_ExtractData    = false;
 
@@ -330,7 +330,7 @@ class getID3
 	/** misc.pdf
 	 * return full details of PDF Cross-Reference Table (XREF)
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $options_misc_pdf_returnXREF = false;
 
@@ -529,7 +529,7 @@ class getID3
 	/**
 	 * @param array $optArray
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function setOption($optArray)
 	{
@@ -550,7 +550,7 @@ class getID3
 	 * @param int      $filesize
 	 * @param resource $fp
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @throws getid3_exception
 	 */
@@ -850,7 +850,7 @@ class getID3
 	 *
 	 * @param string $message
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function warning($message)
 	{
@@ -860,7 +860,7 @@ class getID3
 
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	private function CleanUp()
 	{
@@ -1620,7 +1620,7 @@ class getID3
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function HandleAllTags()
 	{
@@ -1754,7 +1754,7 @@ class getID3
 	 *
 	 * @param array $ThisFileInfo
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function CopyTagsToComments(&$ThisFileInfo)
 	{
@@ -1944,7 +1944,7 @@ class getID3
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function CalculateCompressionRatioVideo()
 	{
@@ -1995,7 +1995,7 @@ class getID3
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function CalculateCompressionRatioAudio()
 	{
@@ -2015,7 +2015,7 @@ class getID3
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function CalculateReplayGain()
 	{
@@ -2041,7 +2041,7 @@ class getID3
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ProcessAudioStreams()
 	{
@@ -2068,7 +2068,7 @@ class getID3
 	/**
 	 * @param string $name
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @throws getid3_exception
 	 */
@@ -2085,7 +2085,7 @@ class getID3
 	/**
 	 * @param string $filename
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function is_writable($filename)
 	{
@@ -2110,7 +2110,7 @@ abstract class getid3_handler
 	/**
 	 * Analyzing filepointer or string.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $data_string_flag     = false;
 
@@ -2158,7 +2158,7 @@ abstract class getid3_handler
 	/**
 	 * Analyze from file pointer.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	abstract public function Analyze();
 
@@ -2369,7 +2369,7 @@ abstract class getid3_handler
 	/**
 	 * @phpstan-impure
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function feof()
 	{
@@ -2382,7 +2382,7 @@ abstract class getid3_handler
 	/**
 	 * @param string $module
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	final protected function isDependencyFor($module)
 	{
@@ -2392,7 +2392,7 @@ abstract class getid3_handler
 	/**
 	 * @param string $text
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function error($text)
 	{
@@ -2404,7 +2404,7 @@ abstract class getid3_handler
 	/**
 	 * @param string $text
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function warning($text)
 	{

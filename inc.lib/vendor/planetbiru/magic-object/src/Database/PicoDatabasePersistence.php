@@ -12,6 +12,7 @@ use MagicObject\Exceptions\InvalidFilterException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\NoInsertableColumnException;
 use MagicObject\Exceptions\NoColumnMatchException;
+use MagicObject\Exceptions\NoDatabaseConnectionException;
 use MagicObject\Exceptions\NoUpdatableColumnException;
 use MagicObject\Exceptions\NoPrimaryKeyDefinedException;
 use MagicObject\Util\ExtendedReflectionClass;
@@ -138,7 +139,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Set flag to skip null column
      *
-     * @param bool $skip
+     * @param boolean $skip
      * @return self
      */
     public function includeNull($skip)
@@ -335,7 +336,7 @@ class PicoDatabasePersistence // NOSONAR
      * Get match row
      *
      * @param PDOStatement $stmt
-     * @return bool
+     * @return boolean
      */
     public function matchRow($stmt)
     {
@@ -350,7 +351,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Save data to database
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PDOStatement
      */
     public function save($includeNull = false)
@@ -395,7 +396,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Query of save data
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PicoDatabaseQueryBuilder
      */
     public function saveQuery($includeNull = false)
@@ -666,7 +667,7 @@ class PicoDatabasePersistence // NOSONAR
      *
      * @param string $columnName
      * @param array $primaryKeys
-     * @return bool
+     * @return boolean
      */
     public function isPrimaryKeys($columnName, $primaryKeys)
     {
@@ -700,7 +701,7 @@ class PicoDatabasePersistence // NOSONAR
      * Add generated value
      *
      * @param stdClass $info
-     * @param bool $fisrtCall
+     * @param boolean $fisrtCall
      * @return void
      */
     private function addGeneratedValue($info, $fisrtCall)
@@ -758,7 +759,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Insert data
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PDOStatement
      */
     public function insert($includeNull = false)
@@ -772,7 +773,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Query of insert data
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PicoDatabaseQueryBuilder
      */
     public function insertQuery($includeNull = false)
@@ -1164,7 +1165,7 @@ class PicoDatabasePersistence // NOSONAR
      *
      * @param string[] $primaryKeys
      * @param array $propertyValues
-     * @return bool
+     * @return boolean
      */
     private function isValidPrimaryKeyValues($primaryKeys, $propertyValues)
     {
@@ -1418,6 +1419,7 @@ class PicoDatabasePersistence // NOSONAR
      * @param PicoPagable $pagable
      * @param PicoSortable|string $sortable
      * @return array|null
+     * @throws PDOException|NoDatabaseConnectionException
      */
     public function findBy($propertyName, $propertyValue, $pagable = null, $sortable = null)
     {
@@ -1457,14 +1459,18 @@ class PicoDatabasePersistence // NOSONAR
                     $result[] = $data;
                 }
             }
-            else
-            {
-                throw new EmptyResultException(self::MESSAGE_NO_RECORD_FOUND);
-            }
+        }
+        catch(PDOException $e)
+        {
+            throw new PDOException($e->getMessage());
+        }
+        catch(NoDatabaseConnectionException $e)
+        {
+            throw new NoDatabaseConnectionException($e->getMessage());
         }
         catch(Exception $e)
         {
-            throw new EmptyResultException($e->getMessage());
+            // do nothing
         }
         return $result;
     }
@@ -1474,7 +1480,7 @@ class PicoDatabasePersistence // NOSONAR
      *
      * @param string $propertyName
      * @param mixed $propertyValue
-     * @return bool
+     * @return boolean
      */
     public function existsBy($propertyName, $propertyValue)
     {
@@ -1737,7 +1743,7 @@ class PicoDatabasePersistence // NOSONAR
      * Check if filter is valid or not
      *
      * @param string $filter
-     * @return bool
+     * @return boolean
      */
     private function isValidFilter($filter)
     {
@@ -1748,7 +1754,7 @@ class PicoDatabasePersistence // NOSONAR
      * Check if data is not null and not empty and not a space
      *
      * @param string $value
-     * @return bool
+     * @return boolean
      */
     private function notNullAndNotEmptyAndNotSpace($value)
     {
@@ -1792,7 +1798,7 @@ class PicoDatabasePersistence // NOSONAR
         "float"=>"double",
         "bigint"=>"integer",
         "smallint"=>"integer",
-        "tinyint(1)"=>"bool",
+        "tinyint(1)"=>"boolean",
         "tinyint"=>"integer",
         "int"=>"integer",
         "varchar"=>"string",
@@ -1802,8 +1808,8 @@ class PicoDatabasePersistence // NOSONAR
         "longtext"=>"string",
         "text"=>"string",   
         "enum"=>"string",   
-        "boolean"=>"bool",
-        "bool"=>"bool",
+        "bool"=>"boolean",
+        "boolean"=>"boolean",
         "timestamp"=>"string",
         "datetime"=>"string",
         "date"=>"string",
@@ -1815,7 +1821,7 @@ class PicoDatabasePersistence // NOSONAR
             $v = strlen($value) > 19 ? substr($value, 0, 19) : $value;
             $ret = DateTime::createFromFormat(self::SQL_DATETIME_FORMAT, $v);
         }
-        else if($typeLower == 'bool')
+        else if($typeLower == 'bool' || $typeLower == 'boolean')
         {
             $ret = $this->boolval($value);
         }
@@ -1842,7 +1848,7 @@ class PicoDatabasePersistence // NOSONAR
      * Boolean value
      *
      * @param mixed $value
-     * @return bool
+     * @return boolean
      */
     private function boolval($value)
     {
@@ -1913,7 +1919,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Check if date time is NULL
      * @param string $value
-     * @return bool
+     * @return boolean
      */
     private function isDateTimeNull($value)
     {
@@ -2067,7 +2073,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Update data
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PDOStatement
      */
     public function update($includeNull = false)
@@ -2082,7 +2088,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Query of update data
      *
-     * @param bool $includeNull
+     * @param boolean $includeNull
      * @return PicoDatabaseQueryBuilder
      */
     public function updateQuery($includeNull = false)

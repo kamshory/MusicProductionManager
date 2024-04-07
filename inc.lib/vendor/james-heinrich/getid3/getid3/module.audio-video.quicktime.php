@@ -27,19 +27,19 @@ class getid3_quicktime extends getid3_handler
 	/** audio-video.quicktime
 	 * return all parsed data from all atoms if true, otherwise just returned parsed metadata
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $ReturnAtomData        = false;
 
 	/** audio-video.quicktime
 	 * return all parsed data from all atoms if true, otherwise just returned parsed metadata
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $ParseAllPossibleAtoms = false;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -239,7 +239,7 @@ class getid3_quicktime extends getid3_handler
 	 * @param string $atom_data
 	 * @param int    $baseoffset
 	 * @param array  $atomHierarchy
-	 * @param bool   $ParseAllPossibleAtoms
+	 * @param boolean   $ParseAllPossibleAtoms
 	 *
 	 * @return array|false
 	 */
@@ -2229,7 +2229,7 @@ $this->error('fragmented mp4 files not currently supported');
 	 * @param string $atom_data
 	 * @param int    $baseoffset
 	 * @param array  $atomHierarchy
-	 * @param bool   $ParseAllPossibleAtoms
+	 * @param boolean   $ParseAllPossibleAtoms
 	 *
 	 * @return array|false
 	 */
@@ -2813,7 +2813,7 @@ $this->error('fragmented mp4 files not currently supported');
 	 * @param string|array $data
 	 * @param string $boxname
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function CopyToAppropriateCommentsSection($keyname, $data, $boxname='') {
 		static $handyatomtranslatorarray = array();

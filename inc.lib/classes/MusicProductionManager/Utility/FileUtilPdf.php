@@ -106,7 +106,7 @@ class FileUtilPdf
      * Check if error JSON occured
      *
      * @param array $jsonObj
-     * @return bool
+     * @return boolean
      */
     private static function isErrorJson($jsonObj)
     {
@@ -132,7 +132,7 @@ class FileUtilPdf
     /**
      * Check if multiple group
      *
-     * @return bool
+     * @return boolean
      */
     private static function isMultipleGroup($groupLyrics)
     {
@@ -303,7 +303,7 @@ class FileUtilPdf
      * Split page with vertical line
      *
      * @param Fpdi $pdf
-     * @param bool $split
+     * @param boolean $split
      * @return Fpdi
      */
     public static function splitPage($pdf, $split)
@@ -394,12 +394,12 @@ class FileUtilPdf
     /**
      * Check if lyric must be split or note
      *
-     * @param bool $split
+     * @param boolean $split
      * @param integer $maxLen
      * @param integer $maxLine
      * @param integer $threshold
      * @param array $lyrics
-     * @return bool
+     * @return boolean
      */
     public static function mustSplit($split, $maxLen, $maxLine, $threshold, $lyrics)
     {

@@ -48,8 +48,8 @@ class StringUtil
      *
      * @param string $haystack
      * @param string $value
-     * @param bool $caseSensitive
-     * @return bool
+     * @param boolean $caseSensitive
+     * @return boolean
      */
     public static function startsWith($haystack, $value, $caseSensitive = false)
     {
@@ -68,8 +68,8 @@ class StringUtil
      *
      * @param string $haystack
      * @param string $value
-     * @param bool $caseSensitive
-     * @return bool
+     * @param boolean $caseSensitive
+     * @return boolean
      */
     public static function endsWith($haystack, $value, $caseSensitive = false)
     {

@@ -214,7 +214,7 @@ class PdfParser
      * Get an indirect object by its object number.
      *
      * @param int $objectNumber
-     * @param bool $cache
+     * @param boolean $cache
      * @return PdfIndirectObject
      * @throws CrossReferenceException
      * @throws PdfParserException
@@ -363,7 +363,7 @@ class PdfParser
     }
 
     /**
-     * @return bool|PdfDictionary
+     * @return boolean|PdfDictionary
      * @throws PdfTypeException
      */
     protected function parsePdfDictionary()
@@ -410,7 +410,7 @@ class PdfParser
      *
      * @param string $token
      * @param string|null $expectedType
-     * @return bool
+     * @return boolean
      * @throws Type\PdfTypeException
      */
     protected function ensureExpectedType($token, $expectedType)

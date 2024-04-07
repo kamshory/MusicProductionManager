@@ -304,8 +304,7 @@ class EntityMidi extends MagicObject
 
     /**
      * Active
-     * @Label(content="Active")
-     * @var bool
+     * @var boolean
      * @Column(name=active)
      */
     protected $active;

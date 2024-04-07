@@ -6,5 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+<<<<<<< HEAD
     'WS\\' => array($baseDir . '/libs'),
+=======
+>>>>>>> id3-tag
 );

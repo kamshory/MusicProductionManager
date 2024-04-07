@@ -16,7 +16,14 @@
         }
     ],
     "require": {
+<<<<<<< HEAD
         "php": ">=5.3.3"
+=======
+        "php": ">=7.1"
+    },
+    "provide": {
+        "ext-ctype": "*"
+>>>>>>> id3-tag
     },
     "autoload": {
         "psr-4": { "Symfony\\Polyfill\\Ctype\\": "" },
@@ -27,9 +34,12 @@
     },
     "minimum-stability": "dev",
     "extra": {
+<<<<<<< HEAD
         "branch-alias": {
             "dev-main": "1.19-dev"
         },
+=======
+>>>>>>> id3-tag
         "thanks": {
             "name": "symfony/polyfill",
             "url": "https://github.com/symfony/polyfill"

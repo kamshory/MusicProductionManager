@@ -118,7 +118,7 @@ class PicoRequestTool extends stdClass
     /**
      * Get value
      *
-     * @var bool $snakeCase
+     * @var boolean $snakeCase
      */
     public function value($snakeCase = false)
     {
@@ -147,8 +147,8 @@ class PicoRequestTool extends stdClass
     /**
      * Property list
      *
-     * @var bool $reflectSelf
-     * @var bool $asArrayProps
+     * @var boolean $reflectSelf
+     * @var boolean $asArrayProps
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -187,7 +187,11 @@ class PicoRequestTool extends stdClass
      * @param integer $type
      * @param string $variable_name
      * @param integer $filter
+<<<<<<< HEAD
      * @param bool $escapeSQL
+=======
+     * @param boolean $escapeSQL
+>>>>>>> id3-tag
      * @return mixed
      */
     public function filterInput($type, $variable_name, $filter = FILTER_DEFAULT, $escapeSQL=false) // NOSONAR
@@ -483,7 +487,7 @@ class PicoRequestTool extends stdClass
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isSnake()
     {
@@ -496,7 +500,7 @@ class PicoRequestTool extends stdClass
     /**
      * Check if JSON naming strategy is camel case or not
      *
-     * @return bool
+     * @return boolean
      */
     protected function isCamel()
     {
@@ -506,7 +510,7 @@ class PicoRequestTool extends stdClass
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isPretty()
     {
@@ -519,7 +523,7 @@ class PicoRequestTool extends stdClass
     /**
      * Check if request is empty
      *
-     * @return bool
+     * @return boolean
      */
     public function isEmpty()
     {

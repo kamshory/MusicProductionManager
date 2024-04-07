@@ -67,8 +67,13 @@ class Dms
     /**
      * Print Dms
      *
+<<<<<<< HEAD
      * @param bool $trim
      * @param bool $rounded
+=======
+     * @param boolean $trim
+     * @param boolean $rounded
+>>>>>>> id3-tag
      * @return string
      */
     public function printDms($trim = false, $rounded = false)

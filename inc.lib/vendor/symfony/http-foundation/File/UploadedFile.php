@@ -49,7 +49,7 @@ class UploadedFile extends File
      * @param string|null $mimeType     The type of the file as provided by PHP; null defaults to application/octet-stream
      * @param int|null    $size         The file size provided by the uploader
      * @param int|null    $error        The error constant of the upload (one of PHP's UPLOAD_ERR_XXX constants); null defaults to UPLOAD_ERR_OK
-     * @param bool        $test         Whether the test mode is active
+     * @param boolean        $test         Whether the test mode is active
      *                                  Local files are used in test mode hence the code should not enforce HTTP uploads
      *
      * @throws FileException         If file_uploads is disabled

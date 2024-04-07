@@ -74,7 +74,7 @@ class ClassLoader
      */
     private $fallbackDirsPsr0 = array();
 
-    /** @var bool */
+    /** @var boolean */
     private $useIncludePath = false;
 
     /**
@@ -83,11 +83,11 @@ class ClassLoader
      */
     private $classMap = array();
 
-    /** @var bool */
+    /** @var boolean */
     private $classMapAuthoritative = false;
 
     /**
-     * @var bool[]
+     * @var boolean[]
      * @psalm-var array<string, bool>
      */
     private $missingClasses = array();

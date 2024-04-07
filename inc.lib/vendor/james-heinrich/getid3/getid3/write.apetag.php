@@ -34,7 +34,7 @@ class getid3_write_apetag
 	/**
 	 * ReplayGain / MP3gain tags will be copied from old tag even if not passed in data.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $always_preserve_replaygain = true;
 
@@ -56,7 +56,7 @@ class getid3_write_apetag
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteAPEtag() {
 		// NOTE: All data passed to this function must be UTF-8 format
@@ -121,7 +121,7 @@ class getid3_write_apetag
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function DeleteAPEtag() {
 		$getID3 = new getID3;
@@ -195,7 +195,7 @@ class getid3_write_apetag
 
 	/**
 	 * @param array $items
-	 * @param bool  $isheader
+	 * @param boolean  $isheader
 	 *
 	 * @return string
 	 */
@@ -216,11 +216,11 @@ class getid3_write_apetag
 	}
 
 	/**
-	 * @param bool $header
-	 * @param bool $footer
-	 * @param bool $isheader
+	 * @param boolean $header
+	 * @param boolean $footer
+	 * @param boolean $isheader
 	 * @param int  $encodingid
-	 * @param bool $readonly
+	 * @param boolean $readonly
 	 *
 	 * @return string
 	 */

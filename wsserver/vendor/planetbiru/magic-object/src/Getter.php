@@ -88,6 +88,14 @@ class Getter extends stdClass
 
     /**
      * Get value
+<<<<<<< HEAD
+<<<<<<<< HEAD:wsserver/vendor/planetbiru/magic-object/src/Getter.php
+========
+     * 
+     * @var boolean $snakeCase
+>>>>>>>> id3-tag:wsserver/vendor/libs/WS/Utils/SetterGetter.php
+=======
+>>>>>>> id3-tag
      */
     public function value($snakeCase = false)
     {
@@ -113,7 +121,17 @@ class Getter extends stdClass
 
     /**
      * Property list
-     * @var bool $reflectSelf
+<<<<<<< HEAD
+<<<<<<<< HEAD:wsserver/vendor/planetbiru/magic-object/src/Getter.php
+     * @var boolean $reflectSelf
+========
+     * 
+     * @var boolean $reflectSelf
+     * @var boolean $asArrayProps
+>>>>>>>> id3-tag:wsserver/vendor/libs/WS/Utils/SetterGetter.php
+=======
+     * @var boolean $reflectSelf
+>>>>>>> id3-tag
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -167,7 +185,7 @@ class Getter extends stdClass
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isSnake()
     {
@@ -180,7 +198,7 @@ class Getter extends stdClass
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isPretty()
     {

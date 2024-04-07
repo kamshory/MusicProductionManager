@@ -125,8 +125,7 @@ class EntityArticle extends MagicObject
 	 * 
 	 * @Column(name="draft", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Draft")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $draft;
 
@@ -135,8 +134,7 @@ class EntityArticle extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

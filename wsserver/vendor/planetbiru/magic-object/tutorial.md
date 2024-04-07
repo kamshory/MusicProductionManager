@@ -608,7 +608,11 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @var bool
+<<<<<<< HEAD
+	 * @var boolean
+=======
+	 * @var boolean
+>>>>>>> id3-tag
 	 */
 	protected $active;
 
@@ -617,7 +621,11 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="as_draft", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @var bool
+<<<<<<< HEAD
+	 * @var boolean
+=======
+	 * @var boolean
+>>>>>>> id3-tag
 	 */
 	protected $asDraft;
 
@@ -1095,7 +1103,11 @@ class EntitySong extends MagicObject
 	 * Subtitle Complete
 	 * 
 	 * @Column(name="subtitle_complete", type="tinyint(1)", length=1, nullable=true)
-	 * @var bool
+<<<<<<< HEAD
+	 * @var boolean
+=======
+	 * @var boolean
+>>>>>>> id3-tag
 	 */
 	protected $subtitleComplete;
 
@@ -1119,7 +1131,11 @@ class EntitySong extends MagicObject
 	 * Vocal
 	 * 
 	 * @Column(name="vocal", type="tinyint(1)", length=1, nullable=true)
-	 * @var bool
+<<<<<<< HEAD
+	 * @var boolean
+=======
+	 * @var boolean
+>>>>>>> id3-tag
 	 */
 	protected $vocal;
 
@@ -1224,7 +1240,11 @@ class EntitySong extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @var bool
+<<<<<<< HEAD
+	 * @var boolean
+=======
+	 * @var boolean
+>>>>>>> id3-tag
 	 */
 	protected $active;
 }

@@ -143,7 +143,7 @@ class FileUtil
      * @param ZipArchive $zip
      * @param string $path
      * @param EntitySong $song
-     * @param bool $perAlbum
+     * @param boolean $perAlbum
      * @return void
      */
     public static function downloadSongFiles($zip, $path, $song, $perAlbum = false)
@@ -176,7 +176,7 @@ class FileUtil
      *
      * @param ZipArchive $zip
      * @param EntitySong $song
-     * @param bool $perAlbum
+     * @param boolean $perAlbum
      * @return ZipArchive
      */
     public static function addFileMp3($zip, $song, $perAlbum)
@@ -196,7 +196,7 @@ class FileUtil
      *
      * @param ZipArchive $zip
      * @param EntitySong $song
-     * @param bool $perAlbum
+     * @param boolean $perAlbum
      * @return ZipArchive
      */
     public static function addFileMidi($zip, $song, $perAlbum)
@@ -219,7 +219,7 @@ class FileUtil
      *
      * @param ZipArchive $zip
      * @param EntitySong $song
-     * @param bool $perAlbum
+     * @param boolean $perAlbum
      * @return ZipArchive
      */
     public static function addFilePdf($zip, $song, $perAlbum)
@@ -311,7 +311,7 @@ class FileUtil
      *
      * @param ZipArchive $zip
      * @param EntitySong $song
-     * @param bool $perAlbum
+     * @param boolean $perAlbum
      * @return ZipArchive
      */
     public static function addFileXml($zip, $song, $perAlbum)

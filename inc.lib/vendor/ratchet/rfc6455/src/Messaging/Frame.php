@@ -69,7 +69,7 @@ class Frame implements FrameInterface {
 
     /**
      * @param string|null $payload
-     * @param bool        $final
+     * @param boolean        $final
      * @param int         $opcode
      * @param callable<\UnderflowException> $ufExceptionFactory
      */

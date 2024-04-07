@@ -208,7 +208,7 @@ class WSUtility
      *
 	 * @param string $payload
 	 * @param string $type
-	 * @param bool $masked
+	 * @param boolean $masked
 	 * @throws \RuntimeException
 	 * @return string
 	 */

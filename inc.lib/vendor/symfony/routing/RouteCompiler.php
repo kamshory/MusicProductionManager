@@ -254,7 +254,7 @@ class RouteCompiler implements RouteCompilerInterface
      * Returns the next static character in the Route pattern that will serve as a separator.
      *
      * @param string $pattern The route pattern
-     * @param bool   $useUtf8 Whether the character is encoded in UTF-8 or not
+     * @param boolean   $useUtf8 Whether the character is encoded in UTF-8 or not
      *
      * @return string The next static character that functions as separator (or empty string when none available)
      */

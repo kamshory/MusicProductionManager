@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "21bbeb3e24f4f7f64d4011a074452e23",
     "packages": [
         {
@@ -18,11 +19,31 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/9cb744c2cbce7d270c268ed8e33f4e20d7dfeaa1",
                 "reference": "9cb744c2cbce7d270c268ed8e33f4e20d7dfeaa1",
+=======
+    "content-hash": "1b2c51d1db932e6e7ac8f28ee74f6a35",
+    "packages": [
+        {
+            "name": "planetbiru/magic-object",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Planetbiru/MagicObject.git",
+                "reference": "7b2bde2347de741bc4f3752f3832d2f30742485d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/7b2bde2347de741bc4f3752f3832d2f30742485d",
+                "reference": "7b2bde2347de741bc4f3752f3832d2f30742485d",
+>>>>>>> id3-tag
                 "shasum": ""
             },
             "require": {
                 "symfony/yaml": "^3.4"
             },
+<<<<<<< HEAD
+=======
+            "default-branch": true,
+>>>>>>> id3-tag
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -41,6 +62,7 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/Planetbiru/MagicObject/tree/1.0.5"
             },
             "time": "2024-04-07T01:30:08+00:00"
@@ -61,15 +83,43 @@
             },
             "require": {
                 "php": ">=5.3.3"
+=======
+                "source": "https://github.com/Planetbiru/MagicObject/tree/main"
+            },
+            "time": "2024-04-07T23:31:45+00:00"
+        },
+        {
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.29.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "ef4d7e442ca910c4764bce785146269b30cb5fc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/ef4d7e442ca910c4764bce785146269b30cb5fc4",
+                "reference": "ef4d7e442ca910c4764bce785146269b30cb5fc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "provide": {
+                "ext-ctype": "*"
+>>>>>>> id3-tag
             },
             "suggest": {
                 "ext-ctype": "For best performance"
             },
             "type": "library",
             "extra": {
+<<<<<<< HEAD
                 "branch-alias": {
                     "dev-main": "1.19-dev"
                 },
+=======
+>>>>>>> id3-tag
                 "thanks": {
                     "name": "symfony/polyfill",
                     "url": "https://github.com/symfony/polyfill"
@@ -106,7 +156,11 @@
                 "portable"
             ],
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/polyfill-ctype/tree/v1.19.0"
+=======
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.29.0"
+>>>>>>> id3-tag
             },
             "funding": [
                 {
@@ -122,7 +176,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2020-10-23T09:01:57+00:00"
+=======
+            "time": "2024-01-29T20:11:03+00:00"
+>>>>>>> id3-tag
         },
         {
             "name": "symfony/yaml",
@@ -199,13 +257,22 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
+<<<<<<< HEAD
     "stability-flags": [],
+=======
+    "stability-flags": {
+        "planetbiru/magic-object": 20
+    },
+>>>>>>> id3-tag
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
+<<<<<<< HEAD
     "platform-overrides": {
         "php": "5.6.14"
     },
+=======
+>>>>>>> id3-tag
     "plugin-api-version": "2.2.0"
 }

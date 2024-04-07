@@ -43,7 +43,7 @@ class getid3_dts extends getid3_handler
 		3 => "\xFF\x1F\x00\xE8"); // 14-bit little-endian
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

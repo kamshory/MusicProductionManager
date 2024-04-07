@@ -54,9 +54,8 @@ class AlbumDto extends SetterGetter
 
     /**
      * Active
-     * 
-     * @Label(content="Active")
-     * @var bool
+     *
+     * @var boolean
      */
     protected $active;
 

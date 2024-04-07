@@ -94,7 +94,7 @@ trait FpdiTrait
      * This method is called internally when the document is created successfully. By default it only cleans up
      * stream reader instances which were created internally.
      *
-     * @param bool $allReaders
+     * @param boolean $allReaders
      */
     public function cleanUp($allReaders = false)
     {
@@ -244,8 +244,8 @@ trait FpdiTrait
      *
      * @param int $pageNumber The page number.
      * @param string $box The page boundary to import. Default set to PageBoundaries::CROP_BOX.
-     * @param bool $groupXObject Define the form XObject as a group XObject to support transparency (if used).
-     * @param bool $importExternalLinks Define whether external links are imported or not.
+     * @param boolean $groupXObject Define the form XObject as a group XObject to support transparency (if used).
+     * @param boolean $importExternalLinks Define whether external links are imported or not.
      * @return string A unique string identifying the imported page.
      * @throws CrossReferenceException
      * @throws FilterException
@@ -433,7 +433,7 @@ trait FpdiTrait
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param bool $adjustPageSize
+     * @param boolean $adjustPageSize
      * @return array The size.
      * @see Fpdi::getTemplateSize()
      */

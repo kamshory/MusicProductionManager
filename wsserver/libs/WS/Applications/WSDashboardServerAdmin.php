@@ -75,7 +75,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 	 * Login with basic authentication
 	 *
 	 * @param WSClient $clientChat
-	 * @return bool
+	 * @return boolean
 	 */
 	private function loginWithBasicAuth($clientChat)
 	{
@@ -95,7 +95,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 	 * Login with session
 	 *
 	 * @param WSClient $clientChat
-	 * @return bool
+	 * @return boolean
 	 */
 	private function loginWithSession($clientChat)
 	{
@@ -251,7 +251,7 @@ class WSDashboardServerAdmin extends WSServer implements WSInterface
 	 *
 	 * @param string $username
 	 * @param string $password
-	 * @return bool
+	 * @return boolean
 	 */
 	private function validUser($username, $password)
 	{

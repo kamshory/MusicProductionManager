@@ -149,7 +149,11 @@ class SetterGetter
     /**
      * Get value
      *
-     * @var bool $snakeCase
+<<<<<<< HEAD
+     * @var boolean $snakeCase
+=======
+     * @var boolean $snakeCase
+>>>>>>> id3-tag
      */
     public function value($snakeCase = false)
     {
@@ -178,8 +182,13 @@ class SetterGetter
     /**
      * Property list
      *
-     * @var bool $reflectSelf
-     * @var bool $asArrayProps
+<<<<<<< HEAD
+     * @var boolean $reflectSelf
+     * @var boolean $asArrayProps
+=======
+     * @var boolean $reflectSelf
+     * @var boolean $asArrayProps
+>>>>>>> id3-tag
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -253,7 +262,11 @@ class SetterGetter
     /**
      * Check if JSON naming strategy is snake case or not
      *
+<<<<<<< HEAD
      * @return bool
+=======
+     * @return boolean
+>>>>>>> id3-tag
      */
     private function isSnake()
     {
@@ -266,7 +279,11 @@ class SetterGetter
     /**
      * Check if JSON naming strategy is camel case or not
      *
+<<<<<<< HEAD
      * @return bool
+=======
+     * @return boolean
+>>>>>>> id3-tag
      */
     protected function isCamel()
     {
@@ -276,7 +293,11 @@ class SetterGetter
     /**
      * Check if JSON naming strategy is snake case or not
      *
+<<<<<<< HEAD
      * @return bool
+=======
+     * @return boolean
+>>>>>>> id3-tag
      */
     private function isPretty()
     {

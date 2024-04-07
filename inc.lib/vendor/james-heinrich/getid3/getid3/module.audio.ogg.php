@@ -24,7 +24,7 @@ class getid3_ogg extends getid3_handler
 	/**
 	 * @link http://xiph.org/vorbis/doc/Vorbis_I_spec.html
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -415,7 +415,7 @@ $this->warning('Ogg Theora (v3) not fully supported in this version of getID3 ['
 	 * @param int    $filedataoffset
 	 * @param array  $oggpageinfo
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseVorbisPageHeader(&$filedata, &$filedataoffset, &$oggpageinfo) {
 		$info = &$this->getid3->info;
@@ -472,7 +472,7 @@ $this->warning('Ogg Theora (v3) not fully supported in this version of getID3 ['
 	 * @param int    $filedataoffset
 	 * @param array  $oggpageinfo
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseOpusPageHeader(&$filedata, &$filedataoffset, &$oggpageinfo) {
 		$info = &$this->getid3->info;
@@ -582,7 +582,7 @@ $this->warning('Ogg Theora (v3) not fully supported in this version of getID3 ['
 	/**
 	 * @link http://xiph.org/vorbis/doc/Vorbis_I_spec.html#x1-810005
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseVorbisComments() {
 		$info = &$this->getid3->info;

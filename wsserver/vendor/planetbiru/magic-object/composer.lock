@@ -7,6 +7,7 @@
     "content-hash": "30ba00fe281a7531e0141dd89972af92",
     "packages": [
         {
+<<<<<<< HEAD
             "name": "symfony/polyfill-ctype",
             "version": "v1.29.0",
             "source": {
@@ -102,6 +103,23 @@
             "require": {
                 "php": "^5.5.9|>=7.0.8",
                 "symfony/polyfill-ctype": "~1.8"
+=======
+            "name": "symfony/yaml",
+            "version": "v3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "b3d0c9c11be3831b84825967dc6b52b5a7b84e04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/b3d0c9c11be3831b84825967dc6b52b5a7b84e04",
+                "reference": "b3d0c9c11be3831b84825967dc6b52b5a7b84e04",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8"
+>>>>>>> id3-tag
             },
             "conflict": {
                 "symfony/console": "<3.4"
@@ -113,6 +131,14 @@
                 "symfony/console": "For validating YAML files using the lint command"
             },
             "type": "library",
+<<<<<<< HEAD
+=======
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+>>>>>>> id3-tag
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Yaml\\": ""
@@ -138,6 +164,7 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/yaml/tree/v3.4.47"
             },
             "funding": [
@@ -155,6 +182,11 @@
                 }
             ],
             "time": "2020-10-24T10:57:07+00:00"
+=======
+                "source": "https://github.com/symfony/yaml/tree/3.4"
+            },
+            "time": "2017-11-29T13:28:14+00:00"
+>>>>>>> id3-tag
         }
     ],
     "packages-dev": [],

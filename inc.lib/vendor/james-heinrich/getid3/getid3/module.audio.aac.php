@@ -21,7 +21,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_aac extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -35,7 +35,7 @@ class getid3_aac extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getAACADIFheaderFilepointer() {
 		$info = &$this->getid3->info;
@@ -266,9 +266,9 @@ class getid3_aac extends getid3_handler
 
 	/**
 	 * @param int  $MaxFramesToScan
-	 * @param bool $ReturnExtendedInfo
+	 * @param boolean $ReturnExtendedInfo
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getAACADTSheaderFilepointer($MaxFramesToScan=1000000, $ReturnExtendedInfo=false) {
 		$info = &$this->getid3->info;

@@ -100,7 +100,7 @@ class Page
      * Get a page attribute.
      *
      * @param string $name
-     * @param bool $inherited
+     * @param boolean $inherited
      * @return PdfType|null
      * @throws PdfParserException
      * @throws PdfTypeException
@@ -178,8 +178,8 @@ class Page
      * Get a boundary of this page.
      *
      * @param string $box
-     * @param bool $fallback
-     * @return bool|Rectangle
+     * @param boolean $fallback
+     * @return boolean|Rectangle
      * @throws PdfParserException
      * @throws PdfTypeException
      * @throws CrossReferenceException
@@ -213,7 +213,7 @@ class Page
      * Get the width and height of this page.
      *
      * @param string $box
-     * @param bool $fallback
+     * @param boolean $fallback
      * @return array|bool
      * @throws PdfParserException
      * @throws PdfTypeException

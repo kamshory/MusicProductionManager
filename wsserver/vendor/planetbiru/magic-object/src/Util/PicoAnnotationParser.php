@@ -394,7 +394,11 @@ class PicoAnnotationParser
      *
      * @param array $keys
      * @param string $val
+<<<<<<< HEAD
      * @return bool
+=======
+     * @return boolean
+>>>>>>> id3-tag
      */
     private function matchArgs($keys, $val)
     {

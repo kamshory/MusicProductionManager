@@ -113,7 +113,7 @@ class Getter extends stdClass
 
     /**
      * Property list
-     * @var bool $reflectSelf
+     * @var boolean $reflectSelf
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -167,7 +167,7 @@ class Getter extends stdClass
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isSnake()
     {
@@ -180,7 +180,7 @@ class Getter extends stdClass
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isPretty()
     {

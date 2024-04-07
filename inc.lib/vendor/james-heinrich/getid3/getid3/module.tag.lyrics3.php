@@ -20,7 +20,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_lyrics3 extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -138,7 +138,7 @@ class getid3_lyrics3 extends getid3_handler
 	 * @param int $version
 	 * @param int $length
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getLyrics3Data($endoffset, $version, $length) {
 		// http://www.volweb.cz/str/tags.htm
@@ -280,7 +280,7 @@ class getid3_lyrics3 extends getid3_handler
 	/**
 	 * @param array $Lyrics3data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Lyrics3LyricsTimestampParse(&$Lyrics3data) {
 		$lyricsarray = explode("\r\n", $Lyrics3data['raw']['LYR']);
@@ -316,7 +316,7 @@ class getid3_lyrics3 extends getid3_handler
 	/**
 	 * @param string $char
 	 *
-	 * @return bool|null
+	 * @return boolean|null
 	 */
 	public function IntString2Bool($char) {
 		if ($char == '1') {

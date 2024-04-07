@@ -31,7 +31,7 @@ class InstalledVersions
     private static $installed;
 
     /**
-     * @var bool|null
+     * @var boolean|null
      */
     private static $canGetVendors;
 

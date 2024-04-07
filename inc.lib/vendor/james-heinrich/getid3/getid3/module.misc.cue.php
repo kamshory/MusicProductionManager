@@ -41,7 +41,7 @@ class getid3_cue extends getid3_handler
 	public $cuesheet = array();
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

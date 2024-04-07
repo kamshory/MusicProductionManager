@@ -48,8 +48,13 @@ class StringUtil
      *
      * @param string $haystack
      * @param string $value
+<<<<<<< HEAD
      * @param bool $caseSensitive
      * @return bool
+=======
+     * @param boolean $caseSensitive
+     * @return boolean
+>>>>>>> id3-tag
      */
     public static function startsWith($haystack, $value, $caseSensitive = false)
     {
@@ -68,8 +73,13 @@ class StringUtil
      *
      * @param string $haystack
      * @param string $value
+<<<<<<< HEAD
      * @param bool $caseSensitive
      * @return bool
+=======
+     * @param boolean $caseSensitive
+     * @return boolean
+>>>>>>> id3-tag
      */
     public static function endsWith($haystack, $value, $caseSensitive = false)
     {

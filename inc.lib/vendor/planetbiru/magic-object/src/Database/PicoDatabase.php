@@ -38,7 +38,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Autocommit
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	private $autocommit = true;
 
@@ -80,7 +80,7 @@ class PicoDatabase //NOSONAR
 
 	/**
 	 * Connect to database
-	 * @return bool true if success and false if failed
+	 * @return boolean true if success and false if failed
 	 */
 	public function connect()
 	{
@@ -130,8 +130,8 @@ class PicoDatabase //NOSONAR
 	 * Set autocommit ON of OFF
 	 * When it set to OFF, user MUST call commit or rollback manualy. Default action is rollback
 	 *
-	 * @param bool $autocommit
-	 * @return bool
+	 * @param boolean $autocommit
+	 * @return boolean
 	 */
 	public function setAudoCommit($autocommit)
 	{
@@ -142,7 +142,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Commit
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function commit()
 	{
@@ -152,7 +152,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Rollback
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function rollback()
 	{
@@ -220,7 +220,7 @@ class PicoDatabase //NOSONAR
 	 * Check if record is exists
 	 *
 	 * @param string $sql
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isRecordExists($sql)
 	{
@@ -302,7 +302,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeQuery($sql)
 	{
@@ -326,7 +326,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute query and sync to hub
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeInsert($sql)
 	{
@@ -338,7 +338,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute update query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeUpdate($sql)
 	{
@@ -350,7 +350,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute delete query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeDelete($sql)
 	{
@@ -362,7 +362,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute transaction query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeTransaction($sql)
 	{
@@ -437,7 +437,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Get indication that database is connected or not
 	 *
-	 * @return bool
+	 * @return boolean
 	 */ 
 	public function isConnected()
 	{

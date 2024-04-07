@@ -68,7 +68,7 @@ class Tokenizer
     /**
      * Get next token.
      *
-     * @return bool|string
+     * @return boolean|string
      */
     public function getNextToken()
     {

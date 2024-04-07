@@ -22,7 +22,7 @@ class getid3_pcd extends getid3_handler
 	public $ExtractData = 0;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

@@ -55,7 +55,7 @@ abstract class AbstractPipes implements PipesInterface
     /**
      * Returns true if a system call has been interrupted.
      *
-     * @return bool
+     * @return boolean
      */
     protected function hasSystemCallBeenInterrupted()
     {

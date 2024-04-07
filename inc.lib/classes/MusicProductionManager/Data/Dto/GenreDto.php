@@ -39,26 +39,23 @@ class GenreDto extends SetterGetter
 
     /**
      * Default data
-     * 
-     * @Label(content="Default data")
-     * @var bool
+     *
+     * @var boolean
      * @Column(name=default_data)
      */
     protected $defaultData;
 
     /**
      * Admin
-     * 
-     * @Label(content="Admin")
-     * @var bool
+     *
+     * @var boolean
      */
     protected $admin;
 
     /**
      * Active
-     * 
-     * @Label(content="Active")
-     * @var bool
+     *
+     * @var boolean
      */
     protected $active;
 

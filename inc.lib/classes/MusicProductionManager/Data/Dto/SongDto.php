@@ -245,8 +245,7 @@ class SongDto extends SetterGetter
 	/**
 	 * Subtitle Complete
 	 * 
-	 * @Label(content="Subtitle Complete")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $subtitleComplete;
 
@@ -269,8 +268,7 @@ class SongDto extends SetterGetter
 	/**
 	 * Vocal
 	 * 
-	 * @Label(content="Vocal")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $vocal;
 
@@ -365,8 +363,7 @@ class SongDto extends SetterGetter
 	/**
 	 * Active
 	 * 
-	 * @Label(content="Active")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

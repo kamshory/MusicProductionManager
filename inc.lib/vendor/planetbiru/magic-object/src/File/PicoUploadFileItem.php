@@ -32,7 +32,7 @@ class PicoUploadFileItem
      * Copy file to destination path
      *
      * @param string $path
-     * @return bool
+     * @return boolean
      * @throws FileNotFoundException
      */
     public function copyTo($path)
@@ -51,7 +51,7 @@ class PicoUploadFileItem
      * Move uploaded file to destination path
      *
      * @param string $path
-     * @return bool
+     * @return boolean
      * @throws FileNotFoundException
      */
     public function moveTo($path)

@@ -252,7 +252,7 @@ class ExtendedReflectionClass extends ReflectionClass {
 	 * Check if class is using a class or an alias of a class.
 	 * 
 	 * @param string $class
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasUseStatement($class) {
 

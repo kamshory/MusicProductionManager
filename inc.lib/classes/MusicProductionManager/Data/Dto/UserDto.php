@@ -37,8 +37,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Admin
 	 * 
-	 * @Label(content="Admin")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $admin;
 
@@ -181,16 +180,14 @@ class UserDto extends SetterGetter
 	/**
 	 * Blocked
 	 * 
-	 * @Label(content="Blocked")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $blocked;
 
 	/**
 	 * Active
 	 * 
-	 * @Label(content="Active")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

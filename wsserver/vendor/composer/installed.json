@@ -2,6 +2,7 @@
     "packages": [
         {
             "name": "planetbiru/magic-object",
+<<<<<<< HEAD
             "version": "1.0.5",
             "version_normalized": "1.0.5.0",
             "source": {
@@ -13,12 +14,30 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/9cb744c2cbce7d270c268ed8e33f4e20d7dfeaa1",
                 "reference": "9cb744c2cbce7d270c268ed8e33f4e20d7dfeaa1",
+=======
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Planetbiru/MagicObject.git",
+                "reference": "7b2bde2347de741bc4f3752f3832d2f30742485d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/7b2bde2347de741bc4f3752f3832d2f30742485d",
+                "reference": "7b2bde2347de741bc4f3752f3832d2f30742485d",
+>>>>>>> id3-tag
                 "shasum": ""
             },
             "require": {
                 "symfony/yaml": "^3.4"
             },
+<<<<<<< HEAD
             "time": "2024-04-07T01:30:08+00:00",
+=======
+            "time": "2024-04-07T23:31:45+00:00",
+            "default-branch": true,
+>>>>>>> id3-tag
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -38,12 +57,17 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/Planetbiru/MagicObject/tree/1.0.5"
+=======
+                "source": "https://github.com/Planetbiru/MagicObject/tree/main"
+>>>>>>> id3-tag
             },
             "install-path": "../planetbiru/magic-object"
         },
         {
             "name": "symfony/polyfill-ctype",
+<<<<<<< HEAD
             "version": "v1.19.0",
             "version_normalized": "1.19.0.0",
             "source": {
@@ -59,16 +83,42 @@
             },
             "require": {
                 "php": ">=5.3.3"
+=======
+            "version": "v1.29.0",
+            "version_normalized": "1.29.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "ef4d7e442ca910c4764bce785146269b30cb5fc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/ef4d7e442ca910c4764bce785146269b30cb5fc4",
+                "reference": "ef4d7e442ca910c4764bce785146269b30cb5fc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "provide": {
+                "ext-ctype": "*"
+>>>>>>> id3-tag
             },
             "suggest": {
                 "ext-ctype": "For best performance"
             },
+<<<<<<< HEAD
             "time": "2020-10-23T09:01:57+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-main": "1.19-dev"
                 },
+=======
+            "time": "2024-01-29T20:11:03+00:00",
+            "type": "library",
+            "extra": {
+>>>>>>> id3-tag
                 "thanks": {
                     "name": "symfony/polyfill",
                     "url": "https://github.com/symfony/polyfill"
@@ -106,7 +156,11 @@
                 "portable"
             ],
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/polyfill-ctype/tree/v1.19.0"
+=======
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.29.0"
+>>>>>>> id3-tag
             },
             "funding": [
                 {

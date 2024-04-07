@@ -21,7 +21,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_iso extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -65,7 +65,7 @@ class getid3_iso extends getid3_handler
 	/**
 	 * @param string $ISOheader
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParsePrimaryVolumeDescriptor(&$ISOheader) {
 		// ISO integer values are stored *BOTH* Little-Endian AND Big-Endian format!!
@@ -143,7 +143,7 @@ class getid3_iso extends getid3_handler
 	/**
 	 * @param string $ISOheader
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseSupplementaryVolumeDescriptor(&$ISOheader) {
 		// ISO integer values are stored Both-Endian format!!
@@ -224,7 +224,7 @@ class getid3_iso extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParsePathTable() {
 		$info = &$this->getid3->info;

@@ -186,8 +186,8 @@ class AdvancedMedia extends AbstractMediaType
      * @param string[]        $outs           Output labels of the -filter_complex part.
      * @param FormatInterface $format         Format of the output file.
      * @param string          $outputFilename Output filename.
-     * @param bool            $forceDisableAudio
-     * @param bool            $forceDisableVideo
+     * @param boolean            $forceDisableAudio
+     * @param boolean            $forceDisableVideo
      *
      * @return $this
      * @see https://ffmpeg.org/ffmpeg.html#Manual-stream-selection
@@ -242,8 +242,8 @@ class AdvancedMedia extends AbstractMediaType
 
     /**
      * @param FormatInterface $format
-     * @param bool            $forceDisableAudio
-     * @param bool            $forceDisableVideo
+     * @param boolean            $forceDisableAudio
+     * @param boolean            $forceDisableVideo
      *
      * @return array
      */

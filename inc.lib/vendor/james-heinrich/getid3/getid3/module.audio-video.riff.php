@@ -35,7 +35,7 @@ class getid3_riff extends getid3_handler
 	protected $container = 'riff'; // default
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @throws getid3_exception
 	 */
@@ -1943,7 +1943,7 @@ class getid3_riff extends getid3_handler
 	/**
 	 * @param string $RIFFdata
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseRIFFdata(&$RIFFdata) {
 		$info = &$this->getid3->info;
@@ -1986,7 +1986,7 @@ class getid3_riff extends getid3_handler
 	 * @param array $RIFFinfoArray
 	 * @param array $CommentsTargetArray
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function parseComments(&$RIFFinfoArray, &$CommentsTargetArray) {
 		$RIFFinfoKeyLookup = array(
@@ -2081,7 +2081,7 @@ class getid3_riff extends getid3_handler
 	/**
 	 * @param string $WavPackChunkData
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function parseWavPackHeader($WavPackChunkData) {
 		// typedef struct {
@@ -2146,7 +2146,7 @@ class getid3_riff extends getid3_handler
 
 	/**
 	 * @param string $BITMAPINFOHEADER
-	 * @param bool   $littleEndian
+	 * @param boolean   $littleEndian
 	 *
 	 * @return array
 	 */
@@ -2172,7 +2172,7 @@ class getid3_riff extends getid3_handler
 
 	/**
 	 * @param string $DIVXTAG
-	 * @param bool   $raw
+	 * @param boolean   $raw
 	 *
 	 * @return array
 	 */
@@ -2854,7 +2854,7 @@ class getid3_riff extends getid3_handler
 
 	/**
 	 * @param string $byteword
-	 * @param bool   $signed
+	 * @param boolean   $signed
 	 *
 	 * @return int|float|false
 	 */

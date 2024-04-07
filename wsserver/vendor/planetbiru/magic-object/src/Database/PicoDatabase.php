@@ -38,7 +38,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Autocommit
 	 *
-	 * @var bool
+<<<<<<< HEAD
+	 * @var boolean
+=======
+	 * @var boolean
+>>>>>>> id3-tag
 	 */
 	private $autocommit = true;
 
@@ -80,7 +84,7 @@ class PicoDatabase //NOSONAR
 
 	/**
 	 * Connect to database
-	 * @return bool true if success and false if failed
+	 * @return boolean true if success and false if failed
 	 */
 	public function connect()
 	{
@@ -130,8 +134,13 @@ class PicoDatabase //NOSONAR
 	 * Set autocommit ON of OFF
 	 * When it set to OFF, user MUST call commit or rollback manualy. Default action is rollback
 	 *
+<<<<<<< HEAD
 	 * @param bool $autocommit
 	 * @return bool
+=======
+	 * @param boolean $autocommit
+	 * @return boolean
+>>>>>>> id3-tag
 	 */
 	public function setAudoCommit($autocommit)
 	{
@@ -142,7 +151,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Commit
 	 *
+<<<<<<< HEAD
 	 * @return bool
+=======
+	 * @return boolean
+>>>>>>> id3-tag
 	 */
 	public function commit()
 	{
@@ -152,7 +165,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Rollback
 	 *
+<<<<<<< HEAD
 	 * @return bool
+=======
+	 * @return boolean
+>>>>>>> id3-tag
 	 */
 	public function rollback()
 	{
@@ -220,7 +237,7 @@ class PicoDatabase //NOSONAR
 	 * Check if record is exists
 	 *
 	 * @param string $sql
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isRecordExists($sql)
 	{
@@ -302,7 +319,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute query
 	 * @param string $sql Query string to be executed
+<<<<<<< HEAD
 	 * @return PDOStatement|bool
+=======
+	 * @return PDOStatement|boolean
+>>>>>>> id3-tag
 	 */
 	public function executeQuery($sql)
 	{
@@ -326,7 +347,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute query and sync to hub
 	 * @param string $sql Query string to be executed
+<<<<<<< HEAD
 	 * @return PDOStatement|bool
+=======
+	 * @return PDOStatement|boolean
+>>>>>>> id3-tag
 	 */
 	public function executeInsert($sql)
 	{
@@ -338,7 +363,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute update query
 	 * @param string $sql Query string to be executed
+<<<<<<< HEAD
 	 * @return PDOStatement|bool
+=======
+	 * @return PDOStatement|boolean
+>>>>>>> id3-tag
 	 */
 	public function executeUpdate($sql)
 	{
@@ -350,7 +379,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute delete query
 	 * @param string $sql Query string to be executed
+<<<<<<< HEAD
 	 * @return PDOStatement|bool
+=======
+	 * @return PDOStatement|boolean
+>>>>>>> id3-tag
 	 */
 	public function executeDelete($sql)
 	{
@@ -362,7 +395,11 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute transaction query
 	 * @param string $sql Query string to be executed
+<<<<<<< HEAD
 	 * @return PDOStatement|bool
+=======
+	 * @return PDOStatement|boolean
+>>>>>>> id3-tag
 	 */
 	public function executeTransaction($sql)
 	{
@@ -437,8 +474,18 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Get indication that database is connected or not
 	 *
+<<<<<<< HEAD
+<<<<<<<< HEAD:wsserver/vendor/planetbiru/magic-object/src/Database/PicoDatabase.php
 	 * @return bool
 	 */ 
+========
+	 * @return boolean
+	 */
+>>>>>>>> id3-tag:wsserver/vendor/libs/WS/Database/PicoDatabase.php
+=======
+	 * @return boolean
+	 */ 
+>>>>>>> id3-tag
 	public function isConnected()
 	{
 		return $this->connected;

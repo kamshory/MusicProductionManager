@@ -133,17 +133,17 @@ class PdoSessionHandler extends AbstractSessionHandler
     private $unlockStatements = [];
 
     /**
-     * @var bool True when the current session exists but expired according to session.gc_maxlifetime
+     * @var boolean True when the current session exists but expired according to session.gc_maxlifetime
      */
     private $sessionExpired = false;
 
     /**
-     * @var bool Whether a transaction is active
+     * @var boolean Whether a transaction is active
      */
     private $inTransaction = false;
 
     /**
-     * @var bool Whether gc() has been called
+     * @var boolean Whether gc() has been called
      */
     private $gcCalled = false;
 

@@ -185,7 +185,7 @@ class WSClient
 	/**
 	 * Login
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function login()
 	{

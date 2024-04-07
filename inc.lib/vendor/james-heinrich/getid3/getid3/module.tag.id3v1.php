@@ -21,7 +21,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_id3v1 extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -151,7 +151,7 @@ class getid3_id3v1 extends getid3_handler
 	}
 
 	/**
-	 * @param bool $allowSCMPXextended
+	 * @param boolean $allowSCMPXextended
 	 *
 	 * @return string[]
 	 */
@@ -385,7 +385,7 @@ class getid3_id3v1 extends getid3_handler
 
 	/**
 	 * @param string $genreid
-	 * @param bool   $allowSCMPXextended
+	 * @param boolean   $allowSCMPXextended
 	 *
 	 * @return string|false
 	 */
@@ -407,7 +407,7 @@ class getid3_id3v1 extends getid3_handler
 
 	/**
 	 * @param string $genre
-	 * @param bool   $allowSCMPXextended
+	 * @param boolean   $allowSCMPXextended
 	 *
 	 * @return string|false
 	 */

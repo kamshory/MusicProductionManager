@@ -33,7 +33,7 @@ class getid3_ac3 extends getid3_handler
 	const syncword = 0x0B77;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -627,7 +627,7 @@ class getid3_ac3 extends getid3_handler
 
 	/**
 	 * @param int  $acmod
-	 * @param bool $lfeon
+	 * @param boolean $lfeon
 	 *
 	 * @return array
 	 */
