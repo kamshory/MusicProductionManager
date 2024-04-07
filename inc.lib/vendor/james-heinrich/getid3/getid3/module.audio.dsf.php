@@ -22,7 +22,7 @@ getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.id3v2.php', __FILE_
 class getid3_dsf extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

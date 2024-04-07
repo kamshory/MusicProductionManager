@@ -58,7 +58,7 @@ class getid3_write_real
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteReal() {
 		// File MUST be writeable - CHMOD(646) at least
@@ -262,7 +262,7 @@ class getid3_write_real
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function RemoveReal() {
 		// File MUST be writeable - CHMOD(646) at least

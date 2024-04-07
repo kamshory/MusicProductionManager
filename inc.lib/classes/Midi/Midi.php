@@ -57,7 +57,7 @@ class Midi //NOSONAR
 	/**
 	 * wether to throw exception on error (only PHP5+)
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $throwFlag = true;
 

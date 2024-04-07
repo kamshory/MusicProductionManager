@@ -222,14 +222,14 @@ class getid3_matroska extends getid3_handler
 	 * If true, do not return information about CLUSTER chunks, since there's a lot of them
 	 * and they're not usually useful [default: TRUE].
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $hide_clusters    = true;
 
 	/**
 	 * True to parse the whole file, not only header [default: FALSE].
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $parse_whole_file = false;
 
@@ -243,7 +243,7 @@ class getid3_matroska extends getid3_handler
 	private $unuseful_elements = array(EBML_ID_CRC32, EBML_ID_VOID);
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze()
 	{
@@ -1279,7 +1279,7 @@ class getid3_matroska extends getid3_handler
 	/**
 	 * @param int $min_data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function EnsureBufferHasEnoughData($min_data=1024) {
 		if (($this->current_offset - $this->EBMLbuffer_offset) >= ($this->EBMLbuffer_length - $min_data)) {
@@ -1339,7 +1339,7 @@ class getid3_matroska extends getid3_handler
 
 	/**
 	 * @param int  $length
-	 * @param bool $check_buffer
+	 * @param boolean $check_buffer
 	 *
 	 * @return string|false
 	 */
@@ -1357,7 +1357,7 @@ class getid3_matroska extends getid3_handler
 	 * @param int        $parent_end
 	 * @param array|bool $get_data
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function getEBMLelement(&$element, $parent_end, $get_data=false) {
 		if ($this->current_offset >= $parent_end) {
@@ -1415,7 +1415,7 @@ class getid3_matroska extends getid3_handler
 	/**
 	 * @param array $SimpleTagArray
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function ExtractCommentsSimpleTag($SimpleTagArray) {
 		if (!empty($SimpleTagArray['SimpleTag'])) {

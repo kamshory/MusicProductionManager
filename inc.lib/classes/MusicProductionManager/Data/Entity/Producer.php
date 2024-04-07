@@ -114,7 +114,7 @@ class Producer extends MagicObject
 	 * Picture
 	 * 
 	 * @Column(name="picture", type="tinyint(1)", length=1, nullable=true)
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $picture;
 
@@ -187,7 +187,7 @@ class Producer extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

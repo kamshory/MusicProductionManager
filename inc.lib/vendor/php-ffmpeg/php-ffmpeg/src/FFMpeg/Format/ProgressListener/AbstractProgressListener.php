@@ -42,7 +42,7 @@ abstract class AbstractProgressListener extends EventEmitter implements Listener
     /** @var string */
     private $pathfile;
 
-    /** @var bool */
+    /** @var boolean */
     private $initialized = false;
 
     /** @var int */

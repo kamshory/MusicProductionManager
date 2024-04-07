@@ -47,7 +47,7 @@ class getid3_write_metaflac
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteMetaFLAC() {
 
@@ -159,7 +159,7 @@ class getid3_write_metaflac
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function DeleteMetaFLAC() {
 

@@ -20,7 +20,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_bink extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -43,7 +43,7 @@ class getid3_bink extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseBink() {
 		$info = &$this->getid3->info;
@@ -63,7 +63,7 @@ class getid3_bink extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseSmacker() {
 		$info = &$this->getid3->info;

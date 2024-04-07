@@ -23,12 +23,12 @@ class getid3_wavpack extends getid3_handler
 	 * Avoid scanning all frames (break after finding ID_RIFF_HEADER and ID_CONFIG_BLOCK,
 	 * significantly faster for very large files but other data may be missed
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $quick_parsing = false;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

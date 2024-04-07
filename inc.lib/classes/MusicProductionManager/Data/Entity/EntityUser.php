@@ -42,7 +42,7 @@ class EntityUser extends MagicObject
 	 * Admin
 	 * 
 	 * @Column(name="admin", type="tinyint(1)", length=1, nullable=true)
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $admin;
 
@@ -218,7 +218,7 @@ class EntityUser extends MagicObject
 	 * Blocked
 	 * 
 	 * @Column(name="blocked", type="tinyint(1)", length=1, nullable=true)
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $blocked;
 
@@ -227,7 +227,7 @@ class EntityUser extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

@@ -31,12 +31,12 @@ class FilesystemTestCase extends TestCase
     protected $workspace = null;
 
     /**
-     * @var bool|null Flag for hard links on Windows
+     * @var boolean|null Flag for hard links on Windows
      */
     private static $linkOnWindows = null;
 
     /**
-     * @var bool|null Flag for symbolic links on Windows
+     * @var boolean|null Flag for symbolic links on Windows
      */
     private static $symlinkOnWindows = null;
 

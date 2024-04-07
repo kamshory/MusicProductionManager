@@ -23,12 +23,12 @@ class getid3_pdf extends getid3_handler
 	/** misc.pdf
 	 * return full details of PDF Cross-Reference Table (XREF)
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $returnXREF = false;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -123,7 +123,7 @@ class getid3_pdf extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	private function parseXREF($XREFoffset) {
 		$info = &$this->getid3->info;

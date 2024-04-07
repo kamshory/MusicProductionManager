@@ -53,7 +53,7 @@ class UserUtil
      * Is user as vocalist
      *
      * @param EntityUser $user
-     * @return bool
+     * @return boolean
      */
     public static function isUserAsProducer($user)
     {
@@ -75,7 +75,7 @@ class UserUtil
      * Is user as vocalist
      *
      * @param EntityUser $user
-     * @return bool
+     * @return boolean
      */
     public static function isUserAsVocalist($user)
     {
@@ -97,7 +97,7 @@ class UserUtil
      * Is user as composer
      *
      * @param EntityUser $user
-     * @return bool
+     * @return boolean
      */
     public static function isUserAsComposer($user)
     {
@@ -119,7 +119,7 @@ class UserUtil
      * Is user as arranger
      *
      * @param EntityUser $user
-     * @return bool
+     * @return boolean
      */
     public static function isUserAsArranger($user)
     {
@@ -163,7 +163,7 @@ class UserUtil
      *
      * @param EntityUser $user
      * @param string $newRole
-     * @return bool
+     * @return boolean
      */
     public static function isValidNewUserRole($user, $newRole)
     {
@@ -272,7 +272,7 @@ class UserUtil
      * @param string $activity
      * @param InputGet|null $inputGet
      * @param InputPost|null $inputPost
-     * @param bool $skipRequestBody
+     * @param boolean $skipRequestBody
      * @return string
      */
     public static function logUserActivity($cfg, $database, $userId, $activity, $inputGet, $inputPost, $skipRequestBody = false)

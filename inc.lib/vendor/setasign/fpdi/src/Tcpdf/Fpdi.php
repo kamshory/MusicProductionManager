@@ -90,7 +90,7 @@ class Fpdi extends \TCPDF
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param bool $adjustPageSize
+     * @param boolean $adjustPageSize
      * @return array The size
      * @see FpdiTrait::getTemplateSize()
      */
@@ -111,7 +111,7 @@ class Fpdi extends \TCPDF
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param bool $adjustPageSize
+     * @param boolean $adjustPageSize
      * @return array The size.
      * @see Fpdi::getTemplateSize()
      */
@@ -212,7 +212,7 @@ class Fpdi extends \TCPDF
      * Append content to the buffer of TCPDF.
      *
      * @param string $s
-     * @param bool $newLine
+     * @param boolean $newLine
      */
     protected function _put($s, $newLine = true)
     {

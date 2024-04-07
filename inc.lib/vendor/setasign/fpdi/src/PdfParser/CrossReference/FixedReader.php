@@ -174,7 +174,7 @@ class FixedReader extends AbstractReader implements ReaderInterface
      *
      * It shall only be called on the first table.
      *
-     * @return bool
+     * @return boolean
      */
     public function fixFaultySubSectionShift()
     {

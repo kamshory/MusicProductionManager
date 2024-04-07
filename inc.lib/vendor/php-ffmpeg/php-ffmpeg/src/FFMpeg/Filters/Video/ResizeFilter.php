@@ -31,7 +31,7 @@ class ResizeFilter implements VideoFilterInterface
     private $dimension;
     /** @var string */
     private $mode;
-    /** @var bool */
+    /** @var boolean */
     private $forceStandards;
     /** @var int */
     private $priority;

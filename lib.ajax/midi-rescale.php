@@ -29,7 +29,7 @@ function fixValue($value)
 /**
  * Check if request is via AJAX
  *
- * @return bool
+ * @return boolean
  */
 function isAjax() {
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';

@@ -50,7 +50,7 @@ class AlbumDto extends SetterGetter
     /**
      * Active
      *
-     * @var bool
+     * @var boolean
      */
     protected $active;
 

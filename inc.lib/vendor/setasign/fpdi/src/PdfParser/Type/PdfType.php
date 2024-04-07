@@ -26,7 +26,7 @@ class PdfType
      *
      * @param PdfType $value
      * @param PdfParser $parser
-     * @param bool $stopAtIndirectObject
+     * @param boolean $stopAtIndirectObject
      * @return PdfType
      * @throws CrossReferenceException
      * @throws PdfParserException

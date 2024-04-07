@@ -23,8 +23,8 @@ class getid3_lib
 {
 	/**
 	 * @param string      $string
-	 * @param bool        $hex
-	 * @param bool        $spaces
+	 * @param boolean        $hex
+	 * @param boolean        $spaces
 	 * @param string|bool $htmlencoding
 	 *
 	 * @return string
@@ -75,7 +75,7 @@ class getid3_lib
 	 * @param int|null $variable
 	 * @param int      $increment
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function safe_inc(&$variable, $increment=1) {
 		if (isset($variable)) {
@@ -109,7 +109,7 @@ class getid3_lib
 	/**
 	 * @param int $num
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function intValueSupported($num) {
 		// check if integers are 64-bit
@@ -343,8 +343,8 @@ class getid3_lib
 
 	/**
 	 * @param string $byteword
-	 * @param bool   $synchsafe
-	 * @param bool   $signed
+	 * @param boolean   $synchsafe
+	 * @param boolean   $signed
 	 *
 	 * @return int|float|false
 	 * @throws Exception
@@ -379,7 +379,7 @@ class getid3_lib
 
 	/**
 	 * @param string $byteword
-	 * @param bool   $signed
+	 * @param boolean   $signed
 	 *
 	 * @return int|float|false
 	 */
@@ -413,8 +413,8 @@ class getid3_lib
 	/**
 	 * @param int  $number
 	 * @param int  $minbytes
-	 * @param bool $synchsafe
-	 * @param bool $signed
+	 * @param boolean $synchsafe
+	 * @param boolean $signed
 	 *
 	 * @return string
 	 * @throws Exception
@@ -465,7 +465,7 @@ class getid3_lib
 
 	/**
 	 * @param string $binstring
-	 * @param bool   $signed
+	 * @param boolean   $signed
 	 *
 	 * @return int|float
 	 */
@@ -502,7 +502,7 @@ class getid3_lib
 	/**
 	 * @param int  $number
 	 * @param int  $minbytes
-	 * @param bool $synchsafe
+	 * @param boolean $synchsafe
 	 *
 	 * @return string
 	 */
@@ -587,7 +587,7 @@ class getid3_lib
 	/**
 	 * @param array $theArray
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function ksort_recursive(&$theArray) {
 		ksort($theArray);
@@ -700,7 +700,7 @@ class getid3_lib
 
 	/**
 	 * @param array $arraydata
-	 * @param bool  $returnkey
+	 * @param boolean  $returnkey
 	 *
 	 * @return int|false
 	 */
@@ -720,7 +720,7 @@ class getid3_lib
 
 	/**
 	 * @param array $arraydata
-	 * @param bool  $returnkey
+	 * @param boolean  $returnkey
 	 *
 	 * @return int|false
 	 */
@@ -815,7 +815,7 @@ class getid3_lib
 	 * @param int    $offset
 	 * @param int    $length
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 *
 	 * @deprecated Unused, may be removed in future versions of getID3
@@ -878,7 +878,7 @@ class getid3_lib
 	 * ISO-8859-1 => UTF-8
 	 *
 	 * @param string $string
-	 * @param bool   $bom
+	 * @param boolean   $bom
 	 *
 	 * @return string
 	 */
@@ -898,7 +898,7 @@ class getid3_lib
 	 * ISO-8859-1 => UTF-16BE
 	 *
 	 * @param string $string
-	 * @param bool   $bom
+	 * @param boolean   $bom
 	 *
 	 * @return string
 	 */
@@ -917,7 +917,7 @@ class getid3_lib
 	 * ISO-8859-1 => UTF-16LE
 	 *
 	 * @param string $string
-	 * @param bool   $bom
+	 * @param boolean   $bom
 	 *
 	 * @return string
 	 */
@@ -993,7 +993,7 @@ class getid3_lib
 	 * UTF-8 => UTF-16BE
 	 *
 	 * @param string $string
-	 * @param bool   $bom
+	 * @param boolean   $bom
 	 *
 	 * @return string
 	 */
@@ -1043,7 +1043,7 @@ class getid3_lib
 	 * UTF-8 => UTF-16LE
 	 *
 	 * @param string $string
-	 * @param bool   $bom
+	 * @param boolean   $bom
 	 *
 	 * @return string
 	 */
@@ -1548,9 +1548,9 @@ class getid3_lib
 
 	/**
 	 * @param array $ThisFileInfo
-	 * @param bool  $option_tags_html default true (just as in the main getID3 class)
+	 * @param boolean  $option_tags_html default true (just as in the main getID3 class)
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function CopyTagsToComments(&$ThisFileInfo, $option_tags_html=true) {
 		// Copy all entries from ['tags'] into common ['comments']
@@ -1732,9 +1732,9 @@ class getid3_lib
 	/**
 	 * @param string $filename
 	 * @param string $sourcefile
-	 * @param bool   $DieOnFailure
+	 * @param boolean   $DieOnFailure
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	public static function IncludeDependency($filename, $sourcefile, $DieOnFailure=false) {

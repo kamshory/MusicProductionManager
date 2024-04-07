@@ -142,7 +142,7 @@ class AspectRatio
      * custom ratio need to be used, disable it.
      *
      * @param Dimension $dimension
-     * @param bool   $forceStandards Whether to force or not standard ratios
+     * @param boolean   $forceStandards Whether to force or not standard ratios
      *
      * @return AspectRatio
      *

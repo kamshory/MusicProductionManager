@@ -23,19 +23,19 @@ class getid3_bmp extends getid3_handler
 	/**
 	 * return BMP palette
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $ExtractPalette = false;
 
 	/**
 	 * return image data
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $ExtractData    = false;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -650,7 +650,7 @@ class getid3_bmp extends getid3_handler
 	/**
 	 * @param array $BMPinfo
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function PlotBMP(&$BMPinfo) {
 		$starttime = time();

@@ -37,7 +37,7 @@ class GenreDto extends SetterGetter
     /**
      * Default data
      *
-     * @var bool
+     * @var boolean
      * @Column(name=default_data)
      */
     protected $defaultData;
@@ -45,14 +45,14 @@ class GenreDto extends SetterGetter
     /**
      * Admin
      *
-     * @var bool
+     * @var boolean
      */
     protected $admin;
     
     /**
      * Active
      *
-     * @var bool
+     * @var boolean
      */
     protected $active;
 

@@ -22,7 +22,7 @@ getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio-video.riff.php', 
 class getid3_lpac extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

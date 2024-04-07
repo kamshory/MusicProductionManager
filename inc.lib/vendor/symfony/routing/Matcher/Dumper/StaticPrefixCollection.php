@@ -135,7 +135,7 @@ class StaticPrefixCollection
      *
      * @param string $prefix
      *
-     * @return bool Whether a prefix could belong in a given group
+     * @return boolean Whether a prefix could belong in a given group
      */
     private function accepts($prefix)
     {

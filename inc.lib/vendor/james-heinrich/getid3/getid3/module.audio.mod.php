@@ -21,7 +21,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_mod extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -49,7 +49,7 @@ class getid3_mod extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getMODheaderFilepointer() {
 		$info = &$this->getid3->info;
@@ -98,7 +98,7 @@ $this->warning('MOD (SoundTracker) parsing incomplete in this version of getID3(
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getXMheaderFilepointer() {
 		$info = &$this->getid3->info;
@@ -116,7 +116,7 @@ $this->warning('MOD (SoundTracker) parsing incomplete in this version of getID3(
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getS3MheaderFilepointer() {
 		$info = &$this->getid3->info;
@@ -134,7 +134,7 @@ $this->warning('MOD (SoundTracker) parsing incomplete in this version of getID3(
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getITheaderFilepointer() {
 		$info = &$this->getid3->info;

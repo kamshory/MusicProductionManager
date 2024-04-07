@@ -21,7 +21,7 @@ if (!defined('GETID3_INCLUDEPATH')) { // prevent path-exposing attacks that acce
 class getid3_bonk extends getid3_handler
 {
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -224,9 +224,9 @@ class getid3_bonk extends getid3_handler
 
 	/**
 	 * @param string $PossibleBonkTag
-	 * @param bool   $ignorecase
+	 * @param boolean   $ignorecase
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function BonkIsValidTagName($PossibleBonkTag, $ignorecase=false) {
 		static $BonkIsValidTagName = array('BONK', 'INFO', ' ID3', 'META');

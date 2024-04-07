@@ -79,7 +79,7 @@ class getid3_writetags
 	 * If true will erase existing tag data and write only passed data; if false will merge passed data
 	 * with existing tag data.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $overwrite_tags     = true;
 
@@ -87,7 +87,7 @@ class getid3_writetags
 	 * If true will erase remove all existing tags and only write those passed in $tagformats;
 	 * If false will ignore any tags not mentioned in $tagformats.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $remove_other_tags  = false;
 
@@ -132,7 +132,7 @@ class getid3_writetags
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteTags() {
 
@@ -417,7 +417,7 @@ class getid3_writetags
 	/**
 	 * @param string[] $TagFormatsToDelete
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function DeleteTags($TagFormatsToDelete) {
 		foreach ($TagFormatsToDelete as $DeleteTagFormat) {
@@ -494,7 +494,7 @@ class getid3_writetags
 	 * @param string $TagFormat
 	 * @param array  $tag_data
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @throws Exception
 	 */
 	public function MergeExistingTagData($TagFormat, &$tag_data) {

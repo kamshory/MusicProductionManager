@@ -27,7 +27,7 @@ class getid3_flac extends getid3_handler
 	const syncword = 'fLaC';
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -47,7 +47,7 @@ class getid3_flac extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function parseMETAdata() {
 		$info = &$this->getid3->info;
@@ -234,7 +234,7 @@ class getid3_flac extends getid3_handler
 	/**
 	 * @param string $BlockData
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function parseSTREAMINFO($BlockData) {
 		$info = &$this->getid3->info;
@@ -267,7 +267,7 @@ class getid3_flac extends getid3_handler
 	/**
 	 * @param string $BlockData
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function parseAPPLICATION($BlockData) {
 		$info = &$this->getid3->info;
@@ -282,7 +282,7 @@ class getid3_flac extends getid3_handler
 	/**
 	 * @param string $BlockData
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function parseSEEKTABLE($BlockData) {
 		$info = &$this->getid3->info;
@@ -316,7 +316,7 @@ class getid3_flac extends getid3_handler
 	/**
 	 * @param string $BlockData
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function parseVORBIS_COMMENT($BlockData) {
 		$info = &$this->getid3->info;
@@ -340,7 +340,7 @@ class getid3_flac extends getid3_handler
 	/**
 	 * @param string $BlockData
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	private function parseCUESHEET($BlockData) {
 		$info = &$this->getid3->info;
@@ -397,7 +397,7 @@ class getid3_flac extends getid3_handler
 	 * Parse METADATA_BLOCK_PICTURE flac structure and extract attachment
 	 * External usage: audio.ogg
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function parsePICTURE() {
 		$info = &$this->getid3->info;

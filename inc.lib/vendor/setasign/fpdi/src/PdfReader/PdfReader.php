@@ -191,7 +191,7 @@ class PdfReader
     /**
      * Walk the page tree and resolve all indirect objects of all pages.
      *
-     * @param bool $readAll
+     * @param boolean $readAll
      * @throws CrossReferenceException
      * @throws PdfParserException
      * @throws PdfTypeException

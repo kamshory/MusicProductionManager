@@ -25,7 +25,7 @@ class getid3_mp3 extends getid3_handler
 	 * Forces getID3() to scan the file byte-by-byte and log all the valid audio frame headers - extremely slow,
 	 * unrecommended, but may provide data from otherwise-unusable files.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $allow_bruteforce = false;
 
@@ -39,7 +39,7 @@ class getid3_mp3 extends getid3_handler
 	public $mp3_valid_check_frames = 50;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -440,11 +440,11 @@ class getid3_mp3 extends getid3_handler
 	/**
 	 * @param int   $offset
 	 * @param array $info
-	 * @param bool  $recursivesearch
-	 * @param bool  $ScanAsCBR
-	 * @param bool  $FastMPEGheaderScan
+	 * @param boolean  $recursivesearch
+	 * @param boolean  $ScanAsCBR
+	 * @param boolean  $FastMPEGheaderScan
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function decodeMPEGaudioHeader($offset, &$info, $recursivesearch=true, $ScanAsCBR=false, $FastMPEGheaderScan=false) {
 		static $MPEGaudioVersionLookup;
@@ -1155,9 +1155,9 @@ class getid3_mp3 extends getid3_handler
 	/**
 	 * @param int $offset
 	 * @param int $nextframetestoffset
-	 * @param bool $ScanAsCBR
+	 * @param boolean $ScanAsCBR
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function RecursiveFrameScanning(&$offset, &$nextframetestoffset, $ScanAsCBR) {
 		$info = &$this->getid3->info;
@@ -1210,7 +1210,7 @@ class getid3_mp3 extends getid3_handler
 
 	/**
 	 * @param int  $offset
-	 * @param bool $deepscan
+	 * @param boolean $deepscan
 	 *
 	 * @return int|false
 	 */
@@ -1292,7 +1292,7 @@ class getid3_mp3 extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getOnlyMPEGaudioInfoBruteForce() {
 		$MPEGaudioHeaderDecodeCache   = array();
@@ -1444,9 +1444,9 @@ class getid3_mp3 extends getid3_handler
 
 	/**
 	 * @param int  $avdataoffset
-	 * @param bool $BitrateHistogram
+	 * @param boolean $BitrateHistogram
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function getOnlyMPEGaudioInfo($avdataoffset, $BitrateHistogram=false) {
 		// looks for synch, decodes MPEG audio header
@@ -1824,9 +1824,9 @@ class getid3_mp3 extends getid3_handler
 
 	/**
 	 * @param string $head4
-	 * @param bool   $allowBitrate15
+	 * @param boolean   $allowBitrate15
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function MPEGaudioHeaderBytesValid($head4, $allowBitrate15=false) {
 		return self::MPEGaudioHeaderValid(self::MPEGaudioHeaderDecode($head4), false, $allowBitrate15);
@@ -1834,10 +1834,10 @@ class getid3_mp3 extends getid3_handler
 
 	/**
 	 * @param array $rawarray
-	 * @param bool  $echoerrors
-	 * @param bool  $allowBitrate15
+	 * @param boolean  $echoerrors
+	 * @param boolean  $allowBitrate15
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function MPEGaudioHeaderValid($rawarray, $echoerrors=false, $allowBitrate15=false) {
 		if (!isset($rawarray['synch']) || ($rawarray['synch'] & 0x0FFE) != 0x0FFE) {
@@ -1958,7 +1958,7 @@ class getid3_mp3 extends getid3_handler
 	 * @param int|string $bitrate
 	 * @param string     $version
 	 * @param string     $layer
-	 * @param bool       $padding
+	 * @param boolean       $padding
 	 * @param int        $samplerate
 	 *
 	 * @return int|false

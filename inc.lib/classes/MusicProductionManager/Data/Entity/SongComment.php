@@ -91,7 +91,7 @@ class SongComment extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

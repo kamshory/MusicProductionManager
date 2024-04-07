@@ -94,7 +94,7 @@ class Getter
 
     /**
      * Property list
-     * @var bool $reflectSelf
+     * @var boolean $reflectSelf
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -144,7 +144,7 @@ class Getter
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isSnake()
     {
@@ -156,7 +156,7 @@ class Getter
     /**
      * Check if JSON naming strategy is snake case or not
      *
-     * @return bool
+     * @return boolean
      */
     private function isPretty()
     {

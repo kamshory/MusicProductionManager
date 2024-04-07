@@ -34,7 +34,7 @@ class UserDto extends SetterGetter
 	/**
 	 * Admin
 	 * 
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $admin;
 
@@ -160,14 +160,14 @@ class UserDto extends SetterGetter
 	/**
 	 * Blocked
 	 * 
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $blocked;
 
 	/**
 	 * Active
 	 * 
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

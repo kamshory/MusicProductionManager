@@ -272,7 +272,7 @@ class EntityMidi extends MagicObject
 
     /**
      * Active
-     * @var bool
+     * @var boolean
      * @Column(name=active)
      */
     protected $active;

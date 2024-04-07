@@ -35,7 +35,7 @@ class MessageBuffer {
     private $onControl;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $checkForMask;
 
@@ -60,7 +60,7 @@ class MessageBuffer {
     private $permessageDeflateOptions;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $deflateEnabled = false;
 
@@ -75,7 +75,7 @@ class MessageBuffer {
     private $maxFramePayloadSize;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $compressedMessage;
 
@@ -364,7 +364,7 @@ class MessageBuffer {
 
     /**
      * @param string|null $payload
-     * @param bool|null   $final
+     * @param boolean|null   $final
      * @param int|null    $opcode
      * @return \Ratchet\RFC6455\Messaging\FrameInterface
      */

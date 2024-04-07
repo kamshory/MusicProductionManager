@@ -55,7 +55,7 @@ class StreamEncryption
 
     /**
      * @param Connection $stream
-     * @param bool $toggle
+     * @param boolean $toggle
      * @return \React\Promise\PromiseInterface<Connection>
      */
     public function toggle(Connection $stream, $toggle)
@@ -111,7 +111,7 @@ class StreamEncryption
      * @internal
      * @param resource $socket
      * @param Deferred<null> $deferred
-     * @param bool $toggle
+     * @param boolean $toggle
      * @param int $method
      * @return void
      */

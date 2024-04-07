@@ -62,7 +62,7 @@ class getid3_write_id3v2
 	/**
 	 * If true, merge new data with existing tags; if false, delete old tag data and only write new tags.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $merge_existing_data         = false;
 
@@ -77,7 +77,7 @@ class getid3_write_id3v2
 	 * The specs say it should be TRUE, but most other ID3v2-aware programs are broken if unsynchronization is used,
 	 * so by default don't use it.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $id3v2_use_unsynchronisation = false;
 
@@ -99,7 +99,7 @@ class getid3_write_id3v2
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function WriteID3v2() {
 		// File MUST be writeable - CHMOD(646) at least. It's best if the
@@ -187,7 +187,7 @@ class getid3_write_id3v2
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function RemoveID3v2() {
 		// File MUST be writeable - CHMOD(646) at least. It's best if the
@@ -319,14 +319,14 @@ class getid3_write_id3v2
 	}
 
 	/**
-	 * @param bool $TagAlter
-	 * @param bool $FileAlter
-	 * @param bool $ReadOnly
-	 * @param bool $Compression
-	 * @param bool $Encryption
-	 * @param bool $GroupingIdentity
-	 * @param bool $Unsynchronisation
-	 * @param bool $DataLengthIndicator
+	 * @param boolean $TagAlter
+	 * @param boolean $FileAlter
+	 * @param boolean $ReadOnly
+	 * @param boolean $Compression
+	 * @param boolean $Encryption
+	 * @param boolean $GroupingIdentity
+	 * @param boolean $Unsynchronisation
+	 * @param boolean $DataLengthIndicator
 	 *
 	 * @return string|false
 	 */
@@ -1262,7 +1262,7 @@ class getid3_write_id3v2
 	 * @param string|null $frame_name
 	 * @param array       $source_data_array
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2FrameIsAllowed($frame_name, $source_data_array) {
 		static $PreviousFrames = array();
@@ -1621,7 +1621,7 @@ class getid3_write_id3v2
 	}
 
 	/**
-	 * @param bool $noerrorsonly
+	 * @param boolean $noerrorsonly
 	 *
 	 * @return string|false
 	 */
@@ -1742,7 +1742,7 @@ class getid3_write_id3v2
 	/**
 	 * @param string $pricestring
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidPriceString($pricestring) {
 		if (getid3_id3v2::LanguageLookup(substr($pricestring, 0, 3), true) == '') {
@@ -1756,7 +1756,7 @@ class getid3_write_id3v2
 	/**
 	 * @param string $framename
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2FrameFlagsLookupTagAlter($framename) {
 		// unfinished
@@ -1774,7 +1774,7 @@ class getid3_write_id3v2
 	/**
 	 * @param string $framename
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2FrameFlagsLookupFileAlter($framename) {
 		// unfinished
@@ -1790,7 +1790,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $eventid
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidETCOevent($eventid) {
 		if (($eventid < 0) || ($eventid > 0xFF)) {
@@ -1815,7 +1815,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $contenttype
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidSYLTtype($contenttype) {
 		if (($contenttype >= 0) && ($contenttype <= 8) && ($this->majorversion == 4)) {
@@ -1829,7 +1829,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $channeltype
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidRVA2channeltype($channeltype) {
 		if (($channeltype >= 0) && ($channeltype <= 8) && ($this->majorversion == 4)) {
@@ -1841,7 +1841,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $picturetype
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidAPICpicturetype($picturetype) {
 		if (($picturetype >= 0) && ($picturetype <= 0x14) && ($this->majorversion >= 2) && ($this->majorversion <= 4)) {
@@ -1853,7 +1853,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int|string $imageformat
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidAPICimageformat($imageformat) {
 		if ($imageformat == '-->') {
@@ -1873,7 +1873,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $receivedas
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidCOMRreceivedAs($receivedas) {
 		if (($this->majorversion >= 3) && ($receivedas >= 0) && ($receivedas <= 8)) {
@@ -1885,7 +1885,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $RGADname
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function ID3v2IsValidRGADname($RGADname) {
 		if (($RGADname >= 0) && ($RGADname <= 2)) {
@@ -1897,7 +1897,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $RGADoriginator
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function ID3v2IsValidRGADoriginator($RGADoriginator) {
 		if (($RGADoriginator >= 0) && ($RGADoriginator <= 3)) {
@@ -1909,7 +1909,7 @@ class getid3_write_id3v2
 	/**
 	 * @param int $textencodingbyte
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ID3v2IsValidTextEncoding($textencodingbyte) {
 		// 0 = ISO-8859-1
@@ -1962,7 +1962,7 @@ class getid3_write_id3v2
 	/**
 	 * @param mixed $var
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function is_hash($var) {
 		// written by dev-nullØchristophe*vg
@@ -2021,9 +2021,9 @@ class getid3_write_id3v2
 	/**
 	 * @param int  $number
 	 * @param int  $maxbits
-	 * @param bool $signed
+	 * @param boolean $signed
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function IsWithinBitRange($number, $maxbits, $signed=false) {
 		if ($signed) {
@@ -2053,9 +2053,9 @@ class getid3_write_id3v2
 
 	/**
 	 * @param string $url
-	 * @param bool   $allowUserPass
+	 * @param boolean   $allowUserPass
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function IsValidURL($url, $allowUserPass=false) {
 		if ($url == '') {

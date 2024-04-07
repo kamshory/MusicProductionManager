@@ -216,7 +216,7 @@ class SongDto extends SetterGetter
 	/**
 	 * Subtitle Complete
 	 * 
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $subtitleComplete;
 
@@ -237,7 +237,7 @@ class SongDto extends SetterGetter
 	/**
 	 * Vocal
 	 * 
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $vocal;
 
@@ -321,7 +321,7 @@ class SongDto extends SetterGetter
 	/**
 	 * Active
 	 * 
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $active;
 

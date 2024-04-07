@@ -29,7 +29,7 @@ class getid3_png extends getid3_handler
 	public $max_data_bytes = 10000000;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 

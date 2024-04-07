@@ -186,7 +186,7 @@ class SongFileUtil extends SongUtil
      *
      * @param string $path
      * @param array $tagData
-     * @return bool
+     * @return boolean
      */
     public static function addID3Tag($path, $tagData)
     {
@@ -275,7 +275,7 @@ class SongFileUtil extends SongUtil
      *
      * @param string $dir
      * @param integer $permission
-     * @return bool
+     * @return boolean
      */
     public static function prepareDir($dir, $permission = 0755)
     {

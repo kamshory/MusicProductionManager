@@ -29,7 +29,7 @@ class WSSession
      *
      * @param array $array
      * @param string $method
-     * @param bool $safe
+     * @param boolean $safe
      * @return string
      */
     public static function serialize($array, $method = "php", $safe = true) {

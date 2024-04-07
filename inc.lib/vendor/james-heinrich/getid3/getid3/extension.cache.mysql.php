@@ -210,7 +210,7 @@ class getID3_cached_mysql extends getID3
 	/**
 	 * (re)create sql table
 	 *
-	 * @param bool $drop
+	 * @param boolean $drop
 	 */
 	private function create_table($drop=false) {
 

@@ -88,7 +88,7 @@ class getID3_cached_mysqli extends getID3
 	private $table;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 */
 	private $db_structure_check;
 
@@ -242,7 +242,7 @@ class getID3_cached_mysqli extends getID3
 	/**
 	 * (re)create mysqli table
 	 *
-	 * @param bool $drop
+	 * @param boolean $drop
 	 */
 	private function create_table($drop=false) {
 		if ($drop) {

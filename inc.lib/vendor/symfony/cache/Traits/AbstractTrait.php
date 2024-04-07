@@ -179,7 +179,7 @@ trait AbstractTrait
      *
      * Calling this method also clears the memoized namespace version and thus forces a resynchonization of it.
      *
-     * @param bool $enable
+     * @param boolean $enable
      *
      * @return boolean the previous state of versioning
      */

@@ -39,8 +39,8 @@ interface PipesInterface
     /**
      * Reads data in file handles and pipes.
      *
-     * @param bool $blocking Whether to use blocking calls or not
-     * @param bool $close    Whether to close pipes if they've reached EOF
+     * @param boolean $blocking Whether to use blocking calls or not
+     * @param boolean $close    Whether to close pipes if they've reached EOF
      *
      * @return string[] An array of read data indexed by their fd
      */
@@ -49,14 +49,14 @@ interface PipesInterface
     /**
      * Returns if the current state has open file handles or pipes.
      *
-     * @return bool
+     * @return boolean
      */
     public function areOpen();
 
     /**
      * Returns if pipes are able to read output.
      *
-     * @return bool
+     * @return boolean
      */
     public function haveReadSupport();
 

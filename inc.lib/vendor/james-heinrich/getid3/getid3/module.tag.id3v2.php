@@ -24,7 +24,7 @@ class getid3_id3v2 extends getid3_handler
 	public $StartingOffset = 0;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -564,7 +564,7 @@ class getid3_id3v2 extends getid3_handler
 	/**
 	 * @param array $parsedFrame
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function ParseID3v2Frame(&$parsedFrame) {
 
@@ -2684,7 +2684,7 @@ class getid3_id3v2 extends getid3_handler
 
 	/**
 	 * @param string $languagecode
-	 * @param bool   $casesensitive
+	 * @param boolean   $casesensitive
 	 *
 	 * @return string
 	 */
@@ -3214,7 +3214,7 @@ class getid3_id3v2 extends getid3_handler
 
 	/**
 	 * @param int   $index
-	 * @param bool $returnarray
+	 * @param boolean $returnarray
 	 *
 	 * @return array|string
 	 */
@@ -3731,7 +3731,7 @@ class getid3_id3v2 extends getid3_handler
 	 * @param string $framename
 	 * @param int    $id3v2majorversion
 	 *
-	 * @return bool|int
+	 * @return boolean|int
 	 */
 	public static function IsValidID3v2FrameName($framename, $id3v2majorversion) {
 		switch ($id3v2majorversion) {
@@ -3747,10 +3747,10 @@ class getid3_id3v2 extends getid3_handler
 
 	/**
 	 * @param string $numberstring
-	 * @param bool   $allowdecimal
-	 * @param bool   $allownegative
+	 * @param boolean   $allowdecimal
+	 * @param boolean   $allownegative
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function IsANumber($numberstring, $allowdecimal=false, $allownegative=false) {
 		$pattern  = '#^';
@@ -3764,7 +3764,7 @@ class getid3_id3v2 extends getid3_handler
 	/**
 	 * @param string $datestamp
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function IsValidDateStampString($datestamp) {
 		if (!preg_match('#^[12][0-9]{3}[01][0-9][0123][0-9]$#', $datestamp)) {

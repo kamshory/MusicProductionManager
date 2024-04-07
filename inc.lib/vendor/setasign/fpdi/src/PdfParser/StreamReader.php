@@ -46,7 +46,7 @@ class StreamReader
     /**
      * Defines whether the stream should be closed when the stream reader instance is deconstructed or not.
      *
-     * @var bool
+     * @var boolean
      */
     protected $closeStream;
 
@@ -96,7 +96,7 @@ class StreamReader
      * StreamReader constructor.
      *
      * @param resource $stream
-     * @param bool $closeStream Defines whether to close the stream resource if the instance is destructed or not.
+     * @param boolean $closeStream Defines whether to close the stream resource if the instance is destructed or not.
      */
     public function __construct($stream, $closeStream = false)
     {
@@ -145,7 +145,7 @@ class StreamReader
     /**
      * Returns the byte length of the buffer.
      *
-     * @param bool $atOffset
+     * @param boolean $atOffset
      * @return int
      */
     public function getBufferLength($atOffset = false)
@@ -170,7 +170,7 @@ class StreamReader
     /**
      * Returns the current buffer.
      *
-     * @param bool $atOffset
+     * @param boolean $atOffset
      * @return string
      */
     public function getBuffer($atOffset = true)
@@ -358,7 +358,7 @@ class StreamReader
     /**
      * Make sure that there is at least one character beyond the current offset in the buffer.
      *
-     * @return bool
+     * @return boolean
      */
     public function ensureContent()
     {
@@ -456,7 +456,7 @@ class StreamReader
      * Forcefully read more data into the buffer.
      *
      * @param int $minLength
-     * @return bool Returns false if the stream reaches the end
+     * @return boolean Returns false if the stream reaches the end
      */
     public function increaseLength($minLength = 100)
     {

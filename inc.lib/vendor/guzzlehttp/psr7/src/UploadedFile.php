@@ -44,7 +44,7 @@ class UploadedFile implements UploadedFileInterface
     private $file;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $moved = false;
 

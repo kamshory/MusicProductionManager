@@ -23,12 +23,12 @@ class getid3_swf extends getid3_handler
 	/**
 	 * return all parsed tags if true, otherwise do not return tags not parsed by getID3
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $ReturnAllTagData = false;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

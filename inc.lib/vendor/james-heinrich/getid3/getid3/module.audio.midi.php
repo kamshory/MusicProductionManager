@@ -26,12 +26,12 @@ class getid3_midi extends getid3_handler
 	/**
 	 * if false only parse most basic information, much faster for some files but may be inaccurate
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $scanwholefile = true;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

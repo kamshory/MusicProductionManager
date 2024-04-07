@@ -33,7 +33,7 @@ class getid3_apetag extends getid3_handler
 	public $overrideendoffset  = 0;
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -420,7 +420,7 @@ class getid3_apetag extends getid3_handler
 	/**
 	 * @param string $itemkey
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function APEtagItemIsUTF8Lookup($itemkey) {
 		static $APEtagItemIsUTF8Lookup = array(

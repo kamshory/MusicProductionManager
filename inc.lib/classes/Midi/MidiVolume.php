@@ -10,7 +10,7 @@ class MidiVolume extends Midi
 	 * (and removing existing volume controllers)
 	 *
 	 * @param integer $vol
-	 * @param bool $removeAll
+	 * @param boolean $removeAll
 	 * @return void
 	 */
 	public function setGlobalVolume($vol, $removeAll = true) //NOSONAR

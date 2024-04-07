@@ -43,7 +43,7 @@ class FileMp3
     /**
      * Read entire file, frame by frame... ie: Variable Bit Rate (VBR)
      *
-     * @param bool $use_cbr_estimate
+     * @param boolean $use_cbr_estimate
      * @return float
      */
     public function getDuration($use_cbr_estimate = false)

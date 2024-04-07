@@ -14,7 +14,7 @@ class FileUtilMxl
      * Check if file is valid MusicXML file
      *
      * @param string $path Zip file path
-     * @return bool
+     * @return boolean
      */
     public static function isValidMusicXmlFile($path)
     {
@@ -133,7 +133,7 @@ class FileUtilMxl
      *
      * @param string $fullPath
      * @param string $mimeType
-     * @return bool
+     * @return boolean
      */
     public static function isMusicXml($fullPath, $mimeType)
     {

@@ -64,7 +64,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Check if database type is MySQL or MariaDB
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isMySql()
 	{
@@ -74,7 +74,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Check if database type is PostgreSQL
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isPgSql()
 	{

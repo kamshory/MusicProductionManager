@@ -33,7 +33,7 @@ class getid3_mpeg extends getid3_handler
 	const AUDIO_START           = "\x00\x00\x01\xC0";
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -520,9 +520,9 @@ echo 'average_File_bitrate = '.number_format(array_sum($vbr_bitrates) / count($v
 	 * @param string $bitstream
 	 * @param int    $bitstreamoffset
 	 * @param int    $bits_to_read
-	 * @param bool $return_singlebit_as_boolean
+	 * @param boolean $return_singlebit_as_boolean
 	 *
-	 * @return bool|int
+	 * @return boolean|int
 	 */
 	private function readBitsFromStream(&$bitstream, &$bitstreamoffset, $bits_to_read, $return_singlebit_as_boolean=true) {
 		$return = bindec(substr($bitstream, $bitstreamoffset, $bits_to_read));

@@ -37,7 +37,7 @@ class UserTypeDto extends SetterGetter
     /**
      * Default data
      *
-     * @var bool
+     * @var boolean
      * @Column(name=default_data)
      */
     protected $defaultData;
@@ -45,7 +45,7 @@ class UserTypeDto extends SetterGetter
     /**
      * Active
      *
-     * @var bool
+     * @var boolean
      */
     protected $active;
 

@@ -28,7 +28,7 @@ $user = new EntityUser(null, $database);
  *
  * @param PicoPageData $duplicated
  * @param string $username
- * @return bool
+ * @return boolean
  */
 function checkDuplicatedUsername($existing, $username)
 {
@@ -50,7 +50,7 @@ function checkDuplicatedUsername($existing, $username)
  *
  * @param PicoPageData $duplicated
  * @param string $email
- * @return bool
+ * @return boolean
  */
 function checkDuplicatedEmail($existing, $email)
 {
@@ -71,7 +71,7 @@ function checkDuplicatedEmail($existing, $email)
  * Validate password
  *
  * @param string $password
- * @return bool
+ * @return boolean
  */
 function isValidPassword($password)
 {
@@ -86,7 +86,7 @@ function isValidPassword($password)
  *
  * @param string $date
  * @param string $format
- * @return bool
+ * @return boolean
  */
 function isValidDate($date, $format = 'Y-m-d')
 {

@@ -19,7 +19,7 @@ abstract class AbstractProxy
     /**
      * Flag if handler wraps an internal PHP session handler (using \SessionHandler).
      *
-     * @var bool
+     * @var boolean
      */
     protected $wrapper = false;
 

@@ -54,7 +54,7 @@ class getid3_asf extends getid3_handler
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;
@@ -1706,7 +1706,7 @@ class getid3_asf extends getid3_handler
 
 	/**
 	 * @param int  $FILETIME
-	 * @param bool $round
+	 * @param boolean $round
 	 *
 	 * @return float|int
 	 */

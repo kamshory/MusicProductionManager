@@ -38,7 +38,7 @@ class getid3_torrent extends getid3_handler
 	const PIECE_HASHLENGTH = 20; // number of bytes the SHA1 hash is for each piece
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function Analyze() {
 		$info = &$this->getid3->info;

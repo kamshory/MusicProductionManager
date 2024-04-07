@@ -39,7 +39,7 @@ trait FpdfTrait
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param bool $adjustPageSize
+     * @param boolean $adjustPageSize
      * @return array The size
      * @see Fpdi::getTemplateSize()
      */
