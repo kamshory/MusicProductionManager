@@ -1,0 +1,5 @@
+{
+    "require": {
+        "planetbiru/magic-object": "dev-main"
+    }
+}
