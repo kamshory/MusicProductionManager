@@ -366,7 +366,7 @@ if(!empty($result))
       function(e) {
         let files = e.target.files;
  
-        for (let i in files) {
+        for (let i = 0; i < files.length; i++) {
           let file = files[i];
           console.log(file)
           let formData = new FormData();

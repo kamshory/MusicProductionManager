@@ -147,13 +147,14 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
                     <div class="logo"><i class="fas fa-bolt"></i></div>
                 </div>
 
-                
+                <div class="albumselect-container">
                 <form class="albumselect" id="albumselect" action="">
                     <input type="hidden" name="action" value="play">
                     <select class="album-selector" name="album_id" id="album_id" onchange="albumselect.submit()">
                         <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
                     </select>
                 </form>
+                </div>
 
                 </div>
 

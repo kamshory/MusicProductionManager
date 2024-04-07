@@ -491,11 +491,15 @@ font-family: 'VT323', monospace;
 
 }
 
-form.albumselect {
+.albumselect-container{
     padding: 10px 0 0px 0;
+}
+
+form.albumselect {
+    
     display: block;
     width: 100%;
-
+    border: 2px inset #555265;
 }
 
 .album-selector {
@@ -504,12 +508,27 @@ form.albumselect {
     width: 100%;
     box-sizing: border-box;
     font-size: 14px;
-    background-color: transparent;
-    border: none;
-    border: 2px inset #555265;
+    background: transparent;
+    border: 0px solid #DDDDDD;
     color: lime;
 }
 
 .album-selector option {
     background-color: #11101A;
+    color: lime;
 }
+select.album-selector:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+select.album-selector::-moz-dropdown-list {
+    background-color: inherit;
+    color: inherit;
+    border-style: inherit;
+    border-color: inherit;
+    border-width: 0;
+    z-index: 2147483647;
+    -moz-user-select: none;
+  }
+ 
