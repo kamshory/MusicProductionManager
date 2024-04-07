@@ -135,10 +135,10 @@ class DataTable extends SetterGetter
     {
         $className = get_class($this);
         $reflexClass = new PicoAnnotationParser($className);
-        $this->attributes = TableUtil::parseElementAttributes($reflexClass->getParameter(self::ANNOTATION_ATTRIBUTES));    
-        $classList = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::CLASS_LIST));
-        $prefLanguage = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::ANNOTATION_LANGUAGE));
-        $defaultColumnName = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::ANNOTATION_DEFAULT_COLUMN_LABEL));
+        $this->attributes = TableUtil::parseElementAttributes($reflexClass->getFirstParameter(self::ANNOTATION_ATTRIBUTES));    
+        $classList = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::CLASS_LIST));
+        $prefLanguage = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::ANNOTATION_LANGUAGE));
+        $defaultColumnName = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::ANNOTATION_DEFAULT_COLUMN_LABEL));
         if($defaultColumnName->issetContent())
         {
             $this->defaultColumnName = $defaultColumnName->getContent();
@@ -152,7 +152,7 @@ class DataTable extends SetterGetter
         {
             $this->currentLanguage = $prefLanguage->getContent();
         }  
-        $this->tableIdentity = $reflexClass->parseKeyValueAsObject($reflexClass->getParameter(self::ANNOTATION_TABLE));
+        $this->tableIdentity = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::ANNOTATION_TABLE));
     }
     
     /**

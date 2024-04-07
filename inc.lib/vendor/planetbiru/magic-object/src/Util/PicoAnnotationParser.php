@@ -286,6 +286,29 @@ class PicoAnnotationParser
     }
 
     /**
+     * Get first parameter
+     *
+     * @param string $key
+     * @return string
+     */
+    public function getFirstParameter($key)
+    {
+        $parameters = $this->parseSingle($key);
+        if(is_string($parameters[0]))
+        {
+            return $parameters;
+        }
+        else if(is_array($parameters) && is_string($parameters[0]))
+        {
+            return $parameters[0];
+        }
+        else
+        {
+            return $parameters;
+        }
+    }
+
+    /**
      * Combine and merge array
      *
      * @param array $matches2

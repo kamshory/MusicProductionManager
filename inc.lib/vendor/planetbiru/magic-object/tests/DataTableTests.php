@@ -87,4 +87,5 @@ $rumah->addClass('coba');
 $rumah->addClass('coba');
 $rumah->addClass('coba');
 
-echo $rumah;
+$apa = $rumah."";
+echo $apa;
