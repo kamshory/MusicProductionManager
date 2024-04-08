@@ -12,7 +12,6 @@ use MagicObject\Exceptions\InvalidFilterException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\NoInsertableColumnException;
 use MagicObject\Exceptions\NoColumnMatchException;
-use MagicObject\Exceptions\NoDatabaseConnectionException;
 use MagicObject\Exceptions\NoUpdatableColumnException;
 use MagicObject\Exceptions\NoPrimaryKeyDefinedException;
 use MagicObject\Util\ExtendedReflectionClass;
@@ -1419,7 +1418,6 @@ class PicoDatabasePersistence // NOSONAR
      * @param PicoPagable $pagable
      * @param PicoSortable|string $sortable
      * @return array|null
-     * @throws PDOException|NoDatabaseConnectionException
      */
     public function findBy($propertyName, $propertyValue, $pagable = null, $sortable = null)
     {
@@ -1459,18 +1457,14 @@ class PicoDatabasePersistence // NOSONAR
                     $result[] = $data;
                 }
             }
-        }
-        catch(PDOException $e)
-        {
-            throw new PDOException($e->getMessage());
-        }
-        catch(NoDatabaseConnectionException $e)
-        {
-            throw new NoDatabaseConnectionException($e->getMessage());
+            else
+            {
+                throw new EmptyResultException(self::MESSAGE_NO_RECORD_FOUND);
+            }
         }
         catch(Exception $e)
         {
-            // do nothing
+            throw new EmptyResultException($e->getMessage());
         }
         return $result;
     }
@@ -1798,7 +1792,7 @@ class PicoDatabasePersistence // NOSONAR
         "float"=>"double",
         "bigint"=>"integer",
         "smallint"=>"integer",
-        "tinyint(1)"=>"boolean",
+        "tinyint(1)"=>"bool",
         "tinyint"=>"integer",
         "int"=>"integer",
         "varchar"=>"string",
@@ -1808,8 +1802,8 @@ class PicoDatabasePersistence // NOSONAR
         "longtext"=>"string",
         "text"=>"string",   
         "enum"=>"string",   
-        "bool"=>"boolean",
-        "boolean"=>"boolean",
+        "boolean"=>"bool",
+        "bool"=>"bool",
         "timestamp"=>"string",
         "datetime"=>"string",
         "date"=>"string",
@@ -1821,7 +1815,7 @@ class PicoDatabasePersistence // NOSONAR
             $v = strlen($value) > 19 ? substr($value, 0, 19) : $value;
             $ret = DateTime::createFromFormat(self::SQL_DATETIME_FORMAT, $v);
         }
-        else if($typeLower == 'bool' || $typeLower == 'boolean')
+        else if($typeLower == 'bool')
         {
             $ret = $this->boolval($value);
         }

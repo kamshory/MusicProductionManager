@@ -12,7 +12,7 @@ final class Loop
      */
     private static $instance;
 
-    /** @var boolean */
+    /** @var bool */
     private static $stopped = false;
 
     /**

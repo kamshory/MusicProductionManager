@@ -558,7 +558,7 @@ class Parser
      * Returns the next embed block of YAML.
      *
      * @param int  $indentation The indent level at which the block is to be read, or null for default
-     * @param bool $inSequence  True if the enclosing data structure is a sequence
+     * @param boolean $inSequence  True if the enclosing data structure is a sequence
      *
      * @return string A YAML string
      *
@@ -663,7 +663,7 @@ class Parser
     /**
      * Moves the parser to the next line.
      *
-     * @return bool
+     * @return boolean
      */
     private function moveToNextLine()
     {
@@ -679,7 +679,7 @@ class Parser
     /**
      * Moves the parser to the previous line.
      *
-     * @return bool
+     * @return boolean
      */
     private function moveToPreviousLine()
     {
@@ -912,7 +912,7 @@ class Parser
     /**
      * Returns true if the next line is indented.
      *
-     * @return bool Returns true if the next line is indented, false otherwise
+     * @return boolean Returns true if the next line is indented, false otherwise
      */
     private function isNextLineIndented()
     {
@@ -943,7 +943,7 @@ class Parser
     /**
      * Returns true if the current line is blank or if it is a comment line.
      *
-     * @return bool Returns true if the current line is empty or if it is a comment line, false otherwise
+     * @return boolean Returns true if the current line is empty or if it is a comment line, false otherwise
      */
     private function isCurrentLineEmpty()
     {
@@ -953,7 +953,7 @@ class Parser
     /**
      * Returns true if the current line is blank.
      *
-     * @return bool Returns true if the current line is blank, false otherwise
+     * @return boolean Returns true if the current line is blank, false otherwise
      */
     private function isCurrentLineBlank()
     {
@@ -963,7 +963,7 @@ class Parser
     /**
      * Returns true if the current line is a comment line.
      *
-     * @return bool Returns true if the current line is a comment line, false otherwise
+     * @return boolean Returns true if the current line is a comment line, false otherwise
      */
     private function isCurrentLineComment()
     {
@@ -1019,7 +1019,7 @@ class Parser
     /**
      * Returns true if the next line starts unindented collection.
      *
-     * @return bool Returns true if the next line starts unindented collection, false otherwise
+     * @return boolean Returns true if the next line starts unindented collection, false otherwise
      */
     private function isNextLineUnIndentedCollection()
     {
@@ -1050,7 +1050,7 @@ class Parser
     /**
      * Returns true if the string is un-indented collection item.
      *
-     * @return bool Returns true if the string is un-indented collection item, false otherwise
+     * @return boolean Returns true if the string is un-indented collection item, false otherwise
      */
     private function isStringUnIndentedCollectionItem()
     {

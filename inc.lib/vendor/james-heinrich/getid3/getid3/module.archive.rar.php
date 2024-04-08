@@ -23,7 +23,7 @@ class getid3_rar extends getid3_handler
 	/**
 	 * if true use PHP RarArchive extension, if false (non-extension parsing not yet written in getID3)
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $use_php_rar_extension = true;
 

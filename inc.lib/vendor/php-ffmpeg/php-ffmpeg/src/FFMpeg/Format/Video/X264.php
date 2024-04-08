@@ -16,7 +16,7 @@ namespace FFMpeg\Format\Video;
  */
 class X264 extends DefaultVideo
 {
-    /** @var boolean */
+    /** @var bool */
     private $bframesSupport = true;
 
     /** @var int */

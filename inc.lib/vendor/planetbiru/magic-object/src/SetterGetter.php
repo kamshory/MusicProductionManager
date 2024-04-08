@@ -149,7 +149,7 @@ class SetterGetter
     /**
      * Get value
      *
-     * @var boolean $snakeCase
+     * @var bool $snakeCase
      */
     public function value($snakeCase = false)
     {
@@ -178,8 +178,8 @@ class SetterGetter
     /**
      * Property list
      *
-     * @var boolean $reflectSelf
-     * @var boolean $asArrayProps
+     * @var bool $reflectSelf
+     * @var bool $asArrayProps
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)

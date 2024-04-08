@@ -12,11 +12,7 @@ class PicoResponse
      * Send response headers and response body to client
      *
      * @param mixed $data Data to sent to client
-<<<<<<< HEAD
-     * @param bool $prettify Flag to prettify JSON
-=======
      * @param boolean $prettify Flag to prettify JSON
->>>>>>> id3-tag
      * @param array $headers Response headers
      * @return void
      */
@@ -43,11 +39,7 @@ class PicoResponse
      * @param string $body Response body
      * @param string $contentType Content type
      * @param array $headers Response headers
-<<<<<<< HEAD
-     * @param bool $async
-=======
      * @param boolean $async
->>>>>>> id3-tag
      * @return void
      */
     public static function sendResponse($body, $contentType = null, $headers = null, $httpStatusCode = PicoHttpStatus::HTTP_OK, $async = false)
@@ -66,11 +58,7 @@ class PicoResponse
      *
      * @param stdClass|object|array|string $body Response body
      * @param array $headers Response headers
-<<<<<<< HEAD
-     * @param bool $async
-=======
      * @param boolean $async
->>>>>>> id3-tag
      * @return void
      */
     public static function sendResponseJSON($body, $headers = null, $httpStatusCode = PicoHttpStatus::HTTP_OK, $async = false)
@@ -135,11 +123,7 @@ class PicoResponse
      * Send response body
      *
      * @param string $body Response body
-<<<<<<< HEAD
-     * @param bool $async
-=======
      * @param boolean $async
->>>>>>> id3-tag
      * @return void
      */
     public static function sendBody($body, $async = false)

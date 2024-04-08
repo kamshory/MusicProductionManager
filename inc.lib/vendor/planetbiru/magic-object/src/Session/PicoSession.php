@@ -14,7 +14,7 @@ class PicoSession
     /**
      * The state of the session
      *
-     * @var boolean
+     * @var bool
      */
     private $sessionState = self::SESSION_NOT_STARTED;
  

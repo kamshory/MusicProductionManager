@@ -22,7 +22,7 @@ class StringUtil
     /**
      * Return attribute selected on select > option
      *
-     * @param bool $condition
+     * @param boolean $condition
      * @return string
      */
     public static function formSelected($condition)
@@ -33,7 +33,7 @@ class StringUtil
     /**
      * Return attribute checked on input[type=checkbox]
      *
-     * @param bool $condition
+     * @param boolean $condition
      * @return string
      */
     public static function formChecked($condition)

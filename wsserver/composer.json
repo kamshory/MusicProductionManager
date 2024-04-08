@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "autoload": {
         "psr-0": {
             "WS\\": "libs/"
@@ -11,10 +10,6 @@
         }
     },
     "require": {
-        "planetbiru/magic-object": "^1.0"
-=======
-    "require": {
         "planetbiru/magic-object": "dev-main"
->>>>>>> id3-tag
     }
 }

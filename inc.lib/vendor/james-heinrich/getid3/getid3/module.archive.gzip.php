@@ -29,7 +29,7 @@ class getid3_gzip extends getid3_handler
 	 * Optional file list - disable for speed.
 	 * Decode gzipped files, if possible, and parse recursively (.tar.gz for example).
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $parse_contents = false;
 

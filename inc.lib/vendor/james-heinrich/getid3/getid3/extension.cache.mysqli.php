@@ -88,7 +88,7 @@ class getID3_cached_mysqli extends getID3
 	private $table;
 
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	private $db_structure_check;
 

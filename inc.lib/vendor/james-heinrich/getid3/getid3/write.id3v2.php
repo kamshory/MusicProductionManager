@@ -62,7 +62,7 @@ class getid3_write_id3v2
 	/**
 	 * If true, merge new data with existing tags; if false, delete old tag data and only write new tags.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $merge_existing_data         = false;
 
@@ -77,7 +77,7 @@ class getid3_write_id3v2
 	 * The specs say it should be TRUE, but most other ID3v2-aware programs are broken if unsynchronization is used,
 	 * so by default don't use it.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $id3v2_use_unsynchronisation = false;
 

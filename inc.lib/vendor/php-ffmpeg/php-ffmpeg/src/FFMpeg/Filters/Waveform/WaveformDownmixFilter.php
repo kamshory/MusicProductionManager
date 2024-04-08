@@ -17,7 +17,7 @@ use FFMpeg\Media\Waveform;
 class WaveformDownmixFilter implements WaveformFilterInterface
 {
 
-    /** @var boolean */
+    /** @var bool */
     private $downmix;
     /** @var int */
     private $priority;

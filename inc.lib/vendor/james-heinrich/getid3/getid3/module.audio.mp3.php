@@ -25,7 +25,7 @@ class getid3_mp3 extends getid3_handler
 	 * Forces getID3() to scan the file byte-by-byte and log all the valid audio frame headers - extremely slow,
 	 * unrecommended, but may provide data from otherwise-unusable files.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $allow_bruteforce = false;
 

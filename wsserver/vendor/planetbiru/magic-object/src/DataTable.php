@@ -210,13 +210,8 @@ class DataTable extends SetterGetter
     
     /**
      * Property list
-<<<<<<< HEAD
      * @var boolean $reflectSelf
      * @var boolean $asArrayProps
-=======
-     * @var boolean $reflectSelf
-     * @var boolean $asArrayProps
->>>>>>> id3-tag
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)

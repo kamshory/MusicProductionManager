@@ -23,14 +23,14 @@ class getid3_bmp extends getid3_handler
 	/**
 	 * return BMP palette
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $ExtractPalette = false;
 
 	/**
 	 * return image data
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $ExtractData    = false;
 

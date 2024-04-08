@@ -66,11 +66,7 @@ class PicoLanguage
      * Check if property value is set
      *
      * @param string $propertyName
-<<<<<<< HEAD
-     * @return bool
-=======
      * @return boolean
->>>>>>> id3-tag
      */
     public function isset($propertyName)
     {

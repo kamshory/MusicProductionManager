@@ -23,7 +23,7 @@ class getid3_swf extends getid3_handler
 	/**
 	 * return all parsed tags if true, otherwise do not return tags not parsed by getID3
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $ReturnAllTagData = false;
 

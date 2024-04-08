@@ -5,11 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-<<<<<<< HEAD
-        'reference' => '7666ae0add725f1b66475e495fbcfbd791132b8b',
-=======
-        'reference' => '01cea786ddcca14496bb52001bbf9da217299079',
->>>>>>> id3-tag
+        'reference' => '3e7f0308d185297445f3ce2e072bd81b4855fffe',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -20,28 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-<<<<<<< HEAD
-            'reference' => '7666ae0add725f1b66475e495fbcfbd791132b8b',
-            'dev_requirement' => false,
-        ),
-        'planetbiru/magic-object' => array(
-            'pretty_version' => '1.0.5',
-            'version' => '1.0.5.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../planetbiru/magic-object',
-            'aliases' => array(),
-            'reference' => '9cb744c2cbce7d270c268ed8e33f4e20d7dfeaa1',
-            'dev_requirement' => false,
-        ),
-        'symfony/polyfill-ctype' => array(
-            'pretty_version' => 'v1.19.0',
-            'version' => '1.19.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../symfony/polyfill-ctype',
-            'aliases' => array(),
-            'reference' => 'aed596913b70fae57be53d86faa2e9ef85a2297b',
-=======
-            'reference' => '01cea786ddcca14496bb52001bbf9da217299079',
+            'reference' => '3e7f0308d185297445f3ce2e072bd81b4855fffe',
             'dev_requirement' => false,
         ),
         'planetbiru/magic-object' => array(
@@ -56,13 +31,12 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-ctype' => array(
-            'pretty_version' => 'v1.29.0',
-            'version' => '1.29.0.0',
+            'pretty_version' => 'v1.19.0',
+            'version' => '1.19.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-ctype',
             'aliases' => array(),
-            'reference' => 'ef4d7e442ca910c4764bce785146269b30cb5fc4',
->>>>>>> id3-tag
+            'reference' => 'aed596913b70fae57be53d86faa2e9ef85a2297b',
             'dev_requirement' => false,
         ),
         'symfony/yaml' => array(

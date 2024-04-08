@@ -1,9 +1,14 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "08bad83fce0a5443f952fef3055578fe",
     "packages": [
         {
             "name": "alchemy/binary-driver",
             "version": "v5.2.0",
-            "version_normalized": "5.2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alchemy-fr/BinaryDriver.git",
@@ -24,9 +29,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^4.0|^5.0"
             },
-            "time": "2020-02-12T19:35:11+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Alchemy": "src"
@@ -67,12 +70,11 @@
                 "issues": "https://github.com/alchemy-fr/BinaryDriver/issues",
                 "source": "https://github.com/alchemy-fr/BinaryDriver/tree/master"
             },
-            "install-path": "../alchemy/binary-driver"
+            "time": "2020-02-12T19:35:11+00:00"
         },
         {
             "name": "cboden/ratchet",
             "version": "v0.4.4",
-            "version_normalized": "0.4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ratchetphp/Ratchet.git",
@@ -96,9 +98,7 @@
             "require-dev": {
                 "phpunit/phpunit": "~4.8"
             },
-            "time": "2021-12-14T00:20:41+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Ratchet\\": "src/Ratchet"
@@ -133,12 +133,11 @@
                 "issues": "https://github.com/ratchetphp/Ratchet/issues",
                 "source": "https://github.com/ratchetphp/Ratchet/tree/v0.4.4"
             },
-            "install-path": "../cboden/ratchet"
+            "time": "2021-12-14T00:20:41+00:00"
         },
         {
             "name": "evenement/evenement",
             "version": "v2.1.0",
-            "version_normalized": "2.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/igorw/evenement.git",
@@ -156,14 +155,12 @@
             "require-dev": {
                 "phpunit/phpunit": "^6.0||^5.7||^4.8.35"
             },
-            "time": "2017-07-17T17:39:19+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.0-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Evenement": "src"
@@ -188,12 +185,11 @@
                 "issues": "https://github.com/igorw/evenement/issues",
                 "source": "https://github.com/igorw/evenement/tree/master"
             },
-            "install-path": "../evenement/evenement"
+            "time": "2017-07-17T17:39:19+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
             "version": "1.9.1",
-            "version_normalized": "1.9.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
@@ -220,9 +216,7 @@
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
-            "time": "2023-04-17T16:00:37+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/functions_include.php"
@@ -296,12 +290,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../guzzlehttp/psr7"
+            "time": "2023-04-17T16:00:37+00:00"
         },
         {
             "name": "james-heinrich/getid3",
             "version": "v1.9.23",
-            "version_normalized": "1.9.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
@@ -336,14 +329,12 @@
                 "ext-xml": "XML extension is required for graphic modules to analyze the XML metadata.",
                 "ext-zlib": "Zlib extension is required for archive modules and compressed metadata."
             },
-            "time": "2023-10-19T13:18:49+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.9.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "getid3/"
@@ -366,12 +357,11 @@
                 "issues": "https://github.com/JamesHeinrich/getID3/issues",
                 "source": "https://github.com/JamesHeinrich/getID3/tree/v1.9.23"
             },
-            "install-path": "../james-heinrich/getid3"
+            "time": "2023-10-19T13:18:49+00:00"
         },
         {
             "name": "neutron/temporary-filesystem",
             "version": "3.0.1",
-            "version_normalized": "3.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/romainneutron/Temporary-Filesystem.git",
@@ -390,9 +380,7 @@
             "require-dev": {
                 "symfony/phpunit-bridge": "^5.0.4 || ^6.0"
             },
-            "time": "2021-12-14T07:30:33+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Neutron": "src"
@@ -413,12 +401,11 @@
                 "issues": "https://github.com/romainneutron/Temporary-Filesystem/issues",
                 "source": "https://github.com/romainneutron/Temporary-Filesystem/tree/3.0.1"
             },
-            "install-path": "../neutron/temporary-filesystem"
+            "time": "2021-12-14T07:30:33+00:00"
         },
         {
             "name": "paragonie/random_compat",
             "version": "v2.0.21",
-            "version_normalized": "2.0.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
@@ -439,9 +426,7 @@
             "suggest": {
                 "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
             },
-            "time": "2022-02-16T17:07:03+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "lib/random.php"
@@ -470,12 +455,11 @@
                 "issues": "https://github.com/paragonie/random_compat/issues",
                 "source": "https://github.com/paragonie/random_compat"
             },
-            "install-path": "../paragonie/random_compat"
+            "time": "2022-02-16T17:07:03+00:00"
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
             "version": "v0.19.0",
-            "version_normalized": "0.19.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
@@ -501,14 +485,12 @@
             "suggest": {
                 "php-ffmpeg/extras": "A compilation of common audio & video drivers for PHP-FFMpeg"
             },
-            "time": "2021-12-20T11:51:26+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "FFMpeg": "src"
@@ -560,12 +542,11 @@
                 "issues": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues",
                 "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v0.19.0"
             },
-            "install-path": "../php-ffmpeg/php-ffmpeg"
+            "time": "2021-12-20T11:51:26+00:00"
         },
         {
             "name": "planetbiru/magic-object",
             "version": "1.0.5",
-            "version_normalized": "1.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
@@ -580,9 +561,7 @@
             "require": {
                 "symfony/yaml": "^3.4"
             },
-            "time": "2024-04-07T01:30:08+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "MagicObject\\": "src/"
@@ -602,12 +581,11 @@
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
                 "source": "https://github.com/Planetbiru/MagicObject/tree/1.0.5"
             },
-            "install-path": "../planetbiru/magic-object"
+            "time": "2024-04-07T01:30:08+00:00"
         },
         {
             "name": "psr/cache",
             "version": "1.0.1",
-            "version_normalized": "1.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/cache.git",
@@ -622,14 +600,12 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2016-08-06T20:24:11+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Cache\\": "src/"
@@ -654,12 +630,11 @@
             "support": {
                 "source": "https://github.com/php-fig/cache/tree/master"
             },
-            "install-path": "../psr/cache"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/http-message",
             "version": "1.0.1",
-            "version_normalized": "1.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
@@ -674,14 +649,12 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2016-08-06T14:39:51+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Message\\": "src/"
@@ -710,12 +683,11 @@
             "support": {
                 "source": "https://github.com/php-fig/http-message/tree/master"
             },
-            "install-path": "../psr/http-message"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
             "version": "1.1.4",
-            "version_normalized": "1.1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
@@ -730,14 +702,12 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2021-05-03T11:20:27+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.1.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Log\\": "Psr/Log/"
@@ -763,12 +733,11 @@
             "support": {
                 "source": "https://github.com/php-fig/log/tree/1.1.4"
             },
-            "install-path": "../psr/log"
+            "time": "2021-05-03T11:20:27+00:00"
         },
         {
             "name": "psr/simple-cache",
             "version": "1.0.1",
-            "version_normalized": "1.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/simple-cache.git",
@@ -783,14 +752,12 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2017-10-23T01:57:42+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\SimpleCache\\": "src/"
@@ -817,12 +784,11 @@
             "support": {
                 "source": "https://github.com/php-fig/simple-cache/tree/master"
             },
-            "install-path": "../psr/simple-cache"
+            "time": "2017-10-23T01:57:42+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
-            "version_normalized": "3.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ralouphie/getallheaders.git",
@@ -841,9 +807,7 @@
                 "php-coveralls/php-coveralls": "^2.1",
                 "phpunit/phpunit": "^5 || ^6.5"
             },
-            "time": "2019-03-08T08:55:37+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/getallheaders.php"
@@ -864,12 +828,11 @@
                 "issues": "https://github.com/ralouphie/getallheaders/issues",
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
-            "install-path": "../ralouphie/getallheaders"
+            "time": "2019-03-08T08:55:37+00:00"
         },
         {
             "name": "ratchet/rfc6455",
             "version": "v0.3.1",
-            "version_normalized": "0.3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ratchetphp/RFC6455.git",
@@ -889,9 +852,7 @@
                 "phpunit/phpunit": "^5.7",
                 "react/socket": "^1.3"
             },
-            "time": "2021-12-09T23:20:49+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Ratchet\\RFC6455\\": "src"
@@ -924,12 +885,11 @@
                 "issues": "https://github.com/ratchetphp/RFC6455/issues",
                 "source": "https://github.com/ratchetphp/RFC6455/tree/v0.3.1"
             },
-            "install-path": "../ratchet/rfc6455"
+            "time": "2021-12-09T23:20:49+00:00"
         },
         {
             "name": "react/cache",
             "version": "v1.2.0",
-            "version_normalized": "1.2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/cache.git",
@@ -948,9 +908,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.5 || ^5.7 || ^4.8.35"
             },
-            "time": "2022-11-30T15:59:55+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "React\\Cache\\": "src/"
@@ -999,12 +957,11 @@
                     "type": "open_collective"
                 }
             ],
-            "install-path": "../react/cache"
+            "time": "2022-11-30T15:59:55+00:00"
         },
         {
             "name": "react/dns",
             "version": "v1.12.0",
-            "version_normalized": "1.12.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/dns.git",
@@ -1027,9 +984,7 @@
                 "react/async": "^4 || ^3 || ^2",
                 "react/promise-timer": "^1.9"
             },
-            "time": "2023-11-29T12:41:06+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "React\\Dns\\": "src/"
@@ -1078,12 +1033,11 @@
                     "type": "open_collective"
                 }
             ],
-            "install-path": "../react/dns"
+            "time": "2023-11-29T12:41:06+00:00"
         },
         {
             "name": "react/event-loop",
             "version": "v1.5.0",
-            "version_normalized": "1.5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/event-loop.git",
@@ -1104,9 +1058,7 @@
             "suggest": {
                 "ext-pcntl": "For signal handling support when using the StreamSelectLoop"
             },
-            "time": "2023-11-13T13:48:05+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "React\\EventLoop\\": "src/"
@@ -1153,12 +1105,11 @@
                     "type": "open_collective"
                 }
             ],
-            "install-path": "../react/event-loop"
+            "time": "2023-11-13T13:48:05+00:00"
         },
         {
             "name": "react/promise",
             "version": "v2.11.0",
-            "version_normalized": "2.11.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
@@ -1176,9 +1127,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36"
             },
-            "time": "2023-11-16T16:16:50+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/functions_include.php"
@@ -1228,12 +1177,11 @@
                     "type": "open_collective"
                 }
             ],
-            "install-path": "../react/promise"
+            "time": "2023-11-16T16:16:50+00:00"
         },
         {
             "name": "react/socket",
             "version": "v1.15.0",
-            "version_normalized": "1.15.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/socket.git",
@@ -1259,9 +1207,7 @@
                 "react/promise-stream": "^1.4",
                 "react/promise-timer": "^1.10"
             },
-            "time": "2023-12-15T11:02:10+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "React\\Socket\\": "src/"
@@ -1311,12 +1257,11 @@
                     "type": "open_collective"
                 }
             ],
-            "install-path": "../react/socket"
+            "time": "2023-12-15T11:02:10+00:00"
         },
         {
             "name": "react/stream",
             "version": "v1.3.0",
-            "version_normalized": "1.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/stream.git",
@@ -1337,9 +1282,7 @@
                 "clue/stream-filter": "~1.2",
                 "phpunit/phpunit": "^9.5 || ^5.7 || ^4.8.35"
             },
-            "time": "2023-06-16T10:52:11+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "React\\Stream\\": "src/"
@@ -1392,12 +1335,11 @@
                     "type": "open_collective"
                 }
             ],
-            "install-path": "../react/stream"
+            "time": "2023-06-16T10:52:11+00:00"
         },
         {
             "name": "setasign/fpdf",
             "version": "1.8.6",
-            "version_normalized": "1.8.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDF.git",
@@ -1413,9 +1355,7 @@
                 "ext-gd": "*",
                 "ext-zlib": "*"
             },
-            "time": "2023-06-26T14:44:25+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "fpdf.php"
@@ -1441,12 +1381,11 @@
             "support": {
                 "source": "https://github.com/Setasign/FPDF/tree/1.8.6"
             },
-            "install-path": "../setasign/fpdf"
+            "time": "2023-06-26T14:44:25+00:00"
         },
         {
             "name": "setasign/fpdi",
             "version": "v2.6.0",
-            "version_normalized": "2.6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDI.git",
@@ -1475,9 +1414,7 @@
             "suggest": {
                 "setasign/fpdf": "FPDI will extend this class but as it is also possible to use TCPDF or tFPDF as an alternative. There's no fixed dependency configured."
             },
-            "time": "2023-12-11T16:03:32+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "setasign\\Fpdi\\": "src/"
@@ -1516,12 +1453,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../setasign/fpdi"
+            "time": "2023-12-11T16:03:32+00:00"
         },
         {
             "name": "setasign/fpdi-fpdf",
             "version": "v2.3.0",
-            "version_normalized": "2.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDI-FPDF.git",
@@ -1537,9 +1473,7 @@
                 "setasign/fpdf": "^1.8.2",
                 "setasign/fpdi": "^2.3"
             },
-            "time": "2020-02-19T12:21:53+00:00",
             "type": "library",
-            "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -1562,12 +1496,11 @@
                 "source": "https://github.com/Setasign/FPDI-FPDF/tree/v2.3.0"
             },
             "abandoned": true,
-            "install-path": "../setasign/fpdi-fpdf"
+            "time": "2020-02-19T12:21:53+00:00"
         },
         {
             "name": "symfony/cache",
             "version": "v3.4.47",
-            "version_normalized": "3.4.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
@@ -1599,9 +1532,7 @@
                 "doctrine/dbal": "^2.4|^3.0",
                 "predis/predis": "^1.0"
             },
-            "time": "2020-10-24T10:57:07+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Cache\\": ""
@@ -1647,12 +1578,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/cache"
+            "time": "2020-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/filesystem",
             "version": "v3.4.47",
-            "version_normalized": "3.4.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -1668,9 +1598,7 @@
                 "php": "^5.5.9|>=7.0.8",
                 "symfony/polyfill-ctype": "~1.8"
             },
-            "time": "2020-10-24T10:57:07+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Filesystem\\": ""
@@ -1712,12 +1640,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/filesystem"
+            "time": "2020-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/http-foundation",
             "version": "v3.4.47",
-            "version_normalized": "3.4.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
@@ -1737,9 +1664,7 @@
             "require-dev": {
                 "symfony/expression-language": "~2.8|~3.0|~4.0"
             },
-            "time": "2020-10-24T10:57:07+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\HttpFoundation\\": ""
@@ -1781,12 +1706,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/http-foundation"
+            "time": "2020-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/polyfill-apcu",
             "version": "v1.19.0",
-            "version_normalized": "1.19.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-apcu.git",
@@ -1801,7 +1725,6 @@
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2020-10-21T09:57:48+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1812,7 +1735,6 @@
                     "url": "https://github.com/symfony/polyfill"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -1861,12 +1783,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/polyfill-apcu"
+            "time": "2020-10-21T09:57:48+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
             "version": "v1.19.0",
-            "version_normalized": "1.19.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -1884,7 +1805,6 @@
             "suggest": {
                 "ext-ctype": "For best performance"
             },
-            "time": "2020-10-23T09:01:57+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1895,7 +1815,6 @@
                     "url": "https://github.com/symfony/polyfill"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -1943,12 +1862,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/polyfill-ctype"
+            "time": "2020-10-23T09:01:57+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
             "version": "v1.19.0",
-            "version_normalized": "1.19.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -1966,7 +1884,6 @@
             "suggest": {
                 "ext-mbstring": "For best performance"
             },
-            "time": "2020-10-23T09:01:57+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1977,7 +1894,6 @@
                     "url": "https://github.com/symfony/polyfill"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -2026,12 +1942,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/polyfill-mbstring"
+            "time": "2020-10-23T09:01:57+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
             "version": "v1.19.0",
-            "version_normalized": "1.19.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php70.git",
@@ -2047,7 +1962,6 @@
                 "paragonie/random_compat": "~1.0|~2.0|~9.99",
                 "php": ">=5.3.3"
             },
-            "time": "2020-10-23T09:01:57+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2058,7 +1972,6 @@
                     "url": "https://github.com/symfony/polyfill"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -2109,12 +2022,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/polyfill-php70"
+            "time": "2020-10-23T09:01:57+00:00"
         },
         {
             "name": "symfony/process",
             "version": "v3.4.47",
-            "version_normalized": "3.4.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -2129,9 +2041,7 @@
             "require": {
                 "php": "^5.5.9|>=7.0.8"
             },
-            "time": "2020-10-24T10:57:07+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Process\\": ""
@@ -2173,12 +2083,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/process"
+            "time": "2020-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/routing",
             "version": "v3.4.47",
-            "version_normalized": "3.4.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
@@ -2214,9 +2123,7 @@
                 "symfony/http-foundation": "For using a Symfony Request object",
                 "symfony/yaml": "For using the YAML loader"
             },
-            "time": "2020-10-24T10:57:07+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Routing\\": ""
@@ -2264,12 +2171,11 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/routing"
+            "time": "2020-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/yaml",
             "version": "v3.4.47",
-            "version_normalized": "3.4.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -2294,9 +2200,7 @@
             "suggest": {
                 "symfony/console": "For validating YAML files using the lint command"
             },
-            "time": "2020-10-24T10:57:07+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Yaml\\": ""
@@ -2338,9 +2242,19 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/yaml"
+            "time": "2020-10-24T10:57:07+00:00"
         }
     ],
-    "dev": true,
-    "dev-package-names": []
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.6.14"
+    },
+    "plugin-api-version": "2.2.0"
 }

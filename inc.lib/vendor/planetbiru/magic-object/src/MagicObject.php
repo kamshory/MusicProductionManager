@@ -45,7 +45,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Flag readonly
      *
-     * @var boolean
+     * @var bool
      */
     private $readonly = false; // NOSONAR
 
@@ -143,11 +143,7 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from INI string
      *
      * @param string $rawData
-<<<<<<< HEAD
-     * @param bool $systemEnv
-=======
      * @param boolean $systemEnv
->>>>>>> id3-tag
      * @return self
      */
     public function loadIniString($rawData, $systemEnv = false)
@@ -187,15 +183,9 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from Yaml string
      *
      * @param string $rawData
-<<<<<<< HEAD
-     * @param bool $systemEnv
-     * @param bool $asObject
-     * @param bool $recursive
-=======
      * @param boolean $systemEnv
      * @param boolean $asObject
      * @param boolean $recursive
->>>>>>> id3-tag
      * @return self
      */
     public function loadYamlString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
@@ -237,15 +227,9 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from Yaml file
      *
      * @param string $path
-<<<<<<< HEAD
-     * @param bool $systemEnv
-     * @param bool $asObject
-     * @param bool $recursive
-=======
      * @param boolean $systemEnv
      * @param boolean $asObject
      * @param boolean $recursive
->>>>>>> id3-tag
      * @return self
      */
     public function loadYamlFile($path, $systemEnv = false, $asObject = false, $recursive = false)
@@ -287,13 +271,8 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from JSON string
      *
      * @param string $rawData
-<<<<<<< HEAD
-     * @param bool $systemEnv
-     * @param bool $recursive
-=======
      * @param boolean $systemEnv
      * @param boolean $recursive
->>>>>>> id3-tag
      * @return self
      */
     public function loadJsonString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
@@ -335,13 +314,8 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from JSON file
      *
      * @param string $path
-<<<<<<< HEAD
-     * @param bool $systemEnv
-     * @param bool $recursive
-=======
      * @param boolean $systemEnv
      * @param boolean $recursive
->>>>>>> id3-tag
      * @return self
      */
     public function loadJsonFile($path, $systemEnv = false, $asObject = false, $recursive = false)
@@ -995,8 +969,8 @@ class MagicObject extends stdClass // NOSONAR
     
     /**
      * Property list
-     * @var boolean $reflectSelf
-     * @var boolean $asArrayProps
+     * @var bool $reflectSelf
+     * @var bool $asArrayProps
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -1124,6 +1098,7 @@ class MagicObject extends stdClass // NOSONAR
      * @param PicoSortable|string $sortable
      * @param boolean $passive
      * @return PicoPageData
+     * @throws NoRecordFoundException|NoDatabaseConnectionException
      */
     private function findBy($method, $params, $pagable = null, $sortable = null, $passive = false)
     {
@@ -1249,7 +1224,7 @@ class MagicObject extends stdClass // NOSONAR
     }
     
     /**
-     * Convert boolean to text
+     * Convert bool to text
      *
      * @param string $propertyName
      * @param string[] $params
@@ -1309,7 +1284,7 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Magic method called when user call any undefined method. __call method will check the prefix of called method and call appropriated method according to its name and its parameters.
-     * is &raquo; get property value as boolean. Number will true if it's value is 1. String will be convert to number first. This method not require database connection.
+     * is &raquo; get property value as bool. Number will true if it's value is 1. String will be convert to number first. This method not require database connection.
      * get &raquo; get property value. This method not require database connection.
      * set &raquo; set property value. This method not require database connection.
      * unset &raquo; unset property value. This method not require database connection.
@@ -1329,7 +1304,7 @@ class MagicObject extends stdClass // NOSONAR
      * countBy &raquo; count data from database.
      * existsBy &raquo; check data from database. This method require database connection.
      * deleteBy &raquo; delete data from database without read it first. This method require database connection.
-     * booleanToTextBy &raquo; convert boolean value to yes/no or true/false depend on parameters given. Example: $result = booleanToTextByActive("Yes", "No"); If $obj->active is true, $result will be "Yes" otherwise "No". This method not require database connection.
+     * booleanToTextBy &raquo; convert bool value to yes/no or true/false depend on parameters given. Example: $result = booleanToTextByActive("Yes", "No"); If $obj->active is true, $result will be "Yes" otherwise "No". This method not require database connection.
      * booleanToSelectedBy &raquo; Create attribute selected="selected" for form. This method not require database connection.
      * booleanToCheckedBy &raquo; Create attribute checked="checked" for form. This method not require database connection.
      * startsWith &raquo; Check that value starts with any string. This method not require database connection.

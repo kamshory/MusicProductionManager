@@ -46,7 +46,7 @@ class StreamReader
     /**
      * Defines whether the stream should be closed when the stream reader instance is deconstructed or not.
      *
-     * @var boolean
+     * @var bool
      */
     protected $closeStream;
 

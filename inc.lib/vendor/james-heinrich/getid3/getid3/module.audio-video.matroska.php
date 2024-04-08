@@ -222,14 +222,14 @@ class getid3_matroska extends getid3_handler
 	 * If true, do not return information about CLUSTER chunks, since there's a lot of them
 	 * and they're not usually useful [default: TRUE].
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $hide_clusters    = true;
 
 	/**
 	 * True to parse the whole file, not only header [default: FALSE].
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $parse_whole_file = false;
 

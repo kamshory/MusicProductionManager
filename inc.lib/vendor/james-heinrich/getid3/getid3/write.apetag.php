@@ -34,7 +34,7 @@ class getid3_write_apetag
 	/**
 	 * ReplayGain / MP3gain tags will be copied from old tag even if not passed in data.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $always_preserve_replaygain = true;
 

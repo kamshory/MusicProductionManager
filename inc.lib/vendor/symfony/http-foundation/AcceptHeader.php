@@ -27,7 +27,7 @@ class AcceptHeader
     private $items = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $sorted = true;
 

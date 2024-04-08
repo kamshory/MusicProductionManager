@@ -260,7 +260,7 @@ function installLinux($input)
  * Validate commands
  *
  * @param string[] $commands
- * @return bool
+ * @return boolean
  */
 function validateVariables($commands)
 {

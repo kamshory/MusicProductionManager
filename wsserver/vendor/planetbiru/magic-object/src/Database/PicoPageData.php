@@ -218,8 +218,6 @@ class PicoPageData
     {
         return $this->totalResult;
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Get pagable
@@ -230,5 +228,4 @@ class PicoPageData
     {
         return $this->pagable;
     }
->>>>>>> id3-tag
 }

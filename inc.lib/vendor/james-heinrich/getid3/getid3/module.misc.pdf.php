@@ -23,7 +23,7 @@ class getid3_pdf extends getid3_handler
 	/** misc.pdf
 	 * return full details of PDF Cross-Reference Table (XREF)
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $returnXREF = false;
 

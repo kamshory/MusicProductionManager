@@ -35,7 +35,7 @@ class MessageBuffer {
     private $onControl;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $checkForMask;
 
@@ -60,7 +60,7 @@ class MessageBuffer {
     private $permessageDeflateOptions;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $deflateEnabled = false;
 
@@ -75,7 +75,7 @@ class MessageBuffer {
     private $maxFramePayloadSize;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $compressedMessage;
 
