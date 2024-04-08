@@ -154,7 +154,7 @@ class SecretObject extends stdClass //NOSONAR
      *
      * @param string $method
      * @param mixed $params
-     * @return self|bool|mixed|null
+     * @return self|boolean|mixed|null
      */
     public function __call($method, $params) // NOSONAR
     {
@@ -624,8 +624,8 @@ class SecretObject extends stdClass //NOSONAR
     
     /**
      * Property list
-     * @var bool $reflectSelf
-     * @var bool $asArrayProps
+     * @var boolean $reflectSelf
+     * @var boolean $asArrayProps
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)

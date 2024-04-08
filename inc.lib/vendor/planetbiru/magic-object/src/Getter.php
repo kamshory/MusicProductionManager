@@ -113,7 +113,7 @@ class Getter extends stdClass
 
     /**
      * Property list
-     * @var bool $reflectSelf
+     * @var boolean $reflectSelf
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)

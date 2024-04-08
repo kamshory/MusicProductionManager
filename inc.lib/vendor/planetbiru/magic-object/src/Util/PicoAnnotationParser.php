@@ -170,6 +170,14 @@ class PicoAnnotationParser
                 $this->parameters[$rawParameter] = null;
             }
         }
+        foreach($this->parameters as $key=>$value)
+        {
+            if(is_array($value))
+            {
+                $end = end($value);
+                $this->parameters[$key] = $end;
+            }
+        }
     }
 
     /**

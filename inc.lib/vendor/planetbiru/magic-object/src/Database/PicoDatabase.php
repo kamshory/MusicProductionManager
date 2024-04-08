@@ -38,7 +38,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Autocommit
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	private $autocommit = true;
 
@@ -302,7 +302,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeQuery($sql)
 	{
@@ -326,7 +326,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute query and sync to hub
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeInsert($sql)
 	{
@@ -338,7 +338,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute update query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeUpdate($sql)
 	{
@@ -350,7 +350,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute delete query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeDelete($sql)
 	{
@@ -362,7 +362,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute transaction query
 	 * @param string $sql Query string to be executed
-	 * @return PDOStatement|bool
+	 * @return PDOStatement|boolean
 	 */
 	public function executeTransaction($sql)
 	{

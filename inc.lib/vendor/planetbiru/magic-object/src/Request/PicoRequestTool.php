@@ -118,7 +118,7 @@ class PicoRequestTool extends stdClass
     /**
      * Get value
      *
-     * @var bool $snakeCase
+     * @var boolean $snakeCase
      */
     public function value($snakeCase = false)
     {
@@ -147,8 +147,8 @@ class PicoRequestTool extends stdClass
     /**
      * Property list
      *
-     * @var bool $reflectSelf
-     * @var bool $asArrayProps
+     * @var boolean $reflectSelf
+     * @var boolean $asArrayProps
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)

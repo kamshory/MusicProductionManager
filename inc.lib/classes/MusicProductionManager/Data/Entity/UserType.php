@@ -36,12 +36,7 @@ class UserType extends MagicObject
 	 * Admin
 	 * 
 	 * @Column(name="admin", type="tinyint(1)", length=1, nullable=true)
-<<<<<<< HEAD
-	 * @Label(content="Admin")
 	 * @var boolean
-=======
-	 * @var boolean
->>>>>>> id3-tag
 	 */
 	protected $admin;
 
@@ -113,12 +108,7 @@ class UserType extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-<<<<<<< HEAD
-	 * @Label(content="Active")
 	 * @var boolean
-=======
-	 * @var boolean
->>>>>>> id3-tag
 	 */
 	protected $active;
 

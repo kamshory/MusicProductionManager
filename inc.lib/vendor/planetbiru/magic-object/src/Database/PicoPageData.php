@@ -218,4 +218,14 @@ class PicoPageData
     {
         return $this->totalResult;
     }
+
+    /**
+     * Get pagable
+     *
+     * @return  PicoPagable
+     */ 
+    public function getPagable()
+    {
+        return $this->pagable;
+    }
 }

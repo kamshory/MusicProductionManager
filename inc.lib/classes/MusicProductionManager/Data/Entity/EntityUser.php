@@ -28,6 +28,7 @@ class EntityUser extends MagicObject
 	 * 
 	 * @Column(name="username", type="varchar(100)", length=100, nullable=true)
 	 * @Label(content="Username")
+	 * @Label(content="Username")
 	 * @var string
 	 */
 	protected $username;

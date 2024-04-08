@@ -177,7 +177,7 @@ class ClassLoader
      *
      * @param string          $prefix  The prefix
      * @param string[]|string $paths   The PSR-0 root directories
-     * @param boolean            $prepend Whether to prepend the directories
+     * @param bool            $prepend Whether to prepend the directories
      *
      * @return void
      */
@@ -224,7 +224,7 @@ class ClassLoader
      *
      * @param string          $prefix  The prefix/namespace, with trailing '\\'
      * @param string[]|string $paths   The PSR-4 base directories
-     * @param boolean            $prepend Whether to prepend the directories
+     * @param bool            $prepend Whether to prepend the directories
      *
      * @throws \InvalidArgumentException
      *
@@ -314,7 +314,7 @@ class ClassLoader
     /**
      * Turns on searching the include path for class files.
      *
-     * @param boolean $useIncludePath
+     * @param bool $useIncludePath
      *
      * @return void
      */
@@ -327,7 +327,7 @@ class ClassLoader
      * Can be used to check if the autoloader uses the include path to check
      * for classes.
      *
-     * @return boolean
+     * @return bool
      */
     public function getUseIncludePath()
     {
@@ -338,7 +338,7 @@ class ClassLoader
      * Turns off searching the prefix and fallback directories for classes
      * that have not been registered with the class map.
      *
-     * @param boolean $classMapAuthoritative
+     * @param bool $classMapAuthoritative
      *
      * @return void
      */
@@ -350,7 +350,7 @@ class ClassLoader
     /**
      * Should class lookup fail if not found in the current class map?
      *
-     * @return boolean
+     * @return bool
      */
     public function isClassMapAuthoritative()
     {
@@ -382,7 +382,7 @@ class ClassLoader
     /**
      * Registers this instance as an autoloader.
      *
-     * @param boolean $prepend Whether to prepend the autoloader or not
+     * @param bool $prepend Whether to prepend the autoloader or not
      *
      * @return void
      */

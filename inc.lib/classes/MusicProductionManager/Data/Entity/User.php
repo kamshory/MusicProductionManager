@@ -45,12 +45,7 @@ class User extends MagicObject
 	 * Admin
 	 * 
 	 * @Column(name="admin", type="tinyint(1)", length=1, nullable=true)
-<<<<<<< HEAD
-	 * @Label(content="Admin")
 	 * @var boolean
-=======
-	 * @var boolean
->>>>>>> id3-tag
 	 */
 	protected $admin;
 

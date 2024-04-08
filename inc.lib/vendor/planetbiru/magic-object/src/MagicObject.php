@@ -45,7 +45,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Flag readonly
      *
-     * @var bool
+     * @var boolean
      */
     private $readonly = false; // NOSONAR
 
@@ -969,8 +969,8 @@ class MagicObject extends stdClass // NOSONAR
     
     /**
      * Property list
-     * @var bool $reflectSelf
-     * @var bool $asArrayProps
+     * @var boolean $reflectSelf
+     * @var boolean $asArrayProps
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -1098,7 +1098,6 @@ class MagicObject extends stdClass // NOSONAR
      * @param PicoSortable|string $sortable
      * @param boolean $passive
      * @return PicoPageData
-     * @throws NoRecordFoundException|NoDatabaseConnectionException
      */
     private function findBy($method, $params, $pagable = null, $sortable = null, $passive = false)
     {
@@ -1224,7 +1223,7 @@ class MagicObject extends stdClass // NOSONAR
     }
     
     /**
-     * Convert bool to text
+     * Convert boolean to text
      *
      * @param string $propertyName
      * @param string[] $params
@@ -1284,7 +1283,7 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Magic method called when user call any undefined method. __call method will check the prefix of called method and call appropriated method according to its name and its parameters.
-     * is &raquo; get property value as bool. Number will true if it's value is 1. String will be convert to number first. This method not require database connection.
+     * is &raquo; get property value as boolean. Number will true if it's value is 1. String will be convert to number first. This method not require database connection.
      * get &raquo; get property value. This method not require database connection.
      * set &raquo; set property value. This method not require database connection.
      * unset &raquo; unset property value. This method not require database connection.
@@ -1304,7 +1303,7 @@ class MagicObject extends stdClass // NOSONAR
      * countBy &raquo; count data from database.
      * existsBy &raquo; check data from database. This method require database connection.
      * deleteBy &raquo; delete data from database without read it first. This method require database connection.
-     * booleanToTextBy &raquo; convert bool value to yes/no or true/false depend on parameters given. Example: $result = booleanToTextByActive("Yes", "No"); If $obj->active is true, $result will be "Yes" otherwise "No". This method not require database connection.
+     * booleanToTextBy &raquo; convert boolean value to yes/no or true/false depend on parameters given. Example: $result = booleanToTextByActive("Yes", "No"); If $obj->active is true, $result will be "Yes" otherwise "No". This method not require database connection.
      * booleanToSelectedBy &raquo; Create attribute selected="selected" for form. This method not require database connection.
      * booleanToCheckedBy &raquo; Create attribute checked="checked" for form. This method not require database connection.
      * startsWith &raquo; Check that value starts with any string. This method not require database connection.
