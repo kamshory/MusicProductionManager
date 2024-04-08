@@ -541,16 +541,20 @@ select.album-selector::-moz-dropdown-list {
     
  }
   .teleprompter-container{
-    position: relative;
+    position: absolute;
+    width: 100%;
 
   }
   .teleprompter-container > div{
+    position: absolute;
     width: 100%;
     box-sizing: border-box;
+    padding-top: 3px;
     padding-left: 10px;
     padding-right: 10px;
     font-size: 16px;
     color: #48bd48;
+    line-height: 1;
   }
 
   .teleprompter-container > div.marked{

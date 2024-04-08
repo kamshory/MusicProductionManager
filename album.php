@@ -164,44 +164,46 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
 
         <!-- third section : visualisation-->
 
-        <div class="visualisation-container">
-            <div class="title resizable">
-                <div class="line line-other">
-                </div>
-                <h2> LYRIC </h2>
-                <div class="line line-other">
-                </div>
-            </div>
-            <div class="lyric-container img-container">
-            <div class="teleprompter">
-              <div class="teleprompter-container"></div>
+      <div class="visualisation-container">
+          <div class="title resizable">
+              <div class="line line-other">
               </div>
-            </div>
-            </div>
-        </div>
+              <h2> LYRIC </h2>
+              <div class="line line-other">
+              </div>
+          </div>
+          <div class="lyric-container img-container">
+              <div class="teleprompter">
+                  <div class="teleprompter-container"></div>
+              </div>
+          </div>
+      </div>
 
-        <!-- second section : playlist-->
 
-        <div class="playlist-container">
-            <div class="title resizable">
-                <div class="line line-other">
-                </div>
-                <h2> PLAYLIST</h2>
-                <div class="line line-other">
-                </div>
-            </div>
-            <div class="playlist">
-            </div>
-        </div>
+      <!-- second section : playlist-->
+
+      <div class="playlist-container">
+          <div class="title resizable">
+              <div class="line line-other">
+              </div>
+              <h2> PLAYLIST</h2>
+              <div class="line line-other">
+              </div>
+          </div>
+          <div class="playlist">
+          </div>
+      </div>
+</div>
+</div>
 
         
-    </div>
+    
 </div>
 
     <script>
       let karaoke = null;
       let albumEntry = <?php echo json_encode($json);?>;
-      let offset = 200;
+      let offset = 20;
       let wa = new Winamp();
       $(document).ready(function(){
         wa.init(albumEntry);
