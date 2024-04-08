@@ -170,6 +170,17 @@ class PicoAnnotationParser
                 $this->parameters[$rawParameter] = null;
             }
         }
+
+        // fixing duplicated annotation
+        // if any duplication, use last one instead
+        foreach($this->parameters as $key=>$value)
+        {
+            if(is_array($value))
+            {
+                $end = end($value);
+                $this->parameters[$key] = $end;
+            }
+        }
     }
 
     /**
