@@ -238,6 +238,7 @@ class Winamp {
         this.trackLoaded = Math.floor(Math.random() * this.tracks.length);
       } else {
         this.trackLoaded++;
+        this.loadSong(this.trackLoaded);
       }
       this.hilightCurrentTrack(this.trackLoaded);
       

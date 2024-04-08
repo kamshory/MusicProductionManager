@@ -209,6 +209,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
         wa.init(albumEntry);
         wa.onLoadSong = function(album, song)
         {
+          $('.teleprompter-container').empty();
           karaoke = new Karaoke(song, '.teleprompter-container');
           let pos = wa.getAudioCurrentTime();
           karaoke.updatePosition(pos * 1000, offset);

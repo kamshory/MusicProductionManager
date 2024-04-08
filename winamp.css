@@ -478,7 +478,7 @@ font-family: 'VT323', monospace;
 
 .vu-meter-inner {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#2fbc25+0,e5af00+71,e5af00+71,e5af00+87,e00000+100 */
-    background: linear-gradient(to right, #2fbc25 0%, #e5af00 71%, #e5af00 71%, #e5af00 87%, #e00000 100%);
+    background: linear-gradient(to right, #2fbc25 0%, #2fbc25 60%, #e5af00 85%, #e5af00 90%, #e00000 98%, #e00000 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     position: relative;
 }
@@ -552,7 +552,7 @@ select.album-selector::-moz-dropdown-list {
     padding-top: 3px;
     padding-left: 10px;
     padding-right: 10px;
-    font-size: 16px;
+    font-size: 14px;
     color: #48bd48;
     line-height: 1;
   }
