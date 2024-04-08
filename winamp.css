@@ -531,4 +531,29 @@ select.album-selector::-moz-dropdown-list {
     z-index: 2147483647;
     -moz-user-select: none;
   }
- 
+ .teleprompter{
+    overflow: hidden;
+    position: relative;
+    height: 270px;
+    width: calc(100% + 22px);
+    margin-left: -11px;
+    margin-right: -11px;
+    
+ }
+  .teleprompter-container{
+    position: relative;
+
+  }
+  .teleprompter-container > div{
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+    color: #48bd48;
+  }
+
+  .teleprompter-container > div.marked{
+    color: lime;
+    background-color: #353535;
+  }

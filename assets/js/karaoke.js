@@ -337,15 +337,16 @@ class Karaoke {
       }
     };
 
-    this.updatePosition = function (ellapsed) {
+    this.updatePosition = function (ellapsed, offset) {
+      offset = offset || 0;
       this.height = this.elem.parentNode.offsetHeight;
-      let offset = this.height / 4;
-      let top = offset - ellapsed * this.scale;
+      let offset2 = this.height / 4;
+      let top = offset2 - ellapsed * this.scale;
 
       let selected = this.getIndex(ellapsed);
       this.markSelected(selected);
 
-      this.elem.style.top = top + "px";
+      this.elem.style.top = (offset + top) + "px";
     };
 
     this.readStored = false;

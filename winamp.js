@@ -43,11 +43,25 @@ class Winamp {
 
     
 
-    this.buildSubtitle = function(index)
+    this.loadSong = function(index)
     {
-      let songProp = this.songList.songList[index];
-      let subtitle = songProp.subtitle;
-      console.log(subtitle)
+      this.audio.src = this.tracks[index].url;
+      this.onLoadSong(this.songList.album, this.songList.songList[index]);
+    }
+    this.getAudioCurrentTime = function()
+    {
+      if(typeof this.audio.src != 'undefined')
+      {
+        return this.audio.currentTime;
+      }
+      else
+      {
+        return 0;
+      }
+    }
+    this.onLoadSong = function(album, song)
+    {
+      
     }
 
     this.createPlaylistItem = function (index) {
@@ -104,8 +118,8 @@ class Winamp {
         this.trackInfo[this.trackLoaded].classList.toggle("highlighted-track");
         this.trackLoaded = e.target.dataset.id;
         this.trackInfo[this.trackLoaded].classList.toggle("highlighted-track");
-        this.audio.src = this.tracks[this.trackLoaded].url;
-        this.buildSubtitle(this.trackLoaded);
+        
+        this.loadSong(this.trackLoaded);
         this.playAudio();
 
         this.updateTrackInfo();
@@ -119,8 +133,8 @@ class Winamp {
       };
 
       this.updateTrackInfo();
-      this.audio.src = this.tracks[this.trackLoaded].url;
-      this.buildSubtitle(this.trackLoaded);
+      
+      this.loadSong(this.trackLoaded);
     };
 
     this.beforePlay = function () {
@@ -226,7 +240,7 @@ class Winamp {
         this.trackLoaded++;
       }
       this.hilightCurrentTrack(this.trackLoaded);
-      this.audio.src = this.tracks[this.trackLoaded].url;
+      
       
 
       this.playAudio();
@@ -275,9 +289,9 @@ class Winamp {
       //Now the playlist is created, let handle the buttons
       this.playBtn.addEventListener("click", () => {
         if (!this.isPlaying) {
-          this.audio.src = this.tracks[this.trackLoaded].url;
           
-          this.buildSubtitle(this.trackLoaded);
+          
+          this.loadSong(this.trackLoaded);
 
           this.playAudio();
 
@@ -329,8 +343,8 @@ class Winamp {
           } else {
             console.error("Unexpected error");
           }
-          this.audio.src = this.tracks[this.trackLoaded].url;
-          this.buildSubtitle(this.trackLoaded);
+          
+          this.loadSong(this.trackLoaded);
           this.trackInfo[this.trackLoaded].classList.toggle(
             "highlighted-track"
           );

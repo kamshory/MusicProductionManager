@@ -66,6 +66,8 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     <link rel="stylesheet" href="winamp.css?<?php echo mt_rand(1111, 999999);?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
+    <script src="assets/js/karaoke.js"></script>
+
     <link rel="stylesheet" href="vu-meter.css">
     <style>
       
@@ -160,6 +162,24 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
 
         </div>
 
+        <!-- third section : visualisation-->
+
+        <div class="visualisation-container">
+            <div class="title resizable">
+                <div class="line line-other">
+                </div>
+                <h2> LYRIC </h2>
+                <div class="line line-other">
+                </div>
+            </div>
+            <div class="lyric-container img-container">
+            <div class="teleprompter">
+              <div class="teleprompter-container"></div>
+              </div>
+            </div>
+            </div>
+        </div>
+
         <!-- second section : playlist-->
 
         <div class="playlist-container">
@@ -174,36 +194,30 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
             </div>
         </div>
 
-        <!-- third section : visualisation-->
-
-        <div class="visualisation-container">
-            <div class="title resizable">
-                <div class="line line-other">
-                </div>
-                <h2> LYRIC </h2>
-                <div class="line line-other">
-                </div>
-            </div>
-            <div class="lyric-container img-container">
-                <img src="https://c.tenor.com/BDN0GwbpmcYAAAAC/yas-banana.gif" class="visualisation"
-                    alt="dancing banana" />
-            </div>
-        </div>
+        
     </div>
 </div>
 
     <script>
+      let karaoke = null;
       let albumEntry = <?php echo json_encode($json);?>;
-
+      let offset = 200;
       let wa = new Winamp();
       $(document).ready(function(){
         wa.init(albumEntry);
+        wa.onLoadSong = function(album, song)
+        {
+          karaoke = new Karaoke(song, '.teleprompter-container');
+          let pos = wa.getAudioCurrentTime();
+          karaoke.updatePosition(pos * 1000, offset);
+        }
         wa.onPlay = function()
         {
           if(wa.sourceConnected)
           {
             draw();
           }
+          
         }
       });
 
@@ -213,6 +227,12 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
         {
           drawVuMeter(wa.analyserLeft, 0);
           drawVuMeter(wa.analyserRight, 1);
+        }
+
+        if(karaoke != null)
+        {
+          let pos = wa.getAudioCurrentTime();
+          karaoke.updatePosition(pos * 1000, offset);
         }
         requestAnimationFrame(() => draw());
       }
