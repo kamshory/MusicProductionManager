@@ -292,7 +292,7 @@ class Karaoke {
       let minDur = this.getMinimumDuration(data);
       let minHeight = 32; // minimum height
       this.scale = minHeight / minDur;
-
+      elem.innerHTML = "";
       for (let i in data.data) {
         let dur = data.data[i].duration;
         let start = data.data[i].start;
