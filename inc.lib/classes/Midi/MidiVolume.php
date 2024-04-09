@@ -6,7 +6,7 @@ class MidiVolume extends Midi
 {
 
 	/**
-	 * sets global volume (0..127) by adding new volume controllers for channel 1-16
+	 * Sets global volume (0..127) by adding new volume controllers for channel 1-16
 	 * (and removing existing volume controllers)
 	 *
 	 * @param integer $vol
@@ -88,7 +88,7 @@ class MidiVolume extends Midi
 	}
 
 	/**
-	 * array (channel=>volume) of all found volume controllers 
+	 * Array (channel=>volume) of all found volume controllers 
 	 *
 	 * @return integer[]
 	 */

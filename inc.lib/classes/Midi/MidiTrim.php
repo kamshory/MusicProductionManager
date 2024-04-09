@@ -5,9 +5,13 @@ namespace Midi;
 class MidiTrim extends Midi
 {
 
-	//---------------------------------------------------------------
-	// trims song to section from $from to $to (or to the end, if $to is omitted)
-	//---------------------------------------------------------------
+	/**
+	 * Trims song to section from $from to $to (or to the end, if $to is omitted)
+	 *
+	 * @param integer $from
+	 * @param boolean $to
+	 * @return void
+	 */
 	public function trimSong($from = 0, $to = false)
 	{
 		$tc = count($this->tracks);
@@ -16,9 +20,14 @@ class MidiTrim extends Midi
 		}
 	}
 
-	//---------------------------------------------------------------
-	// trims track to section from $from to $to (or to the end, if $to is omitted)
-	//---------------------------------------------------------------
+	/**
+	 * Trims track to section from $from to $to (or to the end, if $to is omitted)
+	 *
+	 * @param integer $tn
+	 * @param integer $from
+	 * @param boolean $to
+	 * @return void
+	 */
 	public function trimTrack($tn, $from = 0, $to = false)
 	{
 		$track = $this->tracks[$tn];
@@ -39,10 +48,23 @@ class MidiTrim extends Midi
 		$this->tracks[$tn] = $new;
 	}
 
+	/**
+	 * Convert timestamp to second
+	 *
+	 * @param integer $ts
+	 * @return float
+	 */
 	public function timestamp2seconds($ts)
 	{
 		return $ts * $this->getTempo() / $this->getTimebase() / 1000000;
 	}
+	
+	/**
+	 * Convert second to timestamp
+	 *
+	 * @param float $sec
+	 * @return integer
+	 */
 	public function seconds2timestamp($sec)
 	{
 		return (int)($sec * 1000000 * $this->getTimebase() / $this->getTempo());
