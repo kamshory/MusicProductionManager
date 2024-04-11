@@ -17,11 +17,11 @@ use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\NoDatabaseConnectionException;
 use MagicObject\Exceptions\NoRecordFoundException;
-use MagicObject\Util\ObjectParser;
+use MagicObject\Util\PicoObjectParser;
 use MagicObject\Util\PicoAnnotationParser;
 use MagicObject\Util\PicoDatabaseUtil;
 use MagicObject\Util\PicoEnvironmentVariable;
-use MagicObject\Util\StringUtil;
+use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
@@ -125,13 +125,13 @@ class MagicObject extends stdClass // NOSONAR
             {
                 $values = $data->value();
                 foreach ($values as $key => $value) {
-                    $key2 = StringUtil::camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->set($key2, $value, true);
                 }
             }
             else if (is_array($data) || is_object($data)) {
                 foreach ($data as $key => $value) {
-                    $key2 = StringUtil::camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->set($key2, $value, true);
                 }
             }
@@ -202,7 +202,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -213,7 +213,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursive($data));
             }
             else
             {
@@ -246,7 +246,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -257,7 +257,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursive($data));
             }
             else
             {
@@ -289,7 +289,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -300,7 +300,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursive($data));
             }
             else
             {
@@ -332,7 +332,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursive($obj));
             }
             else
             {
@@ -343,7 +343,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(ObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursive($data));
             }
             else
             {
@@ -650,7 +650,7 @@ class MagicObject extends stdClass // NOSONAR
     public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
     {
         $var = lcfirst($propertyName);
-        $var = StringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($var);
         $this->{$var} = $propertyValue;
         if(!$skipModifyNullProperties && $propertyValue === null)
         {
@@ -668,7 +668,7 @@ class MagicObject extends stdClass // NOSONAR
     public function get($propertyName)
     {
         $var = lcfirst($propertyName);
-        $var = StringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($var);
         return isset($this->$var) ? $this->$var : null;
     }
     
@@ -682,7 +682,7 @@ class MagicObject extends stdClass // NOSONAR
     public function getOrDefault($propertyName, $defaultValue = null)
     {
         $var = lcfirst($propertyName);
-        $var = StringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($var);
         return isset($this->$var) ? $this->$var : $defaultValue;
     }
     
@@ -752,7 +752,7 @@ class MagicObject extends stdClass // NOSONAR
             $index = 0;
             foreach($filter as $val)
             {
-                $tmp[$index] = trim(StringUtil::camelize($val));               
+                $tmp[$index] = trim(PicoStringUtil::camelize($val));               
                 $index++;
             }
             $filter = $tmp;
@@ -803,7 +803,7 @@ class MagicObject extends stdClass // NOSONAR
                     $columnName = trim($column[self::KEY_NAME]);
                     if($snakeCase)
                     {
-                        $col = StringUtil::snakeize($columnName);
+                        $col = PicoStringUtil::snakeize($columnName);
                     }
                     else
                     {
@@ -834,7 +834,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             $value2 = new stdClass;
             foreach ($value as $key => $val) {
-                $key2 = StringUtil::snakeize($key);
+                $key2 = PicoStringUtil::snakeize($key);
                 $value2->$key2 = $val;
             }
             return $value2;
@@ -1467,14 +1467,14 @@ class MagicObject extends stdClass // NOSONAR
             $value = $params[0];
             $caseSensitive = isset($params[1]) && $params[1];    
             $haystack = $this->$var;
-            return StringUtil::startsWith($haystack, $value, $caseSensitive);
+            return PicoStringUtil::startsWith($haystack, $value, $caseSensitive);
         }  
         else if (strncasecmp($method, "endsWith", 8) === 0) {
             $var = lcfirst(substr($method, 13));
             $value = $params[0];
             $caseSensitive = isset($params[1]) && $params[1];  
             $haystack = $this->$var;
-            return StringUtil::endsWith($haystack, $value, $caseSensitive);
+            return PicoStringUtil::endsWith($haystack, $value, $caseSensitive);
         } 
     }
 

@@ -2,7 +2,7 @@
 
 namespace MagicObject\Database;
 
-use MagicObject\Util\StringUtil;
+use MagicObject\Util\PicoStringUtil;
 
 class PicoEntityGenerator
 {
@@ -21,7 +21,7 @@ class PicoEntityGenerator
      */
     private function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra)
     {
-        $propertyName = StringUtil::camelize($columnName);
+        $propertyName = PicoStringUtil::camelize($columnName);
         $docs = array();
         $docStart = "\t/**";
         $docEnd = "\t */";
@@ -139,7 +139,7 @@ class PicoEntityGenerator
     public function generateEntity($database, $picoTableName, $namespace, $baseDir)
     {
 
-        $className = ucfirst(StringUtil::camelize($picoTableName));
+        $className = ucfirst(PicoStringUtil::camelize($picoTableName));
 
         $fileName = $namespace . "/" . $className;
         $path = $baseDir. "/" . $fileName . ".php";

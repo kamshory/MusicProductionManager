@@ -3,6 +3,7 @@
 namespace MagicObject\Util;
 
 use MagicObject\Exceptions\InvalidAnnotationException;
+use MagicObject\Exceptions\InvalidParameterException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\ZeroArgumentException;
 use ReflectionClass;
@@ -11,6 +12,9 @@ use ReflectionProperty;
 
 class PicoAnnotationParser
 {
+    const METHOD = "method";
+    const PROPERTY = "property";
+
     /**
      * Raw docblock
      * @var string
@@ -49,9 +53,6 @@ class PicoAnnotationParser
      * @var ReflectionClass|ReflectionMethod|ReflectionProperty
      */
     private $reflection;
-    
-    const METHOD = "method";
-    const PROPERTY = "property";
 
     /**
      * Constructor
@@ -69,11 +70,12 @@ class PicoAnnotationParser
             $reflection = new ReflectionClass($arguments[0]);
         } else {
             $type = $count === 3 ? $arguments[2] : self::METHOD;
-
             if ($type === self::METHOD) {
                 $reflection = new ReflectionMethod($arguments[0], $arguments[1]);
             } else if ($type === self::PROPERTY) {
                 $reflection = new ReflectionProperty($arguments[0], $arguments[1]);
+            } else {
+                throw new InvalidParameterException("Invalid type for $type");
             }
         }
         $this->reflection = $reflection;
@@ -419,7 +421,7 @@ class PicoAnnotationParser
      */
     public function parseKeyValueAsObject($queryString)
     {
-        if(StringUtil::isNullOrEmpty($queryString))
+        if(PicoStringUtil::isNullOrEmpty($queryString))
         {
             return new PicoGenericObject();
         }

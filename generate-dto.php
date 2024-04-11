@@ -1,7 +1,7 @@
 <?php
 
 
-use MusicProductionManager\Utility\StringUtil;
+use MusicProductionManager\Utility\PicoStringUtil;
 
 require_once __DIR__ . "/inc/app.php";
 
@@ -24,7 +24,7 @@ if(empty($picoTableName))
     exit();
 }
 
-$className = ucfirst(StringUtil::camelize($picoTableName));
+$className = ucfirst(PicoStringUtil::camelize($picoTableName));
 $namespace = "MusicProductionManager\\Data\\Dto";
 
 $fileName = $namespace."/".$className;
@@ -66,7 +66,7 @@ $typeMap = array(
  */
 function createProperty($typeMap, $columnName, $columnType)
 {
-    $propertyName = StringUtil::camelize($columnName);
+    $propertyName = PicoStringUtil::camelize($columnName);
     $description = getPropertyName($columnName);
 
     $docs = array();
@@ -157,7 +157,7 @@ function getDataLength($str)
  */
 function createValuueOf($picoTableName, $rows)
 {
-    $className = ucfirst(StringUtil::camelize($picoTableName));
+    $className = ucfirst(PicoStringUtil::camelize($picoTableName));
     $str = "";
     $str .="    /**\r\n";
     $str .="     * Construct $className"."Dto from $className and not copy other properties\r\n";
@@ -172,7 +172,7 @@ function createValuueOf($picoTableName, $rows)
     foreach($rows as $row)
     {
         $columnName = $row['Field'];
-        $str .="        \$output->set".ucfirst(StringUtil::camelize($columnName))."(\$input->get".ucfirst(StringUtil::camelize($columnName))."());\r\n";
+        $str .="        \$output->set".ucfirst(PicoStringUtil::camelize($columnName))."(\$input->get".ucfirst(PicoStringUtil::camelize($columnName))."());\r\n";
     }
     $str .="        return \$output;\r\n";
     $str .="    }\r\n";

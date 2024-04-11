@@ -5,7 +5,7 @@ namespace MagicObject;
 use DOMDocument;
 use MagicObject\Util\PicoGenericObject;
 use MagicObject\Util\PicoAnnotationParser;
-use MagicObject\Util\StringUtil;
+use MagicObject\Util\PicoStringUtil;
 use MagicObject\Util\TableUtil;
 use ReflectionClass;
 use stdClass;
@@ -93,13 +93,13 @@ class DataTable extends SetterGetter
             {
                 $values = $data->value();
                 foreach ($values as $key => $value) {
-                    $key2 = StringUtil::camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->set($key2, $value);
                 }
             }
             else if (is_array($data) || is_object($data)) {
                 foreach ($data as $key => $value) {
-                    $key2 = StringUtil::camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->set($key2, $value);
                 }
             }
@@ -261,7 +261,7 @@ class DataTable extends SetterGetter
         {
             $cn = explode("->", $this->defaultColumnName);
             $lbl = $this->annotationContent($reflexProp, $parameters, trim($cn[0]), trim($cn[1]));
-            $label = StringUtil::selectNotNull($lbl, $defaultLabel);
+            $label = PicoStringUtil::selectNotNull($lbl, $defaultLabel);
             
         }
         else if($this->defaultColumnName == self::ANNOTATION_LANGUAGE)
@@ -273,7 +273,7 @@ class DataTable extends SetterGetter
             else
             {
                 $lbl = $this->annotationContent($reflexProp, $parameters, "Label", "content");
-                $label = StringUtil::selectNotNull($lbl, $defaultLabel);
+                $label = PicoStringUtil::selectNotNull($lbl, $defaultLabel);
             }
             
         }

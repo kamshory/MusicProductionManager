@@ -36,7 +36,7 @@ class ExtendedReflectionClass extends ReflectionClass {
 	 * 
 	 * @var array
 	 */
-	protected $useStatements = [];
+	protected $useStatements = array();
 
 
 	/**
@@ -114,12 +114,12 @@ class ExtendedReflectionClass extends ReflectionClass {
 		$buildingNamespace = false;
 		$matchedNamespace = false;
 
-		$useStatements = [];
+		$useStatements = array();
 		$record = false;
-		$currentUse = [
+		$currentUse = array(
 			'class' => '',
 			'as' => ''
-		];
+		);
 
 		foreach ($tokens as $token) {
 

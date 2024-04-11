@@ -1,7 +1,7 @@
 <?php
 namespace MagicObject\Util;
 
-class StringUtil
+class PicoStringUtil
 {
     /**
      * Convert snake case to camel case

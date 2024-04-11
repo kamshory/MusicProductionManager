@@ -2,23 +2,24 @@
     "packages": [
         {
             "name": "planetbiru/magic-object",
-            "version": "1.0.6",
-            "version_normalized": "1.0.6.0",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "f730f8b69838d9f7514e92d0444bb8c98ae30eee"
+                "reference": "8268027e62666e6d2c95ee2cb5caf895ddf9c04c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/f730f8b69838d9f7514e92d0444bb8c98ae30eee",
-                "reference": "f730f8b69838d9f7514e92d0444bb8c98ae30eee",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/8268027e62666e6d2c95ee2cb5caf895ddf9c04c",
+                "reference": "8268027e62666e6d2c95ee2cb5caf895ddf9c04c",
                 "shasum": ""
             },
             "require": {
                 "symfony/yaml": "^3.4"
             },
-            "time": "2024-04-08T00:32:05+00:00",
+            "time": "2024-04-11T00:24:33+00:00",
+            "default-branch": true,
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -38,7 +39,7 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/1.0.6"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/main"
             },
             "install-path": "../planetbiru/magic-object"
         },

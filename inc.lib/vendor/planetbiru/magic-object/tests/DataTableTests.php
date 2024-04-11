@@ -1,7 +1,7 @@
 <?php
 
 use MagicObject\DataTable;
-use MagicObject\Util\ObjectParser;
+use MagicObject\Util\PicoObjectParser;
 
 error_reporting(E_ALL);
 require_once dirname(__DIR__) . "/vendor/autoload.php";
@@ -68,7 +68,7 @@ class BahasaIndonesia extends stdClass
     public $timeCreate = "Waktu Buat";
 }
 
-$data = ObjectParser::parseYamlRecursive(
+$data = PicoObjectParser::parseYamlRecursive(
 "id: 1
 address: Jalan Inspeksi no 9
 color: blue

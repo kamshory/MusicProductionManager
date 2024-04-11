@@ -2,7 +2,7 @@
 
 namespace MusicProductionManager\Utility;
 
-class StringUtil
+class PicoStringUtil
 {
     /**
      * Fixing cariage return

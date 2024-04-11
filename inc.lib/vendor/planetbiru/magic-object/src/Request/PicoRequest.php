@@ -25,6 +25,11 @@ class PicoRequest extends PicoRequestTool
         }
     }
     
+    /**
+     * Get request body
+     *
+     * @return string
+     */
     public static function getRequestBody()
     {
         return file_get_contents("php://input");
@@ -74,6 +79,5 @@ class PicoRequest extends PicoRequestTool
         }
         $allHeaders = array_combine($keys, $values);
         return isset($allHeaders[$key]) ? $allHeaders[$key] : null;      
-    }
-        
+    }      
 }

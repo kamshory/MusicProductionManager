@@ -6,9 +6,32 @@ use stdClass;
 
 class Dms
 {
+    /**
+     * Degree
+     *
+     * @var integer
+     */
     private $deg = 0;
+    
+    /**
+     * Minute
+     * 
+     * @var integer
+     */
     private $min = 0;
+
+    /**
+     * Second
+     * 
+     * @var float
+     */
     private $sec = 0;
+
+    /**
+     * Decimal
+     *
+     * @var float
+     */
     private $dd = 0;
     
     /**

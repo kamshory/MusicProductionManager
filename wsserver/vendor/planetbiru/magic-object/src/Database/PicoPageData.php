@@ -135,7 +135,6 @@ class PicoPageData
         {
             $this->pagination[] = array('page'=>$i, 'selected'=>$i == $curPage);
         }
-
     }
 
     /**

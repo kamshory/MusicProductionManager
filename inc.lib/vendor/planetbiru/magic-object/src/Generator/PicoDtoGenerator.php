@@ -3,7 +3,7 @@
 namespace MagicObject\Geneator;
 
 use MagicObject\Database\PicoDatabase;
-use MagicObject\Util\StringUtil;
+use MagicObject\Util\PicoStringUtil;
 
 class PicoDtoGenerator
 {
@@ -13,8 +13,25 @@ class PicoDtoGenerator
      * @var PicoDatabase
      */
     private $database;
+    /**
+     * Base directory
+     *
+     * @var string
+     */
     private $baseDir = "";
+
+    /**
+     * Base namespace
+     *
+     * @var string
+     */
     private $baseNamespace = "";
+
+    /**
+     * Table name
+     *
+     * @var string
+     */
     private $tableName = "";
     
     /**
@@ -43,7 +60,7 @@ class PicoDtoGenerator
      */
     private function createProperty($typeMap, $columnName, $columnType)
     {
-        $propertyName = StringUtil::camelize($columnName);
+        $propertyName = PicoStringUtil::camelize($columnName);
         $docs = array();
         $docStart = "\t/**";
         $docEnd = "\t */";
@@ -109,7 +126,7 @@ class PicoDtoGenerator
      */
     private function createValuueOf($picoTableName, $rows)
     {
-        $className = ucfirst(StringUtil::camelize($picoTableName));
+        $className = ucfirst(PicoStringUtil::camelize($picoTableName));
         $str = "";
         $str .="    /**\r\n";
         $str .="     * Construct $className"."Dto from $className and not copy other properties\r\n";
@@ -124,7 +141,7 @@ class PicoDtoGenerator
         foreach($rows as $row)
         {
             $columnName = $row['Field'];
-            $str .="        \$output->set".ucfirst(StringUtil::camelize($columnName))."(\$input->get".ucfirst(StringUtil::camelize($columnName))."());\r\n";
+            $str .="        \$output->set".ucfirst(PicoStringUtil::camelize($columnName))."(\$input->get".ucfirst(PicoStringUtil::camelize($columnName))."());\r\n";
         }
         $str .="        return \$output;\r\n";
         $str .="    }\r\n";
@@ -162,12 +179,16 @@ class PicoDtoGenerator
         );    
     }
 
-    
+    /**
+     * Generate DTO
+     *
+     * @return string
+     */
     public function generate()
     {
         $typeMap = $this->getTypeMap();
         $picoTableName = $this->tableName;
-        $className = ucfirst(StringUtil::camelize($picoTableName));
+        $className = ucfirst(PicoStringUtil::camelize($picoTableName));
         $fileName = $this->baseNamespace."/".$className;
         $path = $this->baseDir."/".$fileName."Dto.php";
         $path = str_replace("\\", "/", $path);

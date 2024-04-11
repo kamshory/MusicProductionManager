@@ -9,10 +9,10 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Object parser
  */
-class ObjectParser
+class PicoObjectParser
 {
     /**
-     * Parse Magic Object
+     * Parse MagicObject
      * @param MagicObject $data
      * @return MagicObject
      */
@@ -21,7 +21,7 @@ class ObjectParser
         $magicObject = new MagicObject();
         $values = $data->value();
         foreach ($values as $key => $value) {
-            $key2 = StringUtil::camelize($key);
+            $key2 = PicoStringUtil::camelize($key);
             if(is_scalar($value))
             {
                 $magicObject->set($key2, $value, true);
@@ -43,7 +43,7 @@ class ObjectParser
     {
         $magicObject = new MagicObject();
         foreach ($data as $key => $value) {
-            $key2 = StringUtil::camelize($key);
+            $key2 = PicoStringUtil::camelize($key);
             if(is_scalar($value))
             {
                 $magicObject->set($key2, $value, true);

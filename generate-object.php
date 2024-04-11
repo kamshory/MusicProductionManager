@@ -1,7 +1,7 @@
 <?php
 
 
-use MusicProductionManager\Utility\StringUtil;
+use MusicProductionManager\Utility\PicoStringUtil;
 
 require_once __DIR__ . "/inc/app.php";
 
@@ -24,7 +24,7 @@ if(empty($picoTableName))
     exit();
 }
 
-$className = ucfirst(StringUtil::camelize($picoTableName));
+$className = ucfirst(PicoStringUtil::camelize($picoTableName));
 $namespace = "MusicProductionManager\\Data\\Entity";
 
 $fileName = $namespace."/".$className;
@@ -70,7 +70,7 @@ $typeMap = array(
  */
 function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra)
 {
-    $propertyName = StringUtil::camelize($columnName);
+    $propertyName = PicoStringUtil::camelize($columnName);
     $description = getPropertyName($columnName);
     $docs = array();
     $docStart = "\t/**";

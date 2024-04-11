@@ -4,6 +4,7 @@ namespace MagicObject\Request;
 
 class PicoFilterConstant
 {
+	const FILTER_DEFAULT = 516;
 	const FILTER_SANITIZE_NO_DOUBLE_SPACE = 512;
 	const FILTER_SANITIZE_PASSWORD = 511;
 	const FILTER_SANITIZE_ALPHA = 510;

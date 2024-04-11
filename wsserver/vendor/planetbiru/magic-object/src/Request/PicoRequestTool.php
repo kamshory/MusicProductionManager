@@ -3,6 +3,7 @@
 namespace MagicObject\Request;
 
 use MagicObject\Exceptions\InvalidAnnotationException;
+use MagicObject\MagicObject;
 use MagicObject\Util\PicoAnnotationParser;
 use ReflectionClass;
 use stdClass;
@@ -190,7 +191,7 @@ class PicoRequestTool extends stdClass
      * @param boolean $escapeSQL
      * @return mixed
      */
-    public function filterInput($type, $variable_name, $filter = FILTER_DEFAULT, $escapeSQL=false) // NOSONAR
+    public function filterInput($type, $variable_name, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL=false) // NOSONAR
     {
         $var = array();
         switch ($type) {
@@ -215,7 +216,16 @@ class PicoRequestTool extends stdClass
         return $this->filterValue(isset($var[$variable_name])?$var[$variable_name]:null, $filter, $escapeSQL);
     }
     
-    public function filterValue($val, $filter=FILTER_DEFAULT, $escapeSQL=false, $nullIfEmpty=false) // NOSONAR
+    /**
+     * Filter value
+     *
+     * @param mixed $val
+     * @param integer $filter
+     * @param boolean $escapeSQL
+     * @param boolean $nullIfEmpty
+     * @return mixed
+     */
+    public function filterValue($val, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL = false, $nullIfEmpty = false) // NOSONAR
     {
         if(!is_scalar($val))
         {
@@ -228,7 +238,7 @@ class PicoRequestTool extends stdClass
         if($filter == PicoFilterConstant::FILTER_SANITIZE_EMAIL)
         {
             $val = trim(strtolower($val));
-            $val = filter_var($val, FILTER_VALIDATE_EMAIL);
+            $val = filter_var($val, PicoFilterConstant::FILTER_VALIDATE_EMAIL);
             if($val === false)
             {
                 $val = "";
@@ -359,12 +369,26 @@ class PicoRequestTool extends stdClass
 
         return $val;
     }
+
+    /**
+     * Addslahes
+     *
+     * @param string $inp
+     * @return string
+     */
     public function addslashes($inp)
     {
         return addslashes($inp);
     }
 
-    public function _get_value($cfg, $input)
+    /**
+     * Get value from formated number
+     *
+     * @param stdClass|MagicObject $cfg
+     * @param mixed $input
+     * @return float
+     */
+    public function _getValue($cfg, $input)
     {
         if($input === null || $input == '' || $input == 'undefined')
         {
@@ -389,11 +413,20 @@ class PicoRequestTool extends stdClass
         {
             return 0;
         }
+        // force value to numeric
         return $output * 1;
     }
+
+    /**
+     * Get value from formated number
+     *
+     * @param stdClass|MagicObject $cfg
+     * @param mixed $input
+     * @return float
+     */
     public function getValue($cfg, $input)
     {
-        return $this->get_value($cfg, $input);
+        return $this->_getValue($cfg, $input);
     }
 
     /**

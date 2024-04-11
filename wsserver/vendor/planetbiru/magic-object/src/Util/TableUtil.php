@@ -66,7 +66,7 @@ class TableUtil
      */
     public static function parseElementAttributes($attributes)
     {
-        if(StringUtil::isNullOrEmpty($attributes))
+        if(PicoStringUtil::isNullOrEmpty($attributes))
         {
             return array();
         }
@@ -74,14 +74,14 @@ class TableUtil
         {
             throw new InvalidParameterException("Invalid parameter for ".__CLASS__."::parseElementAttributes(). Expected value to be string, array given.");
         }
-        if(StringUtil::isNotNullAndNotEmpty($attributes))
+        if(PicoStringUtil::isNotNullAndNotEmpty($attributes))
         {
             $attributes = trim($attributes);
-            if(StringUtil::startsWith($attributes, "("))
+            if(PicoStringUtil::startsWith($attributes, "("))
             {
                 $attributes = trim(substr($attributes, 1));
             }
-            if(StringUtil::endsWith($attributes, ")"))
+            if(PicoStringUtil::endsWith($attributes, ")"))
             {
                 $attributes = trim(substr($attributes, 0, strlen($attributes) - 1));
             }

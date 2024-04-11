@@ -28,7 +28,7 @@ class PicoGenericObject extends stdClass
         if($data != null && (is_array($data) || is_object($data)))
         {
             foreach ($data as $key => $value) {
-                $key2 = StringUtil::camelize($key);
+                $key2 = PicoStringUtil::camelize($key);
                 $this->set($key2, $value);
             }
         }
@@ -44,7 +44,7 @@ class PicoGenericObject extends stdClass
      */
     public function set($propertyName, $propertyValue)
     {
-        $var = StringUtil::camelize($propertyName);
+        $var = PicoStringUtil::camelize($propertyName);
         $this->$var = $propertyValue;
         return $this;
     }
@@ -57,7 +57,7 @@ class PicoGenericObject extends stdClass
      */
     public function get($propertyName)
     {
-        $var = StringUtil::camelize($propertyName);
+        $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
     
