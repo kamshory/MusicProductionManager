@@ -218,7 +218,6 @@ class Winamp {
       if (this.pause) {
         this.pause = false;
         this.pauseBtn.classList.toggle("highlighted");
-        //this.visualisation.style.display = "block";
       }
     };
 

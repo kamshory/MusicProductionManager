@@ -59,6 +59,20 @@ namespace MagicObject\Util;
 class PicoWebsocketClient
 {
 
+  /**
+   * Open websocket
+   *
+   * @param string $host
+   * @param integer $port
+   * @param array $headers
+   * @param string $error_string
+   * @param integer $timeout
+   * @param boolean $ssl
+   * @param boolean $persistant
+   * @param string $path
+   * @param resource $context
+   * @return resource|false
+   */
   public static function websocketOpen($host = '', $port = 80, $headers = array(), &$error_string = '', $timeout = 10, $ssl = false, $persistant = false, $path = '/', $context = null) // NOSONAR
   {
 

@@ -2,6 +2,8 @@
 
 namespace MagicObject\Session;
 
+use MagicObject\SecretObject;
+
 class PicoSession
 {
 

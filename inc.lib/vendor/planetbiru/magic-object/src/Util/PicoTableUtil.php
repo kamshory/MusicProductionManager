@@ -5,7 +5,7 @@ use DOMDocument;
 use DOMElement;
 use MagicObject\Exceptions\InvalidParameterException;
 
-class TableUtil
+class PicoTableUtil
 {
     /**
      * Set class
@@ -77,14 +77,9 @@ class TableUtil
         if(PicoStringUtil::isNotNullAndNotEmpty($attributes))
         {
             $attributes = trim($attributes);
-            if(PicoStringUtil::startsWith($attributes, "("))
-            {
-                $attributes = trim(substr($attributes, 1));
-            }
-            if(PicoStringUtil::endsWith($attributes, ")"))
-            {
-                $attributes = trim(substr($attributes, 0, strlen($attributes) - 1));
-            }
+            $attributes = PicoStringUtil::lTrim($attributes, "(", 1);
+            $attributes = PicoStringUtil::rTrim($attributes, ")", 1);
+
             $doc = new DOMDocument();
             $doc->loadHTML("<html><body><div $attributes></div></body></html>");
             $div = $doc->getElementsByTagName("div")->item(0);

@@ -2,7 +2,7 @@
 
 namespace MagicObject\Request;
 
-class  InputPost extends PicoRequestTool {
+class  InputPost extends PicoRequestBase {
     public function __construct()
     {
         parent::__construct();

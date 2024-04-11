@@ -2,7 +2,7 @@
 
 namespace MagicObject\Request;
 
-class PicoRequest extends PicoRequestTool
+class PicoRequest extends PicoRequestBase
 {
     const ACTION_DETAIL = "detail";
     const ACTION_EDIT = "edit";

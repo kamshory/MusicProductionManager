@@ -6,7 +6,7 @@ use DOMDocument;
 use MagicObject\Util\PicoGenericObject;
 use MagicObject\Util\PicoAnnotationParser;
 use MagicObject\Util\PicoStringUtil;
-use MagicObject\Util\TableUtil;
+use MagicObject\Util\PicoTableUtil;
 use ReflectionClass;
 use stdClass;
 
@@ -135,7 +135,7 @@ class DataTable extends SetterGetter
     {
         $className = get_class($this);
         $reflexClass = new PicoAnnotationParser($className);
-        $this->attributes = TableUtil::parseElementAttributes($reflexClass->getFirstParameter(self::ANNOTATION_ATTRIBUTES));    
+        $this->attributes = PicoTableUtil::parseElementAttributes($reflexClass->getFirstParameter(self::ANNOTATION_ATTRIBUTES));    
         $classList = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::CLASS_LIST));
         $prefLanguage = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::ANNOTATION_LANGUAGE));
         $defaultColumnName = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::ANNOTATION_DEFAULT_COLUMN_LABEL));
@@ -163,7 +163,7 @@ class DataTable extends SetterGetter
      */
     public function addClass($className)
     {
-        if(TableUtil::isValidClassName($className))
+        if(PicoTableUtil::isValidClassName($className))
         {
             $this->classList[] = $className;
             $this->classList = array_unique($this->classList);
@@ -179,7 +179,7 @@ class DataTable extends SetterGetter
      */
     public function removeClass($className)
     {
-        if(TableUtil::isValidClassName($className))
+        if(PicoTableUtil::isValidClassName($className))
         {
             $tmp = array();
             foreach($this->classList as $cls)
@@ -313,9 +313,9 @@ class DataTable extends SetterGetter
         $doc = new DOMDocument();
         $table = $doc->appendChild($doc->createElement(self::TAG_TABLE));
 
-        TableUtil::setAttributes($table, $this->attributes);
-        TableUtil::setClassList($table, $this->classList);
-        TableUtil::setIdentity($table, $this->tableIdentity);
+        PicoTableUtil::setAttributes($table, $this->attributes);
+        PicoTableUtil::setClassList($table, $this->classList);
+        PicoTableUtil::setIdentity($table, $this->tableIdentity);
        
         $tbody = $table->appendChild($doc->createElement(self::TAG_TBODY));
         $doc->formatOutput = true;

@@ -1422,14 +1422,14 @@ namespace MusicProductionManager\Utility;
 
 use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSpecification;
-use MagicObject\Request\PicoRequestTool;
+use MagicObject\Request\PicoRequestBase;
 
 
 class SpecificationUtil
 {
     /**
      * Create Song specification
-     * @param PicoRequestTool $inputGet
+     * @param PicoRequestBase $inputGet
      * @param array $additional
      * @return PicoSpecification
      */

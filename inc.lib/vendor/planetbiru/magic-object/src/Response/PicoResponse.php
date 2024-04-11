@@ -229,6 +229,12 @@ class PicoResponse
         return isset(PicoHttpStatus::$httpStatus[$code]) ? PicoHttpStatus::$httpStatus[$code] : null;
     }
 
+    /**
+     * Redirect browser to current URL.
+     * WARNING! Use this only if there is a POST input that will control the process to prevent an endless loop that causes damage to the server. Modern browsers may prevent undesirable things from happening but other browsers may not have this feature.
+     *
+     * @return void
+     */
     public function redirectToItself()
     {
         header("Location: ".$_SERVER['REQUEST_URI']);

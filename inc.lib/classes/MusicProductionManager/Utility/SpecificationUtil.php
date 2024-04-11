@@ -4,7 +4,7 @@ namespace MusicProductionManager\Utility;
 
 use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSpecification;
-use MagicObject\Request\PicoRequestTool;
+use MagicObject\Request\PicoRequestBase;
 
 /**
  * Specification utility
@@ -13,7 +13,7 @@ class SpecificationUtil
 {
     /**
      * Create MIDI specification
-     * @param PicoRequestTool $name
+     * @param PicoRequestBase $name
      * @return PicoSpecification
      */
     public static function createMidiSpecification($inputGet)
@@ -67,7 +67,7 @@ class SpecificationUtil
 
     /**
      * Create Song specification
-     * @param PicoRequestTool $inputGet
+     * @param PicoRequestBase $inputGet
      * $@param array|null $additional
      * @return PicoSpecification
      */
@@ -181,7 +181,7 @@ class SpecificationUtil
 
     /**
      * Create Song specification
-     * @param PicoRequestTool $inputGet
+     * @param PicoRequestBase $inputGet
      * $@param array|null $additional
      * @return PicoSpecification
      */
@@ -246,7 +246,7 @@ class SpecificationUtil
 
     /**
      * Create Song specification
-     * @param PicoRequestTool $inputGet
+     * @param PicoRequestBase $inputGet
      * $@param array|null $additional
      * @return PicoSpecification
      */
@@ -358,7 +358,7 @@ class SpecificationUtil
 
     /**
      * Create album specification
-     * @param PicoRequestTool $name
+     * @param PicoRequestBase $name
      * @return PicoSpecification
      */
     public static function createAlbumSpecification($inputGet)
@@ -413,7 +413,7 @@ class SpecificationUtil
 
     /**
      * Create genre specification
-     * @param PicoRequestTool $name
+     * @param PicoRequestBase $name
      * @return PicoSpecification
      */
     public static function createGenreSpecification($inputGet)
@@ -439,7 +439,7 @@ class SpecificationUtil
 
     /**
      * Create user type specification
-     * @param PicoRequestTool $name
+     * @param PicoRequestBase $name
      * @return PicoSpecification
      */
     public static function createUserTypeSpecification($inputGet)
@@ -465,7 +465,7 @@ class SpecificationUtil
 
     /**
      * Create artist specification
-     * @param PicoRequestTool $name
+     * @param PicoRequestBase $name
      * @return PicoSpecification
      */
     public static function createArtistSpecification($inputGet)
@@ -491,7 +491,7 @@ class SpecificationUtil
 
     /**
      * Create user specification
-     * @param PicoRequestTool $name
+     * @param PicoRequestBase $name
      * @return PicoSpecification
      */
     public static function createUserSpecification($inputGet)

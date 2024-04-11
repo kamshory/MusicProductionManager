@@ -8,7 +8,7 @@ use MagicObject\Util\PicoAnnotationParser;
 use ReflectionClass;
 use stdClass;
 
-class PicoRequestTool extends stdClass
+class PicoRequestBase extends stdClass //NOSONAR
 {
     /**
      * Class parameter
@@ -223,17 +223,45 @@ class PicoRequestTool extends stdClass
      * @param integer $filter
      * @param boolean $escapeSQL
      * @param boolean $nullIfEmpty
+     * @return mixed|null
+     */
+    public function filterValue($val, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL = false, $nullIfEmpty = false)
+    {
+        $ret = null;
+        if(is_scalar($val))
+        {
+            return $this->filterValueSingle($val, $filter, $escapeSQL, $nullIfEmpty);
+        }
+        else if(is_array($val))
+        {
+            $ret = array();
+            foreach($val as $k=>$v)
+            {
+                $ret[$k] = $this->filterValueSingle($v, $filter, $escapeSQL, $nullIfEmpty);
+            }
+        }
+        else if(is_object($val))
+        {
+            $ret = new stdClass();
+            foreach($val as $k=>$v)
+            {
+                $ret->{$k} = $this->filterValueSingle($v, $filter, $escapeSQL, $nullIfEmpty);
+            }
+        }
+        return $ret;  
+    }
+
+    /**
+     * Filter single value
+     *
+     * @param mixed $val
+     * @param integer $filter
+     * @param boolean $escapeSQL
+     * @param boolean $nullIfEmpty
      * @return mixed
      */
-    public function filterValue($val, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL = false, $nullIfEmpty = false) // NOSONAR
+    public function filterValueSingle($val, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL = false, $nullIfEmpty = false) //NOSONAR
     {
-        if(!is_scalar($val))
-        {
-            unset($val);
-            $val = "";
-            // ignore
-        }
-
         // add filter
         if($filter == PicoFilterConstant::FILTER_SANITIZE_EMAIL)
         {
@@ -366,7 +394,6 @@ class PicoRequestTool extends stdClass
         {
             return null;
         }
-
         return $val;
     }
 
@@ -438,7 +465,13 @@ class PicoRequestTool extends stdClass
      */
     public function __call($method, $params) //NOSONAR
     {
-        if (strncasecmp($method, "is", 2) === 0) 
+        
+        if (strncasecmp($method, "countable", 9) === 0) 
+        {
+            $var = lcfirst(substr($method, 9));
+            return is_array($this->$var);
+        } 
+        else if (strncasecmp($method, "is", 2) === 0) 
         {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) ? $this->$var == 1 : false;

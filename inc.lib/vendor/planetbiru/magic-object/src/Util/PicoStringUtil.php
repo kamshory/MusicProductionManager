@@ -82,6 +82,64 @@ class PicoStringUtil
             return isset($haystack) && strtolower(substr($haystack, strlen($haystack) - strlen($value))) == strtolower($value);
         }
     }
+
+    /**
+     * Left trim a string
+     *
+     * @param string $haystack
+     * @param string $substring
+     * @param integer $count
+     * @return string
+     */
+    public static function lTrim($haystack, $substring, $count = -1)
+    {
+        $i = 0;
+        $found = false;
+        do
+        {
+            if(PicoStringUtil::startsWith($haystack, $substring))
+            {
+                $haystack = trim(substr($haystack, 1));
+                $found = true;
+                $i++;
+            }
+            else
+            {
+                $found = false;
+            }
+        }
+        while($found && ($count == -1 || $count > $i));
+        return $haystack;
+    }
+
+    /**
+     * Right trim a string
+     *
+     * @param string $haystack
+     * @param string $substring
+     * @param integer $count
+     * @return string
+     */
+    public static function rTrim($haystack, $substring, $count = -1)
+    {
+        $i = 0;
+        $found = false;
+        do
+        {
+            if(PicoStringUtil::endsWith($haystack, $substring))
+            {
+                $haystack = trim(substr($haystack, 0, strlen($haystack) - 1));
+                $found = true;
+                $i++;
+            }
+            else
+            {
+                $found = false;
+            }
+        }
+        while($found && ($count == -1 || $count > $i));
+        return $haystack;
+    }
     
     /**
      * Check if string is not null and not empty

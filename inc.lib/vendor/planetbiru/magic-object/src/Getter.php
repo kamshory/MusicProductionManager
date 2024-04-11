@@ -40,7 +40,7 @@ class Getter extends stdClass
     
     /**
      * Load data to object
-     * @param mixed $data
+     * @param stdClass|array $data
      */
     public function loadData($data)
     {

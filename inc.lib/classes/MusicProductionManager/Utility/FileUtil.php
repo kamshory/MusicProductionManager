@@ -2,7 +2,7 @@
 
 namespace MusicProductionManager\Utility;
 
-use MagicObject\Request\PicoRequestTool;
+use MagicObject\Request\PicoRequestBase;
 use MusicProductionManager\Constants\HttpHeaderConstant;
 use MusicProductionManager\Data\Entity\EntitySong;
 use ZipArchive;
@@ -22,7 +22,7 @@ class FileUtil
     /**
      * Download per song
      *
-     * @param PicoRequestTool $inputGet
+     * @param PicoRequestBase $inputGet
      * @param EntitySong $song
      * @return void
      */
