@@ -108,7 +108,7 @@ class PicoSortable
     /**
      * Create sort by
      *
-     * @param stdClass $tableInfo
+     * @param PicoTableInfo $tableInfo
      * @return string
      */
     public function createOrderBy($tableInfo = null)
@@ -156,14 +156,14 @@ class PicoSortable
     /**
      * Create sort with mapping
      *
-     * @param stdClass $tableInfo
+     * @param PicoTableInfo $tableInfo
      * @return string
      */
     private function createWithMapping($tableInfo)
     {
         $ret = null;
-        $columns = $tableInfo->columns;
-        $joinColumns = $tableInfo->joinColumns;
+        $columns = $tableInfo->getColumns();
+        $joinColumns = $tableInfo->getJoinColumns();
         $columnList = array_merge($columns, $joinColumns);
         $columnNames = array();
         foreach($columnList as $column)

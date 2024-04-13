@@ -80,13 +80,14 @@ class PicoPagination
     /**
      * Parse offset
      *
+     * @param string $paramName
      * @return integer
      */
-    private function parseCurrentPage()
+    private function parseCurrentPage($paramName = 'page')
     {
-        if(isset($_GET['page']))
+        if(isset($_GET[$paramName]))
         {
-            $pageStr = preg_replace("/\D/", "", $_GET['page']);
+            $pageStr = preg_replace("/\D/", "", $_GET[$paramName]);
             if($pageStr == "")
             {
                 $page = 0;

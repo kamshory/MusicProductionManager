@@ -115,7 +115,7 @@ class PicoPagable
     /**
      * Create sort by
      *
-     * @param stdClass $tableInfo
+     * @param PicoTableInfo $tableInfo
      * @return string|null
      */
     public function createOrderBy($tableInfo)

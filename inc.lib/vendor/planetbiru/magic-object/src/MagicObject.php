@@ -794,9 +794,9 @@ class MagicObject extends stdClass // NOSONAR
         $persist = new PicoDatabasePersistence($this->database, $this);
         $tableInfo = $persist->getTableInfo();
         $defaultValue = new stdClass;
-        if(isset($tableInfo->defaultValue))
+        if($tableInfo->getDefaultValue() != null)
         {
-            foreach($tableInfo->defaultValue as $column)
+            foreach($tableInfo->getDefaultValue() as $column)
             {
                 if(isset($column[self::KEY_NAME]))
                 {

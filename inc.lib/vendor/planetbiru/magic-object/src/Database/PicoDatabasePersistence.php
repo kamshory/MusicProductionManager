@@ -193,7 +193,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get table information by parsing class and property annotation
      *
-     * @return stdClass
+     * @return PicoTableInfo
      */
     public function getTableInfo() // NOSONAR
     {
@@ -321,15 +321,7 @@ class PicoDatabasePersistence // NOSONAR
             }
         }
         // bring it together
-        $info = new stdClass;
-        $info->tableName = $picoTableName;
-        $info->columns = $columns;
-        $info->joinColumns = $joinColumns;
-        $info->primaryKeys = $primaryKeys;
-        $info->autoIncrementKeys = $autoIncrementKeys;
-        $info->defaultValue = $defaultValue;
-        $info->notNullColumns = $notNullColumns;
-        return $info;
+        return new PicoTableInfo($picoTableName, $columns, $joinColumns, $primaryKeys, $autoIncrementKeys, $defaultValue, $notNullColumns);
     }
 
     /**
@@ -442,14 +434,14 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get object values
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @return array
      */
     private function getValues($info, $queryBuilder)
     {
         $values = array();
-        foreach($info->columns as $property=>$column)
+        foreach($info->getColumns() as $property=>$column)
         {
             $columnName = $column[self::KEY_NAME];
             $value = $this->object->get($property);
@@ -465,7 +457,7 @@ class PicoDatabasePersistence // NOSONAR
 
     /**
      * Get null column set manualy
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     private function getNullCols($info)
@@ -476,9 +468,9 @@ class PicoDatabasePersistence // NOSONAR
         {
             foreach($nullList as $key=>$val)
             {
-                if($val === true && isset($info->columns[$key]))
+                if($val === true && isset($info->getColumns()[$key]))
                 {
-                    $columnName = $info->columns[$key][self::KEY_NAME];
+                    $columnName = $info->getColumns()[$key][self::KEY_NAME];
                     $nullCols[] = $columnName;
                 }
             }
@@ -488,13 +480,13 @@ class PicoDatabasePersistence // NOSONAR
     
     /**
      * Get noninsertable column
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     private function getNonInsertableCols($info)
     {
         $nonInsertableCols = array();
-        foreach($info->columns as $params)
+        foreach($info->getColumns() as $params)
         {
             if(isset($params) 
                 && isset($params[self::KEY_INSERTABLE])
@@ -510,13 +502,13 @@ class PicoDatabasePersistence // NOSONAR
     
     /**
      * Get nonupdatable column
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     private function getNonUpdatableCols($info)
     {
         $nonUpdatableCols = array();
-        foreach($info->columns as $params)
+        foreach($info->getColumns() as $params)
         {
             if(isset($params) 
                 && isset($params[self::KEY_UPDATABLE])
@@ -533,7 +525,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get SET statement
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @return string
      */
@@ -543,7 +535,7 @@ class PicoDatabasePersistence // NOSONAR
         $primaryKeys = $this->getPrimaryKeys($info);
         $nullCols = $this->getNullCols($info);
         $nonUpdatableCols = $this->getNonUpdatableCols($info);
-        foreach($info->columns as $property=>$column)
+        foreach($info->getColumns() as $property=>$column)
         {
             $columnName = $column[self::KEY_NAME];
             if(!$this->isPrimaryKeys($columnName, $primaryKeys))
@@ -574,14 +566,14 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get WHERE statement
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @return string
      */
     private function getWhere($info, $queryBuilder)
     {
         $wheres = array();
-        foreach($info->primaryKeys as $property=>$column)
+        foreach($info->getPrimaryKeys() as $property=>$column)
         {
             $columnName = $column[self::KEY_NAME];
             $value = $this->object->get($property);
@@ -605,7 +597,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get primary keys
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     public function getPrimaryKeys($info = null)
@@ -615,7 +607,7 @@ class PicoDatabasePersistence // NOSONAR
             $info = $this->getTableInfo();
         }
         $primaryKeys = array();
-        foreach($info->primaryKeys as $column)
+        foreach($info->getPrimaryKeys() as $column)
         {
             $primaryKeys[] = $column[self::KEY_NAME];
         }
@@ -625,7 +617,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get columns
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     public function getColumns($info = null)
@@ -635,7 +627,7 @@ class PicoDatabasePersistence // NOSONAR
             $info = $this->getTableInfo();
         }
         $columns = array();
-        foreach($info->columns as $column)
+        foreach($info->getColumns() as $column)
         {
             $columns[] = $column[self::KEY_NAME];
         }
@@ -645,7 +637,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get join columns
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     public function getJoinColumns($info = null)
@@ -655,7 +647,7 @@ class PicoDatabasePersistence // NOSONAR
             $info = $this->getTableInfo();
         }
         $joinColumns = array();
-        foreach($info->joinColumns as $joinColumn)
+        foreach($info->getJoinColumns() as $joinColumn)
         {
             $joinColumns[] = $joinColumn[self::KEY_NAME];
         }
@@ -677,16 +669,16 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get primary key with autoincrement value
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     public function getPrimaryKeyAutoIncrement($info)
     {
         $aiKeys = array();
-        if(isset($info->autoIncrementKeys) && is_array($info->autoIncrementKeys))
+        if($info->getAutoIncrementKeys() != null)
         {
-            $primaryKeys = array_keys($info->primaryKeys);
-            foreach($info->autoIncrementKeys as $name=>$value)
+            $primaryKeys = array_keys($info->getPrimaryKeys());
+            foreach($info->getAutoIncrementKeys() as $name=>$value)
             {
                 if(in_array($name, $primaryKeys))
                 {
@@ -700,7 +692,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Add generated value
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param boolean $fisrtCall
      * @return void
      */
@@ -708,7 +700,7 @@ class PicoDatabasePersistence // NOSONAR
     {
         if(!$this->generatedValue)
         {
-            $keys = $info->autoIncrementKeys;
+            $keys = $info->getAutoIncrementKeys();
             if(isset($keys) && is_array($keys))
             {
                 foreach($keys as $prop=>$col)
@@ -787,34 +779,12 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Insert data
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @return PDOStatement
      */
     private function _insert($info = null, $queryBuilder = null)
     {
-        /*
-        Original code
-        $this->generatedValue = false;
-        if($queryBuilder == null)
-        {
-            $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
-        }
-        if($info == null)
-        {
-            $info = $this->getTableInfo();
-        }
-        $this->addGeneratedValue($info, true);
-        $values = $this->getValues($info, $queryBuilder);
-        $fixValues = $this->fixInsertableValues($values, $info);      
-        
-        $sqlQuery = $queryBuilder
-            ->newQuery()
-            ->insert()
-            ->into($info->tableName)
-            ->fields($this->createStatementFields($fixValues))
-            ->values($this->createStatementValues($fixValues));
-        */
         $sqlQuery = $this->_insertQuery($info, $queryBuilder);
         $stmt = $this->database->executeInsert($sqlQuery);
         if(!$this->generatedValue)
@@ -828,7 +798,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Insert data
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @return PicoDatabaseQueryBuilder
      */
@@ -850,7 +820,7 @@ class PicoDatabasePersistence // NOSONAR
         return $queryBuilder
             ->newQuery()
             ->insert()
-            ->into($info->tableName)
+            ->into($info->getTableName())
             ->fields($this->createStatementFields($fixValues))
             ->values($this->createStatementValues($fixValues));
     }
@@ -859,7 +829,7 @@ class PicoDatabasePersistence // NOSONAR
      * Fix insertable values
      *
      * @param array $values
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     private function fixInsertableValues($values, $info = null)
@@ -891,9 +861,9 @@ class PicoDatabasePersistence // NOSONAR
          * 5. UUID - Indicates that the persistence provider must assign primary keys for the entity with a UUID value.
          */ 
         
-        if(isset($info->autoIncrementKeys))
+        if($info->getAutoIncrementKeys() != null)
         {
-            foreach($info->autoIncrementKeys as $name=>$col)
+            foreach($info->getAutoIncrementKeys() as $name=>$col)
             {
                 if(strcasecmp($col[self::KEY_STRATEGY], "GenerationType.UUID") == 0)
                 {
@@ -914,7 +884,7 @@ class PicoDatabasePersistence // NOSONAR
      * Implode array keys to field list
      *
      * @param array $values
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return string
      */
     public function createStatementFields($values)
@@ -979,22 +949,22 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Ger column map
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     private function getColumnMap($info)
     {
         $maps = array();
-        if(isset($info->joinColumns) && is_array($info->joinColumns))
+        if($info->getJoinColumns() != null)
         {
-            foreach($info->joinColumns as $key=>$value)
+            foreach($info->getJoinColumns() as $key=>$value)
             {
                 $maps[$key] = $value[self::KEY_NAME];
             }
         }
-        if(isset($info->columns) && is_array($info->columns))
+        if($info->getColumns() != null)
         {
-            foreach($info->columns as $key=>$value)
+            foreach($info->getColumns() as $key=>$value)
             {
                 $maps[$key] = $value[self::KEY_NAME];
             }
@@ -1039,7 +1009,7 @@ class PicoDatabasePersistence // NOSONAR
      */
     private function createWhereFromArgs($info, $propertyName, $propertyValues)
     {
-        $columnNames = $this->getColumnNames($propertyName, $info->columns);
+        $columnNames = $this->getColumnNames($propertyName, $info->getColumns());
         $arr = explode("?", $columnNames);
         $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
         $wheres = array();
@@ -1071,7 +1041,7 @@ class PicoDatabasePersistence // NOSONAR
      *
      * @param PicoDatabaseQueryBuilder $sqlQuery
      * @param PicoSpecification $specification
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return string
      */
     private function createWhereFromSpecification($sqlQuery, $specification, $info)
@@ -1143,7 +1113,7 @@ class PicoDatabasePersistence // NOSONAR
         else if(is_string($order))
         {
             $orderBys = array();
-            $pKeys = array_values($info->primaryKeys);
+            $pKeys = array_values($info->getPrimaryKeys());
             if(!empty($pKeys))
             {
                 foreach($pKeys as $pKey)
@@ -1183,7 +1153,7 @@ class PicoDatabasePersistence // NOSONAR
         $data = null;
         $info = $this->getTableInfo();
         
-        $primaryKeys = $info->primaryKeys;
+        $primaryKeys = $info->getPrimaryKeys();
         
         if($this->isValidPrimaryKeyValues($primaryKeys, $propertyValues))
         {
@@ -1210,8 +1180,8 @@ class PicoDatabasePersistence // NOSONAR
             }
             $sqlQuery = $queryBuilder
                 ->newQuery()
-                ->select($info->tableName.".*")
-                ->from($info->tableName)
+                ->select($info->getTableName().".*")
+                ->from($info->getTableName())
                 ->where($where)
                 ->limit(1)
                 ->offset(0);
@@ -1246,7 +1216,7 @@ class PicoDatabasePersistence // NOSONAR
      *
      * @param PicoDatabaseQueryBuilder $sqlQuery
      * @param PicoSpecification|array $specification
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return PicoDatabaseQueryBuilder
      */
     private function setSpecification($sqlQuery, $specification, $info)
@@ -1291,7 +1261,7 @@ class PicoDatabasePersistence // NOSONAR
      * @param PicoDatabaseQueryBuilder $sqlQuery
      * @param PicoPagable|null $pagable
      * @param PicoSortable|string|null $pagable
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return PicoDatabaseQueryBuilder
      */
     private function setSortable($sqlQuery, $pagable, $sortable, $info)
@@ -1370,8 +1340,8 @@ class PicoDatabasePersistence // NOSONAR
         $result = array();
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->tableName.".*")
-            ->from($info->tableName);
+            ->select($info->getTableName().".*")
+            ->from($info->getTableName());
         
         if($specification != null)
         {
@@ -1434,8 +1404,8 @@ class PicoDatabasePersistence // NOSONAR
         $result = array();
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->tableName.".*")
-            ->from($info->tableName)
+            ->select($info->getTableName().".*")
+            ->from($info->getTableName())
             ->where($where);
         if($pagable != null)
         {
@@ -1499,8 +1469,8 @@ class PicoDatabasePersistence // NOSONAR
         $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->tableName.".*")
-            ->from($info->tableName);       
+            ->select($info->getTableName().".*")
+            ->from($info->getTableName());       
         if($specification != null)
         {
             $sqlQuery = $this->setSpecification($sqlQuery, $specification, $info);
@@ -1526,7 +1496,7 @@ class PicoDatabasePersistence // NOSONAR
     public function countBy($propertyName, $propertyValue)
     {
         $info = $this->getTableInfo();
-        $primaryKeys = array_values($info->primaryKeys);
+        $primaryKeys = array_values($info->getPrimaryKeys());
         if(is_array($primaryKeys) && isset($primaryKeys[0][self::KEY_NAME]))
         {
             // it will be faster than asterisk
@@ -1545,7 +1515,7 @@ class PicoDatabasePersistence // NOSONAR
         $sqlQuery = $queryBuilder
             ->newQuery()
             ->select($agg)
-            ->from($info->tableName)
+            ->from($info->getTableName())
             ->where($where);
         try
         {
@@ -1584,7 +1554,7 @@ class PicoDatabasePersistence // NOSONAR
         $sqlQuery = $queryBuilder
             ->newQuery()
             ->delete()
-            ->from($info->tableName)
+            ->from($info->getTableName())
             ->where($where);
         try
         {
@@ -1624,8 +1594,8 @@ class PicoDatabasePersistence // NOSONAR
         $data = null;
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->tableName.".*")
-            ->from($info->tableName)
+            ->select($info->getTableName().".*")
+            ->from($info->getTableName())
             ->where($where);
         $sqlQuery = $this->setSortable($sqlQuery, null, $sortable, $info);  
         $sqlQuery->limit(1)
@@ -1697,14 +1667,14 @@ class PicoDatabasePersistence // NOSONAR
      * 
      * @param mixed $data Object
      * @param array $row Row
-     * @param stdClass $info Table info
+     * @param PicoTableInfo $info Table info
      * @return object
      */
     private function join($data, $row, $info)
     {
-        if(!empty($info->joinColumns))
+        if(!empty($info->getJoinColumns()))
         {
-            foreach($info->joinColumns as $propName=>$join)
+            foreach($info->getJoinColumns() as $propName=>$join)
             {
                 $joinName = $join[self::KEY_NAME];
                 $classNameJoin = $join[self::KEY_PROPERTY_TYPE];
@@ -1765,7 +1735,7 @@ class PicoDatabasePersistence // NOSONAR
      * Fix data type
      *
      * @param array $data
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     private function fixDataType($data, $info)
@@ -1942,15 +1912,15 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Create type map
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return array
      */
     private function createTypeMap($info)
     {
         $map = array();
-        if(isset($info) && isset($info->columns))
+        if(isset($info) && $info->getColumns() != null)
         {
-            foreach($info->columns as $cols)
+            foreach($info->getColumns() as $cols)
             {
                 $map[$cols[self::KEY_NAME]] = $cols[self::KEY_PROPERTY_TYPE];
             }
@@ -1987,7 +1957,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Select record from database with primary keys given
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @param string $where
      * @return mixed
@@ -2013,8 +1983,8 @@ class PicoDatabasePersistence // NOSONAR
         $data = null;
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->tableName.".*")
-            ->from($info->tableName)
+            ->select($info->getTableName().".*")
+            ->from($info->getTableName())
             ->where($where);
         try
         {
@@ -2040,7 +2010,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Select record from database with primary keys given
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @param string $where
      * @return PicoDatabaseQueryBuilder
@@ -2065,8 +2035,8 @@ class PicoDatabasePersistence // NOSONAR
         }
         return $queryBuilder
             ->newQuery()
-            ->select($info->tableName.".*")
-            ->from($info->tableName)
+            ->select($info->getTableName().".*")
+            ->from($info->getTableName())
             ->where($where);
     }
 
@@ -2103,7 +2073,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Update record on database with primary keys given
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @param string $where
      * @return PDOStatement
@@ -2111,31 +2081,6 @@ class PicoDatabasePersistence // NOSONAR
      */
     private function _update($info = null, $queryBuilder = null, $where = null)
     {
-        /*
-        Original code
-        if($queryBuilder == null)
-        {
-            $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
-        }
-        if($info == null)
-        {
-            $info = $this->getTableInfo();
-        }
-        if($where == null)
-        {
-            $where = $this->getWhere($info, $queryBuilder);
-        }
-        if(!$this->isValidFilter($where))
-        {
-            throw new InvalidFilterException(self::MESSAGE_INVALID_FILTER);
-        }
-        $set = $this->getSet($info, $queryBuilder);
-        $sqlQuery = $queryBuilder
-            ->newQuery()
-            ->update($info->tableName)
-            ->set($set)
-            ->where($where);
-        */
         $sqlQuery = $this->_updateQuery($info, $queryBuilder, $where);
         return $this->database->executeUpdate($sqlQuery);
     }
@@ -2143,7 +2088,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Update record on database with primary keys given
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @param string $where
      * @return PicoDatabaseQueryBuilder
@@ -2170,7 +2115,7 @@ class PicoDatabasePersistence // NOSONAR
         $set = $this->getSet($info, $queryBuilder);
         return $queryBuilder
             ->newQuery()
-            ->update($info->tableName)
+            ->update($info->getTableName())
             ->set($set)
             ->where($where);
     }
@@ -2204,37 +2149,13 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Delete record from database with primary keys given
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @param string $where
      * @return PDOStatement
      */
     private function _delete($info = null, $queryBuilder = null, $where = null)
     {
-        /*
-        Original code
-        if($queryBuilder == null)
-        {
-            $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
-        }
-        if($info == null)
-        {
-            $info = $this->getTableInfo();
-        }
-        if($where == null)
-        {
-            $where = $this->getWhere($info, $queryBuilder);
-        }
-        if(!$this->isValidFilter($where))
-        {
-            throw new InvalidFilterException(self::MESSAGE_INVALID_FILTER);
-        }              
-        $sqlQuery = $queryBuilder
-            ->newQuery()
-            ->delete()
-            ->from($info->tableName)
-            ->where($where);
-        */
         $sqlQuery = $this->_deleteQuery($info, $queryBuilder, $where);
         return $this->database->executeDelete($sqlQuery);
     }
@@ -2242,7 +2163,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Delete record from database with primary keys given
      *
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @param PicoDatabaseQueryBuilder $queryBuilder
      * @param string $where
      * @return PicoDatabaseQueryBuilder
@@ -2269,7 +2190,7 @@ class PicoDatabasePersistence // NOSONAR
         return $queryBuilder
             ->newQuery()
             ->delete()
-            ->from($info->tableName)
+            ->from($info->getTableName())
             ->where($where);
     }
 }
