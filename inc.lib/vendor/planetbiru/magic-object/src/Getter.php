@@ -4,7 +4,7 @@ namespace MagicObject;
 
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidQueryInputException;
-use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use stdClass;

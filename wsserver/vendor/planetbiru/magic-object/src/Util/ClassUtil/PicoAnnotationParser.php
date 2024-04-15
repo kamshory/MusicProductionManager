@@ -1,12 +1,14 @@
 <?php
 
-namespace MagicObject\Util;
+namespace MagicObject\Util\ClassUtil;
 
 use InvalidArgumentException;
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidParameterException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\ZeroArgumentException;
+use MagicObject\Util\PicoGenericObject;
+use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;

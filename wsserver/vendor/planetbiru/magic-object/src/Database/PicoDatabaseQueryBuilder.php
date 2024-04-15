@@ -3,9 +3,7 @@ namespace MagicObject\Database;
 
 class PicoDatabaseQueryBuilder // NOSONAR
 {
-	const DATABASE_TYPE_MYSQL = "mysql";
-	const DATABASE_TYPE_MARIADB = "mariadb";
-	const DATABASE_TYPE_POSTGRESQL = "postgresql";
+
 	
 	/**
 	 * Buffer
@@ -81,7 +79,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	 */
 	public function isMySql()
 	{
-		return strcasecmp($this->databaseType, self::DATABASE_TYPE_MYSQL) == 0 || strcasecmp($this->databaseType, self::DATABASE_TYPE_MARIADB) == 0;
+		return strcasecmp($this->databaseType, PicoDatabaseType::DATABASE_TYPE_MYSQL) == 0 || strcasecmp($this->databaseType, PicoDatabaseType::DATABASE_TYPE_MARIADB) == 0;
 	}
 
 	/**
@@ -91,7 +89,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	 */
 	public function isPgSql()
 	{
-		return strcasecmp($this->databaseType, self::DATABASE_TYPE_POSTGRESQL) == 0;
+		return strcasecmp($this->databaseType, PicoDatabaseType::DATABASE_TYPE_POSTGRESQL) == 0;
 	}
 
 	/**
@@ -830,11 +828,11 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	 */
 	public function escapeSQL($query)
 	{
-		if(stripos($this->databaseType, self::DATABASE_TYPE_MYSQL) !== false || stripos($this->databaseType, self::DATABASE_TYPE_MARIADB) !== false)
+		if(stripos($this->databaseType, PicoDatabaseType::DATABASE_TYPE_MYSQL) !== false || stripos($this->databaseType, PicoDatabaseType::DATABASE_TYPE_MARIADB) !== false)
 		{
 			return str_replace(array("\r", "\n"), array("\\r", "\\n"), addslashes($query));
 		}
-		if(stripos($this->databaseType, self::DATABASE_TYPE_POSTGRESQL) !== false)
+		if(stripos($this->databaseType, PicoDatabaseType::DATABASE_TYPE_POSTGRESQL) !== false)
 		{
 			return str_replace(array("\r", "\n"), array("\\r", "\\n"), $this->replaceQuote($query));
 		}

@@ -1,6 +1,6 @@
 <?php
 
-namespace MagicObject;
+namespace MagicObject\Language;
 
 use MagicObject\Util\PicoStringUtil;
 use stdClass;

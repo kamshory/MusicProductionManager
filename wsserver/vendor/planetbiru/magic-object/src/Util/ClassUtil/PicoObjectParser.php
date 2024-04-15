@@ -1,8 +1,9 @@
 <?php
 
-namespace MagicObject\Util;
+namespace MagicObject\Util\ClassUtil;
 
 use MagicObject\MagicObject;
+use MagicObject\Util\PicoStringUtil;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
 

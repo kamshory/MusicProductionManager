@@ -22,7 +22,7 @@ class Line {
     public $B;
 
     /**
-     * Constructor to initialize the Line with three Point objects
+     * Constructor to initialize the Line with two Point objects
      *
      * @param Point $A
      * @param Point $B

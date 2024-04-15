@@ -40,6 +40,7 @@ class Polygon
      * Function to calculate the area of a polygon using the Shoelace formula
      *
      * @return double
+     * @throws InvalidPolygonException
      */
     public function getArea() {
         $cnt = count($this->points);
@@ -69,6 +70,7 @@ class Polygon
      * Get circumference
      *
      * @return double
+     * @throws InvalidPolygonException
      */
     public function getCircumference()
     {

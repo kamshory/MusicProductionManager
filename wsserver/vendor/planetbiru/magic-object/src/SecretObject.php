@@ -2,9 +2,9 @@
 
 namespace MagicObject;
 
-use MagicObject\Util\PicoAnnotationParser;
 use MagicObject\Util\PicoEnvironmentVariable;
 use MagicObject\Secret\PicoSecret;
+use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use stdClass;

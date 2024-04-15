@@ -1,7 +1,7 @@
 <?php
 
 use MagicObject\DataTable;
-use MagicObject\Util\PicoObjectParser;
+use MagicObject\Util\ClassUtil\PicoObjectParser;
 
 error_reporting(E_ALL);
 require_once dirname(__DIR__) . "/vendor/autoload.php";

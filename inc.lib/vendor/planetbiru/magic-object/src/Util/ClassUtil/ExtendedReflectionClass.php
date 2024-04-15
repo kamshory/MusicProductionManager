@@ -1,6 +1,6 @@
 <?php
 
-namespace MagicObject\Util;
+namespace MagicObject\Util\ClassUtil;
 
 use MagicObject\Exceptions\InvalidClassExceptio;
 use ReflectionClass;

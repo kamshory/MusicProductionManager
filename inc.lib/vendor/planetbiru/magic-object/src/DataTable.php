@@ -3,8 +3,9 @@
 namespace MagicObject;
 
 use DOMDocument;
+use MagicObject\Language\PicoLanguage;
+use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 use MagicObject\Util\PicoGenericObject;
-use MagicObject\Util\PicoAnnotationParser;
 use MagicObject\Util\PicoStringUtil;
 use MagicObject\Util\PicoTableUtil;
 use ReflectionClass;
@@ -106,6 +107,7 @@ class DataTable extends SetterGetter
         }
         return $this;
     }
+    
     /**
      * Add language
      *
@@ -118,9 +120,25 @@ class DataTable extends SetterGetter
         $this->lableLanguage[$code] = new PicoLanguage($reference);
         return $this;
     }
+
+    /**
+     * Remove language
+     *
+     * @param string $code
+     * @param stdClass|array $reference
+     * @return self
+     */
+    public function removeLanguage($code)
+    {
+        if(isset($this->lableLanguage[$code]))
+        {
+            unset($this->lableLanguage[$code]);
+        }
+        return $this;
+    }
     
     /**
-     * Add language
+     * Set current language
      *
      * @param string $code
      * @return self
@@ -150,7 +168,7 @@ class DataTable extends SetterGetter
         }    
         if($classList->issetContent())
         {
-            $this->classList = explode(" ", preg_replace('/\s+/', ' ', $classList->getContent()));
+            $this->classList = explode(" ", preg_replace('/\s+/', " ", $classList->getContent()));
             $this->classList = array_unique($this->classList);
         }
         if($prefLanguage->issetContent())
@@ -172,6 +190,7 @@ class DataTable extends SetterGetter
         if(PicoTableUtil::isValidClassName($className))
         {
             $this->classList[] = $className;
+            // fix duplicated class
             $this->classList = array_unique($this->classList);
         }
         return $this;

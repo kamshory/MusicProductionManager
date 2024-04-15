@@ -1,6 +1,6 @@
 <?php
 
-namespace MagicObject\Util;
+namespace MagicObject\Util\Database;
 
 use MagicObject\Database\PicoPagable;
 use MagicObject\Database\PicoSortable;
