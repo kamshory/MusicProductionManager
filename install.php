@@ -5,6 +5,7 @@ use MagicObject\Database\PicoDatabaseCredentials;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Request\InputPost;
 use MusicProductionManager\Data\Entity\User;
+use MusicProductionManager\Exceptions\InstallationException;
 use MusicProductionManager\Utility\ServerUtil;
 
 require_once __DIR__ . "/inc.lib/vendor/autoload.php";
@@ -39,7 +40,7 @@ if($inputPost->hasValueInstall())
  *
  * @param InputPost $input
  * @return void
- * @throws Exception
+ * @throws InstallationException
  */
 function createUser($input)
 {
@@ -85,7 +86,7 @@ function createUser($input)
     }
     catch(Exception $e)
     {
-        throw new Exception($e);
+        throw new InstallationException($e);
     }
 }
 
