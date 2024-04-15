@@ -111,6 +111,16 @@ class PicoDatabase //NOSONAR
 		}
 		return $connected;
 	}
+
+	/**
+	 * Disconnect from database
+	 *
+	 * @return void
+	 */
+	public function disconnect()
+	{
+		$this->databaseConnection = null;
+	}
 	
 	/**
 	 * Set time zone offset
