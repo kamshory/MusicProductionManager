@@ -50,8 +50,7 @@ class SetterGetter
      */
     public function set($propertyName, $propertyValue)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         $this->$var = $propertyValue;
         return $this;
     }
@@ -64,8 +63,7 @@ class SetterGetter
      */
     public function get($propertyName)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
     
@@ -73,8 +71,8 @@ class SetterGetter
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
      * 
-     * @param $name Name of the property.
-     * @param $value Value of the property.
+     * @param string $name Name of the property.
+     * @param string $value Value of the property.
      * @return void 
      **/
     public function __set($name, $value)
@@ -87,7 +85,7 @@ class SetterGetter
      * Gets datas from the property.
      * Example: echo $instance->foo;
      * 
-     * @param $name Name of the property to get.
+     * @param string $name Name of the property to get.
      * @return mixed Datas stored in property.
      **/
     public function __get($name)

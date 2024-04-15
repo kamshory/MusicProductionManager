@@ -649,8 +649,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         $this->{$var} = $propertyValue;
         if(!$skipModifyNullProperties && $propertyValue === null)
         {
@@ -667,8 +666,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function get($propertyName)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
     
@@ -681,8 +679,7 @@ class MagicObject extends stdClass // NOSONAR
      */
     public function getOrDefault($propertyName, $defaultValue = null)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : $defaultValue;
     }
     

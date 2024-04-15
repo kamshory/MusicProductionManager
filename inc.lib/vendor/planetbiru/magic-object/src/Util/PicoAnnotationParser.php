@@ -50,13 +50,14 @@ class PicoAnnotationParser
     private $parsedAll = false;
 
     /**
-     * Reflection
+     * Reflection object
      * @var ReflectionClass|ReflectionMethod|ReflectionProperty
      */
     private $reflection;
 
     /**
      * Constructor
+     * @throws ZeroArgumentException|InvalidParameterException
      */
     public function __construct()
     {
@@ -156,9 +157,8 @@ class PicoAnnotationParser
     private function parse()
     {
         $pattern = "/@(?=(.*)" . $this->endPattern . ")/U";
-
         preg_match_all($pattern, $this->rawDocBlock, $matches);
-
+        
         foreach ($matches[1] as $rawParameter) {
             if (preg_match("/^(" . $this->keyPattern . ")(.*)$/", $rawParameter, $match)) {
                 $parsedValue = $this->parseValue($match[2]);
@@ -207,6 +207,7 @@ class PicoAnnotationParser
      * @param mixed $declaration
      * @param string $name
      * @return string[]
+     * @throws InvalidArgumentException
      */
     private function parseVariableDeclaration($declaration, $name)
     {
@@ -326,22 +327,21 @@ class PicoAnnotationParser
      * Combine and merge array
      *
      * @param array $matches2
-     * @param array $pair1
+     * @param array $pair
      * @return array
      */
-    private function combineAndMerge($matches2, $pair1)
+    private function combineAndMerge($matches2, $pair)
     {
         if(isset($matches2[1]) && isset($matches2[2]) && is_array($matches2[1]) && is_array($matches2[2]))
         {
             $pair2 = array_combine($matches2[1], $matches2[2]);
-            // merge $pair1 and $pair2 into $pair3
-            $pair3 = array_merge($pair1, $pair2);
+            // merge $pair and $pair2 into $pair3
+            return array_merge($pair, $pair2);
         }
         else
         {
-            $pair3 = $pair1;
+            return $pair;
         }
-        return $pair3;
     }
 
     /**
@@ -349,6 +349,7 @@ class PicoAnnotationParser
      *
      * @param string $queryString
      * @return string[]
+     * @throws InvalidQueryInputException 
      */
     public function parseKeyValue($queryString)
     {
@@ -356,27 +357,27 @@ class PicoAnnotationParser
         {
             return array();
         }
-        if(is_array($queryString))
+        if(!is_string($queryString))
         {
-            throw new InvalidQueryInputException("Invalid query input");
+            throw new InvalidAnnotationException("Invalid query string");
         }
 
         // For every modification, please test regular expression with https://regex101.com/
     
         // parse attributes with quotes
-        $regex1 = '/([_\-\w+]+)\=\"([a-zA-Z0-9\-\+ _,.\(\)\{\}\`\~\!\@\#\$\%\^\*\\\|\<\>\[\]\/&%?=:;\'\t\r\n|\r|\n]+)\"/m'; // NOSONAR
-        preg_match_all($regex1, $queryString, $matches1);
+        $pattern1 = '/([_\-\w+]+)\=\"([a-zA-Z0-9\-\+ _,.\(\)\{\}\`\~\!\@\#\$\%\^\*\\\|\<\>\[\]\/&%?=:;\'\t\r\n|\r|\n]+)\"/m'; // NOSONAR
+        preg_match_all($pattern1, $queryString, $matches1);
         $pair1 = array_combine($matches1[1], $matches1[2]);
         
         // parse attributes without quotes
-        $regex2 = '/([_\-\w+]+)\=([a-zA-Z0-9._]+)/m'; // NOSONAR
-        preg_match_all($regex2, $queryString, $matches2);
+        $pattern2 = '/([_\-\w+]+)\=([a-zA-Z0-9._]+)/m'; // NOSONAR
+        preg_match_all($pattern2, $queryString, $matches2);
 
         $pair3 = $this->combineAndMerge($matches2, $pair1);
         
         // parse attributes without any value
-        $regex3 = '/([\w\=\-\_"]+)/m'; // NOSONAR
-        preg_match_all($regex3, $queryString, $matches3);
+        $pattern3 = '/([\w\=\-\_"]+)/m'; // NOSONAR
+        preg_match_all($pattern3, $queryString, $matches3);
         
         $pair4 = array();
         if(isset($matches3) && isset($matches3[0]) && is_array($matches3[0]))
@@ -419,6 +420,7 @@ class PicoAnnotationParser
      *
      * @param string $queryString
      * @return PicoGenericObject
+     * @throws InvalidAnnotationException
      */
     public function parseKeyValueAsObject($queryString)
     {
@@ -426,7 +428,7 @@ class PicoAnnotationParser
         {
             return new PicoGenericObject();
         }
-        if(is_array($queryString))
+        if(!is_string($queryString))
         {
             throw new InvalidAnnotationException("Invalid query string");
         }

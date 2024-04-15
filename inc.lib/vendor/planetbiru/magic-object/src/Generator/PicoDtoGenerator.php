@@ -131,7 +131,7 @@ class PicoDtoGenerator
      * @param array $rows
      * @return string
      */
-    private function createValuueOf($picoTableName, $rows)
+    private function createValueOf($picoTableName, $rows)
     {
         $className = ucfirst(PicoStringUtil::camelize($picoTableName));
         $str = "";
@@ -214,7 +214,7 @@ class PicoDtoGenerator
                 $prop = $this->createProperty($typeMap, $columnName, $columnType);
                 $attrs[] = $prop;
             }
-            $valueOf = $this->createValuueOf($picoTableName, $rows);
+            $valueOf = $this->createValueOf($picoTableName, $rows);
             $attrs[] = $valueOf;
         }
 

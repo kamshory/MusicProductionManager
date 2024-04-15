@@ -107,7 +107,6 @@ class ExtendedReflectionClass extends ReflectionClass {
 	 */
 	private function tokenizeSource($source) //NOSONAR
 	{
-
 		$tokens = token_get_all($source);
 
 		$builtNamespace = '';

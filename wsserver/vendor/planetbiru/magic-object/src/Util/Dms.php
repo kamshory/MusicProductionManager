@@ -2,8 +2,6 @@
 
 namespace MagicObject\Util;
 
-use stdClass;
-
 class Dms
 {
     /**
@@ -25,14 +23,14 @@ class Dms
      * 
      * @var float
      */
-    private $sec = 0;
+    private $sec = 0.0;
 
     /**
      * Decimal
      *
      * @var float
      */
-    private $dd = 0;
+    private $dd = 0.0;
     
     /**
      * Converting DMS ( Degrees / minutes / seconds ) to decimal format
@@ -45,7 +43,7 @@ class Dms
     public function dmsToDd($deg, $min, $sec)
     {
         // Converting DMS ( Degrees / minutes / seconds ) to decimal format
-        $dec = $deg+((($min*60)+($sec))/3600);
+        $dec = $deg+((($min*60)+$sec)/3600);
         
         $this->deg = $deg;
         $this->min = $min;

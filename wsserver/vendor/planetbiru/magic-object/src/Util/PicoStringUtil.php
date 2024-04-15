@@ -12,7 +12,8 @@ class PicoStringUtil
      */
     public static function camelize($input, $glue = '_')
     {
-        return lcfirst(str_replace($glue, '', ucwords($input, $glue)));
+        $input = lcfirst($input);
+        return lcfirst(str_replace($glue, '', ucwords(trim($input), $glue)));
     }
     
     /**
@@ -24,6 +25,7 @@ class PicoStringUtil
      */
     public static function upperCamelize($input, $glue = '_')
     {
+        $input = lcfirst($input);
         return ucfirst(str_replace($glue, '', ucwords($input, $glue)));
     }
 

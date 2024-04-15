@@ -17,8 +17,7 @@ class SecretObject extends stdClass //NOSONAR
     const KEY_VALUE = "value";
     
     const KEY_PROPERTY_TYPE = "propertyType";
-    const KEY_DEFAULT_VALUE = "default_value";
-    
+    const KEY_DEFAULT_VALUE = "default_value"; 
     const ANNOTATION_ENCRYPT_IN = "EncryptIn";
     const ANNOTATION_DECRYPT_IN = "DecryptIn";
     const ANNOTATION_ENCRYPT_OUT = "EncryptOut";
@@ -422,8 +421,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         $this->{$var} = $propertyValue;
         if(!$skipModifyNullProperties && $propertyValue === null)
         {
@@ -440,8 +438,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     public function get($propertyName)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
     
@@ -453,8 +450,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     public function getOrDefault($propertyName, $defaultValue = null)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : $defaultValue;
     }
     
@@ -684,6 +680,25 @@ class SecretObject extends stdClass //NOSONAR
             }
         }
         return $array;
+    }
+
+    /**
+     * Dumps a PHP value to a YAML string.
+     *
+     * The dump method, when supplied with an array, will do its best
+     * to convert the array into friendly YAML.
+     *
+     * @param int   $inline The level where you switch to inline YAML
+     * @param int   $indent The amount of spaces to use for indentation of nested nodes
+     * @param int   $flags  A bit field of DUMP_* constants to customize the dumped YAML string
+     *
+     * @return string A YAML string representing the original PHP value
+     */
+    public function dumpYaml($inline = 2, $indent = 4, $flags = 0)
+    {
+        $snake = $this->_snake();
+        $input = $this->valueArray($snake);
+        return Yaml::dump($input, $inline, $indent, $flags);
     }
     
     /**

@@ -138,7 +138,6 @@ class PicoEntityGenerator
 
     public function generateEntity($database, $picoTableName, $namespace, $baseDir)
     {
-
         $className = ucfirst(PicoStringUtil::camelize($picoTableName));
 
         $fileName = $namespace . "/" . $className;

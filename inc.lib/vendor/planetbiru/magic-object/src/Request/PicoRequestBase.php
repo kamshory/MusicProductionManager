@@ -59,8 +59,7 @@ class PicoRequestBase extends stdClass //NOSONAR
      */
     public function set($propertyName, $propertyValue)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         $this->$var = $propertyValue;
         return $this;
     }
@@ -74,8 +73,7 @@ class PicoRequestBase extends stdClass //NOSONAR
      */
     public function get($propertyName, $params = null)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         $value = isset($this->$var) ? $this->$var : null;
         if(isset($params) && !empty($params))
         {

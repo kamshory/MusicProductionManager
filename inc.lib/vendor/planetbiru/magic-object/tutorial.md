@@ -357,7 +357,23 @@ class PicoDatabaseCredentials extends SecretObject
 }
 ```
 
-## Input GET/POST/REQUEST/COOKIE
+## Input GET/POST/REQUEST/COOKIE/SERVER
+
+### Input POST
+
+```php
+
+use MagicObject\Request\InputPost;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+$inputPost = new InputPost();
+
+$name = $inputPost->getRealName();
+// equivalen to 
+$name = $_POST['real_name'];
+
+```
 
 ### Input GET
 
@@ -375,39 +391,7 @@ $name = $_GET['real_name'];
 
 ```
 
-### Input Post
-
-```php
-
-use MagicObject\Request\InputPost;
-
-require_once __DIR__ . "/vendor/autoload.php";
-
-$inputPost = new InputPost();
-
-$name = $inputPost->getRealName();
-// equivalen to 
-$name = $_POST['real_name'];
-
-```
-
-### Input Request
-
-```php
-
-use MagicObject\Request\InputRequest;
-
-require_once __DIR__ . "/vendor/autoload.php";
-
-$inputRequest = new InputRequest();
-
-$name = $inputRequest->getRealName();
-// equivalen to 
-$name = $_REQUEST['real_name'];
-
-```
-
-### Input Cookie
+### Input COOKIE
 
 ```php
 
@@ -420,6 +404,38 @@ $inputCookie = new InputCookie();
 $name = $inputCookie->getRealName();
 // equivalen to 
 $name = $_COOKIE['real_name'];
+
+```
+
+### Input SERVER
+
+```php
+
+use MagicObject\Request\InputServer;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+$inputServer = new InputServer();
+
+$remoteAddress = $inputServer->getRemoteAddr();
+// equivalen to 
+$remoteAddress = $_SERVER_['REMOTE_ADDR'];
+
+```
+
+### Input REQUEST
+
+```php
+
+use MagicObject\Request\InputRequest;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+$inputRequest = new InputRequest();
+
+$name = $inputRequest->getRealName();
+// equivalen to 
+$name = $_REQUEST['real_name'];
 
 ```
 
@@ -760,14 +776,14 @@ try
     foreach($rows as $albumSaved)
     {
         // $albumSaved is instance of Album
-      
+  
         // we can update data
         $albumSaved->setAdminEdit("USER1");
         $albumSaved->setTimeEdit(date('Y-m-d H:i:s'));
-      
+  
         // this value will not be saved to database because has no column
         $albumSaved->setAnyValue("ANY VALUE");
-      
+  
         $albumSaved->update();
     }
   
@@ -1387,7 +1403,7 @@ try
             <?php
             }
             ?>
-          
+    
         </tbody>
         </table>
 
@@ -1509,12 +1525,12 @@ class SpecificationUtil
         {
             foreach($additional as $key=>$value)
             {
-                $predicate2 = new PicoPredicate();        
+                $predicate2 = new PicoPredicate();  
                 $predicate2->equals($key, $value);
                 $spesification->addAnd($predicate2);
             }
         }
-      
+  
         return $spesification;
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 namespace MagicObject\Util;
+
+use MagicObject\MagicObject;
 use stdClass;
 
 class PicoGenericObject extends stdClass
@@ -8,7 +10,7 @@ class PicoGenericObject extends stdClass
     /**
      * Constructor
      *
-     * @param stdClass|array $data
+     * @param MagicObject|self|stdClass|array $data
      */
     public function __construct($data = null)
     {
@@ -65,8 +67,8 @@ class PicoGenericObject extends stdClass
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
      * 
-     * @param $name Name of the property.
-     * @param $value Value of the property.
+     * @param string $name Name of the property.
+     * @param string $value Value of the property.
      * @return void 
      **/
     public function __set($name, $value)
@@ -74,12 +76,11 @@ class PicoGenericObject extends stdClass
         $this->set($name, $value);
     }
 
-
     /**
      * Gets datas from the property.
      * Example: echo $instance->foo;
      * 
-     * @param $name Name of the property to get.
+     * @param string $name Name of the property to get.
      * @return mixed Datas stored in property.
      **/
     public function __get($name)
@@ -145,7 +146,7 @@ class PicoGenericObject extends stdClass
         else if (strncasecmp($method, "unset", 5) === 0) 
         {
             $var = lcfirst(substr($method, 5));
-            $this->removeValue($var, $params[0]);
+            $this->__unset($var);
             return $this;
         }
     }

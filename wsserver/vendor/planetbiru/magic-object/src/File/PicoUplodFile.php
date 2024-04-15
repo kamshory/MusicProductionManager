@@ -37,7 +37,7 @@ class PicoUplodFile
     public function __call($method, $arguments) //NOSONAR
     {
         if (strncasecmp($method, "get", 3) === 0) {
-            $var = lcfirst(substr($method, 3));
+            $var = substr($method, 3);
             $camel = PicoStringUtil::camelize($var);
             $key = $this->map[$camel];
             return isset($this->values[$key]) ? $this->values[$key] : new PicoUploadFileContainer();

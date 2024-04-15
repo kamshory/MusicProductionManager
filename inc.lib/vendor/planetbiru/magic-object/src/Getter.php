@@ -62,8 +62,7 @@ class Getter extends stdClass
      */
     public function get($propertyName)
     {
-        $var = lcfirst($propertyName);
-        $var = PicoStringUtil::camelize($var);
+        $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;   
     }
 
