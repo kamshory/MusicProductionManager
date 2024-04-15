@@ -4,6 +4,7 @@ namespace MagicObject\DataLabel;
 
 use MagicObject\SetterGetter;
 use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\PicoStringUtil;
 use stdClass;
 
 class PicoDataLabel extends SetterGetter
@@ -61,13 +62,13 @@ class PicoDataLabel extends SetterGetter
             {
                 $values = $data->value();
                 foreach ($values as $key => $value) {
-                    $key2 = $this->camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->set($key2, $value);
                 }
             }
             else if (is_array($data) || is_object($data)) {
                 foreach ($data as $key => $value) {
-                    $key2 = $this->camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->set($key2, $value);
                 }
             }

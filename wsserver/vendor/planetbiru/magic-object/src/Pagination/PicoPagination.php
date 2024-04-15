@@ -2,6 +2,7 @@
 namespace MagicObject\Pagination;
 
 use MagicObject\Exceptions\NullPointerException;
+use MagicObject\Util\PicoStringUtil;
 
 class PicoPagination
 {
@@ -48,34 +49,6 @@ class PicoPagination
         $this->orderBy = @$_GET['orderby'];
         $this->orderType = @$_GET['ordertype'];
     }
-
-    /**
-     * Convert snake case to camel case
-     *
-     * @param string $input
-     * @param string $separator
-     * @return string
-     */
-    protected function camelize($input, $separator = '_')
-    {
-        return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
-    }
-
-    /**
-     * Convert camel case to snake case
-     *
-     * @param string $input
-     * @param string $glue
-     * @return string
-     */
-    protected function snakeize($input, $glue = '_') {
-        return ltrim(
-            preg_replace_callback('/[A-Z]/', function ($matches) use ($glue) {
-                return $glue . strtolower($matches[0]);
-            }, $input),
-            $glue
-        );
-    } 
 
     /**
      * Parse offset
@@ -138,14 +111,14 @@ class PicoPagination
      */ 
     public function getOrderBy($filter = null, $defaultOrderBy = null)
     {
-        $orderBy = $this->camelize($this->orderBy);
+        $orderBy = PicoStringUtil::camelize($this->orderBy);
         if($filter != null && is_array($filter) && !isset($filter[$orderBy]))
         {
             $orderBy = null;
         }
         if(($orderBy == null || empty($this->orderBy)) && $defaultOrderBy != null)
         {
-            $orderBy = $this->camelize($defaultOrderBy);
+            $orderBy = PicoStringUtil::camelize($defaultOrderBy);
         }
         if(empty($orderBy))
         {

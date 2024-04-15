@@ -262,9 +262,7 @@ class PicoEntityGenerator
         mkdir($dir, 0755, true);
 
         $sql = "SHOW COLUMNS FROM $picoTableName";
-
-
-
+        
         $rows = $this->database->fetchAll($sql);
 
         $attrs = array();

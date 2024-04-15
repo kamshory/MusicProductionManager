@@ -37,7 +37,7 @@ class PicoSort
     /**
      * Set sort by
      *
-     * @param  string  $sortBy  Sort by
+     * @param string $sortBy  Sort by
      *
      * @return self
      */ 
@@ -61,7 +61,7 @@ class PicoSort
     /**
      * Set sort type
      *
-     * @param  string  $sortType  Sort type
+     * @param string $sortType  Sort type
      *
      * @return self
      */ 

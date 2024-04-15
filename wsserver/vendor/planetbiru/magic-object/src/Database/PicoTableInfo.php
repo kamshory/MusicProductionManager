@@ -9,7 +9,7 @@ class PicoTableInfo
      *
      * @var string
      */
-    private $tableName = "";
+    private $tableName = null;
 
     /**
      * Columns
@@ -78,7 +78,7 @@ class PicoTableInfo
     /**
      * Get table name
      *
-     * @return  string
+     * @return string
      */ 
     public function getTableName()
     {
@@ -88,9 +88,9 @@ class PicoTableInfo
     /**
      * Set table name
      *
-     * @param  string  $tableName  Table name
+     * @param string $tableName  Table name
      *
-     * @return  self
+     * @return self
      */ 
     public function setTableName(string $tableName)
     {
@@ -102,7 +102,7 @@ class PicoTableInfo
     /**
      * Get columns
      *
-     * @return  array
+     * @return array
      */ 
     public function getColumns()
     {
@@ -112,9 +112,9 @@ class PicoTableInfo
     /**
      * Set columns
      *
-     * @param  array  $columns  Columns
+     * @param array $columns  Columns
      *
-     * @return  self
+     * @return self
      */ 
     public function setColumns(array $columns)
     {
@@ -126,7 +126,7 @@ class PicoTableInfo
     /**
      * Get join columns
      *
-     * @return  array
+     * @return array
      */ 
     public function getJoinColumns()
     {
@@ -136,9 +136,9 @@ class PicoTableInfo
     /**
      * Set join columns
      *
-     * @param  array  $joinColumns  Join columns
+     * @param array $joinColumns  Join columns
      *
-     * @return  self
+     * @return self
      */ 
     public function setJoinColumns(array $joinColumns)
     {
@@ -150,7 +150,7 @@ class PicoTableInfo
     /**
      * Get primary keys
      *
-     * @return  array
+     * @return array
      */ 
     public function getPrimaryKeys()
     {
@@ -160,9 +160,9 @@ class PicoTableInfo
     /**
      * Set primary keys
      *
-     * @param  array  $primaryKeys  Primary keys
+     * @param array $primaryKeys  Primary keys
      *
-     * @return  self
+     * @return self
      */ 
     public function setPrimaryKeys(array $primaryKeys)
     {
@@ -174,7 +174,7 @@ class PicoTableInfo
     /**
      * Get auto increment keys
      *
-     * @return  array
+     * @return array
      */ 
     public function getAutoIncrementKeys()
     {
@@ -184,9 +184,9 @@ class PicoTableInfo
     /**
      * Set auto increment keys
      *
-     * @param  array  $autoIncrementKeys  Auto increment keys
+     * @param array $autoIncrementKeys  Auto increment keys
      *
-     * @return  self
+     * @return self
      */ 
     public function setAutoIncrementKeys(array $autoIncrementKeys)
     {
@@ -198,7 +198,7 @@ class PicoTableInfo
     /**
      * Get default value keys
      *
-     * @return  array
+     * @return array
      */ 
     public function getDefaultValue()
     {
@@ -208,9 +208,9 @@ class PicoTableInfo
     /**
      * Set default value keys
      *
-     * @param  array  $defaultValue  Default value keys
+     * @param array $defaultValue  Default value keys
      *
-     * @return  self
+     * @return self
      */ 
     public function setDefaultValue(array $defaultValue)
     {
@@ -222,7 +222,7 @@ class PicoTableInfo
     /**
      * Get not null columns
      *
-     * @return  array
+     * @return array
      */ 
     public function getNotNullColumns()
     {
@@ -232,9 +232,9 @@ class PicoTableInfo
     /**
      * Set not null columns
      *
-     * @param  array  $notNullColumns  Not null columns
+     * @param array $notNullColumns  Not null columns
      *
-     * @return  self
+     * @return self
      */ 
     public function setNotNullColumns(array $notNullColumns)
     {

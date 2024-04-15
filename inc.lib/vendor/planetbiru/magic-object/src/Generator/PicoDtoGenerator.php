@@ -44,6 +44,7 @@ class PicoDtoGenerator
      */
     public function __construct($database, $baseDir, $baseNamespace, $tableName)
     {
+        $tableName = str_replace(array('"', "'"), "", $tableName);
         $this->database = $database;
         $this->baseDir = $baseDir;
         $this->baseNamespace = $baseNamespace;
@@ -80,6 +81,12 @@ class PicoDtoGenerator
         return implode("\r\n", $docs)."\r\n".$prop."\r\n";
     }
 
+    /**
+     * Get property name
+     *
+     * @param string $name
+     * @return string
+     */
     private function getPropertyName($name)
     {
         $arr = explode("_", $name);
@@ -195,28 +202,24 @@ class PicoDtoGenerator
 
         $sql = "SHOW COLUMNS FROM $picoTableName";
 
-
         $rows = $this->database->fetchAll($sql);
-
-            $attrs = [];
-            if(is_array($rows))
+        $attrs = [];
+        if(is_array($rows))
+        {
+            foreach($rows as $row)
             {
-                foreach($rows as $row)
-                {
-                    $columnName = $row['Field'];
-                    $columnType = $row['Type'];
+                $columnName = $row['Field'];
+                $columnType = $row['Type'];
 
-                    $prop = $this->createProperty($typeMap, $columnName, $columnType);
-                    $attrs[] = $prop;
-                }
-                $valueOf = $this->createValuueOf($picoTableName, $rows);
-                $attrs[] = $valueOf;
+                $prop = $this->createProperty($typeMap, $columnName, $columnType);
+                $attrs[] = $prop;
             }
-
+            $valueOf = $this->createValuueOf($picoTableName, $rows);
+            $attrs[] = $valueOf;
+        }
 
         $uses = array();
         $uses[] = "";
-
         $classStr = '<?php
 
 namespace '.$this->baseNamespace.';

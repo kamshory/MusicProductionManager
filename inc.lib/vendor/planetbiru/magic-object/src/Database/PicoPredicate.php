@@ -205,7 +205,7 @@ class PicoPredicate
     /**
      * Set filter logic
      *
-     * @param  string  $filterLogic  Filter logic
+     * @param string $filterLogic  Filter logic
      *
      * @return self
      */ 

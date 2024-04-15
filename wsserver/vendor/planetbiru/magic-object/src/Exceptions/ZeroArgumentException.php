@@ -1,10 +1,10 @@
 <?php
 namespace MagicObject\Exceptions;
 
-use Exception;
+use InvalidArgumentException;
 use Throwable;
 
-class ZeroArgumentException extends Exception
+class ZeroArgumentException extends InvalidArgumentException
 {
     /**
      * Previous exception

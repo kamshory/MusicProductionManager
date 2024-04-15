@@ -7,7 +7,6 @@ use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\MandatoryTableNameException;
 use MagicObject\MagicObject;
 use MagicObject\Util\PicoAnnotationParser;
-use stdClass;
 
 class PicoDatabaseStructure
 {
@@ -54,13 +53,13 @@ class PicoDatabaseStructure
     public function showCreateTable($databaseType, $tableName = null)
     {
         $info = $this->getObjectInfo();
-        if (!isset($tableName) && !isset($info->tableName)) 
+        if (!isset($tableName) || $info->getTableName() != null) 
         {
             throw new MandatoryTableNameException("Table name is mandatory");
         }
-        if (isset($tableName) && !isset($info->tableName)) 
+        else
         {
-            $tableName = $info->tableName;
+            $tableName = $info->getTableName();
         }
         $createStrArr = array();
         $createStrArr[] = "CREATE TABLE IF NOT EXISTS $tableName(";
@@ -73,7 +72,7 @@ class PicoDatabaseStructure
      * Show create table
      *
      * @param string $databaseType
-     * @param stdClass $info
+     * @param PicoTableInfo $info
      * @return string
      */
     private function showCreateTableByType($databaseType, $info)
@@ -82,11 +81,11 @@ class PicoDatabaseStructure
         $pk = array();
         if($databaseType == self::DATABASE_TYPE_MYSQL) 
         {
-            foreach($info->column as $column) 
+            foreach($info->getColumns() as $column) 
             {
                 $createStrArr[] = $column[self::KEY_NAME]." ".$column[self::KEY_TYPE]." ".$this->nullable($column[self::KEY_NULLABLE]);
             }
-            foreach($info->column as $column) 
+            foreach($info->getColumns() as $column) 
             {
                 if(isset($column[self::KEY_PRIMARY]) && $column[self::KEY_PRIMARY] === true)
                 {
@@ -143,7 +142,7 @@ class PicoDatabaseStructure
     /**
      * Get object information
      *
-     * @return stdClass
+     * @return PicoTableInfo
      */
     public function getObjectInfo(){
         $reflexClass = new PicoAnnotationParser($this->className);
@@ -181,14 +180,6 @@ class PicoDatabaseStructure
                 }
             }
         }
-        $info = new stdClass();
-        $info->name = $picoTableName;
-        $info->tableName = $picoTableName;
-        $info->columns = $columns;
-        $info->primaryKeys = $primaryKeys;
-        $info->autoIncrementKeys = $autoIncrementKeys;
-        $info->notNullColumns = $notNullColumns;
-        $info->defaultValue = $defaultValue;
-        return $info;
+        return new PicoTableInfo($picoTableName, $columns, array(), $primaryKeys, $autoIncrementKeys, $defaultValue, $notNullColumns);
     }
 }

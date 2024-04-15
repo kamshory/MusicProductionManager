@@ -84,7 +84,7 @@ class PicoPagable
     /**
      * Set sortable
      *
-     * @param  PicoSortable  $sortable  Sortable
+     * @param PicoSortable  $sortable  Sortable
      *
      * @return self
      */ 
@@ -140,7 +140,7 @@ class PicoPagable
     /**
      * Set page
      *
-     * @param  PicoPage  $page  Page
+     * @param PicoPage  $page  Page
      *
      * @return self
      */ 
@@ -166,7 +166,7 @@ class PicoPagable
     /**
      * Set offset and limit
      *
-     * @param  PicoLimit  $offsetLimit  Offset and limit
+     * @param PicoLimit  $offsetLimit  Offset and limit
      *
      * @return self
      */ 

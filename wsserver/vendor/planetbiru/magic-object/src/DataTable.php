@@ -131,6 +131,11 @@ class DataTable extends SetterGetter
         return $this;
     }
     
+    /**
+     * Initialize table
+     *
+     * @return self
+     */
     private function init()
     {
         $className = get_class($this);
@@ -153,6 +158,7 @@ class DataTable extends SetterGetter
             $this->currentLanguage = $prefLanguage->getContent();
         }  
         $this->tableIdentity = $reflexClass->parseKeyValueAsObject($reflexClass->getFirstParameter(self::ANNOTATION_TABLE));
+        return $this;
     }
     
     /**
@@ -349,8 +355,5 @@ class DataTable extends SetterGetter
             $td2->textContent = isset($value) ? $value : "";
         }
         return $doc->saveHTML();
-    }
-    
-    
-    
+    } 
 }

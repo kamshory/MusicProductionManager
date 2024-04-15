@@ -5,12 +5,14 @@ namespace MagicObject;
 use MagicObject\Util\PicoAnnotationParser;
 use MagicObject\Util\PicoEnvironmentVariable;
 use MagicObject\Secret\PicoSecret;
+use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
 
 class SecretObject extends stdClass //NOSONAR
 {
+    const JSON = 'JSON';
     const KEY_NAME = "name";
     const KEY_VALUE = "value";
     
@@ -320,13 +322,13 @@ class SecretObject extends stdClass //NOSONAR
             {
                 $values = $data->value();
                 foreach ($values as $key => $value) {
-                    $key2 = $this->camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->_set($key2, $value);
                 }
             }
             else if (is_array($data) || is_object($data)) {
                 foreach ($data as $key => $value) {
-                    $key2 = $this->camelize($key);
+                    $key2 = PicoStringUtil::camelize($key);
                     $this->_set($key2, $value);
                 }
             }
@@ -421,7 +423,7 @@ class SecretObject extends stdClass //NOSONAR
     public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = PicoStringUtil::camelize($var);
         $this->{$var} = $propertyValue;
         if(!$skipModifyNullProperties && $propertyValue === null)
         {
@@ -439,7 +441,7 @@ class SecretObject extends stdClass //NOSONAR
     public function get($propertyName)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = PicoStringUtil::camelize($var);
         return isset($this->$var) ? $this->$var : null;
     }
     
@@ -452,7 +454,7 @@ class SecretObject extends stdClass //NOSONAR
     public function getOrDefault($propertyName, $defaultValue = null)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = PicoStringUtil::camelize($var);
         return isset($this->$var) ? $this->$var : $defaultValue;
     }
     
@@ -472,7 +474,7 @@ class SecretObject extends stdClass //NOSONAR
             $index = 0;
             foreach($filter as $val)
             {
-                $tmp[$index] = trim($this->camelize($val));               
+                $tmp[$index] = trim(PicoStringUtil::camelize($val));               
                 $index++;
             }
             $filter = $tmp;
@@ -509,7 +511,7 @@ class SecretObject extends stdClass //NOSONAR
         {
             $value2 = new stdClass;
             foreach ($value as $key => $val) {
-                $key2 = $this->snakeize($key);
+                $key2 = PicoStringUtil::snakeize($key);
                 $value2->$key2 = $val;
             }
             return $value2;
@@ -564,9 +566,9 @@ class SecretObject extends stdClass //NOSONAR
      */
     protected function _snake()
     {
-        return isset($this->classParams['JSON'])
-            && isset($this->classParams['JSON']['property-naming-strategy'])
-            && strcasecmp($this->classParams['JSON']['property-naming-strategy'], 'SNAKE_CASE') == 0
+        return isset($this->classParams[self::JSON])
+            && isset($this->classParams[self::JSON]['property-naming-strategy'])
+            && strcasecmp($this->classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
             ;
     }
     
@@ -577,9 +579,9 @@ class SecretObject extends stdClass //NOSONAR
      */
     protected function isUpperCamel()
     {
-        return isset($this->classParams['JSON'])
-            && isset($this->classParams['JSON']['property-naming-strategy'])
-            && strcasecmp($this->classParams['JSON']['property-naming-strategy'], 'UPPER_CAMEL_CASE') == 0
+        return isset($this->classParams[self::JSON])
+            && isset($this->classParams[self::JSON]['property-naming-strategy'])
+            && strcasecmp($this->classParams[self::JSON]['property-naming-strategy'], 'UPPER_CAMEL_CASE') == 0
             ;
     }
     
@@ -592,35 +594,6 @@ class SecretObject extends stdClass //NOSONAR
     {
         return !$this->_snake();
     }
-    
-    /**
-     * Convert snake case to camel case
-     *
-     * @param string $input
-     * @param string $separator
-     * @return string
-     */
-    protected function camelize($input, $separator = '_')
-    {
-        return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
-    }
-
-    /**
-     * Convert camel case to snake case
-     *
-     * @param string $input
-     * @param string $glue
-     * @return string
-     */
-    protected function snakeize($input, $glue = '_') {
-        return ltrim(
-            preg_replace_callback('/[A-Z]/', function ($matches) use ($glue) {
-                return $glue . strtolower($matches[0]);
-            }, $input),
-            $glue
-        );
-    } 
-    
     
     /**
      * Property list

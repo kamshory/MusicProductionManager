@@ -1542,5 +1542,23 @@ class MagicObject extends stdClass // NOSONAR
         return $value->value($snake);
     }
     
-    
+
+    /**
+     * Dumps a PHP value to a YAML string.
+     *
+     * The dump method, when supplied with an array, will do its best
+     * to convert the array into friendly YAML.
+     *
+     * @param int   $inline The level where you switch to inline YAML
+     * @param int   $indent The amount of spaces to use for indentation of nested nodes
+     * @param int   $flags  A bit field of DUMP_* constants to customize the dumped YAML string
+     *
+     * @return string A YAML string representing the original PHP value
+     */
+    public function dumpYaml($inline = 2, $indent = 4, $flags = 0)
+    {
+        $snake = $this->_snake();
+        $input = $this->valueArray($snake);
+        return Yaml::dump($input, $inline, $indent, $flags);
+    }
 }

@@ -5,6 +5,7 @@ namespace MagicObject\Request;
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\MagicObject;
 use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use stdClass;
 
@@ -43,39 +44,10 @@ class PicoRequestBase extends stdClass //NOSONAR
     {
         if (is_array($data) || is_object($data)) {
             foreach ($data as $key => $value) {
-                $key2 = $this->camelize(str_replace("-", "_", $key));
+                $key2 = PicoStringUtil::camelize(str_replace("-", "_", $key));
                 $this->{$key2} = $value;
             }
         }
-    }
-
-    /**
-     * Convert snake case to camel case
-     *
-     * @param string $input
-     * @param string $separator
-     * @return string
-     */
-    protected function camelize($input, $separator = '_')
-    {
-        return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
-    }
-
-    /**
-     * Convert camel case to snake case
-     *
-     * @param string $input
-     * @param string $glue
-     * @return string
-     */
-    protected function snakeize($input, $glue = '_') {
-        return ltrim(
-            preg_replace_callback('/[A-Z]/', function ($matches) use ($glue)
-            {
-                return $glue . strtolower($matches[0]);
-            }, $input),
-            $glue
-        );
     }
 
     /**
@@ -88,7 +60,7 @@ class PicoRequestBase extends stdClass //NOSONAR
     public function set($propertyName, $propertyValue)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = PicoStringUtil::camelize($var);
         $this->$var = $propertyValue;
         return $this;
     }
@@ -103,7 +75,7 @@ class PicoRequestBase extends stdClass //NOSONAR
     public function get($propertyName, $params = null)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = PicoStringUtil::camelize($var);
         $value = isset($this->$var) ? $this->$var : null;
         if(isset($params) && !empty($params))
         {
@@ -137,7 +109,7 @@ class PicoRequestBase extends stdClass //NOSONAR
             $value2 = new stdClass;
             foreach ($value as $key => $val)
             {
-                $key2 = $this->snakeize($key);
+                $key2 = PicoStringUtil::snakeize($key);
                 $value2->$key2 = $val;
             }
             return $value2;

@@ -5,11 +5,14 @@ namespace MagicObject;
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use stdClass;
 
 class SetterGetter
 {
+    const JSON = 'JSON';
+    
     /**
      * Class parameter
      *
@@ -39,35 +42,6 @@ class SetterGetter
     }
 
     /**
-     * Convert snake case to camel case
-     *
-     * @param string $input
-     * @param string $separator
-     * @return string
-     */
-    protected function camelize($input, $separator = '_')
-    {
-        return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
-    }
-
-    /**
-     * Convert camel case to snake case
-     *
-     * @param string $input
-     * @param string $glue
-     * @return string
-     */
-    protected function snakeize($input, $glue = '_') {
-        return ltrim(
-            preg_replace_callback('/[A-Z]/', function ($matches) use ($glue)
-            {
-                return $glue . strtolower($matches[0]);
-            }, $input),
-            $glue
-        );
-    }
-
-    /**
      * Set property value
      *
      * @param string $propertyName
@@ -77,7 +51,7 @@ class SetterGetter
     public function set($propertyName, $propertyValue)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = PicoStringUtil::camelize($var);
         $this->$var = $propertyValue;
         return $this;
     }
@@ -91,7 +65,7 @@ class SetterGetter
     public function get($propertyName)
     {
         $var = lcfirst($propertyName);
-        $var = $this->camelize($var);
+        $var = PicoStringUtil::camelize($var);
         return isset($this->$var) ? $this->$var : null;
     }
     
@@ -167,7 +141,7 @@ class SetterGetter
             $value2 = new stdClass;
             foreach ($value as $key => $val)
             {
-                $key2 = $this->snakeize($key);
+                $key2 = PicoStringUtil::snakeize($key);
                 $value2->$key2 = $val;
             }
             return $value2;
@@ -257,9 +231,9 @@ class SetterGetter
      */
     private function isSnake()
     {
-        return isset($this->classParams['JSON'])
-            && isset($this->classParams['JSON']['property-naming-strategy'])
-            && strcasecmp($this->classParams['JSON']['property-naming-strategy'], 'SNAKE_CASE') == 0
+        return isset($this->classParams[self::JSON])
+            && isset($this->classParams[self::JSON]['property-naming-strategy'])
+            && strcasecmp($this->classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
             ;
     }
     
@@ -280,9 +254,9 @@ class SetterGetter
      */
     private function isPretty()
     {
-        return isset($this->classParams['JSON'])
-            && isset($this->classParams['JSON']['prettify'])
-            && strcasecmp($this->classParams['JSON']['prettify'], 'true') == 0
+        return isset($this->classParams[self::JSON])
+            && isset($this->classParams[self::JSON]['prettify'])
+            && strcasecmp($this->classParams[self::JSON]['prettify'], 'true') == 0
             ;
     }
 

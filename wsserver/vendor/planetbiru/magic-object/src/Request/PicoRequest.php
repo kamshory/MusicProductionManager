@@ -23,6 +23,14 @@ class PicoRequest extends PicoRequestBase
         {
             $this->loadData($_COOKIE);
         }
+        else if($inputType == INPUT_ENV && isset($_ENV))
+        {
+            $this->loadData($_ENV);
+        }
+        else if($inputType == INPUT_SERVER && isset($_SERVER))
+        {
+            $this->loadData($_SERVER);
+        }
     }
     
     /**

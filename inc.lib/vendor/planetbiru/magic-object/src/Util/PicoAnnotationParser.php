@@ -2,6 +2,7 @@
 
 namespace MagicObject\Util;
 
+use InvalidArgumentException;
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidParameterException;
 use MagicObject\Exceptions\InvalidQueryInputException;
@@ -212,13 +213,13 @@ class PicoAnnotationParser
         $type = gettype($declaration);
 
         if ($type !== 'string') {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "Raw declaration must be string, $type given. Key='$name'."
             );
         }
 
         if (strlen($declaration) === 0) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "Raw declaration cannot have zero length. Key='$name'."
             );
         }

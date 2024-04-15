@@ -221,7 +221,7 @@ class PicoPageData
     /**
      * Get pagable
      *
-     * @return  PicoPagable
+     * @return PicoPagable
      */ 
     public function getPagable()
     {

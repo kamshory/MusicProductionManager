@@ -17,7 +17,6 @@ use MagicObject\Exceptions\NoUpdatableColumnException;
 use MagicObject\Exceptions\NoPrimaryKeyDefinedException;
 use MagicObject\Util\ExtendedReflectionClass;
 use MagicObject\Util\PicoAnnotationParser;
-use stdClass;
 
 class PicoDatabasePersistence // NOSONAR
 {
