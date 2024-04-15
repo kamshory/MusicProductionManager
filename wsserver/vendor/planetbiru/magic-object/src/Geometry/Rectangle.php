@@ -10,42 +10,42 @@ use MagicObject\Exceptions\InvalidPolygonException;
 class Rectangle {
 
     /**
-     * Point A
+     * Point a
      *
      * @var Point
      */
-    public $A;
+    public $a;
 
     /**
-     * Point B
+     * Point b
      *
      * @var Point
      */
-    public $B;
+    public $b;
 
     public $polygon = new Polygon();
 
     /**
      * Constructor to initialize the Rectangle with two Point objects
      *
-     * @param Point $A
-     * @param Point $B
+     * @param Point $a
+     * @param Point $b
      */
-    public function __construct(Point $A, Point $B) {
-        $this->A = $A;
-        $this->B = $B;
+    public function __construct(Point $a, Point $b) {
+        $this->a = $a;
+        $this->b = $b;
 
-        $point1 = new Point($this->A->x, $this->A->y);
-        $point2 = new Point($this->B->x, $this->A->y);
-        $point3 = new Point($this->B->x, $this->B->y);
-        $point4 = new Point($this->A->x, $this->B->y);
+        $point1 = new Point($this->a->x, $this->a->y);
+        $point2 = new Point($this->b->x, $this->a->y);
+        $point3 = new Point($this->b->x, $this->b->y);
+        $point4 = new Point($this->a->x, $this->b->y);
         
         $this->polygon
             ->addPoint($point1)
             ->addPoint($point2)
             ->addPoint($point3)
-            ->addPoint($point4);
-        
+            ->addPoint($point4)
+            ; 
     }
 
     /**

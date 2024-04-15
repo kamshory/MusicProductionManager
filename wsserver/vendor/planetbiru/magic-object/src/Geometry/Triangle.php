@@ -8,63 +8,63 @@ namespace MagicObject\Geometry;
 class Triangle {
 
     /**
-     * Point A
-     *
-     * @var Point
-     */
-    public $A;
-
-    /**
-     * Point B
-     *
-     * @var Point
-     */
-    public $B;
-
-    /**
-     * Point C
-     *
-     * @var Point
-     */
-    public $C;
-
-    /**
      * Point a
      *
-     * @var double
+     * @var Point
      */
     public $a;
 
     /**
      * Point b
      *
-     * @var double
+     * @var Point
      */
     public $b;
 
     /**
      * Point c
      *
-     * @var double
+     * @var Point
      */
     public $c;
 
     /**
+     * Point sa
+     *
+     * @var double
+     */
+    public $sa;
+
+    /**
+     * Point sb
+     *
+     * @var double
+     */
+    public $sb;
+
+    /**
+     * Point sc
+     *
+     * @var double
+     */
+    public $sc;
+
+    /**
      * Constructor to initialize the Triangle with three Point objects
      *
-     * @param Point $A
-     * @param Point $B
-     * @param Point $C
+     * @param Point $a
+     * @param Point $b
+     * @param Point $c
      */
-    public function __construct(Point $A, Point $B, Point $C) {
-        $this->A = $A;
-        $this->B = $B;
-        $this->C = $C;
+    public function __construct(Point $a, Point $b, Point $c) {
+        $this->a = $a;
+        $this->b = $b;
+        $this->c = $c;
 
         // Calculate the lengths of the sides of the triangle
-        $this->a = $B->distanceFrom($C);
-        $this->b = $C->distanceFrom($A);
-        $this->c = $A->distanceFrom($B);
+        $this->sa = $b->distanceFrom($c);
+        $this->sb = $c->distanceFrom($a);
+        $this->sc = $a->distanceFrom($b);
     }
 
     /**
@@ -73,7 +73,7 @@ class Triangle {
      * @return double
      */
     public function getArea() {
-        $z = ($this->a + $this->b + $this->c) / 2;
-        return sqrt($z * ($z - $this->a) * ($z - $this->b) * ($z - $this->c));
+        $z = ($this->sa + $this->sb + $this->sc) / 2;
+        return sqrt($z * ($z - $this->sa) * ($z - $this->sb) * ($z - $this->sc));
     }
 }

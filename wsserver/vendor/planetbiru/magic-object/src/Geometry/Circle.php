@@ -3,9 +3,9 @@
 namespace MagicObject\Geometry;
 
 /**
- * Class representing a Line with two Point objects
+ * Class representing a Circle with center Point and radius
  */
-class Line {
+class Circle {
 
     /**
      * Center

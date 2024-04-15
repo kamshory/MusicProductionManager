@@ -8,28 +8,28 @@ namespace MagicObject\Geometry;
 class Line {
 
     /**
-     * Point A
+     * Point a
      *
      * @var Point
      */
-    public $A;
+    public $a;
 
     /**
-     * Point B
+     * Point b
      *
      * @var Point
      */
-    public $B;
+    public $b;
 
     /**
      * Constructor to initialize the Line with two Point objects
      *
-     * @param Point $A
-     * @param Point $B
+     * @param Point $a
+     * @param Point $b
      */
-    public function __construct(Point $A, Point $B) {
-        $this->A = $A;
-        $this->B = $B;
+    public function __construct(Point $a, Point $b) {
+        $this->a = $a;
+        $this->b = $b;
     }
 
     /**
@@ -38,6 +38,6 @@ class Line {
      * @return double
      */
     public function getLength() {
-        return $this->A->distanceFrom($this->B);
+        return $this->a->distanceFrom($this->a);
     }
 }

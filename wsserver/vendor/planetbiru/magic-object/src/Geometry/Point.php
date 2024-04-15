@@ -6,7 +6,18 @@ namespace MagicObject\Geometry;
  * Class representing a Point with x and y coordinates
  */
 class Point {
+    /**
+     * X coordinate
+     *
+     * @var double
+     */
     public $x = 0.0;
+
+    /**
+     * Y coordinate
+     *
+     * @var double
+     */
     public $y = 0.0;
 
     /**
