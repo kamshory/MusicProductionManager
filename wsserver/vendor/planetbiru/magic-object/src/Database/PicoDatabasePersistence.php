@@ -15,8 +15,8 @@ use MagicObject\Exceptions\NoColumnMatchException;
 use MagicObject\Exceptions\NoDatabaseConnectionException;
 use MagicObject\Exceptions\NoUpdatableColumnException;
 use MagicObject\Exceptions\NoPrimaryKeyDefinedException;
-use MagicObject\Util\ExtendedReflectionClass;
-use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\ClassUtil\ExtendedReflectionClass;
+use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 
 class PicoDatabasePersistence // NOSONAR
 {

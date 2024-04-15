@@ -5,7 +5,7 @@ namespace MagicObject\Database;
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\MagicObject;
-use MagicObject\Util\PicoAnnotationParser;
+use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 use stdClass;
 
 class PicoEntityLabel
