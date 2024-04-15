@@ -1,6 +1,6 @@
 <?php
 
-namespace MusicProductionManager;
+namespace MusicProductionManager\App;
 
 use MagicObject\Database\PicoDatabase;
 

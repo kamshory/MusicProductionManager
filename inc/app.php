@@ -2,8 +2,8 @@
 
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabaseCredentials;
+use MusicProductionManager\App\ShutdownManager;
 use MusicProductionManager\Config\ConfigApp;
-use MusicProductionManager\ShutdownManager;
 
 require_once dirname(__DIR__)."/inc.lib/vendor/autoload.php";
 
