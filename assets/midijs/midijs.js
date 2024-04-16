@@ -90,6 +90,14 @@
             loadMidi(e, malloc, null)
         })
     }
+    
+    function setCurrentTime(currentTime)
+    {
+        if(S)
+        {
+            S.currentTime = currentTime;
+        }
+    }
 
     function loadMidi(e, n, t) {
         if (-1 != e.indexOf("data:")) {
@@ -198,7 +206,24 @@
         for (var e = 0; e < document.scripts.length; e++) {
             var n = document.scripts[e].src;
             var t = n.lastIndexOf("/midi.min.js");			
-            if (t == n.length - 8) return n.substr(0, t + 1)
+            if (t == n.length - 8) 
+            {
+                return n.substr(0, t + 1)
+            }
+            console.log('it1');
+            console.log(n);
+            console.log(t);
+        }
+        for (var e = 0; e < document.scripts.length; e++) {
+            var n = document.scripts[e].src;
+            var t = n.lastIndexOf("/midi.js");			
+            if (t == n.length - 4) 
+            {
+                return n.substr(0, t + 1)
+            }
+            console.log('it2');
+            console.log(n);
+            console.log(t);
         }
         return null
     }
@@ -240,7 +265,16 @@
             "Microsoft Internet Explorer" == Q.browserName && Q.fullVersion < 10 ? n && n(-1) : loadScript(k, function() {
                 loadMidi(e, initAll, n)
             })
-        }, e.MIDIjs.pause = function() {}, e.MIDIjs.resume = function() {}, e.MIDIjs.resumeWebAudioContext = function() {}, "WebAudioAPI" == C ? (e.MIDIjs.resumeWebAudioContext = resume, e.MIDIjs.pause = suspend, e.MIDIjs.resume = resume, e.MIDIjs.play = play, e.MIDIjs.stop = stop, G = "audioMethod: WebAudioAPI, sampleRate (Hz): " + S.sampleRate + ", audioBufferSize (Byte): " + R, e.MIDIjs.noteOn = noteOn, e.MIDIjs.startSynth = startSynth) : "bgsound" == C ? (e.MIDIjs.play = createBGSound, e.MIDIjs.stop = silent, G = "audioMethod: &lt;bgsound&gt;") : "object" == C ? (e.MIDIjs.play = createMidiObject, e.MIDIjs.stop = remove, G = "audioMethod: &lt;object&gt;") : (e.MIDIjs.play = function(e) {}, e.MIDIjs.stop = function(e) {}, G = "audioMethod: No method found"), "Microsoft Internet Explorer" == Q.browserName && "https:" == location.protocol.toLowerCase() && setTimeout(function() {
+        }, e.MIDIjs.pause = function() {
+            
+        }, e.MIDIjs.resume = function() {
+            
+        }, e.MIDIjs.resumeWebAudioContext = function() {
+            
+        }, e.MIDIjs.setCurrentTime = function(currentTime) {
+            setCurrentTime(currentTime)
+        }, 
+        "WebAudioAPI" == C ? (e.MIDIjs.resumeWebAudioContext = resume, e.MIDIjs.pause = suspend, e.MIDIjs.resume = resume, e.MIDIjs.play = play, e.MIDIjs.stop = stop, G = "audioMethod: WebAudioAPI, sampleRate (Hz): " + S.sampleRate + ", audioBufferSize (Byte): " + R, e.MIDIjs.noteOn = noteOn, e.MIDIjs.startSynth = startSynth) : "bgsound" == C ? (e.MIDIjs.play = createBGSound, e.MIDIjs.stop = silent, G = "audioMethod: &lt;bgsound&gt;") : "object" == C ? (e.MIDIjs.play = createMidiObject, e.MIDIjs.stop = remove, G = "audioMethod: &lt;object&gt;") : (e.MIDIjs.play = function(e) {}, e.MIDIjs.stop = function(e) {}, G = "audioMethod: No method found"), "Microsoft Internet Explorer" == Q.browserName && "https:" == location.protocol.toLowerCase() && setTimeout(function() {
             createBGSound(createBaseURL(q) + "silence.mid"), clearInterval(P)
         }, 1), -1 == location.href.indexOf("scorio.com") && -1 == location.href.indexOf("weblily.net") && -1 == location.href.indexOf("local") || "WebAudioAPI" == C && (ajaxLoad(q + "pat/arachno-127.pat"), ajaxLoad(q + "pat/MT32Drums/mt32drum-41.pat"), ajaxLoad(k)), e.MIDIjs.initError = null
     } catch (Z) {

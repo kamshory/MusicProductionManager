@@ -88,7 +88,6 @@ $(document).ready(function () {
   $(document).on("click", ".mp-play", function () {
     if ($(".planet-midi-player").attr("data-is-stoped") == "true") {
       let url = $(".planet-midi-player").attr("data-midi-url");
-      console.log(url);
       MIDIjs.play(url);
       $(".planet-midi-player").attr("data-is-stoped", "false");
       $(".lyric-preview").find(".lyric-item").removeClass("hilight");

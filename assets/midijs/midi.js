@@ -247,6 +247,7 @@ var ctx;
     }
     function setCurrentTime(par1, par2, par3)
     {
+
     }
     function callbackInterval() 
     {
@@ -312,7 +313,7 @@ var ctx;
     }
     function play(url) {
         stop();
-        isPaused = !1;
+        isPaused = false;
         isPlaying = true;
         audioBufferSize = bufferSize;
         resumeAndLoad(url)
@@ -355,6 +356,22 @@ var ctx;
         {
             loadMidi(e, malloc, null);
         })
+        
+        arrayBuffer = audioContext.createBuffer(
+            2,
+            audioContext.sampleRate * 3,
+            audioContext.sampleRate,
+          );
+        
+        // Get an AudioBufferSourceNode.
+        // This is the AudioNode to use when we want to play an AudioBuffer
+        source = audioContext.createBufferSource();
+        // set the buffer in the AudioBufferSourceNode
+        source.buffer = arrayBuffer;
+        // connect the AudioBufferSourceNode to the
+        // destination so we can hear the sound
+        source.connect(audioContext.destination);
+        // start the source playing
     }
     function loadMidi(midiURL, callback1, callback2) 
     {
@@ -583,9 +600,28 @@ var ctx;
                 return arr.join("/")+"/";
             }
         }
+        for (let e = 0; e < document.scripts.length; e++) {
+            let n = document.scripts[e].src;
+            let t = n.lastIndexOf("/midi.js");
+            if (t > -1) 
+            {
+                let arr = n.split("/");
+                arr.pop();
+                return arr.join("/")+"/";
+            }
+        }
         return null
     }
     function seek(time){
+
+    }
+    function getSource()
+    {
+        return source;
+    }
+    function getAudioContext()
+    {
+        return audioContext;
     }
 
     function log(e) {
@@ -618,7 +654,10 @@ var ctx;
             isPlaying = !1,
             logging = !1,
             timeInterval = 10,
-            scriptLoaded = !1;
+            scriptLoaded = !1,
+            arrayBuffer = null,
+            source = null
+            ;
         baseScriptURL = getBaseScriptURL();
         scriptName = baseScriptURL + "libtimidity.min.js";
         var ua = userAgent();
@@ -643,7 +682,10 @@ var ctx;
         event.MIDIjs.data.duration = 0;
         event.MIDIjs.data.audioMethod = audioMethod;
 
-        event.MIDIjs.set_playing_time = function() {
+        event.MIDIjs.setPlayingTime = function() {
+
+        };
+        event.MIDIjs.getAudioContext = function() {
 
         };
         event.MIDIjs.on_ended - function() {
@@ -663,6 +705,8 @@ var ctx;
         }; 
         event.MIDIjs.get_audio_status = function() {
             return audioStatus
+        }; 
+        event.MIDIjs.getSource = function() {
         }; 
         event.MIDIjs.visualization = function(buff) {
         }; 
@@ -700,11 +744,13 @@ var ctx;
             event.MIDIjs.resume = resume;
             event.MIDIjs.play = play;
             event.MIDIjs.stop = stop;
-            event.MIDIjs.set_playing_time = setCurrentTime;
+            event.MIDIjs.setPlayingTime = setCurrentTime;
+            event.MIDIjs.getAudioContext = getAudioContext;
             audioStatus = "audioMethod: WebAudioAPI, sampleRate (Hz): " + audioContext.sampleRate + ", audioBufferSize (Byte): " + audioBufferSize;
             event.MIDIjs.noteOn = noteOn;
             event.MIDIjs.startSynth = startSynth;
             event.MIDIjs.seek = seek;
+            event.MIDIjs.getSource = getSource;
         } 
         else 
         {
