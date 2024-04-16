@@ -492,7 +492,8 @@ function getCFunc(ident) {
     if (!func) {
         try {
             func = eval('_' + ident);
-        } catch (e) {}
+        } catch (e) {
+        }
     }
     assert(func, 'Cannot call unknown function ' + ident + ' (perhaps LLVM optimizations or closure removed it?)');
     return func;
@@ -42019,6 +42020,8 @@ var asm = (function(global, env, buffer) {
         _mid_init: _mid_init,
         _mid_song_load: _mid_song_load,
         _mid_song_start: _mid_song_start,
+        _seek_forward: _seek_forward,
+        _skip_to:_skip_to,
         _llvm_cttz_i32: _llvm_cttz_i32,
         ___udivdi3: ___udivdi3,
         ___errno_location: ___errno_location,
@@ -42203,6 +42206,20 @@ asm["_mid_song_start"] = function() {
     return real__mid_song_start.apply(null, arguments);
 };
 
+var real__seek_forward = asm["_seek_forward"];
+asm["_seek_forward"] = function() {
+    assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
+    assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
+    return real__seek_forward.apply(null, arguments);
+};
+
+var real__skip_to = asm["_skip_to"];
+asm["_skip_to"] = function() {
+    assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
+    assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
+    return real__skip_to.apply(null, arguments);
+};
+
 var real__llvm_cttz_i32 = asm["_llvm_cttz_i32"];
 asm["_llvm_cttz_i32"] = function() {
     assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
@@ -42262,6 +42279,8 @@ var _mid_song_free = Module["_mid_song_free"] = asm["_mid_song_free"];
 var _mid_init = Module["_mid_init"] = asm["_mid_init"];
 var _mid_song_load = Module["_mid_song_load"] = asm["_mid_song_load"];
 var _mid_song_start = Module["_mid_song_start"] = asm["_mid_song_start"];
+var _seek_forward = Module["_seek_forward"] = asm["_seek_forward"];
+var _skip_to = Module["_skip_to"] = asm["_skip_to"];
 var _llvm_cttz_i32 = Module["_llvm_cttz_i32"] = asm["_llvm_cttz_i32"];
 var ___udivdi3 = Module["___udivdi3"] = asm["___udivdi3"];
 var _mid_song_get_num_missing_instruments = Module["_mid_song_get_num_missing_instruments"] = asm["_mid_song_get_num_missing_instruments"];

@@ -153,6 +153,7 @@ var ctx;
     }
 
     function processAudio(audioProcessingEvent) {
+        
         songNumber = Module.ccall("mid_song_read_wave", "number", ["number", "number", "number", "number"], [song, generalBuffer1, 2 * audioBufferSize, isPaused]);
         if (0 == songNumber) 
         {
@@ -616,7 +617,8 @@ var ctx;
         return null
     }
     function seek(time){
-
+        Module.ccall("skip_to", "void", ["number", "number"], [song, time*audioContext.sampleRate]);
+        startTime = audioContext.currentTime - time;
     }
     function getSource()
     {
