@@ -412,7 +412,7 @@ var ctx;
     function malloc(url, data, callback1) {
         generalBuffer2 = Module._malloc(data.length);
         Module.writeArrayToMemory(data, generalBuffer2);
-        rval = Module.ccall("mid_init", "number", [], []);
+        let rval = Module.ccall("mid_init", "number", [], []);
         let a = Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [generalBuffer2, data.length, !1]);
         let s = 32784;
         let u = Module.ccall("mid_create_options", "number", ["number", "number", "number", "number"], [audioContext.sampleRate, s, 1, 2 * audioBufferSize]);
@@ -454,7 +454,8 @@ var ctx;
         let songDuration = (Module.ccall("mid_istream_close", "number", ["number"], [o]), Module.ccall("mid_song_get_total_time", "number", ["number"], [s]) / 1000);      
         event.MIDIjs.data.duration = songDuration;
         event.MIDIjs.on_song_loaded(o, a, i, s, songDuration);
-        Module.ccall("mid_song_free", "void", ["number"], [s]), Module._free(r);
+        Module.ccall("mid_song_free", "void", ["number"], [s]);
+        Module._free(r);
         if(callback1)
         {
             callback1(songDuration)
@@ -590,7 +591,8 @@ var ctx;
 
 
     function getBaseScriptURL() {
-        for (let e = 0; e < document.scripts.length; e++) {
+        for (let e = 0; e < document.scripts.length; e++) //NOSONAR
+        {
             let n = document.scripts[e].src;
             let t = n.lastIndexOf("/midi.min.js");
             if (t > -1) 
@@ -600,7 +602,8 @@ var ctx;
                 return arr.join("/")+"/";
             }
         }
-        for (let e = 0; e < document.scripts.length; e++) {
+        for (let e = 0; e < document.scripts.length; e++) //NOSONAR
+        {
             let n = document.scripts[e].src;
             let t = n.lastIndexOf("/midi.js");
             if (t > -1) 
