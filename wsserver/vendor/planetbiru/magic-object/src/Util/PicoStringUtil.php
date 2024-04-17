@@ -44,6 +44,31 @@ class PicoStringUtil
             $glue
         );
     }
+
+    /**
+     * Convert snake case to title
+     *
+     * @param string $input
+     * @param string $glue
+     * @return string
+     */
+    public static function snakeToTitle($input, $glue = '_')
+    {
+        $input = lcfirst($input);
+        return ucwords(str_replace($glue, ' ', ucwords($input, $glue)));
+    }
+
+    /**
+     * Convert camel case to title
+     *
+     * @param string $input
+     * @return string
+     */
+    public static function camelToTitle($input)
+    {
+        $snake = self::snakeize($input);
+        return self::snakeToTitle($snake);
+    }
     
     /**
      * Check if string is starts with substring

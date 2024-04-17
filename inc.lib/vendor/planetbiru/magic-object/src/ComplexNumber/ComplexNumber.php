@@ -69,12 +69,54 @@ class ComplexNumber {
               
         return new ComplexNumber($real, $imaginary); 
     } 
-  
-    public function __toString() { 
-        return "({$this->real}, {$this->imaginary}i)"; 
+
+    /**
+     * Divide complex number
+     *
+     * @param ComplexNumber $complexNumber
+     * @return self
+     */
+    public function divide(ComplexNumber $complexNumber) { 
+        $denominator = $complexNumber->getReal()**2  
+            + $complexNumber->getImaginary()**2; 
+              
+        $real = ($this->real * $complexNumber->getReal()  
+            + $this->imaginary * $complexNumber->getImaginary())  
+            / $denominator; 
+              
+        $imaginary = ($this->imaginary * $complexNumber->getReal()  
+            - $this->real * $complexNumber->getImaginary())  
+            / $denominator; 
+              
+        return new ComplexNumber($real, $imaginary); 
     } 
   
-    
+    /**
+     * Magnitude
+     *
+     * @return double
+     */
+    public function magnitude() { 
+        return sqrt($this->real**2 + $this->imaginary**2); 
+    } 
+  
+    /**
+     * Conjugate
+     *
+     * @return self
+     */
+    public function conjugate() { 
+        return new ComplexNumber($this->real, -$this->imaginary); 
+    }
+  
+    /**
+     * Print comlpex number
+     *
+     * @return string
+     */
+    public function __toString() { 
+        return "({$this->real}, {$this->imaginary}i)"; 
+    }
 
     /**
      * Get real number
