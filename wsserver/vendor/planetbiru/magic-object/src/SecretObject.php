@@ -500,7 +500,8 @@ class SecretObject extends stdClass //NOSONAR
         foreach ($this as $key => $val) {
             if(!in_array($key, $parentProps))
             {
-                $value->$key = $val;
+                // get decripted or encrypted value
+                $value->$key = $this->_get($key);
             }
         }
         if($snakeCase)
@@ -508,7 +509,8 @@ class SecretObject extends stdClass //NOSONAR
             $value2 = new stdClass;
             foreach ($value as $key => $val) {
                 $key2 = PicoStringUtil::snakeize($key);
-                $value2->$key2 = $val;
+                // get decripted or encrypted value
+                $value2->$key2 = $this->_get($key);
             }
             return $value2;
         }

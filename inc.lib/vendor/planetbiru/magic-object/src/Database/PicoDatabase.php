@@ -131,7 +131,7 @@ class PicoDatabase //NOSONAR
 	 */
 	public function setTimeZoneOffset($timeZoneOffset)
 	{
-		$sql = "SET time_zone = '$timeZoneOffset';";
+		$sql = "SET time_zone='$timeZoneOffset';";
 		$this->execute($sql);
 		return $this;
 	}

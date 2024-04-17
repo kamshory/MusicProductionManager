@@ -1,8 +1,11 @@
 <?php
 
-namespace MusicProductionManager\Data\Entity;
-
+use MagicObject\Generator\PicoDatabaseDump;
+use MagicObject\Generator\PicoDatabaseStructureGenerator;
 use MagicObject\MagicObject;
+
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+
 
 /**
  * @Entity
@@ -448,3 +451,9 @@ class Song extends MagicObject
 	protected $active;
 
 }
+$song = new Song();
+$dump = new PicoDatabaseDump();
+echo $dump->dumpStructure($song, 'mysql', true, true);
+
+$pageData = $song;
+echo $dump->dumpData($pageData, 'mysql');

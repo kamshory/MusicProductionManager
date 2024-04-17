@@ -120,4 +120,16 @@ class PicoDatabaseUtil
             return $value;
         }
     }
+    
+    /**
+     * Dump database structure
+     *
+     * @param PicoTableInfo $tableInfo
+     * @param string $databaseType
+     * @return string
+     */
+    public static function dumpStructure($tableInfo, $databaseType)
+    {
+        
+    }
 }

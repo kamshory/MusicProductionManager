@@ -1,6 +1,6 @@
 <?php
 
-namespace MagicObject\Geneator;
+namespace MagicObject\Generator;
 
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Util\PicoStringUtil;

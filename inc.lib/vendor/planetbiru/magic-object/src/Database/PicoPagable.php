@@ -2,8 +2,6 @@
 
 namespace MagicObject\Database;
 
-use stdClass;
-
 class PicoPagable
 {
     /**

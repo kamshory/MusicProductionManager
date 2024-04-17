@@ -126,7 +126,7 @@ class PicoDatabasePersistence // NOSONAR
      * Database connection
      *
      * @param PicoDatabase $database
-     * @param mixed $object
+     * @param MagicObject|mixed $object
      */
     public function __construct($database, $object)
     {
@@ -194,14 +194,14 @@ class PicoDatabasePersistence // NOSONAR
      *
      * @return PicoTableInfo
      */
-    public function getTableInfo() // NOSONAR
+    public function getTableInfo()
     {
         $reflexClass = new PicoAnnotationParser($this->className);
         $table = $reflexClass->getParameter(self::ANNOTATION_TABLE);
 
         $values = $this->parseKeyValue($reflexClass, $table, self::ANNOTATION_TABLE);
-
-        $picoTableName = $values[self::KEY_NAME];
+ 
+        $picoTableName = isset($values[self::KEY_NAME]) ? $values[self::KEY_NAME] : "";
         $columns = array();
         $joinColumns = array();
         $primaryKeys = array();

@@ -215,12 +215,8 @@ class User extends MagicObject
 	 * Blocked
 	 * 
 	 * @Column(name="blocked", type="tinyint(1)", length=1, nullable=true)
-<<<<<<< HEAD
 	 * @Label(content="Blocked")
 	 * @var boolean
-=======
-	 * @var boolean
->>>>>>> id3-tag
 	 */
 	protected $blocked;
 
@@ -229,12 +225,8 @@ class User extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-<<<<<<< HEAD
 	 * @Label(content="Active")
 	 * @var boolean
-=======
-	 * @var boolean
->>>>>>> id3-tag
 	 */
 	protected $active;
 

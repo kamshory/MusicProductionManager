@@ -375,6 +375,25 @@ class MagicObject extends stdClass // NOSONAR
         $this->database = $database;
         return $this;
     }
+    
+    /**
+     * Set or get current database. If parameter is not empty, set current database with database given. Return current database or null.
+     *
+     * @param PicoDatabase|null $database
+     * @return PicoDatabase|null
+     */
+    public function currentDatabase($database = null)
+    {
+        if($database != null)
+        {
+            $this->withDatabase($database);
+        }
+        if(!isset($this->database))
+        {
+            return null;
+        }
+        return $this->database;
+    }
 
     /**
      * Remove property
