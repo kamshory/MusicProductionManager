@@ -122,41 +122,41 @@ class PicoDatabaseUtilMySql
     /**
      * Dump data
      *
-     * @param PicoTableInfo $tableInfo
+     * @param array $columns
      * @param string $picoTableName
      * @param MagicObject|PicoPageData $data
      * @return string
      */
-    public static function dumpData($tableInfo, $picoTableName, $data)
+    public static function dumpData($columns, $picoTableName, $data)
     {
         if($data instanceof PicoPageData && isset($data->getResult()[0]))
         {
-            return self::dumpRecords($tableInfo, $picoTableName, $data->getResult());
+            return self::dumpRecords($columns, $picoTableName, $data->getResult());
         }
         else if($data instanceof MagicObject)
         {
-            return self::dumpRecords($tableInfo, $picoTableName, array($data));
+            return self::dumpRecords($columns, $picoTableName, array($data));
         }
         else if(is_array($data) && isset($data[0]) && $data[0] instanceof MagicObject)
         {
-            return self::dumpRecords($tableInfo, $picoTableName, $data);
+            return self::dumpRecords($columns, $picoTableName, $data);
         }
     }
     
     /**
      * Dump records
      *
-     * @param PicoTableInfo $tableInfo
+     * @param array $columns
      * @param string $picoTableName
      * @param MagicObject[] $data
      * @return string
      */
-    public static function dumpRecords($tableInfo, $picoTableName, $data)
+    public static function dumpRecords($columns, $picoTableName, $data)
     {
         $result = "";
         foreach($data as $record)
         {
-            $result .= self::dumpRecord($tableInfo, $picoTableName, $record).";\r\n";
+            $result .= self::dumpRecord($columns, $picoTableName, $record).";\r\n";
         }
         return $result;
     }
@@ -164,15 +164,14 @@ class PicoDatabaseUtilMySql
     /**
      * Dump records
      *
-     * @param PicoTableInfo $tableInfo
+     * @param array $columns
      * @param string $picoTableName
      * @param MagicObject $record
      * @return string
      */
-    public static function dumpRecord($tableInfo, $picoTableName, $record)
+    public static function dumpRecord($columns, $picoTableName, $record)
     {
         $value = $record->valueArray();
-        $columns = $tableInfo->getColumns();
         $rec = array();
         foreach($value as $key=>$val)
         {

@@ -29,7 +29,7 @@ class PicoRequestBase extends stdClass //NOSONAR
         {
             if(is_array($paramValue))
             {
-                throw new InvalidAnnotationException("Invalid annootation @".$paramName);
+                throw new InvalidAnnotationException("Invalid annotation @".$paramName);
             }
             $vals = $jsonAnnot->parseKeyValue($paramValue);
             $this->classParams[$paramName] = $vals;

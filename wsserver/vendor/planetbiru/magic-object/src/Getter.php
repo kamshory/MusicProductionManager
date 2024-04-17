@@ -34,7 +34,7 @@ class Getter extends stdClass
             }
             catch(InvalidQueryInputException $e)
             {
-                throw new InvalidAnnotationException("Invalid annootation @".$paramName);
+                throw new InvalidAnnotationException("Invalid annotation @".$paramName);
             }
             $this->classParams[$paramName] = $vals;
         }

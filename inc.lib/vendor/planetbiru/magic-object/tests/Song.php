@@ -1,5 +1,6 @@
 <?php
 
+use MagicObject\Database\PicoDatabaseType;
 use MagicObject\Generator\PicoDatabaseDump;
 use MagicObject\Generator\PicoDatabaseStructureGenerator;
 use MagicObject\MagicObject;
@@ -453,7 +454,7 @@ class Song extends MagicObject
 }
 $song = new Song();
 $dump = new PicoDatabaseDump();
-echo $dump->dumpStructure($song, 'mysql', true, true);
+echo $dump->dumpStructure($song, PicoDatabaseType::DATABASE_TYPE_MYSQL, true, true);
 
 $pageData = $song;
-echo $dump->dumpData($pageData, 'mysql');
+echo $dump->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);

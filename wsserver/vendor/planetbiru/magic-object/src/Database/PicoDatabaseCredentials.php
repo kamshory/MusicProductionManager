@@ -4,6 +4,10 @@ namespace MagicObject\Database;
 
 use MagicObject\SecretObject;
 
+/**
+ * PicoDatabaseCredentials class
+ * The SecretObject will encrypt all attributes to prevent unauthorized user read the database configuration
+ */
 class PicoDatabaseCredentials extends SecretObject
 {
 	/**

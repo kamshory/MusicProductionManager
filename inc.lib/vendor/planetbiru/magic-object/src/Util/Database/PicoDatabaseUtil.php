@@ -93,8 +93,8 @@ class PicoDatabaseUtil
     /**
      * Fix value
      *
-     * @param string $value
-     * @param string $type
+     * @param string $value Value
+     * @param string $type Data type
      * @return mixed
      */
     public static function fixValue($value, $type) // NOSONAR
@@ -119,17 +119,5 @@ class PicoDatabaseUtil
         {
             return $value;
         }
-    }
-    
-    /**
-     * Dump database structure
-     *
-     * @param PicoTableInfo $tableInfo
-     * @param string $databaseType
-     * @return string
-     */
-    public static function dumpStructure($tableInfo, $databaseType)
-    {
-        
     }
 }

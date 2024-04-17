@@ -50,7 +50,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Database
 	 *
-	 * @param mixed $databaseType
+	 * @param mixed $databaseType Database type. See PicoDatabaseType class
 	 */
 	public function __construct($databaseType)
 	{
@@ -119,7 +119,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create into statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function into($query)
@@ -131,7 +131,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create select statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function select($query = "")
@@ -143,7 +143,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create alias statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function alias($query)
@@ -155,7 +155,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create field statement
 	 *
-	 * @param mixed $query
+	 * @param mixed $query SQL parameter
 	 * @return self
 	 */
 	public function fields($query)
@@ -174,7 +174,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create values statement
 	 *
-	 * @param mixed $query
+	 * @param mixed $query SQL parameter
 	 * @return self
 	 */
 	public function values($query)
@@ -238,7 +238,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create from statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function from($query)
@@ -250,7 +250,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create join statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function join($query)
@@ -262,7 +262,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create inner join statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function innerJoin($query)
@@ -274,7 +274,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create outer join statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function outerJoin($query)
@@ -286,7 +286,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create left outer join statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function leftOuterJoin($query)
@@ -298,7 +298,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create left join statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function leftJoin($query)
@@ -310,7 +310,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create right join statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function rightJoin($query)
@@ -322,7 +322,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create on statement
 	 *
-	 * @param mixed $query
+	 * @param mixed $query SQL parameter
 	 * @return self
 	 */
 	public function on($query)
@@ -348,7 +348,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create update statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function update($query)
@@ -360,7 +360,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create set statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function set($query)
@@ -386,7 +386,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create where statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function where($query)
@@ -445,7 +445,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create insert query
 	 *
-	 * @param string $table
+	 * @param string $table Table name
 	 * @param array $data
 	 * @return string
 	 */
@@ -468,7 +468,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create update query
 	 *
-	 * @param string $table
+	 * @param string $table Table name
 	 * @param array $data
 	 * @param array $primaryKey
 	 * @return string
@@ -543,7 +543,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create having statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function having($query)
@@ -569,7 +569,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create order by statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function orderBy($query)
@@ -584,7 +584,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create goup by statement
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return self
 	 */
 	public function groupBy($query)
@@ -599,7 +599,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Set limit
 	 *
-	 * @param [type] $limit
+	 * @param integer $limit Result limit
 	 * @return self
 	 */
 	public function limit($limit)
@@ -612,7 +612,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Set offset
 	 *
-	 * @param [type] $offset
+	 * @param integer $offset Result offset
 	 * @return self
 	 */
 	public function offset($offset)
@@ -625,7 +625,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create lock tables statement
 	 *
-	 * @param string $tables
+	 * @param string $tables Table name
 	 * @return string|null
 	 */
 	public function lockTables($tables)
@@ -704,8 +704,8 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create execute function statement
 	 *
-	 * @param string $name
-	 * @param string $params
+	 * @param string $name Function name
+	 * @param string $params Function parameters
 	 * @return string|null
 	 */
 	public function executeFunction($name, $params)
@@ -720,8 +720,8 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create execute procedure statement
 	 *
-	 * @param string $name
-	 * @param string $params
+	 * @param string $name Procedure name
+	 * @param string $params Procedure parameters
 	 * @return string|null
 	 */
 	public function executeProcedure($name, $params)
@@ -801,7 +801,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create now statement
 	 *
-	 * @param integer $precission
+	 * @param integer $precission Decimal precission of second
 	 * @return string
 	 */
 	public function now($precission = 0)
@@ -823,7 +823,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Escape SQL
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return string
 	 */
 	public function escapeSQL($query)
@@ -844,7 +844,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 
 	/**
 	 * Replace quote
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return string
 	 */
 	public function replaceQuote($query)
@@ -855,7 +855,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Add query parameter
 	 *
-	 * @param string $query
+	 * @param string $query SQL parameter
 	 * @return string
 	 */
 	public function addQueryParameters($query)
@@ -909,6 +909,5 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		}
 		return $sql;
 	}
-
 	
 }

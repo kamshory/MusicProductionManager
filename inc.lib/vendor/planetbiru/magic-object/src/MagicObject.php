@@ -99,7 +99,7 @@ class MagicObject extends stdClass // NOSONAR
             catch(InvalidQueryInputException $e)
             {
                 echo $e->getMessage();
-                throw new InvalidAnnotationException("Invalid annootation @".$paramName);
+                throw new InvalidAnnotationException("Invalid annotation @".$paramName);
             }    
         }
         if($data != null)

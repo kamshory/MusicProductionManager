@@ -46,8 +46,8 @@ class PicoDatabaseStructure
     /**
      * Show create table
      *
-     * @param string $databaseType
-     * @param string $tableName
+     * @param string $databaseType Database type. See PicoDatabaseType class
+     * @param string $tableName Table name
      * @return string
      */
     public function showCreateTable($databaseType, $tableName = null)
@@ -71,8 +71,8 @@ class PicoDatabaseStructure
     /**
      * Show create table
      *
-     * @param string $databaseType
-     * @param PicoTableInfo $info
+     * @param string $databaseType Database type. See PicoDatabaseType class
+     * @param PicoTableInfo $info Table information
      * @return string
      */
     private function showCreateTableByType($databaseType, $info)
@@ -122,9 +122,9 @@ class PicoDatabaseStructure
     /**
      * Parse key value string
      *
-     * @param PicoAnnotationParser $reflexClass
-     * @param string $queryString
-     * @param string $parameter
+     * @param PicoAnnotationParser $reflexClass Refection of class
+     * @param string $queryString String to be parsed
+     * @param string $parameter Parameter name
      * @return array
      */
     private function parseKeyValue($reflexClass, $queryString, $parameter)
@@ -135,7 +135,7 @@ class PicoDatabaseStructure
         }
         catch(InvalidQueryInputException $e)
         {
-            throw new InvalidAnnotationException("Invalid annootation @".$parameter);
+            throw new InvalidAnnotationException("Invalid annotation @".$parameter);
         } 
     }
     

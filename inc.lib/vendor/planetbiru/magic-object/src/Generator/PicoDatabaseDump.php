@@ -2,15 +2,36 @@
 
 namespace MagicObject\Generator;
 
-use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabasePersistence;
 use MagicObject\Database\PicoDatabaseType;
 use MagicObject\Database\PicoPageData;
+use MagicObject\Database\PicoTableInfo;
 use MagicObject\MagicObject;
 use MagicObject\Util\Database\PicoDatabaseUtilMySql;
 
 class PicoDatabaseDump
-{    
+{
+    /**
+     * Table info
+     *
+     * @var PicoTableInfo
+     */
+    private $tableInfo;    
+    
+    /**
+     * Table name
+     *
+     * @var string
+     */
+    private $picoTableName = "";
+    
+    
+    /**
+     * Columns
+     *
+     * @var array
+     */
+    private $columns = array();
 
     /**
      * Dump table structure
@@ -40,45 +61,51 @@ class PicoDatabaseDump
     }
     
     /**
-     * Dump data
+     * Dump data to SQL. 
+     * WARNING!!! Use different instance to dump different entity
      *
-     * @param MagicObject|PicoPageData $data
-     * @param string $databaseType
-     * @return void
+     * @param MagicObject|PicoPageData $data Data to be dump
+     * @param string $databaseType Target database type
+     * @return string
      */
     public function dumpData($data, $databaseType)
     {
-        
-        $entity = null;
-        if($data instanceof PicoPageData && isset($data->getResult()[0]))
+        if(!isset($this->tableInfo))
         {
-            $entity = $data->getResult()[0];
+            $entity = null;
+            if($data instanceof PicoPageData && isset($data->getResult()[0]))
+            {
+                $entity = $data->getResult()[0];
+            }
+            else if($data instanceof MagicObject)
+            {
+                $entity = $data;
+            }
+            else if(is_array($data) && isset($data[0]) && $data[0] instanceof MagicObject)
+            {
+                $entity = $data[0];
+            }
+            if($entity == null)
+            {
+                return "";
+            }
+            
+            $databasePersist = new PicoDatabasePersistence(null, $entity);
+            $this->tableInfo = $databasePersist->getTableInfo();
+            $this->picoTableName = $this->tableInfo->getTableName();
+            $this->columns = $this->tableInfo->getColumns();
         }
-        else if($data instanceof MagicObject)
-        {
-            $entity = $data;
-        }
-        else if(is_array($data) && isset($data[0]) && $data[0] instanceof MagicObject)
-        {
-            $entity = $data[0];
-        }
-        if($entity == null)
-        {
-            return "";
-        }
-        
-        $databasePersist = new PicoDatabasePersistence(null, $entity);
-        $tableInfo = $databasePersist->getTableInfo();
-        $picoTableName = $tableInfo->getTableName();
         
         if($databaseType == PicoDatabaseType::DATABASE_TYPE_MARIADB || $databaseType == PicoDatabaseType::DATABASE_TYPE_MYSQL)
         {
-            return PicoDatabaseUtilMySql::dumpData($tableInfo, $picoTableName, $data);
+            return PicoDatabaseUtilMySql::dumpData($this->columns, $this->picoTableName, $data);
         }
         else
         {
             return "";
         }
     }
+    
+    
     
 }

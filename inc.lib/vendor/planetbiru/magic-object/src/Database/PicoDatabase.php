@@ -61,7 +61,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Constructor
 	 * 
-	 * @param PicoDatabaseCredentials $databaseCredentials
+	 * @param PicoDatabaseCredentials $databaseCredentials Database credentials
 	 * @param callable $callbackExecuteQuery Callback when execute query that modify data. Parameter 1 is SQL, parameter 2 is one of query type (PicoDatabase::QUERY_INSERT, PicoDatabase::QUERY_UPDATE, PicoDatabase::QUERY_DELETE, PicoDatabase::QUERY_TRANSACTION)
 	 * @param callable $callbackDebugQuery Callback when execute all queries. Parameter 1 is SQL
 	 */
@@ -126,7 +126,7 @@ class PicoDatabase //NOSONAR
 	 * Set time zone offset
 	 * Time zone offset is difference to Greenwich time (GMT) with colon between hours and minutes. See date("P") on PHP manual
 	 *
-	 * @param string $timeZoneOffset
+	 * @param string $timeZoneOffset Client time zone
 	 * @return self
 	 */
 	public function setTimeZoneOffset($timeZoneOffset)
@@ -181,7 +181,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Execute query
 	 *
-	 * @param string $sql
+	 * @param string $sql SQL to be executed
 	 * @return PDOStatement|false
 	 * @throws PDOException
 	 */
@@ -193,9 +193,9 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Fetch result
 	 *
-	 * @param string $sql
-	 * @param integer $tentativeType
-	 * @param array $defaultValue
+	 * @param string $sql SQL to be executed
+	 * @param integer $tentativeType Tentative type
+	 * @param array $defaultValue Default value
 	 * @return array|object|stdClass|null
 	 */
 	public function fetch($sql, $tentativeType = PDO::FETCH_ASSOC, $defaultValue = null)
@@ -229,7 +229,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Check if record is exists
 	 *
-	 * @param string $sql
+	 * @param string $sql SQL to be executed
 	 * @return boolean
 	 */
 	public function isRecordExists($sql)
@@ -254,9 +254,9 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Fetch all result
 	 *
-	 * @param string $sql
-	 * @param integer $tentativeType
-	 * @param array $defaultValue
+	 * @param string $sql SQL to be executed
+	 * @param integer $tentativeType Tentative type
+	 * @param array $defaultValue Default value
 	 * @return array|null
 	 */
 	public function fetchAll($sql, $tentativeType = PDO::FETCH_ASSOC, $defaultValue = null)
@@ -427,7 +427,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Get last insert ID
 	 *
-	 * @param string $name
+	 * @param string $name Sequence name (eg. PostgreSQL)
 	 * @return string|false
 	 */
 	public function lastInsertId($name = null)
@@ -465,7 +465,7 @@ class PicoDatabase //NOSONAR
 	}
 	
 	/**
-	 * Convert object to string for debug
+	 * Convert object to string for debug. This method also prevent PHP sho show its attribute when it converted to a string
 	 *
 	 * @return string
 	 */

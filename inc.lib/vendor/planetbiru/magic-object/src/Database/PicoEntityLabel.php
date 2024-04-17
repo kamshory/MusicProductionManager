@@ -154,7 +154,7 @@ class PicoEntityLabel
         }
         catch(InvalidQueryInputException $e)
         {
-            throw new InvalidAnnotationException("Invalid annootation @".$parameter);
+            throw new InvalidAnnotationException("Invalid annotation @".$parameter);
         } 
     }
 
