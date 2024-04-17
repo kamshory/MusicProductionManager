@@ -1,4 +1,4 @@
-var ctx;
+let ctx;
 !function(event) {
     
     function userAgent() {
@@ -59,39 +59,37 @@ var ctx;
             browserName = "Firefox";
             versionFloat = userAgent.substring(browser + 8);
         }
-        else
+        else if((userAgent.lastIndexOf(" ") + 1) < userAgent.lastIndexOf("/"))
         {
-            if((userAgent.lastIndexOf(" ") + 1) < userAgent.lastIndexOf("/"))
+            spacePos = userAgent.lastIndexOf(" ") + 1;
+            browserName = userAgent.substring(browser, spacePos);
+            versionFloat = userAgent.substring(browser + 1);
+            if(browserName.toLowerCase() == browserName.toUpperCase()) 
             {
-                spacePos = userAgent.lastIndexOf(" ") + 1;
-                browserName = userAgent.substring(browser, spacePos);
-                versionFloat = userAgent.substring(browser + 1);
-                if(browserName.toLowerCase() == browserName.toUpperCase()) 
+                browserName = navigator.appName;
+                versionFloatSeparator = versionFloat.indexOf(";");
+                if(versionFloatSeparator != -1)
                 {
-                    browserName = navigator.appName;
-                    versionFloatSeparator = versionFloat.indexOf(";");
-                    if(versionFloatSeparator != -1)
-                    {
-                        versionFloat = versionFloat.substring(0, versionFloatSeparator);
-                    }
-                    versionFloatSeparator = versionFloat.indexOf(" ");
-                    if(versionFloatSeparator != -1)
-                    {
-                        versionFloat = versionFloat.substring(0, versionFloatSeparator);
-                    }
-                    versionFloatSeparator = versionFloat.indexOf(")")
-                    if(versionFloatSeparator != -1)
-                    {
-                        versionFloat = versionFloat.substring(0, versionFloatSeparator);
-                    }
-                    versionInteger = parseInt("" + versionFloat, 10);
-                    if(isNaN(versionInteger))
-                    {
-                        versionFloat = "" + parseFloat(navigator.appVersion);
-                    } 
-                    versionInteger = parseInt(navigator.appVersion, 10);
+                    versionFloat = versionFloat.substring(0, versionFloatSeparator);
                 }
+                versionFloatSeparator = versionFloat.indexOf(" ");
+                if(versionFloatSeparator != -1)
+                {
+                    versionFloat = versionFloat.substring(0, versionFloatSeparator);
+                }
+                versionFloatSeparator = versionFloat.indexOf(")")
+                if(versionFloatSeparator != -1)
+                {
+                    versionFloat = versionFloat.substring(0, versionFloatSeparator);
+                }
+                versionInteger = parseInt("" + versionFloat, 10);
+                if(isNaN(versionInteger))
+                {
+                    versionFloat = "" + parseFloat(navigator.appVersion);
+                } 
+                versionInteger = parseInt(navigator.appVersion, 10);
             }
+            
         }
         let ua = new Object;
         ua.browserName = browserName;
@@ -104,14 +102,14 @@ var ctx;
     }
 
     function loadScript(name, clbk) {
-        for (let t = 0; t < document.scripts.length; t++) 
+        for (let t = 0; t < document.scripts.length; t++) //NOSONAR
         {
             let jsURL = document.scripts[t].src;
             if (scriptName == jsURL) 
             {
                 if (scriptLoaded)
                 {
-                    return void clbk();
+                    return clbk();
                 }
                 let fn = newjs.onload;
                 newjs.onreadystatechange = function() {
@@ -123,11 +121,11 @@ var ctx;
                         clbk();
                     }
                 };
-                void(newjs.onload = function() {
+                newjs.onload = function() {
                     scriptLoaded = !0;
                     fn();
                     clbk();
-                })
+                }
             }
         }
         let jsNode = document.getElementsByTagName("script")[0];
@@ -157,7 +155,7 @@ var ctx;
         songNumber = Module.ccall("mid_song_read_wave", "number", ["number", "number", "number", "number"], [song, generalBuffer1, 2 * audioBufferSize, isPaused]);
         if (0 == songNumber) 
         {
-            return void free();
+            return free();
         }
         let buff = [];
         for (let n = Math.pow(2, 15), i = 0; i < audioBufferSize; i++)
@@ -171,7 +169,7 @@ var ctx;
                 audioProcessingEvent.outputBuffer.getChannelData(0)[i] = buff[i] = 0;
             }
         }
-        bufVisual = buff;//JSON.parse(JSON.stringify(audioProcessingEvent.outputBuffer.getChannelData(0)));
+        bufVisual = buff;
         if(0 == startTime)
         {
             startTime = audioContext.currentTime;   
@@ -199,7 +197,7 @@ var ctx;
         req.onload = function() {
             if (200 != req.status)
             {
-                return void log("Error: Cannot retrieve patch file " + instrumentURL + missingInstrument + " : " + req.status);
+                return log("Error: Cannot retrieve patch file " + instrumentURL + missingInstrument + " : " + req.status);
             }
             instrumentToBeLoad--;
             FS.createDataFile("pat/", missingInstrument, new Int8Array(req.response), !0, !0);
@@ -241,14 +239,14 @@ var ctx;
         req.onload = function() {
             if (200 != req.status) 
             {
-                return void log("Error: Cannot preload file " + e + " : " + req.status);
+                return log("Error: Cannot preload file " + e + " : " + req.status);
             }
         };
         req.send()
     }
     function setCurrentTime(par1, par2, par3)
     {
-
+        // do nothing
     }
     function callbackInterval() 
     {
@@ -307,7 +305,7 @@ var ctx;
             draw();
             drawed = true;
         }
-        if (audioContext && audioContext.resume) 
+        if (audioContext) 
         {
             return audioContext.resume();
         }
@@ -373,6 +371,7 @@ var ctx;
         // destination so we can hear the sound
         source.connect(audioContext.destination);
         // start the source playing
+        return true;
     }
     function loadMidi(midiURL, callback1, callback2) 
     {
@@ -400,7 +399,7 @@ var ctx;
         req.onload = function() {
             if (200 != req.status) 
             {
-                return void log("Error: Cannot retrieve MIDI file " + midiURL + " : " + req.status);
+                return log("Error: Cannot retrieve MIDI file " + midiURL + " : " + req.status);
             }
             log("MIDI file loaded: " + midiURL);
             midiAudioData = new Int8Array(req.response);
@@ -413,7 +412,7 @@ var ctx;
     function malloc(url, data, callback1) {
         generalBuffer2 = Module._malloc(data.length);
         Module.writeArrayToMemory(data, generalBuffer2);
-        let rval = Module.ccall("mid_init", "number", [], []);
+        rval = Module.ccall("mid_init", "number", [], []);
         let a = Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [generalBuffer2, data.length, !1]);
         let s = 32784;
         let u = Module.ccall("mid_create_options", "number", ["number", "number", "number", "number"], [audioContext.sampleRate, s, 1, 2 * audioBufferSize]);
@@ -465,7 +464,7 @@ var ctx;
     function noteOn(e, n, t) {
         if(!isPaused)
         {
-            sPlaying = true;
+            isPlaying = true;
             audioBufferSize = bSize;
             resumeAndLoad(baseScriptURL + "initsynth.midi");
         }
@@ -565,7 +564,8 @@ var ctx;
         }
         else
         { 
-            elem = document.createElement("div"), elem.setAttribute("id", "planetMIDI");
+            elem = document.createElement("div");
+            elem.setAttribute("id", "planetMIDI");
             elem.innerHTML = '<object data="' + url + '" autostart="true" volume="0" type="audio/mid"></object>';
             if(document.body)
             {
@@ -617,8 +617,12 @@ var ctx;
         return null
     }
     function seek(time){
-        Module.ccall("skip_to", "void", ["number", "number"], [song, time*audioContext.sampleRate]);
-        startTime = audioContext.currentTime - time;
+        if(typeof Module != 'undefined')
+        {
+            Module.ccall("skip_to", "void", ["number", "number"], [song, time*audioContext.sampleRate]);
+            startTime = audioContext.currentTime - time;
+        }
+        
     }
     function getSource()
     {
@@ -632,41 +636,43 @@ var ctx;
     function log(e) {
         logging && console.log(e)
     }
-
+    var audioMethod, 
+        generalBuffer1, 
+        generalBuffer2, 
+        midiAudioData, 
+        scriptName, 
+        link, 
+        playingInterval, 
+        audioContext = null,
+        scriptProcessor = 0,
+        bSize = 512,
+        bufferSize = 8192,
+        audioBufferSize = bufferSize,
+        instrumentToBeLoad = 0,
+        songNumber = 0,
+        song = 0,
+        baseScriptURL = "",
+        startTime = 0,
+        audioStatus = "",
+        isPaused = !1,
+        logging = !1,
+        timeInterval = 10,
+        scriptLoaded = !1,
+        arrayBuffer = null,
+        source = null,
+        rval = null,
+        isPlaying = false,
+        newjs = null
+    ;
     try {
         event.MIDIjs = new Object;
         event.MIDIjs.data = new Object;
         event.MIDIjs.initError = "initializing ...";
-        var audioMethod, 
-            generalBuffer1, 
-            generalBuffer2, 
-            midiAudioData, 
-            scriptName, 
-            link, 
-            playingInterval, 
-            audioContext = null,
-            scriptProcessor = 0,
-            bSize = 512,
-            bufferSize = 8192,
-            audioBufferSize = bufferSize,
-            instrumentToBeLoad = 0,
-            songNumber = 0,
-            song = 0,
-            baseScriptURL = "",
-            startTime = 0,
-            audioStatus = "",
-            isPaused = !1,
-            isPlaying = !1,
-            logging = !1,
-            timeInterval = 10,
-            scriptLoaded = !1,
-            arrayBuffer = null,
-            source = null
-            ;
+        
         baseScriptURL = getBaseScriptURL();
         scriptName = baseScriptURL + "libtimidity.min.js";
-        var ua = userAgent();
-        var drawed = false;
+        let ua = userAgent();
+        let drawed = false;
         try 
         {
             if (("iPhone" == ua.platform || "iPod" == ua.platform || "iPad" == ua.platform) && ua.majorVersion <= 6) 
@@ -682,7 +688,18 @@ var ctx;
         } 
         catch (Y) 
         {
-            audioMethod = "Microsoft Internet Explorer" == ua.browserName ? "bgsound" : "Android" == ua.browserName ? "none" : "object"
+            if("Microsoft Internet Explorer" == ua.browserName)
+            {
+                audioMethod = "bgsound";
+            }
+            else if("Android" == ua.browserName)
+            {
+                audioMethod = "none";
+            }
+            else
+            {
+                audioMethod = "object";
+            }
         }
         event.MIDIjs.data.duration = 0;
         event.MIDIjs.data.audioMethod = audioMethod;
@@ -693,7 +710,7 @@ var ctx;
         event.MIDIjs.getAudioContext = function() {
 
         };
-        event.MIDIjs.on_ended - function() {
+        event.MIDIjs.on_ended = function() {
 
         };
         event.MIDIjs.set_logging = function(e) {
@@ -757,40 +774,33 @@ var ctx;
             event.MIDIjs.seek = seek;
             event.MIDIjs.getSource = getSource;
         } 
+        else if ("bgsound" == audioMethod) {
+            event.MIDIjs.play = createBGSound;
+            event.MIDIjs.stop = silent;
+            audioStatus = "audioMethod: &lt;bgsound&gt;";
+        } 
+        else if ("object" == audioMethod) 
+        {
+            event.MIDIjs.play = createMidiObject;
+            event.MIDIjs.stop = remove;
+            audioStatus = "audioMethod: &lt;object&gt;";
+        } 
         else 
         {
-            if ("bgsound" == audioMethod) 
+            event.MIDIjs.play = function(e) {};
+            event.MIDIjs.stop = function(e) {};
+            audioStatus = "audioMethod: No method found";
+            if("Microsoft Internet Explorer" == ua.browserName && "https:" == location.protocol.toLowerCase())
             {
-                event.MIDIjs.play = createBGSound;
-                event.MIDIjs.stop = silent;
-                audioStatus = "audioMethod: &lt;bgsound&gt;";
-            } 
-            else 
-            {
-                if ("object" == audioMethod) 
-                {
-                    event.MIDIjs.play = createMidiObject;
-                    event.MIDIjs.stop = remove;
-                    audioStatus = "audioMethod: &lt;object&gt;";
-                } 
-                else 
-                {
-                    event.MIDIjs.play = function(e) {};
-                    event.MIDIjs.stop = function(e) {};
-                    audioStatus = "audioMethod: No method found";
-                    if("Microsoft Internet Explorer" == ua.browserName && "https:" == location.protocol.toLowerCase())
-                    {
-                        setTimeout(function() {
-                            createBGSound(createBaseURL(baseScriptURL) + "silence.mid");
-                            clearInterval(playingInterval);
-                        }, 1);
-                    }
-                }
+                setTimeout(function() {
+                    createBGSound(createBaseURL(baseScriptURL) + "silence.mid");
+                    clearInterval(playingInterval);
+                }, 1);
             }
         }
         ctx = audioContext;
-        var arrayBuff = [];
-        var bufVisual = {};
+        let arrayBuff = [];
+        let bufVisual = {};
         if(-1 == location.href.indexOf("local") || "WebAudioAPI" == audioMethod)
         {
             ajaxLoad(baseScriptURL + "pat/arachno-127.pat");
