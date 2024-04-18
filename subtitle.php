@@ -16,7 +16,6 @@ use MusicProductionManager\Data\Entity\EntitySong;
 use MusicProductionManager\Data\Entity\Genre;
 use MusicProductionManager\Data\Entity\Producer;
 use MusicProductionManager\Data\Entity\Song;
-
 use MusicProductionManager\Utility\SpecificationUtil;
 
 require_once "inc/auth-with-login-form.php";

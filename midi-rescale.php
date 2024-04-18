@@ -1,8 +1,6 @@
 <?php
 
 use MagicObject\Request\InputGet;
-use MagicObject\Request\InputPost;
-use MagicObject\Request\PicoRequest;
 use Midi\MidiDuration;
 
 require_once "inc/auth-with-login-form.php";
