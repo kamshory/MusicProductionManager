@@ -458,3 +458,5 @@ echo $dump->dumpStructure($song, PicoDatabaseType::DATABASE_TYPE_MYSQL, true, tr
 
 $pageData = $song;
 echo $dump->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);
+
+echo $song->label('admin_create');

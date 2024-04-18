@@ -70,6 +70,13 @@ class MagicObject extends stdClass // NOSONAR
     private $nullProperties = array();
 
     /**
+     * Property label
+     *
+     * @var array
+     */
+    private $label = array();
+
+    /**
      * Get null properties
      *
      * @return array
@@ -1479,18 +1486,42 @@ class MagicObject extends stdClass // NOSONAR
         }     
         
         else if (strncasecmp($method, "startsWith", 10) === 0) {
-            $var = lcfirst(substr($method, 13));
+            $var = lcfirst(substr($method, 10));
             $value = $params[0];
             $caseSensitive = isset($params[1]) && $params[1];    
             $haystack = $this->$var;
             return PicoStringUtil::startsWith($haystack, $value, $caseSensitive);
         }  
         else if (strncasecmp($method, "endsWith", 8) === 0) {
-            $var = lcfirst(substr($method, 13));
+            $var = lcfirst(substr($method, 8));
             $value = $params[0];
             $caseSensitive = isset($params[1]) && $params[1];  
             $haystack = $this->$var;
             return PicoStringUtil::endsWith($haystack, $value, $caseSensitive);
+        } 
+
+        else if (strncasecmp($method, "label", 5) === 0) {
+            $var = lcfirst(substr($method, 5));
+            if(empty($var))
+            {
+                $var = PicoStringUtil::camelize($params[0]);
+            }
+            if(!empty($var) && !isset($this->label[$var]))
+            {
+                $reflexProp = new PicoAnnotationParser(get_class($this), $var, PicoAnnotationParser::PROPERTY);
+                $parameters = $reflexProp->getParameters();   
+                if(isset($parameters['Label']))
+                {
+                    $label = $reflexProp->parseKeyValueAsObject($parameters['Label']);
+                    $this->label[$var] = $label->getContent();
+                } 
+                
+            }
+            if(isset($this->label[$var]))
+            {
+                return $this->label[$var];
+            }
+            return "";
         } 
     }
 
