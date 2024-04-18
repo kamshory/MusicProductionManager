@@ -358,7 +358,7 @@ class SpecificationUtil
 
     /**
      * Create album specification
-     * @param PicoRequestBase $name
+     * @param PicoRequestBase $inputGet
      * @return PicoSpecification
      */
     public static function createAlbumSpecification($inputGet)
