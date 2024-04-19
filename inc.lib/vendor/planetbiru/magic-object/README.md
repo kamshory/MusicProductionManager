@@ -16,8 +16,6 @@ Some examples of using MagicObject are as follows:
 8. annotations
 9. debug objects 
 
-
-
 # Installation
 
 To install Magic Obbject

@@ -29,7 +29,7 @@ class PicoObjectParser
             }
             else
             {
-                $magicObject->set($key2, self::parseRecursive($value), true);
+                $magicObject->set($key2, self::parseRecursiveObject($value), true);
             }
         }
         return $magicObject;
@@ -51,28 +51,132 @@ class PicoObjectParser
             }
             else
             {
-                $magicObject->set($key2, self::parseRecursive($value), true);
+                $magicObject->set($key2, self::parseRecursiveObject($value), true);
             }
         }
         return $magicObject;
     }
     
     /**
-     * Parse recursive
+     * Check if input is associated array
+     *
+     * @param array $array
+     * @return boolean
      */
-    public static function parseRecursive($data)
+    private static function hasStringKeys($array) {
+        return count(array_filter(array_keys($array), 'is_string')) > 0;
+    }
+    
+    /**
+     * Parse recursive
+     * @param mixed $data
+     * @return mixed
+     */
+    public static function parseRecursiveObject($data)
     {
+        $result = null;
         if($data != null)
         {
             if($data instanceof MagicObject)
             {
-                return self::parseMagicObject($data);
+                $result = self::parseMagicObject($data);
             }
-            else if (is_array($data) || is_object($data)) {
-                return self::parseObject($data);
+            else if (is_array($data) || is_object($data) || $data instanceof stdClass) {
+                $obj = new MagicObject();
+                foreach($data as $key=>$val)
+                {
+                    $obj = self::updateObject($obj, $key, $val);
+                }
+                $result = $obj;
+            }
+            else
+            {
+                $result = $data;
             }
         }
-        return null;
+        return $result;
+    }
+    
+    /**
+     * Update object
+     *
+     * @param MagicObject $obj
+     * @param string $key
+     * @param mixed $val
+     * @return MagicObject
+     */
+    private static function updateObject($obj, $key, $val)
+    {
+        if (self::isObject($val))
+        {
+            $obj->set($key, self::parseRecursiveObject($val));
+        }
+        else if (is_array($val))
+        {
+            if(self::hasStringKeys($val))
+            {
+                $obj->set($key, self::parseRecursiveObject($val));
+            }
+            else
+            {
+                $obj->set($key, self::parseRecursiveArray($val));
+            }
+        }
+        else
+        {
+            $obj->set($key, $val);
+        }
+        return $obj;
+    }
+    
+    /**
+     * Check if value is object
+     *
+     * @param [type] $value
+     * @return boolean
+     */
+    private static function isObject($value)
+    {
+        if ($value instanceof stdClass || is_object($value))  
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Parse recursive
+     * @param array $data
+     */
+    public static function parseRecursiveArray($data)
+    {
+        $result = array();
+        if($data != null)
+        {
+            foreach($data as $val)
+            {
+                if (self::isObject($val))
+                {
+                    $result[] = self::parseRecursiveObject($val);
+                }
+                else if (is_array($val))
+                {
+                    if(self::hasStringKeys($val))
+                    {
+                        $result[] = self::parseRecursiveObject($val);
+                    }
+                    else
+                    {
+                        $result[] = self::parseRecursiveArray($val);
+                    }
+                }
+                else
+                {
+                    $result[] = $val;
+                }
+            }
+        }
+        return $result;
     }
     
     /**

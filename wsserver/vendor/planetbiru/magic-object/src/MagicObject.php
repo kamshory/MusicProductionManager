@@ -13,6 +13,7 @@ use MagicObject\Database\PicoPagable;
 use MagicObject\Database\PicoPageData;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
+use MagicObject\Database\PicoTableInfo;
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Exceptions\NoDatabaseConnectionException;
@@ -75,6 +76,20 @@ class MagicObject extends stdClass // NOSONAR
      * @var array
      */
     private $label = array();
+    
+    /**
+     * Table info
+     *
+     * @var PicoTableInfo
+     */
+    private $tableInfoProp = null;
+    
+    /**
+     * Database persistence
+     *
+     * @var PicoDatabasePersistence
+     */
+    private $persistProp = null;
 
     /**
      * Get null properties
@@ -189,10 +204,10 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Load data from Yaml string
      *
-     * @param string $rawData
-     * @param boolean $systemEnv
-     * @param boolean $asObject
-     * @param boolean $recursive
+     * @param string $rawData String of Yaml
+     * @param boolean $systemEnv Replace all environment variable value
+     * @param boolean $asObject Result is object instead of array
+     * @param boolean $recursive Convert all object to MagicObject
      * @return self
      */
     public function loadYamlString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
@@ -209,7 +224,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($obj));
             }
             else
             {
@@ -220,7 +235,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($data));
             }
             else
             {
@@ -234,9 +249,9 @@ class MagicObject extends stdClass // NOSONAR
      * Load data from Yaml file
      *
      * @param string $path
-     * @param boolean $systemEnv
-     * @param boolean $asObject
-     * @param boolean $recursive
+     * @param boolean $systemEnv Replace all environment variable value
+     * @param boolean $asObject Result is object instead of array
+     * @param boolean $recursive Convert all object to MagicObject
      * @return self
      */
     public function loadYamlFile($path, $systemEnv = false, $asObject = false, $recursive = false)
@@ -253,7 +268,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($obj));
             }
             else
             {
@@ -264,7 +279,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($data));
             }
             else
             {
@@ -296,7 +311,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($obj));
             }
             else
             {
@@ -307,7 +322,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($data));
             }
             else
             {
@@ -339,7 +354,7 @@ class MagicObject extends stdClass // NOSONAR
             $obj = json_decode(json_encode((object) $data), false);
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($obj));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($obj));
             }
             else
             {
@@ -350,7 +365,7 @@ class MagicObject extends stdClass // NOSONAR
         {
             if($recursive)
             {
-                $this->loadData(PicoObjectParser::parseRecursive($data));
+                $this->loadData(PicoObjectParser::parseRecursiveObject($data));
             }
             else
             {
@@ -807,17 +822,31 @@ class MagicObject extends stdClass // NOSONAR
     }
     
     /**
+     * Get table info
+     *
+     * @return PicoTableInfo
+     */
+    public function tableInfo()
+    {
+        if(!isset($this->tableInfo))
+        {
+            $this->persistProp = new PicoDatabasePersistence($this->database, $this);
+            $this->tableInfoProp = $this->persistProp->getTableInfo();
+        }
+        return $this->tableInfoProp;
+    }
+    
+    /**
      * Get default value
      *
      * @param boolean $snakeCase
      * @return stdClass
      */
     public function defaultValue($snakeCase = false)
-    {
-        $persist = new PicoDatabasePersistence($this->database, $this);
-        $tableInfo = $persist->getTableInfo();
+    {     
         $defaultValue = new stdClass;
-        if($tableInfo->getDefaultValue() != null)
+        $tableInfo = $this->tableInfo();   
+        if(isset($tableInfo) && $tableInfo->getDefaultValue() != null)
         {
             foreach($tableInfo->getDefaultValue() as $column)
             {
@@ -832,7 +861,7 @@ class MagicObject extends stdClass // NOSONAR
                     {
                         $col = $columnName;
                     }
-                    $defaultValue->$col = $persist->fixData($column[self::KEY_VALUE], $column[self::KEY_PROPERTY_TYPE]);
+                    $defaultValue->$col = $this->persistProp->fixData($column[self::KEY_VALUE], $column[self::KEY_PROPERTY_TYPE]);
                 }
             }
         }
@@ -1225,6 +1254,27 @@ class MagicObject extends stdClass // NOSONAR
     }
     
     /**
+     * Delete one by params
+     *
+     * @param string $method
+     * @param mixed $params
+     * @param PicoSortable|string $sortable
+     * @return PDOStatement|boolean
+     */
+    private function deleteOneBy($method, $params)
+    {
+        if($this->database != null && $this->database->isConnected())
+        {
+            $persist = new PicoDatabasePersistence($this->database, $this);
+            return $persist->deleteOneBy($method, $params);
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
+    
+    /**
      * Exists by params
      *
      * @param string $method
@@ -1311,6 +1361,7 @@ class MagicObject extends stdClass // NOSONAR
      * set &raquo; set property value. This method not require database connection.
      * unset &raquo; unset property value. This method not require database connection.
      * findOneBy &raquo; search data from database and return one record. This method require database connection.
+     * deleteOneBy &raquo; delete data from database and return one record. This method require database connection.
      * findFirstBy &raquo; search data from database and return first record. This method require database connection.
      * findLastBy &raquo; search data from database and return last record. This method require database connection.
      * findBy &raquo; search data from database. This method require database connection.
@@ -1342,6 +1393,10 @@ class MagicObject extends stdClass // NOSONAR
             $var = lcfirst(substr($method, 8));
             return isset($this->$var);
         } 
+        else if (strncasecmp($method, "isset", 5) === 0) {
+            $var = lcfirst(substr($method, 5));
+            return isset($this->$var);
+        }
         else if (strncasecmp($method, "is", 2) === 0) {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) ? $this->$var == 1 : false;
@@ -1371,6 +1426,12 @@ class MagicObject extends stdClass // NOSONAR
             // filter param
             $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->findOneBy($var, $parameters, $sortable);
+        }
+        else if (strncasecmp($method, "deleteOneBy", 11) === 0) {
+            $var = lcfirst(substr($method, 11));
+            // filter param
+            $parameters = PicoDatabaseUtil::valuesFromParams($params);
+            return $this->deleteOneBy($var, $parameters);
         }
         else if (strncasecmp($method, "findFirstBy", 11) === 0) {
             $var = lcfirst(substr($method, 11));

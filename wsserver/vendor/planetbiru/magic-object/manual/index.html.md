@@ -1,0 +1,20 @@
+---
+includes:
+  - installation
+  - implementation
+  - simple-object
+  - multilevel-object
+  - object-from-yaml
+  - object-from-ini
+  - environment-variable
+  - secret-object
+  - input
+  - session
+  - entity
+  - pagination
+  - database-dump
+  - object-label
+  - database-query-builder
+  - upload-file
+  - data-table
+---

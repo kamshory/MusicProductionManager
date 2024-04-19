@@ -202,4 +202,19 @@ class PicoStringUtil
         return isset($value1) ? $value1 : $value2;
     }
     
+    /**
+     * Fix cariage return
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function windowsCariageReturn($str)
+    {
+        $str = str_replace("\n", "\r\n", $str);
+        $str = str_replace("\r\r\n", "\r\n", $str);
+        $str = str_replace("\r", "\r\n", $str);
+        $str = str_replace("\r\n\n", "\r\n", $str);
+        return $str;
+    }
+    
 }

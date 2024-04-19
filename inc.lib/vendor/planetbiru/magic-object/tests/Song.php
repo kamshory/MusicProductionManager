@@ -2,7 +2,6 @@
 
 use MagicObject\Database\PicoDatabaseType;
 use MagicObject\Generator\PicoDatabaseDump;
-use MagicObject\Generator\PicoDatabaseStructureGenerator;
 use MagicObject\MagicObject;
 
 require_once dirname(__DIR__) . "/vendor/autoload.php";
@@ -426,7 +425,7 @@ class Song extends MagicObject
 	/**
 	 * Admin Create
 	 * 
-	 * @Column(name="admin_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Column(name="admin_create", type="varchar(50)", length=50, default_value=null, nullable=true, updatable=false)
 	 * @Label(content="Admin Create")
 	 * @var string
 	 */
@@ -435,7 +434,7 @@ class Song extends MagicObject
 	/**
 	 * Admin Edit
 	 * 
-	 * @Column(name="admin_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Column(name="admin_edit", type="varchar(50)", length=50, default_value=null, nullable=true)
 	 * @Label(content="Admin Edit")
 	 * @var string
 	 */
@@ -454,9 +453,59 @@ class Song extends MagicObject
 }
 $song = new Song();
 $dump = new PicoDatabaseDump();
+
 echo $dump->dumpStructure($song, PicoDatabaseType::DATABASE_TYPE_MYSQL, true, true);
 
 $pageData = $song;
-echo $dump->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);
+//echo $dump->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);
 
-echo $song->label('admin_create');
+//echo $song->label('admin_create');
+
+$song = new MagicObject();
+$song->loadYamlString(
+"
+songId: 1234567890
+title: Lagu 0001
+duration: 320
+album:
+  albumId: 234567
+  name: Album 0001
+genre:
+  genreId: 123456
+  name: Pop
+vocalist:
+  vovalistId: 5678
+  name: Budi
+  agency:
+    agencyId: 1234
+    name: Agency 0001
+    company:
+      companyId: 5678
+      name: Company 1
+      pic:
+        - name: Kamshory
+          gender: M
+        - name: Mas Roy
+          gender: M
+timeCreate: 2024-03-03 12:12:12
+timeEdit: 2024-03-03 13:13:13
+",
+false, true, true
+);
+
+// to get company name
+echo $song->getVocalist()->getAgency()->getCompany()->getName();
+echo "\r\n";
+// add company properties
+$song->getVocalist()->getAgency()->getCompany()->setCompanyAddress("Jalan Jendral Sudirman Nomor 1");
+// get agency
+echo $song->getVocalist()->getAgency();
+echo "\r\n";
+
+// to get pic
+foreach($song->getVocalist()->getAgency()->getCompany()->getPic() as $pic)
+{
+	echo $pic;
+	echo "\r\n----\r\n";
+}
+

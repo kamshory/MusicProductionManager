@@ -127,31 +127,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		$this->buffer .= "into $query\r\n";
 		return $this;
 	}
-
-	/**
-	 * Create select statement
-	 *
-	 * @param string $query SQL parameter
-	 * @return self
-	 */
-	public function select($query = "")
-	{
-		$this->buffer .= "select $query\r\n";
-		return $this;
-	}
-
-	/**
-	 * Create alias statement
-	 *
-	 * @param string $query SQL parameter
-	 * @return self
-	 */
-	public function alias($query)
-	{
-		$this->buffer .= "as $query\r\n";
-		return $this;
-	}
-
+	
 	/**
 	 * Create field statement
 	 *
@@ -221,6 +197,30 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		}
 		
 		$this->hasValues = true;
+		return $this;
+	}
+
+	/**
+	 * Create select statement
+	 *
+	 * @param string $query SQL parameter
+	 * @return self
+	 */
+	public function select($query = "")
+	{
+		$this->buffer .= "select $query\r\n";
+		return $this;
+	}
+
+	/**
+	 * Create alias statement
+	 *
+	 * @param string $query SQL parameter
+	 * @return self
+	 */
+	public function alias($query)
+	{
+		$this->buffer .= "as $query\r\n";
 		return $this;
 	}
 
@@ -753,7 +753,6 @@ class PicoDatabaseQueryBuilder // NOSONAR
 			$this->buffer .= "lastval()\r\n";
 		}
 		return $this;
-
 	}
 
 	/**

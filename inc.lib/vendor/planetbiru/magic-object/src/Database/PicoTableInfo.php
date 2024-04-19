@@ -2,6 +2,10 @@
 
 namespace MagicObject\Database;
 
+use Exception;
+use ReflectionProperty;
+use stdClass;
+
 class PicoTableInfo
 {
     /**
@@ -241,5 +245,19 @@ class PicoTableInfo
         $this->notNullColumns = $notNullColumns;
 
         return $this;
+    }
+    
+    public function __toString()
+    {
+        // create new object because all properties are private
+        $stdClass = new stdClass;
+        $stdClass->tableName = $this->tableName;
+        $stdClass->columns = $this->columns;
+        $stdClass->joinColumns = $this->joinColumns;
+        $stdClass->primaryKeys = $this->primaryKeys;
+        $stdClass->autoIncrementKeys = $this->autoIncrementKeys;
+        $stdClass->defaultValue = $this->defaultValue;
+        $stdClass->notNullColumns = $this->notNullColumns;
+        return json_encode($stdClass);
     }
 }

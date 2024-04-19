@@ -112,6 +112,10 @@ class PicoDatabaseUtilMySql
      */
     public static function fixDefaultValue($defaultValue, $type)
     {
+        if(strtolower($defaultValue) == 'true' || strtolower($defaultValue) == 'false' || strtolower($defaultValue) == 'null')
+        {
+            return $defaultValue;
+        }
         if(stripos($type, 'char') !== false || stripos($type, 'text') !== false || stripos($type, 'int') !== false || stripos($type, 'float') !== false || stripos($type, 'double') !== false)
         {
             return "'".$defaultValue."'";
