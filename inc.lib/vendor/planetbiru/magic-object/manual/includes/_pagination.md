@@ -1,4 +1,6 @@
-## Filtering and Pagination
+## Filtering, Ordering and Pagination
+
+MagicObject will filter data according to the given criteria. On the other hand, MagicObject will only retrieve data on the specified page by specifying `limit` and `offset` data in the `select` query.
 
 Example parameters:
 

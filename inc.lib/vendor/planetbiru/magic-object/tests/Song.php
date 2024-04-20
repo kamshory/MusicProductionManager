@@ -457,9 +457,9 @@ $dump = new PicoDatabaseDump();
 echo $dump->dumpStructure($song, PicoDatabaseType::DATABASE_TYPE_MYSQL, true, true);
 
 $pageData = $song;
-//echo $dump->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);
+echo $dump->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);
 
-//echo $song->label('admin_create');
+echo $song->label('admin_create');
 
 $song = new MagicObject();
 $song->loadYamlString(

@@ -2069,7 +2069,1265 @@ catch(Exception $e)
 	error_log($e->getMessage());
 }
 ```
-## Filtering and Pagination
+
+### Join the Entity
+
+Users can join entities with other entities. This joining can be done in stages, not limited to just two levels. Please note that using multi-level joins will reduce application performance and waste resource usage. Consider denormalizing the database for applications with large amounts of data.
+
+The following example is a two-level entity join. Users can expand it into three levels, for example by joining the `Album` or `Artist` entity with another new entity.
+
+WARNING:
+Don't join entities recursively because it will make the system carry out an endless process.
+
+**EntitySong**
+
+```php
+<?php
+
+namespace MusicProductionManager\Data\Entity;
+
+use MagicObject\MagicObject;
+
+/**
+ * @Entity
+ * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @Table(name="song")
+ */
+class EntitySong extends MagicObject
+{
+	/**
+	 * Song ID
+	 * 
+	 * @Id
+	 * @GeneratedValue(strategy=GenerationType.UUID)
+	 * @NotNull
+	 * @Column(name="song_id", type="varchar(50)", length=50, nullable=false)
+	 * @Label(content="Song ID")
+	 * @var string
+	 */
+	protected $songId;
+
+	/**
+	 * Random Song ID
+	 * 
+	 * @Column(name="random_song_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Random Song ID")
+	 * @var string
+	 */
+	protected $randomSongId;
+
+	/**
+	 * Name
+	 * 
+	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Name")
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * Title
+	 * 
+	 * @Column(name="title", type="text", nullable=true)
+	 * @Label(content="Title")
+	 * @var string
+	 */
+	protected $title;
+
+	/**
+	 * Album ID
+	 * 
+	 * @Column(name="album_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Album ID")
+	 * @var string
+	 */
+	protected $albumId;
+
+	/**
+	 * Album
+	 * @JoinColumn(name="album_id")
+	 * @Label(content="Album")
+	 * @var Album
+	 */
+	protected $album;
+
+	/**
+	 * Track Number
+	 * 
+	 * @Column(name="track_number", type="int(11)", length=11, nullable=true)
+	 * @Label(content="Track Number")
+	 * @var integer
+	 */
+	protected $trackNumber;
+
+	/**
+	 * Producer ID
+	 * 
+	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Producer ID")
+	 * @var string
+	 */
+	protected $producerId;
+
+	/**
+	 * Producer
+	 * 
+	 * @JoinColumn(name="producer_id")
+	 * @Label(content="Producer")
+	 * @var Producer
+	 */
+	protected $producer;
+
+	/**
+	 * Artist Vocal
+	 * 
+	 * @Column(name="artist_vocalist", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Artist Vocal")
+	 * @var string
+	 */
+	protected $artistVocalist;
+
+	/**
+	 * Artist Vocal
+	 * 
+	 * @JoinColumn(name="artist_vocalist")
+	 * @Label(content="Artist Vocal")
+	 * @var Artist
+	 */
+	protected $vocalist;
+
+	/**
+	 * Artist Composer
+	 * 
+	 * @Column(name="artist_composer", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Artist Composer")
+	 * @var string
+	 */
+	protected $artistComposer;
+
+	/**
+	 * Artist Composer
+	 * 
+	 * @JoinColumn(name="artist_composer")
+	 * @Label(content="Artist Composer")
+	 * @var Artist
+	 */
+	protected $composer;
+
+	/**
+	 * Artist Arranger
+	 * 
+	 * @Column(name="artist_arranger", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Artist Arranger")
+	 * @var string
+	 */
+	protected $artistArranger;
+
+	/**
+	 * Artist Arranger
+	 * 
+	 * @JoinColumn(name="artist_arranger")
+	 * @Label(content="Artist Arranger")
+	 * @var Artist
+	 */
+	protected $arranger;
+
+	/**
+	 * File Path
+	 * 
+	 * @Column(name="file_path", type="text", nullable=true)
+	 * @Label(content="File Path")
+	 * @var string
+	 */
+	protected $filePath;
+
+	/**
+	 * File Name
+	 * 
+	 * @Column(name="file_name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="File Name")
+	 * @var string
+	 */
+	protected $fileName;
+
+	/**
+	 * File Type
+	 * 
+	 * @Column(name="file_type", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="File Type")
+	 * @var string
+	 */
+	protected $fileType;
+
+	/**
+	 * File Extension
+	 * 
+	 * @Column(name="file_extension", type="varchar(20)", length=20, nullable=true)
+	 * @Label(content="File Extension")
+	 * @var string
+	 */
+	protected $fileExtension;
+
+	/**
+	 * File Size
+	 * 
+	 * @Column(name="file_size", type="bigint(20)", length=20, nullable=true)
+	 * @Label(content="File Size")
+	 * @var integer
+	 */
+	protected $fileSize;
+
+	/**
+	 * File Md5
+	 * 
+	 * @Column(name="file_md5", type="varchar(32)", length=32, nullable=true)
+	 * @Label(content="File Md5")
+	 * @var string
+	 */
+	protected $fileMd5;
+
+	/**
+	 * File Upload Time
+	 * 
+	 * @Column(name="file_upload_time", type="timestamp", length=19, nullable=true)
+	 * @Label(content="File Upload Time")
+	 * @var string
+	 */
+	protected $fileUploadTime;
+
+	/**
+	 * First Upload Time
+	 * 
+	 * @Column(name="first_upload_time", type="timestamp", length=19, nullable=true)
+	 * @Label(content="First Upload Time")
+	 * @var string
+	 */
+	protected $firstUploadTime;
+
+	/**
+	 * Last Upload Time
+	 * 
+	 * @Column(name="last_upload_time", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Last Upload Time")
+	 * @var string
+	 */
+	protected $lastUploadTime;
+
+	/**
+	 * File Path Midi
+	 * 
+	 * @Column(name="file_path_midi", type="text", nullable=true)
+	 * @Label(content="File Path Midi")
+	 * @var string
+	 */
+	protected $filePathMidi;
+
+	/**
+	 * Last Upload Time Midi
+	 * 
+	 * @Column(name="last_upload_time_midi", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Last Upload Time Midi")
+	 * @var string
+	 */
+	protected $lastUploadTimeMidi;
+
+	/**
+	 * File Path Xml
+	 * 
+	 * @Column(name="file_path_xml", type="text", nullable=true)
+	 * @Label(content="File Path Xml")
+	 * @var string
+	 */
+	protected $filePathXml;
+
+	/**
+	 * Last Upload Time Xml
+	 * 
+	 * @Column(name="last_upload_time_xml", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Last Upload Time Xml")
+	 * @var string
+	 */
+	protected $lastUploadTimeXml;
+
+	/**
+	 * File Path Pdf
+	 * 
+	 * @Column(name="file_path_pdf", type="text", nullable=true)
+	 * @Label(content="File Path Pdf")
+	 * @var string
+	 */
+	protected $filePathPdf;
+
+	/**
+	 * Last Upload Time Pdf
+	 * 
+	 * @Column(name="last_upload_time_pdf", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Last Upload Time Pdf")
+	 * @var string
+	 */
+	protected $lastUploadTimePdf;
+
+	/**
+	 * Duration
+	 * 
+	 * @Column(name="duration", type="float", nullable=true)
+	 * @Label(content="Duration")
+	 * @var double
+	 */
+	protected $duration;
+
+	/**
+	 * Genre ID
+	 * 
+	 * @Column(name="genre_id", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Genre ID")
+	 * @var string
+	 */
+	protected $genreId;
+
+	/**
+	 * Genre ID
+	 * 
+	 * @JoinColumn(name="genre_id")
+	 * @Label(content="Genre ID")
+	 * @var Genre
+	 */
+	protected $genre;
+
+	/**
+	 * Bpm
+	 * 
+	 * @Column(name="bpm", type="float", nullable=true)
+	 * @Label(content="Bpm")
+	 * @var double
+	 */
+	protected $bpm;
+
+	/**
+	 * Time Signature
+	 * 
+	 * @Column(name="time_signature", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Time Signature")
+	 * @var string
+	 */
+	protected $timeSignature;
+
+	/**
+	 * Subtitle
+	 * 
+	 * @Column(name="subtitle", type="longtext", nullable=true)
+	 * @Label(content="Subtitle")
+	 * @var string
+	 */
+	protected $subtitle;
+
+	/**
+	 * Subtitle Complete
+	 * 
+	 * @Column(name="subtitle_complete", type="tinyint(1)", length=1, nullable=true)
+	 * @var boolean
+	 */
+	protected $subtitleComplete;
+
+	/**
+	 * Lyric Midi
+	 * 
+	 * @Column(name="lyric_midi", type="longtext", nullable=true)
+	 * @Label(content="Lyric Midi")
+	 * @var string
+	 */
+	protected $lyricMidi;
+
+	/**
+	 * Lyric Midi Raw
+	 * 
+	 * @Column(name="lyric_midi_raw", type="longtext", nullable=true)
+	 * @Label(content="Lyric Midi Raw")
+	 * @var string
+	 */
+	protected $lyricMidiRaw;
+
+	/**
+	 * Vocal Guide
+	 * 
+	 * @Column(name="vocal_guide", type="longtext", nullable=true)
+	 * @Label(content="Vocal Guide")
+	 * @var string
+	 */
+	protected $vocalGuide;
+
+	/**
+	 * Vocal
+	 * 
+	 * @Column(name="vocal", type="tinyint(1)", length=1, nullable=true)
+	 * @var boolean
+	 */
+	protected $vocal;
+
+	/**
+	 * Instrument
+	 * 
+	 * @Column(name="instrument", type="longtext", nullable=true)
+	 * @Label(content="Instrument")
+	 * @var string
+	 */
+	protected $instrument;
+
+	/**
+	 * Midi Vocal Channel
+	 * 
+	 * @Column(name="midi_vocal_channel", type="int(11)", length=11, nullable=true)
+	 * @Label(content="Midi Vocal Channel")
+	 * @var integer
+	 */
+	protected $midiVocalChannel;
+
+	/**
+	 * Rating
+	 * 
+	 * @Column(name="rating", type="float", nullable=true)
+	 * @Label(content="Rating")
+	 * @var double
+	 */
+	protected $rating;
+
+	/**
+	 * Comment
+	 * 
+	 * @Column(name="comment", type="longtext", nullable=true)
+	 * @Label(content="Comment")
+	 * @var string
+	 */
+	protected $comment;
+
+	/**
+	 * Image Path
+	 * 
+	 * @Column(name="image_path", type="text", nullable=true)
+	 * @Label(content="Image Path")
+	 * @var string
+	 */
+	protected $imagePath;
+
+	/**
+	 * Last Upload Time Image
+	 * 
+	 * @Column(name="last_upload_time_image", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Last Upload Time Image")
+	 * @var string
+	 */
+	protected $lastUploadTimeImage;
+
+	/**
+	 * Time Create
+	 * 
+	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
+	 * @var string
+	 */
+	protected $timeCreate;
+
+	/**
+	 * Time Edit
+	 * 
+	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
+	 * @var string
+	 */
+	protected $timeEdit;
+
+	/**
+	 * IP Create
+	 * 
+	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
+	 * @var string
+	 */
+	protected $ipCreate;
+
+	/**
+	 * IP Edit
+	 * 
+	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
+	 * @var string
+	 */
+	protected $ipEdit;
+
+	/**
+	 * Admin Create
+	 * 
+	 * @Column(name="admin_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
+	 * @var string
+	 */
+	protected $adminCreate;
+
+	/**
+	 * Admin Edit
+	 * 
+	 * @Column(name="admin_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Admin Edit")
+	 * @var string
+	 */
+	protected $adminEdit;
+
+	/**
+	 * Active
+	 * 
+	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @var boolean
+	 */
+	protected $active;
+}
+```
+
+**Album**
+
+```php
+<?php
+
+namespace MusicProductionManager\Data\Entity;
+
+use MagicObject\MagicObject;
+
+/**
+ * @Entity
+ * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @Table(name="album")
+ */
+class Album extends MagicObject
+{
+	/**
+	 * Album ID
+	 * 
+	 * @Id
+	 * @GeneratedValue(strategy=GenerationType.UUID)
+	 * @NotNull
+	 * @Column(name="album_id", type="varchar(50)", length=50, nullable=false)
+	 * @Label(content="Album ID")
+	 * @var string
+	 */
+	protected $albumId;
+
+	/**
+	 * Name
+	 * 
+	 * @Column(name="name", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Name")
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * Title
+	 * 
+	 * @Column(name="title", type="text", nullable=true)
+	 * @Label(content="Title")
+	 * @var string
+	 */
+	protected $title;
+
+	/**
+	 * Description
+	 * 
+	 * @Column(name="description", type="longtext", nullable=true)
+	 * @Label(content="Description")
+	 * @var string
+	 */
+	protected $description;
+
+	/**
+	 * Producer ID
+	 * 
+	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Producer ID")
+	 * @var string
+	 */
+	protected $producerId;
+
+	/**
+	 * Release Date
+	 * 
+	 * @Column(name="release_date", type="date", nullable=true)
+	 * @Label(content="Release Date")
+	 * @var string
+	 */
+	protected $releaseDate;
+
+	/**
+	 * Number Of Song
+	 * 
+	 * @Column(name="number_of_song", type="int(11)", length=11, nullable=true)
+	 * @Label(content="Number Of Song")
+	 * @var integer
+	 */
+	protected $numberOfSong;
+
+	/**
+	 * Duration
+	 * 
+	 * @Column(name="duration", type="float", nullable=true)
+	 * @Label(content="Duration")
+	 * @var double
+	 */
+	protected $duration;
+
+	/**
+	 * Image Path
+	 * 
+	 * @Column(name="image_path", type="text", nullable=true)
+	 * @Label(content="Image Path")
+	 * @var string
+	 */
+	protected $imagePath;
+
+	/**
+	 * Sort Order
+	 * 
+	 * @Column(name="sort_order", type="int(11)", length=11, nullable=true)
+	 * @Label(content="Sort Order")
+	 * @var integer
+	 */
+	protected $sortOrder;
+
+	/**
+	 * Time Create
+	 * 
+	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
+	 * @var string
+	 */
+	protected $timeCreate;
+
+	/**
+	 * Time Edit
+	 * 
+	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
+	 * @var string
+	 */
+	protected $timeEdit;
+
+	/**
+	 * Admin Create
+	 * 
+	 * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
+	 * @var string
+	 */
+	protected $adminCreate;
+
+	/**
+	 * Admin Edit
+	 * 
+	 * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Admin Edit")
+	 * @var string
+	 */
+	protected $adminEdit;
+
+	/**
+	 * IP Create
+	 * 
+	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
+	 * @var string
+	 */
+	protected $ipCreate;
+
+	/**
+	 * IP Edit
+	 * 
+	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
+	 * @var string
+	 */
+	protected $ipEdit;
+
+	/**
+	 * Active
+	 * 
+	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @var boolean
+	 */
+	protected $active;
+
+	/**
+	 * As Draft
+	 * 
+	 * @Column(name="as_draft", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @var boolean
+	 */
+	protected $asDraft;
+
+}
+```
+
+**Producer**
+
+```php
+<?php
+
+namespace MusicProductionManager\Data\Entity;
+
+use MagicObject\MagicObject;
+
+/**
+ * @Entity
+ * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @Table(name="producer")
+ */
+class Producer extends MagicObject
+{
+	/**
+	 * Producer ID
+	 * 
+	 * @Id
+	 * @GeneratedValue(strategy=GenerationType.UUID)
+	 * @NotNull
+	 * @Column(name="producer_id", type="varchar(40)", length=40, nullable=false)
+	 * @Label(content="Producer ID")
+	 * @var string
+	 */
+	protected $producerId;
+
+	/**
+	 * Name
+	 * 
+	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Name")
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * Gender
+	 * 
+	 * @Column(name="gender", type="varchar(2)", length=2, nullable=true)
+	 * @Label(content="Gender")
+	 * @var string
+	 */
+	protected $gender;
+
+	/**
+	 * Birth Day
+	 * 
+	 * @Column(name="birth_day", type="date", nullable=true)
+	 * @Label(content="Birth Day")
+	 * @var string
+	 */
+	protected $birthDay;
+
+	/**
+	 * Phone
+	 * 
+	 * @Column(name="phone", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone")
+	 * @var string
+	 */
+	protected $phone;
+
+	/**
+	 * Phone2
+	 * 
+	 * @Column(name="phone2", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone2")
+	 * @var string
+	 */
+	protected $phone2;
+
+	/**
+	 * Phone3
+	 * 
+	 * @Column(name="phone3", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone3")
+	 * @var string
+	 */
+	protected $phone3;
+
+	/**
+	 * Email
+	 * 
+	 * @Column(name="email", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email")
+	 * @var string
+	 */
+	protected $email;
+
+	/**
+	 * Email2
+	 * 
+	 * @Column(name="email2", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email2")
+	 * @var string
+	 */
+	protected $email2;
+
+	/**
+	 * Email3
+	 * 
+	 * @Column(name="email3", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email3")
+	 * @var string
+	 */
+	protected $email3;
+
+	/**
+	 * Website
+	 * 
+	 * @Column(name="website", type="text", nullable=true)
+	 * @Label(content="Website")
+	 * @var string
+	 */
+	protected $website;
+
+	/**
+	 * Address
+	 * 
+	 * @Column(name="address", type="text", nullable=true)
+	 * @Label(content="Address")
+	 * @var string
+	 */
+	protected $address;
+
+	/**
+	 * Picture
+	 * 
+	 * @Column(name="picture", type="tinyint(1)", length=1, nullable=true)
+	 * @var boolean
+	 */
+	protected $picture;
+
+	/**
+	 * Image Path
+	 * 
+	 * @Column(name="image_path", type="text", nullable=true)
+	 * @Label(content="Image Path")
+	 * @var string
+	 */
+	protected $imagePath;
+
+	/**
+	 * Image Update
+	 * 
+	 * @Column(name="image_update", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Image Update")
+	 * @var string
+	 */
+	protected $imageUpdate;
+
+	/**
+	 * Time Create
+	 * 
+	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
+	 * @var string
+	 */
+	protected $timeCreate;
+
+	/**
+	 * Time Edit
+	 * 
+	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
+	 * @var string
+	 */
+	protected $timeEdit;
+
+	/**
+	 * Admin Create
+	 * 
+	 * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
+	 * @var string
+	 */
+	protected $adminCreate;
+
+	/**
+	 * Admin Edit
+	 * 
+	 * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Admin Edit")
+	 * @var string
+	 */
+	protected $adminEdit;
+
+	/**
+	 * IP Create
+	 * 
+	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
+	 * @var string
+	 */
+	protected $ipCreate;
+
+	/**
+	 * IP Edit
+	 * 
+	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
+	 * @var string
+	 */
+	protected $ipEdit;
+
+	/**
+	 * Active
+	 * 
+	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @var boolean
+	 */
+	protected $active;
+
+}
+```
+
+**Artist**
+
+```php
+<?php
+
+namespace MusicProductionManager\Data\Entity;
+
+use MagicObject\MagicObject;
+
+/**
+ * @Entity
+ * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @Table(name="artist")
+ */
+class Artist extends MagicObject
+{
+	/**
+	 * Artist ID
+	 * 
+	 * @Id
+	 * @GeneratedValue(strategy=GenerationType.UUID)
+	 * @NotNull
+	 * @Column(name="artist_id", type="varchar(40)", length=40, nullable=false)
+	 * @Label(content="Artist ID")
+	 * @var string
+	 */
+	protected $artistId;
+
+	/**
+	 * Name
+	 * 
+	 * @Column(name="name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Name")
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * Stage Name
+	 * 
+	 * @Column(name="stage_name", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Stage Name")
+	 * @var string
+	 */
+	protected $stageName;
+
+	/**
+	 * Gender
+	 * 
+	 * @Column(name="gender", type="varchar(2)", length=2, nullable=true)
+	 * @Label(content="Gender")
+	 * @var string
+	 */
+	protected $gender;
+
+	/**
+	 * Birth Day
+	 * 
+	 * @Column(name="birth_day", type="date", nullable=true)
+	 * @Label(content="Birth Day")
+	 * @var string
+	 */
+	protected $birthDay;
+
+	/**
+	 * Phone
+	 * 
+	 * @Column(name="phone", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone")
+	 * @var string
+	 */
+	protected $phone;
+
+	/**
+	 * Phone2
+	 * 
+	 * @Column(name="phone2", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone2")
+	 * @var string
+	 */
+	protected $phone2;
+
+	/**
+	 * Phone3
+	 * 
+	 * @Column(name="phone3", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="Phone3")
+	 * @var string
+	 */
+	protected $phone3;
+
+	/**
+	 * Email
+	 * 
+	 * @Column(name="email", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email")
+	 * @var string
+	 */
+	protected $email;
+
+	/**
+	 * Email2
+	 * 
+	 * @Column(name="email2", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email2")
+	 * @var string
+	 */
+	protected $email2;
+
+	/**
+	 * Email3
+	 * 
+	 * @Column(name="email3", type="varchar(100)", length=100, nullable=true)
+	 * @Label(content="Email3")
+	 * @var string
+	 */
+	protected $email3;
+
+	/**
+	 * Website
+	 * 
+	 * @Column(name="website", type="text", nullable=true)
+	 * @Label(content="Website")
+	 * @var string
+	 */
+	protected $website;
+
+	/**
+	 * Address
+	 * 
+	 * @Column(name="address", type="text", nullable=true)
+	 * @Label(content="Address")
+	 * @var string
+	 */
+	protected $address;
+
+	/**
+	 * Picture
+	 * 
+	 * @Column(name="picture", type="tinyint(1)", length=1, nullable=true)
+	 * @var boolean
+	 */
+	protected $picture;
+
+	/**
+	 * Image Path
+	 * 
+	 * @Column(name="image_path", type="text", nullable=true)
+	 * @Label(content="Image Path")
+	 * @var string
+	 */
+	protected $imagePath;
+
+	/**
+	 * Image Update
+	 * 
+	 * @Column(name="image_update", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Image Update")
+	 * @var string
+	 */
+	protected $imageUpdate;
+
+	/**
+	 * Time Create
+	 * 
+	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
+	 * @var string
+	 */
+	protected $timeCreate;
+
+	/**
+	 * Time Edit
+	 * 
+	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
+	 * @var string
+	 */
+	protected $timeEdit;
+
+	/**
+	 * Admin Create
+	 * 
+	 * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
+	 * @var string
+	 */
+	protected $adminCreate;
+
+	/**
+	 * Admin Edit
+	 * 
+	 * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Admin Edit")
+	 * @var string
+	 */
+	protected $adminEdit;
+
+	/**
+	 * IP Create
+	 * 
+	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
+	 * @var string
+	 */
+	protected $ipCreate;
+
+	/**
+	 * IP Edit
+	 * 
+	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
+	 * @var string
+	 */
+	protected $ipEdit;
+
+	/**
+	 * Active
+	 * 
+	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @var boolean
+	 */
+	protected $active;
+
+}
+```
+
+**Genre**
+
+```php
+<?php
+
+namespace MusicProductionManager\Data\Entity;
+
+use MagicObject\MagicObject;
+
+/**
+ * @Entity
+ * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @Table(name="genre")
+ */
+class Genre extends MagicObject
+{
+	/**
+	 * Genre ID
+	 * 
+	 * @Id
+	 * @GeneratedValue(strategy=GenerationType.UUID)
+	 * @NotNull
+	 * @Column(name="genre_id", type="varchar(50)", length=50, nullable=false)
+	 * @Label(content="Genre ID")
+	 * @var string
+	 */
+	protected $genreId;
+
+	/**
+	 * Name
+	 * 
+	 * @Column(name="name", type="varchar(255)", length=255, nullable=true)
+	 * @Label(content="Name")
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * Sort Order
+	 * 
+	 * @Column(name="sort_order", type="int(11)", length=11, nullable=true)
+	 * @Label(content="Sort Order")
+	 * @var integer
+	 */
+	protected $sortOrder;
+
+	/**
+	 * Time Create
+	 * 
+	 * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+	 * @Label(content="Time Create")
+	 * @var string
+	 */
+	protected $timeCreate;
+
+	/**
+	 * Time Edit
+	 * 
+	 * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+	 * @Label(content="Time Edit")
+	 * @var string
+	 */
+	protected $timeEdit;
+
+	/**
+	 * Admin Create
+	 * 
+	 * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+	 * @Label(content="Admin Create")
+	 * @var string
+	 */
+	protected $adminCreate;
+
+	/**
+	 * Admin Edit
+	 * 
+	 * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+	 * @Label(content="Admin Edit")
+	 * @var string
+	 */
+	protected $adminEdit;
+
+	/**
+	 * IP Create
+	 * 
+	 * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+	 * @Label(content="IP Create")
+	 * @var string
+	 */
+	protected $ipCreate;
+
+	/**
+	 * IP Edit
+	 * 
+	 * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+	 * @Label(content="IP Edit")
+	 * @var string
+	 */
+	protected $ipEdit;
+
+	/**
+	 * Active
+	 * 
+	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @var boolean
+	 */
+	protected $active;
+
+}
+```
+## Filtering, Ordering and Pagination
+
+MagicObject will filter data according to the given criteria. On the other hand, MagicObject will only retrieve data on the specified page by specifying `limit` and `offset` data in the `select` query.
 
 Example parameters:
 
@@ -4185,10 +5443,8 @@ $rumah->addLanguage('id', $language);
 $rumah->selectLanguage('id');
 $rumah->addClass('table');
 
-$apa = $rumah."";
+$apa = $rumah;
 echo $apa;
 ```
-
-### Define Langauges
 
 

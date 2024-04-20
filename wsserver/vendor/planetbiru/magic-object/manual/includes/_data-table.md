@@ -221,9 +221,7 @@ $rumah->addLanguage('id', $language);
 $rumah->selectLanguage('id');
 $rumah->addClass('table');
 
-$apa = $rumah."";
+$apa = $rumah;
 echo $apa;
 ```
-
-### Define Langauges
 

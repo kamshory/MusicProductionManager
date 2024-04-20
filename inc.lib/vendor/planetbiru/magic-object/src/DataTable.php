@@ -3,6 +3,7 @@
 namespace MagicObject;
 
 use DOMDocument;
+use DOMNode;
 use Exception;
 use MagicObject\Database\PicoTableInfo;
 use MagicObject\Language\PicoLanguage;
@@ -351,6 +352,106 @@ class DataTable extends SetterGetter
         }
         return null;
     }
+
+    /**
+     * Append table by properties
+     *
+     * @param DOMDocument $doc
+     * @param DOMNode $tbody
+     * @param array $props
+     * @param string $className
+     * @return void
+     */
+    private function appendByProp($doc, $tbody, $props, $className)
+    {
+        foreach($props as $prop)
+        {
+            $key = $prop->name;
+            $label = $key;
+            $value = $this->get($key);
+            if(is_scalar($value))
+            {
+                $tr = $tbody->appendChild($doc->createElement(self::TAG_TR));
+                
+                $reflexProp = new PicoAnnotationParser($className, $key, PicoAnnotationParser::PROPERTY);
+                
+                if($reflexProp != null)
+                {
+                    $parameters = $reflexProp->getParametersAsObject();
+                    if($parameters->issetLabel())
+                    {
+                        $label = $this->label($reflexProp, $parameters, $key, $label);
+                    }
+                }
+
+                $td1 = $tr->appendChild($doc->createElement(self::TAG_TD));
+                $td1->setAttribute(self::KEY_CLASS, self::TD_LABEL);
+                $td1->textContent = $label;
+                
+                $td2 = $tr->appendChild($doc->createElement(self::TAG_TD));         
+                $td2->setAttribute(self::KEY_CLASS, self::TD_VALUE);
+                $td2->textContent = isset($value) ? $value : "";
+            }
+        }
+    }
+
+    /**
+     * Append table by values
+     *
+     * @param DOMDocument $doc
+     * @param DOMNode $tbody
+     * @param stdClass $values
+     * @return void
+     */
+    private function appendByValues($doc, $tbody, $values)
+    {
+        foreach($values as $propertyName=>$value)
+        {
+            if(is_scalar($value))
+            {
+                $tr = $tbody->appendChild($doc->createElement(self::TAG_TR));
+                $label = $this->getLabel($propertyName);             
+                
+                $td1 = $tr->appendChild($doc->createElement(self::TAG_TD));
+                $td1->setAttribute(self::KEY_CLASS, self::TD_LABEL);
+                $td1->textContent = $label;
+                
+                $td2 = $tr->appendChild($doc->createElement(self::TAG_TD));         
+                $td2->setAttribute(self::KEY_CLASS, self::TD_VALUE);
+                $td2->textContent = isset($value) ? $value : "";
+            }
+        }
+    }
+
+    /**
+     * Get label
+     *
+     * @param string $propertyName
+     * @return string
+     */
+    private function getLabel($propertyName)
+    {
+        $label = "";
+        if(isset($this->lableLanguage[$this->currentLanguage]))
+        {
+            $language = $this->lableLanguage[$this->currentLanguage];
+        
+            $label = $language->get($propertyName);
+            
+        }
+        else
+        {
+            if(isset($this->labels[$propertyName]))
+            {
+                $label = $this->labels[$propertyName];
+            }
+        }
+        if(empty($label))
+        {
+            $label = PicoStringUtil::camelToTitle($propertyName);
+        }
+        return $label;
+    }
     
     /**
      * Magic method to string
@@ -373,69 +474,12 @@ class DataTable extends SetterGetter
         $props = $this->propertyList();
         if(!empty($props))
         {     
-            foreach($props as $prop)
-            {
-                $key = $prop->name;
-                $label = $key;
-                $value = $this->get($key);
-                if(is_scalar($value))
-                {
-                    $tr = $tbody->appendChild($doc->createElement(self::TAG_TR));
-                    
-                    $reflexProp = new PicoAnnotationParser($className, $key, PicoAnnotationParser::PROPERTY);
-                    
-                    if($reflexProp != null)
-                    {
-                        $parameters = $reflexProp->getParametersAsObject();
-                        if($parameters->issetLabel())
-                        {
-                            $label = $this->label($reflexProp, $parameters, $key, $label);
-                        }
-                    }
-
-                    $td1 = $tr->appendChild($doc->createElement(self::TAG_TD));
-                    $td1->setAttribute(self::KEY_CLASS, self::TD_LABEL);
-                    $td1->textContent = $label;
-                    
-                    $td2 = $tr->appendChild($doc->createElement(self::TAG_TD));         
-                    $td2->setAttribute(self::KEY_CLASS, self::TD_VALUE);
-                    $td2->textContent = isset($value) ? $value : "";
-                }
-            }
+            $this->appendByProp($doc, $tbody, $props, $className);
         }
         else
         {
             $values = $this->value();
-            foreach($values as $propertyName=>$value)
-            {
-                if(is_scalar($value))
-                {
-                    $tr = $tbody->appendChild($doc->createElement(self::TAG_TR));
-                    $label = "";
-                    if(isset($this->lableLanguage[$this->currentLanguage]))
-                    {
-                        $language = $this->lableLanguage[$this->currentLanguage];
-                    
-                        $label = $language->get($propertyName);
-                        
-                    }
-                    else
-                    {
-                        if(isset($this->labels[$propertyName]))
-                        {
-                            $label = $this->labels[$propertyName];
-                        }
-                    }
-                    
-                    $td1 = $tr->appendChild($doc->createElement(self::TAG_TD));
-                    $td1->setAttribute(self::KEY_CLASS, self::TD_LABEL);
-                    $td1->textContent = $label;
-                    
-                    $td2 = $tr->appendChild($doc->createElement(self::TAG_TD));         
-                    $td2->setAttribute(self::KEY_CLASS, self::TD_VALUE);
-                    $td2->textContent = isset($value) ? $value : "";
-                }
-            }
+            $this->appendByValues($doc, $tbody, $values);
         }
          return $doc->saveHTML();
     } 
