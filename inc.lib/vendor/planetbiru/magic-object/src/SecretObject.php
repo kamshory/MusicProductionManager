@@ -33,51 +33,51 @@ class SecretObject extends stdClass //NOSONAR
      *
      * @var string[]
      */
-    private $encryptInProperties = array();
+    private $_encryptInProperties = array();
     
     /**
      * Class parameters
      *
      * @var array
      */
-    protected $classParams = array();
+    protected $_classParams = array();
     
     /**
      * NULL properties
      *
      * @var array
      */
-    protected $nullProperties = array();
+    protected $_nullProperties = array();
     
     /**
      * List of propertis to be decrypted when call GET
      *
      * @var string[]
      */
-    private $decryptOutProperties = array();
+    private $_decryptOutProperties = array();
 
     /**
      * List of propertis to be encrypted when call GET
      *
      * @var string[]
      */
-    private $encryptOutProperties = array();
+    private $_encryptOutProperties = array();
     
     /**
      * List of propertis to be decrypted when call SET
      *
      * @var string[]
      */
-    private $decryptInProperties = array();
+    private $_decryptInProperties = array();
 
     /**
      * Read only
      *
      * @var boolean
      */
-    private $readonly = false;
+    private $_readonly = false;
     
-    private $secureFunction = null;
+    private $_secureFunction = null;
     
     /**
      * Constructor
@@ -90,7 +90,7 @@ class SecretObject extends stdClass //NOSONAR
         // set callback secure before load default data
         if($secureCallback != null && is_callable($secureCallback))
         {
-            $this->secureFunction = $secureCallback;
+            $this->_secureFunction = $secureCallback;
         }
         if($data != null)
         {
@@ -115,7 +115,7 @@ class SecretObject extends stdClass //NOSONAR
             try
             {
                 $vals = $reflexClass->parseKeyValue($paramValue);
-                $this->classParams[$paramName] = $vals;
+                $this->_classParams[$paramName] = $vals;
             }
             catch(InvalidQueryInputException $e)
             {
@@ -134,19 +134,19 @@ class SecretObject extends stdClass //NOSONAR
             {
                 if(strcasecmp($param, self::ANNOTATION_ENCRYPT_IN) == 0)
                 {
-                    $this->encryptInProperties[] = $prop->name;
+                    $this->_encryptInProperties[] = $prop->name;
                 }
                 else if(strcasecmp($param, self::ANNOTATION_DECRYPT_OUT) == 0)
                 {
-                    $this->decryptOutProperties[] = $prop->name;
+                    $this->_decryptOutProperties[] = $prop->name;
                 }
                 else if(strcasecmp($param, self::ANNOTATION_ENCRYPT_OUT) == 0)
                 {
-                    $this->encryptOutProperties[] = $prop->name;
+                    $this->_encryptOutProperties[] = $prop->name;
                 }
                 else if(strcasecmp($param, self::ANNOTATION_DECRYPT_IN) == 0)
                 {
-                    $this->decryptInProperties[] = $prop->name;
+                    $this->_decryptInProperties[] = $prop->name;
                 }
             }
         }
@@ -160,9 +160,9 @@ class SecretObject extends stdClass //NOSONAR
      */
     private function secureKey()
     {
-        if($this->secureFunction != null && is_callable($this->secureFunction))
+        if($this->_secureFunction != null && is_callable($this->_secureFunction))
         {
-            return call_user_func($this->secureFunction);
+            return call_user_func($this->_secureFunction);
         }
         else
         {
@@ -186,7 +186,7 @@ class SecretObject extends stdClass //NOSONAR
             $var = lcfirst(substr($method, 3));
             return $this->_get($var);
         }
-        else if (strncasecmp($method, "set", 3) === 0 && !$this->readonly) {
+        else if (strncasecmp($method, "set", 3) === 0 && !$this->_readonly) {
             $var = lcfirst(substr($method, 3));
             $this->_set($var, $params[0]);
             $this->modifyNullProperties($var, $params[0]);
@@ -388,7 +388,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     private function needInputEncryption($var)
     {
-        return in_array($var, $this->encryptInProperties);
+        return in_array($var, $this->_encryptInProperties);
     }
     
     /**
@@ -399,7 +399,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     private function needOutputDecryption($var)
     {
-        return in_array($var, $this->decryptOutProperties);
+        return in_array($var, $this->_decryptOutProperties);
     }
     
     /**
@@ -410,7 +410,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     private function needOutputEncryption($var)
     {
-        return in_array($var, $this->encryptOutProperties);
+        return in_array($var, $this->_encryptOutProperties);
     }
     
     /**
@@ -421,7 +421,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     private function needInputDecryption($var)
     {
-        return in_array($var, $this->decryptInProperties);
+        return in_array($var, $this->_decryptInProperties);
     }
 
     /**
@@ -673,7 +673,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     protected function readOnly($readonly)
     {
-        $this->readonly = $readonly;
+        $this->_readonly = $readonly;
         return $this;
     }
     
@@ -822,9 +822,9 @@ class SecretObject extends stdClass //NOSONAR
      */
     protected function _snake()
     {
-        return isset($this->classParams[self::JSON])
-            && isset($this->classParams[self::JSON]['property-naming-strategy'])
-            && strcasecmp($this->classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
+        return isset($this->_classParams[self::JSON])
+            && isset($this->_classParams[self::JSON]['property-naming-strategy'])
+            && strcasecmp($this->_classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
             ;
     }
     
@@ -835,9 +835,9 @@ class SecretObject extends stdClass //NOSONAR
      */
     protected function isUpperCamel()
     {
-        return isset($this->classParams[self::JSON])
-            && isset($this->classParams[self::JSON]['property-naming-strategy'])
-            && strcasecmp($this->classParams[self::JSON]['property-naming-strategy'], 'UPPER_CAMEL_CASE') == 0
+        return isset($this->_classParams[self::JSON])
+            && isset($this->_classParams[self::JSON]['property-naming-strategy'])
+            && strcasecmp($this->_classParams[self::JSON]['property-naming-strategy'], 'UPPER_CAMEL_CASE') == 0
             ;
     }
     
@@ -897,13 +897,13 @@ class SecretObject extends stdClass //NOSONAR
      */
     private function modifyNullProperties($propertyName, $propertyValue)
     {
-        if($propertyValue === null && !isset($this->nullProperties[$propertyName]))
+        if($propertyValue === null && !isset($this->_nullProperties[$propertyName]))
         {
-            $this->nullProperties[$propertyName] = true; 
+            $this->_nullProperties[$propertyName] = true; 
         }
-        if($propertyValue != null && isset($this->nullProperties[$propertyName]))
+        if($propertyValue != null && isset($this->_nullProperties[$propertyName]))
         {
-            unset($this->nullProperties[$propertyName]); 
+            unset($this->_nullProperties[$propertyName]); 
         }
     }
     
