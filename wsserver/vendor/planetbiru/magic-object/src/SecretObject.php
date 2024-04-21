@@ -154,11 +154,11 @@ class SecretObject extends stdClass //NOSONAR
     }
 
     /**
-     * Get secure
+     * Secure key
      *
      * @return string
      */
-    private function getSecure()
+    private function secureKey()
     {
         if($this->secureFunction != null && is_callable($this->secureFunction))
         {
@@ -205,11 +205,11 @@ class SecretObject extends stdClass //NOSONAR
     {
         if($this->needInputEncryption($var))
         {
-            $value = $this->encryptValue($value, $this->getSecure());
+            $value = $this->encryptValue($value, $this->secureKey());
         }
         else if($this->needInputDecryption($var))
         {
-            $value = $this->decryptValue($value, $this->getSecure());
+            $value = $this->decryptValue($value, $this->secureKey());
         }
         $this->$var = $value;
         return $this;
@@ -226,11 +226,11 @@ class SecretObject extends stdClass //NOSONAR
         $value = $this->_getValue($var);
         if($this->needOutputEncryption($var))
         {
-            $value = $this->encryptValue($value, $this->getSecure());
+            $value = $this->encryptValue($value, $this->secureKey());
         }
         else if($this->needOutputDecryption($var))
         {
-            $value = $this->decryptValue($value, $this->getSecure());
+            $value = $this->decryptValue($value, $this->secureKey());
         }
         return $value;
     }
@@ -295,8 +295,12 @@ class SecretObject extends stdClass //NOSONAR
      * @param string $hexKey
      * @return string
      */
-    private function encryptString($plaintext, $hexKey)
+    public function encryptString($plaintext, $hexKey)
     {
+        if($hexKey == null)
+        {
+            $hexKey = $this->secureKey();
+        }
         $key = $hexKey;
         $method = "AES-256-CBC";
         $iv = openssl_random_pseudo_bytes(16);   
@@ -353,8 +357,12 @@ class SecretObject extends stdClass //NOSONAR
      * @param string $hexKey
      * @return string
      */
-    private function decryptString($ciphertext, $hexKey) 
+    public function decryptString($ciphertext, $hexKey) 
     {
+        if($hexKey == null)
+        {
+            $hexKey = $this->secureKey();
+        }
         if(!isset($ciphertext) || empty($ciphertext))
         {
             return null;
@@ -928,7 +936,7 @@ class SecretObject extends stdClass //NOSONAR
             }
             else if(is_string($val))
             {
-                $array[$key] = $this->encryptValue($val, $this->getSecure());
+                $array[$key] = $this->encryptValue($val, $this->secureKey());
             }
         }
         return $array;

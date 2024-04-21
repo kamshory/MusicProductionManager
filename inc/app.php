@@ -15,7 +15,6 @@ $databaseCredentials = new DbCredentials($cfg->getDatabase(), function(){
     return bin2hex("783ery238rfhicihsc8ys9cw3sfuifh8");
 });
 
-
 $database = new PicoDatabase($databaseCredentials, 
     function($sql, $type) //NOSONAR
     {
