@@ -251,6 +251,7 @@ class EntityUser extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;

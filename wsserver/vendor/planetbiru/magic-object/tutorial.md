@@ -1337,6 +1337,7 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -2777,6 +2778,7 @@ class EntitySong extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -2951,6 +2953,7 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -3179,6 +3182,7 @@ class Producer extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -3407,6 +3411,7 @@ class Artist extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -3519,6 +3524,7 @@ class Genre extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -4031,6 +4037,7 @@ class EntitySong extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -5012,6 +5019,7 @@ class UserType extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
+	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
