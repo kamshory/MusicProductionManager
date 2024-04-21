@@ -132,7 +132,7 @@ class ConfigApp extends MagicObject
 <?php
 
 $cfg = new ConfigApp(null, true);
-$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 // to get database object,
 // $cfg->getDatabase()

@@ -2,10 +2,15 @@
 
 namespace MagicObject;
 
+use MagicObject\Exceptions\InvalidAnnotationException;
+use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Util\PicoEnvironmentVariable;
 use MagicObject\Secret\PicoSecret;
 use MagicObject\Util\ClassUtil\PicoAnnotationParser;
+use MagicObject\Util\ClassUtil\PicoSecretParser;
+use MagicObject\Util\PicoGenericObject;
 use MagicObject\Util\PicoStringUtil;
+use MagicObject\Util\PicoYamlUtil;
 use ReflectionClass;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
@@ -75,23 +80,6 @@ class SecretObject extends stdClass //NOSONAR
     private $secureFunction = null;
     
     /**
-     * Get secure
-     *
-     * @return string
-     */
-    private function getSecure()
-    {
-        if($this->secureFunction != null && is_callable($this->secureFunction))
-        {
-            return call_user_func($this->secureFunction);
-        }
-        else
-        {
-            return PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2;
-        }
-    }
-    
-    /**
      * Constructor
      *
      * @param self|array|object $data
@@ -119,7 +107,21 @@ class SecretObject extends stdClass //NOSONAR
     {
         $className = get_class($this);
         $reflexClass = new PicoAnnotationParser($className);
+        $params = $reflexClass->getParameters();
         $props = $reflexClass->getProperties();
+        
+        foreach($params as $paramName=>$paramValue)
+        {
+            try
+            {
+                $vals = $reflexClass->parseKeyValue($paramValue);
+                $this->classParams[$paramName] = $vals;
+            }
+            catch(InvalidQueryInputException $e)
+            {
+                throw new InvalidAnnotationException("Invalid annotation @".$paramName);
+            }    
+        }
         
         // iterate each properties of the class
         foreach($props as $prop)
@@ -147,6 +149,24 @@ class SecretObject extends stdClass //NOSONAR
                     $this->decryptInProperties[] = $prop->name;
                 }
             }
+        }
+
+    }
+
+    /**
+     * Get secure
+     *
+     * @return string
+     */
+    private function getSecure()
+    {
+        if($this->secureFunction != null && is_callable($this->secureFunction))
+        {
+            return call_user_func($this->secureFunction);
+        }
+        else
+        {
+            return PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2;
         }
     }
     
@@ -179,7 +199,7 @@ class SecretObject extends stdClass //NOSONAR
      *
      * @param string $var
      * @param mixed $value
-     * @return void
+     * @return self
      */
     private function _set($var, $value)
     {
@@ -192,6 +212,7 @@ class SecretObject extends stdClass //NOSONAR
             $value = $this->decryptValue($value, $this->getSecure());
         }
         $this->$var = $value;
+        return $this;
     }
     
     /**
@@ -228,11 +249,53 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Encrypt data
      *
+     * @param MagicObject|PicoGenericObject|array|stdClass|string|number $data
+     * @param string $hexKey
+     * @return mixed
+     */
+    private function encryptValue($data, $hexKey) 
+    {
+        if($data instanceof MagicObject || $data instanceof PicoGenericObject)
+        {
+            $values = $data->value();
+            print_r($data);
+            foreach($values as $key=>$value)
+            {
+                $data->set($key, $this->encryptValue($value, $hexKey));
+            }
+            return $data;
+        }
+        else if($data instanceof self || $data instanceof stdClass)
+        {
+            foreach($data as $key=>$value)
+            {
+                $data->$key = $this->encryptValue($value, $hexKey);
+            }
+            return $data;
+        }
+        else if(is_array($data))
+        {
+            foreach($data as $key=>$value)
+            {
+                $data[$key] = $this->encryptValue($value, $hexKey);
+            }
+            return $data;
+        }
+        else
+        {
+            $data = $data."";
+            return $this->encryptString($data, $hexKey);
+        }
+    }
+
+    /**
+     * Encrypt string
+     *
      * @param string $plaintext
      * @param string $hexKey
      * @return string
      */
-    private function encryptValue($plaintext, $hexKey) 
+    private function encryptString($plaintext, $hexKey)
     {
         $key = $hexKey;
         $method = "AES-256-CBC";
@@ -245,12 +308,57 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Decrypt data
      *
-     * @param string $ciphertext
+     * @param MagicObject|PicoGenericObject|array|stdClass|string $data
+     * @param string $hexKey
+     * @return mixed
+     */
+    private function decryptValue($data, $hexKey) 
+    {
+        if($data instanceof MagicObject || $data instanceof PicoGenericObject)
+        {
+            $values = $data->value();
+            foreach($values as $key=>$value)
+            {
+                $data->set($key, $this->decryptValue($value, $hexKey));
+            }
+            return $data;
+        }
+        else if($data instanceof stdClass)
+        {
+            foreach($data as $key=>$value)
+            {
+                $data->$key = $this->decryptValue($value, $hexKey);
+            }
+            return $data;
+        }
+        else if(is_array($data))
+        {
+            foreach($data as $key=>$value)
+            {
+                $data[$key] = $this->decryptValue($value, $hexKey);
+            }
+            return $data;
+        }
+        else
+        {
+            $data = $data."";
+            return $this->decryptString($data, $hexKey);
+        }
+    }
+
+    /**
+     * Decrypt string
+     *
+     * @param string $data
      * @param string $hexKey
      * @return string
      */
-    private function decryptValue($ciphertext, $hexKey) 
+    private function decryptString($ciphertext, $hexKey) 
     {
+        if(!isset($ciphertext) || empty($ciphertext))
+        {
+            return null;
+        }
         $ivHashCiphertext = base64_decode($ciphertext);
         $key = $hexKey;
         $method = "AES-256-CBC";
@@ -317,7 +425,7 @@ class SecretObject extends stdClass //NOSONAR
     {
         if($data != null)
         {
-            if($data instanceof self)
+            if($data instanceof self || $data instanceof MagicObject || $data instanceof PicoGenericObject)
             {
                 $values = $data->value();
                 foreach ($values as $key => $value) {
@@ -332,6 +440,26 @@ class SecretObject extends stdClass //NOSONAR
                 }
             }
         }
+        return $this;
+    }
+    
+    /**
+     * Load data from INI string
+     *
+     * @param string $rawData
+     * @param boolean $systemEnv
+     * @return self
+     */
+    public function loadIniString($rawData, $systemEnv = false)
+    {
+        // Parse without sections
+        $data = parse_ini_string($rawData);
+        if($systemEnv)
+        {
+            $env = new PicoEnvironmentVariable();
+            $data = $env->replaceSysEnvAll($data, true);
+        }
+        $this->loadData($data);
         return $this;
     }
 
@@ -356,13 +484,59 @@ class SecretObject extends stdClass //NOSONAR
     }
 
     /**
+     * Load data from Yaml string
+     *
+     * @param string $rawData String of Yaml
+     * @param boolean $systemEnv Replace all environment variable value
+     * @param boolean $asObject Result is object instead of array
+     * @param boolean $recursive Convert all object to MagicObject
+     * @return self
+     */
+    public function loadYamlString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
+    {
+        $data = Yaml::parse($rawData);
+        if($systemEnv)
+        {
+            $env = new PicoEnvironmentVariable();
+            $data = $env->replaceSysEnvAll($data, true);
+        }
+        if($asObject)
+        {
+            // convert to object
+            $obj = json_decode(json_encode((object) $data), false);
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
+        }
+        else
+        {
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
+        }
+        return $this;
+    }
+    
+    /**
      * Load data from Yaml file
      *
      * @param string $path
-     * @param boolean $systemEnv
+     * @param boolean $systemEnv Replace all environment variable value
+     * @param boolean $asObject Result is object instead of array
+     * @param boolean $recursive Convert all object to MagicObject
      * @return self
      */
-    public function loadYamlFile($path, $systemEnv = false, $asObject = false)
+    public function loadYamlFile($path, $systemEnv = false, $asObject = false, $recursive = false)
     {
         $data = Yaml::parseFile($path);
         if($systemEnv)
@@ -374,23 +548,81 @@ class SecretObject extends stdClass //NOSONAR
         {
             // convert to object
             $obj = json_decode(json_encode((object) $data), false);
-            $this->loadData($obj);
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
         }
         else
         {
-            $this->loadData($data);
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
         }
         return $this;
     }
 
     /**
+     * Load data from JSON string
+     *
+     * @param string $rawData
+     * @param boolean $systemEnv
+     * @param boolean $recursive
+     * @return self
+     */
+    public function loadJsonString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
+    {
+        $data = json_decode($rawData);
+        if($systemEnv)
+        {
+            $env = new PicoEnvironmentVariable();
+            $data = $env->replaceSysEnvAll($data, true);
+        }
+        if($asObject)
+        {
+            // convert to object
+            $obj = json_decode(json_encode((object) $data), false);
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
+        }
+        else
+        {
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
+        }
+        return $this;
+    }
+    
+    /**
      * Load data from JSON file
      *
      * @param string $path
      * @param boolean $systemEnv
+     * @param boolean $recursive
      * @return self
      */
-    public function loadJsonFile($path, $systemEnv = false, $asObject = false)
+    public function loadJsonFile($path, $systemEnv = false, $asObject = false, $recursive = false)
     {
         $data = json_decode(file_get_contents($path));
         if($systemEnv)
@@ -402,12 +634,38 @@ class SecretObject extends stdClass //NOSONAR
         {
             // convert to object
             $obj = json_decode(json_encode((object) $data), false);
-            $this->loadData($obj);
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($obj));
+            }
+            else
+            {
+                $this->loadData($obj);
+            }
         }
         else
         {
-            $this->loadData($data);
+            if($recursive)
+            {
+                $this->loadData(PicoSecretParser::parseRecursiveObject($data));
+            }
+            else
+            {
+                $this->loadData($data);
+            }
         }
+        return $this;
+    }
+
+    /**
+     * Set readonly. When object is set to readonly, setter will not change value of its properties but loadData still works fine
+     *
+     * @param boolean $readonly
+     * @return self
+     */
+    protected function readOnly($readonly)
+    {
+        $this->readonly = $readonly;
         return $this;
     }
     
@@ -416,18 +674,11 @@ class SecretObject extends stdClass //NOSONAR
      *
      * @param string $propertyName
      * @param mixed|null
-     * @param boolean $skipModifyNullProperties
      * @return self
      */
-    public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
+    public function set($propertyName, $propertyValue)
     {
-        $var = PicoStringUtil::camelize($propertyName);
-        $this->{$var} = $propertyValue;
-        if(!$skipModifyNullProperties && $propertyValue === null)
-        {
-            $this->modifyNullProperties($var, $propertyValue);
-        }
-        return $this;
+        return $this->_set($propertyName, $propertyValue);
     }
     
     /**
@@ -438,8 +689,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     public function get($propertyName)
     {
-        $var = PicoStringUtil::camelize($propertyName);
-        return isset($this->$var) ? $this->$var : null;
+        return $this->_get($propertyName);
     }
     
     /**
@@ -658,7 +908,7 @@ class SecretObject extends stdClass //NOSONAR
     {
         $obj = clone $this;
         $obj = $this->encryptValueRecorsive($obj);
-        $array = json_decode(json_encode($obj->value($this->isSnake())), true);
+        $array = json_decode(json_encode($obj->value($this->_snake())), true);
         return $this->encryptValueRecursive($array);
     }
 
@@ -690,17 +940,17 @@ class SecretObject extends stdClass //NOSONAR
      * The dump method, when supplied with an array, will do its best
      * to convert the array into friendly YAML.
      *
-     * @param int   $inline The level where you switch to inline YAML
+     * @param int|null   $inline The level where you switch to inline YAML. If $inline set to NULL, MagicObject will use maximum value of array depth
      * @param int   $indent The amount of spaces to use for indentation of nested nodes
      * @param int   $flags  A bit field of DUMP_* constants to customize the dumped YAML string
      *
      * @return string A YAML string representing the original PHP value
      */
-    public function dumpYaml($inline = 2, $indent = 4, $flags = 0)
+    public function dumpYaml($inline = null, $indent = 4, $flags = 0)
     {
         $snake = $this->_snake();
         $input = $this->valueArray($snake);
-        return Yaml::dump($input, $inline, $indent, $flags);
+        return PicoYamlUtil::dump($input, $inline, $indent, $flags);
     }
     
     /**
@@ -711,6 +961,6 @@ class SecretObject extends stdClass //NOSONAR
     public function __toString()
     {
         $obj = clone $this;
-        return json_encode($obj->value($this->isSnake()));
+        return json_encode($obj->value($this->_snake()), JSON_PRETTY_PRINT);
     }
 }
