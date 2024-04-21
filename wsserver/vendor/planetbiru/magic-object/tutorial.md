@@ -420,7 +420,7 @@ On Linux, users must create a configuration on the Apache server by creating a f
 Setup environtment variable on Windows using command lines.
 
 ```bash
-SETX SONG_BASE_UER "https://domain.tld/path"
+SETX SONG_BASE_URL "https://domain.tld/path"
 SETX APP_DATABASE_TYPE "mariadb"
 SETX APP_DATABASE_SERVER "localhost"
 SETX APP_DATABASE_PORT "3306"
@@ -437,7 +437,7 @@ Setup environtment variable on Linux using command lines create new file configu
 
 ```bash
 echo -e '' > /etc/httpd/conf.d/mpm.conf
-echo -e 'SetEnv SONG_BASE_UER "https://domain.tld/path"' >> /etc/httpd/conf.d/mpm.conf
+echo -e 'SetEnv SONG_BASE_URL "https://domain.tld/path"' >> /etc/httpd/conf.d/mpm.conf
 echo -e 'SetEnv APP_DATABASE_TYPE "mariadb"' >> /etc/httpd/conf.d/mpm.conf
 echo -e 'SetEnv APP_DATABASE_SERVER "localhost"' >> /etc/httpd/conf.d/mpm.conf
 echo -e 'SetEnv APP_DATABASE_PORT "3306"' >> /etc/httpd/conf.d/mpm.conf
@@ -456,6 +456,7 @@ service httpd restart
 
 Secret Objects are very important in applications that use very sensitive and secret configurations. This configuration must be encrypted so that it cannot be seen either when someone tries to open the configuration file, environment variables, or even when the developer accidentally debugs an object related to the database so that the properties of the database object are exposed including the host name, database name, username and even password.
 
+
 ```php
 <?php
 
@@ -531,6 +532,20 @@ class PicoDatabaseCredentials extends SecretObject
 	protected $timeZone = "Asia/Jakarta";
 }
 ```
+
+### Class Parameters
+
+**@JSON**
+
+`@JSON` is parameter to inform how the object will be serialized.
+
+Attributes:
+`property-naming-strategy`
+
+Available value:
+
+- `SNAKE_CASE` all column will be snace case when `__toString()` or `dumpYaml()` method called.
+- `CAMEL_CASE` all column will be camel case when `__toString()` or `dumpYaml()` method called.
 
 ### Property Parameters
 
@@ -539,86 +554,7 @@ class PicoDatabaseCredentials extends SecretObject
 3. `@EncryptOut` annotation will encrypt the property when application call `get` method. 
 4. `@DecryptOut` annotation will decrypt the property when application call `get` method. 
 
-### Secure Config
-
-Application configuration is usually written in a file or environment variable after being encrypted. This configuration cannot be read by anyone without decrypting it first. MagicObject will retrieve the encrypted value. If a user accidentally dumps an object using `var_dump` or `print_r`, then PHP will only display the encrypted value. When PHP makes a connection to the database using a credential, MagicObject will decrypt it but the value will not be stored in the object's properties.
-
-Thus, to create an application configuration, it is enough to use the `@DecryptOut` annotation. Thus, MagicObject will only decrypt the configuration when it is ready to be used.
-
-**Example 1**
-
-```php
-<?php
-
-namespace MagicObject\Database;
-
-use MagicObject\SecretObject;
-
-class PicoDatabaseCredentials extends SecretObject
-{
-	/**
-	 * Database driver
-	 *
-	 * @var string
-	 */
-	protected $driver = 'mysql';
-
-	/**
-	 * Database server host
-	 *
-	 * @DecryptOut
-	 * @var string
-	 */
-	protected $host = 'localhost';
-
-	/**
-	 * Database server port
-	 * @var integer
-	 */
-	protected $port = 3306;
-
-	/**
-	 * Database username
-	 *
-	 * @DecryptOut
-	 * @var string
-	 */
-	protected $username = "";
-
-	/**
-	 * Database user password
-	 *
-	 * @DecryptOut
-	 * @var string
-	 */
-	protected $password = "";
-
-	/**
-	 * Database name
-	 *
-	 * @DecryptOut
-	 * @var string
-	 */
-	protected $databaseName = "";
-
-	/**
-	 * Database schema
-	 *
-	 * @DecryptOut
-	 * @var string
-	 */
-	protected $databseSchema = "public";
-
-	/**
-	 * Application time zone
-	 *
-	 * @var string
-	 */
-	protected $timeZone = "Asia/Jakarta";
-}
-```
-
-### Create Secret
+### Create Secure Config
 
 When creating a secure application configuration, users can simply use the `@EncryptOut` annotation. MagicObject will load the configuration as entered but will encrypt it when dumped to a file. For configurations that will not be encrypted, do not use `@EncryptIn`, `@DecryptIn`, `@EncryptOut`, or `@DecryptOut`. 
 
@@ -789,6 +725,85 @@ $secretYaml = $generator->dumpYaml(null, 4, 0); // will print secret yaml
 file_put_content("secret.yaml", $secretYaml); // will dump to file secret.yaml
 ```
 
+### Implement Secure Config
+
+Application configuration is usually written in a file or environment variable after being encrypted. This configuration cannot be read by anyone without decrypting it first. MagicObject will retrieve the encrypted value. If a user accidentally dumps an object using `var_dump` or `print_r`, then PHP will only display the encrypted value. When PHP makes a connection to the database using a credential, MagicObject will decrypt it but the value will not be stored in the object's properties.
+
+Thus, to create an application configuration, it is enough to use the `@DecryptOut` annotation. Thus, MagicObject will only decrypt the configuration when it is ready to be used.
+
+**Example 1**
+
+```php
+<?php
+
+namespace MagicObject\Database;
+
+use MagicObject\SecretObject;
+
+class PicoDatabaseCredentials extends SecretObject
+{
+	/**
+	 * Database driver
+	 *
+	 * @var string
+	 */
+	protected $driver = 'mysql';
+
+	/**
+	 * Database server host
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $host = 'localhost';
+
+	/**
+	 * Database server port
+	 * @var integer
+	 */
+	protected $port = 3306;
+
+	/**
+	 * Database username
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $username = "";
+
+	/**
+	 * Database user password
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $password = "";
+
+	/**
+	 * Database name
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $databaseName = "";
+
+	/**
+	 * Database schema
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $databseSchema = "public";
+
+	/**
+	 * Application time zone
+	 *
+	 * @var string
+	 */
+	protected $timeZone = "Asia/Jakarta";
+}
+```
+
 ### Multilevel Object Secure
 
 MagicObject also support Multilevel Yaml.
@@ -936,6 +951,116 @@ $secret2 = new ConfigSecret2(null, function(){
 $secret2->loadYamlString($yaml2, false, true, true);
 
 echo $secret2->dumpYaml(null, 4);
+```
+
+### Secure Config from DynamicObject
+
+```php
+<?php
+
+use MagicObject\Database\PicoDatabase;
+use MagicObject\Database\PicoDatabaseCredentials;
+use MusicProductionManager\App\ShutdownManager;
+use MusicProductionManager\Config\ConfigApp;
+use MagicObject\SecretObject;
+namespace MagicObject\Database;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+/**
+ * PicoDatabaseCredentials class
+ * The SecretObject will encrypt all attributes to prevent unauthorized user read the database configuration
+ */
+class PicoDatabaseCredentials extends SecretObject
+{
+	/**
+	 * Database driver
+	 *
+	 * @var string
+	 */
+	protected $driver = 'mysql';
+
+	/**
+	 * Database server host
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $host = 'localhost';
+
+	/**
+	 * Database server port
+	 * @var integer
+	 */
+	protected $port = 3306;
+
+	/**
+	 * Database username
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $username = "";
+
+	/**
+	 * Database user password
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $password = "";
+
+	/**
+	 * Database name
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $databaseName = "";
+	
+	/**
+	 * Database schema
+	 *
+	 * @DecryptOut
+	 * @var string
+	 */
+	protected $databseSchema = "public";
+
+	/**
+	 * Application time zone
+	 *
+	 * @var string
+	 */
+	protected $timeZone = "Asia/Jakarta";
+}
+
+$cfg = new ConfigApp(null, true);
+$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+
+$databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
+
+$database = new PicoDatabase($databaseCredentials, 
+    function($sql, $type) //NOSONAR
+    {
+        // callback when execute query that modify data
+    }, 
+    function($sql) //NOSONAR
+    {
+        // callback when execute all query
+    }
+);
+
+try
+{
+    $database->connect();
+    $shutdownManager = new ShutdownManager($database);
+    $shutdownManager->registerShutdown();
+}
+catch(Exception $e)
+{
+    // do nothing
+}
+
 ```
 ## Input POST/GET/COOKIE/REQUEST/SERVER
 
@@ -1337,7 +1462,6 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -1373,8 +1497,8 @@ Attributes:
 
 Available value:
 
-- `SNAKE_CASE` all column will be snace case when `__toString()` method called.
-- `CAMEL_CASE` all column will be camel case when `__toString()` method called.
+- `SNAKE_CASE` all column will be snace case when `__toString()` or `dumpYaml()` method called.
+- `CAMEL_CASE` all column will be camel case when `__toString()` or `dumpYaml()` method called.
 
 
 **@Table**
@@ -2778,7 +2902,6 @@ class EntitySong extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -2953,7 +3076,6 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -3182,7 +3304,6 @@ class Producer extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -3411,7 +3532,6 @@ class Artist extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -3524,7 +3644,6 @@ class Genre extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -4037,7 +4156,6 @@ class EntitySong extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -5019,7 +5137,6 @@ class UserType extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;

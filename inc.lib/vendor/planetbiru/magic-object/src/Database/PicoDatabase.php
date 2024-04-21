@@ -7,6 +7,7 @@ use PDOException;
 use PDOStatement;
 use MagicObject\Constants\PicoConstants;
 use MagicObject\Exceptions\NullPointerException;
+use MagicObject\SecretObject;
 use stdClass;
 
 /**
@@ -24,7 +25,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Database credential
 	 *
-	 * @var PicoDatabaseCredentials
+	 * @var SecretObject
 	 */
 	private $databaseCredentials;
 
@@ -61,7 +62,7 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Constructor
 	 * 
-	 * @param PicoDatabaseCredentials $databaseCredentials Database credentials
+	 * @param SecretObject $databaseCredentials Database credentials
 	 * @param callable $callbackExecuteQuery Callback when execute query that modify data. Parameter 1 is SQL, parameter 2 is one of query type (PicoDatabase::QUERY_INSERT, PicoDatabase::QUERY_UPDATE, PicoDatabase::QUERY_DELETE, PicoDatabase::QUERY_TRANSACTION)
 	 * @param callable $callbackDebugQuery Callback when execute all queries. Parameter 1 is SQL
 	 */
@@ -89,7 +90,7 @@ class PicoDatabase //NOSONAR
 		$connected = true;
 		try 
 		{
-			$connectionString = $this->databaseCredentials->getDriver() . ':host=' . $this->databaseCredentials->getHost() . '; port=' . $this->databaseCredentials->getPort() . '; dbname=' . $this->databaseCredentials->getDatabaseName();
+			$connectionString = $this->databaseCredentials->getDriver() . ':host=' . $this->databaseCredentials->getHost() . '; port=' . ((int) $this->databaseCredentials->getPort()) . '; dbname=' . $this->databaseCredentials->getDatabaseName();
 			$this->databaseType = $this->databaseCredentials->getDriver();
 			$this->databaseConnection = new PDO(
 				$connectionString,
@@ -437,7 +438,7 @@ class PicoDatabase //NOSONAR
 
 	/**
 	 * Get the value of databaseCredentials
-	 * @return PicoDatabaseCredentials
+	 * @return SecretObject
 	 */
 	public function getDatabaseCredentials()
 	{

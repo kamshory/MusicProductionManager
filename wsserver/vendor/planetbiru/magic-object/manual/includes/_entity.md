@@ -168,7 +168,6 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -204,8 +203,8 @@ Attributes:
 
 Available value:
 
-- `SNAKE_CASE` all column will be snace case when `__toString()` method called.
-- `CAMEL_CASE` all column will be camel case when `__toString()` method called.
+- `SNAKE_CASE` all column will be snace case when `__toString()` or `dumpYaml()` method called.
+- `CAMEL_CASE` all column will be camel case when `__toString()` or `dumpYaml()` method called.
 
 
 **@Table**
@@ -1609,7 +1608,6 @@ class EntitySong extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -1784,7 +1782,6 @@ class Album extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -2013,7 +2010,6 @@ class Producer extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -2242,7 +2238,6 @@ class Artist extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;
@@ -2355,7 +2350,6 @@ class Genre extends MagicObject
 	 * 
 	 * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
 	 * @DefaultColumn(value="1")
-	 * @Label(content="Active")
 	 * @var boolean
 	 */
 	protected $active;

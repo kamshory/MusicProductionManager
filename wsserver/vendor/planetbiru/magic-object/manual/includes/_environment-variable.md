@@ -88,7 +88,7 @@ On Linux, users must create a configuration on the Apache server by creating a f
 Setup environtment variable on Windows using command lines.
 
 ```bash
-SETX SONG_BASE_UER "https://domain.tld/path"
+SETX SONG_BASE_URL "https://domain.tld/path"
 SETX APP_DATABASE_TYPE "mariadb"
 SETX APP_DATABASE_SERVER "localhost"
 SETX APP_DATABASE_PORT "3306"
@@ -105,7 +105,7 @@ Setup environtment variable on Linux using command lines create new file configu
 
 ```bash
 echo -e '' > /etc/httpd/conf.d/mpm.conf
-echo -e 'SetEnv SONG_BASE_UER "https://domain.tld/path"' >> /etc/httpd/conf.d/mpm.conf
+echo -e 'SetEnv SONG_BASE_URL "https://domain.tld/path"' >> /etc/httpd/conf.d/mpm.conf
 echo -e 'SetEnv APP_DATABASE_TYPE "mariadb"' >> /etc/httpd/conf.d/mpm.conf
 echo -e 'SetEnv APP_DATABASE_SERVER "localhost"' >> /etc/httpd/conf.d/mpm.conf
 echo -e 'SetEnv APP_DATABASE_PORT "3306"' >> /etc/httpd/conf.d/mpm.conf

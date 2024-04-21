@@ -2,8 +2,9 @@
 namespace MusicProductionManager\Config;
 
 use MagicObject\MagicObject;
+use MagicObject\SecretObject;
 
-class ConfigApp extends MagicObject
+class ConfigApp extends SecretObject
 {
     /**
      * Constructor

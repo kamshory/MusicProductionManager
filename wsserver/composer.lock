@@ -4,25 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd81f93678c4cc34c20de90d421fa56d",
+    "content-hash": "653f4eff9b58fd13f288bbbbead10668",
     "packages": [
         {
             "name": "planetbiru/magic-object",
-            "version": "1.2.0",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "1338989e64fcf6c504488cbceb6eebf64016f093"
+                "reference": "7f33e6cd150e699a5d191e9f99633ca659111641"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/1338989e64fcf6c504488cbceb6eebf64016f093",
-                "reference": "1338989e64fcf6c504488cbceb6eebf64016f093",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/7f33e6cd150e699a5d191e9f99633ca659111641",
+                "reference": "7f33e6cd150e699a5d191e9f99633ca659111641",
                 "shasum": ""
             },
             "require": {
                 "symfony/yaml": "^3.4"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -41,9 +42,9 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/1.2.0"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/main"
             },
-            "time": "2024-04-21T05:08:03+00:00"
+            "time": "2024-04-21T13:16:17+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -199,7 +200,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "planetbiru/magic-object": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

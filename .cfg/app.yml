@@ -31,3 +31,7 @@ session:
   max_life_time: 86400
   save_handler: files
 vocal_guide_instrument: piano
+
+
+
+

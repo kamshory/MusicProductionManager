@@ -73,7 +73,7 @@ Tutorial is provided here https://github.com/Planetbiru/MagicObject/blob/main/tu
 
 ```yaml
 result_per_page: 20
-song_base_url: ${SONG_BASE_UER}
+song_base_url: ${SONG_BASE_URL}
 app_name: Music Production Manager
 user_image:
   width: 512

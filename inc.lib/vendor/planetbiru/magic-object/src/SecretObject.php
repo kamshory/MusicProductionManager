@@ -760,7 +760,7 @@ class SecretObject extends stdClass //NOSONAR
             foreach ($value as $key => $val) {
                 $key2 = PicoStringUtil::snakeize($key);
                 // get decripted or encrypted value
-                $value2->$key2 = $this->_get($key);
+                $value2->$key2 = $val;
             }
             return $value2;
         }

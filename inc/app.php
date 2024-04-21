@@ -1,16 +1,20 @@
 <?php
 
 use MagicObject\Database\PicoDatabase;
-use MagicObject\Database\PicoDatabaseCredentials;
 use MusicProductionManager\App\ShutdownManager;
 use MusicProductionManager\Config\ConfigApp;
+use MusicProductionManager\Config\DbCredentials;
 
 require_once dirname(__DIR__)."/inc.lib/vendor/autoload.php";
 
 $cfg = new ConfigApp(null, true);
-$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
-$databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
+
+$databaseCredentials = new DbCredentials($cfg->getDatabase(), function(){
+    return bin2hex("783ery238rfhicihsc8ys9cw3sfuifh8");
+});
+
 
 $database = new PicoDatabase($databaseCredentials, 
     function($sql, $type) //NOSONAR
