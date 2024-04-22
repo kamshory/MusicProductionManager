@@ -310,12 +310,12 @@ let ctx;
             return audioContext.resume();
         }
     }
-    function play(url) {
+    function play(url, playingOffset) {
         stop();
         isPaused = false;
         isPlaying = true;
         audioBufferSize = bufferSize;
-        resumeAndLoad(url)
+        resumeAndLoad(url, playingOffset)
         if(event.MIDIjs.data.duration > 1)
         {
             clearInterval(playingInterval);
@@ -328,7 +328,7 @@ let ctx;
         }
     }
 
-    function resumeAndLoad(url) 
+    function resumeAndLoad(url, playingOffset) 
     {
         if(!audioContext)
         {
@@ -338,15 +338,15 @@ let ctx;
 
         if (audioContext.resume) 
         {
-            audioContext.resume().then(load(url))
+            audioContext.resume().then(load(url, playingOffset))
         } 
         else 
         {
-            load(url)
+            load(url, playingOffset)
         }
     }
 
-    function load(e) 
+    function load(e, playingOffset) 
     {
         startTime = 0;
         callbackInterval();
