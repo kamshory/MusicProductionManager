@@ -350,7 +350,6 @@ let ctx;
     function load(midiUrl, playingOffset) 
     {
         playingOffset = playingOffset || 0;
-        playingOffset = 20;
         startTime = 0;
         callbackInterval();
         log("Loading libtimidity ... ");
@@ -461,8 +460,7 @@ let ctx;
         event.MIDIjs.data.duration = songDuration;
         event.MIDIjs.on_song_loaded(o, a, i, s, songDuration);
         Module.ccall("mid_song_free", "void", ["number"], [s]);
-        Module._free(r);
-        
+        Module._free(r);  
         
         if(callback1)
         {
