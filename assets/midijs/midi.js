@@ -101,7 +101,7 @@ let ctx;
         return ua;
     }
 
-    function loadScript(name, clbk) {
+    function loadScript(name, callback) {
         for (let t = 0; t < document.scripts.length; t++) //NOSONAR
         {
             let jsURL = document.scripts[t].src;
@@ -109,22 +109,22 @@ let ctx;
             {
                 if (scriptLoaded)
                 {
-                    return clbk();
+                    return callback();
                 }
                 let fn = newjs.onload;
                 newjs.onreadystatechange = function() {
                     if("loaded" == newjs.readyState || "complete" == newjs.readyState )
                     {
                         newjs.onreadystatechange = null;
-                        scriptLoaded = !0;
+                        scriptLoaded = true;
                         fn();
-                        clbk();
+                        callback();
                     }
                 };
                 newjs.onload = function() {
-                    scriptLoaded = !0;
+                    scriptLoaded = true;
                     fn();
-                    clbk();
+                    callback();
                 }
             }
         }
@@ -134,13 +134,13 @@ let ctx;
            if("loaded" == newjs.readyState || "complete" == newjs.readyState)
            {
                newjs.onreadystatechange = null;
-               scriptLoaded = !0;
-               clbk();
+               scriptLoaded = true;
+               callback();
            }
         };
         newjs.onload = function() {
-            scriptLoaded = !0;
-            clbk();
+            scriptLoaded = true;
+            callback();
         };
         newjs.onerror = function() {
             log("Error: Cannot load  JavaScript file " + name);
@@ -189,7 +189,7 @@ let ctx;
 
     function loadInstruments(midiURL, instrumentURL, missingInstrument) {
         let req = new XMLHttpRequest;
-        req.open("GET", instrumentURL + missingInstrument, !0);
+        req.open("GET", instrumentURL + missingInstrument, true);
         req.responseType = "arraybuffer";
         req.onerror = function() {
             log("Error: Cannot retrieve patch file " + instrumentURL + missingInstrument)
@@ -200,14 +200,14 @@ let ctx;
                 return log("Error: Cannot retrieve patch file " + instrumentURL + missingInstrument + " : " + req.status);
             }
             instrumentToBeLoad--;
-            FS.createDataFile("pat/", missingInstrument, new Int8Array(req.response), !0, !0);
+            FS.createDataFile("pat/", missingInstrument, new Int8Array(req.response), true, true);
             if(MIDIjs.message_callback && instrumentToBeLoad > 0)
             {
                 MIDIjs.message_callback("Loading Instruments: " + instrumentToBeLoad);
                 log("Loading Instruments: " + instrumentToBeLoad)
             } 
             if (0 == instrumentToBeLoad) {
-                let a = Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [generalBuffer2, midiAudioData.length, !1]);
+                let a = Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [generalBuffer2, midiAudioData.length, false]);
                 let s = 32784;
                 let u = Module.ccall("mid_create_options", "number", ["number", "number", "number", "number"], [audioContext.sampleRate, s, 1, 2 * audioBufferSize]);
                 song = Module.ccall("mid_song_load", "number", ["number", "number"], [a, u]);
@@ -231,7 +231,7 @@ let ctx;
 
     function ajaxLoad(e) {
         let req = new XMLHttpRequest;
-        req.open("GET", e, !0);
+        req.open("GET", e, true);
         req.responseType = "arraybuffer";
         req.onerror = function() {
             log("Error: Cannot preload file " + e)
@@ -346,14 +346,14 @@ let ctx;
         }
     }
 
-    function load(e, playingOffset) 
+    function load(midiUrl, playingOffset) 
     {
         startTime = 0;
         callbackInterval();
         log("Loading libtimidity ... ");
         loadScript(scriptName, function() 
         {
-            loadMidi(e, malloc, null);
+            loadMidi(midiUrl, playingOffset, malloc, null);
         })
         
         arrayBuffer = audioContext.createBuffer(
@@ -373,63 +373,63 @@ let ctx;
         // start the source playing
         return true;
     }
-    function loadMidi(midiURL, callback1, callback2) 
+    function loadMidi(midiUrl, playingOffset, callback1, callback2) 
     {
-        if (-1 != midiURL.indexOf("data:")) {
-            let dataOffset = midiURL.indexOf(",") + 1;
-            let midiFileContent = atob(midiURL.substring(dataOffset));
+        if (-1 != midiUrl.indexOf("data:")) {
+            let dataOffset = midiUrl.indexOf(",") + 1;
+            let midiFileContent = atob(midiUrl.substring(dataOffset));
             midiAudioData = new Uint8Array(new ArrayBuffer(midiFileContent.length));
-            for (let a = 0; a < midiFileContent.length; a++) 
+            for (let i = 0; i < midiFileContent.length; i++) 
             {
-                midiAudioData[a] = midiFileContent.charCodeAt(a);
+                midiAudioData[i] = midiFileContent.charCodeAt(i);
             }
             return callback1("data:audio/x-midi ...", midiAudioData, callback2)
         }
-        log("Loading MIDI file " + midiURL + " ...");
+        log("Loading MIDI file " + midiUrl + " ...");
         if(!callback2)
         {
             MIDIjs.message_callback("Loading MIDI");
         } 
         let req = new XMLHttpRequest;
-        req.open("GET", midiURL, !0);
+        req.open("GET", midiUrl, true);
         req.responseType = "arraybuffer";
         req.onerror = function() {
-            log("Error: Cannot retrieve MIDI file " + midiURL)
+            log("Error: Cannot retrieve MIDI file " + midiUrl)
         };
         req.onload = function() {
             if (200 != req.status) 
             {
-                return log("Error: Cannot retrieve MIDI file " + midiURL + " : " + req.status);
+                return log("Error: Cannot retrieve MIDI file " + midiUrl + " : " + req.status);
             }
-            log("MIDI file loaded: " + midiURL);
+            log("MIDI file loaded: " + midiUrl);
             midiAudioData = new Int8Array(req.response);
-            let r = callback1(midiURL, midiAudioData, callback2);
-            return r;
+            let resp = callback1(midiUrl, playingOffset, midiAudioData, callback2);
+            return resp;
         };
         req.send()
     }
 
-    function malloc(url, data, callback1) {
+    function malloc(midiUrl, playingOffset, data, callback1) {
         generalBuffer2 = Module._malloc(data.length);
         Module.writeArrayToMemory(data, generalBuffer2);
         rval = Module.ccall("mid_init", "number", [], []);
-        let a = Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [generalBuffer2, data.length, !1]);
+        let stream = Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [generalBuffer2, data.length, false]);
         let s = 32784;
         let u = Module.ccall("mid_create_options", "number", ["number", "number", "number", "number"], [audioContext.sampleRate, s, 1, 2 * audioBufferSize]);
-        song = Module.ccall("mid_song_load", "number", ["number", "number"], [a, u]);
-        rval = Module.ccall("mid_istream_close", "number", ["number"], [a]);
-        instrumentToBeLoad = Module.ccall("mid_song_get_num_missing_instruments", "number", ["number"], [song]);
+        stream = Module.ccall("mid_song_load", "number", ["number", "number"], [stream, u]);
+        rval = Module.ccall("mid_istream_close", "number", ["number"], [stream]);
+        instrumentToBeLoad = Module.ccall("mid_song_get_num_missing_instruments", "number", ["number"], [stream]);
         if (0 < instrumentToBeLoad)
         {
             for (let l = 0; l < instrumentToBeLoad; l++) 
             {
-                let missingInstrument = Module.ccall("mid_song_get_missing_instrument", "string", ["number", "number"], [song, l]);
-                loadInstruments(url, baseScriptURL + "pat/", missingInstrument)
+                let missingInstrument = Module.ccall("mid_song_get_missing_instrument", "string", ["number", "number"], [stream, l]);
+                loadInstruments(midiUrl, baseScriptURL + "pat/", missingInstrument)
             } 
         }
         else 
         {
-            Module.ccall("mid_song_start", "void", ["number"], [song]);
+            Module.ccall("mid_song_start", "void", ["number"], [stream]);
             scriptProcessor = audioContext.createScriptProcessor(audioBufferSize, 0, 1);
             generalBuffer1 = Module._malloc(2 * audioBufferSize);
             scriptProcessor.onaudioprocess = processAudio;
@@ -440,22 +440,27 @@ let ctx;
             {
                 MIDIjs.message_callback("Playing MIDI");
             }
-            log("Playing: " + url + " ...");
+            log("Playing: " + midiUrl + " ...");
         }
-        processMidiData(url, data, callback1);
+        processMidiData(midiUrl, playingOffset, data, callback1);
     }
-    function processMidiData(url, data, callback1) {
+    function processMidiData(midiUrl, playingOffset, data, callback1) {
+        let samplingRate = 44100;
         let r = Module._malloc(data.length);
         Module.writeArrayToMemory(data, r);
-        let o = (Module.ccall("mid_init", "number", [], []), Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [r, data.length, !1]));
+        let o = (Module.ccall("mid_init", "number", [], []), Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [r, data.length, false]));
         let a = 32784;
-        let i = Module.ccall("mid_create_options", "number", ["number", "number", "number", "number"], [44100, a, 1, 2 * audioBufferSize]);
+        let i = Module.ccall("mid_create_options", "number", ["number", "number", "number", "number"], [samplingRate, a, 1, 2 * audioBufferSize]);
         let s = Module.ccall("mid_song_load", "number", ["number", "number"], [o, i]);
         let songDuration = (Module.ccall("mid_istream_close", "number", ["number"], [o]), Module.ccall("mid_song_get_total_time", "number", ["number"], [s]) / 1000);      
         event.MIDIjs.data.duration = songDuration;
         event.MIDIjs.on_song_loaded(o, a, i, s, songDuration);
         Module.ccall("mid_song_free", "void", ["number"], [s]);
         Module._free(r);
+        if(playingOffset > 0)
+        {
+            seek(playingOffset);
+        }
         if(callback1)
         {
             callback1(songDuration)
@@ -617,7 +622,7 @@ let ctx;
         return null
     }
     function seek(time){
-        if(typeof Module != 'undefined')
+        if(typeof Module != 'undefined' && time > 0)
         {
             Module.ccall("skip_to", "void", ["number", "number"], [song, time*audioContext.sampleRate]);
             startTime = audioContext.currentTime - time;
@@ -634,7 +639,10 @@ let ctx;
     }
 
     function log(e) {
-        logging && console.log(e)
+        if(logging)
+        {
+            console.log(e);
+        }
     }
     var audioMethod, 
         generalBuffer1, 
@@ -654,13 +662,14 @@ let ctx;
         baseScriptURL = "",
         startTime = 0,
         audioStatus = "",
-        isPaused = !1,
-        logging = !1,
+        isPaused = false,
+        logging = false,
         timeInterval = 10,
-        scriptLoaded = !1,
+        scriptLoaded = false,
         arrayBuffer = null,
         source = null,
         rval = null,
+        drawed = false,
         isPlaying = false,
         newjs = null
     ;
@@ -672,7 +681,7 @@ let ctx;
         baseScriptURL = getBaseScriptURL();
         scriptName = baseScriptURL + "libtimidity.min.js";
         let ua = userAgent();
-        let drawed = false;
+        drawed = false;
         try 
         {
             if (("iPhone" == ua.platform || "iPod" == ua.platform || "iPad" == ua.platform) && ua.majorVersion <= 6) 
@@ -759,6 +768,7 @@ let ctx;
         event.MIDIjs.on_song_loaded = function() {
 
         };
+        
         if ("WebAudioAPI" == audioMethod) 
         {
             event.MIDIjs.resumeWebAudioContext = resume;
