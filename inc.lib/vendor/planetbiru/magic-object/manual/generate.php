@@ -37,7 +37,7 @@ function processBlock($block)
             {
                 // Echo the HTML from the Markdown text submitted by the user. Note: Additional escaping functions should be implemented based on the context.
                 $markdown = file_get_contents($file);
-                $buffer = "\r\n".$parsedown->text($markdown);
+                $buffer .= "\r\n".$parsedown->text($markdown);
                 fwrite($fp, $markdown."\r\n");
             }
         }

@@ -861,8 +861,6 @@ class ConfigSecret2 extends SecretObject
     protected $session;
 }
 
-// only database and session will be encrypted
-
 $secret1 = new ConfigSecret1(null, function(){
     return bin2hex("This is your secure key for Scrt");
 });
@@ -903,28 +901,31 @@ session:
   save_path: /tmp/session
 vocal_guide_instrument: piano
 ";
-$secret1->loadYamlString($yaml1, false, true, true);
+$secret1->loadYamlString(
+$yaml1,
+false, true, true
+);
 
 echo $secret1->dumpYaml(null, 4);
 
 $yaml2 = "
 database:
-    time_zone_system: 9jAU0W/ja1cGjgUJwMfZJbnuSz/ZokaYLdMeOItAKeXFAKTKyjIr2HLkxh4RXgkzER4Cbx9HdI2WFqGbHfT/IHnUEQP9RslMVDKOuw2hIEpt9+QIJXTeZSRifgJGLCyZI0HasjndiTqx6OBWQbs0KuKckLCRNllSQ/4lDj1p78pAvul/yoEhwU4DOjknlSot      
-    default_charset: K5SqhKUKYBWuYQa1SzexG0iUnnQAAXlKKAugab5OdsqZgUA4hNzcb7sguARQc8nuk8MzQCzI9l2PUkJleUk0zPdDf07fyRW4QfsLdUmq39sTEgqjNpyTpL9KC3bZ8dDrs0ClAZrTV5nP+S5eI4Cm2wqpIwEnifIWlNkwWFaXuLdmRGvcaOiZ0pvg01jsTjgi       
-    driver: cXWyWFxUhVvxlGZjvbz/VKaYg9mXcMc2foL99dbXJ9D+5znFaQb2uQBc0MR8ot6MyK7w6mqkYSyveSTKCOTugdaromJwe33NrX5Syk/kLx4baOTgMNtp+yzc4xf8u8DgaaCL6h/wPiiyagFCHrdXHmLMq6vyNsDMJAQ1pUhFw7fjRCNWxrT1wWCyCxHgL41b
-    host: wKfsRPZtBdbQvP5eybGxbcZwajSeUzmg3o8eMoFtT8bgdhQCsqnsq2LtTrdsU8fngje8uCcUPianj3KB15CfBS0bVssOCyrqstyvWKz9HGGwBVFq7CtPVkrycDfPLy4Lmy5cBUESmzJ6oZaF4U09rAyWp9eNzMARQMl/SlCGVWICC9S4PQbRGNR525Jdjrkm
-    port: TqQDnEKT+iaYHrp7hWP5/J9H42yolh8hyUrcn5r6Pak9rIKPWHLB2f0n1jBTFPAuTaim/LC2An02BM2HOWkRHb8yk2fRs8l6aLPl5MkgjPJ2WrX/nTgj5UnqckXM0QI54f8jl3vKRgKX2Mo1kSh51tlAHtHEAej7jAzB3MqoLYD/cWlLqWNszgMcluSXhNqg
-    username: Zq1ceoiG57Bm7sJUIwWwggKmO69Dj6YYPVMSsx6cr/tWST4TQ60b9Ukmpnk5vmBxClK3Luz1FnQk6CUZfU1EkJx6Z0xvyOcDM8avnHm139Isw0KR5RrHnMFGA7XzlYg0sEOXc1ww6/TljZoB7VrPbIxOo7tUnfu3SKyrxq73iut2Ggvfqeg3WLvaUexcbsfx
-    password: GSrwvtctYPV6kWQUPa0096TT6dVizB1rtc+DS816LqSJdd/8LnGLsrVU5y7wYP8wWjbszrNbiO3RrS8Yi4jGiQ3nVGYfMm6MxypqBS1HVyELscyIOWNdb3XG4vUnUc4hBGHBvpTBn3A39kV+oUbqjV5RX//hrwVSyUNs87W4YR5jRJh78c3Dcopxa8LPibxv
-    database_name: piiCRCs33WNxN343DMMA6BLnKT54XjAB5HSX5TrRDZhwa5QM0jcnURrfRfaZ+h3zSiB97BjTLG5Ij5sKI4+vSfnpiRjmykYuZppKY1XxVbSP97SGAV4+WRLH5b/OLwGN5FpVQKBHJJW/hJb53AU5g3Ie0Wwy68Uk0CpIU1VQogUtbYmh8Ml+e6b676SNYxKr
-    database_schema: g9U9chCj4HItkdJ7YrJJgLiiXk5QHcxQ/a7cRDNxJ1M3Z9hYsBKj4EM4fzdnmDkGrjdNyahBRlQ5pn771zAkzrUI06h0nb4sZiEmXEK8Ks+QqSJIc3SzKMXpRAlDUxiOqQmDGyy9lkTG7oQU8iZiQizVzXU/Yv5tSzTt0R9RX4nSddSU/tWJMWHw+S/SNyPE       
-    time_zone: JlTEF/VnijNTFGHtW3coKPGV5/3lEGLMQfUNREkGRiVzOLk9n7hXyFI4bYTapjaAC614GPBsg+JysmYHcP+rb+ZczC8cwP12oKPaNa7wp2yd6iXW1GbcjXV4c7W4po4acI9hwcJkup9alHSymI61TgHyQkyO8whGd6TuTRZjXUtbisx9wNeX2/soTRAWixp1
-    salt: u2dXCErgGfZHCUaRFCgxwJAPeOXAiLX5pB7yzjfmDDjIWSHX7FzDZ8TJPzBcSxl8I9t60/MKG36BTrQq+x7Nc7TKNo1vZw+Q9TCENxi9CVuEWr6A5+JEkIEpsywmHlNvNZbc8RFcUtKdh3ikAUS98K4sh9sZJdy6Ps89QhepQtulanvQ+OWI3RLa2vc/B8A+
+    time_zone_system: UEMGavyLkN7rFAmoXBsdDKwuGC+zFttpPTAaqeMH0XUEZaAMKbyvykNtfqT+F8FcAbQCUHV66qjYfjArzgrHlA==
+    default_charset: dawURojqYqXdvt2YdZ+kWsq47bcA7FKWnEfGHPMxJr3KUyKxAC0VrH8Khfqcm5iIzQFHE/1wQbdgxJNiffkayw==
+    driver: Ur4FCOYvXGPpoMpHm3fwhdK5D3SaP0+MGe4IuPAvpzhAvRcjOW7EZe5VvDAf+0CLeus9tCqqE1sTXj/dxfmkaA==
+    host: zyfIMxYi/qQAbazR+nOaLnXFUN9qDYiapxlvocKYxkL8uuN6zRrP3Jsj0mlj6UnLOlvhfDgF3Pq0PrP2ZORGNg==
+    port: Cs3NTbxIXJ0lf1umQuuDXbPqdBPlVg+jeXi6UqqUUvVUQWgAhbfenfP8g81cONoY2dXof+P1V5Gr/q+iDLNv5Q==
+    username: 5NImv2VEL1WSbt3cqx7gi/8f158SYtssj74zTN2fRrIDsGOxsnEa8+50H3Y1MCaJV7SnZo851dnjEhm38Tzjsg==
+    password: /1SK1m9qVjbWnGa6/xai2H82OWvzXeErRvtQ0RYceGsr3fvAfGfqcDSY6pq8KoXg6MmtJS0FLyjXUq8dftM7yQ==
+    database_name: ZQ0PTeDl7AOtjDBV1PHzlwMbPBVZmhXuO65O1pDYYCGQSMNf3GpQJi9SkvGApQ8kBKUgPAmchCTYb8ChL2szrQ==
+    database_schema: 628aqGw8hLV8Malwg6jninVfNRgDUgANtXdPfIuz8IohoMQ4NROIuj7Y28/SeLD74NPoiBYFZpaON9+jV8QQug==
+    time_zone: zfpl4IxctWh2Y/UnrANjuCKlnevw8MmoSboMtzV3oBzKKN0gg+TT/Zz/QieHkVd+pn7OHx2OXvLadkzzWQTMUQ==
+    salt: hdsBgcmvq/rzfNUuhgQiBop4Hp4wqd5w03Il9zaOshK0LgGtaEK1WTcPx5OdL+9VvhmZvs7g/jDGYjYoHwXjIg==
 session:
-    name: iOZiWwizvDSAeaUoVxaLlGrlYyY6X9GHgxDKi85CB0Wq068jsx3TKkmTL92OWIctwoCbJaz7a3sGLvNi48SxqA9Lz3C4g1sWx3ZTBK6nzPt+7Jq91H6cYlragNCRdRwTdWrIaj2e75qT1Al71y09C0jXre9B+LH4sqdIdlBeHUHdopf+P+2meIFZ1MecPnjdTyVv6432uY67eO2KM/0dgw==
-    max_life_time: b8gV+XITyZDg8MAuQyY3pR8oRynBwI8HeEyCJs3gCT3W92W6yf365fvO+ToFr1igr8atrj9a3n456zeVwoA8vWHtTghsHNfnZhZwsd3uB9E9kaIU6HJejKGsqKIrGaORucMMYFs/N0Uv4b+nrUTCsvuKEzPK1AGT9YcZw3Vfl3r7mdV3//1sVrc/mFmKBvfD
-    save_handler: 4jsY+ExJo9VlEalJ7niSv5TZjF0qmoHlbYGQ9wyqI5fpbYXE9lWj865vV4gpk7dWRVZJOkD6Sqq0F36/QnjLr6ud1rdOlm8nwClT+YPalJ+nLygoYw8ZV+gwKJoSai1UapYDEBNS0OmyPQd69nj9BypDSnLLxUyDw8o/0vdw/MNLqcLNcGKcrZtjT6qS+1aG
-    save_path: 1VQ4zmPuAMxVmjnGiLfaseBZdovfINp6kLa9VokR+n18BUiMMVppPN5oky4+ROwt1Jx5c2Y7+NjCmXA5KJZkewrFp1YPszEM/JqSBygBPsOKY/QH08fZfdxugDkiHuxPdXtZVQC40sHu+BTHUlexVee87MACjvpm+cQDgAwfVwLlW3KlYxEdcX6sPP4MTWeM
+    name: 4u5xAE2K74pUxZyIVsphoYUka3vpnzUx7op6CnELtdWNEepz/jQLaKynItFt5dx6bv7wjBUFL1AaZaA4ypw/CP6xtR5WFQy+RV6V8VqYM8o=
+    max_life_time: cspEenRp8+kwUY1RNvmEdWcLqmsRZ+UJZVjY4JwRsuIIfkr+J0w1SYCuRMzMtHG4/hZ5tlXhtGdRZyM7quCbZg==
+    save_handler: LIlCCaWHVqg9R4G6ghxDZnuenMLgSI6HjiW+tVGNDa7UyIA7FkFtOgOJtvT/EolUc+kkJSXiMo+76QhvFFq8Dg==
+    save_path: CZijzyucTzrj3tZ1M9PbQ6Hky1+4Gz3RnXwZNSe9/SL+9QZdpK4PoW2TSLsuQ+cKBgKgkncd7JXWgA3CFg0f1A==
 result_per_page: 20
 song_base_url: http//domain.tld/songs
 song_base_path: /var/www/songs
@@ -946,9 +947,7 @@ vocal_guide_instrument: piano
 
 $secret2 = new ConfigSecret2(null, function(){
     return bin2hex("This is your secure key for Scrt");
-});
-
-$secret2->loadYamlString($yaml2, false, true, true);
+});$secret2->loadYamlString($yaml2, false, true, true);
 
 echo $secret2->dumpYaml(null, 4);
 ```
