@@ -671,7 +671,8 @@ let ctx;
         rval = null,
         drawed = false,
         isPlaying = false,
-        newjs = null
+        newjs = null,
+        bufVisual = null
     ;
     try {
         event.MIDIjs = new Object;
