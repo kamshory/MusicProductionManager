@@ -81,6 +81,18 @@ $(document).ready(function () {
       $(this)[0].checked = checked;
     });
   });
+  $(document).on("change", "#playing-progress", function (e) {
+    let value = parseInt($(this).val());
+    MIDIjs.seek(value);
+    $('.lyric-preview').find('.lyric-item').each(function(e2){
+      let span = $(this);
+      let rtime = parseFloat(span.attr('data-rtime')) / 1000;
+      if(rtime < value)
+      {
+        span.removeClass('hilight');
+      }
+    });
+  });
   $(document).on("change", ".filter-bar select", function (e) {
     $(this).closest("form").submit();
   });
@@ -101,7 +113,7 @@ $(document).ready(function () {
   });
   $(document).on("click", ".mp-stop", function () {
     MIDIjs.stop();
-    $(".mp-progress-bar-inner").css({ width: "0%" });
+    $("#playing-progress").val(0);
     $(".mp-elapsed").text("0:0");
     $(".planet-midi-player").attr("data-is-playing", "false");
     $(".planet-midi-player").attr("data-is-stoped", "true");
@@ -113,13 +125,17 @@ $(document).ready(function () {
     playNext();
   });
 
-  MIDIjs.message_callback = function (message) {
+  MIDIjs.messageCallback = function (message) {
     $(".mp-status-bar").text(message);
   };
 
-  MIDIjs.player_callback = function (message) {
-    let percent = (100 * message.time) / message.duration;
-    $(".mp-progress-bar-inner").css({ width: percent + "%" });
+  MIDIjs.playerCallback = function (message) {
+    let max = $("#playing-progress").attr("max");
+    if("0" == max)
+    {
+      $("#playing-progress").attr("max", parseInt(message.duration));
+    }
+    $("#playing-progress")[0].value = message.time;
     $(".planet-midi-player").attr(
       "data-is-playing",
       message.isPlaying ? "true" : "false"

@@ -44,13 +44,13 @@
             log("Error: Cannot retrieve patch file " + n + t)
         }, o.onload = function() {
             if (200 != o.status) return void log("Error: Cannot retrieve patch file " + n + t + " : " + o.status);
-            if (F--, FS.createDataFile("pat/", t, new Int8Array(o.response), !0, !0), MIDIjs.message_callback && F > 0 && MIDIjs.message_callback("Instruments to be loaded: " + F), log("Instruments to be loaded: " + F), 0 == F) {
+            if (F--, FS.createDataFile("pat/", t, new Int8Array(o.response), !0, !0), MIDIjs.messageCallback && F > 0 && MIDIjs.messageCallback("Instruments to be loaded: " + F), log("Instruments to be loaded: " + F), 0 == F) {
                 var a = Module.ccall("mid_istream_open_mem", "number", ["number", "number", "number"], [E, T.length, !1]),
                     s = 32784,
                     u = Module.ccall("mid_create_options", "number", ["number", "number", "number", "number"], [S.sampleRate, s, 1, 2 * R]);
                 W = Module.ccall("mid_song_load", "number", ["number", "number"], [a, u]);
                 Module.ccall("mid_istream_close", "number", ["number"], [a]);
-                Module.ccall("mid_song_start", "void", ["number"], [W]), V = S.createScriptProcessor(R, 0, 1), O = Module._malloc(2 * R), V.onaudioprocess = audioOnProcess, V.connect(S.destination), P = setInterval(callbackInterval, J), MIDIjs.message_callback && MIDIjs.message_callback("Playing: " + e), log("Playing: " + e + " ...")
+                Module.ccall("mid_song_start", "void", ["number"], [W]), V = S.createScriptProcessor(R, 0, 1), O = Module._malloc(2 * R), V.onaudioprocess = audioOnProcess, V.connect(S.destination), P = setInterval(callbackInterval, J), MIDIjs.messageCallback && MIDIjs.messageCallback("Playing: " + e), log("Playing: " + e + " ...")
             }
         }, o.send()
     }
@@ -66,7 +66,7 @@
 
     function callbackInterval() {
         var e = new Object;
-        0 != z ? e.time = S.currentTime - z : e.time = 0, MIDIjs.player_callback && MIDIjs.player_callback(e)
+        0 != z ? e.time = S.currentTime - z : e.time = 0, MIDIjs.playerCallback && MIDIjs.playerCallback(e)
     }
 
     function suspend() {
@@ -107,7 +107,7 @@
             for (var a = 0; a < o.length; a++) T[a] = o.charCodeAt(a);
             return n("data:audio/x-midi ...", T, t)
         }
-        log("Loading MIDI file " + e + " ..."), t || MIDIjs.message_callback("Loading MIDI file " + e + " ...");
+        log("Loading MIDI file " + e + " ..."), t || MIDIjs.messageCallback("Loading MIDI file " + e + " ...");
         var i = new XMLHttpRequest;
         i.open("GET", e, !0), i.responseType = "arraybuffer", i.onerror = function() {
             log("Error: Cannot retrieve MIDI file " + e)
@@ -128,7 +128,7 @@
             for (var l = 0; l < F; l++) {
                 var c = Module.ccall("mid_song_get_missing_instrument", "string", ["number", "number"], [W, l]);
                 loadInstruments(e, q + "pat/", c)
-            } else Module.ccall("mid_song_start", "void", ["number"], [W]), V = S.createScriptProcessor(R, 0, 1), O = Module._malloc(2 * R), V.onaudioprocess = audioOnProcess, V.connect(S.destination), P = setInterval(callbackInterval, J), MIDIjs.message_callback && MIDIjs.message_callback("Playing: " + e), log("Playing: " + e + " ...")
+            } else Module.ccall("mid_song_start", "void", ["number"], [W]), V = S.createScriptProcessor(R, 0, 1), O = Module._malloc(2 * R), V.onaudioprocess = audioOnProcess, V.connect(S.destination), P = setInterval(callbackInterval, J), MIDIjs.messageCallback && MIDIjs.messageCallback("Playing: " + e), log("Playing: " + e + " ...")
     }
 
     function noteOn(e, n, t) {
@@ -160,7 +160,7 @@
 
     function timeInterval() {
         var e = new Object;
-        0 == z && (z = (new Date).getTime()), e.time = ((new Date).getTime() - z) / 1e3, MIDIjs.player_callback && MIDIjs.player_callback(e)
+        0 == z && (z = (new Date).getTime()), e.time = ((new Date).getTime() - z) / 1e3, MIDIjs.playerCallback && MIDIjs.playerCallback(e)
     }
 
     function createBGSound(e) {
@@ -259,7 +259,7 @@
             U = e
         }, e.MIDIjs.get_loggging = function() {
             return U
-        }, e.MIDIjs.player_callback = function(e) {}, e.MIDIjs.message_callback = function(e) {}, e.MIDIjs.get_audio_status = function() {
+        }, e.MIDIjs.playerCallback = function(e) {}, e.MIDIjs.messageCallback = function(e) {}, e.MIDIjs.get_audio_status = function() {
             return G
         }, e.MIDIjs.get_duration = function(e, n) {
             "Microsoft Internet Explorer" == Q.browserName && Q.fullVersion < 10 ? n && n(-1) : loadScript(k, function() {

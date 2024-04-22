@@ -172,8 +172,7 @@ if (isset($song)) {
 					</div>
 					<div class="mp-progress-bar">
 						<div class="mp-progress-bar-container">
-							<div class="mp-progress-bar-inner">
-							</div>
+							<input type="range" id="playing-progress" min="0" max="0" step="1">
 						</div>
 					</div>
 					<div class="mp-status-bar">
