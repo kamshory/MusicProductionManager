@@ -453,6 +453,7 @@ let ctx;
   }
   function processMidiData(midiUrl, playingOffset, data, callback1) {
     playingOffset = playingOffset || 0;
+    let samplingRate = 44100;
     let r = Module._malloc(data.length);
     Module.writeArrayToMemory(data, r);
     let o =
@@ -468,7 +469,7 @@ let ctx;
       "mid_create_options",
       "number",
       ["number", "number", "number", "number"],
-      [44100, a, 1, 2 * audioBufferSize]
+      [samplingRate, a, 1, 2 * audioBufferSize]
     );
     let s = Module.ccall(
       "mid_song_load",
