@@ -22,7 +22,7 @@ function goto(id)
     let obj = document.querySelector('[data-id="'+id+'"]');
     let top = obj.offsetTop;
     window.scrollTo({
-        top: top,
+        top: top - 10,
         behavior: "smooth",
       });
 }

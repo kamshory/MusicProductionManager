@@ -262,10 +262,10 @@ $orderMap = array(
     'title'=>'title', 
     'rating'=>'rating',
     'albumId'=>'albumId', 
-    'album'=>'albumId', 
+    'album'=>'Album.sortOrder', 
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
-    'genre'=>'genreId',
+    'genre'=>'Album.sortOrder',
     'producerId'=>'producerId',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
@@ -276,7 +276,7 @@ $orderMap = array(
     'vocal'=>'vocal',
     'active'=>'active'
 );
-$defaultOrderBy = 'albumId';
+$defaultOrderBy = 'Album.sortOrder';
 $defaultOrderType = 'desc';
 $pagination = new PicoPagination($cfg->getResultPerPage());
 
@@ -285,9 +285,9 @@ $spesification = SpecificationUtil::createSongSpecification($inputGet);
 if($pagination->getOrderBy() == '')
 {
   $sortable = new PicoSortable();
-  $sort1 = new PicoSort('albumId', PicoSortable::ORDER_TYPE_DESC);
+  $sort1 = new PicoSort('Album.sortOrder', PicoSortable::ORDER_TYPE_DESC);
   $sortable->addSortable($sort1);
-  $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+  $sort2 = new PicoSort('EntitySong.trackNumber', PicoSortable::ORDER_TYPE_ASC);
   $sortable->addSortable($sort2);
 }
 else
