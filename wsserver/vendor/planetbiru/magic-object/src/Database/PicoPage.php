@@ -76,4 +76,14 @@ class PicoPage
 
         return $this;
     }
+    
+    /**
+     * Debug
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode(array('pageNumber'=>$this->pageNumber, 'pageSize'=>$this->pageSize));
+    }
 }

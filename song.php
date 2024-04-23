@@ -262,11 +262,11 @@ $orderMap = array(
     'title'=>'title', 
     'rating'=>'rating',
     'albumId'=>'albumId', 
-    'album'=>'albumId', 
+    'album'=>'Album.sortOrder', 
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
-    'genre'=>'genreId',
-    'producerId'=>'producerId',
+    'genre'=>'Album.sortOrder',
+    'producer'=>'Producer.name',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
     'artistComposer'=>'artistComposer',
@@ -276,7 +276,7 @@ $orderMap = array(
     'vocal'=>'vocal',
     'active'=>'active'
 );
-$defaultOrderBy = 'albumId';
+$defaultOrderBy = 'Album.sortOrder';
 $defaultOrderType = 'desc';
 $pagination = new PicoPagination($cfg->getResultPerPage());
 
@@ -285,9 +285,9 @@ $spesification = SpecificationUtil::createSongSpecification($inputGet);
 if($pagination->getOrderBy() == '')
 {
   $sortable = new PicoSortable();
-  $sort1 = new PicoSort('albumId', PicoSortable::ORDER_TYPE_DESC);
+  $sort1 = new PicoSort('Album.sortOrder', PicoSortable::ORDER_TYPE_DESC);
   $sortable->addSortable($sort1);
-  $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+  $sort2 = new PicoSort('EntitySong.trackNumber', PicoSortable::ORDER_TYPE_ASC);
   $sortable->addSortable($sort2);
 }
 else
@@ -339,10 +339,10 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="rating">Rate</th>
-        <th scope="col" class="col-sort" data-name="album_id">Album</th>
+        <th scope="col" class="col-sort" data-name="album">Album</th>
         <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
         <th scope="col" class="col-sort" data-name="track_number">Trk</th>
-        <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
+        <th scope="col" class="col-sort" data-name="genre">Genre</th>
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>

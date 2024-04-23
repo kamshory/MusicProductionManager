@@ -145,5 +145,8 @@ $cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 # Application
 
-One application that uses **MagicObjects** is **Music Production Manager** https://github.com/kamshory/MusicProductionManager
+Applications that uses **MagicObjects** are :
+
+1. **Music Production Manager** https://github.com/kamshory/MusicProductionManager
+2. **Koperasi-Simpan-Pinjam-Syariah** https://github.com/kamshory/Koperasi-Simpan-Pinjam-Syariah
 

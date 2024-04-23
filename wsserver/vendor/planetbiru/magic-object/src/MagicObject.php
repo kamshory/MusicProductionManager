@@ -62,35 +62,35 @@ class MagicObject extends stdClass // NOSONAR
      *
      * @var array
      */
-    private $_classParams = array();
+    private $_classParams = array(); // NOSONAR
 
     /**
      * Null properties
      *
      * @var array
      */
-    private $_nullProperties = array();
+    private $_nullProperties = array(); // NOSONAR
 
     /**
      * Property label
      *
      * @var array
      */
-    private $_label = array();
+    private $_label = array(); // NOSONAR
     
     /**
      * Table info
      *
      * @var PicoTableInfo
      */
-    private $_tableInfoProp = null;
+    private $_tableInfoProp = null; // NOSONAR
     
     /**
      * Database persistence
      *
      * @var PicoDatabasePersistence
      */
-    private $_persistProp = null;
+    private $_persistProp = null; // NOSONAR
 
     /**
      * Get null properties
@@ -1111,6 +1111,39 @@ class MagicObject extends stdClass // NOSONAR
         catch(Exception $e)
         {
             return new PicoPageData(array(), $pagable, 0, $startTime);
+        }
+    }
+    
+    /**
+     * Find all query
+     *
+     * @param PicoSpecification $specification
+     * @param PicoPagable|string $pagable
+     * @param PicoSortable|string $sortable
+     * @param boolean $passive
+     * @return PicoDatabaseQueryBuilder
+     * @throws NoRecordFoundException if no record found
+     * @throws NoDatabaseConnectionException if no database connection
+     */
+    public function findAllQuery($specification = null, $pagable = null, $sortable = null, $passive = false)
+    {
+        try
+        {
+            if($this->_database != null && $this->_database->isConnected())
+            {
+                
+                $persist = new PicoDatabasePersistence($this->_database, $this);
+                $result = $persist->findAllQuery($specification, $pagable, $sortable);
+            }
+            else
+            {
+                $result = new PicoDatabaseQueryBuilder($this->_database);
+            }
+            return $result;
+        }
+        catch(Exception $e)
+        {
+            return new PicoDatabaseQueryBuilder($this->_database);
         }
     }
 

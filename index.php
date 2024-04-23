@@ -706,24 +706,25 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
 
   <?php
 
-  $orderMap = array(
-    'title' => 'title',
-    'score' => 'score',
-    'albumId' => 'albumId',
-    'album' => 'albumId',
-    'trackNumber' => 'trackNumber',
-    'genreId' => 'genreId',
-    'genre' => 'genreId',
-    'artistVocalId' => 'artistVocalId',
-    'artistVocalist' => 'artistVocalId',
-    'artistComposer' => 'artistComposer',
-    'artistCArranger' => 'artistArranger',
-    'duration' => 'duration',
-    'subtitleComplete' => 'subtitleComplete',
-    'vocal' => 'vocal',
-    'active' => 'active',
-    'producerId' => 'producerId'
-  );
+$orderMap = array(
+  'name'=>'name', 
+  'title'=>'title', 
+  'rating'=>'rating',
+  'albumId'=>'albumId', 
+  'album'=>'Album.sortOrder', 
+  'trackNumber'=>'trackNumber',
+  'genreId'=>'genreId', 
+  'genre'=>'Album.sortOrder',
+  'producer'=>'Producer.name',
+  'artistVocalId'=>'artistVocalId',
+  'artistVocalist'=>'artistVocalId',
+  'artistComposer'=>'artistComposer',
+  'artistArranger'=>'artistArranger',
+  'duration'=>'duration',
+  'subtitleComplete'=>'subtitleComplete',
+  'vocal'=>'vocal',
+  'active'=>'active'
+);
   $defaultOrderBy = 'songId';
   $defaultOrderType = 'desc';
   $pagination = new PicoPagination($cfg->getResultPerPage());

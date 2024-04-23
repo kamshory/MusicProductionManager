@@ -2,6 +2,8 @@
 
 namespace MagicObject\Database;
 
+use stdClass;
+
 class PicoPagable
 {
     /**
@@ -173,5 +175,28 @@ class PicoPagable
         $this->offsetLimit = $offsetLimit;
 
         return $this;
+    }
+    
+    /**
+     * Debug
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $stdClass = new stdClass;
+        $offsetLimit = new stdClass;
+        $page = new stdClass;
+        
+        $offsetLimit->limit = $this->offsetLimit->getLimit();
+        $offsetLimit->offset = $this->offsetLimit->getOffset();
+
+        $page->pageNumber = $this->page->getPageNumber();
+        $page->pageSize = $this->page->getPageSize();
+
+        $stdClass->page = $page;
+        $stdClass->offsetLimit = $offsetLimit;
+        
+        return json_encode($stdClass);
     }
 }

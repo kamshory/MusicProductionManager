@@ -112,9 +112,16 @@ class PicoPagination
     public function getOrderBy($filter = null, $defaultOrderBy = null)
     {
         $orderBy = PicoStringUtil::camelize($this->orderBy);
-        if($filter != null && is_array($filter) && !isset($filter[$orderBy]))
+        if($filter != null && is_array($filter))
         {
-            $orderBy = null;
+            if(isset($filter[$orderBy]))
+            {
+                $orderBy = $filter[$orderBy];
+            }
+            else
+            {
+                $orderBy = null;
+            }
         }
         if(($orderBy == null || empty($this->orderBy)) && $defaultOrderBy != null)
         {

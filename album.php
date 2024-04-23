@@ -558,6 +558,10 @@ if(!empty($result))
           $('[data-id="'+dataId+'"] .text-data.text-data-number-of-song').text(numberOfSong);
           $('[data-id="'+dataId+'"] .text-data.text-data-active').text(active?'Yes':'No');
           $('[data-id="'+dataId+'"] .text-data.text-data-as-draft').text(draft?'Yes':'No');
+        },
+        error: function(e1, e2)
+        {
+          
         }
       })
     });

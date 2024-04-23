@@ -2,6 +2,8 @@
 
 namespace MagicObject\Database;
 
+use MagicObject\Util\PicoStringUtil;
+
 class PicoSpecification
 {
     const LOGIC_AND = "and";
@@ -20,6 +22,23 @@ class PicoSpecification
      * @var array
      */
     private $specifications = array();
+    
+    /**
+     * Check if require real join table
+     *
+     * @var boolean
+     */
+    private $requireJoin = false;
+    
+    /**
+     * Return true if require real join table
+     *
+     * @return boolean
+     */
+    public function isRequireJoin()
+    {
+        return $this->requireJoin;
+    }
 
     /**
      * Add AND specification
@@ -84,6 +103,10 @@ class PicoSpecification
         {
             $predicate->setFilterLogic($logic);
             $this->specifications[count($this->specifications)] = $predicate;
+            if($predicate->isRequireJoin())
+            {
+                $this->requireJoin = true;
+            }
         }
         else if(is_array($predicate))
         {
@@ -93,6 +116,10 @@ class PicoSpecification
                 $pred->equals($key, $value);
                 $pred->setFilterLogic($logic);
                 $this->specifications[count($this->specifications)] = $pred;
+                if($pred->isRequireJoin())
+                {
+                    $this->requireJoin = true;
+                }
             }
         }
         return $this;
@@ -164,5 +191,134 @@ class PicoSpecification
     {
         $this->parentFilterLogic = $parentFilterLogic;
         return $this;
+    }
+    
+    private function getWhere($specifications)
+    {
+        foreach($specifications as $spec)
+        {
+            if($spec instanceof PicoPredicate)
+            {
+                $entityField = new PicoEntityField($spec->getField());
+                $field = $entityField->getField();
+                $entityName = $entityField->getEntity();
+                $column = ($entityName == null) ? $field : $entityName.".".$field;
+                $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . $this->escapeValue($spec->getValue());               
+            }
+            else if($spec instanceof PicoSpecification)
+            {
+                // nested
+                $arr[] = $spec->getParentFilterLogic() . " (" . $this->createWhereFromSpecification($spec) . ")";
+            }
+        }
+        return $arr;
+    }
+    
+    /**
+     * Create WHERE from specification
+     *
+     * @param PicoSpecification $specification
+     * @return string
+     */
+    private function createWhereFromSpecification($specification)
+    {
+        
+        $arr = array();
+        $arr[] = "(1=1)";
+        if($specification != null && !$specification->isEmpty())
+        {
+            $specifications = $specification->getSpecifications();
+            foreach($specifications as $spec)
+            {           
+                $entityField = new PicoEntityField($spec->getField());
+                $field = $entityField->getField();
+                $entityName = $entityField->getEntity();
+                $column = ($entityName == null) ? $field : $entityName.".".$field;
+                $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . $this->escapeValue($spec->getValue());      
+            }
+        }
+        $ret = implode(" ", $arr);
+        return $this->trimWhere($ret);
+    }
+    
+    /**
+	 * Escape value
+	 * @var mixed
+	 * @return string
+	 */
+	public function escapeValue($value)
+	{
+		if($value === null)
+		{
+			// null
+			$ret = 'null';
+		}
+		else if(is_string($value))
+		{
+			// escape the value
+			$ret = "'".$this->escapeSQL($value)."'";
+		}
+		else if(is_bool($value))
+		{
+			// true or false
+			$ret = $value?'true':'false';
+		}
+		else if(is_numeric($value))
+		{
+			// convert number to string
+			$ret = $value."";
+		}
+		else if(is_array($value) || is_object($value))
+		{
+			// encode to JSON and escapethe value
+			$ret = "'".$this->escapeSQL(json_encode($value))."'";
+		}
+		else
+		{
+			// force convert to string and escapethe value
+			$ret = "'".$this->escapeSQL($value)."'";
+		}
+		
+		return $ret;
+	}
+    
+    /**
+     * Escape SQL
+     *
+     * @param string $value
+     * @return string
+     */
+    private function escapeSQL($value)
+    {
+        return addslashes($value);
+    }
+    
+    /**
+     * Trim WHERE
+     *
+     * @param string $where
+     * @return string
+     */
+    private function trimWhere($where)
+    {
+        if(stripos($where, "(1=1) or ") === 0)
+        {
+            $where = substr($where, 9);
+        }
+        if(stripos($where, "(1=1) and ") === 0)
+        {
+            $where = substr($where, 10);
+        }
+        return $where;
+    }
+    
+    public function __toString()
+    {
+        $specification = implode(" ", $this->getWhere($this->specifications));
+        if(stripos($specification, "and ") === 0)
+        {
+            $specification = substr($specification, 4);
+        }
+        return $specification;
     }
 }

@@ -7,7 +7,7 @@ class PicoPredicate
     /**
      * @var string
      */
-    private $filed = "";
+    private $field = "";
 
     /**
      * Value
@@ -29,6 +29,16 @@ class PicoPredicate
      * @var string
      */
     private $filterLogic = null;
+    
+    /**
+     * Return true if require real join table
+     *
+     * @return boolean
+     */
+    public function isRequireJoin()
+    {
+        return strpos($this->field, ".");
+    }
 
     /**
      * Equals
@@ -38,7 +48,7 @@ class PicoPredicate
      */
     public function equals($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = PicoDataComparation::equals($value);
         return $this;
@@ -62,7 +72,7 @@ class PicoPredicate
      */
     public function notEquals($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = new PicoDataComparation($value, PicoDataComparation::NOT_EQUALS);
         return $this;
@@ -86,7 +96,7 @@ class PicoPredicate
      */
     public function like($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = PicoDataComparation::like($value);
         return $this;
@@ -100,7 +110,7 @@ class PicoPredicate
      */
     public function notLike($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = PicoDataComparation::notLike($value);
         return $this;
@@ -114,7 +124,7 @@ class PicoPredicate
      */
     public function lessThan($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = new PicoDataComparation($value, PicoDataComparation::LESS_THAN);
         return $this;
@@ -128,7 +138,7 @@ class PicoPredicate
      */
     public function greaterThan($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = new PicoDataComparation($value, PicoDataComparation::GREATER_THAN);
         return $this;
@@ -142,7 +152,7 @@ class PicoPredicate
      */
     public function lessThanOrEquals($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = new PicoDataComparation($value, PicoDataComparation::LESS_THAN_OR_EQUALS);
         return $this;
@@ -156,20 +166,20 @@ class PicoPredicate
      */
     public function greaterThanOrEquals($field, $value)
     {
-        $this->filed = $field;
+        $this->field = $field;
         $this->value = $value;
         $this->comparation = new PicoDataComparation($value, PicoDataComparation::GREATER_THAN_OR_EQUALS);
         return $this;
     }
 
     /**
-     * Get the value of filed
+     * Get the value of field
      *
      * @return string
      */ 
-    public function getFiled()
+    public function getField()
     {
-        return $this->filed;
+        return $this->field;
     }
 
     /**

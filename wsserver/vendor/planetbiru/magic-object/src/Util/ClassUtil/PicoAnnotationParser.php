@@ -160,19 +160,26 @@ class PicoAnnotationParser
     {
         $pattern = "/@(?=(.*)" . $this->endPattern . ")/U";
         preg_match_all($pattern, $this->rawDocBlock, $matches);
-        
+                
         foreach ($matches[1] as $rawParameter) {
             if (preg_match("/^(" . $this->keyPattern . ")(.*)$/", $rawParameter, $match)) {
                 $parsedValue = $this->parseValue($match[2]);
                 if (isset($this->parameters[$match[1]])) {
                     $this->parameters[$match[1]] = array_merge((array)$this->parameters[$match[1]], (array)$parsedValue);
                 } else {
-                    $this->parameters[$match[1]] = $parsedValue;
+                    if($parsedValue == null)
+                    {
+                        $this->parameters[$match[1]] = new PicoEmptyParameter();
+                    }
+                    else
+                    {
+                        $this->parameters[$match[1]] = $parsedValue;
+                    }
                 }
             } else if (preg_match("/^" . $this->keyPattern . "$/", $rawParameter, $match)) {
                 $this->parameters[$rawParameter] = true;
             } else {
-                $this->parameters[$rawParameter] = null;
+                $this->parameters[$rawParameter] = new PicoEmptyParameter();
             }
         }
 
@@ -355,7 +362,7 @@ class PicoAnnotationParser
      */
     public function parseKeyValue($queryString)
     {
-        if(!isset($queryString) || empty($queryString))
+        if(!isset($queryString) || empty($queryString) || $queryString instanceof PicoEmptyParameter)
         {
             return array();
         }

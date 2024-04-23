@@ -90,7 +90,7 @@ class PicoDatabaseCredentials extends SecretObject
 Attributes:
 `property-naming-strategy`
 
-Available value:
+Allowed value:
 
 - `SNAKE_CASE` all column will be snace case when `__toString()` or `dumpYaml()` method called.
 - `CAMEL_CASE` all column will be camel case when `__toString()` or `dumpYaml()` method called.
