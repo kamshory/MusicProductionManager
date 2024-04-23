@@ -18,6 +18,7 @@ use MagicObject\Exceptions\NoUpdatableColumnException;
 use MagicObject\Exceptions\NoPrimaryKeyDefinedException;
 use MagicObject\Util\ClassUtil\ExtendedReflectionClass;
 use MagicObject\Util\ClassUtil\PicoAnnotationParser;
+use MagicObject\Util\ClassUtil\PicoEmptyParameter;
 
 class PicoDatabasePersistence // NOSONAR
 {
@@ -1225,6 +1226,9 @@ class PicoDatabasePersistence // NOSONAR
                 {
                     $tableName = $attribute->getName();
                     $this->entityTable[$entityName] = $tableName;
+                    
+                    
+                    //$this->joinPrimaryKeys[]
                 }
             }
         }
@@ -1235,6 +1239,35 @@ class PicoDatabasePersistence // NOSONAR
         }
         
         return $tableName;
+    }
+    
+    private function getPrimaryKeyOf($entityName)
+    {
+        $columns = array();
+        try
+        {
+            $className = $this->getRealClassName($entityName);
+            $annotationParser = new PicoAnnotationParser($className);
+            $props = $annotationParser->getProperties();
+            foreach($props as $prop)
+            {
+                $reflexProp = new PicoAnnotationParser($className, $prop->name, PicoAnnotationParser::PROPERTY);
+                $parameters = $reflexProp->getParametersAsObject();
+                if($parameters->getId() != null && $parameters->getId() instanceof PicoEmptyParameter)
+                {
+                    $properties = $reflexProp->parseKeyValueAsObject($parameters->getColumn());
+                    $columns[$prop->name] = $properties->getName();
+                }
+
+                // get column name of each parameters
+                
+            }
+        }
+        catch(Exception $e)
+        {
+            // do nothing
+        }
+        return $columns;
     }
     
     private function getColumnMapOf($entityName)
@@ -1270,11 +1303,18 @@ class PicoDatabasePersistence // NOSONAR
      * @param string $field
      * @return string
      */
-    private function getTableColumn($entityTable, $field)
+    private function getTableColumn($entityTable, $field, $master = false)
     {
         if($entityTable != null)
         {
-            return $entityTable.".".$field;
+            if($master)
+            {
+                return $entityTable.".".$field;
+            }
+            else
+            {
+                return $entityTable."1.".$field;
+            }
         }
         else
         {
@@ -1322,6 +1362,7 @@ class PicoDatabasePersistence // NOSONAR
     {
         if($spec instanceof PicoPredicate)
         {
+            $masterTable = $info->getTableName();
             $entityField = new PicoEntityField($spec->getField());
             $field = $entityField->getField();
             $entityName = $entityField->getEntity();
@@ -1351,14 +1392,14 @@ class PicoDatabasePersistence // NOSONAR
             {
                 
                 // get from map
-                $column = $this->getTableColumn($entityTable, $maps[$field]);
+                $column = $this->getTableColumn($entityTable, $maps[$field], $entityTable == $masterTable);
                 
                 $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . $sqlQuery->escapeValue($spec->getValue());
             }
             else if(in_array($field, $columnNames))
             {
                 // get colum name
-                $column = $this->getTableColumn($entityTable, $field);
+                $column = $this->getTableColumn($entityTable, $field, $entityTable == $masterTable);
                 $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . $sqlQuery->escapeValue($spec->getValue());
             }
         }
@@ -1487,6 +1528,7 @@ class PicoDatabasePersistence // NOSONAR
     private function createWithMapping($order, $info)
     {
         $masterColumnMaps = $this->getColumnMap($info);
+        $masterTable = $info->getTableName();
         
         $arr = array();
     
@@ -1520,14 +1562,14 @@ class PicoDatabasePersistence // NOSONAR
             if(isset($maps[$field]))
             {
                 // get from map
-                $column = $this->getTableColumn($entityTable, $maps[$field]);
+                $column = $this->getTableColumn($entityTable, $maps[$field], $masterTable == $entityTable);
                 
                 $arr[] = $column . " " . $sortOrder->getSortType();
             }
             else if(in_array($field, $columnNames))
             {
                 // get colum name
-                $column = $this->getTableColumn($entityTable, $field);
+                $column = $this->getTableColumn($entityTable, $field, $masterTable == $entityTable);
                 $arr[] = $column . " " . $sortOrder->getSortType();
             }
         }
@@ -1739,22 +1781,41 @@ class PicoDatabasePersistence // NOSONAR
     private function addJoinQuery($sqlQuery, $info)
     {
         $joinColumns = $info->getJoinColumns();
+        
         $masterTable = $info->getTableName();
+        $tableAlias = array();
+        
         foreach($joinColumns as $joinColumn)
         {
             $entity = $joinColumn[self::KEY_PROPERTY_TYPE];
             $columnName = $joinColumn[self::KEY_NAME];
+            $joinTable = $this->getTableOf($entity);
+            if(!isset($tableAlias[$joinTable]))
+            {
+                $tableAlias[$joinTable] = 0;
+            }
+            $tableAlias[$joinTable]++;
+            
+            $joinTableAlias = $joinTable.$tableAlias[$joinTable];
+            
+            $joinColumn = $this->getPrimaryKeyOf($entity);
+
+            $joinPrimaryKeys = array_values($this->getPrimaryKeyOf($entity));
+
             if(isset($joinColumn[self::KEY_REFERENCE_COLUMN_NAME]))
             {
                 $referenceColumName = $joinColumn[self::KEY_REFERENCE_COLUMN_NAME];
+            }
+            else if(!empty($joinPrimaryKeys))
+            {
+                $referenceColumName = $joinPrimaryKeys[0];
             }
             else
             {
                 $referenceColumName = $joinColumn[self::KEY_NAME];
             }
-            $joinTable = $this->getTableOf($entity);
             
-            $sqlQuery->leftJoin($joinTable)->on($joinTable.".".$referenceColumName." = ".$masterTable.".".$columnName);
+            $sqlQuery->leftJoin($joinTable." ".$joinTableAlias)->on($joinTableAlias.".".$referenceColumName." = ".$masterTable.".".$columnName);
         }
         return $sqlQuery;
     }

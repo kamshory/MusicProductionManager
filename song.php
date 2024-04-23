@@ -266,7 +266,7 @@ $orderMap = array(
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
     'genre'=>'Album.sortOrder',
-    'producerId'=>'producerId',
+    'producer'=>'Producer.name',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'artistVocalId',
     'artistComposer'=>'artistComposer',
@@ -339,10 +339,10 @@ if(!empty($result))
         <th scope="col" class="col-sort" data-name="name">Name</th>
         <th scope="col" class="col-sort" data-name="title">Title</th>
         <th scope="col" class="col-sort" data-name="rating">Rate</th>
-        <th scope="col" class="col-sort" data-name="album_id">Album</th>
+        <th scope="col" class="col-sort" data-name="album">Album</th>
         <th scope="col" class="col-sort" data-name="producer_id">Producer</th>
         <th scope="col" class="col-sort" data-name="track_number">Trk</th>
-        <th scope="col" class="col-sort" data-name="genre_id">Genre</th>
+        <th scope="col" class="col-sort" data-name="genre">Genre</th>
         <th scope="col" class="col-sort" data-name="artist_vocalist">Vocalist</th>
         <th scope="col" class="col-sort" data-name="artist_composer">Composer</th>
         <th scope="col" class="col-sort" data-name="artist_arranger">Arranger</th>
