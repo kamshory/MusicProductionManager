@@ -27,6 +27,7 @@ function processBlock($block)
 
 
     $fp = fopen(dirname(__DIR__) . "/tutorial.md", "w+");
+    $article = 0;
     foreach($arr as $line)
     {
 
@@ -36,8 +37,9 @@ function processBlock($block)
             if(file_exists($file))
             {
                 // Echo the HTML from the Markdown text submitted by the user. Note: Additional escaping functions should be implemented based on the context.
+                $article++;
                 $markdown = file_get_contents($file);
-                $buffer .= "\r\n".$parsedown->text($markdown);
+                $buffer .= "<article class=\"article\" id=\"part$article\">\r\n".$parsedown->text($markdown)."\r\n</article>\r\n\r\n";
                 fwrite($fp, $markdown."\r\n");
             }
         }

@@ -1,5 +1,17 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+<title>MagicObject User Manual</title> 
+<link rel="stylesheet" type="text/css" href="css/css.css" /> 
+<script type="text/javascript" src="js/js.js"></script> 
+</head>
+
+<body onload="doStuff()"> 
+
+<div class="articles">
 
 
+<article class="article" id="part1">
 <h1>MagicObject Installation</h1>
 <p>To install <strong>MagicObbject</strong></p>
 <pre><code>composer require planetbiru/magic-object</code></pre>
@@ -10,7 +22,13 @@
 <p>or if composer is not installed</p>
 <pre><code>php composer.phar remove planetbiru/magic-object</code></pre>
 <p>To install composer on your PC or download latest composer.phar, click <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a> </p>
+</article>
+
+<article class="article" id="part2">
 <h1>MagicObject Implementation</h1>
+</article>
+
+<article class="article" id="part3">
 <h2>Simple Object</h2>
 <h3>Set and Get Properties Value</h3>
 <pre><code class="language-php">&lt;?php
@@ -99,6 +117,49 @@ echo $someObject;
 
 // or you can debug with
 error_log($someObject);</code></pre>
+</article>
+
+<article class="article" id="part4">
+<h2>Extend Magic Object</h2>
+<p>User can extend <code>MagicObject</code> to many classes.</p>
+<pre><code class="language-php">&lt;?php
+
+use MagicObject\MagicObject;
+
+/**
+ * Example to extends MagicObject
+ * 
+ * @JSON(property-naming-strategy=SNAKE_CASE, prettify=true)
+ */
+class MyObject extends MagicObject
+{
+
+}</code></pre>
+<h3>Class Parameters</h3>
+<p><strong>@JSON</strong></p>
+<p><code>@JSON</code> is parameter to inform how the object will be serialized.</p>
+<p>Attributes:</p>
+<ol>
+<li><code>property-naming-strategy</code></li>
+</ol>
+<p>Allowed value:</p>
+<ul>
+<li><code>SNAKE_CASE</code> all column will be snace case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
+<li><code>CAMEL_CASE</code> all column will be camel case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
+</ul>
+<p>Default value: <code>CAMEL_CASE</code></p>
+<ol>
+<li><code>prettify</code></li>
+</ol>
+<p>Allowed value:</p>
+<ul>
+<li><code>true</code> JSON string will be prettified</li>
+<li><code>false</code> JSON string will not be prettified</li>
+</ul>
+<p>Default value: <code>false</code></p>
+</article>
+
+<article class="article" id="part5">
 <h2>Multilevel Object</h2>
 <pre><code class="language-php">&lt;?php
 use MagicObject\MagicObject;
@@ -180,6 +241,9 @@ foreach($song-&gt;getVocalist()-&gt;getAgency()-&gt;getCompany()-&gt;getPic() as
     echo $pic;
     echo "\r\n----\r\n";
 }</code></pre>
+</article>
+
+<article class="article" id="part6">
 <h2>Object from Yaml</h2>
 <h3>From Yaml String</h3>
 <pre><code class="language-php">&lt;?php
@@ -243,6 +307,9 @@ echo $car;
 
 echo $car-&gt;getBody()-&gt;getColor();
 </code></pre>
+</article>
+
+<article class="article" id="part7">
 <h2>Object from INI</h2>
 <p>INI not support multilevel object. If multilevel object needed, use Yaml instead.</p>
 <h3>From INI String</h3>
@@ -269,6 +336,9 @@ require_once __DIR__ . "/vendor/autoload.php";
 $cfg = new MagicObject();
 $cfg-&gt;loadIniFile(__DIR__ . "/config.ini", false);
 </code></pre>
+</article>
+
+<article class="article" id="part8">
 <h2>Environment Variable</h2>
 <p>Many application use environment variable to store the config. We can replace the config template with the environment variable. We must set the environment variable to the server before run the application.</p>
 <pre><code class="language-yaml"># config.yml
@@ -361,6 +431,9 @@ echo -e 'SetEnv APP_DATABASE_TIME_ZONE "Asia/Jakarta"' &gt;&gt; /etc/httpd/conf.
 echo -e 'SetEnv APP_DATABASE_SALT "GaramDapur"' &gt;&gt; /etc/httpd/conf.d/mpm.conf
 
 service httpd restart</code></pre>
+</article>
+
+<article class="article" id="part9">
 <h2>Secret Object</h2>
 <h3>Definition</h3>
 <p>Secret Objects are very important in applications that use very sensitive and secret configurations. This configuration must be encrypted so that it cannot be seen either when someone tries to open the configuration file, environment variables, or even when the developer accidentally debugs an object related to the database so that the properties of the database object are exposed including the host name, database name, username and even password.</p>
@@ -442,7 +515,7 @@ class PicoDatabaseCredentials extends SecretObject
 <p><code>@JSON</code> is parameter to inform how the object will be serialized.</p>
 <p>Attributes:
 <code>property-naming-strategy</code></p>
-<p>Available value:</p>
+<p>Allowed value:</p>
 <ul>
 <li><code>SNAKE_CASE</code> all column will be snace case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
 <li><code>CAMEL_CASE</code> all column will be camel case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
@@ -929,6 +1002,9 @@ catch(Exception $e)
     // do nothing
 }
 </code></pre>
+</article>
+
+<article class="article" id="part10">
 <h2>Input POST/GET/COOKIE/REQUEST/SERVER</h2>
 <h3>Input POST</h3>
 <pre><code class="language-php">
@@ -1040,6 +1116,9 @@ FILTER_VALIDATE_EMAIL = 274;
 FILTER_SANITIZE_EMAIL = 517;
 FILTER_SANITIZE_SPECIAL_CHARS = 515;
 FILTER_SANITIZE_ASCII = 601;</code></pre>
+</article>
+
+<article class="article" id="part11">
 <h2>Session</h2>
 <p>Session variables keep information about one single user, and are available to all pages in one application.</p>
 <h3>Session with File</h3>
@@ -1099,6 +1178,9 @@ $sessConf = new SecretObject($cfg-&gt;getSession());
 $sessions = new PicoSession($sessConf);
 
 $sessions-&gt;startSession();</code></pre>
+</article>
+
+<article class="article" id="part12">
 <h2>Entity</h2>
 <p>Entity is class to access database. Entity is derived from MagicObject. Some annotations required to activated all entity features. </p>
 <pre><code class="language-php">&lt;?php
@@ -1109,7 +1191,7 @@ use MagicObject\MagicObject;
 
 /**
  * @Entity
- * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @JSON(property-naming-strategy=SNAKE_CASE, prettify=true)
  * @Table(name="album")
  */
 class Album extends MagicObject
@@ -1290,13 +1372,25 @@ class Album extends MagicObject
 <p><code>@Entity</code> is parameter to validate that the object is an entity.</p>
 <p><strong>@JSON</strong></p>
 <p><code>@JSON</code> is parameter to inform how the object will be serialized.</p>
-<p>Attributes:
-<code>property-naming-strategy</code></p>
-<p>Available value:</p>
+<p>Attributes:</p>
+<ol>
+<li><code>property-naming-strategy</code></li>
+</ol>
+<p>Allowed value:</p>
 <ul>
 <li><code>SNAKE_CASE</code> all column will be snace case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
 <li><code>CAMEL_CASE</code> all column will be camel case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
 </ul>
+<p>Default value: <code>CAMEL_CASE</code></p>
+<ol>
+<li><code>prettify</code></li>
+</ol>
+<p>Allowed value:</p>
+<ul>
+<li><code>true</code> JSON string will be prettified</li>
+<li><code>false</code> JSON string will not be prettified</li>
+</ul>
+<p>Default value: <code>false</code></p>
 <p><strong>@Table</strong></p>
 <p><code>@Table</code> is parameter contains table information.</p>
 <p>Attributes:
@@ -1321,7 +1415,7 @@ class Album extends MagicObject
 <li><code>generator</code></li>
 </ul>
 <p><code>strategy</code> is strategy to generate auto value.</p>
-<p>Available value:</p>
+<p>Allowed value:</p>
 <p><strong>1. GenerationType.UUID</strong></p>
 <p>Generate 20 bytes unique ID</p>
 <ul>
@@ -3295,6 +3389,9 @@ class Genre extends MagicObject
     protected $active;
 
 }</code></pre>
+</article>
+
+<article class="article" id="part13">
 <h2>Filtering, Ordering and Pagination</h2>
 <p>MagicObject will filter data according to the given criteria. On the other hand, MagicObject will only retrieve data on the specified page by specifying <code>limit</code> and <code>offset</code> data in the <code>select</code> query.</p>
 <p>Example parameters:</p>
@@ -4175,6 +4272,9 @@ $(document).on('click', '.save-update-song', function(){
 &lt;?php
 require_once "inc/footer.php";
 ?&gt;</code></pre>
+</article>
+
+<article class="article" id="part14">
 <h2>Dump Database</h2>
 <p>We can dump database to another database type. We do not need any database converter. Just define the target database type when we dump the database.</p>
 <pre><code class="language-php">&lt;?php
@@ -4641,6 +4741,9 @@ echo $dumpForSong-&gt;dumpStructure($song, PicoDatabaseType::DATABASE_TYPE_MYSQL
 $pageData = $song-&gt;findAll();
 $dumpForSong = new PicoDatabaseDump();
 echo $dumpForSong-&gt;dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);</code></pre>
+</article>
+
+<article class="article" id="part15">
 <h2>Object Label</h2>
 <pre><code>&lt;?php
 
@@ -4763,6 +4866,9 @@ $userType = new UserType();
 // print label of adminCreate property
 echo $userType-&gt;labelAdminCreate();
 // it will print "Admin Create"</code></pre>
+</article>
+
+<article class="article" id="part16">
 <h2>Database Query Builder</h2>
 <pre><code class="language-php">&lt;?php
 
@@ -5014,6 +5120,9 @@ left join album
 on album.album_id = song.album_id
 where song.active = true
 */</code></pre>
+</article>
+
+<article class="article" id="part17">
 <h2>Upload File</h2>
 <p>Uploading lots of files with arrays is difficult for some developers, especially novice developers. There is a significant difference between uploading a single file and multiple files.</p>
 <p>When the developer decides to change the form from single file to multiple files or vice versa, the backend developer must change the code to handle the uploaded files.</p>
@@ -5060,6 +5169,9 @@ else
 {
     // do something here
 }</code></pre>
+</article>
+
+<article class="article" id="part18">
 <h2>Language</h2>
 <p>MagicObject supports multilingual applications. MagicObject allows developers to create entities that support a wide variety of languages that users can choose from. At the same time, different users can use different languages.</p>
 <p>To create table with multiple language, create new class from <code>DataTable</code> object. We can copy data from aother object to <code>DataTable</code> easly.</p>
@@ -5277,3 +5389,15 @@ $rumah-&gt;addClass('table');
 
 $apa = $rumah;
 echo $apa;</code></pre>
+</article>
+
+
+</div>
+
+<div id="nav"> 
+  <ul>  
+  </ul>
+</div>
+
+</body>
+</html>
