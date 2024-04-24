@@ -265,7 +265,7 @@ $orderMap = array(
     'album'=>'album.sortOrder', 
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
-    'genre'=>'album.sortOrder',
+    'genre'=>'genre.sortOrder',
     'producer'=>'producer.name',
     'artistVocalId'=>'artistVocalId',
     'artistVocalist'=>'vocalist.name',
@@ -277,7 +277,7 @@ $orderMap = array(
     'active'=>'active'
 );
 $defaultOrderBy = 'album.sortOrder';
-$defaultOrderType = 'desc';
+$defaultOrderType = PicoSortable::ORDER_TYPE_DESC;
 $pagination = new PicoPagination($cfg->getResultPerPage());
 
 $spesification = SpecificationUtil::createSongSpecification($inputGet);
