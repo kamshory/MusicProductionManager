@@ -636,28 +636,28 @@ try
 	$spesification = new PicoSpecification();	
 	
 	$predicate1 = new PicoPredicate();
-	$predicate1->like('EntityAlbum.title', '%Album%');
+	$predicate1->like('title', '%Album%');
 	$spesification->addAnd($predicate1);
 
 	$predicate2 = new PicoPredicate();
-	$predicate2->lessThan('Producer.birthDay', '2001-01-01');
+	$predicate2->lessThan('producer.birthDay', '2001-01-01');
 	$spesification->addAnd($predicate2);
 		
 	$predicate3 = new PicoPredicate();
-	$predicate3->equals('EntityAlbum.active', true);
+	$predicate3->equals('active', true);
 	$spesification->addAnd($predicate3);
 	
 	$sortable = new PicoSortable();
 	
-	$sortable->addSortable(new PicoSort("Producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
-	$sortable->addSortable(new PicoSort("Producer.producerId", PicoSortable::ORDER_TYPE_DESC));
+	$sortable->addSortable(new PicoSort("producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
+	$sortable->addSortable(new PicoSort("producer.producerId", PicoSortable::ORDER_TYPE_DESC));
 	
 	
 	$pageData = $album->findAll($spesification, null, $sortable, true);
 	$rowData = $pageData->getResult();
 	foreach($rowData as $alb)
 	{
-		echo $alb."\r\n\r\n";
+		//echo $alb."\r\n\r\n";
 	}
 	
 	$pagable = new PicoPagable(new PicoPage(1, 20));

@@ -1126,7 +1126,8 @@ FILTER_SANITIZE_ASCII = 601;</code></pre>
 <pre><code class="language-yaml">session:
   name: MUSICPRODUCTIONMANAGER
   max_life_time: 86400
-  save_handler: files</code></pre>
+  save_handler: files
+  save_path: /tmp/sessions</code></pre>
 <p><strong>PHP Script</strong></p>
 <pre><code class="language-php">&lt;?php
 
@@ -1154,7 +1155,8 @@ $sessions-&gt;startSession();</code></pre>
   name: MUSICPRODUCTIONMANAGER
   max_life_time: 86400
   save_handler: redis
-  save_path: tcp://127.0.0.1:6379?auth=${REDIS_AUTH}</code></pre>
+  save_path: ${REDIS_AUTH}</code></pre>
+<p><strong>WARNING!</strong></p>
 <p>You can not encrypt the <code>${REDIS_AUTH}</code> value. If you want to secure the config, encrypt entire <code>save_path</code> instead.</p>
 <p>For example:</p>
 <pre><code class="language-yaml">session:
@@ -1175,6 +1177,34 @@ $cfg = new ConfigApp(null, true);
 $cfg-&gt;loadYamlFile(__DIR__ . "/.cfg/app.yml", true, true);
 
 $sessConf = new SecretObject($cfg-&gt;getSession());
+$sessions = new PicoSession($sessConf);
+
+$sessions-&gt;startSession();</code></pre>
+<p>If you want to encrypt <code>session.save_path</code>, you must define your own class.</p>
+<p><strong>PHP Script</strong></p>
+<pre><code class="language-php">&lt;?php
+
+use MagicObject\SecretObject;
+use MagicObject\Session\PicoSession;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+class SessionSecureConfig extends SecretObject
+{
+  /**
+   * Session save path
+   * save_path is encrypted and stored in ${SESSION_SAVE_PATH}. To decrypt it, use anotation DecryptOut
+   * 
+   * @DecryptOut
+   * @var string
+   */ 
+  protected $savePath;
+}
+
+$cfg = new ConfigApp(null, true);
+$cfg-&gt;loadYamlFile(__DIR__ . "/.cfg/app.yml", true, true);
+
+$sessConf = new SessionSecureConfig($cfg-&gt;getSession());
 $sessions = new PicoSession($sessConf);
 
 $sessions-&gt;startSession();</code></pre>
@@ -3836,10 +3866,10 @@ try
     /**
     select album.*
     from album
-    left join producer
-    on producer.producer_id = album.producer_id
-    where album.title like '%Album%' and producer.birth_day &lt; '2001-01-01' and album.active = true
-    order by producer.birth_day asc, producer.producer_id desc
+    left join producer producer__jn__1
+    on producer__jn__1.producer_id = album.producer_id
+    where album.title like '%Album%' and producer__jn__1.birth_day &lt; '2001-01-01' and album.active = true
+    order by producer__jn__1.birth_day asc, producer__jn__1.producer_id desc
     limit 0, 20
     */
 

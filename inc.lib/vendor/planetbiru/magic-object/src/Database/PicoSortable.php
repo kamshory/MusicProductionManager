@@ -201,7 +201,7 @@ class PicoSortable
     }
     
     /**
-     * Debug sortable
+     * This method is for debug purpose only.
      *
      * @return string
      */

@@ -18,14 +18,14 @@ class PicoSession
      *
      * @var boolean
      */
-    private $sessionState = self::SESSION_NOT_STARTED;
+    private $_sessionState = self::SESSION_NOT_STARTED; //NOSONAR
  
     /**
      * The instance of the object
      *
      * @var self
      */
-    private static $instance;
+    private static $_instance; //NOSONAR
 
 
     /**
@@ -69,20 +69,20 @@ class PicoSession
      **/
     public static function getInstance($name = null, $maxLifeTime = 0)
     {
-        if (!isset(self::$instance)) {
-            self::$instance = new self();
+        if (!isset(self::$_instance)) {
+            self::$_instance = new self();
             if(isset($name))
             {
-                self::$instance->setSessionName($name);
+                self::$_instance->setSessionName($name);
             }
             if($maxLifeTime > 0)
             {
-                self::$instance->setSessionMaxLifeTime($maxLifeTime);
+                self::$_instance->setSessionMaxLifeTime($maxLifeTime);
             }
         }
 
-        self::$instance->startSession();
-        return self::$instance;
+        self::$_instance->startSession();
+        return self::$_instance;
     }
 
 
@@ -93,11 +93,11 @@ class PicoSession
      **/
     public function startSession()
     {
-        if ($this->sessionState == self::SESSION_NOT_STARTED) {
-            $this->sessionState = session_start();
+        if ($this->_sessionState == self::SESSION_NOT_STARTED) {
+            $this->_sessionState = session_start();
         }
         $this->sessionStarted = true;
-        return $this->sessionState;
+        return $this->_sessionState;
     }
 
     /**
@@ -107,12 +107,12 @@ class PicoSession
      */
     public function isSessionStarted()
     {
-        return $this->sessionState;
+        return $this->_sessionState;
     }
 
     /**
      * Stores datas in the session.
-     * Example: $instance->foo = 'bar';
+     * Example: $_instance->foo = 'bar';
      * 
      * @param string $name Name of the datas.
      * @param string $value Your datas.
@@ -126,7 +126,7 @@ class PicoSession
 
     /**
      * Gets datas from the session.
-     * Example: echo $instance->foo;
+     * Example: echo $_instance->foo;
      * 
      * @param string $name Name of the datas to get.
      * @return mixed Datas stored in session.
@@ -155,11 +155,11 @@ class PicoSession
      **/
     public function destroy()
     {
-        if ($this->sessionState == self::SESSION_STARTED) {
-            $this->sessionState = !session_destroy();
+        if ($this->_sessionState == self::SESSION_STARTED) {
+            $this->_sessionState = !session_destroy();
             unset($_SESSION);
 
-            return !$this->sessionState;
+            return !$this->_sessionState;
         }
         return false;
     }

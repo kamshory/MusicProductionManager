@@ -6,6 +6,7 @@ use PDO;
 use PDOException;
 use PDOStatement;
 use MagicObject\Constants\PicoConstants;
+use MagicObject\Exceptions\InvalidDatabaseConfiguration;
 use MagicObject\Exceptions\NullPointerException;
 use MagicObject\SecretObject;
 use stdClass;
@@ -85,12 +86,21 @@ class PicoDatabase //NOSONAR
 	 */
 	public function connect()
 	{
-		date_default_timezone_set($this->databaseCredentials->getTimeZone());
+		$databaseTimeZone = $this->databaseCredentials->getTimeZone();
+		if($databaseTimeZone != null && !empty($databaseTimeZone))
+		{
+			date_default_timezone_set($this->databaseCredentials->getTimeZone());
+		}
 		$timeZoneOffset = date("P");
 		$connected = true;
 		try 
 		{
-			$connectionString = $this->databaseCredentials->getDriver() . ':host=' . $this->databaseCredentials->getHost() . '; port=' . ((int) $this->databaseCredentials->getPort()) . '; dbname=' . $this->databaseCredentials->getDatabaseName();
+			$connectionString = $this->constructConnectionString();
+			if(!$this->databaseCredentials->issetUsername())
+			{
+				throw new InvalidDatabaseConfiguration("Database username may not be empty. Please check your database configuration!");
+			}
+			
 			$this->databaseType = $this->databaseCredentials->getDriver();
 			$this->databaseConnection = new PDO(
 				$connectionString,
@@ -111,6 +121,39 @@ class PicoDatabase //NOSONAR
 			// Do nothing
 		}
 		return $connected;
+	}
+	
+	/**
+	 * Create connection string
+	 *
+	 * @return string
+	 * @throws InvalidDatabaseConfiguration
+	 */
+	private function constructConnectionString()
+	{
+		$emptyDriver = !$this->databaseCredentials->issetDriver();
+		$emptyHost = !$this->databaseCredentials->issetHost();
+		$emptyPort = !$this->databaseCredentials->issetPort();
+		$emptyName = !$this->databaseCredentials->issetDatabaseName();
+		
+		if(
+			$emptyDriver
+			||
+			$emptyHost
+			||
+			$emptyPort
+			||
+			$emptyName
+		)
+		{
+			$emptyValue = "";
+			$emptyValue .= $emptyDriver ? "{driver}" : "";
+			$emptyValue .= $emptyHost ? "{host}" : "";
+			$emptyValue .= $emptyPort ? "{port}" : "";
+			$emptyValue .= $emptyName ? "{name}" : "";
+			throw new InvalidDatabaseConfiguration("Invalid database configuration. $emptyValue. Please check your database configuration!");
+		}
+		return $this->databaseCredentials->getDriver() . ':host=' . $this->databaseCredentials->getHost() . '; port=' . ((int) $this->databaseCredentials->getPort()) . '; dbname=' . $this->databaseCredentials->getDatabaseName();
 	}
 
 	/**
@@ -147,7 +190,7 @@ class PicoDatabase //NOSONAR
 	public function setAudoCommit($autocommit)
 	{
 		$this->autocommit = $autocommit;
-		return $this->databaseConnection->setAttribute(PDO::ATTR_AUTOCOMMIT, $autocommit ? 1 : 0);
+		return $this->databaseConnection->setAttribute(PDO::ATTR_AUTOCOMMIT, $this->autocommit ? 1 : 0);
 	}
 	
 	/**

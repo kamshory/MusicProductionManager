@@ -2818,10 +2818,10 @@ try
 	/**
 	select album.*
 	from album
-	left join producer
-	on producer.producer_id = album.producer_id
-	where album.title like '%Album%' and producer.birth_day < '2001-01-01' and album.active = true
-	order by producer.birth_day asc, producer.producer_id desc
+	left join producer producer__jn__1
+	on producer__jn__1.producer_id = album.producer_id
+	where album.title like '%Album%' and producer__jn__1.birth_day < '2001-01-01' and album.active = true
+	order by producer__jn__1.birth_day asc, producer__jn__1.producer_id desc
 	limit 0, 20
 	*/
 	

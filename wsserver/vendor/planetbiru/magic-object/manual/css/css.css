@@ -73,7 +73,7 @@
     position: fixed;
     left: 0px;
     top: 0px;
-    width: 200px;
+    width: 220px;
     height: calc(100% - 40px);
     overflow: auto;
     z-index: 2;
@@ -82,8 +82,17 @@
 #nav ul {
     list-style-type: none;
     height: 100%;
+    font-size: 13px;
+    line-height: 1.5;
 }
-
+#nav ul li a{
+    text-decoration: none;
+    color: rgb(14, 117, 143);
+}
+#nav ul li a:hover{
+    text-decoration: underline;
+    color: rgb(25, 152, 184);
+}
 body {
     margin: 0;
     padding: auto;

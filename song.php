@@ -262,21 +262,21 @@ $orderMap = array(
     'title'=>'title', 
     'rating'=>'rating',
     'albumId'=>'albumId', 
-    'album'=>'Album.sortOrder', 
+    'album'=>'album.sortOrder', 
     'trackNumber'=>'trackNumber',
     'genreId'=>'genreId', 
-    'genre'=>'Album.sortOrder',
-    'producer'=>'Producer.name',
+    'genre'=>'album.sortOrder',
+    'producer'=>'producer.name',
     'artistVocalId'=>'artistVocalId',
-    'artistVocalist'=>'artistVocalId',
-    'artistComposer'=>'artistComposer',
-    'artistArranger'=>'artistArranger',
+    'artistVocalist'=>'vocalist.name',
+    'artistComposer'=>'composer.name',
+    'artistArranger'=>'arranger.name',
     'duration'=>'duration',
     'subtitleComplete'=>'subtitleComplete',
     'vocal'=>'vocal',
     'active'=>'active'
 );
-$defaultOrderBy = 'Album.sortOrder';
+$defaultOrderBy = 'album.sortOrder';
 $defaultOrderType = 'desc';
 $pagination = new PicoPagination($cfg->getResultPerPage());
 
@@ -285,9 +285,9 @@ $spesification = SpecificationUtil::createSongSpecification($inputGet);
 if($pagination->getOrderBy() == '')
 {
   $sortable = new PicoSortable();
-  $sort1 = new PicoSort('Album.sortOrder', PicoSortable::ORDER_TYPE_DESC);
+  $sort1 = new PicoSort('album.sortOrder', PicoSortable::ORDER_TYPE_DESC);
   $sortable->addSortable($sort1);
-  $sort2 = new PicoSort('EntitySong.trackNumber', PicoSortable::ORDER_TYPE_ASC);
+  $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
   $sortable->addSortable($sort2);
 }
 else

@@ -73,7 +73,7 @@ class PicoSort
     }
     
     /**
-     * Debug
+     * This method is for debug purpose only.
      *
      * @return string
      */

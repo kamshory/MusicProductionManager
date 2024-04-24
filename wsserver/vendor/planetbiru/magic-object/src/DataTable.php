@@ -46,43 +46,43 @@ class DataTable extends SetterGetter
     const TD_LABEL = "td-label";
     const TD_VALUE = "td-value";
     
-    private $_attributes = array();
-    private $_classList = array();
-    private $_defaultColumnName = "key";
+    private $_attributes = array(); //NOSONAR
+    private $_classList = array(); //NOSONAR
+    private $_defaultColumnName = "key"; //NOSONAR
     
     /**
      * Current language
      *
      * @var string
      */
-    private $_currentLanguage;
+    private $_currentLanguage; //NOSONAR
     /**
      * Language
      *
      * @var PicoLanguage[]
      */
-    private $_lableLanguage = array();
+    private $_lableLanguage = array(); //NOSONAR
     
     /**
      * Table identity
      *
      * @var PicoGenericObject
      */
-    private $_tableIdentity;
+    private $_tableIdentity; //NOSONAR
     
     /**
      * Table info
      *
      * @var PicoTableInfo
      */
-    private $_tableInfo;
+    private $_tableInfo; //NOSONAR
     
     /**
      * Labels
      *
      * @var array
      */
-    private $_labels = array();
+    private $_labels = array(); //NOSONAR
       
     /**
      * Constructor

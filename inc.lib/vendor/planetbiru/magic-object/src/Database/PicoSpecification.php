@@ -312,6 +312,11 @@ class PicoSpecification
         return $where;
     }
     
+    /**
+     * This method is for debug purpose only.
+     *
+     * @return string
+     */
     public function __toString()
     {
         $specification = implode(" ", $this->getWhere($this->specifications));

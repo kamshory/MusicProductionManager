@@ -17,6 +17,13 @@ class PicoEntityField
      * @var string
      */
     private $field = null;
+    
+    /**
+     * Parent field
+     *
+     * @var string
+     */
+    private $parentField = null;
 
     /**
      * Get entity
@@ -39,6 +46,16 @@ class PicoEntityField
     }
     
     /**
+     * Get parent field
+     *
+     * @return  string
+     */ 
+    public function getParentField()
+    {
+        return $this->parentField;
+    }
+    
+    /**
      * Constructor
      *
      * @param string $field
@@ -50,6 +67,7 @@ class PicoEntityField
             $arr = explode(".", $field, 2);
             $this->field = $arr[1];
             $this->entity = $arr[0];
+            $this->parentField = $arr[0];
         }
         else
         {

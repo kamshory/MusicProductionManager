@@ -441,11 +441,16 @@ class PicoRequestBase extends stdClass //NOSONAR
             $var = lcfirst(substr($method, 9));
             return is_array($this->$var);
         } 
+        else if (strncasecmp($method, "isset", 5) === 0) 
+        {
+            $var = lcfirst(substr($method, 5));
+            return isset($this->$var);
+        } 
         else if (strncasecmp($method, "is", 2) === 0) 
         {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) ? $this->$var == 1 : false;
-        } 
+        }
         else if (strncasecmp($method, "get", 3) === 0)
         {
             $var = lcfirst(substr($method, 3));

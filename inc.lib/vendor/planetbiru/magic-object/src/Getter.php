@@ -17,7 +17,7 @@ class Getter extends stdClass
      *
      * @var array
      */
-    private $classParams = array();
+    private $_classParams = array(); //NOSONAR
 
     /**
      * Constructor
@@ -36,7 +36,7 @@ class Getter extends stdClass
             {
                 throw new InvalidAnnotationException("Invalid annotation @".$paramName);
             }
-            $this->classParams[$paramName] = $vals;
+            $this->_classParams[$paramName] = $vals;
         }
     }
     
@@ -151,9 +151,9 @@ class Getter extends stdClass
      */
     private function isSnake()
     {
-        return isset($this->classParams[self::JSON]) 
-            && isset($this->classParams[self::JSON]['property-naming-strategy']) 
-            && strcasecmp($this->classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
+        return isset($this->_classParams[self::JSON]) 
+            && isset($this->_classParams[self::JSON]['property-naming-strategy']) 
+            && strcasecmp($this->_classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
             ;
     }
 
@@ -164,9 +164,9 @@ class Getter extends stdClass
      */
     private function isPretty()
     {
-        return isset($this->classParams[self::JSON]) 
-            && isset($this->classParams[self::JSON]['prettify']) 
-            && strcasecmp($this->classParams[self::JSON]['prettify'], 'true') == 0
+        return isset($this->_classParams[self::JSON]) 
+            && isset($this->_classParams[self::JSON]['prettify']) 
+            && strcasecmp($this->_classParams[self::JSON]['prettify'], 'true') == 0
             ;
     }
 
