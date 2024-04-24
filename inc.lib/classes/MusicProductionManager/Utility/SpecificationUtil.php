@@ -102,6 +102,13 @@ class SpecificationUtil
             $predicate1->equals('producerId', $inputGet->getProducerId());
             $spesification->addAnd($predicate1);
         }
+        
+        if($inputGet->getProducerName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->like('producer.name', PicoPredicate::generateCenterLike($inputGet->getProducerName()));
+            $spesification->addAnd($predicate1);
+        }
 
         if($inputGet->getName() != "" || $inputGet->getTitle() != "")
         {
@@ -142,6 +149,41 @@ class SpecificationUtil
         {
             $predicate1 = new PicoPredicate();
             $predicate1->equals('artistVocalist', $inputGet->getVocalist());
+            $spesification->addAnd($predicate1);
+        }
+        
+        if($inputGet->getVocalistName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->like('vocalist.name', PicoPredicate::generateCenterLike($inputGet->getVocalistName()));
+            $spesification->addAnd($predicate1);
+        }
+        
+        if($inputGet->getComposer() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->equals('artistComposer', $inputGet->getComposer());
+            $spesification->addAnd($predicate1);
+        }
+        
+        if($inputGet->getComposerName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->like('composer.name', PicoPredicate::generateCenterLike($inputGet->getComposerName()));
+            $spesification->addAnd($predicate1);
+        }
+        
+        if($inputGet->getArranger() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->equals('artistArranger', $inputGet->getArranger());
+            $spesification->addAnd($predicate1);
+        }
+        
+        if($inputGet->getArrangerName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1->like('arranger.name', PicoPredicate::generateCenterLike($inputGet->getArrangerName()));
             $spesification->addAnd($predicate1);
         }
 
