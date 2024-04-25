@@ -77,22 +77,29 @@ class PicoPageData
      */
     private $pagination = array();
 
-
     /**
      * Constructor
      *
      * @param MagicObject[] $result
+     * @param integer $startTime
+     * @param integer $totalResult
      * @param PicoPagable $pagable
-     * @param integer $match
      */
-    public function __construct($result, $pagable, $totalResult, $startTime)
+    public function __construct($result, $startTime, $totalResult = 0, $pagable = null)
     {
         $this->startTime = $startTime;
         $this->result = $result;
-        $this->pagable = $pagable;
-        $this->totalResult = $totalResult;
+        if($totalResult != 0)
+        {
+            $this->totalResult = $totalResult;
+        }
+        else
+        {
+            $this->totalResult = count($result);
+        }
         if($pagable != null && $pagable instanceof PicoPagable)
         {
+            $this->pagable = $pagable;
             $this->calculateContent();
         }
         else

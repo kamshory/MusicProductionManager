@@ -1092,25 +1092,33 @@ class MagicObject extends stdClass // NOSONAR
             {
                 $persist = new PicoDatabasePersistence($this->_database, $this);
                 $result = $persist->findAll($specification, $pagable, $sortable);
-                $match = $persist->countAll($specification);
+                
                 if($this->_notNullAndNotEmpty($result))
                 {
-                    $pageData = new PicoPageData($this->toArrayObject($result, $passive), $pagable, $match, $startTime);
+                    if($pagable != null && $pagable instanceof PicoPagable)
+                    {
+                        $match = $persist->countAll($specification);
+                        $pageData = new PicoPageData($this->toArrayObject($result, $passive), $startTime, $match, $pagable);
+                    }
+                    else
+                    {
+                        $pageData = new PicoPageData($this->toArrayObject($result, $passive), $startTime);
+                    }
                 }
                 else
                 {
-                    $pageData = new PicoPageData(array(), $pagable, 0, $startTime);
+                    $pageData = new PicoPageData(array(), $startTime);
                 }
             }
             else
             {
-                $pageData = new PicoPageData(array(), $pagable, 0, $startTime);
+                $pageData = new PicoPageData(array(), $startTime);
             }
             return $pageData;
         }
         catch(Exception $e)
         {
-            return new PicoPageData(array(), $pagable, 0, $startTime);
+            return new PicoPageData(array(), $startTime);
         }
     }
     
@@ -1195,25 +1203,32 @@ class MagicObject extends stdClass // NOSONAR
             {
                 $persist = new PicoDatabasePersistence($this->_database, $this);
                 $result = $persist->findBy($method, $params, $pagable, $sortable);
-                $match = $persist->countBy($method, $params);
                 if($this->_notNullAndNotEmpty($result))
                 {
-                    $pageData = new PicoPageData($this->toArrayObject($result, $passive), $pagable, $match, $startTime);
+                    if($pagable != null && $pagable instanceof PicoPagable)
+                    {
+                        $match = $persist->countBy($method, $params);
+                        $pageData = new PicoPageData($this->toArrayObject($result, $passive), $startTime, $match, $pagable);
+                    }
+                    else
+                    {
+                        $pageData = new PicoPageData($this->toArrayObject($result, $passive), $startTime);
+                    }
                 }
                 else
                 {
-                    $pageData = new PicoPageData(array(), $pagable, 0, $startTime);
+                    $pageData = new PicoPageData(array(), $startTime);
                 }
             }
             else
             {
-                $pageData = new PicoPageData(array(), $pagable, 0, $startTime);
+                $pageData = new PicoPageData(array(), $startTime);
             }
             return $pageData;
         }
         catch(Exception $e)
         {
-            return new PicoPageData(array(), $pagable, 0, $startTime);
+            return new PicoPageData(array(), $startTime);
         }
     }
     

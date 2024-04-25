@@ -1155,7 +1155,7 @@ $sessions-&gt;startSession();</code></pre>
   name: MUSICPRODUCTIONMANAGER
   max_life_time: 86400
   save_handler: redis
-  save_path: ${REDIS_AUTH}</code></pre>
+  save_path: tcp://127.0.0.1:6379?auth=${REDIS_AUTH}</code></pre>
 <p><strong>WARNING!</strong></p>
 <p>You can not encrypt the <code>${REDIS_AUTH}</code> value. If you want to secure the config, encrypt entire <code>save_path</code> instead.</p>
 <p>For example:</p>
@@ -3419,6 +3419,50 @@ class Genre extends MagicObject
     protected $active;
 
 }</code></pre>
+<p>To join <code>song</code> and <code>album</code>, we create property</p>
+<pre><code class="language-php">    /**
+     * Album
+     * @JoinColumn(name="album_id")
+     * @Label(content="Album")
+     * @var Album
+     */
+    protected $album;</code></pre>
+<p>Because <code>album_id</code> is primary key of table <code>album</code>, we not need to write reference column name.</p>
+<p>To join <code>song</code> and <code>artist</code>, we create property</p>
+<pre><code class="language-php">    **
+     * Artist Vocal
+     * 
+     * @JoinColumn(name="artist_vocalist")
+     * @Label(content="Artist Vocal")
+     * @var Artist
+     */
+    protected $vocalist;</code></pre>
+<p>Primary key of table <code>artist</code> is <code>artist_id</code>, not <code>artist_vocalist</code>. We should write <code>referenceColumnName</code> in annotation <code>@JoinColumn</code>.</p>
+<pre><code class="language-php">    **
+     * Artist Vocal
+     * 
+     * @JoinColumn(name="artist_vocalist" referenceColumnName="artist_id")
+     * @Label(content="Artist Vocal")
+     * @var Artist
+     */
+    protected $vocalist;</code></pre>
+<p>If entity miss the <code>referenceColumnName</code>, MagicObject will search the primary key of table <code>artist</code> and will use first primary key. Process will run slower. We are recommended to always write <code>referenceColumnName</code> to make it run faster.</p>
+<pre><code class="language-php">    /**
+     * Album
+     * @JoinColumn(name="album_id"  referenceColumnName="artist_id")
+     * @Label(content="Album")
+     * @var Album
+     */
+    protected $album;
+
+    /**
+     * Artist Vocal
+     * 
+     * @JoinColumn(name="artist_vocalist" referenceColumnName="artist_id")
+     * @Label(content="Artist Vocal")
+     * @var Artist
+     */
+    protected $vocalist;</code></pre>
 <h3>Filter and Order by Join Columns</h3>
 <p>On real application, user may be filter and order data by column on join table. If the user in the column contains a dot (.) character, then MagicObject will create a select query with a join instead of a regular select query so that filters and orders can work as they should. This way, the process may run slower than with a regular select query.</p>
 <pre><code class="language-php">&lt;?php
@@ -3838,41 +3882,54 @@ try
     $spesification = new PicoSpecification();   
 
     $predicate1 = new PicoPredicate();
-    $predicate1-&gt;like('EntityAlbum.title', '%Album%');
+    // for entity album, just use the colum name
+    $predicate1-&gt;like('title', '%Album%');
     $spesification-&gt;addAnd($predicate1);
 
     $predicate2 = new PicoPredicate();
-    $predicate2-&gt;lessThan('Producer.birthDay', '2001-01-01');
+    $predicate2-&gt;lessThan('producer.birthDay', '2001-01-01');
     $spesification-&gt;addAnd($predicate2);
 
     $predicate3 = new PicoPredicate();
-    $predicate3-&gt;equals('EntityAlbum.active', true);
+    // type releaseDate instead of release_date
+    // because MagicObject use entyty property name, not real table column name 
+    $predicate3-&gt;greaterThan('releaseDate', '2020-01-01');
     $spesification-&gt;addAnd($predicate3);
+
+    $predicate4 = new PicoPredicate();
+    $predicate4-&gt;equals('active', true);
+    $spesification-&gt;addAnd($predicate4);
+
+    $predicate4 = new PicoPredicate();
+    $predicate4-&gt;equals('asDraft', false);
+    $spesification-&gt;addAnd($predicate4);
 
     $sortable = new PicoSortable();
 
-    $sortable-&gt;addSortable(new PicoSort("Producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
-    $sortable-&gt;addSortable(new PicoSort("Producer.producerId", PicoSortable::ORDER_TYPE_DESC));
+    $sortable-&gt;addSortable(new PicoSort("producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
+    $sortable-&gt;addSortable(new PicoSort("producer.producerId", PicoSortable::ORDER_TYPE_DESC));
 
     $pageData = $album-&gt;findAll($spesification, null, $sortable, true);
     $rowData = $pageData-&gt;getResult();
     foreach($rowData as $alb)
     {
-        echo $alb."\r\n\r\n";
+        //echo $alb."\r\n\r\n";
     }
 
     $pagable = new PicoPagable(new PicoPage(1, 20));
     echo $album-&gt;findAllQuery($spesification, $pagable, $sortable, true);
     /**
-    select album.*
-    from album
-    left join producer producer__jn__1
-    on producer__jn__1.producer_id = album.producer_id
-    where album.title like '%Album%' and producer__jn__1.birth_day &lt; '2001-01-01' and album.active = true
-    order by producer__jn__1.birth_day asc, producer__jn__1.producer_id desc
-    limit 0, 20
-    */
-
+     *  select album.*
+        from album
+        left join producer producer__jn__1
+        on producer__jn__1.producer_id = album.producer_id
+        where album.title like '%Album%'
+        and producer__jn__1.birth_day &lt; '2001-01-01'
+        and album.release_date &gt; '2020-01-01' and album.active = true
+        and album.as_draft = false
+        order by producer__jn__1.birth_day asc, producer__jn__1.producer_id desc
+        limit 0, 20
+     */
     echo "\r\n-----\r\n";
     echo $spesification;
     echo "\r\n-----\r\n";
@@ -3884,6 +3941,10 @@ catch(Exception $e)
 {
     echo $e-&gt;getMessage();
 }</code></pre>
+<pre><code class="language-php">    $predicate2 = new PicoPredicate();
+    $predicate2-&gt;lessThan('producer.birthDay', '2001-01-01');
+    $spesification-&gt;addAnd($predicate2);</code></pre>
+<p><code>producer</code> is property of entity that join with other entity, not table name. <code>birthDay</code> and <code>producerId</code> are is property of entity <code>producer</code>, not column name of table <code>producer</code>.</p>
 </article>
 
 <article class="article" id="part13">

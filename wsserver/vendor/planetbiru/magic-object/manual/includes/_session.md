@@ -52,7 +52,7 @@ session:
   name: MUSICPRODUCTIONMANAGER
   max_life_time: 86400
   save_handler: redis
-  save_path: ${REDIS_AUTH}
+  save_path: tcp://127.0.0.1:6379?auth=${REDIS_AUTH}
 ```
 
 **WARNING!**
