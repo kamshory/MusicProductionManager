@@ -250,7 +250,7 @@ else
         <span>Album</span>
         <select class="form-control" name="album_id" id="album_id">
             <option value="">- All -</option>
-            <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
+            <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSort::ORDER_TYPE_DESC)); ?>
         </select>
     </div>
     <div class="filter-group">
@@ -329,9 +329,9 @@ $spesification->addAnd($filter1);
 if($pagination->getOrderBy() == '')
 {
   $sortable = new PicoSortable();
-  $sort1 = new PicoSort('albumId', PicoSortable::ORDER_TYPE_DESC);
+  $sort1 = new PicoSort('albumId', PicoSort::ORDER_TYPE_DESC);
   $sortable->addSortable($sort1);
-  $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+  $sort2 = new PicoSort('trackNumber', PicoSort::ORDER_TYPE_ASC);
   $sortable->addSortable($sort2);
 }
 else

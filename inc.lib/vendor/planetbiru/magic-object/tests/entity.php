@@ -637,8 +637,8 @@ try
 	
 	$predicate1 = new PicoPredicate();
 	// for entity album, just use the colum name
-	$predicate1->like('title', '%Album%');
-	$spesification->addAnd($predicate1);
+	//$predicate1->like('title', '%Album%');
+	//$spesification->addAnd($predicate1);
 
 	$predicate2 = new PicoPredicate();
 	$predicate2->lessThan('producer.birthDay', '2001-01-01');
@@ -647,8 +647,8 @@ try
 	$predicate3 = new PicoPredicate();
 	// type releaseDate instead of release_date
 	// because MagicObject use entyty property name, not real table column name 
-	$predicate3->greaterThan('releaseDate', '2020-01-01');
-	$spesification->addAnd($predicate3);
+	//$predicate3->greaterThan('releaseDate', '2020-01-01');
+	//$spesification->addAnd($predicate3);
 
 
 	$predicate4 = new PicoPredicate();
@@ -661,18 +661,19 @@ try
 	
 	$sortable = new PicoSortable();
 	
-	$sortable->addSortable(new PicoSort("producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
-	$sortable->addSortable(new PicoSort("producer.producerId", PicoSortable::ORDER_TYPE_DESC));
+	$sortable->addSortable(new PicoSort("producer.birthDay", PicoSort::ORDER_TYPE_ASC));
+	$sortable->addSortable(new PicoSort("producer.producerId", PicoSort::ORDER_TYPE_DESC));
 	
+	$pagable = new PicoPagable(new PicoPage(2, 2));
 	
-	$pageData = $album->findAll($spesification, null, $sortable, true);
+	$pageData = $album->findAll($spesification, $pagable, $sortable, true);
 	$rowData = $pageData->getResult();
 	foreach($rowData as $alb)
 	{
-		//echo $alb."\r\n\r\n";
+		echo $alb."\r\n\r\n";
 	}
 	
-	$pagable = new PicoPagable(new PicoPage(1, 20));
+	
 	echo $album->findAllQuery($spesification, $pagable, $sortable, true);
 	/**
 	 * 	select album.*
@@ -692,6 +693,9 @@ try
 	echo $sortable;
 	echo "\r\n-----\r\n";
 	echo $pagable;
+	echo "\r\n-----\r\n";
+	echo $pageData;
+	echo "\r\n-----\r\n";
 }
 catch(Exception $e)
 {

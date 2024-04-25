@@ -74,7 +74,7 @@ class PicoSelectOption
         }
         else
         {
-            $this->sortable = new PicoSortable('name', PicoSortable::ORDER_TYPE_DESC);
+            $this->sortable = new PicoSortable('name', PicoSort::ORDER_TYPE_DESC);
         }
         $this->findAllActive();
     }

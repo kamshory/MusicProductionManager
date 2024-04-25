@@ -1846,7 +1846,7 @@ try
     $album-&gt;findOneByAlbumId($inputGet-&gt;getAlbumId());
 
     $sortable = new PicoSortable();
-    $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+    $sort2 = new PicoSort('trackNumber', PicoSort::ORDER_TYPE_ASC);
     $sortable-&gt;addSortable($sort2);
 
     $spesification = new PicoSpecification();
@@ -1942,7 +1942,7 @@ try
     $album-&gt;findOneByAlbumId($inputGet-&gt;getAlbumId());
 
     $sortable = new PicoSortable();
-    $sort2 = new PicoSort('albumId', PicoSortable::ORDER_TYPE_ASC);
+    $sort2 = new PicoSort('albumId', PicoSort::ORDER_TYPE_ASC);
     $sortable-&gt;addSortable($sort2);
 
     $spesification = createAlbumSpecification(new InputGet());
@@ -1966,121 +1966,580 @@ if(!empty($rowData))
 }</code></pre>
 <p><strong>Example 3</strong></p>
 <p>Song specification from <code>$_GET</code></p>
-<pre><code class="language-php">/**
- * Create Song specification
- * @param PicoRequestBase $inputGet
- * $@param array|null $additional
- * @return PicoSpecification
+<pre><code class="language-php">&lt;?php
+
+namespace MusicProductionManager\Utility;
+
+use MagicObject\Database\PicoPredicate;
+use MagicObject\Database\PicoSpecification;
+use MagicObject\Request\PicoRequestBase;
+
+/**
+ * Specification utility
  */
-public static function createSongSpecification($inputGet, $additional = null) //NOSONAR
+class SpecificationUtil
 {
-    $spesification = new PicoSpecification();
-
-    if($inputGet-&gt;getSongId() != "")
+    /**
+     * Create MIDI specification
+     * @param PicoRequestBase $name
+     * @return PicoSpecification
+     */
+    public static function createMidiSpecification($inputGet)
     {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('songId', $inputGet-&gt;getSongId());
-        $spesification-&gt;addAnd($predicate1);
-    }
+        $spesification = new PicoSpecification();
 
-    if($inputGet-&gt;getGenreId() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('genreId', $inputGet-&gt;getGenreId());
-        $spesification-&gt;addAnd($predicate1);
-    }
+        if($inputGet-&gt;getMidiId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('midiId', $inputGet-&gt;getMidiId());
+            $spesification-&gt;addAnd($predicate1);
+        }
 
-    if($inputGet-&gt;getAlbumId() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('albumId', $inputGet-&gt;getAlbumId());
-        $spesification-&gt;addAnd($predicate1);
-    }
+        if($inputGet-&gt;getGenreId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('genreId', $inputGet-&gt;getGenreId());
+            $spesification-&gt;addAnd($predicate1);
+        }
 
-    if($inputGet-&gt;getProducerId() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('producerId', $inputGet-&gt;getProducerId());
-        $spesification-&gt;addAnd($predicate1);
-    }
-
-    if($inputGet-&gt;getName() != "" || $inputGet-&gt;getTitle() != "")
-    {
-        $spesificationTitle = new PicoSpecification();
+        if($inputGet-&gt;getAlbumId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('albumId', $inputGet-&gt;getAlbumId());
+            $spesification-&gt;addAnd($predicate1);
+        }
 
         if($inputGet-&gt;getName() != "")
         {
             $predicate1 = new PicoPredicate();
             $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
-            $spesificationTitle-&gt;addOr($predicate1);
-
-            $predicate2 = new PicoPredicate();
-            $predicate2-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
-            $spesificationTitle-&gt;addOr($predicate2);
+            $spesification-&gt;addAnd($predicate1);
         }
+
         if($inputGet-&gt;getTitle() != "")
         {
-            $predicate3 = new PicoPredicate();
-            $predicate3-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
-            $spesificationTitle-&gt;addOr($predicate3);
-
-            $predicate4 = new PicoPredicate();
-            $predicate4-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
-            $spesificationTitle-&gt;addOr($predicate4);
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+            $spesification-&gt;addAnd($predicate1);
         }
 
-        $spesification-&gt;addAnd($spesificationTitle);
-    }
-
-    if($inputGet-&gt;getSubtitle() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;like('subtitle', PicoPredicate::generateCenterLike($inputGet-&gt;getSubtitle()));
-        $spesification-&gt;addAnd($predicate1);
-    }
-
-    if($inputGet-&gt;getVocalist() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('artistVocalist', $inputGet-&gt;getVocalist());
-        $spesification-&gt;addAnd($predicate1);
-    }
-
-    if($inputGet-&gt;getSubtitleComplete() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('subtitleComplete', $inputGet-&gt;getSubtitleComplete());
-        $spesification-&gt;addAnd($predicate1);
-    }
-
-    if($inputGet-&gt;getVocal() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('vocal', $inputGet-&gt;getVocal());
-        $spesification-&gt;addAnd($predicate1);
-    }
-
-    if($inputGet-&gt;getActive() != "")
-    {
-        $predicate1 = new PicoPredicate();
-        $predicate1-&gt;equals('active', $inputGet-&gt;getActive());
-        $spesification-&gt;addAnd($predicate1);
-    }
-
-    if(isset($additional) &amp;&amp; is_array($additional))
-    {
-        foreach($additional as $key=&gt;$value)
+        if($inputGet-&gt;getArtistVocalistId() != "")
         {
-            $predicate2 = new PicoPredicate();          
-            $predicate2-&gt;equals($key, $value);
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('artistVocalId', $inputGet-&gt;getArtistVocalistId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        return $spesification;
+    }
+
+    /**
+     * Create Song specification
+     * @param PicoRequestBase $inputGet
+     * $@param array|null $additional
+     * @return PicoSpecification
+     */
+    public static function createSongSpecification($inputGet, $additional = null) //NOSONAR
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet-&gt;getSongId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('songId', $inputGet-&gt;getSongId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getGenreId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('genreId', $inputGet-&gt;getGenreId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getAlbumId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('albumId', $inputGet-&gt;getAlbumId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getProducerId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('producerId', $inputGet-&gt;getProducerId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getProducerName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('producer.name', PicoPredicate::generateCenterLike($inputGet-&gt;getProducerName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getName() != "" || $inputGet-&gt;getTitle() != "")
+        {
+            $spesificationTitle = new PicoSpecification();
+
+            if($inputGet-&gt;getName() != "")
+            {
+                $predicate1 = new PicoPredicate();
+                $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+                $spesificationTitle-&gt;addOr($predicate1);
+
+                $predicate2 = new PicoPredicate();
+                $predicate2-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+                $spesificationTitle-&gt;addOr($predicate2);
+            }
+            if($inputGet-&gt;getTitle() != "")
+            {
+                $predicate3 = new PicoPredicate();
+                $predicate3-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+                $spesificationTitle-&gt;addOr($predicate3);
+
+                $predicate4 = new PicoPredicate();
+                $predicate4-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+                $spesificationTitle-&gt;addOr($predicate4);
+            }
+
+            $spesification-&gt;addAnd($spesificationTitle);
+        }
+
+        if($inputGet-&gt;getSubtitle() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('subtitle', PicoPredicate::generateCenterLike($inputGet-&gt;getSubtitle()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getVocalist() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('artistVocalist', $inputGet-&gt;getVocalist());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getVocalistName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('vocalist.name', PicoPredicate::generateCenterLike($inputGet-&gt;getVocalistName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getComposer() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('artistComposer', $inputGet-&gt;getComposer());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getComposerName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('composer.name', PicoPredicate::generateCenterLike($inputGet-&gt;getComposerName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getArranger() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('artistArranger', $inputGet-&gt;getArranger());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getArrangerName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('arranger.name', PicoPredicate::generateCenterLike($inputGet-&gt;getArrangerName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getSubtitleComplete() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('subtitleComplete', $inputGet-&gt;getSubtitleComplete());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getVocal() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('vocal', $inputGet-&gt;getVocal());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getActive() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('active', $inputGet-&gt;getActive());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if(isset($additional) &amp;&amp; is_array($additional))
+        {
+            foreach($additional as $key=&gt;$value)
+            {
+                $predicate2 = new PicoPredicate();          
+                $predicate2-&gt;equals($key, $value);
+                $spesification-&gt;addAnd($predicate2);
+            }
+        }
+
+        return $spesification;
+    }
+
+    /**
+     * Create Song specification
+     * @param PicoRequestBase $inputGet
+     * $@param array|null $additional
+     * @return PicoSpecification
+     */
+    public static function createReferenceSpecification($inputGet, $additional = null)
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet-&gt;getReferenceId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('referenceId', $inputGet-&gt;getReferenceId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getGenreId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('genreId', $inputGet-&gt;getGenreId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getAlbum() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('album', $inputGet-&gt;getAlbum());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getTitle() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getArtistId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('artistId', $inputGet-&gt;getArtistId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getActive() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('active', $inputGet-&gt;getActive());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if(isset($additional) &amp;&amp; is_array($additional))
+        {
+            foreach($additional as $key=&gt;$value)
+            {
+                $predicate2 = new PicoPredicate();          
+                $predicate2-&gt;equals($key, $value);
+                $spesification-&gt;addAnd($predicate2);
+            }
+        }
+
+        return $spesification;
+    }
+
+    /**
+     * Create Song specification
+     * @param PicoRequestBase $inputGet
+     * $@param array|null $additional
+     * @return PicoSpecification
+     */
+    public static function createSongDraftSpecification($inputGet, $additional = null) //NOSONAR
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet-&gt;getSongId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('songId', $inputGet-&gt;getSongId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getName() != "" || $inputGet-&gt;getTitle() != "")
+        {
+            $spesificationTitle = new PicoSpecification();
+
+            if($inputGet-&gt;getName() != "")
+            {
+                $predicate1 = new PicoPredicate();
+                $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+                $spesificationTitle-&gt;addOr($predicate1);
+
+                $predicate2 = new PicoPredicate();
+                $predicate2-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+                $spesificationTitle-&gt;addOr($predicate2);
+            }
+            if($inputGet-&gt;getTitle() != "")
+            {
+                $predicate3 = new PicoPredicate();
+                $predicate3-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+                $spesificationTitle-&gt;addOr($predicate3);
+
+                $predicate4 = new PicoPredicate();
+                $predicate4-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+                $spesificationTitle-&gt;addOr($predicate4);
+            }
+
+            $spesification-&gt;addAnd($spesificationTitle);
+        }
+
+        if($inputGet-&gt;getArtistId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('artistId', $inputGet-&gt;getArtistId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getActive() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('active', $inputGet-&gt;getActive());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getFrom() != "" &amp;&amp; $inputGet-&gt;getTo() != "")
+        {
+            $to = $inputGet-&gt;getTo();
+            if(strlen($to) &lt; 11)
+            {
+                $to = $to . " 23:59:59";
+            }
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;greaterThanOrEquals('timeCreate', $inputGet-&gt;getFrom());
+            $spesification-&gt;addAnd($predicate1);
+
+            $predicate2 = new PicoPredicate();
+            $predicate2-&gt;lessThanOrEquals('timeCreate', $to);
             $spesification-&gt;addAnd($predicate2);
         }
+        else if($inputGet-&gt;getFrom())
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;greaterThanOrEquals('timeCreate', $inputGet-&gt;getFrom());
+            $spesification-&gt;addAnd($predicate1);
+        }
+        else if($inputGet-&gt;getTo() != "")
+        {
+            $to = $inputGet-&gt;getTo();
+            if(strlen($to) &lt; 11)
+            {
+                $to = $to . " 23:59:59";
+            }
+            $predicate2 = new PicoPredicate();
+            $predicate2-&gt;lessThanOrEquals('timeCreate', $to);
+            $spesification-&gt;addAnd($predicate2);
+        }
+
+        if($inputGet-&gt;getLyric() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('lyric', PicoPredicate::generateCenterLike($inputGet-&gt;getLyric()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if(isset($additional) &amp;&amp; is_array($additional))
+        {
+            foreach($additional as $key=&gt;$value)
+            {
+                $predicate2 = new PicoPredicate();          
+                $predicate2-&gt;equals($key, $value);
+                $spesification-&gt;addAnd($predicate2);
+            }
+        }
+
+        return $spesification;
     }
 
-    return $spesification;
-}
+    /**
+     * Create album specification
+     * @param PicoRequestBase $inputGet
+     * @return PicoSpecification
+     */
+    public static function createAlbumSpecification($inputGet)
+    {
+        $spesification = new PicoSpecification();
 
-$orderMap = array(
+        if($inputGet-&gt;getAlbumId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('albumId', $inputGet-&gt;getAlbumId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getName() != "" || $inputGet-&gt;getTitle() != "")
+        {
+            $spesificationTitle = new PicoSpecification();
+
+            if($inputGet-&gt;getName() != "")
+            {
+                $predicate1 = new PicoPredicate();
+                $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+                $spesificationTitle-&gt;addOr($predicate1);
+
+                $predicate2 = new PicoPredicate();
+                $predicate2-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+                $spesificationTitle-&gt;addOr($predicate2);
+            }
+            if($inputGet-&gt;getTitle() != "")
+            {
+                $predicate3 = new PicoPredicate();
+                $predicate3-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+                $spesificationTitle-&gt;addOr($predicate3);
+
+                $predicate4 = new PicoPredicate();
+                $predicate4-&gt;like('title', PicoPredicate::generateCenterLike($inputGet-&gt;getTitle()));
+                $spesificationTitle-&gt;addOr($predicate4);
+            }
+
+            $spesification-&gt;addAnd($spesificationTitle);
+        }
+
+        if($inputGet-&gt;getProducerId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('producerId', $inputGet-&gt;getProducerId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        return $spesification;
+    }
+
+    /**
+     * Create genre specification
+     * @param PicoRequestBase $name
+     * @return PicoSpecification
+     */
+    public static function createGenreSpecification($inputGet)
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet-&gt;getGenreId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('genreId', $inputGet-&gt;getGenreId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        return $spesification;
+    }
+
+    /**
+     * Create user type specification
+     * @param PicoRequestBase $name
+     * @return PicoSpecification
+     */
+    public static function createUserTypeSpecification($inputGet)
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet-&gt;getUserTypeId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('userTypeId', $inputGet-&gt;getUserTypeId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        return $spesification;
+    }
+
+    /**
+     * Create artist specification
+     * @param PicoRequestBase $name
+     * @return PicoSpecification
+     */
+    public static function createArtistSpecification($inputGet)
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet-&gt;getArtistId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('artistId', $inputGet-&gt;getArtistId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        return $spesification;
+    }
+
+    /**
+     * Create user specification
+     * @param PicoRequestBase $name
+     * @return PicoSpecification
+     */
+    public static function createUserSpecification($inputGet)
+    {
+        $spesification = new PicoSpecification();
+
+        if($inputGet-&gt;getUserId() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;equals('userId', $inputGet-&gt;getUserId());
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getName() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('name', PicoPredicate::generateCenterLike($inputGet-&gt;getName()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getUsername() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('username', PicoPredicate::generateCenterLike($inputGet-&gt;getUsername()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        if($inputGet-&gt;getEmail() != "")
+        {
+            $predicate1 = new PicoPredicate();
+            $predicate1-&gt;like('email', PicoPredicate::generateCenterLike($inputGet-&gt;getEmail()));
+            $spesification-&gt;addAnd($predicate1);
+        }
+
+        return $spesification;
+    }
+}</code></pre>
+<p>Implementation</p>
+<pre><code class="language-php">$orderMap = array(
     'name'=&gt;'name', 
     'title'=&gt;'title', 
     'rating'=&gt;'rating',
@@ -2108,9 +2567,9 @@ $spesification = SpecificationUtil::createSongSpecification($inputGet);
 if($pagination-&gt;getOrderBy() == '')
 {
     $sortable = new PicoSortable();
-    $sort1 = new PicoSort('albumId', PicoSortable::ORDER_TYPE_DESC);
+    $sort1 = new PicoSort('albumId', PicoSort::ORDER_TYPE_DESC);
     $sortable-&gt;addSortable($sort1);
-    $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+    $sort2 = new PicoSort('trackNumber', PicoSort::ORDER_TYPE_ASC);
     $sortable-&gt;addSortable($sort2);
 }
 else
@@ -3906,8 +4365,8 @@ try
 
     $sortable = new PicoSortable();
 
-    $sortable-&gt;addSortable(new PicoSort("producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
-    $sortable-&gt;addSortable(new PicoSort("producer.producerId", PicoSortable::ORDER_TYPE_DESC));
+    $sortable-&gt;addSortable(new PicoSort("producer.birthDay", PicoSort::ORDER_TYPE_ASC));
+    $sortable-&gt;addSortable(new PicoSort("producer.producerId", PicoSort::ORDER_TYPE_DESC));
 
     $pageData = $album-&gt;findAll($spesification, null, $sortable, true);
     $rowData = $pageData-&gt;getResult();
@@ -4496,7 +4955,7 @@ $allowChangeArranger = UserUtil::isAllowSelectArranger($currentLoggedInUser);
     &lt;span&gt;Album&lt;/span&gt;
     &lt;select class="form-control" name="album_id" id="album_id"&gt;
         &lt;option value=""&gt;- All -&lt;/option&gt;
-        &lt;?php echo new PicoSelectOption(new Album(null, $database), array('value'=&gt;'albumId', 'label'=&gt;'name'), $inputGet-&gt;getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?&gt;
+        &lt;?php echo new PicoSelectOption(new Album(null, $database), array('value'=&gt;'albumId', 'label'=&gt;'name'), $inputGet-&gt;getAlbumId(), null, new PicoSortable('sortOrder', PicoSort::ORDER_TYPE_DESC)); ?&gt;
     &lt;/select&gt;
 &lt;/div&gt;
 &lt;div class="filter-group"&gt;
@@ -4596,9 +5055,9 @@ $spesification = SpecificationUtil::createSongSpecification($inputGet);
 if($pagination-&gt;getOrderBy() == '')
 {
 $sortable = new PicoSortable();
-$sort1 = new PicoSort('albumId', PicoSortable::ORDER_TYPE_DESC);
+$sort1 = new PicoSort('albumId', PicoSort::ORDER_TYPE_DESC);
 $sortable-&gt;addSortable($sort1);
-$sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+$sort2 = new PicoSort('trackNumber', PicoSort::ORDER_TYPE_ASC);
 $sortable-&gt;addSortable($sort2);
 }
 else

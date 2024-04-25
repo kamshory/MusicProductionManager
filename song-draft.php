@@ -211,7 +211,7 @@ $spesification = SpecificationUtil::createSongDraftSpecification($inputGet, arra
 if($pagination->getOrderBy() == '')
 {
   $sortable = new PicoSortable();
-  $sort1 = new PicoSort('timeCreate', PicoSortable::ORDER_TYPE_DESC);
+  $sort1 = new PicoSort('timeCreate', PicoSort::ORDER_TYPE_DESC);
   $sortable->addSortable($sort1);
 }
 else

@@ -134,15 +134,18 @@ class PicoSortable
      */
     private function createWithoutMapping()
     {
-        $ret = null;
+        $ret = "";
+        if(empty($this->sortable))
+        {
+            return "";
+        }
         $sorts = array();
         foreach($this->sortable as $sortable)
         {
             $columnName = $sortable->getSortBy();
             $sortType = $sortable->getSortType();             
             $sortBy = $columnName;
-            $sorts[] = $sortBy . " " . $sortType;
-            
+            $sorts[] = $sortBy . " " . $sortType;           
         }
         if(!empty($sorts))
         {

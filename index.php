@@ -726,7 +726,7 @@ $orderMap = array(
   'active'=>'active'
 );
   $defaultOrderBy = 'songId';
-  $defaultOrderType = PicoSortable::ORDER_TYPE_DESC;
+  $defaultOrderType = PicoSort::ORDER_TYPE_DESC;
   $pagination = new PicoPagination($cfg->getResultPerPage());
 
   $spesification = SpecificationUtil::createSongSpecification($inputGet);

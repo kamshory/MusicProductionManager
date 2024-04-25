@@ -33,7 +33,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     $album->findOneByAlbumId($inputGet->getAlbumId());
 
     $sortable = new PicoSortable();
-    $sort2 = new PicoSort('trackNumber', PicoSortable::ORDER_TYPE_ASC);
+    $sort2 = new PicoSort('trackNumber', PicoSort::ORDER_TYPE_ASC);
     $sortable->addSortable($sort2);
 
     $spesification = new PicoSpecification();
@@ -153,7 +153,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
                 <form class="albumselect" id="albumselect" action="">
                     <input type="hidden" name="action" value="play">
                     <select class="album-selector" name="album_id" id="album_id" onchange="albumselect.submit()">
-                        <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSortable::ORDER_TYPE_DESC)); ?>
+                        <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSort::ORDER_TYPE_DESC)); ?>
                     </select>
                 </form>
                 </div>
@@ -339,7 +339,7 @@ else
       <span>Producer</span>
       <select class="form-control" name="producer_id" id="producer_id">
           <option value="">- All -</option>
-          <?php echo new PicoSelectOption(new Producer(null, $database), array('value'=>'producerId', 'label'=>'name'), $inputGet->getProducerId(), null, new PicoSortable('name', PicoSortable::ORDER_TYPE_ASC)); ?>
+          <?php echo new PicoSelectOption(new Producer(null, $database), array('value'=>'producerId', 'label'=>'name'), $inputGet->getProducerId(), null, new PicoSortable('name', PicoSort::ORDER_TYPE_ASC)); ?>
       </select>
   </div>
   <div class="filter-group">
