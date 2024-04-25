@@ -49,8 +49,8 @@ class PicoDatabasePersistence // NOSONAR
     const VALUE_TRUE = "true";
     const VALUE_FALSE = "false";
 
-    const ORDER_ASC = "ASC";
-    const ORDER_DESC = "DESC";
+    const ORDER_ASC = "asc";
+    const ORDER_DESC = "desc";
 
     const MESSAGE_NO_RECORD_FOUND = "No record found";
     const MESSAGE_INVALID_FILTER = "Invalid filter";
@@ -59,6 +59,7 @@ class PicoDatabasePersistence // NOSONAR
     
     const NAMESPACE_SEPARATOR = "\\";
     const JOIN_TABLE_SUBFIX = "__jn__";
+    const MAX_LINE_LENGTH = 80;
     
     /**
      * Database connection
@@ -724,7 +725,8 @@ class PicoDatabasePersistence // NOSONAR
         {
             throw new NoUpdatableColumnException("No updatable column");
         }
-        return implode(", ", $sets);
+        //return implode(", ", $sets);
+        return $this->joinStringArray($sets, self::MAX_LINE_LENGTH, ", ");
     }
 
     /**
@@ -1202,7 +1204,8 @@ class PicoDatabasePersistence // NOSONAR
                 }
             }
         }
-        return implode(" ", $wheres);
+        //return implode(" ", $wheres);
+        return $this->joinStringArray($wheres, self::MAX_LINE_LENGTH);
     }
     
     /**
@@ -1381,8 +1384,53 @@ class PicoDatabasePersistence // NOSONAR
                 $arr = $this->addWhere($arr, $masterColumnMaps, $sqlQuery, $spec, $info);
             }
         }
-        $ret = implode(" ", $arr);
+        $ret = $this->joinStringArray($arr, self::MAX_LINE_LENGTH);
         return $this->trimWhere($ret);
+    }
+
+    /**
+     * Join array string with maximum length. If max is reached, it will create new line
+     *
+     * @param string[] $arr
+     * @param integer $max
+     * @param string $normalSplit
+     * @param string $maxSplit
+     * @return string
+     */
+    private function joinStringArray($arr, $max = 0, $normalSplit = " ", $maxSplit = " \r\n")
+    {
+        if($arr == null)
+        {
+            return "";
+        }
+        if($max == 0)
+        {
+            return implode($normalSplit, $arr);
+        }
+        $arr2 = array();
+        $idx = 0;
+        foreach($arr as $value)
+        {
+            if(!isset($arr2[$idx]))
+            {
+                $arr2[$idx] = array();
+            }
+            if(strlen(implode($normalSplit, $arr2[$idx])) + strlen($value) < $max)
+            {
+                $arr2[$idx][] = $value;
+            }
+            else
+            {
+                $idx++;
+                $arr2[$idx][] = $value;
+            }         
+        }
+        $arr3 = array();
+        foreach($arr2 as $value)
+        {
+            $arr3[] = implode($normalSplit, $value);
+        }
+        return implode($maxSplit, $arr3);
     }
     
     /**
@@ -1493,7 +1541,8 @@ class PicoDatabasePersistence // NOSONAR
                     $orderBys[] = $pKeyCol." ".strtolower($order);
                 }
             }
-            return implode(", ", $orderBys);
+            //return implode(", ", $orderBys);
+            return $this->joinStringArray($orderBys, self::MAX_LINE_LENGTH, ", ");
         }
         else
         {
@@ -1551,7 +1600,8 @@ class PicoDatabasePersistence // NOSONAR
         }
         if(!empty($sorts))
         {
-            $ret = implode(", ", $sorts);
+            //$ret = implode(", ", $sorts);
+            $ret = $this->joinStringArray($sorts, self::MAX_LINE_LENGTH, ", ");
         }
         return $ret;
     }
@@ -1611,7 +1661,8 @@ class PicoDatabasePersistence // NOSONAR
                 $arr[] = $column . " " . $sortOrder->getSortType();
             }
         }
-        return implode(", ", $arr);
+        //return implode(", ", $arr);
+        return $this->joinStringArray($arr, self::MAX_LINE_LENGTH, ", ");
     }
     
     /**

@@ -353,17 +353,17 @@ class SpecificationUtil
                 $to = $to . " 23:59:59";
             }
             $predicate1 = new PicoPredicate();
-            $predicate1->greaterThanOrEquals('time_create', $inputGet->getFrom());
+            $predicate1->greaterThanOrEquals('timeCreate', $inputGet->getFrom());
             $spesification->addAnd($predicate1);
 
             $predicate2 = new PicoPredicate();
-            $predicate2->lessThanOrEquals('time_create', $to);
+            $predicate2->lessThanOrEquals('timeCreate', $to);
             $spesification->addAnd($predicate2);
         }
         else if($inputGet->getFrom())
         {
             $predicate1 = new PicoPredicate();
-            $predicate1->greaterThanOrEquals('time_create', $inputGet->getFrom());
+            $predicate1->greaterThanOrEquals('timeCreate', $inputGet->getFrom());
             $spesification->addAnd($predicate1);
         }
         else if($inputGet->getTo() != "")
@@ -374,7 +374,7 @@ class SpecificationUtil
                 $to = $to . " 23:59:59";
             }
             $predicate2 = new PicoPredicate();
-            $predicate2->lessThanOrEquals('time_create', $to);
+            $predicate2->lessThanOrEquals('timeCreate', $to);
             $spesification->addAnd($predicate2);
         }
 

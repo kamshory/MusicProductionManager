@@ -2367,6 +2367,67 @@ class Genre extends MagicObject
 }
 ```
 
+To join `song` and `album`, we create property
+
+```php
+	/**
+	 * Album
+	 * @JoinColumn(name="album_id")
+	 * @Label(content="Album")
+	 * @var Album
+	 */
+	protected $album;
+```
+
+Because `album_id` is primary key of table `album`, we not need to write reference column name.
+
+To join `song` and `artist`, we create property
+
+```php
+	**
+	 * Artist Vocal
+	 * 
+	 * @JoinColumn(name="artist_vocalist")
+	 * @Label(content="Artist Vocal")
+	 * @var Artist
+	 */
+	protected $vocalist;
+```
+
+Primary key of table `artist` is `artist_id`, not `artist_vocalist`. We should write `referenceColumnName` in annotation `@JoinColumn`.
+
+```php
+	**
+	 * Artist Vocal
+	 * 
+	 * @JoinColumn(name="artist_vocalist" referenceColumnName="artist_id")
+	 * @Label(content="Artist Vocal")
+	 * @var Artist
+	 */
+	protected $vocalist;
+```
+
+If entity miss the `referenceColumnName`, MagicObject will search the primary key of table `artist` and will use first primary key. Process will run slower. We are recommended to always write `referenceColumnName` to make it run faster.
+
+```php
+	/**
+	 * Album
+	 * @JoinColumn(name="album_id"  referenceColumnName="artist_id")
+	 * @Label(content="Album")
+	 * @var Album
+	 */
+	protected $album;
+
+	/**
+	 * Artist Vocal
+	 * 
+	 * @JoinColumn(name="artist_vocalist" referenceColumnName="artist_id")
+	 * @Label(content="Artist Vocal")
+	 * @var Artist
+	 */
+	protected $vocalist;
+```
+
 ### Filter and Order by Join Columns
 
 On real application, user may be filter and order data by column on join table. If the user in the column contains a dot (.) character, then MagicObject will create a select query with a join instead of a regular select query so that filters and orders can work as they should. This way, the process may run slower than with a regular select query.
@@ -2789,42 +2850,56 @@ try
 	$spesification = new PicoSpecification();	
 	
 	$predicate1 = new PicoPredicate();
-	$predicate1->like('EntityAlbum.title', '%Album%');
+	// for entity album, just use the colum name
+	$predicate1->like('title', '%Album%');
 	$spesification->addAnd($predicate1);
 
 	$predicate2 = new PicoPredicate();
-	$predicate2->lessThan('Producer.birthDay', '2001-01-01');
+	$predicate2->lessThan('producer.birthDay', '2001-01-01');
 	$spesification->addAnd($predicate2);
-		
+
 	$predicate3 = new PicoPredicate();
-	$predicate3->equals('EntityAlbum.active', true);
+	// type releaseDate instead of release_date
+	// because MagicObject use entyty property name, not real table column name 
+	$predicate3->greaterThan('releaseDate', '2020-01-01');
 	$spesification->addAnd($predicate3);
+
+
+	$predicate4 = new PicoPredicate();
+	$predicate4->equals('active', true);
+	$spesification->addAnd($predicate4);
+	
+	$predicate4 = new PicoPredicate();
+	$predicate4->equals('asDraft', false);
+	$spesification->addAnd($predicate4);
 	
 	$sortable = new PicoSortable();
 	
-	$sortable->addSortable(new PicoSort("Producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
-	$sortable->addSortable(new PicoSort("Producer.producerId", PicoSortable::ORDER_TYPE_DESC));
+	$sortable->addSortable(new PicoSort("producer.birthDay", PicoSortable::ORDER_TYPE_ASC));
+	$sortable->addSortable(new PicoSort("producer.producerId", PicoSortable::ORDER_TYPE_DESC));
 	
 	
 	$pageData = $album->findAll($spesification, null, $sortable, true);
 	$rowData = $pageData->getResult();
 	foreach($rowData as $alb)
 	{
-		echo $alb."\r\n\r\n";
+		//echo $alb."\r\n\r\n";
 	}
 	
 	$pagable = new PicoPagable(new PicoPage(1, 20));
 	echo $album->findAllQuery($spesification, $pagable, $sortable, true);
 	/**
-	select album.*
-	from album
-	left join producer producer__jn__1
-	on producer__jn__1.producer_id = album.producer_id
-	where album.title like '%Album%' and producer__jn__1.birth_day < '2001-01-01' and album.active = true
-	order by producer__jn__1.birth_day asc, producer__jn__1.producer_id desc
-	limit 0, 20
-	*/
-	
+	 * 	select album.*
+		from album
+		left join producer producer__jn__1
+		on producer__jn__1.producer_id = album.producer_id
+		where album.title like '%Album%'
+		and producer__jn__1.birth_day < '2001-01-01'
+		and album.release_date > '2020-01-01' and album.active = true
+		and album.as_draft = false
+		order by producer__jn__1.birth_day asc, producer__jn__1.producer_id desc
+		limit 0, 20
+	 */
 	echo "\r\n-----\r\n";
 	echo $spesification;
 	echo "\r\n-----\r\n";
@@ -2837,3 +2912,11 @@ catch(Exception $e)
 	echo $e->getMessage();
 }
 ```
+
+```php
+	$predicate2 = new PicoPredicate();
+	$predicate2->lessThan('producer.birthDay', '2001-01-01');
+	$spesification->addAnd($predicate2);
+```
+
+`producer` is property of entity that join with other entity, not table name. `birthDay` and `producerId` are is property of entity `producer`, not column name of table `producer`.
