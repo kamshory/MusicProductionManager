@@ -89,13 +89,14 @@ class PicoPageData
     {
         $this->startTime = $startTime;
         $this->result = $result;
+        $countResult = count($result);
         if($totalResult != 0)
         {
             $this->totalResult = $totalResult;
         }
         else
         {
-            $this->totalResult = count($result);
+            $this->totalResult = $countResult;
         }
         if($pagable != null && $pagable instanceof PicoPagable)
         {
@@ -106,7 +107,7 @@ class PicoPageData
         {
             $this->pageNumber = 1;
             $this->totalPage = 1;
-            $this->pageSize = $totalResult;
+            $this->pageSize = $countResult;
         }
         $this->endTime = microtime(true);
         $this->executionTime = $this->endTime - $this->startTime;
