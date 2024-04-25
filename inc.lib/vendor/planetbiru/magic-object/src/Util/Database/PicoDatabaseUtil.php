@@ -120,4 +120,77 @@ class PicoDatabaseUtil
             return $value;
         }
     }
+    
+    /**
+	 * Escape value
+	 * @var mixed
+	 * @return string
+	 */
+	public static function escapeValue($value)
+	{
+		if($value === null)
+		{
+			// null
+			$ret = 'null';
+		}
+		else if(is_string($value))
+		{
+			// escape the value
+			$ret = "'".self::escapeSQL($value)."'";
+		}
+		else if(is_bool($value))
+		{
+			// true or false
+			$ret = $value?'true':'false';
+		}
+		else if(is_numeric($value))
+		{
+			// convert number to string
+			$ret = $value."";
+		}
+		else if(is_array($value) || is_object($value))
+		{
+			// encode to JSON and escapethe value
+			$ret = "'".self::escapeSQL(json_encode($value))."'";
+		}
+		else
+		{
+			// force convert to string and escapethe value
+			$ret = "'".self::escapeSQL($value)."'";
+		}
+		
+		return $ret;
+	}
+    
+    /**
+     * Escape SQL
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function escapeSQL($value)
+    {
+        return addslashes($value);
+    }
+    
+    /**
+     * Trim WHERE
+     *
+     * @param string $where
+     * @return string
+     */
+    public static function trimWhere($where)
+    {
+        // DO NOT EDIT THIS CONSTANT
+        if(stripos($where, "(1=1) or ") === 0)
+        {
+            $where = substr($where, 9);
+        }
+        // DO NOT EDIT THIS CONSTANT
+        if(stripos($where, "(1=1) and ") === 0)
+        {
+            $where = substr($where, 10);
+        }
+        return $where;
+    }
 }

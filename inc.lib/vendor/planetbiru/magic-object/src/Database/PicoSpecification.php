@@ -2,7 +2,7 @@
 
 namespace MagicObject\Database;
 
-use MagicObject\Util\PicoStringUtil;
+use MagicObject\Util\Database\PicoDatabaseUtil;
 
 class PicoSpecification
 {
@@ -203,7 +203,7 @@ class PicoSpecification
                 $field = $entityField->getField();
                 $entityName = $entityField->getEntity();
                 $column = ($entityName == null) ? $field : $entityName.".".$field;
-                $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . $this->escapeValue($spec->getValue());               
+                $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue());               
             }
             else if($spec instanceof PicoSpecification)
             {
@@ -234,82 +234,10 @@ class PicoSpecification
                 $field = $entityField->getField();
                 $entityName = $entityField->getEntity();
                 $column = ($entityName == null) ? $field : $entityName.".".$field;
-                $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . $this->escapeValue($spec->getValue());      
+                $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue());      
             }
         }
-        $ret = implode(" ", $arr);
-        return $this->trimWhere($ret);
-    }
-    
-    /**
-	 * Escape value
-	 * @var mixed
-	 * @return string
-	 */
-	public function escapeValue($value)
-	{
-		if($value === null)
-		{
-			// null
-			$ret = 'null';
-		}
-		else if(is_string($value))
-		{
-			// escape the value
-			$ret = "'".$this->escapeSQL($value)."'";
-		}
-		else if(is_bool($value))
-		{
-			// true or false
-			$ret = $value?'true':'false';
-		}
-		else if(is_numeric($value))
-		{
-			// convert number to string
-			$ret = $value."";
-		}
-		else if(is_array($value) || is_object($value))
-		{
-			// encode to JSON and escapethe value
-			$ret = "'".$this->escapeSQL(json_encode($value))."'";
-		}
-		else
-		{
-			// force convert to string and escapethe value
-			$ret = "'".$this->escapeSQL($value)."'";
-		}
-		
-		return $ret;
-	}
-    
-    /**
-     * Escape SQL
-     *
-     * @param string $value
-     * @return string
-     */
-    private function escapeSQL($value)
-    {
-        return addslashes($value);
-    }
-    
-    /**
-     * Trim WHERE
-     *
-     * @param string $where
-     * @return string
-     */
-    private function trimWhere($where)
-    {
-        if(stripos($where, "(1=1) or ") === 0)
-        {
-            $where = substr($where, 9);
-        }
-        if(stripos($where, "(1=1) and ") === 0)
-        {
-            $where = substr($where, 10);
-        }
-        return $where;
+        return PicoDatabaseUtil::trimWhere(implode(" ", $arr));
     }
     
     /**

@@ -1554,23 +1554,23 @@ class PicoDatabasePersistence // NOSONAR
      * Create sort by
      *
      * @param PicoSortable $order
-     * @param PicoTableInfo $tableInfo
+     * @param PicoTableInfo $info
      * @return string
      */
-    public function createOrderByQuery($order, $tableInfo = null)
+    public function createOrderByQuery($order, $info = null)
     {
         if($order->getSortable() == null || !is_array($order->getSortable()) || empty($order->getSortable()))
         {
             return null;
         }
         $ret = null;
-        if($tableInfo == null)
+        if($info == null)
         {
             $ret = $this->createWithoutMapping($order);
         }
         else
         {
-            $ret = $this->createWithMapping($order, $tableInfo);
+            $ret = $this->createWithMapping($order, $info);
         }
         return $ret;
     }

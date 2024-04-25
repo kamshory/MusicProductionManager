@@ -4,8 +4,6 @@ namespace MagicObject\Database;
 
 class PicoSortable
 {
-    const ORDER_TYPE_ASC = "asc";
-    const ORDER_TYPE_DESC = "desc";
     /**
      * Sortable
      *
@@ -62,7 +60,7 @@ class PicoSortable
         if($argc % 2 == 1)
         {
             // set order type ASC
-            $sortType = self::ORDER_TYPE_ASC;
+            $sortType = PicoSort::ORDER_TYPE_ASC;
             $lastOrder = $this->createSortable($sortBy, $sortType);
             $this->sortable[count($this->sortable) - 1] = $lastOrder;
         }
