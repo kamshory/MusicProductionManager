@@ -2,6 +2,7 @@
 
 use MagicObject\Database\PicoPagable;
 use MagicObject\Database\PicoPage;
+use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Pagination\PicoPagination;
 use MagicObject\Request\PicoFilterConstant;

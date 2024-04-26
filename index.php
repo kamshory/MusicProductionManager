@@ -4,6 +4,7 @@ use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Database\PicoPagable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoPredicate;
+use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
 use MagicObject\Pagination\PicoPagination;
