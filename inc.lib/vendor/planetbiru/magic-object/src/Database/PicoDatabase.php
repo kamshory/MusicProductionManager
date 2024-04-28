@@ -100,6 +100,13 @@ class PicoDatabase //NOSONAR
 			{
 				throw new InvalidDatabaseConfiguration("Database username may not be empty. Please check your database configuration!");
 			}
+
+			$initialQueries = "SET time_zone = '$timeZoneOffset';";
+			if($this->databaseCredentials->getDriver() == PicoDatabaseType::DATABASE_TYPE_POSTGRESQL && $this->databaseCredentials->getDatabaseShema() != null  && $this->databaseCredentials->getDatabaseShema() != "")
+			{
+				$initialQueries .= "SET search_path TO ".$this->databaseCredentials->getDatabaseShema();
+			}
+
 			
 			$this->databaseType = $this->databaseCredentials->getDriver();
 			$this->databaseConnection = new PDO(
@@ -107,7 +114,7 @@ class PicoDatabase //NOSONAR
 				$this->databaseCredentials->getUsername(),
 				$this->databaseCredentials->getPassword(),
 				array(
-					PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '$timeZoneOffset';",
+					PDO::MYSQL_ATTR_INIT_COMMAND => $initialQueries,
 					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 					PDO::MYSQL_ATTR_FOUND_ROWS => true
 				)
@@ -119,6 +126,7 @@ class PicoDatabase //NOSONAR
 		catch (PDOException $e) 
 		{
 			// Do nothing
+			echo $e->getMessage();
 		}
 		return $connected;
 	}
@@ -150,7 +158,7 @@ class PicoDatabase //NOSONAR
 			$emptyValue .= $emptyDriver ? "{driver}" : "";
 			$emptyValue .= $emptyHost ? "{host}" : "";
 			$emptyValue .= $emptyPort ? "{port}" : "";
-			$emptyValue .= $emptyName ? "{name}" : "";
+			$emptyValue .= $emptyName ? "{database_name}" : "";
 			throw new InvalidDatabaseConfiguration("Invalid database configuration. $emptyValue. Please check your database configuration!");
 		}
 		return $this->databaseCredentials->getDriver() . ':host=' . $this->databaseCredentials->getHost() . '; port=' . ((int) $this->databaseCredentials->getPort()) . '; dbname=' . $this->databaseCredentials->getDatabaseName();

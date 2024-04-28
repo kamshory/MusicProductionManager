@@ -3,8 +3,6 @@ namespace MagicObject\Database;
 
 class PicoDatabaseQueryBuilder // NOSONAR
 {
-
-	
 	/**
 	 * Buffer
 	 *
@@ -50,7 +48,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Database
 	 *
-	 * @param mixed $databaseType Database type. See PicoDatabaseType class
+	 * @param PicoDatabase|string $databaseType Database type. See PicoDatabaseType class
 	 */
 	public function __construct($databaseType)
 	{
@@ -58,7 +56,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		{
 			$databaseType->getDatabaseType();
 		}
-		else
+		else if(is_string($databaseType))
 		{
 			$this->databaseType = $databaseType;
 		}
@@ -166,8 +164,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 				$vals[$key] = $this->escapeValue($val);
 			}
 			$buffer = "(".implode(", ", $vals).")";
-			$values = $buffer;
-			
+			$values = $buffer;			
 		}
 		else
 		{

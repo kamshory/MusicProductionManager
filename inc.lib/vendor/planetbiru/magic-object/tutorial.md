@@ -6263,6 +6263,12 @@ echo $userType->labelAdminCreate();
 
 ## Database Query Builder
 
+Database Query Builder is a feature for creating object-based database queries. The output of the Database Query Builder is a query that can be directly executed by the database used.
+
+Database Query Builder is actually designed for all relational databases but is currently only available in two languages, namely MySQL and PostgreSQL. MagicObject internally uses the Database Query Builder to create queries based on given methods and parameters.
+
+Database Query Builder is required to create native queries that cannot be created automatically by MagicObject. Apart from that, Database Query Builder is also used for performance reasons where native queries will run faster because they only retrieve the desired columns and do not perform unnecessary joins.
+
 ```php
 <?php
 
@@ -6336,6 +6342,8 @@ values('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')
 */
 ```
 
+This way, `('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')` will be executed by the database as is. You have to escape them manually before use it.
+
 **into($query)**
 
 `into($query)` is method for `INTO`
@@ -6380,6 +6388,8 @@ values('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')
 */
 ```
 
+This way, `('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')` will be executed by the database as is. You have to escape them manually before use it.
+
 Example 2:
 
 ```php
@@ -6395,6 +6405,8 @@ insert into song
 values('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')
 */
 ```
+
+This way, `'123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12'` will be escaped before being executed by the database. You don't need to escape it first.
 
 Example 3:
 
@@ -6412,6 +6424,9 @@ values('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')
 */
 ```
 
+This way, `'123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12'` will be executed by the database as is. You have to escape them manually before use it.
+
+
 Example 4:
 
 ```php
@@ -6427,6 +6442,9 @@ insert into song
 values('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')
 */
 ```
+
+This way, `'123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12'` will be executed by the database as is. You have to escape them manually before use it.
+
 
 Example 5:
 
@@ -6449,6 +6467,9 @@ insert into song
 values('123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12')
 */
 ```
+
+This way, `'123456', 'Lagu 0001', 'Membendung Rindu', '2024-03-03 10:11:12'` will be escaped before being executed by the database. You don't need to escape it first.
+
 
 **select($query)**
 
@@ -6477,23 +6498,26 @@ $queryBuilder = new PicoDatabaseQueryBuilder($database);
 $queryBuilder->newQuery()
     ->select("*")
     ->from("song")
-    ->where("time_create > '2023-01-00' ");
+    ->where("time_create > '2023-01-01' ");
 /*
 select *
 from song
-where time_create > '2023-01-00'
+where time_create > '2023-01-01'
 */
 
 $queryBuilder->newQuery()
     ->detele()
     ->from("song")
-    ->where("time_create > '2023-01-00' ");
+    ->where("time_create > '2023-01-01' ");
 /*
 delete
 from song
-where time_create > '2023-01-00'
+where time_create > '2023-01-01'
 */
 ```
+
+This way, `'2023-01-01'` will be executed by the database as is. You have to escape them manually before use it.
+
 
 Example 2:
 
@@ -6502,13 +6526,16 @@ $queryBuilder = new PicoDatabaseQueryBuilder($database);
 $queryBuilder->newQuery()
     ->select("song_id, name as song_code, title, time_create")
     ->from("song")
-    ->where("time_create > '2023-01-00' ");
+    ->where("time_create > '2023-01-01' ");
 /*
 select song_id, name as song_code, title, time_create
 from song
-where time_create > '2023-01-00'
+where time_create > '2023-01-01'
 */
 ```
+
+This way, `'2023-01-01'` will be executed by the database as is. You have to escape them manually before use it.
+
 
 Example 3:
 
@@ -6517,23 +6544,26 @@ $queryBuilder = new PicoDatabaseQueryBuilder($database);
 $queryBuilder->newQuery()
     ->select("song_id, name as song_code, title, time_create")
     ->from("song")
-    ->where("time_create > ? ", '2023-01-00');
+    ->where("time_create > ? ", '2023-01-01');
 /*
 select song_id, name as song_code, title, time_create
 from song
-where time_create > '2023-01-00'
+where time_create > '2023-01-01'
 */
 
 $queryBuilder->newQuery()
     ->delete()
     ->from("song")
-    ->where("time_create > ? ", '2023-01-00');
+    ->where("time_create > ? ", '2023-01-01');
 /*
 delete
 from song
-where time_create > '2023-01-00'
+where time_create > '2023-01-01'
 */
 ```
+
+This way, `'2023-01-01'` will be escaped before being executed by the database. You don't need to escape it first.
+
 
 Example 4:
 
@@ -6589,6 +6619,9 @@ on album.album_id = song.album_id
 where song.active = true
 */
 ```
+
+This way, `$active` will be escaped before being executed by the database. You don't need to escape it first.
+
 ## Upload File
 
 Uploading lots of files with arrays is difficult for some developers, especially novice developers. There is a significant difference between uploading a single file and multiple files.

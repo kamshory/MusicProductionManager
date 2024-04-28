@@ -197,7 +197,7 @@ class FileUtilPdf
             }
             
             $lyric = self::joinLyric($jsonObj);           
-            $lyric = PicoStringUtil::fixingCariageReturn($lyric);
+            $lyric = StringUtil::fixingCariageReturn($lyric);
             $lyric = trim($lyric, "\r\n");
             
             $fontName = self::LYRIC_FONT_NAME;

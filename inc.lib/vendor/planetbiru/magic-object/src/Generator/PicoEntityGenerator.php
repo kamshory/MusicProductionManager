@@ -41,19 +41,36 @@ class PicoEntityGenerator
     private $tableName = "";
     
     /**
+     * Entity name
+     *
+     * @var string
+     */
+    private $entityName = null;
+    
+    /**
+     * Prettify
+     *
+     * @var boolean
+     */
+    private $prettify = false;
+    
+    /**
      * Constructor
      *
      * @param PicoDatabase $database
      * @param string $baseDir
-     * @param string $baseNamespace
      * @param string $tableName
+     * @param string $baseNamespace
+     * @param string $entityName
+     * @param boolean $prettify
      */
-    public function __construct($database, $baseDir, $baseNamespace, $tableName)
+    public function __construct($database, $baseDir, $tableName, $baseNamespace, $entityName = null)
     {
         $this->database = $database;
         $this->baseDir = $baseDir;
         $this->baseNamespace = $baseNamespace;
         $this->tableName = $tableName;
+        $this->entityName = $entityName;
     }
     
     /**
@@ -253,14 +270,23 @@ class PicoEntityGenerator
     {
         $typeMap = $this->getTypeMap();
         $picoTableName = $this->tableName;
-
-        $className = ucfirst(PicoStringUtil::camelize($picoTableName));
+        if($this->entityName != null)
+        {
+            $className = $this->entityName;
+        }
+        else
+        {
+            $className = ucfirst(PicoStringUtil::camelize($picoTableName));
+        }
         $fileName = $this->baseNamespace."/".$className;
         $path = $this->baseDir."/".$fileName.".php";
         $path = str_replace("\\", "/", $path);
         
         $dir = dirname($path);
-        mkdir($dir, 0755, true);
+        if(!file_exists($dir))
+        {
+            mkdir($dir, 0755, true);
+        }
 
         $rows = PicoColumnGenerator::getColumnList($this->database, $picoTableName);
 
@@ -280,6 +306,8 @@ class PicoEntityGenerator
                 $attrs[] = $prop;
             }
         }
+        
+        $prettify = $this->prettify ? 'true' : 'false';
 
         $uses = array();
         $uses[] = "";
@@ -291,8 +319,11 @@ namespace '.$this->baseNamespace.';
 use MagicObject\MagicObject;'.implode("\r\n", $uses).'
 
 /**
+ * '.$className.' is entity of table '.$picoTableName.'. You can join this entity to other entity using annotation JoinColumn. 
+ * Visit https://github.com/Planetbiru/MagicObject/blob/main/tutorial.md#entity
+ * 
  * @Entity
- * @JSON(property-naming-strategy=SNAKE_CASE)
+ * @JSON(property-naming-strategy=SNAKE_CASE, prettify='.$prettify.')
  * @Table(name="'.$picoTableName.'")
  */
 class '.$className.' extends MagicObject

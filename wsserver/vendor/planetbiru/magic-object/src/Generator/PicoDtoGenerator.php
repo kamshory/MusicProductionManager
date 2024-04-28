@@ -25,7 +25,7 @@ class PicoDtoGenerator
      *
      * @var string
      */
-    private $baseNamespace = "";
+    private $baseNamespaceDto = "";
 
     /**
      * Table name
@@ -35,20 +35,54 @@ class PicoDtoGenerator
     private $tableName = "";
     
     /**
+     * Entity name
+     *
+     * @var string
+     */
+    private $entityName = null;
+    
+    /**
+     * DTO name
+     *
+     * @var string
+     */
+    private $dtoName = null;
+    
+    /**
+     * Base name entity
+     *
+     * @var string
+     */
+    private $baseNamespaceEntity = null;
+    
+    /**
+     * Prettify
+     *
+     * @var boolean
+     */
+    private $prettify = false;
+    
+    /**
      * Constructor
      *
      * @param PicoDatabase $database
      * @param string $baseDir
-     * @param string $baseNamespace
      * @param string $tableName
+     * @param string $baseNamespaceDto
+     * @param string $dtoName
+     * @param string $baseNamespaceEntity
+     * @param string $entityName
+     * @param boolean $prettify
      */
-    public function __construct($database, $baseDir, $baseNamespace, $tableName)
+    public function __construct($database, $baseDir, $tableName, $baseNamespaceDto, $dtoName, $baseNamespaceEntity, $entityName = null)
     {
-        $tableName = str_replace(array('"', "'"), "", $tableName);
         $this->database = $database;
         $this->baseDir = $baseDir;
-        $this->baseNamespace = $baseNamespace;
         $this->tableName = $tableName;
+        $this->baseNamespaceDto = $baseNamespaceDto;
+        $this->dtoName = $dtoName;
+        $this->baseNamespaceEntity = $baseNamespaceEntity;
+        $this->entityName = $entityName;
     }
     
     /**
@@ -131,17 +165,32 @@ class PicoDtoGenerator
      */
     private function createValueOf($picoTableName, $rows)
     {
-        $className = ucfirst(PicoStringUtil::camelize($picoTableName));
+        if($this->entityName != null)
+        {
+            $className = $this->entityName;
+        }
+        else
+        {
+            $className = ucfirst(PicoStringUtil::camelize($picoTableName))."";
+        }
+        if($this->dtoName != null)
+        {
+            $dtoName = $this->dtoName;
+        }
+        else
+        {
+            $dtoName = ucfirst(PicoStringUtil::camelize($picoTableName))."Dto";
+        }
         $str = "";
         $str .="    /**\r\n";
-        $str .="     * Construct $className"."Dto from $className and not copy other properties\r\n";
+        $str .="     * Construct $dtoName"." from $className and not copy other properties\r\n";
         $str .="     * \r\n";
         $str .="     * @param $className \$input\r\n";
         $str .="     * @return self\r\n";
         $str .="     */\r\n";
         $str .="    public static function valueOf(\$input)\r\n";
         $str .="    {\r\n";
-        $str .="        \$output = new $className"."Dto();\r\n";
+        $str .="        \$output = new $dtoName"."();\r\n";
 
         foreach($rows as $row)
         {
@@ -193,11 +242,24 @@ class PicoDtoGenerator
     {
         $typeMap = $this->getTypeMap();
         $picoTableName = $this->tableName;
-        $className = ucfirst(PicoStringUtil::camelize($picoTableName));
-        $fileName = $this->baseNamespace."/".$className;
-        $path = $this->baseDir."/".$fileName."Dto.php";
+        if($this->dtoName != null)
+        {
+            $classNameDto = $this->dtoName;
+        }
+        else
+        {
+            $classNameDto = ucfirst(PicoStringUtil::camelize($picoTableName))."Dto";
+        }
+        $fileName = $this->baseNamespaceDto."/".$classNameDto;
+        $path = $this->baseDir."/".$fileName.".php";
         $path = str_replace("\\", "/", $path);
 
+        $dir = dirname($path);
+        if(!file_exists($dir))
+        {
+            mkdir($dir, 0755, true);
+        }
+        
         $rows = PicoColumnGenerator::getColumnList($this->database, $picoTableName);
         
         $attrs = [];
@@ -215,19 +277,26 @@ class PicoDtoGenerator
             $attrs[] = $prop;
         }
 
-        $uses = array();
+        $prettify = $this->prettify ? 'true' : 'false';
+        $entityName = $this->entityName;
         $uses[] = "";
+        
+        $used = "use ".$this->baseNamespaceEntity."\\".$this->entityName.";";
+        
         $classStr = '<?php
 
-namespace '.$this->baseNamespace.';
+namespace '.$this->baseNamespaceDto.';
 
 use MagicObject\\SetterGetter;
-use MusicProductionManager\\Data\\Entity\\'.$className.';
+'.$used.'
 
 /**
- * @JSON(property-naming-strategy=SNAKE_CASE)
+ * '.$classNameDto.' is Data Transfer Object to be transfer '.$entityName.' via API or to be serializes into file or database.
+ * Visit https://github.com/Planetbiru/MagicObject/blob/main/tutorial.md
+ * 
+ * @JSON(property-naming-strategy=SNAKE_CASE, prettify='.$prettify.')
  */
-class '.$className.'Dto extends SetterGetter
+class '.$classNameDto.' extends SetterGetter
 {
 '.implode("\r\n", $attrs).'
 }';

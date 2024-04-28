@@ -59,6 +59,80 @@ class PicoDatabaseDump
             return "";
         }
     }
+    /**
+     * Get entity table info 
+     *
+     * @param MagicObject $entity
+     * @return PicoTableInfo|null
+     */
+    public function getTableInfo($entity)
+    {
+        if($entity != null)
+        {
+            return $entity->tableInfo();
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    /**
+     * Update query alter table add column
+     *
+     * @param string $query
+     * @param string $lastColumn
+     * @param string $databaseType
+     * @return string
+     */
+    public function updateQueryAlterTableAddColumn($query, $lastColumn, $databaseType)
+    {
+        if($lastColumn != null && ($databaseType == PicoDatabaseType::DATABASE_TYPE_MYSQL || $databaseType == PicoDatabaseType::DATABASE_TYPE_MARIADB))
+        {
+            $query = " AFTER ".$lastColumn;
+        }
+        return $query;
+    }
+    
+    /**
+     * Create query ALTER TABLE ADD COLUMN
+     *
+     * @param MagicObject $entity
+     * @return string[]
+     */
+    public function createAlterTableAdd($entity)
+    {
+        $tableInfo = $this->getTableInfo($entity);
+        $queryAlter = array();
+        if($tableInfo != null)
+        {
+            $dbColumnNames = array();
+            
+            $database = $entity->currentDatabase();
+            $rows = PicoColumnGenerator::getColumnList($database, $tableInfo->getTableName());
+
+            if(is_array($rows))
+            {
+                foreach($rows as $row)
+                {
+                    $columnName = $row['Field'];
+                    $dbColumnNames[] = $columnName;
+                }
+            }
+            $lastColumn = null;
+            foreach($tableInfo->getColumns() as $entityColumn)
+            {
+                if(!in_array($entityColumn['name'], $dbColumnNames))
+                {
+                    $query = "ALTER TABLE ADD COLUMN ".$entityColumn['name']." ".$entityColumn['type'];
+                    $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());
+                    $queryAlter[]  = $query;
+                    $lastColumn = $entityColumn['name'];
+                }
+            }
+        }
+        return $queryAlter;
+    }
     
     /**
      * Dump data to SQL. 

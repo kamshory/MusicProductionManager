@@ -18,9 +18,10 @@ use Symfony\Component\Yaml\Yaml;
 class SecretObject extends stdClass //NOSONAR
 {
     const JSON = 'JSON';
+    const YAML = 'Yaml';
     const KEY_NAME = "name";
     const KEY_VALUE = "value";
-    
+    const PROPERTY_NAMING_STRATEGY = "property-naming-strategy";
     const KEY_PROPERTY_TYPE = "propertyType";
     const KEY_DEFAULT_VALUE = "default_value"; 
     const ANNOTATION_ENCRYPT_IN = "EncryptIn";
@@ -190,7 +191,7 @@ class SecretObject extends stdClass //NOSONAR
             $var = lcfirst(substr($method, 3));
             return $this->_get($var);
         }
-        else if (strncasecmp($method, "set", 3) === 0 && !$this->_readonly) {
+        else if (strncasecmp($method, "set", 3) === 0 && isset($params) && isset($params[0]) && !$this->_readonly) {
             $var = lcfirst(substr($method, 3));
             $this->_set($var, $params[0]);
             $this->modifyNullProperties($var, $params[0]);
@@ -857,11 +858,24 @@ class SecretObject extends stdClass //NOSONAR
      *
      * @return boolean
      */
-    protected function _snake()
+    protected function _snakeJson()
     {
         return isset($this->_classParams[self::JSON])
-            && isset($this->_classParams[self::JSON]['property-naming-strategy'])
-            && strcasecmp($this->_classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
+            && isset($this->_classParams[self::JSON][self::PROPERTY_NAMING_STRATEGY])
+            && strcasecmp($this->_classParams[self::JSON][self::PROPERTY_NAMING_STRATEGY], 'SNAKE_CASE') == 0
+            ;
+    }
+
+    /**
+     * Check if Yaml naming strategy is snake case or not
+     *
+     * @return boolean
+     */
+    protected function _snakeYaml()
+    {
+        return isset($this->_classParams[self::YAML])
+            && isset($this->_classParams[self::YAML][self::PROPERTY_NAMING_STRATEGY])
+            && strcasecmp($this->_classParams[self::YAML][self::PROPERTY_NAMING_STRATEGY], 'SNAKE_CASE') == 0
             ;
     }
     
@@ -873,8 +887,8 @@ class SecretObject extends stdClass //NOSONAR
     protected function isUpperCamel()
     {
         return isset($this->_classParams[self::JSON])
-            && isset($this->_classParams[self::JSON]['property-naming-strategy'])
-            && strcasecmp($this->_classParams[self::JSON]['property-naming-strategy'], 'UPPER_CAMEL_CASE') == 0
+            && isset($this->_classParams[self::JSON][self::PROPERTY_NAMING_STRATEGY])
+            && strcasecmp($this->_classParams[self::JSON][self::PROPERTY_NAMING_STRATEGY], 'UPPER_CAMEL_CASE') == 0
             ;
     }
     
@@ -885,7 +899,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     protected function _camel()
     {
-        return !$this->_snake();
+        return !$this->_snakeJson();
     }
     
     /**
@@ -953,7 +967,7 @@ class SecretObject extends stdClass //NOSONAR
     {
         $obj = clone $this;
         $obj = $this->encryptValueRecorsive($obj);
-        $array = json_decode(json_encode($obj->value($this->_snake())), true);
+        $array = json_decode(json_encode($obj->value($this->_snakeJson())), true);
         return $this->encryptValueRecursive($array);
     }
 
@@ -993,7 +1007,7 @@ class SecretObject extends stdClass //NOSONAR
      */
     public function dumpYaml($inline = null, $indent = 4, $flags = 0)
     {
-        $snake = $this->_snake();
+        $snake = $this->_snakeYaml();
         $input = $this->valueArray($snake);
         return PicoYamlUtil::dump($input, $inline, $indent, $flags);
     }
@@ -1006,6 +1020,6 @@ class SecretObject extends stdClass //NOSONAR
     public function __toString()
     {
         $obj = clone $this;
-        return json_encode($obj->value($this->_snake()), JSON_PRETTY_PRINT);
+        return json_encode($obj->value($this->_snakeJson()), JSON_PRETTY_PRINT);
     }
 }

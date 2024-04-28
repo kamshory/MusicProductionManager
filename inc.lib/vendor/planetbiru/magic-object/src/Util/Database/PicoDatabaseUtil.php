@@ -193,4 +193,19 @@ class PicoDatabaseUtil
         }
         return $where;
     }
+
+    /**
+     * Generate UUID
+     *
+     * @return string
+     */
+    public static function uuid()
+    {
+        $uuid = uniqid();
+		if ((strlen($uuid) % 2) == 1) {
+			$uuid = '0' . $uuid;
+		}
+		$random = sprintf('%06x', mt_rand(0, 16777215));
+		return sprintf('%s%s', $uuid, $random);
+    }
 }
