@@ -3,6 +3,7 @@
 namespace MagicObject\Response\Generated;
 
 use Exception;
+use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
 use MagicObject\MagicObject;
 
