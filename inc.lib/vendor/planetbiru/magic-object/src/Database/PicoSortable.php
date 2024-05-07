@@ -72,6 +72,17 @@ class PicoSortable
      * @param PicoSort|array $sort
      * @return self
      */
+    public function add($sort)
+    {
+        return $this->addSortable($sort);
+    }
+    
+    /**
+     * Add sortable
+     *
+     * @param PicoSort|array $sort
+     * @return self
+     */
     public function addSortable($sort)
     {
         if($sort != null)

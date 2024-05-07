@@ -145,6 +145,7 @@ class PicoDatabaseUtilMySql
         {
             return self::dumpRecords($columns, $picoTableName, $data);
         }
+        return null;
     }
     
     /**

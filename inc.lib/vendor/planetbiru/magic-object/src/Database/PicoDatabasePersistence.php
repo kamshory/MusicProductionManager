@@ -727,8 +727,7 @@ class PicoDatabasePersistence // NOSONAR
         {
             throw new NoUpdatableColumnException("No updatable column");
         }
-        //return implode(", ", $sets);
-        return $this->joinStringArray($sets, self::MAX_LINE_LENGTH, ", ");
+        return $this->joinStringArray($sets, self::MAX_LINE_LENGTH, ", ", ", \r\n");
     }
 
     /**
@@ -1206,7 +1205,6 @@ class PicoDatabasePersistence // NOSONAR
                 }
             }
         }
-        //return implode(" ", $wheres);
         return $this->joinStringArray($wheres, self::MAX_LINE_LENGTH);
     }
     
@@ -1549,7 +1547,6 @@ class PicoDatabasePersistence // NOSONAR
                     $orderBys[] = $pKeyCol." ".strtolower($order);
                 }
             }
-            //return implode(", ", $orderBys);
             return $this->joinStringArray($orderBys, self::MAX_LINE_LENGTH, ", ");
         }
         else
@@ -1608,7 +1605,6 @@ class PicoDatabasePersistence // NOSONAR
         }
         if(!empty($sorts))
         {
-            //$ret = implode(", ", $sorts);
             $ret = $this->joinStringArray($sorts, self::MAX_LINE_LENGTH, ", ");
         }
         return $ret;
@@ -1669,7 +1665,6 @@ class PicoDatabasePersistence // NOSONAR
                 $arr[] = $column . " " . $sortOrder->getSortType();
             }
         }
-        //return implode(", ", $arr);
         return $this->joinStringArray($arr, self::MAX_LINE_LENGTH, ", ");
     }
     

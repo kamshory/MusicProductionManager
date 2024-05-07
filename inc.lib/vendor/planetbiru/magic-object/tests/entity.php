@@ -7,6 +7,7 @@ use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
+use MagicObject\Generator\PicoDatabaseDump;
 use MagicObject\MagicObject;
 use MagicObject\SecretObject;
 
@@ -174,6 +175,26 @@ class EntityAlbum extends MagicObject
 	 * @var string
 	 */
 	protected $ipEdit;
+	
+	/**
+	 * Blocked
+	 * 
+	 * @Column(name="blocked", type="tinyint(1)", length=1, default_value="1", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @Label(content="Blocked")
+	 * @var boolean
+	 */
+	protected $blocked;
+	
+	/**
+	 * Hacked
+	 * 
+	 * @Column(name="hacked", type="tinyint(1)", length=1, default_value="null", nullable=true)
+	 * @DefaultColumn(value="1")
+	 * @Label(content="Hacked")
+	 * @var boolean
+	 */
+	protected $hacked;
 
 	/**
 	 * Active
@@ -613,6 +634,7 @@ class Artist extends MagicObject
 	 */
 	protected $ipEdit;
 
+
 	/**
 	 * Active
 	 * 
@@ -633,6 +655,7 @@ $database->connect();
 $album = new EntityAlbum(null, $database);
 try
 {
+	/*
 	$spesification = new PicoSpecification();	
 	
 	$predicate1 = new PicoPredicate();
@@ -687,6 +710,7 @@ try
 		order by producer__jn__1.birth_day asc, producer__jn__1.producer_id desc
 		limit 0, 20
 	 */
+	/*
 	echo "\r\n-----\r\n";
 	echo $spesification;
 	echo "\r\n-----\r\n";
@@ -696,6 +720,12 @@ try
 	echo "\r\n-----\r\n";
 	echo $pageData;
 	echo "\r\n-----\r\n";
+	*/
+	
+	$dumper = new PicoDatabaseDump();
+	
+	$sql = $dumper->createAlterTableAdd($album);
+	print_r($sql);
 }
 catch(Exception $e)
 {

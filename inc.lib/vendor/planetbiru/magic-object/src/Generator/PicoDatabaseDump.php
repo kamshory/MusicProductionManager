@@ -7,6 +7,7 @@ use MagicObject\Database\PicoDatabaseType;
 use MagicObject\Database\PicoPageData;
 use MagicObject\Database\PicoTableInfo;
 use MagicObject\MagicObject;
+use MagicObject\Util\Database\PicoDatabaseUtil;
 use MagicObject\Util\Database\PicoDatabaseUtilMySql;
 
 class PicoDatabaseDump
@@ -16,14 +17,14 @@ class PicoDatabaseDump
      *
      * @var PicoTableInfo
      */
-    private $tableInfo;    
+    protected $tableInfo;    
     
     /**
      * Table name
      *
      * @var string
      */
-    private $picoTableName = "";
+    protected $picoTableName = "";
     
     
     /**
@@ -31,7 +32,7 @@ class PicoDatabaseDump
      *
      * @var array
      */
-    private $columns = array();
+    protected $columns = array();
 
     /**
      * Dump table structure
@@ -89,7 +90,39 @@ class PicoDatabaseDump
     {
         if($lastColumn != null && ($databaseType == PicoDatabaseType::DATABASE_TYPE_MYSQL || $databaseType == PicoDatabaseType::DATABASE_TYPE_MARIADB))
         {
-            $query = " AFTER ".$lastColumn;
+            $query .= " AFTER ".$lastColumn;
+        }
+        return $query;
+    }
+    
+    /**
+     * Update query alter table nullable
+     *
+     * @param string $query
+     * @param array $entityColumn
+     * @return string
+     */
+    public function updateQueryAlterTableNullable($query, $entityColumn)
+    {
+        if($entityColumn['nullable'])
+        {
+            $query .= " NULL";
+        }
+        return $query;
+    }
+    
+    /**
+     * Update query alter table default value
+     *
+     * @param string $query
+     * @param array $entityColumn
+     * @return string
+     */
+    public function updateQueryAlterTableDefaultValue($query, $entityColumn)
+    {
+        if(isset($entityColumn['default_value']))
+        {
+            $query .= " DEFAULT ".PicoDatabaseUtil::escapeValue($entityColumn['default_value'], true);
         }
         return $query;
     }
@@ -103,6 +136,7 @@ class PicoDatabaseDump
     public function createAlterTableAdd($entity)
     {
         $tableInfo = $this->getTableInfo($entity);
+        $tableName = $tableInfo->getTableName();
         $queryAlter = array();
         if($tableInfo != null)
         {
@@ -124,9 +158,15 @@ class PicoDatabaseDump
             {
                 if(!in_array($entityColumn['name'], $dbColumnNames))
                 {
-                    $query = "ALTER TABLE ADD COLUMN ".$entityColumn['name']." ".$entityColumn['type'];
+                    $query = "ALTER TABLE $tableName ADD COLUMN ".$entityColumn['name']." ".$entityColumn['type'];
+                    $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
+                    $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
                     $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());
                     $queryAlter[]  = $query;
+                    $lastColumn = $entityColumn['name'];
+                }
+                else
+                {
                     $lastColumn = $entityColumn['name'];
                 }
             }

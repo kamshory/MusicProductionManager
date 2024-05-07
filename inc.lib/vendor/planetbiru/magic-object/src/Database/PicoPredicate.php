@@ -2,7 +2,7 @@
 
 namespace MagicObject\Database;
 
-class PicoPredicate
+class PicoPredicate //NOSONAR
 {
     /**
      * @var string
@@ -29,6 +29,21 @@ class PicoPredicate
      * @var string
      */
     private $filterLogic = null;
+
+    /**
+     * Constructor. If $field given, it will call equals method
+     *
+     * @param string $field
+     * @param mixed $value
+     * @return void
+     */
+    public function __construct($field = null, $value = null)
+    {
+        if($field != null)
+        {
+            $this->equals($field, $value);
+        }
+    }
     
     /**
      * Return true if require real join table

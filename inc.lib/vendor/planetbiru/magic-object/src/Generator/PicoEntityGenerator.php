@@ -17,42 +17,42 @@ class PicoEntityGenerator
      *
      * @var PicoDatabase
      */
-    private $database;
+    protected $database;
 
     /**
      * Base directory
      *
      * @var string
      */
-    private $baseDir = "";
+    protected $baseDir = "";
 
     /**
      * Base namespace
      *
      * @var string
      */
-    private $baseNamespace = "";
+    protected $baseNamespace = "";
 
     /**
      * Table name
      *
      * @var string
      */
-    private $tableName = "";
+    protected $tableName = "";
     
     /**
      * Entity name
      *
      * @var string
      */
-    private $entityName = null;
+    protected $entityName = null;
     
     /**
      * Prettify
      *
      * @var boolean
      */
-    private $prettify = false;
+    protected $prettify = false;
     
     /**
      * Constructor
@@ -85,7 +85,7 @@ class PicoEntityGenerator
      * @param string $columnExtra
      * @return string
      */
-    private function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra)
+    protected function createProperty($typeMap, $columnName, $columnType, $columnKey, $columnNull, $columnDefault, $columnExtra)
     {
         $propertyName = PicoStringUtil::camelize($columnName);
         $description = $this->getPropertyName($columnName);
@@ -167,7 +167,7 @@ class PicoEntityGenerator
      * @param string $name
      * @return string
      */
-    private function getPropertyName($name)
+    protected function getPropertyName($name)
     {
         $arr = explode("_", $name);
         foreach($arr as $k => $v)
@@ -186,7 +186,7 @@ class PicoEntityGenerator
      * @param string $columnType
      * @return string
      */
-    private function getDataType($typeMap, $columnType)
+    protected function getDataType($typeMap, $columnType)
     {
         $type = "";
         foreach($typeMap as $key=>$val)
@@ -210,7 +210,7 @@ class PicoEntityGenerator
      * @param string $str
      * @return integer
      */
-    private function getDataLength($str)
+    protected function getDataLength($str)
     {
         $str2 = preg_replace('~\D~', '', $str);
         if(empty($str2))
@@ -235,7 +235,7 @@ class PicoEntityGenerator
      *
      * @return array
      */
-    private function getTypeMap()
+    protected function getTypeMap()
     {
         return array(
             "double" => "double",

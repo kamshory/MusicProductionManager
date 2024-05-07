@@ -122,17 +122,46 @@ class PicoDatabaseUtil
     }
     
     /**
+     * Check if value is null
+     *
+     * @param mixed $value
+     * @param boolean $importFromString
+     * @return boolean
+     */
+    public static function isNull($value, $importFromString)
+    {
+        return $value === null || $value == 'null' && $importFromString;
+    }
+    
+    /**
+     * Check if value is numeric
+     *
+     * @param mixed $value
+     * @param boolean $importFromString
+     * @return boolean
+     */
+    public static function isNumeric($value, $importFromString)
+    {
+        return is_string($value) && is_numeric($value) && $importFromString;
+    }
+    
+    /**
 	 * Escape value
-	 * @var mixed
+	 * @param mixed $value
+     * @param boolean $importFromString
 	 * @return string
 	 */
-	public static function escapeValue($value)
+	public static function escapeValue($value, $importFromString = false)
 	{
-		if($value === null)
+		if(self::isNull($value, $importFromString))
 		{
 			// null
-			$ret = 'null';
+			$ret = 'NULL';
 		}
+        else if(self::isNumeric($value, $importFromString))
+        {
+            $ret = $value."";
+        }
 		else if(is_string($value))
 		{
 			// escape the value

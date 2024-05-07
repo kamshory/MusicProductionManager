@@ -107,5 +107,16 @@ class PicoJoinMap
         return $this->joinTableAlias;
     }
 
-    
+    public function __toString()
+    {
+        return json_encode(
+            array(
+                'propertyName'=>$this->propertyName,
+                'columnName'=>$this->columnName,
+                'entity'=>$this->entity,
+                'joinTable'=>$this->joinTable,
+                'joinTableAlias'=>$this->joinTableAlias
+                )
+            );
+    }
 }

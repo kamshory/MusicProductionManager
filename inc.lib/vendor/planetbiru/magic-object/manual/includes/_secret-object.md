@@ -582,7 +582,7 @@ class PicoDatabaseCredentials extends SecretObject
 }
 
 $cfg = new ConfigApp(null, true);
-$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
 

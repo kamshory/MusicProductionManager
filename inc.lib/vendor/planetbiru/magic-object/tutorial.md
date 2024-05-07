@@ -1078,7 +1078,7 @@ class PicoDatabaseCredentials extends SecretObject
 }
 
 $cfg = new ConfigApp(null, true);
-$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
 
@@ -1709,7 +1709,7 @@ use MusicProductionManager\Data\Entity\Album;
 require_once dirname(__DIR__)."/vendor/autoload.php";
 
 $cfg = new ConfigApp(null, true);
-$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
 $database = new PicoDatabase($databaseCredentials);
@@ -6285,7 +6285,7 @@ use MusicProductionManager\Data\Entity\Album;
 require_once dirname(__DIR__)."/vendor/autoload.php";
 
 $cfg = new ConfigApp(null, true);
-$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
 $database = new PicoDatabase($databaseCredentials);

@@ -182,9 +182,17 @@ class PicoAnnotationParser
                 $this->parameters[$rawParameter] = new PicoEmptyParameter();
             }
         }
+        $this->fixDuplication();
+    }
 
-        // fixing duplicated annotation
-        // if any duplication, use last one instead
+    /**
+     * fixing duplicated annotation
+     * if any duplication, use last one instead
+     *
+     * @return void
+     */
+    private function fixDuplication()
+    {
         foreach($this->parameters as $key=>$value)
         {
             if(is_array($value))

@@ -12,55 +12,55 @@ class PicoDtoGenerator
      *
      * @var PicoDatabase
      */
-    private $database;
+    protected $database;
     /**
      * Base directory
      *
      * @var string
      */
-    private $baseDir = "";
+    protected $baseDir = "";
 
     /**
      * Base namespace
      *
      * @var string
      */
-    private $baseNamespaceDto = "";
+    protected $baseNamespaceDto = "";
 
     /**
      * Table name
      *
      * @var string
      */
-    private $tableName = "";
+    protected $tableName = "";
     
     /**
      * Entity name
      *
      * @var string
      */
-    private $entityName = null;
+    protected $entityName = null;
     
     /**
      * DTO name
      *
      * @var string
      */
-    private $dtoName = null;
+    protected $dtoName = null;
     
     /**
      * Base name entity
      *
      * @var string
      */
-    private $baseNamespaceEntity = null;
+    protected $baseNamespaceEntity = null;
     
     /**
      * Prettify
      *
      * @var boolean
      */
-    private $prettify = false;
+    protected $prettify = false;
     
     /**
      * Constructor
@@ -93,7 +93,7 @@ class PicoDtoGenerator
      * @param string $columnType
      * @return string
      */
-    private function createProperty($typeMap, $columnName, $columnType)
+    protected function createProperty($typeMap, $columnName, $columnType)
     {
         $propertyName = PicoStringUtil::camelize($columnName);
         $docs = array();
@@ -119,7 +119,7 @@ class PicoDtoGenerator
      * @param string $name
      * @return string
      */
-    private function getPropertyName($name)
+    protected function getPropertyName($name)
     {
         $arr = explode("_", $name);
         foreach($arr as $k => $v)
@@ -138,7 +138,7 @@ class PicoDtoGenerator
      * @param string $columnType
      * @return string
      */
-    private function getDataType($typeMap, $columnType)
+    protected function getDataType($typeMap, $columnType)
     {
         $type = "";
         foreach($typeMap as $key=>$val)
@@ -163,7 +163,7 @@ class PicoDtoGenerator
      * @param array $rows
      * @return string
      */
-    private function createValueOf($picoTableName, $rows)
+    protected function createValueOf($picoTableName, $rows)
     {
         if($this->entityName != null)
         {
@@ -207,7 +207,7 @@ class PicoDtoGenerator
      *
      * @return array
      */
-    private function getTypeMap()
+    protected function getTypeMap()
     {
         return array(
             "double" => "double",

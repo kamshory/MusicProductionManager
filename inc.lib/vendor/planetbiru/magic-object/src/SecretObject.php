@@ -806,7 +806,7 @@ class SecretObject extends stdClass //NOSONAR
             foreach ($value as $key => $val) {
                 $key2 = PicoStringUtil::snakeize($key);
                 // get decripted or encrypted value
-                $value2->$key2 = $val;
+                $value2->$key2 = PicoStringUtil::snakeizeObject($val);
             }
             return $value2;
         }
@@ -900,6 +900,17 @@ class SecretObject extends stdClass //NOSONAR
     protected function _camel()
     {
         return !$this->_snakeJson();
+    }
+
+    /**
+     * Chek if magic object is empty
+     *
+     * @return boolean
+     */
+    public function empty()
+    {
+        $keys = array_keys($this->valueArray());
+        return empty($keys);
     }
     
     /**

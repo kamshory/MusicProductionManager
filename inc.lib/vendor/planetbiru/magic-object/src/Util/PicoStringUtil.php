@@ -1,6 +1,8 @@
 <?php
 namespace MagicObject\Util;
 
+use stdClass;
+
 class PicoStringUtil
 {
     /**
@@ -43,6 +45,38 @@ class PicoStringUtil
             }, $input),
             $glue
         );
+    }
+
+    /**
+     * Snakeize object
+     *
+     * @param mixed $object
+     * @return mixed
+     */
+    public static function snakeizeObject($object)
+    {
+        if(is_array($object))
+        {
+            $array = array();
+            foreach($object as $key=>$value)
+            {
+                $array[self::snakeize($key)] = self::snakeizeObject($value);
+            }
+            return $array;
+        }
+        else if($object instanceof stdClass)
+        {
+            $stdClass = new stdClass;
+            foreach($object as $key=>$value)
+            {
+                $stdClass->{self::snakeize($key)} = self::snakeizeObject($value);
+            }
+            return $stdClass;
+        }
+        else
+        {
+            return $object;
+        }
     }
 
     /**

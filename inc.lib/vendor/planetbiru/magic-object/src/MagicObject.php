@@ -891,7 +891,7 @@ class MagicObject extends stdClass // NOSONAR
             $value2 = new stdClass;
             foreach ($value as $key => $val) {
                 $key2 = PicoStringUtil::snakeize($key);
-                $value2->$key2 = $val;
+                $value2->$key2 = PicoStringUtil::snakeizeObject($val);
             }
             return $value2;
         }
@@ -1034,6 +1034,17 @@ class MagicObject extends stdClass // NOSONAR
     private function _notNullAndNotEmpty($value)
     {
         return $value != null && !empty($value);
+    }
+
+    /**
+     * Chek if magic object is empty
+     *
+     * @return boolean
+     */
+    public function empty()
+    {
+        $keys = array_keys($this->valueArray());
+        return empty($keys);
     }
     
     /**
@@ -1635,7 +1646,8 @@ class MagicObject extends stdClass // NOSONAR
         else if (strncasecmp($method, "existsBy", 8) === 0) {
             $var = lcfirst(substr($method, 8));
             return $this->existsBy($var, $params);
-        } else if (strncasecmp($method, "deleteBy", 8) === 0) {
+        } 
+        else if (strncasecmp($method, "deleteBy", 8) === 0) {
             $var = lcfirst(substr($method, 8));
             return $this->deleteBy($var, $params);
         }
@@ -1701,6 +1713,26 @@ class MagicObject extends stdClass // NOSONAR
                 return $this->_label[$var];
             }
             return "";
+        } 
+        else if(strncasecmp($method, "option", 6) === 0) {
+            $var = lcfirst(substr($method, 6));
+            return isset($this->$var) && ($this->$var == 1 || $this->$var === true) ? $params[0] : $params[1];
+        }
+        else if(strncasecmp($method, "notNull", 7) === 0) {
+            $var = lcfirst(substr($method, 7));
+            return isset($this->$var);
+        }
+        else if(strncasecmp($method, "notEmpty", 8) === 0) {
+            $var = lcfirst(substr($method, 8));
+            return isset($this->$var) && !empty($this->$var);
+        }
+        else if(strncasecmp($method, "notZero", 7) === 0) {
+            $var = lcfirst(substr($method, 7));
+            return isset($this->$var) && $this->$var != 0;
+        }
+        else if (strncasecmp($method, "notEquals", 9) === 0) {
+            $var = lcfirst(substr($method, 9));
+            return isset($this->$var) && $this->$var != $params[0];
         } 
     }
 
