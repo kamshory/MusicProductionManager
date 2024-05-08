@@ -48,6 +48,18 @@ class PicoSpecification
      */
     public function add($predicate)
     {
+        $this->and($predicate);
+        return $this;
+    }
+
+    /**
+     * Add AND specification
+     *
+     * @param PicoSpecification|PicoPredicate|array $predicate
+     * @return self
+     */
+    public function and($predicate)
+    {
         $this->addAnd($predicate);
         return $this;
     }
