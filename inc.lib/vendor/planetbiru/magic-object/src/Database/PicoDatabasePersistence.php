@@ -62,6 +62,9 @@ class PicoDatabasePersistence // NOSONAR
     const NAMESPACE_SEPARATOR = "\\";
     const JOIN_TABLE_SUBFIX = "__jn__";
     const MAX_LINE_LENGTH = 80;
+
+    const COMMA = ", ";
+    const COMMA_RETURN = ", \r\n";
     
     /**
      * Database connection
@@ -727,7 +730,7 @@ class PicoDatabasePersistence // NOSONAR
         {
             throw new NoUpdatableColumnException("No updatable column");
         }
-        return $this->joinStringArray($sets, self::MAX_LINE_LENGTH, ", ", ", \r\n");
+        return $this->joinStringArray($sets, self::MAX_LINE_LENGTH, self::COMMA, self::COMMA_RETURN);
     }
 
     /**
@@ -1060,7 +1063,7 @@ class PicoDatabasePersistence // NOSONAR
      */
     public function createStatementFields($values)
     {
-        return "(".implode(", ", array_keys($values)).")";
+        return "(".implode(self::COMMA, array_keys($values)).")";
     }
 
     /**
@@ -1071,7 +1074,7 @@ class PicoDatabasePersistence // NOSONAR
      */
     public function createStatementValues($values)
     {      
-        return "(".implode(", ", array_values($values)).")";
+        return "(".implode(self::COMMA, array_values($values)).")";
     }
 
     /**
@@ -1314,33 +1317,6 @@ class PicoDatabasePersistence // NOSONAR
     }
     
     /**
-     * Get table name
-     *
-     * @param PicoPredicate $spec
-     * @param string|null $entityTable
-     * @param string $field
-     * @return string
-     */
-    public function getTableColumn($spec, $entityTable, $field, $master = false)
-    {
-        if($entityTable != null)
-        {
-            if($master)
-            {
-                return $entityTable.".".$field;
-            }
-            else
-            {
-                return $entityTable.self::JOIN_TABLE_SUBFIX."1.".$field;
-            }
-        }
-        else
-        {
-            return $field;
-        }
-    } 
-    
-    /**
      * Get join source
      *
      * @param string|null $parentName
@@ -1547,7 +1523,7 @@ class PicoDatabasePersistence // NOSONAR
                     $orderBys[] = $pKeyCol." ".strtolower($order);
                 }
             }
-            return $this->joinStringArray($orderBys, self::MAX_LINE_LENGTH, ", ");
+            return $this->joinStringArray($orderBys, self::MAX_LINE_LENGTH, self::COMMA, self::COMMA_RETURN);
         }
         else
         {
@@ -1605,7 +1581,7 @@ class PicoDatabasePersistence // NOSONAR
         }
         if(!empty($sorts))
         {
-            $ret = $this->joinStringArray($sorts, self::MAX_LINE_LENGTH, ", ");
+            $ret = $this->joinStringArray($sorts, self::MAX_LINE_LENGTH, self::COMMA, self::COMMA_RETURN);
         }
         return $ret;
     }
@@ -1665,7 +1641,7 @@ class PicoDatabasePersistence // NOSONAR
                 $arr[] = $column . " " . $sortOrder->getSortType();
             }
         }
-        return $this->joinStringArray($arr, self::MAX_LINE_LENGTH, ", ");
+        return $this->joinStringArray($arr, self::MAX_LINE_LENGTH, self::COMMA, self::COMMA_RETURN);
     }
     
     /**
