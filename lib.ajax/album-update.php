@@ -71,6 +71,7 @@ try {
     $album->setTimeEdit($now);
     $album->setIpEdit(ServerUtil::getRemoteAddress($cfg));
     $album->setAdminEdit($currentLoggedInUser->getUserId());
+    $album->setAsDraft($inputPost->getAsDraft());
 
     $album->update();
     $album->setProducerName($producerName);
