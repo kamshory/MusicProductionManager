@@ -211,6 +211,16 @@ class PicoSortable
     {
         return $this->sortable;
     }
+
+    /**
+     * Get instance of PicoSortable
+     *
+     * @return PicoSortable
+     */
+    public static function getInstance()
+    {
+        return new PicoSortable();
+    }
     
     /**
      * This method is for debug purpose only.

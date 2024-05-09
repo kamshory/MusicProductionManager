@@ -8,6 +8,11 @@ class PicoRequest extends PicoRequestBase
     const ACTION_EDIT = "edit";
     const ACTION_ADD = "add";
     
+    /**
+     * Constructor
+     *
+     * @param integer $inputType
+     */
     public function __construct($inputType = INPUT_GET)
     {
         parent::__construct();
@@ -50,15 +55,20 @@ class PicoRequest extends PicoRequestBase
      */
     public static function getRequestHeaders()
     {
-        if (!function_exists('getallheaders')) {
-            foreach ($_SERVER as $name => $value) {
+        if (!function_exists('getallheaders')) 
+        {
+            foreach ($_SERVER as $name => $value) 
+            {
                 /* RFC2616 (HTTP/1.1) defines header fields as case-insensitive entities. */
-                if (strtolower(substr($name, 0, 5)) == 'http_') {
+                if (strtolower(substr($name, 0, 5)) == 'http_') 
+                {
                     $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
                 }
             }
             return $headers;
-        } else {
+        } 
+        else 
+        {
             return getallheaders();
         }
     }

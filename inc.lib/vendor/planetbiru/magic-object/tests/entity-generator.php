@@ -2,7 +2,6 @@
 
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Generator\PicoEntityGenerator;
-use MagicObject\MagicObject;
 use MagicObject\SecretObject;
 
 require_once dirname(__DIR__) . "/vendor/autoload.php";

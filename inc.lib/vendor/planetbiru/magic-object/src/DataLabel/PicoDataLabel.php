@@ -110,8 +110,6 @@ class PicoDataLabel extends SetterGetter
                     }
                 }
             }
-            
-
         }
         // bring it together
         $info = new stdClass;

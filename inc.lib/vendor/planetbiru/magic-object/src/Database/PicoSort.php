@@ -20,7 +20,7 @@ class PicoSort
      */
     private $sortType = "";
     
-    public function __construct($sortBy, $sortType)
+    public function __construct($sortBy = null, $sortType = null)
     {
         $this->setSortBy($sortBy);
         $this->setSortType($sortType);
@@ -73,7 +73,35 @@ class PicoSort
 
         return $this;
     }
-    
+
+    /**
+     * Magic method
+     *
+     * @param string $method
+     * @param array $params
+     * @return self|mixed|null
+     */
+    public function __call($method, $params)
+    {
+        if (strncasecmp($method, "sortBy", 6) === 0 && isset($params) && isset($params[0])){
+            $field = lcfirst(substr($method, 6));
+            $value = $params[0];
+            $this->setSortBy($field);
+            $this->setSortType($value);
+            return $this;
+        }
+    }
+
+    /**
+     * Get instance of PicoSort
+     *
+     * @return PicoSort
+     */
+    public static function getInstance()
+    {
+        return new PicoSort();
+    }
+
     /**
      * This method is for debug purpose only.
      *
@@ -81,6 +109,9 @@ class PicoSort
      */
     public function __toString()
     {
-        return json_encode(array('sortBy'=>$this->sortBy, 'sortType'=>$this->sortType));
+        return json_encode(array(
+            'sortBy'=>$this->sortBy, 
+            'sortType'=>$this->sortType
+        ));
     }
 }

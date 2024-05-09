@@ -48,18 +48,6 @@ class PicoSpecification
      */
     public function add($predicate)
     {
-        $this->and($predicate);
-        return $this;
-    }
-
-    /**
-     * Add AND specification
-     *
-     * @param PicoSpecification|PicoPredicate|array $predicate
-     * @return self
-     */
-    public function and($predicate)
-    {
         $this->addAnd($predicate);
         return $this;
     }
@@ -204,6 +192,12 @@ class PicoSpecification
         return $this;
     }
     
+    /**
+     * Create where
+     *
+     * @param PicoSpecification[] $specifications
+     * @return string[]
+     */
     private function getWhere($specifications)
     {
         foreach($specifications as $spec)
@@ -249,6 +243,16 @@ class PicoSpecification
             }
         }
         return PicoDatabaseUtil::trimWhere(implode(" ", $arr));
+    }
+
+    /**
+     * Get instance of PicoSpecification
+     *
+     * @return PicoSpecification
+     */
+    public static function getInstance()
+    {
+        return new PicoSpecification();
     }
     
     /**

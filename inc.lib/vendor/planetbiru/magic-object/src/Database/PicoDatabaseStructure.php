@@ -19,7 +19,6 @@ class PicoDatabaseStructure
     const KEY_NOT_NULL = "notnull";
     const KEY_NULLABLE = "nullable";
     const KEY_PRIMARY = "primary";
-    
     const DATABASE_TYPE_MYSQL = "mysql";
     const DATABASE_TYPE_MARIADB = "mariadb";
     

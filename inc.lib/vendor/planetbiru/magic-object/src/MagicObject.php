@@ -7,6 +7,7 @@ use PDOException;
 use PDOStatement;
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabasePersistence;
+use MagicObject\Database\PicoDatabasePersistenceExtended;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Database\PicoDatabaseStructure;
 use MagicObject\Database\PicoPagable;
@@ -523,6 +524,31 @@ class MagicObject extends stdClass // NOSONAR
     }
 
     /**
+     * Select data from database
+     *
+     * @return self
+     * @throws NoDatabaseConnectionException|NoRecordFoundException|PDOException
+     */
+    public function selectAll()
+    {
+        if($this->_database != null && $this->_database->isConnected())
+        {
+            $persist = new PicoDatabasePersistence($this->_database, $this);
+            $data = $persist->selectAll();
+            if($data == null)
+            {
+                throw new NoRecordFoundException(self::MESSAGE_NO_RECORD_FOUND);
+            }
+            $this->loadData($data);
+            return $this;
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
+
+    /**
      * Query of select data
      *
      * @return PicoDatabaseQueryBuilder
@@ -658,7 +684,33 @@ class MagicObject extends stdClass // NOSONAR
             throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
         }
     }
+
+    /**
+     * Get MagicObject with WHERE specification
+     *
+     * @param PicoSpecification $specification
+     * @return PicoDatabasePersistenceExtended
+     */
+    public function where($specification)
+    {
+        if($this->_database != null && ($this->_database->getDatabaseType() != null && $this->_database->getDatabaseType() != ""))
+        {
+            $persist = new PicoDatabasePersistence($this->_database, $this);
+            return $persist->whereWithSpecification($specification);
+        }
+        else
+        {
+            throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
+        }
+    }
     
+    /**
+     * Scho create table
+     *
+     * @param string $databaseType
+     * @param string $tableName
+     * @return string
+     */
     public function showCreateTable($databaseType, $tableName = null)
     {
         $structure = new PicoDatabaseStructure($this);
@@ -1036,17 +1088,6 @@ class MagicObject extends stdClass // NOSONAR
         return $value != null && !empty($value);
     }
 
-    /**
-     * Chek if magic object is empty
-     *
-     * @return boolean
-     */
-    public function empty()
-    {
-        $keys = array_keys($this->valueArray());
-        return empty($keys);
-    }
-    
     /**
      * Property list
      * @var boolean $reflectSelf

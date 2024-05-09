@@ -272,6 +272,33 @@ class PicoPredicate //NOSONAR
     {
         return $value."%";
     }
+
+    /**
+     * Magic method
+     *
+     * @param string $method
+     * @param array $params
+     * @return self|mixed|null
+     */
+    public function __call($method, $params)
+    {
+        if (strncasecmp($method, "set", 3) === 0 && isset($params)) {
+            $field = lcfirst(substr($method, 3));
+            $value = $params[0];
+            $this->equals($field, $value);
+            return $this;
+        }
+    }
+
+    /**
+     * Get instance of PicoPredicate
+     *
+     * @return PicoPredicate
+     */
+    public static function getInstance()
+    {
+        return new PicoPredicate();
+    }
     
     public function __toString()
     {
