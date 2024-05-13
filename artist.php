@@ -1,6 +1,6 @@
 <?php
 
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Exceptions\NoRecordFoundException;
@@ -86,10 +86,10 @@ $pagination = new PicoPagination($cfg->getResultPerPage());
 
 $spesification = SpecificationUtil::createArtistSpecification($inputGet);
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType());
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
 $artistEntity = new Artist(null, $database);
-$rowData = $artistEntity->findAll($spesification, $pagable, $sortable, true);
+$rowData = $artistEntity->findAll($spesification, $pageable, $sortable, true);
 
 $result = $rowData->getResult();
 

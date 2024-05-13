@@ -1,6 +1,6 @@
 <?php
 
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Pagination\PicoPagination;
@@ -224,10 +224,10 @@ $pagination = new PicoPagination($cfg->getResultPerPage());
 
 $spesification = SpecificationUtil::createUserSpecification($inputGet);
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType());
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
 $userEntity = new EntityUser(null, $database);
-$rowData = $userEntity->findAll($spesification, $pagable, $sortable, true);
+$rowData = $userEntity->findAll($spesification, $pageable, $sortable, true);
 
 $result = $rowData->getResult();
 

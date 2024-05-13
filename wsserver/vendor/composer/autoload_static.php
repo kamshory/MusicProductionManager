@@ -6,37 +6,6 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit4f01792400e7d8241a401c7984ef843b
 {
-    public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-    );
-
-    public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
-            'Symfony\\Polyfill\\Ctype\\' => 23,
-            'Symfony\\Component\\Yaml\\' => 23,
-        ),
-        'M' => 
-        array (
-            'MagicObject\\' => 12,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Ctype\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
-        ),
-        'Symfony\\Component\\Yaml\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/yaml',
-        ),
-        'MagicObject\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/planetbiru/magic-object/src',
-        ),
-    );
-
     public static $prefixesPsr0 = array (
         'W' => 
         array (
@@ -54,8 +23,6 @@ class ComposerStaticInit4f01792400e7d8241a401c7984ef843b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4f01792400e7d8241a401c7984ef843b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4f01792400e7d8241a401c7984ef843b::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit4f01792400e7d8241a401c7984ef843b::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit4f01792400e7d8241a401c7984ef843b::$classMap;
 

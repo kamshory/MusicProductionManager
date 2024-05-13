@@ -2,7 +2,7 @@
 
 namespace MagicObject\Util\Database;
 
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
 
@@ -29,17 +29,17 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Get pagable from parameters
+     * Get pageable from parameters
      * @param array $params
-     * @return PicoPagable|null
+     * @return PicoPageable|null
      */
-    public static function pagableFromParams($params)
+    public static function pageableFromParams($params)
     {
         if(isset($params) && is_array($params))
         {
             foreach($params as $param)
             {
-                if($param instanceof PicoPagable)
+                if($param instanceof PicoPageable)
                 {
                     return $param;
                 }
@@ -69,7 +69,7 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Get pagable from parameters
+     * Get pageable from parameters
      * @param array $params
      * @return array
      */
@@ -80,7 +80,7 @@ class PicoDatabaseUtil
         {
             foreach($params as $param)
             {
-                if($param instanceof PicoPagable)
+                if($param instanceof PicoPageable)
                 {
                     break;
                 }

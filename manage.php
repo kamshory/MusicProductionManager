@@ -1,5 +1,5 @@
 <?php
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
@@ -275,10 +275,10 @@ else
   $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 }
 
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
 $songEntity = new EntitySong(null, $database);
-$rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
+$rowData = $songEntity->findAll($spesification, $pageable, $sortable, true);
 
 $result = $rowData->getResult();
 

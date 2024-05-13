@@ -176,7 +176,6 @@ class PicoEntityLabel
         $notNullColumns = array();
         $props = $reflexClass->getProperties();
         $defaultValue = array();
-
         $labels = array();
 
         // iterate each properties of the class
@@ -213,6 +212,7 @@ class PicoEntityLabel
                     }
                 }
             }
+            
             // set column type
             foreach($parameters as $param=>$val)
             {

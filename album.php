@@ -1,6 +1,6 @@
 <?php
 
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSort;
@@ -371,10 +371,10 @@ $pagination = new PicoPagination($cfg->getResultPerPage());
 
 $spesification = SpecificationUtil::createAlbumSpecification($inputGet);
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
 $albumEntity = new EntityAlbum(null, $database);
-$rowData = $albumEntity->findAll($spesification, $pagable, $sortable, true);
+$rowData = $albumEntity->findAll($spesification, $pageable, $sortable, true);
 
 $result = $rowData->getResult();
 

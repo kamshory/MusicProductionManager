@@ -53,7 +53,6 @@ class PicoLimit
             $limit = 0;
         }
         $this->limit = $limit;
-
         return $this;
     }
 
@@ -77,7 +76,6 @@ class PicoLimit
             $offset = 0;
         }
         $this->offset = $offset;
-
         return $this;
     }
     

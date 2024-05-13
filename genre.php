@@ -1,5 +1,5 @@
 <?php
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Pagination\PicoPagination;
@@ -40,10 +40,10 @@ $pagination = new PicoPagination($cfg->getResultPerPage());
 
 $spesification = SpecificationUtil::createGenreSpecification($inputGet);
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
 $genreEntity = new Genre(null, $database);
-$rowData = $genreEntity->findAll($spesification, $pagable, $sortable, true);
+$rowData = $genreEntity->findAll($spesification, $pageable, $sortable, true);
 
 $result = $rowData->getResult();
 

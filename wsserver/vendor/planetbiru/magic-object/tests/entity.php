@@ -1,7 +1,7 @@
 <?php
 
 use MagicObject\Database\PicoDatabase;
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSort;
@@ -664,9 +664,9 @@ try
 	$sortable->addSortable(new PicoSort("producer.birthDay", PicoSort::ORDER_TYPE_ASC));
 	$sortable->addSortable(new PicoSort("producer.producerId", PicoSort::ORDER_TYPE_DESC));
 	
-	$pagable = new PicoPagable(new PicoPage(2, 2));
+	$pageable = new PicoPageable(new PicoPage(2, 2));
 	
-	$pageData = $album->findAll($spesification, $pagable, $sortable, true);
+	$pageData = $album->findAll($spesification, $pageable, $sortable, true);
 	$rowData = $pageData->getResult();
 	foreach($rowData as $alb)
 	{
@@ -674,7 +674,7 @@ try
 	}
 	
 	
-	echo $album->findAllQuery($spesification, $pagable, $sortable, true);
+	echo $album->findAllQuery($spesification, $pageable, $sortable, true);
 	/**
 	 * 	select album.*
 		from album
@@ -692,7 +692,7 @@ try
 	echo "\r\n-----\r\n";
 	echo $sortable;
 	echo "\r\n-----\r\n";
-	echo $pagable;
+	echo $pageable;
 	echo "\r\n-----\r\n";
 	echo $pageData;
 	echo "\r\n-----\r\n";

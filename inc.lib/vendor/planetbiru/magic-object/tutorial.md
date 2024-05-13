@@ -2854,10 +2854,10 @@ else
 	$sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 }
 
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
 $songEntity = new Song(null, $database);
-$pageData = $songEntity->findAll($spesification, $pagable, $sortable, true);
+$pageData = $songEntity->findAll($spesification, $pageable, $sortable, true);
 
 $rowData = $pageData->getResult();
 
@@ -4722,8 +4722,8 @@ try
 		//echo $alb."\r\n\r\n";
 	}
 	
-	$pagable = new PicoPagable(new PicoPage(1, 20));
-	echo $album->findAllQuery($spesification, $pagable, $sortable, true);
+	$pageable = new PicoPageable(new PicoPage(1, 20));
+	echo $album->findAllQuery($spesification, $pageable, $sortable, true);
 	/**
 	 * 	select album.*
 		from album
@@ -4741,7 +4741,7 @@ try
 	echo "\r\n-----\r\n";
 	echo $sortable;
 	echo "\r\n-----\r\n";
-	echo $pagable;
+	echo $pageable;
 }
 catch(Exception $e)
 {
@@ -4756,6 +4756,203 @@ catch(Exception $e)
 ```
 
 `producer` is property of entity that join with other entity, not table name. `birthDay` and `producerId` are is property of entity `producer`, not column name of table `producer`.
+
+### Filter Update
+
+
+Consider the following case:
+
+We have a query as follows:
+
+```sql
+UPDATE album
+SET waiting_for = 3, admin_ask_edit = 'admin', time_ask_edit = '2024-05-10 07:08:09', ip_ask_edit = '::1'
+WHERE album_id = '1234' AND waiting_for = 0;
+```
+
+The query above will be executed for each record checked by the user.
+
+With PicoDatabaseQueryBuilder, we can create it easily as follows:
+
+```php
+if($inputGet->getUserAction() == UserAction::ACTIVATE)
+{
+	if($inputPost->countableCheckedRowId())
+	{
+		foreach($inputPost->getCheckedRowId() as $rowId)
+		{
+			$album = new Album(null, $database);
+			try
+			{
+				$query = new PicoDatabaseQueryBuilder($database);
+				$query->newQuery()
+					->update("album")
+					->set("waiting_for = ?, admin_ask_edit = ?, time_ask_edit = ?, ip_ask_edit = ? ", 
+						WaitingFor::ACTIVATE, $currentAction->getUserId(), $currentAction->getTime(), $currentAction->getIp())
+					->where("album_id = ? and waiting_for = ? ", $rowId, WaitingFor::NOTHING);
+				$database->execute($query);
+			}
+			catch(Exception $e)
+			{
+				// Do something here when record is not found
+			}
+		}
+	}
+}					
+```
+
+But what about using MagicObject?
+
+Maybe you'll make it like this
+
+```php
+if($inputGet->getUserAction() == UserAction::ACTIVATE)
+{
+	if($inputPost->countableCheckedRowId())
+	{
+		foreach($inputPost->getCheckedRowId() as $rowId)
+		{
+			$album = new Album(null, $database);
+			try
+			{
+				$album->findOneByAlbumIdAndWaitingFor($rowId, WaitingFor::NOTHING);
+				$album->setAdminAskEdit($currentAction->getUserId());
+				$album->setTimeAskEdit($currentAction->getTime());
+				$album->setIpAskEdit($currentAction->getIp());
+				$album->setWaitingFor(WaitingFor::ACTIVATE)->update();
+			}
+			catch(Exception $e)
+			{
+				// Do something here when record is not found
+			}
+		}
+	}
+}
+```
+
+The method above looks very elegant. But have you encountered any problems with the method above?
+
+Yes. By using a query builder, the application only runs one query, for example
+
+```sql
+UPDATE album
+SET waiting_for = 3, admin_ask_edit = 'admin', time_ask_edit = '2024-05-10 07:08:09', ip_ask_edit = '::1'
+WHERE album_id = '1234' AND waiting_for = 0;
+```
+
+However, by using MagicObject, we actually make two inefficient queries.
+
+```sql
+SELECT album.*
+WHERE album_id = '1234' AND waiting_for = 0;
+```
+
+and
+
+```sql
+UPDATE album
+SET waiting_for = 3, admin_ask_edit = 'admin', time_ask_edit = '2024-05-10 07:08:09', ip_ask_edit = '::1'
+WHERE album_id = '1234' ;
+```
+
+Of course, if the `Album` entity has joins with other tables, for example `Producer`, `Client` etc., the number of queries that will be executed by the database will be greater and in fact these queries are not needed at all in the application logic.
+
+In large-scale applications, of course this method will cause problems. Imagine if an application interacted with the database 30 to 40 percent more than it should. Of course the user must provide a database server with greater specifications than necessary. This of course will cause unnecessary costs.
+
+MagicObject provides a more efficient way for this case by using the `where` method and specification.
+
+See the following example:
+
+```php
+if($inputGet->getUserAction() == UserAction::ACTIVATE)
+{
+	if($inputPost->countableCheckedRowId())
+	{
+		foreach($inputPost->getCheckedRowId() as $rowId)
+		{
+			$album = new Album(null, $database);
+			try
+			{
+				$album->where(PicoSpecification::getInstance()
+					->addAnd(PicoPredicate::getInstance()->setAlbumId($rowId))
+					->addAnd(PicoPredicate::getInstance()->setWaitingFor(WaitingFor::NOTHING))
+				)
+				->setAdminAskEdit($currentAction->getUserId())
+				->setTimeAskEdit($currentAction->getTime())
+				->setIpAskEdit($currentAction->getIp())
+				->setWaitingFor(WaitingFor::ACTIVATE)
+				->update();
+			}
+			catch(Exception $e)
+			{
+				// Do something here when record is not found
+			}
+		}
+	}
+}
+```
+
+```php
+$album
+->where(PicoSpecification::getInstance()
+->addAnd(PicoPredicate::getInstance()->setAlbumId($rowId))
+->addAnd(PicoPredicate::getInstance()->setWaitingFor(WaitingFor::NOTHING))
+)
+```
+
+will create criteria for the actions to be carried out next. In this case, these actions are
+
+```php
+$album
+->setAdminAskEdit($currentAction->getUserId())
+->setTimeAskEdit($currentAction->getTime())
+->setIpAskEdit($currentAction->getIp())
+->setWaitingFor(WaitingFor::ACTIVATE)
+->update();
+```
+
+Note that the object returned by the `where` method is instance of `PicoDatabasePersistenceExtended` not instance of `MagicObject`. Of course, we will no longer be able to use the methods in MagicObject. 
+
+### Filter Delete
+
+Just like in the case of updates, deletes with more complicated specifications are also possible using the delete filter. Instead of selecting with specifications and then deleting them, deleting with specifications will be more efficient because the application only performs one query to the database.
+
+```sql
+DELETE FROM album
+WHERE album_id = '1234' AND waiting_for = 0;
+```
+
+```php
+$album
+->where(PicoSpecification::getInstance()
+->addAnd(PicoPredicate::getInstance()->setAlbumId('1234'))
+->addAnd(PicoPredicate::getInstance()->setWaitingFor(0))
+)
+->delete();
+```
+
+We'll look at an example of delete with a more complex filter that can't be done with the deleteBy method.
+
+```sql
+DELETE FROM album
+WHERE album_id = '1234' AND (waiting_for = 0 or waiting_for IS NULL)
+
+```
+
+```php
+$specfification = new PicoSpecification();
+$specfification->addAnd(new PicoPredicate('albumId', '1234'));
+$spec2 = new PicoSpecification();
+$predicate1 = new PicoPredicate('waitingFor', 0);
+$predicate1 = new PicoPredicate('waitingFor', null);
+$spec2->addOr($predicate1);
+$spec2->addOr($predicate2);
+$specfification->addAnd($spec2);
+
+$album = new Album(null, $database);
+$album->where($specfification)->delete();
+
+```
 ## Filtering, Ordering and Pagination
 
 MagicObject will filter data according to the given criteria. On the other hand, MagicObject will only retrieve data on the specified page by specifying `limit` and `offset` data in the `select` query.
@@ -5272,7 +5469,7 @@ Filtering and pagination
 
 ```php
 <?php
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
@@ -5424,10 +5621,10 @@ else
 $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 }
 
-$pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), $pagination->getPageSize()), $sortable);
 
 $songEntity = new EntitySong(null, $database);
-$rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
+$rowData = $songEntity->findAll($spesification, $pageable, $sortable, true);
 
 $result = $rowData->getResult();
 

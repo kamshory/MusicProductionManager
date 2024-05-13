@@ -1,7 +1,7 @@
 <?php
 
 use MagicObject\Database\PicoDatabaseQueryBuilder;
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoPredicate;
 use MagicObject\Database\PicoSort;
@@ -514,10 +514,10 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
 
           $sortable = new PicoSortable('timeCreate', 'desc');
 
-          $pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
+          $pageable = new PicoPageable(new PicoPage(1, 10), $sortable);
 
           $userActivityEntity = new EntityUserActivity(null, $database);
-          $rowData = $userActivityEntity->findAll($spesification, $pagable, $sortable, true);
+          $rowData = $userActivityEntity->findAll($spesification, $pageable, $sortable, true);
 
           $result = $rowData->getResult();
 
@@ -574,10 +574,10 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
 
           $sortable = new PicoSortable('timeCreate', 'desc');
 
-          $pagable = new PicoPagable(new PicoPage(1, 10), $sortable);
+          $pageable = new PicoPageable(new PicoPage(1, 10), $sortable);
 
           $albumEntity = new EntityAlbum(null, $database);
-          $rowData = $albumEntity->findAll($spesification, $pagable, $sortable, true);
+          $rowData = $albumEntity->findAll($spesification, $pageable, $sortable, true);
 
           $result = $rowData->getResult();
           if (!empty($result)) {
@@ -735,10 +735,10 @@ $orderMap = array(
 
   $sortable = new PicoSortable($pagination->getOrderBy($orderMap, $defaultOrderBy), $pagination->getOrderType($defaultOrderType));
 
-  $pagable = new PicoPagable(new PicoPage($pagination->getCurrentPage(), 10), $sortable);
+  $pageable = new PicoPageable(new PicoPage($pagination->getCurrentPage(), 10), $sortable);
 
   $songEntity = new EntitySong(null, $database);
-  $rowData = $songEntity->findAll($spesification, $pagable, $sortable, true);
+  $rowData = $songEntity->findAll($spesification, $pageable, $sortable, true);
 
   $result = $rowData->getResult();
 

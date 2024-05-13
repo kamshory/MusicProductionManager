@@ -976,7 +976,7 @@ class PicoDatabaseCredentials extends SecretObject
 }
 
 $cfg = new ConfigApp(null, true);
-$cfg-&gt;loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg-&gt;loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg-&gt;getDatabase());
 
@@ -1506,7 +1506,7 @@ use MusicProductionManager\Data\Entity\Album;
 require_once dirname(__DIR__)."/vendor/autoload.php";
 
 $cfg = new ConfigApp(null, true);
-$cfg-&gt;loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg-&gt;loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg-&gt;getDatabase());
 $database = new PicoDatabase($databaseCredentials);
@@ -2577,10 +2577,10 @@ else
     $sortable = new PicoSortable($pagination-&gt;getOrderBy($orderMap, $defaultOrderBy), $pagination-&gt;getOrderType($defaultOrderType));
 }
 
-$pagable = new PicoPagable(new PicoPage($pagination-&gt;getCurrentPage(), $pagination-&gt;getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination-&gt;getCurrentPage(), $pagination-&gt;getPageSize()), $sortable);
 
 $songEntity = new Song(null, $database);
-$pageData = $songEntity-&gt;findAll($spesification, $pagable, $sortable, true);
+$pageData = $songEntity-&gt;findAll($spesification, $pageable, $sortable, true);
 
 $rowData = $pageData-&gt;getResult();
 
@@ -4375,8 +4375,8 @@ try
         //echo $alb."\r\n\r\n";
     }
 
-    $pagable = new PicoPagable(new PicoPage(1, 20));
-    echo $album-&gt;findAllQuery($spesification, $pagable, $sortable, true);
+    $pageable = new PicoPageable(new PicoPage(1, 20));
+    echo $album-&gt;findAllQuery($spesification, $pageable, $sortable, true);
     /**
      *  select album.*
         from album
@@ -4394,7 +4394,7 @@ try
     echo "\r\n-----\r\n";
     echo $sortable;
     echo "\r\n-----\r\n";
-    echo $pagable;
+    echo $pageable;
 }
 catch(Exception $e)
 {
@@ -4404,6 +4404,143 @@ catch(Exception $e)
     $predicate2-&gt;lessThan('producer.birthDay', '2001-01-01');
     $spesification-&gt;addAnd($predicate2);</code></pre>
 <p><code>producer</code> is property of entity that join with other entity, not table name. <code>birthDay</code> and <code>producerId</code> are is property of entity <code>producer</code>, not column name of table <code>producer</code>.</p>
+<h3>Filter Update</h3>
+<p>Consider the following case:</p>
+<p>We have a query as follows:</p>
+<pre><code class="language-sql">UPDATE album
+SET waiting_for = 3, admin_ask_edit = 'admin', time_ask_edit = '2024-05-10 07:08:09', ip_ask_edit = '::1'
+WHERE album_id = '1234' AND waiting_for = 0;</code></pre>
+<p>The query above will be executed for each record checked by the user.</p>
+<p>With PicoDatabaseQueryBuilder, we can create it easily as follows:</p>
+<pre><code class="language-php">if($inputGet-&gt;getUserAction() == UserAction::ACTIVATE)
+{
+    if($inputPost-&gt;countableCheckedRowId())
+    {
+        foreach($inputPost-&gt;getCheckedRowId() as $rowId)
+        {
+            $album = new Album(null, $database);
+            try
+            {
+                $query = new PicoDatabaseQueryBuilder($database);
+                $query-&gt;newQuery()
+                    -&gt;update("album")
+                    -&gt;set("waiting_for = ?, admin_ask_edit = ?, time_ask_edit = ?, ip_ask_edit = ? ", 
+                        WaitingFor::ACTIVATE, $currentAction-&gt;getUserId(), $currentAction-&gt;getTime(), $currentAction-&gt;getIp())
+                    -&gt;where("album_id = ? and waiting_for = ? ", $rowId, WaitingFor::NOTHING);
+                $database-&gt;execute($query);
+            }
+            catch(Exception $e)
+            {
+                // Do something here when record is not found
+            }
+        }
+    }
+}                   </code></pre>
+<p>But what about using MagicObject?</p>
+<p>Maybe you'll make it like this</p>
+<pre><code class="language-php">if($inputGet-&gt;getUserAction() == UserAction::ACTIVATE)
+{
+    if($inputPost-&gt;countableCheckedRowId())
+    {
+        foreach($inputPost-&gt;getCheckedRowId() as $rowId)
+        {
+            $album = new Album(null, $database);
+            try
+            {
+                $album-&gt;findOneByAlbumIdAndWaitingFor($rowId, WaitingFor::NOTHING);
+                $album-&gt;setAdminAskEdit($currentAction-&gt;getUserId());
+                $album-&gt;setTimeAskEdit($currentAction-&gt;getTime());
+                $album-&gt;setIpAskEdit($currentAction-&gt;getIp());
+                $album-&gt;setWaitingFor(WaitingFor::ACTIVATE)-&gt;update();
+            }
+            catch(Exception $e)
+            {
+                // Do something here when record is not found
+            }
+        }
+    }
+}</code></pre>
+<p>The method above looks very elegant. But have you encountered any problems with the method above?</p>
+<p>Yes. By using a query builder, the application only runs one query, for example</p>
+<pre><code class="language-sql">UPDATE album
+SET waiting_for = 3, admin_ask_edit = 'admin', time_ask_edit = '2024-05-10 07:08:09', ip_ask_edit = '::1'
+WHERE album_id = '1234' AND waiting_for = 0;</code></pre>
+<p>However, by using MagicObject, we actually make two inefficient queries.</p>
+<pre><code class="language-sql">SELECT album.*
+WHERE album_id = '1234' AND waiting_for = 0;</code></pre>
+<p>and</p>
+<pre><code class="language-sql">UPDATE album
+SET waiting_for = 3, admin_ask_edit = 'admin', time_ask_edit = '2024-05-10 07:08:09', ip_ask_edit = '::1'
+WHERE album_id = '1234' ;</code></pre>
+<p>Of course, if the <code>Album</code> entity has joins with other tables, for example <code>Producer</code>, <code>Client</code> etc., the number of queries that will be executed by the database will be greater and in fact these queries are not needed at all in the application logic.</p>
+<p>In large-scale applications, of course this method will cause problems. Imagine if an application interacted with the database 30 to 40 percent more than it should. Of course the user must provide a database server with greater specifications than necessary. This of course will cause unnecessary costs.</p>
+<p>MagicObject provides a more efficient way for this case by using the <code>where</code> method and specification.</p>
+<p>See the following example:</p>
+<pre><code class="language-php">if($inputGet-&gt;getUserAction() == UserAction::ACTIVATE)
+{
+    if($inputPost-&gt;countableCheckedRowId())
+    {
+        foreach($inputPost-&gt;getCheckedRowId() as $rowId)
+        {
+            $album = new Album(null, $database);
+            try
+            {
+                $album-&gt;where(PicoSpecification::getInstance()
+                    -&gt;addAnd(PicoPredicate::getInstance()-&gt;setAlbumId($rowId))
+                    -&gt;addAnd(PicoPredicate::getInstance()-&gt;setWaitingFor(WaitingFor::NOTHING))
+                )
+                -&gt;setAdminAskEdit($currentAction-&gt;getUserId())
+                -&gt;setTimeAskEdit($currentAction-&gt;getTime())
+                -&gt;setIpAskEdit($currentAction-&gt;getIp())
+                -&gt;setWaitingFor(WaitingFor::ACTIVATE)
+                -&gt;update();
+            }
+            catch(Exception $e)
+            {
+                // Do something here when record is not found
+            }
+        }
+    }
+}</code></pre>
+<pre><code class="language-php">$album
+-&gt;where(PicoSpecification::getInstance()
+-&gt;addAnd(PicoPredicate::getInstance()-&gt;setAlbumId($rowId))
+-&gt;addAnd(PicoPredicate::getInstance()-&gt;setWaitingFor(WaitingFor::NOTHING))
+)</code></pre>
+<p>will create criteria for the actions to be carried out next. In this case, these actions are</p>
+<pre><code class="language-php">$album
+-&gt;setAdminAskEdit($currentAction-&gt;getUserId())
+-&gt;setTimeAskEdit($currentAction-&gt;getTime())
+-&gt;setIpAskEdit($currentAction-&gt;getIp())
+-&gt;setWaitingFor(WaitingFor::ACTIVATE)
+-&gt;update();</code></pre>
+<p>Note that the object returned by the <code>where</code> method is instance of <code>PicoDatabasePersistenceExtended</code> not instance of <code>MagicObject</code>. Of course, we will no longer be able to use the methods in MagicObject. </p>
+<h3>Filter Delete</h3>
+<p>Just like in the case of updates, deletes with more complicated specifications are also possible using the delete filter. Instead of selecting with specifications and then deleting them, deleting with specifications will be more efficient because the application only performs one query to the database.</p>
+<pre><code class="language-sql">DELETE FROM album
+WHERE album_id = '1234' AND waiting_for = 0;</code></pre>
+<pre><code class="language-php">$album
+-&gt;where(PicoSpecification::getInstance()
+-&gt;addAnd(PicoPredicate::getInstance()-&gt;setAlbumId('1234'))
+-&gt;addAnd(PicoPredicate::getInstance()-&gt;setWaitingFor(0))
+)
+-&gt;delete();</code></pre>
+<p>We'll look at an example of delete with a more complex filter that can't be done with the deleteBy method.</p>
+<pre><code class="language-sql">DELETE FROM album
+WHERE album_id = '1234' AND (waiting_for = 0 or waiting_for IS NULL)
+</code></pre>
+<pre><code class="language-php">$specfification = new PicoSpecification();
+$specfification-&gt;addAnd(new PicoPredicate('albumId', '1234'));
+$spec2 = new PicoSpecification();
+$predicate1 = new PicoPredicate('waitingFor', 0);
+$predicate1 = new PicoPredicate('waitingFor', null);
+$spec2-&gt;addOr($predicate1);
+$spec2-&gt;addOr($predicate2);
+$specfification-&gt;addAnd($spec2);
+
+$album = new Album(null, $database);
+$album-&gt;where($specfification)-&gt;delete();
+</code></pre>
 </article>
 
 <article class="article" id="part13">
@@ -4913,7 +5050,7 @@ class EntitySong extends MagicObject
 }</code></pre>
 <p>Filtering and pagination</p>
 <pre><code class="language-php">&lt;?php
-use MagicObject\Database\PicoPagable;
+use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPage;
 use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
@@ -5065,10 +5202,10 @@ else
 $sortable = new PicoSortable($pagination-&gt;getOrderBy($orderMap, $defaultOrderBy), $pagination-&gt;getOrderType($defaultOrderType));
 }
 
-$pagable = new PicoPagable(new PicoPage($pagination-&gt;getCurrentPage(), $pagination-&gt;getPageSize()), $sortable);
+$pageable = new PicoPageable(new PicoPage($pagination-&gt;getCurrentPage(), $pagination-&gt;getPageSize()), $sortable);
 
 $songEntity = new EntitySong(null, $database);
-$rowData = $songEntity-&gt;findAll($spesification, $pagable, $sortable, true);
+$rowData = $songEntity-&gt;findAll($spesification, $pageable, $sortable, true);
 
 $result = $rowData-&gt;getResult();
 
@@ -5903,7 +6040,7 @@ use MusicProductionManager\Data\Entity\Album;
 require_once dirname(__DIR__)."/vendor/autoload.php";
 
 $cfg = new ConfigApp(null, true);
-$cfg-&gt;loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true);
+$cfg-&gt;loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 
 $databaseCredentials = new PicoDatabaseCredentials($cfg-&gt;getDatabase());
 $database = new PicoDatabase($databaseCredentials);

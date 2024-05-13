@@ -8,7 +8,7 @@ use stdClass;
 class PicoPageData
 {
     const RESULT = 'result';
-    const PAGABLE = 'pagable';
+    const PAGABLE = 'pageable';
 
     /**
      * Result
@@ -20,9 +20,9 @@ class PicoPageData
     /**
      * Pagable
      *
-     * @var PicoPagable
+     * @var PicoPageable
      */
-    private $pagable;
+    private $pageable;
 
     /**
      * Total match
@@ -83,9 +83,9 @@ class PicoPageData
      * @param MagicObject[] $result
      * @param integer $startTime
      * @param integer $totalResult
-     * @param PicoPagable $pagable
+     * @param PicoPageable $pageable
      */
-    public function __construct($result, $startTime, $totalResult = 0, $pagable = null)
+    public function __construct($result, $startTime, $totalResult = 0, $pageable = null)
     {
         $this->startTime = $startTime;
         $this->result = $result;
@@ -98,9 +98,9 @@ class PicoPageData
         {
             $this->totalResult = $countResult;
         }
-        if($pagable != null && $pagable instanceof PicoPagable)
+        if($pageable != null && $pageable instanceof PicoPageable)
         {
-            $this->pagable = $pagable;
+            $this->pageable = $pageable;
             $this->calculateContent();
         }
         else
@@ -121,9 +121,9 @@ class PicoPageData
      */
     private function calculateContent()
     {
-        $this->pageNumber = $this->pagable->getPage()->getPageNumber();
-        $this->totalPage = ceil($this->totalResult / $this->pagable->getPage()->getPageSize());
-        $this->pageSize = $this->pagable->getPage()->getPageSize();
+        $this->pageNumber = $this->pageable->getPage()->getPageNumber();
+        $this->totalPage = ceil($this->totalResult / $this->pageable->getPage()->getPageSize());
+        $this->pageSize = $this->pageable->getPage()->getPageSize();
 
         $curPage = $this->pageNumber;
         $totalPage = $this->totalPage;
@@ -227,12 +227,12 @@ class PicoPageData
     }
 
     /**
-     * Get pagable
+     * Get pageable
      *
-     * @return PicoPagable
+     * @return PicoPageable
      */ 
     public function getPagable()
     {
-        return $this->pagable;
+        return $this->pageable;
     }
 }

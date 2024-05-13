@@ -4,7 +4,7 @@ namespace MagicObject\Database;
 
 use stdClass;
 
-class PicoPagable
+class PicoPageable
 {
     /**
      * Page
@@ -28,12 +28,12 @@ class PicoPagable
     private $offsetLimit = null;
     
     /**
-     * Constructor of pagable
+     * Constructor of pageable
      * Example: 
-     * 1. $pagable = new Pagable(array(0, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
-     * 2. $pagable = new Pagable(new PicoPage(0, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
-     * 3. $pagable = new Pagable(array(0, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
-     * 4. $pagable = new Pagable(new PicoPage(0, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * 1. $pageable = new Pagable(array(0, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * 2. $pageable = new Pagable(new PicoPage(0, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * 3. $pageable = new Pagable(array(0, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * 4. $pageable = new Pagable(new PicoPage(0, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
      *
      * @param PicoPage|PicoLimit|array $page
      * @param PicoSortable|array $sortable

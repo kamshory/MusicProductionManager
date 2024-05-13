@@ -52,6 +52,10 @@ php composer.phar remove planetbiru/magic-object
 
 To install composer on your PC or download latest composer.phar, click https://getcomposer.org/download/ 
 
+# Advantages
+
+MagicObject does not only pay attention to the ease of users in creating applications. MagicObject also pays attention to the efficiency of both time and resources used by applications so that applications can be run on servers with minimum specifications. This of course will save costs used both in application development and operations.
+
 # Application Scaling
 
 For large applications, users can scale the database and storage. So that a user can access any server, use Redis as a session repository. MagicObject clouds session storage with Redis which can be secured using a password.
