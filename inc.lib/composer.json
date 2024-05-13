@@ -12,7 +12,8 @@
         "james-heinrich/getid3": "^1.9",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.6",
-        "setasign/fpdi-fpdf": "^2.3"
+        "setasign/fpdi-fpdf": "^2.3",
+        "planetbiru/magic-object": "1.6"
     },
     "config": {
         "platform": {
