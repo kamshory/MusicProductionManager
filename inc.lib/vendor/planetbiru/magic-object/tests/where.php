@@ -461,7 +461,7 @@ $album = new EntityAlbum(null, $database);
 
 $album->where(PicoSpecification::getInstance()
 		->addAnd(PicoPredicate::getInstance()->setActive(null))
-		->addAnd(PicoPredicate::getInstance()->setAlbumId($rowId))
+		->addAnd(new PicoPredicate('lower(producer.producerId', '1111111'))
 		->addAnd(PicoPredicate::getInstance()->setWaitingFor(0))
 	)
 	->setAdminAskEdit("AAA")

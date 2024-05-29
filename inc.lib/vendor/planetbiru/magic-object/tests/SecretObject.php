@@ -52,7 +52,7 @@ $secret1 = new ConfigSecret1(null, function(){
     return bin2hex("This is your secure key for Scrt");
 });
 
-$yaml1 = "
+$yaml1 = '
 result_per_page: 20
 song_base_url: http//domain.tld/songs
 song_base_path: /var/www/songs
@@ -87,15 +87,20 @@ session:
   save_handler: files
   save_path: /tmp/session
 vocal_guide_instrument: piano
-";
+prop1:
+  prop2:
+    prop3: $(database.time_zone}
+';
+/*
 $secret1->loadYamlString(
 $yaml1,
 false, true, true
 );
 
 echo $secret1->dumpYaml(null, 4);
+*/
 
-$yaml2 = "
+$yaml2 = '
 database:
     time_zone_system: UEMGavyLkN7rFAmoXBsdDKwuGC+zFttpPTAaqeMH0XUEZaAMKbyvykNtfqT+F8FcAbQCUHV66qjYfjArzgrHlA==
     default_charset: dawURojqYqXdvt2YdZ+kWsq47bcA7FKWnEfGHPMxJr3KUyKxAC0VrH8Khfqcm5iIzQFHE/1wQbdgxJNiffkayw==
@@ -119,7 +124,7 @@ song_base_path: /var/www/songs
 song_draft_base_url: http//domain.tld/songs-draft
 song_draft_base_path: /var/www/songs-draft
 proxy_provider: cloudflare
-app_name: 'Music Production Manager'
+app_name: "Music Production Manager"
 user_image:
     width: 512
     height: 512
@@ -130,10 +135,76 @@ song_image:
     width: 512
     height: 512
 vocal_guide_instrument: piano
-";
+prop1:
+  prop2:
+    prop3: ${user_image.width}
+';
 
+/*
 $secret2 = new ConfigSecret2(null, function(){
     return bin2hex("This is your secure key for Scrt");
-});$secret2->loadYamlString($yaml2, false, true, true);
+});
+
+$secret2->loadYamlString($yaml2, false, true, true);
 
 echo $secret2->dumpYaml(null, 4);
+
+*/
+$yaml4 ='
+application:
+    id: your-application
+    name: Your Application Name
+    application_base_namespace: YourApplication
+    application_base_directory: /var/www/html/your-application
+    entity_base_namespace: YourApplication\Data\Entity
+    entity_base_directory: /var/www/html/your-application/inc.lib/classes
+    entity_base_namespace: YourApplication\\Data\Entity
+    base_include_directory: inc.app
+    base_asset_directory: lib.assets
+    composer:
+        base_directory: inc.lib
+        psr0: true
+        psr4: false
+        psr0_base_directory:
+            -
+                namespace: YourApplication
+                directory: classes
+        psr4_base_directory: null
+    magic_object:
+        version: 1.6
+entity_info:
+    active: active
+    draft: draft
+    waiting_for: waiting_for
+    admin_create: admin_create
+    admin_edit: admin_edit
+    admin_ask_edit: admin_ask_edit
+    time_create: time_create
+    time_edit: time_edit
+    time_ask_edit: time_ask_edit
+    ip_create: ip_create
+    ip_edit: ip_edit
+    ip_ask_edit: ip_ask_edit
+    sort_order: sort_order
+    approval_id: approval_id
+    approval_note: approval_note
+    approval_status: approval_status
+sessions:
+    name: APPBUILDER
+    lifetime: 14400
+    save_handler: files
+    save_path: ""
+current_action:
+    user_function: currentAction->getUserId()
+    time_function: currentAction->getTime()
+    ip_function: currentAction->getIp()
+global_variable_database: database
+';
+
+$secret2 = new ConfigSecret2(null, function(){
+  return bin2hex("This is your secure key for Scrt");
+});
+
+$secret2->loadYamlString($yaml4, false, true, true);
+echo $secret2->getApplication()->getComposer()->getPsr0BaseDirectory()[0];
+//var_dump($secret2->getApplication()->getComposer());

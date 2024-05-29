@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e312e4540c0b935d6382660b3d2d03e",
+    "content-hash": "6e45177b10e6c5bdf1b87f892f93f3fe",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -546,16 +546,16 @@
         },
         {
             "name": "planetbiru/magic-object",
-            "version": "1.6.0",
+            "version": "dev-feature/1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "f7bfb287107b5370155a58f6c91139617072d28b"
+                "reference": "6d28b7b30ddb960eadf0ab29e7b788be7c1d064a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/f7bfb287107b5370155a58f6c91139617072d28b",
-                "reference": "f7bfb287107b5370155a58f6c91139617072d28b",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/6d28b7b30ddb960eadf0ab29e7b788be7c1d064a",
+                "reference": "6d28b7b30ddb960eadf0ab29e7b788be7c1d064a",
                 "shasum": ""
             },
             "require": {
@@ -579,9 +579,9 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/1.6.0"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/feature/1.8"
             },
-            "time": "2024-05-13T02:11:58+00:00"
+            "time": "2024-05-29T09:31:26+00:00"
         },
         {
             "name": "psr/cache",
@@ -2248,7 +2248,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "planetbiru/magic-object": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

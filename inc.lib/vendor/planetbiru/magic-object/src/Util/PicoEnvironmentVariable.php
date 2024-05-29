@@ -5,12 +5,35 @@ namespace MagicObject\Util;
 class PicoEnvironmentVariable
 {
     /**
-     * Replace all values with environment variable
+     * Replace all values from other properties
      *
      * @param array $values
+     * @param array $collection
+     * @param boolean $recursive
      * @return array
      */
-    public function replaceSysEnvAll($values, $recursive = false)
+    public static function replaceValueAll($values, $collection, $recursive = false)
+    {
+        if(is_array($values))
+        {
+            return self::replaceValueAllArray($values, $collection, $recursive);
+        }
+        else if(is_object($values))
+        {
+            return self::replaceValueAllObject($values, $collection, $recursive);
+        }
+        return $values;
+    }
+    
+    /**
+     * Replace all values from other properties as array
+     *
+     * @param array $values
+     * @param array $collection
+     * @param boolean $recursive
+     * @return array
+     */
+    public static function replaceValueAllArray($values, $collection, $recursive = false)
     {
         foreach($values as $key=>$value)
         {
@@ -18,16 +41,144 @@ class PicoEnvironmentVariable
             {
                 if(is_object($value) || is_array($value))
                 {
-                    $value = $this->replaceSysEnvAll($value, $recursive);
+                    $value = self::replaceValueAll($value, $collection, $recursive);
                 }
                 else
                 {
-                    $value = $this->replaceWithEnvironmentVariable($value);
+                    $value = self::replaceWithOtherProperties($value, $collection);
                 }
             }
             else
             {
-                $value = $this->replaceWithEnvironmentVariable($value);
+                $value = self::replaceWithOtherProperties($value, $collection);
+            }
+            $values[$key] = $value;
+        }
+        return $values;
+    }
+    
+    /**
+     * Replace all values from other properties as object
+     *
+     * @param stdClass|object $values
+     * @param array $collection
+     * @param boolean $recursive
+     * @return array
+     */
+    public static function replaceValueAllObject($values, $collection, $recursive = false)
+    {
+        foreach($values as $key=>$value)
+        {
+            if($recursive)
+            {
+                if(is_object($value) || is_array($value))
+                {
+                    $value = self::replaceValueAll($value, $collection, $recursive);
+                }
+                else
+                {
+                    $value = self::replaceWithOtherProperties($value, $collection);
+                }
+            }
+            else
+            {
+                $value = self::replaceWithOtherProperties($value, $collection);
+            }
+            $values->{$key} = $value;
+        }
+        return $values;
+    }
+    
+    /**
+     * Replace string with environment variable nane from a string
+     *
+     * @param string $value
+     * @param array $collection
+     * @return mixed
+     */
+    public static function replaceWithOtherProperties($value, $collection)
+    {
+        if(stripos($value, '$') !== false)
+        {
+            $result = $value;
+            $regex = '/\$\\{([^}]+)\\}/m';
+            preg_match_all($regex, $value, $matches);
+            
+            $pair = array_combine($matches[0], $matches[1]);  
+            if(!empty($pair))
+            {
+                foreach($pair as $key=>$value)
+                {
+                    $otherValue = self::getOtherValue($value, $collection);
+                    if($otherValue !== null)
+                    {
+                        // found
+                        $result = str_replace($key, $otherValue, $result);
+                        // keep data type
+                        if($result == $otherValue)
+                        {
+                            return $otherValue;
+                        }
+                    }
+                }
+            }
+            return $result;
+        }
+        return $value;
+    }
+    
+    /**
+     * Get other value
+     *
+     * @param string $key
+     * @param array $collection
+     * @return mixed
+     */
+    public static function getOtherValue($key, $collection)
+    {
+        print_r($collection);
+        $keys = explode(".", trim($key, ""));
+        if(count($keys) == 1 && isset($collection[$key]))
+        {
+            return $collection[$key];
+        }
+        $value = $collection[$keys[0]];
+        for($i = 1; $i < count($keys); $i++)
+        {
+            if(!isset($value[$keys[$i]]))
+            {
+                return null;
+            }
+            $value = $value[$keys[$i]];
+        }
+        return $value;
+    }
+    
+    /**
+     * Replace all values with environment variable
+     *
+     * @param array $values
+     * @param boolean $recursive
+     * @return array
+     */
+    public static function replaceSysEnvAll($values, $recursive = false)
+    {
+        foreach($values as $key=>$value)
+        {
+            if($recursive)
+            {
+                if(is_object($value) || is_array($value))
+                {
+                    $value = self::replaceSysEnvAll($value, $recursive);
+                }
+                else
+                {
+                    $value = self::replaceWithEnvironmentVariable($value);
+                }
+            }
+            else
+            {
+                $value = self::replaceWithEnvironmentVariable($value);
             }
             $values[$key] = $value;
         }
@@ -40,7 +191,7 @@ class PicoEnvironmentVariable
      * @param string $value
      * @return string
      */
-    public function replaceWithEnvironmentVariable($value)
+    public static function replaceWithEnvironmentVariable($value)
     {
         $result = $value;
         $regex = '/\$\\{([^}]+)\\}/m';
@@ -71,9 +222,9 @@ class PicoEnvironmentVariable
      * @param string $value
      * @return string
      */
-    public function replaceSysEnv($value)
+    public static function replaceSysEnv($value)
     {
-        $vars = $this->getVariables($value);
+        $vars = self::getVariables($value);
         foreach($vars as $key)
         {
             $systemEnv = getenv($key);
@@ -92,7 +243,7 @@ class PicoEnvironmentVariable
      * @param string $value
      * @return array
      */
-    public function getVariables($value)
+    public static function getVariables($value)
     {
         $result = array();
         $arr = explode('${', $value);

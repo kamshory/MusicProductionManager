@@ -158,8 +158,10 @@ Attributes:
 
 Allowed value:
 
-- `SNAKE_CASE` all column will be snace case when `__toString()` or `dumpYaml()` method called.
-- `CAMEL_CASE` all column will be camel case when `__toString()` or `dumpYaml()` method called.
+- `SNAKE_CASE` all properties will be snake case when `__toString()` method called.
+- `CAMEL_CASE` all properties will be camel case when `__toString()` method called.
+- `UPPER_CAMEL_CASE` all properties will be camel case with capitalize first character when `__toString()` method called.
+
 
 Default value: `CAMEL_CASE`
 
@@ -171,6 +173,22 @@ Allowed value:
 - `false` JSON string will not be prettified
 
 Default value: `false`
+
+**@Yaml**
+
+`@Yaml` is parameter to inform how the object will be serialized.
+
+Attributes:
+1. `property-naming-strategy`
+
+Allowed value:
+
+- `SNAKE_CASE` all properties will be snake case when `dumpYaml()` method called.
+- `CAMEL_CASE` all properties will be camel case when `dumpYaml()` method called.
+- `UPPER_CAMEL_CASE` all properties will be camel case with capitalize first character when `__toString()` method called.
+
+Default value: `CAMEL_CASE`
+
 ## Multilevel Object
 
 ```php
@@ -588,8 +606,31 @@ Attributes:
 
 Allowed value:
 
-- `SNAKE_CASE` all column will be snace case when `__toString()` or `dumpYaml()` method called.
-- `CAMEL_CASE` all column will be camel case when `__toString()` or `dumpYaml()` method called.
+- `SNAKE_CASE` all properties will be snake case when `__toString()` method called.
+- `CAMEL_CASE` all properties will be camel case when `__toString()` method called.
+- `UPPER_CAMEL_CASE` all properties will be camel case with capitalize first character when `__toString()` method called.
+
+2. `prettify`
+
+Allowed value:
+
+- `true` JSON string will be prettified
+- `false` JSON string will not be prettified
+
+Default value: `false`
+
+**@Yaml**
+
+`@JSON` is parameter to inform how the object will be serialized.
+
+Attributes:
+`property-naming-strategy`
+
+Allowed value:
+
+- `SNAKE_CASE` all properties will be snake case when `dumpYaml()` method called.
+- `CAMEL_CASE` all properties will be camel case when `dumpYaml()` method called.
+- `UPPER_CAMEL_CASE` all properties will be camel case with capitalize first character when `__toString()` method called.
 
 ### Property Parameters
 
@@ -700,7 +741,7 @@ $secretYaml = $generator->dumpYaml(null, 4, 0); // will print secret yaml
 file_put_content("secret.yaml", $secretYaml); // will dump to file secret.yaml
 ```
 
-Do not use standard encryption keys when creating or using SecretObjects. Always use your own lock. The encryption key must be generated using a callback function. Do not enter it as an object property or constant.
+Do not use standard encryption keys when creating or using SecretObjects. Always use your own key. The encryption key must be generated using a callback function. Do not enter it as an object property or constant.
 
 ```php
 
@@ -1576,12 +1617,13 @@ Attributes:
 
 Allowed value:
 
-- `SNAKE_CASE` all column will be snace case when `__toString()` or `dumpYaml()` method called.
-- `CAMEL_CASE` all column will be camel case when `__toString()` or `dumpYaml()` method called.
+- `SNAKE_CASE` all properties will be snake case when `__toString()` method called.
+- `CAMEL_CASE` all properties will be camel case when `__toString()` method called.
+- `UPPER_CAMEL_CASE` all properties will be camel case with capitalize first character when `__toString()` method called.
 
 Default value: `CAMEL_CASE`
 
-1. `prettify`
+2. `prettify`
 
 Allowed value:
 
@@ -1677,8 +1719,11 @@ Attributes:
 
 Attributes:
 - `name`
+- `referenceColumnName`
 
-`name` is column name of the join table.
+`name` is column name of the master table.
+
+`referenceColumnName` is column name of the join table. If `referenceColumnName` is not exists, MagicObject will use value on `name` as reference column name.
 
 **@Label** is parameter to store label of the column.
 

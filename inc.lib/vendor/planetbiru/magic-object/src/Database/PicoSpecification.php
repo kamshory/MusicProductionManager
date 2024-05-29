@@ -269,4 +269,27 @@ class PicoSpecification
         }
         return $specification;
     }
+    
+    /**
+     * Get specification from user input
+     *
+     * @param PicoRequestBase $request
+     * @param string[] $map
+     * @return PicoSpecification
+     */
+    public static function fromUserInput($request, $map)
+    {
+        $specification = new PicoSpecification();
+        if($map != null && is_array($map))
+        {
+            foreach($map as $key=>$value)
+            {
+                if($request->get($key) !== null)
+                {
+                    $specification->addAnd(new PicoPredicate($value, $request->get($key)));
+                }
+            }
+        }
+        return $specification;
+    }
 }

@@ -326,6 +326,10 @@ class PicoAnnotationParser
     public function getFirstParameter($key)
     {
         $parameters = $this->parseSingle($key);
+        if($parameters == null)
+        {
+            return null;
+        }
         if(is_string($parameters[0]))
         {
             return $parameters;

@@ -1,12 +1,6 @@
 <?php
 
 use MagicObject\Database\PicoDatabase;
-use MagicObject\Database\PicoPageable;
-use MagicObject\Database\PicoPage;
-use MagicObject\Database\PicoPredicate;
-use MagicObject\Database\PicoSort;
-use MagicObject\Database\PicoSortable;
-use MagicObject\Database\PicoSpecification;
 use MagicObject\Generator\PicoDatabaseDump;
 use MagicObject\MagicObject;
 use MagicObject\SecretObject;

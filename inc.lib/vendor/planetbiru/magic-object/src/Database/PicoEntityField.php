@@ -24,6 +24,13 @@ class PicoEntityField
      * @var string
      */
     private $parentField = null;
+    
+    /**
+     * Function format
+     *
+     * @var string
+     */
+    private $functionFormat = "%s";
 
     /**
      * Get entity
@@ -56,12 +63,23 @@ class PicoEntityField
     }
     
     /**
+     * Get function format
+     *
+     * @return  string
+     */ 
+    public function getFunctionFormat()
+    {
+        return $this->functionFormat;
+    }
+    
+    /**
      * Constructor
      *
-     * @param string $field
+     * @param string $fieldRaw
      */
-    public function __construct($field)
+    public function __construct($fieldRaw)
     {
+        $field = $this->extractField($fieldRaw);
         if(strpos($field, "."))
         {
             $arr = explode(".", $field, 2);
@@ -74,6 +92,31 @@ class PicoEntityField
             $this->field = $field;
         }
     }
+    
+    /**
+     * Extract field from any function
+     *
+     * @param string $fieldRaw
+     * @return string
+     */
+    public function extractField($fieldRaw)
+    {
+        if(strpos($fieldRaw, "(") === false)
+        {
+            $this->functionFormat = "%s";
+            return $fieldRaw;
+        }
+        else
+        {
+            $pattern = '/(\((?:\(??[^\(]*?\)))/m'; //NOSONAR
+            preg_match_all($pattern , $fieldRaw, $out);
+            $field = trim($out[0][0], "()");
+            $this->functionFormat = str_replace($field, "%s", $fieldRaw);
+            return $field;
+        }
+    }
+
+    
 
     
 }

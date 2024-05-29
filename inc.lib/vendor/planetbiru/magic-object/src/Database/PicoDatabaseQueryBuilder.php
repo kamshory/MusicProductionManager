@@ -409,7 +409,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	/**
 	 * Create match value
 	 *
-	 * @param array $args
+	 * @param array $args Arguments
 	 * @return string
 	 */
 	public function createMatchedValue($args)
@@ -443,7 +443,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	 * Create insert query
 	 *
 	 * @param string $table Table name
-	 * @param array $data
+	 * @param array $data Data to be inserted
 	 * @return string
 	 */
 	public function createInsertQuery($table, $data)
@@ -466,7 +466,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	 * Create update query
 	 *
 	 * @param string $table Table name
-	 * @param array $data
+	 * @param array $data Data to be upadted
 	 * @param array $primaryKey
 	 * @return string
 	 */
@@ -498,7 +498,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 
 	/**
 	 * Escape value
-	 * @var mixed
+	 * @var mixed $value Value to be escaped
 	 * @return string
 	 */
 	public function escapeValue($value)

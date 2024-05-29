@@ -231,4 +231,27 @@ class PicoSortable
     {
         return $this->createWithoutMapping();
     }
+    
+    /**
+     * Get sortable from user input
+     *
+     * @param PicoRequestBase $request
+     * @param string[] $map
+     * @return PicoSortable
+     */
+    public static function fromUserInput($request, $map)
+    {
+        $sortable = new PicoSortable();
+        if($map != null && is_array($map))
+        {
+            foreach($map as $key=>$value)
+            {
+                if($request->getOrderby() == $key)
+                {
+                    $sortable->add(new PicoSort($value, PicoSort::fixSortType($request->getOrdertype())));
+                }
+            }
+        }
+        return $sortable;
+    }
 }

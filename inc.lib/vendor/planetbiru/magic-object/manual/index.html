@@ -144,8 +144,9 @@ class MyObject extends MagicObject
 </ol>
 <p>Allowed value:</p>
 <ul>
-<li><code>SNAKE_CASE</code> all column will be snace case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
-<li><code>CAMEL_CASE</code> all column will be camel case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
+<li><code>SNAKE_CASE</code> all properties will be snake case when <code>__toString()</code> method called.</li>
+<li><code>CAMEL_CASE</code> all properties will be camel case when <code>__toString()</code> method called.</li>
+<li><code>UPPER_CAMEL_CASE</code> all properties will be camel case with capitalize first character when <code>__toString()</code> method called.</li>
 </ul>
 <p>Default value: <code>CAMEL_CASE</code></p>
 <ol>
@@ -157,6 +158,19 @@ class MyObject extends MagicObject
 <li><code>false</code> JSON string will not be prettified</li>
 </ul>
 <p>Default value: <code>false</code></p>
+<p><strong>@Yaml</strong></p>
+<p><code>@Yaml</code> is parameter to inform how the object will be serialized.</p>
+<p>Attributes:</p>
+<ol>
+<li><code>property-naming-strategy</code></li>
+</ol>
+<p>Allowed value:</p>
+<ul>
+<li><code>SNAKE_CASE</code> all properties will be snake case when <code>dumpYaml()</code> method called.</li>
+<li><code>CAMEL_CASE</code> all properties will be camel case when <code>dumpYaml()</code> method called.</li>
+<li><code>UPPER_CAMEL_CASE</code> all properties will be camel case with capitalize first character when <code>__toString()</code> method called.</li>
+</ul>
+<p>Default value: <code>CAMEL_CASE</code></p>
 </article>
 
 <article class="article" id="part5">
@@ -517,8 +531,28 @@ class PicoDatabaseCredentials extends SecretObject
 <code>property-naming-strategy</code></p>
 <p>Allowed value:</p>
 <ul>
-<li><code>SNAKE_CASE</code> all column will be snace case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
-<li><code>CAMEL_CASE</code> all column will be camel case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
+<li><code>SNAKE_CASE</code> all properties will be snake case when <code>__toString()</code> method called.</li>
+<li><code>CAMEL_CASE</code> all properties will be camel case when <code>__toString()</code> method called.</li>
+<li><code>UPPER_CAMEL_CASE</code> all properties will be camel case with capitalize first character when <code>__toString()</code> method called.</li>
+</ul>
+<ol start="2">
+<li><code>prettify</code></li>
+</ol>
+<p>Allowed value:</p>
+<ul>
+<li><code>true</code> JSON string will be prettified</li>
+<li><code>false</code> JSON string will not be prettified</li>
+</ul>
+<p>Default value: <code>false</code></p>
+<p><strong>@Yaml</strong></p>
+<p><code>@JSON</code> is parameter to inform how the object will be serialized.</p>
+<p>Attributes:
+<code>property-naming-strategy</code></p>
+<p>Allowed value:</p>
+<ul>
+<li><code>SNAKE_CASE</code> all properties will be snake case when <code>dumpYaml()</code> method called.</li>
+<li><code>CAMEL_CASE</code> all properties will be camel case when <code>dumpYaml()</code> method called.</li>
+<li><code>UPPER_CAMEL_CASE</code> all properties will be camel case with capitalize first character when <code>__toString()</code> method called.</li>
 </ul>
 <h3>Property Parameters</h3>
 <ol>
@@ -621,7 +655,7 @@ echo $generator; // will print JSON
 $secretYaml = $generator-&gt;dumpYaml(null, 4, 0); // will print secret yaml
 
 file_put_content("secret.yaml", $secretYaml); // will dump to file secret.yaml</code></pre>
-<p>Do not use standard encryption keys when creating or using SecretObjects. Always use your own lock. The encryption key must be generated using a callback function. Do not enter it as an object property or constant.</p>
+<p>Do not use standard encryption keys when creating or using SecretObjects. Always use your own key. The encryption key must be generated using a callback function. Do not enter it as an object property or constant.</p>
 <pre><code class="language-php">
 $yaml = "  
 time_zone_system: Asia/Jakarta
@@ -1408,11 +1442,12 @@ class Album extends MagicObject
 </ol>
 <p>Allowed value:</p>
 <ul>
-<li><code>SNAKE_CASE</code> all column will be snace case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
-<li><code>CAMEL_CASE</code> all column will be camel case when <code>__toString()</code> or <code>dumpYaml()</code> method called.</li>
+<li><code>SNAKE_CASE</code> all properties will be snake case when <code>__toString()</code> method called.</li>
+<li><code>CAMEL_CASE</code> all properties will be camel case when <code>__toString()</code> method called.</li>
+<li><code>UPPER_CAMEL_CASE</code> all properties will be camel case with capitalize first character when <code>__toString()</code> method called.</li>
 </ul>
 <p>Default value: <code>CAMEL_CASE</code></p>
-<ol>
+<ol start="2">
 <li><code>prettify</code></li>
 </ol>
 <p>Allowed value:</p>
@@ -1482,8 +1517,10 @@ class Album extends MagicObject
 <p>Attributes:</p>
 <ul>
 <li><code>name</code></li>
+<li><code>referenceColumnName</code></li>
 </ul>
-<p><code>name</code> is column name of the join table.</p>
+<p><code>name</code> is column name of the master table.</p>
+<p><code>referenceColumnName</code> is column name of the join table. If <code>referenceColumnName</code> is not exists, MagicObject will use value on <code>name</code> as reference column name.</p>
 <p><strong>@Label</strong> is parameter to store label of the column.</p>
 <p>Attributes:</p>
 <ul>

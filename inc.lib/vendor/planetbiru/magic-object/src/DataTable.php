@@ -29,7 +29,7 @@ class DataTable extends SetterGetter
     const ANNOTATION_LANGUAGE = "Language";
     const KEY_PROPERTY_TYPE = "property_type";
     const KEY_PROPERTY_NAME = "property_name";
-    
+
     const KEY_NAME = "name";
     const KEY_CLASS = "class";
     const KEY_VALUE = "value";
@@ -138,7 +138,7 @@ class DataTable extends SetterGetter
      * Add language
      *
      * @param string $code
-     * @param stdClass|array $reference
+     * @param object|stdClass|array $reference
      * @param boolean $use
      * @return self
      */
@@ -216,60 +216,6 @@ class DataTable extends SetterGetter
     }
     
     /**
-     * Add class to table
-     *
-     * @param string $className
-     * @return self
-     */
-    public function addClass($className)
-    {
-        if(PicoTableUtil::isValidClassName($className))
-        {
-            $this->_classList[] = $className;
-            // fix duplicated class
-            $this->_classList = array_unique($this->_classList);
-        }
-        return $this;
-    }
-    
-    /**
-     * Remove class from table
-     *
-     * @param string $className
-     * @return self
-     */
-    public function removeClass($className)
-    {
-        if(PicoTableUtil::isValidClassName($className))
-        {
-            $tmp = array();
-            foreach($this->_classList as $cls)
-            {
-                if($cls != $className)
-                {
-                    $tmp[] = $cls;
-                }
-            }
-            $this->_classList = $tmp;
-        }
-        return $this;
-    }
-    
-    /**
-     * Replace class of the table
-     *
-     * @param string $search
-     * @param string $replace
-     * @return self
-     */
-    public function replaceClass($search, $replace)
-    {
-        $this->removeClass($search);
-        $this->addClass($replace);
-        return $this;
-    }
-    
-    /**
      * Property list
      * @var boolean $reflectSelf
      * @var boolean $asArrayProps
@@ -305,6 +251,28 @@ class DataTable extends SetterGetter
             return $properties;
         }
     }
+
+    /**
+     * Annotation content
+     *
+     * @param PicoAnnotationParser $reflexProp
+     * @param PicoGenericObject $parameters
+     * @param string $key
+     * @param string $defaultLabel
+     * @return mixed|null
+     */
+    private function annotationContent($reflexProp, $parameters, $annotation, $attribute)
+    {
+        if($parameters->get($annotation) != null)
+        {
+            $attrs = $reflexProp->parseKeyValueAsObject($parameters->get($annotation));
+            if($attrs->get($attribute) != null)
+            {
+                return $attrs->get($attribute);
+            }
+        }
+        return null;
+    }
     
     /**
      * Define label
@@ -339,28 +307,6 @@ class DataTable extends SetterGetter
             
         }
         return $label;
-    }
-    
-    /**
-     * Annotation content
-     *
-     * @param PicoAnnotationParser $reflexProp
-     * @param PicoGenericObject $parameters
-     * @param string $key
-     * @param string $defaultLabel
-     * @return mixed|null
-     */
-    private function annotationContent($reflexProp, $parameters, $annotation, $attribute)
-    {
-        if($parameters->get($annotation) != null)
-        {
-            $attrs = $reflexProp->parseKeyValueAsObject($parameters->get($annotation));
-            if($attrs->get($attribute) != null)
-            {
-                return $attrs->get($attribute);
-            }
-        }
-        return null;
     }
 
     /**
@@ -461,6 +407,60 @@ class DataTable extends SetterGetter
             $label = PicoStringUtil::camelToTitle($propertyName);
         }
         return $label;
+    }
+
+    /**
+     * Add class to table
+     *
+     * @param string $className
+     * @return self
+     */
+    public function addClass($className)
+    {
+        if(PicoTableUtil::isValidClassName($className))
+        {
+            $this->_classList[] = $className;
+            // fix duplicated class
+            $this->_classList = array_unique($this->_classList);
+        }
+        return $this;
+    }
+    
+    /**
+     * Remove class from table
+     *
+     * @param string $className
+     * @return self
+     */
+    public function removeClass($className)
+    {
+        if(PicoTableUtil::isValidClassName($className))
+        {
+            $tmp = array();
+            foreach($this->_classList as $cls)
+            {
+                if($cls != $className)
+                {
+                    $tmp[] = $cls;
+                }
+            }
+            $this->_classList = $tmp;
+        }
+        return $this;
+    }
+    
+    /**
+     * Replace class of the table
+     *
+     * @param string $search
+     * @param string $replace
+     * @return self
+     */
+    public function replaceClass($search, $replace)
+    {
+        $this->removeClass($search);
+        $this->addClass($replace);
+        return $this;
     }
     
     /**

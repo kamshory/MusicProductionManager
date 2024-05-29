@@ -1,6 +1,7 @@
 <?php
 namespace MagicObject\Pagination;
 
+use MagicObject\Database\PicoSort;
 use MagicObject\Exceptions\NullPointerException;
 use MagicObject\Util\PicoStringUtil;
 
@@ -145,11 +146,11 @@ class PicoPagination
         $orderType = $this->orderType;
         if(strcasecmp($orderType, 'desc') == 0)
         {
-            $orderType = 'desc';
+            $orderType = PicoSort::ORDER_TYPE_DESC;
         }
         else if(strcasecmp($orderType, 'asc') == 0)
         {
-            $orderType = 'asc';
+            $orderType = PicoSort::ORDER_TYPE_ASC;
         }
         else
         {
@@ -190,5 +191,34 @@ class PicoPagination
     public function getOffset()
     {
         return $this->offset;
+    }
+    
+    /**
+     * Get page URL
+     *
+     * @param integer $page
+     * @return string
+     */
+    public static function getPageUrl($page)
+    {
+        $urls = array();
+        $params = array();
+        $urls[] = $_SERVER['PHP_SELF'];
+        
+        $urlParameters = isset($_GET) ? $_GET : null;
+        
+        if($urlParameters != null && is_array($urlParameters))
+        {
+            $urlParameters['page'] = $page;
+            foreach($urlParameters as $paramName=>$paramValue)
+            {
+                $params[] = urlencode($paramName)."=".urlencode($paramValue);
+            }
+        }
+        if(!empty($params))
+        {
+            $urls[] = implode("&", $params);
+        }
+        return implode("?", $urls);
     }
 }

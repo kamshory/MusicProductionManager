@@ -101,6 +101,17 @@ class PicoSort
     {
         return new PicoSort();
     }
+    
+    /**
+     * Fix sort type
+     *
+     * @param string $type
+     * @return string
+     */
+    public static function fixSortType($type)
+    {
+        return strtolower($type) == 'desc' ? self::ORDER_TYPE_ASC : self::ORDER_TYPE_ASC;
+    }
 
     /**
      * This method is for debug purpose only.
