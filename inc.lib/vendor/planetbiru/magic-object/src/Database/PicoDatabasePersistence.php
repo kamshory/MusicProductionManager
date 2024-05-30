@@ -1421,10 +1421,10 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Join array string with maximum length. If max is reached, it will create new line
      *
-     * @param string[] $arr
-     * @param integer $max
-     * @param string $normalSplit
-     * @param string $maxSplit
+     * @param string[] $arr Array string to be joined
+     * @param integer $max Threshold to split line
+     * @param string $normalSplit Normal splitter
+     * @param string $maxSplit Overflow splitter
      * @return string
      */
     private function joinStringArray($arr, $max = 0, $normalSplit = " ", $maxSplit = " \r\n")
@@ -1437,6 +1437,29 @@ class PicoDatabasePersistence // NOSONAR
         {
             return implode($normalSplit, $arr);
         }
+        $arr2 = $this->splitChunk($arr, $max, $normalSplit);
+        $arr3 = array();
+        foreach($arr2 as $value)
+        {
+            $value2 = implode($normalSplit, $value);
+            if(!empty(trim($value2)))
+            {
+                $arr3[] = $value2;
+            }
+        }
+        return implode($maxSplit, $arr3);
+    }
+    
+    /**
+     * Split chunk query
+     *
+     * @param string[] $arr Array string to be joined
+     * @param integer $max Threshold to split line
+     * @param string $normalSplit Normal splitter
+     * @return array
+     */
+    private function splitChunk($arr, $max, $normalSplit)
+    {
         $arr2 = array();
         $idx = 0;
         foreach($arr as $value)
@@ -1461,16 +1484,7 @@ class PicoDatabasePersistence // NOSONAR
                 }
             }         
         }
-        $arr3 = array();
-        foreach($arr2 as $value)
-        {
-            $value2 = implode($normalSplit, $value);
-            if(!empty(trim($value2)))
-            {
-                $arr3[] = $value2;
-            }
-        }
-        return implode($maxSplit, $arr3);
+        return $arr2;
     }
     
     /**
@@ -1542,8 +1556,8 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Format column
      *
-     * @param string $column
-     * @param string $format
+     * @param string $column Column name
+     * @param string $format Format
      * @return string
      */
     private function formatColumn($column, $format)
@@ -1577,8 +1591,8 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Create ORDER BY
      *
-     * @param object $info
-     * @param PicoSortable|string $order
+     * @param PicoTableInfo $info Table information
+     * @param PicoSortable|string $order Sortable
      * @return string|null
      */
     private function createOrderBy($info, $order)
@@ -1822,7 +1836,7 @@ class PicoDatabasePersistence // NOSONAR
      * Add specification to query builder
      *
      * @param PicoDatabaseQueryBuilder $sqlQuery Query builder
-     * @param PicoSpecification|array $specification
+     * @param PicoSpecification|array $specification Specification
      * @param PicoTableInfo $info Table information
      * @return PicoDatabaseQueryBuilder
      */

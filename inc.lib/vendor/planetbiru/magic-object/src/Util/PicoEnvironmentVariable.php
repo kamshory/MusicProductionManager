@@ -136,7 +136,6 @@ class PicoEnvironmentVariable
      */
     public static function getOtherValue($key, $collection)
     {
-        print_r($collection);
         $keys = explode(".", trim($key, ""));
         if(count($keys) == 1 && isset($collection[$key]))
         {
