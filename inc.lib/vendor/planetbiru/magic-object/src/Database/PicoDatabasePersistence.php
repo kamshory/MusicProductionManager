@@ -1490,10 +1490,10 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Add where statemenet
      *
-     * @param array $arr
-     * @param array $masterColumnMaps
+     * @param array $arr Array values
+     * @param array $masterColumnMaps Master column  map
      * @param PicoDatabaseQueryBuilder $sqlQuery Query builder
-     * @param PicoSpecification $spec
+     * @param PicoSpecification $spec Specification
      * @param PicoTableInfo $info Table information
      * @return array
      */
@@ -1535,14 +1535,14 @@ class PicoDatabasePersistence // NOSONAR
                 // get from map
                 $column = $this->getJoinSource($parentName, $masterTable, $entityTable, $maps[$field], $entityTable == $masterTable);
                 $columnFinal = $this->formatColumn($column, $functionFormat);
-                $arr[] = $spec->getFilterLogic() . " " . $columnFinal . " " . $spec->getComparation()->getComparison() . " " . $sqlQuery->escapeValue($spec->getValue());
+                $arr[] = $spec->getFilterLogic() . " " . $columnFinal . " " . $spec->getComparation()->getComparison() . " " . $this->contructComparisonValue($spec, $sqlQuery);
             }
             else if(in_array($field, $columnNames))
             {
                 // get colum name
                 $column = $this->getJoinSource($parentName, $masterTable, $entityTable, $field, $entityTable == $masterTable);
                 $columnFinal = $this->formatColumn($column, $functionFormat);
-                $arr[] = $spec->getFilterLogic() . " " . $columnFinal . " " . $spec->getComparation()->getComparison() . " " . $sqlQuery->escapeValue($spec->getValue());
+                $arr[] = $spec->getFilterLogic() . " " . $columnFinal . " " . $spec->getComparation()->getComparison() . " " . $this->contructComparisonValue($spec, $sqlQuery);
             }
         }
         else if($spec instanceof PicoSpecification)
@@ -1551,6 +1551,30 @@ class PicoDatabasePersistence // NOSONAR
             $arr[] = $spec->getParentFilterLogic() . " (" . $this->createWhereFromSpecification($sqlQuery, $spec, $info) . ")";
         }
         return $arr;
+    }
+    
+    /**
+     * Construct comarison value
+     *
+     * @param PicoPredicate $predicate Predicate
+     * @param PicoDatabaseQueryBuilder $sqlQuery Query builder
+     * @return string
+     */
+    private function contructComparisonValue($predicate, $sqlQuery)
+    {
+        if(is_array($predicate->getValue()))
+        {
+            $list = array();
+            foreach($predicate->getValue() as $value)
+            {
+                $list[] = $sqlQuery->escapeValue($value);
+            }
+            return "(".implode(", ", $list).")";
+        }
+        else
+        {
+            return $sqlQuery->escapeValue($predicate->getValue());
+        } 
     }
 
     /**
@@ -2566,22 +2590,26 @@ class PicoDatabasePersistence // NOSONAR
      *
      * @param string $classNameJoin Join class name
      * @param string $joinKey Join key
-     * @return MagicObject
+     * @return MagicObject|null
      */
     private function getJoinData($classNameJoin, $joinKey)
     {
-        if(isset($joinKey) && !isset($this->joinCache[$classNameJoin][$joinKey]))
+        if(isset($joinKey) && (!isset($this->joinCache[$classNameJoin]) || !isset($this->joinCache[$classNameJoin][$joinKey])))
         {              
             $className = $this->getRealClassName($classNameJoin);
             $obj = new $className(null, $this->database);
-            $obj->find(array($joinKey)); 
+            $obj->find($joinKey); 
             $this->joinCache[$classNameJoin][$joinKey] = $obj;
+            return $obj;
+        }
+        else if(isset($this->joinCache[$classNameJoin]) && isset($this->joinCache[$classNameJoin][$joinKey]))
+        {
+            return $this->joinCache[$classNameJoin][$joinKey];
         }
         else
         {
-            $obj = $this->joinCache[$classNameJoin][$joinKey];
+            return null;
         }
-        return $obj;
     }
     
     /**
@@ -2605,28 +2633,38 @@ class PicoDatabasePersistence // NOSONAR
                 {
                     $this->prepareJoinCache($classNameJoin);
                     $obj = $this->getJoinData($classNameJoin, $joinKey);
-                    if(is_array($data))
-                    {                       
-                        $data[$propName] = $obj;
-                    }
-                    else
+                    if($obj != null)
                     {
-                        $data->{$propName} = $obj;
+                        $data = $this->addProperty($data, $propName, $obj);
                     }
                 }
                 catch(Exception $e)
                 {
                     // set null
-                    if(is_array($data))
-                    {
-                        $data[$propName] = null;
-                    }
-                    else
-                    {
-                        $data->{$propName} = null;
-                    }
+                    $data = $this->addProperty($data, $propName, null);
                 }
             }
+        }
+        return $data;
+    }
+
+    /**
+     * Add property
+     *
+     * @param array|object $data
+     * @param string $propName
+     * @param mixed $value
+     * @return array|object
+     */
+    private function addProperty($data, $propName, $value)
+    {
+        if(is_array($data))
+        {                       
+            $data[$propName] = $value;
+        }
+        else
+        {
+            $data->{$propName} = $value;
         }
         return $data;
     }
@@ -3217,20 +3255,16 @@ class PicoDatabasePersistence // NOSONAR
     public function whereWithSpecification($specification)
     {
         $persist = new PicoDatabasePersistenceExtended($this->database, $this->object);
-        
-        
         $persist->specification = $specification;
 
         $sqlQuery = new PicoDatabaseQueryBuilder($this->database);
-        $info = $persist->getTableInfo();
-        
+        $info = $persist->getTableInfo();  
         try
         {
             if($persist->isRequireJoin($specification, null, null, $info))
             {
                 $persist->addJoinQuery($sqlQuery, $info);
             }
-
             $persist->whereStr = $persist->createWhereFromSpecification($sqlQuery, $specification, $info);
             $persist->whereIsDefinedFirst = true;
         }

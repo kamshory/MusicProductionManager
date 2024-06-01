@@ -517,7 +517,7 @@ class PicoDatabase //NOSONAR
 	}
 	
 	/**
-	 * Convert object to string for debug. This method also prevent PHP sho show its attribute when it converted to a string
+	 * Magic method to debug object. This method also prevent PHP sho show its attribute when it converted to a string
 	 *
 	 * @return string
 	 */

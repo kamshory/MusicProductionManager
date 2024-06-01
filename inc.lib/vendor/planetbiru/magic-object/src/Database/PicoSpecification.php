@@ -256,7 +256,7 @@ class PicoSpecification
     }
     
     /**
-     * This method is for debug purpose only.
+     * Magic method to debug object. This method is for debug purpose only.
      *
      * @return string
      */

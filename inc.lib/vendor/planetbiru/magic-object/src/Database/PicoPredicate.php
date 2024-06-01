@@ -102,6 +102,20 @@ class PicoPredicate //NOSONAR
     {
         return $this->notEquals($field, null);
     }
+    
+    /**
+     * In
+     * @param string $field
+     * @param mixed $value
+     * @return self
+     */
+    public function in($field, $value)
+    {
+        $this->field = $field;
+        $this->value = $value;
+        $this->comparation = PicoDataComparation::in($value);
+        return $this;
+    }
 
     /**
      * Like
@@ -300,6 +314,11 @@ class PicoPredicate //NOSONAR
         return new PicoPredicate();
     }
     
+    /**
+     * Magic method to debug object
+     *
+     * @return string
+     */
     public function __toString()
     {
         return json_encode(array(

@@ -185,6 +185,11 @@ class PicoPageData
         return $this->pageSize;
     }
 
+    /**
+     * Magic method to debug object
+     *
+     * @return string
+     */
     public function __toString()
     {
         $obj = new stdClass;

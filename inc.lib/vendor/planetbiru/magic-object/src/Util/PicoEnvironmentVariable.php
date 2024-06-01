@@ -141,7 +141,11 @@ class PicoEnvironmentVariable
         {
             return $collection[$key];
         }
-        $value = $collection[$keys[0]];
+        $value = null;
+        if(isset($collection[$keys[0]]))
+        {
+            $value = $collection[$keys[0]];
+        }
         for($i = 1; $i < count($keys); $i++)
         {
             if(!isset($value[$keys[$i]]))

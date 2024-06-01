@@ -2,6 +2,8 @@
 
 namespace MagicObject\Database;
 
+use MagicObject\Request\PicoRequestBase;
+
 class PicoSortable
 {
     /**
@@ -223,7 +225,7 @@ class PicoSortable
     }
     
     /**
-     * This method is for debug purpose only.
+     * Magic method to debug object. This method is for debug purpose only.
      *
      * @return string
      */

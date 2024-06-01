@@ -23,6 +23,7 @@ $database = new PicoDatabase($databaseCredentials,
     function($sql) //NOSONAR
     {
         // callback when execute all query
+        // error_log($sql);
     }
 );
 

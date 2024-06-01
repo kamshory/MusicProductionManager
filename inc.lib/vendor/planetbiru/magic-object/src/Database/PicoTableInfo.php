@@ -247,6 +247,11 @@ class PicoTableInfo
         return $this;
     }
     
+    /**
+     * Magic method to debug object
+     *
+     * @return string
+     */
     public function __toString()
     {
         // create new object because all properties are private

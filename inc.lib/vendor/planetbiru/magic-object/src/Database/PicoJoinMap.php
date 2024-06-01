@@ -107,6 +107,11 @@ class PicoJoinMap
         return $this->joinTableAlias;
     }
 
+    /**
+     * Magic method to debug object
+     *
+     * @return string
+     */
     public function __toString()
     {
         return json_encode(

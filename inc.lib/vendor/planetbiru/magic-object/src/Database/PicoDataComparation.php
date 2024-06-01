@@ -6,6 +6,9 @@ class PicoDataComparation
 {
     const EQUALS = "=";
     const NOT_EQUALS = "!=";
+    const IN = "in";
+    const IS = "is";
+    const IS_NOT = "is not";
     const LIKE = "like";
     const NOT_LIKE = "not like";
     const LESS_THAN = "<";
@@ -54,6 +57,15 @@ class PicoDataComparation
     public static function notEquals($value)
     {
         return new PicoDataComparation($value, self::NOT_EQUALS);
+    }
+    
+    /**
+     * In
+     * @param mixed $value
+     */
+    public static function in($value)
+    {
+        return new PicoDataComparation($value, self::IN);
     }
 
     /**
@@ -141,7 +153,7 @@ class PicoDataComparation
      */
     private function _equals()
     {
-        return ($this->value === null || $this->type == self::TYPE_NULL) ? "is" : "=";
+        return ($this->value === null || $this->type == self::TYPE_NULL) ? self::IS : self::EQUALS;
     }
 
     /**
@@ -151,7 +163,7 @@ class PicoDataComparation
      */
     private function _notEquals()
     {
-        return ($this->value === null || $this->type == self::TYPE_NULL) ? "is not" : "!=";
+        return ($this->value === null || $this->type == self::TYPE_NULL) ? self::IS_NOT : self::NOT_EQUALS;
     }
 
     /**
@@ -161,7 +173,7 @@ class PicoDataComparation
      */
     private function _lessThan()
     {
-        return "<";
+        return self::LESS_THAN;
     }
     
     /**
@@ -171,7 +183,7 @@ class PicoDataComparation
      */
     private function _greaterThan()
     {
-        return ">";
+        return self::GREATER_THAN;
     }
 
     /**
@@ -181,7 +193,7 @@ class PicoDataComparation
      */
     private function _lessThanOrEquals()
     {
-        return "<=";
+        return self::LESS_THAN_OR_EQUALS;
     }
     
     /**
@@ -191,7 +203,7 @@ class PicoDataComparation
      */
     private function _greaterThanOrEquals()
     {
-        return ">=";
+        return self::GREATER_THAN_OR_EQUALS;
     }
 
     /**
@@ -223,6 +235,10 @@ class PicoDataComparation
             $ret = $this->_greaterThanOrEquals();
         }
         else if($this->comparison == self::LIKE || $this->comparison == self::NOT_LIKE)
+        {
+            $ret = $this->comparison;
+        }
+        else if($this->comparison == self::IN)
         {
             $ret = $this->comparison;
         }

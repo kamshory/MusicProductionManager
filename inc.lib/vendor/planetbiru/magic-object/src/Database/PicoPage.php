@@ -78,7 +78,7 @@ class PicoPage
     }
     
     /**
-     * Debug
+     * Magic method to debug object
      *
      * @return string
      */

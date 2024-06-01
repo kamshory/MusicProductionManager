@@ -178,7 +178,7 @@ class PicoPageable
     }
     
     /**
-     * Debug
+     * Magic method to debug object
      *
      * @return string
      */

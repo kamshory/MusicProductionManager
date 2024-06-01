@@ -24,7 +24,7 @@ database:
   password: ${APP_DATABASE_PASSWORD}
   database_name: music
   database_schema: public
-  time_zone: ${APP_DATABASE_TIME_ZONE}
+  time_zone: Asia/Jakarta
   salt: ${APP_DATABASE_SALT}
 session:
   name: MUSICPRODUCTIONMANAGER

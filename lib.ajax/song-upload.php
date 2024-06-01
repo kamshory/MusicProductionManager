@@ -43,7 +43,7 @@ try
     
     // get uploaded file properties
     $fileUpload = new FileUpload();
-    $defaultTargetDir = dirname(__DIR__)."/files/$id";
+    $defaultTargetDir = dirname(__DIR__)."/files/song/$id";
     if(stripos($defaultTargetDir, ":") !== false)
     {
         $arr1 = explode(":", $defaultTargetDir, 2);
@@ -52,6 +52,7 @@ try
     }
     
     $tempDir = dirname(__DIR__)."/temp";
+    error_log("tempDir = ".$tempDir);
     
     
     SongFileUtil::prepareDir($tempDir);
@@ -59,15 +60,18 @@ try
     $fileUpload->uploadTemporaryFile($_FILES, 'file', $tempDir, $id, mt_rand(100000, 999999));  
 
     $path = $fileUpload->getFilePath();
-    
+    error_log("path = ".$path);
+
     $header = SongFileUtil::getContent($path, 96);
     $targetDir = SongFileUtil::getSongBasePath($cfg, $id, $defaultTargetDir);        
     SongFileUtil::prepareDir($targetDir);
+    error_log("targetDir = ".$targetDir);
 
     if(SongFileUtil::isMp3File($path))
     {    
         $mp3Path = SongFileUtil::getMp3Path($targetDir);
         copy($path, $mp3Path);
+        error_log("copy ".$path." to ".$mp3Path);
         $song->setFileUploadTime($now);
         $song->setFilePath($mp3Path);
         $song->setFileName(basename($mp3Path));

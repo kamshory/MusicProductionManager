@@ -115,8 +115,4 @@ class PicoEntityField
             return $field;
         }
     }
-
-    
-
-    
 }
