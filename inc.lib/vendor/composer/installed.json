@@ -564,23 +564,23 @@
         },
         {
             "name": "planetbiru/magic-object",
-            "version": "dev-feature/1.8",
-            "version_normalized": "dev-feature/1.8",
+            "version": "1.13.7",
+            "version_normalized": "1.13.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "2338bd27fb59592d74bdea58cf99fb97878113c4"
+                "reference": "3061178950e97d3bfab54cbead356bb51b796cd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/2338bd27fb59592d74bdea58cf99fb97878113c4",
-                "reference": "2338bd27fb59592d74bdea58cf99fb97878113c4",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/3061178950e97d3bfab54cbead356bb51b796cd9",
+                "reference": "3061178950e97d3bfab54cbead356bb51b796cd9",
                 "shasum": ""
             },
             "require": {
-                "symfony/yaml": "^3.4"
+                "symfony/yaml": "3.4"
             },
-            "time": "2024-06-01T05:59:37+00:00",
+            "time": "2024-07-12T14:53:22+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -600,7 +600,7 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/feature/1.8"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/1.13.7"
             },
             "install-path": "../planetbiru/magic-object"
         },
@@ -2268,22 +2268,21 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.47",
-            "version_normalized": "3.4.47.0",
+            "version": "v3.4.0",
+            "version_normalized": "3.4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "88289caa3c166321883f67fe5130188ebbb47094"
+                "reference": "b3d0c9c11be3831b84825967dc6b52b5a7b84e04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/88289caa3c166321883f67fe5130188ebbb47094",
-                "reference": "88289caa3c166321883f67fe5130188ebbb47094",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/b3d0c9c11be3831b84825967dc6b52b5a7b84e04",
+                "reference": "b3d0c9c11be3831b84825967dc6b52b5a7b84e04",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
-                "symfony/polyfill-ctype": "~1.8"
+                "php": "^5.5.9|>=7.0.8"
             },
             "conflict": {
                 "symfony/console": "<3.4"
@@ -2294,8 +2293,13 @@
             "suggest": {
                 "symfony/console": "For validating YAML files using the lint command"
             },
-            "time": "2020-10-24T10:57:07+00:00",
+            "time": "2017-11-29T13:28:14+00:00",
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
@@ -2322,22 +2326,8 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v3.4.47"
+                "source": "https://github.com/symfony/yaml/tree/3.4"
             },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "install-path": "../symfony/yaml"
         }
     ],

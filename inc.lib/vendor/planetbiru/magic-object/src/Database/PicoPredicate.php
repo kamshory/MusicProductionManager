@@ -315,6 +315,17 @@ class PicoPredicate //NOSONAR
     }
     
     /**
+     * Function lower
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function functionLower($value)
+    {
+        return "lower($value)";
+    }
+    
+    /**
      * Magic method to debug object
      *
      * @return string
@@ -322,13 +333,13 @@ class PicoPredicate //NOSONAR
     public function __toString()
     {
         return json_encode(array(
-            'field'=>$this->field,
-            'value'=>$this->value,
-            'comparation'=>
+            'field' => $this->field,
+            'value' => $this->value,
+            'comparation' =>
                 array(
                     $this->comparation->getComparison()
                 ),
-            'filterLogic'=>$this->filterLogic
+            'filterLogic' => $this->filterLogic
         ));
     }
 }

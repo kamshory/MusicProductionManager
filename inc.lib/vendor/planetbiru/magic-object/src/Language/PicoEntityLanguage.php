@@ -51,14 +51,14 @@ class PicoEntityLanguage
      *
      * @var string
      */
-    private string $_entityClassName = "";
+    private $_entityClassName = ""; //NOSONAR
 
     /**
      * Entity language
      *
      * @var string
      */
-    private string $_entityLanguage = "";
+    private $_entityLanguage = ""; //NOSONAR
 
     /**
      * Constructor
@@ -75,7 +75,7 @@ class PicoEntityLanguage
     
     /**
      * Load data to object
-     * @param MagicObject $entity
+     * @param MagicObject $entity ENtity
      * @return self
      */
     public function loadEntityLabel($entity)
@@ -121,9 +121,9 @@ class PicoEntityLanguage
     /**
      * Add language
      *
-     * @param string $code
-     * @param object|stdClass|array $reference
-     * @param boolean $use
+     * @param string $code Language code
+     * @param object|stdClass|array $reference Reference
+     * @param boolean $use Flag to use language
      * @return self
      */
     public function addLanguage($code, $reference, $use = false)
@@ -139,8 +139,7 @@ class PicoEntityLanguage
     /**
      * Remove language
      *
-     * @param string $code
-     * @param stdClass|array $reference
+     * GoPro Rechargeable Battery for MAX 360
      * @return self
      */
     public function removeLanguage($code)
@@ -160,7 +159,7 @@ class PicoEntityLanguage
     /**
      * Set current language
      *
-     * @param string $code
+     * GoPro Rechargeable Battery for MAX 360
      * @return self
      */
     public function selectLanguage($code)

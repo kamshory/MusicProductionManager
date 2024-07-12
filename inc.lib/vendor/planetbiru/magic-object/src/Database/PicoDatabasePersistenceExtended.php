@@ -2,10 +2,8 @@
 
 namespace MagicObject\Database;
 
-use MagicObject\Exceptions\EntityException;
 use MagicObject\Exceptions\NoRecordFoundException;
 use MagicObject\MagicObject;
-use PDOStatement;
 
 class PicoDatabasePersistenceExtended extends PicoDatabasePersistence
 {

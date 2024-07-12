@@ -17,12 +17,20 @@ class PicoRequestBase extends stdClass //NOSONAR
      * @var array
      */
     private $classParams = array();
+    /**
+     * Force input object as scalar
+     *
+     * @var boolean
+     */
+    protected $forceScalar = false;
 
     /**
      * Constructor
+     * @param boolean $forceScalar
      */
-    public function __construct()
+    public function __construct($forceScalar = false)
     {
+        $this->forceScalar = $forceScalar;
         $jsonAnnot = new PicoAnnotationParser(get_class($this));
         $params = $jsonAnnot->getParameters();
         foreach($params as $paramName=>$paramValue)
@@ -39,11 +47,16 @@ class PicoRequestBase extends stdClass //NOSONAR
     /**
      * Load data to object
      * @param mixed $data
+     * @param boolean $tolower
      */
-    public function loadData($data)
+    public function loadData($data, $tolower = false)
     {
         if (is_array($data) || is_object($data)) {
             foreach ($data as $key => $value) {
+                if($tolower)
+                {
+                    $key = strtolower($key);
+                }
                 $key2 = PicoStringUtil::camelize(str_replace("-", "_", $key));
                 $this->{$key2} = $value;
             }
@@ -78,7 +91,19 @@ class PicoRequestBase extends stdClass //NOSONAR
         if(isset($params) && !empty($params))
         {
             $filter = $params[0];
-            return $this->filterValue($value, $filter);
+            if(!isset($params[1]))
+            {
+                $params[1] = false;
+            }
+            if(!isset($params[2]))
+            {
+                $params[2] = false;
+            }
+            if(!isset($params[3]))
+            {
+                $params[3] = false;
+            }
+            return $this->filterValue($value, $filter, $params[1], $params[2], $params[3]);
         }
         else
         {
@@ -193,12 +218,20 @@ class PicoRequestBase extends stdClass //NOSONAR
      * @param integer $filter
      * @param boolean $escapeSQL
      * @param boolean $nullIfEmpty
+     * @param boolean $requireScalar
      * @return mixed|null
      */
-    public function filterValue($val, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL = false, $nullIfEmpty = false)
+    public function filterValue($val, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL = false, $nullIfEmpty = false, $requireScalar = false)
     {
         $ret = null;
-        if(is_scalar($val))
+        
+        if(($requireScalar || $this->forceScalar) && (isset($val) && !is_scalar($val)))
+        {
+            // If application require scalar but user give non-scalar, MagicObject will return null
+            // It mean that application will not process invalid input type
+            return null;
+        }
+        if(!isset($val) || is_scalar($val))
         {
             return $this->filterValueSingle($val, $filter, $escapeSQL, $nullIfEmpty);
         }
@@ -415,18 +448,6 @@ class PicoRequestBase extends stdClass //NOSONAR
     }
 
     /**
-     * Get value from formated number
-     *
-     * @param stdClass|MagicObject $cfg
-     * @param mixed $input
-     * @return float
-     */
-    public function getValue($cfg, $input)
-    {
-        return $this->_getValue($cfg, $input);
-    }
-
-    /**
      * Magic method called when user call any undefined method
      *
      * @param string $method
@@ -434,12 +455,11 @@ class PicoRequestBase extends stdClass //NOSONAR
      * @return mixed|null
      */
     public function __call($method, $params) //NOSONAR
-    {
-        
+    { 
         if (strncasecmp($method, "countable", 9) === 0) 
         {
             $var = lcfirst(substr($method, 9));
-            return is_array($this->$var);
+            return isset($this->$var) && is_array($this->$var);
         } 
         else if (strncasecmp($method, "isset", 5) === 0) 
         {
@@ -500,6 +520,14 @@ class PicoRequestBase extends stdClass //NOSONAR
             return $this;
         }
     }  
+
+    /**
+     * Apply filter
+     *
+     * @param string $value
+     * @param string $filterType
+     * @return string|null
+     */
     private function applyFilter($value, $filterType)
     {
         if(isset($value))

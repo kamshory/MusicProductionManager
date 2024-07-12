@@ -156,7 +156,6 @@ class SecretObject extends stdClass //NOSONAR
                 }
             }
         }
-
     }
 
     /**

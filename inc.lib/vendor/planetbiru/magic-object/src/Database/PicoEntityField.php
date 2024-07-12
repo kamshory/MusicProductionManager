@@ -10,6 +10,13 @@ class PicoEntityField
      * @var string
      */
     private $entity = null;
+
+    /**
+     * Object name
+     *
+     * @var string
+     */
+    private $objectName = null;
     
     /**
      * Field
@@ -76,16 +83,26 @@ class PicoEntityField
      * Constructor
      *
      * @param string $fieldRaw
+     * @param PicoTableInfo|null $info
      */
-    public function __construct($fieldRaw)
+    public function __construct($fieldRaw, $info = null)
     {
         $field = $this->extractField($fieldRaw);
         if(strpos($field, "."))
         {
             $arr = explode(".", $field, 2);
             $this->field = $arr[1];
-            $this->entity = $arr[0];
-            $this->parentField = $arr[0];
+            $this->objectName = $arr[0];
+            $this->parentField = $arr[0];  
+
+            if($info != null && $info->getJoinColumns() != null)
+            {
+                $columns = $info->getJoinColumns();
+                if(isset($columns[$this->objectName]) && isset($columns[$this->objectName]['propertyType']))
+                {
+                    $this->entity = $columns[$this->objectName]['propertyType'];
+                }
+            } 
         }
         else
         {

@@ -54,6 +54,7 @@ class PicoDatabasePersistence // NOSONAR
     const ORDER_ASC = "asc";
     const ORDER_DESC = "desc";
 
+    const MESSAGE_NO_PRIMARY_KEY_DEFINED = "No primaru key defined";
     const MESSAGE_NO_RECORD_FOUND = "No record found";
     const MESSAGE_INVALID_FILTER = "Invalid filter";
     const SQL_DATETIME_FORMAT = "Y-m-d H:i:s";
@@ -167,7 +168,6 @@ class PicoDatabasePersistence // NOSONAR
      */
     protected $whereStr = null;
 
-
     /**
      * Specification
      *
@@ -208,18 +208,6 @@ class PicoDatabasePersistence // NOSONAR
         $this->className = get_class($object);
         $this->object = $object;
     }
-
-    /**
-     * Set flag to skip null column
-     *
-     * @param boolean $skip Skip null
-     * @return self
-     */
-    public function includeNull($skip)
-    {
-        $this->flagIncludeNull = $skip;
-        return $this;
-    }
     
     /**
      * Check if string is null or empty
@@ -227,7 +215,7 @@ class PicoDatabasePersistence // NOSONAR
      * @param string $string
      * @return string
      */
-    private function nulOrEmpty($string)
+    public static function nulOrEmpty($string)
     {
         return $string == null || empty($string);
     }
@@ -238,9 +226,53 @@ class PicoDatabasePersistence // NOSONAR
      * @param string $string
      * @return string
      */
-    private function notNullAndNotEmpty($string)
+    public static function notNullAndNotEmpty($string)
     {
         return $string != null && !empty($string);
+    }
+    
+    /**
+     * Apply subquery result
+     *
+     * @param array $data
+     * @param array $row
+     * @param array $subqueryMap
+     * @return array
+     */
+    public static function applySubqueryResult($data, $row, $subqueryMap)
+    {
+        if(isset($subqueryMap) && is_array($subqueryMap))
+        {      
+            foreach($subqueryMap as $info)
+            {
+                $objectName = $info['objectName'];
+                $objectNameSub = $info['objectName'];
+                if(isset($row[$objectNameSub]))
+                {
+                    $data[$objectName] = (new MagicObject())
+                        ->set($info['primaryKey'], $row[$info['columnName']])
+                        ->set($info['propertyName'], $row[$objectNameSub])
+                    ;
+                }
+                else
+                {
+                    $data[$objectName] = new MagicObject();
+                }
+            }
+        }
+        return $data;
+    }
+    
+    /**
+     * Set flag to skip null column
+     *
+     * @param boolean $skip Skip null
+     * @return self
+     */
+    public function includeNull($skip)
+    {
+        $this->flagIncludeNull = $skip;
+        return $this;
     }
 
     /**
@@ -677,7 +709,7 @@ class PicoDatabasePersistence // NOSONAR
     {
         $nullCols = array();
         $nullList = $this->object->nullPropertiyList();
-        if(isset($nullList) && is_array($nullList))
+        if($this->isArray($nullList))
         {
             foreach($nullList as $key=>$val)
             {
@@ -921,12 +953,12 @@ class PicoDatabasePersistence // NOSONAR
         if(!$this->generatedValue)
         {
             $keys = $info->getAutoIncrementKeys();
-            if(isset($keys) && is_array($keys))
+            if($this->isArray($keys))
             {
                 foreach($keys as $prop=>$col)
                 {
                     $autoVal = $this->object->get($prop);
-                    if($this->nulOrEmpty($autoVal) && isset($col[self::KEY_STRATEGY]))
+                    if(self::nulOrEmpty($autoVal) && isset($col[self::KEY_STRATEGY]))
                     {
                         $this->setGeneratedValue($prop, $col[self::KEY_STRATEGY], $fisrtCall);
                     }
@@ -1010,7 +1042,6 @@ class PicoDatabasePersistence // NOSONAR
         if(!$this->generatedValue)
         {
             $this->addGeneratedValue($info, false);
-            $this->object->update();
         }
         return $stmt;
     }
@@ -1086,7 +1117,7 @@ class PicoDatabasePersistence // NOSONAR
         {
             foreach($info->getAutoIncrementKeys() as $name=>$col)
             {
-                if(strcasecmp($col[self::KEY_STRATEGY], "GenerationType.UUID") == 0)
+                if(strcasecmp($col[self::KEY_STRATEGY], "GenerationType.UUID") == 0 && !$this->generatedValue)
                 {
                     $value = $this->database->generateNewId();
                     $values[$col[self::KEY_NAME]] = $value;
@@ -1197,7 +1228,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Fix comparison
      *
-     * @param string $column
+     * @param string $column Column
      * @return string
      */
     private function fixComparison($column)
@@ -1224,7 +1255,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Create WHERE by argument given
      *
-     * @param object $info
+     * @param PicoTableInfo $info Table information
      * @param string $propertyName Property name
      * @param array $propertyValues Property values
      * @return string
@@ -1261,7 +1292,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get table name
      *
-     * @param string|null $entityName
+     * @param string|null $entityName Entity name
      * @return string|null
      */
     private function getTableOf($entityName)
@@ -1277,7 +1308,7 @@ class PicoDatabasePersistence // NOSONAR
         $tableName = $entityName;
         try
         {
-            $className = $this->getRealClassName($entityName);
+            $className = $this->getRealClassName($entityName);          
             $annotationParser = new PicoAnnotationParser($className);
             $parameters = $annotationParser->getParametersAsObject();
             if($parameters->getTable() != null)
@@ -1287,9 +1318,6 @@ class PicoDatabasePersistence // NOSONAR
                 {
                     $tableName = $attribute->getName();
                     $this->entityTable[$entityName] = $tableName;
-                    
-                    
-                    //$this->joinPrimaryKeys[]
                 }
             }
         }
@@ -1298,10 +1326,15 @@ class PicoDatabasePersistence // NOSONAR
             // do nothing
             $tableName = null;
         }
-        
         return $tableName;
     }
     
+    /**
+     * Get entity primary key
+     *
+     * @param string $entityName
+     * @return string[]
+     */
     private function getPrimaryKeyOf($entityName)
     {
         $columns = array();
@@ -1319,9 +1352,7 @@ class PicoDatabasePersistence // NOSONAR
                     $properties = $reflexProp->parseKeyValueAsObject($parameters->getColumn());
                     $columns[$prop->name] = $properties->getName();
                 }
-
                 // get column name of each parameters
-                
             }
         }
         catch(Exception $e)
@@ -1352,8 +1383,7 @@ class PicoDatabasePersistence // NOSONAR
                 $properties = $reflexProp->parseKeyValueAsObject($parameters->getColumn());
                 $columns[$prop->name] = $properties->getName();
 
-                // get column name of each parameters
-                
+                // get column name of each parameters       
             }
         }
         catch(Exception $e)
@@ -1366,15 +1396,14 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get join source
      *
-     * @param string|null $parentName
-     * @param string $masterTable
-     * @param string|null $entityTable
-     * @param string $field
+     * @param string|null $parentName Parent name
+     * @param string $masterTable Master table
+     * @param string|null $entityTable Entity table
+     * @param string $field Field
      * @return string
      */
     private function getJoinSource($parentName, $masterTable, $entityTable, $field, $master = false)
     {
- 
         $result = $masterTable.".".$field;
         if($entityTable != null && $parentName != null)
         {
@@ -1502,7 +1531,7 @@ class PicoDatabasePersistence // NOSONAR
         if($spec instanceof PicoPredicate)
         {
             $masterTable = $info->getTableName();
-            $entityField = new PicoEntityField($spec->getField());
+            $entityField = new PicoEntityField($spec->getField(), $info);
             $field = $entityField->getField();
             $entityName = $entityField->getEntity();
             $parentName = $entityField->getParentField();
@@ -1661,7 +1690,7 @@ class PicoDatabasePersistence // NOSONAR
         $ret = null;
         if($info == null)
         {
-            $ret = $this->createWithoutMapping($order);
+            $ret = $this->createWithoutMapping($order, $info);
         }
         else
         {
@@ -1674,9 +1703,10 @@ class PicoDatabasePersistence // NOSONAR
      * Create sort without mapping
      *
      * @param PicoSortable $order Sortable
+     * @param PicoTableInfo|null $info
      * @return string
      */
-    private function createWithoutMapping($order)
+    private function createWithoutMapping($order, $info)
     {
         $ret = null;
         $sorts = array();
@@ -1685,7 +1715,7 @@ class PicoDatabasePersistence // NOSONAR
             $columnName = $sortable->getSortBy();
             $sortType = $sortable->getSortType();             
             $sortBy = $columnName;
-            $entityField = new PicoEntityField($sortBy);
+            $entityField = new PicoEntityField($sortBy, $info);
             if($entityField->getEntity() != null)
             {
                 $tableName = $this->getTableOf($entityField->getEntity());
@@ -1716,10 +1746,11 @@ class PicoDatabasePersistence // NOSONAR
     
         foreach($order->getSortable() as $sortOrder)
         {           
-            $entityField = new PicoEntityField($sortOrder->getSortBy());
+            $entityField = new PicoEntityField($sortOrder->getSortBy(), $info);
             $field = $entityField->getField();
             $entityName = $entityField->getEntity();
             $parentName = $entityField->getParentField();
+            
             if($entityName != null)
             {
                 $entityTable = $this->getTableOf($entityName);
@@ -1786,6 +1817,23 @@ class PicoDatabasePersistence // NOSONAR
     }
     
     /**
+     * Get all table columns on entity 
+     *
+     * @param PicoTableInfo $info Table information
+     * @return string
+     */
+    private function getAllColumns($info)
+    {
+        $columns = $info->getColumns();
+        $result = array();
+        foreach($columns as $column)
+        {
+            $result[] = $info->getTableName().".".$column['name'];
+        }
+        return $this->joinStringArray($result, self::MAX_LINE_LENGTH, self::COMMA, self::COMMA_RETURN);
+    }
+    
+    /**
      * Find one record by primary key value
      *
      * @param mixed $propertyValue Property values
@@ -1825,7 +1873,7 @@ class PicoDatabasePersistence // NOSONAR
             }
             $sqlQuery = $queryBuilder
                 ->newQuery()
-                ->select($info->getTableName().".*")
+                ->select($this->getAllColumns($info))
                 ->from($info->getTableName())
                 ->where($where)
                 ->limit(1)
@@ -1869,7 +1917,7 @@ class PicoDatabasePersistence // NOSONAR
         if($specification != null && $specification instanceof PicoSpecification && !$specification->isEmpty())
         {
             $where = $this->createWhereFromSpecification($sqlQuery, $specification, $info);
-            if($this->notNullAndNotEmpty($where))
+            if(self::notNullAndNotEmpty($where))
             {
                 $sqlQuery->where($where);
             }
@@ -2095,6 +2143,32 @@ class PicoDatabasePersistence // NOSONAR
     }
 
     /**
+     * Create PDO statement
+     *
+     * @param PicoSpecification $specification
+     * @param PicoPageable $pageable
+     * @param PicoSortable $sortable
+     * @param array $subqueryMap
+     * @param string $selected
+     * @return PDOStatement
+     * @throws PDOException
+     */
+    public function createPDOStatement($specification, $pageable, $sortable, $subqueryMap = null, $selected = null)
+    {
+        $info = $this->getTableInfo();
+        if($selected == null || empty($selected))
+        {
+            $selected = $this->getAllColumns($info);
+        }
+        if($subqueryMap != null)
+        {
+            $selected = $this->joinString($selected, $this->subquery($info, $subqueryMap), self::COMMA_RETURN);
+        }
+        $sql = $this->findSpecificQuery($selected, $specification, $pageable, $sortable, $info);
+        return $this->database->query($sql);
+    }
+
+    /**
      * Get findAll query
      *
      * @param PicoSpecification $specification Specification
@@ -2109,8 +2183,7 @@ class PicoDatabasePersistence // NOSONAR
         {
             $info = $this->getTableInfo();
         }
-        $selected = $info->getTableName().".*";
-        return $this->findSpecificQuery($selected, $specification, $pageable, $sortable, $info);
+        return $this->findSpecificQuery($this->getAllColumns($info), $specification, $pageable, $sortable, $info);
     }
     
     /**
@@ -2164,15 +2237,187 @@ class PicoDatabasePersistence // NOSONAR
      * @param PicoSpecification $specification Specification
      * @param PicoPageable|null $pageable Pagable
      * @param PicoSortable|string|null $sortable Sortable
-     * @return array|null
+     * @param array $subqueryMap
      * @throws EntityException|EmptyResultException
      */
-    public function findAll($specification, $pageable = null, $sortable = null)
+    public function findAll($specification, $pageable = null, $sortable = null, $subqueryMap = null)
     {
-        $info = $this->getTableInfo();     
-        $selected = $info->getTableName().".*";
-        return $this->findSpecific($selected, $specification, $pageable, $sortable);
+        $info = $this->getTableInfo(); 
+        if($subqueryMap == null)    
+        {
+            return $this->findSpecific($this->getAllColumns($info), $specification, $pageable, $sortable);
+        }
+        else
+        {
+            return $this->findSpecificWithSubquery($this->getAllColumns($info), $specification, $pageable, $sortable, $subqueryMap);
+        }
     }
+    
+    /**
+     * Find one with primary key value
+     *
+     * @param mixed $primaryKeyVal
+     * @param array $subqueryMap
+     * @return array
+     */
+    public function findOneWithPrimaryKeyValue($primaryKeyVal, $subqueryMap)
+    {
+        $info = $this->getTableInfo();
+        $tableName = $info->getTableName();
+        $selected = $this->getAllColumns($info);
+        $data = null;
+        $info = $this->getTableInfo();
+        $selected = $this->joinString($selected, $this->subquery($info, $subqueryMap), self::COMMA_RETURN);
+        $primaryKey = null;
+        try
+        {
+            $primaryKeys = array_values($info->getPrimaryKeys());
+            if(is_array($primaryKeys) && isset($primaryKeys[0][self::KEY_NAME]))
+            {
+                // it will be faster than asterisk
+                $primaryKey = $primaryKeys[0][self::KEY_NAME];
+            }
+            if($primaryKey == null)
+            {
+                throw new NoPrimaryKeyDefinedException(self::MESSAGE_NO_PRIMARY_KEY_DEFINED);
+            }
+            
+            $sqlQuery = new PicoDatabaseQueryBuilder($this->database);
+            $sqlQuery
+                ->select($selected)
+                ->from($tableName)
+                ->where("$primaryKey = ? ", $primaryKeyVal)
+                ->limit(1)
+                ->offset(0);
+            $stmt = $this->database->executeQuery($sqlQuery);
+            if($this->matchRow($stmt))
+            {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $data = $this->fixDataType($row, $info); 
+                $data = self::applySubqueryResult($data, $row, $subqueryMap);
+            }
+            else
+            {
+                throw new EmptyResultException(self::MESSAGE_NO_RECORD_FOUND);
+            }
+        }
+        catch(Exception $e)
+        {
+            throw new EmptyResultException($e->getMessage());
+        }
+        return $data;
+    }
+    
+    /**
+     * Get all record from database wihout filter with subquery
+     *
+     * @param string $selected
+     * @param PicoSpecification $specification Specification
+     * @param PicoPageable|null $pageable Pagable
+     * @param PicoSortable|string|null $sortable Sortable
+     * @param array $subqueryMap
+     * @throws EntityException|EmptyResultException
+     */
+    public function findSpecificWithSubquery($selected, $specification, $pageable = null, $sortable = null, $subqueryMap = null)
+    {
+        $data = null;
+        $result = array();
+        $info = $this->getTableInfo();
+        if($subqueryMap != null)
+        {
+            $selected = $this->joinString($selected, $this->subquery($info, $subqueryMap), self::COMMA_RETURN);
+        }
+        $sqlQuery = $this->findSpecificQuery($selected, $specification, $pageable, $sortable, $info);
+    
+        try
+        {
+            $stmt = $this->database->executeQuery($sqlQuery);
+            if($this->matchRow($stmt))
+            {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT))                
+                {
+                    $data = $this->fixDataType($row, $info); 
+                    if($subqueryMap == null)
+                    {
+                        $data = $this->join($data, $row, $info);
+                    }
+                    else
+                    {
+                        $data = self::applySubqueryResult($data, $row, $subqueryMap);
+                    }
+                    $result[] = $data;
+                }
+            }
+            else
+            {
+                throw new EmptyResultException(self::MESSAGE_NO_RECORD_FOUND);
+            }
+        }
+        catch(Exception $e)
+        {
+            throw new EmptyResultException($e->getMessage());
+        }
+        return $result;
+    }
+    
+    /**
+     * Create subquery
+     *
+     * @param PicoTableInfo $info
+     * @param array $subqueryMap
+     * @return string
+     */
+    public function subquery($info, $subqueryMap)
+    {
+        $subquery = array();
+        $tableName = $info->getTableName();
+        if(isset($subqueryMap) && is_array($subqueryMap))
+        {
+            $idx = 1;
+            foreach($subqueryMap as $info)
+            {
+                $joinTableName = $info['tableName'];
+                $columnName = $info['columnName'];                
+                $primaryKey = $info['primaryKey'];
+                $objectNameSub = $info['objectName'];
+                $propertyName = $info['propertyName'];
+                $joinName = $info['tableName']."_".$idx;
+                $selection = $info['tableName']."_".$idx.".".$propertyName; 
+                $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
+                $queryBuilder
+                    ->select($selection)
+                    ->from("$joinTableName $joinName")
+                    ->where("$joinName.$primaryKey = $tableName.$columnName")
+                    ->limit(1)
+                    ->offset(0);
+                $subquery[] = "(".$queryBuilder.") as $objectNameSub";
+                $idx++;
+            }
+        }
+        return implode(self::COMMA_RETURN, $subquery);
+    }
+    
+    /**
+     * Join string with separator
+     *
+     * @param string $string1
+     * @param string $string2
+     * @param string $separator
+     * @return string
+     */
+    public function joinString($string1, $string2, $separator)
+    {
+        if(!empty($string1) && !empty($string2))
+        {
+            return $string1.$separator.$string2;
+        }
+        else
+        {
+            return $string1;
+        }
+    }
+    
+    
 
     /**
      * Get all record from database wihout filter
@@ -2196,9 +2441,7 @@ class PicoDatabasePersistence // NOSONAR
             $stmt = $this->database->executeQuery($sqlQuery);
             if($this->matchRow($stmt))
             {
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $data = array();
-                foreach($rows as $row)                
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT))                
                 {
                     $data = $this->fixDataType($row, $info); 
                     $data = $this->join($data, $row, $info);
@@ -2218,29 +2461,32 @@ class PicoDatabasePersistence // NOSONAR
     }
 
     /**
-     * Get all mathced record from database
+     * Get query for all mathced record from database
      *
      * @param string $propertyName Property name
      * @param mixed $propertyValue Property value
      * @param PicoPageable $pageable Pagable
      * @param PicoSortable|string $sortable Sortable
-     * @return array|null
+     * @param PicoTableInfo $info Table info
+     * @return PicoDatabaseQueryBuilder
      * @throws PDOException|NoDatabaseConnectionException|EntityException
      */
-    public function findBy($propertyName, $propertyValue, $pageable = null, $sortable = null)
+    public function findByQuery($propertyName, $propertyValue, $pageable = null, $sortable = null, $info = null, $subqueryMap = null)
     {
-        $info = $this->getTableInfo();
+        $selected = $this->getAllColumns($info);
+        if($subqueryMap != null)
+        {
+            $selected = $this->joinString($selected, $this->subquery($info, $subqueryMap), self::COMMA_RETURN);
+        }
         $where = $this->createWhereFromArgs($info, $propertyName, $propertyValue);
         if(!$this->isValidFilter($where))
         {
             throw new InvalidFilterException(self::MESSAGE_INVALID_FILTER);
         }
         $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
-        $data = null;
-        $result = array();
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->getTableName().".*")
+            ->select($selected)
             ->from($info->getTableName())
             ->where($where);
         if($pageable != null)
@@ -2251,14 +2497,35 @@ class PicoDatabasePersistence // NOSONAR
         {
             $sqlQuery = $this->setSortable($sqlQuery, $pageable, $sortable, $info);        
         }
+
+        return $sqlQuery;
+    }
+
+    /**
+     * Get all mathced record from database
+     *
+     * @param string $propertyName Property name
+     * @param mixed $propertyValue Property value
+     * @param PicoPageable $pageable Pagable
+     * @param PicoSortable|string $sortable Sortable
+     * @param array $subqueryMap
+     * @return array|null
+     * @throws PDOException|NoDatabaseConnectionException|EntityException
+     */
+    public function findBy($propertyName, $propertyValue, $pageable = null, $sortable = null, $subqueryMap = null)
+    {
+        $info = $this->getTableInfo();
+        $data = null;
+        $result = array();
+
+        $sqlQuery = $this->findByQuery($propertyName, $propertyValue, $pageable, $sortable, $info, $subqueryMap);
+
         try
         {
             $stmt = $this->database->executeQuery($sqlQuery);
             if($this->matchRow($stmt))
             {
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $data = array();
-                foreach($rows as $row)                
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT))               
                 {
                     $data = $this->fixDataType($row, $info); 
                     $data = $this->join($data, $row, $info);
@@ -2268,7 +2535,7 @@ class PicoDatabasePersistence // NOSONAR
         }
         catch(PDOException $e)
         {
-            throw new PDOException($e->getMessage());
+            throw new PDOException($e->getMessage(), intval($e->getCode()));
         }
         catch(NoDatabaseConnectionException $e)
         {
@@ -2296,26 +2563,44 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get all record from database wihout filter
      *
-     * @param PicoSpecification $specification Specification
+     * @param PicoSpecification|null $specification Specification
      * @return integer
      * @throws EntityException|EmptyResultException
      */
     public function countAll($specification)
     {
         $info = $this->getTableInfo();
+        $primaryKeys = array_values($info->getPrimaryKeys());
+        if(is_array($primaryKeys) && isset($primaryKeys[0][self::KEY_NAME]))
+        {
+            // it will be faster than asterisk
+            $agg = $primaryKeys[0][self::KEY_NAME];
+        }
+        else
+        {
+            $agg = "*";
+        }
         $queryBuilder = new PicoDatabaseQueryBuilder($this->database);
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->getTableName().".*")
-            ->from($info->getTableName());
-        
-        if($specification->isRequireJoin())
+            ->select($this->getAllColumns($info))
+            ->from($info->getTableName());  
+               
+        if($specification != null && $specification instanceof PicoSpecification)
         {
-            $sqlQuery = $this->addJoinQuery($sqlQuery, $info);
-        }       
-        if($specification != null)
-        {
+            if($this->isRequireJoinFromSpecification($specification))
+            {
+                $sqlQuery = $this->addJoinQuery($sqlQuery, $info);
+            }
             $sqlQuery = $this->setSpecification($sqlQuery, $specification, $info);
+        }
+        else
+        {
+            $sqlQuery = $queryBuilder
+                ->newQuery()
+                ->select($agg)
+                ->from($info->getTableName())
+                ;
         }
         try
         {
@@ -2439,7 +2724,7 @@ class PicoDatabasePersistence // NOSONAR
         $data = null;
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->getTableName().".*")
+            ->select($this->getAllColumns($info))
             ->from($info->getTableName())
             ->where($where);
         $sqlQuery = $this->setSortable($sqlQuery, null, $sortable, $info);  
@@ -2517,7 +2802,7 @@ class PicoDatabasePersistence // NOSONAR
                 $reflect = new ExtendedReflectionClass($this->className);
                 $useStatements = $reflect->getUseStatements(); 
                 $this->namespaceName = $reflect->getNamespaceName();
-                if(isset($useStatements) && is_array($useStatements))
+                if($this->isArray($useStatements))
                 {
                     foreach($useStatements as $val)
                     {
@@ -2620,7 +2905,7 @@ class PicoDatabasePersistence // NOSONAR
      * @param PicoTableInfo $info Table information
      * @return object
      */
-    private function join($data, $row, $info)
+    public function join($data, $row, $info)
     {
         if(!empty($info->getJoinColumns()))
         {
@@ -2698,15 +2983,17 @@ class PicoDatabasePersistence // NOSONAR
      * @param PicoTableInfo $info Table information
      * @return array
      */
-    private function fixDataType($data, $info)
+    public function fixDataType($data, $info)
     {
         $result = array();
         $typeMap = $this->createTypeMap($info);
-        foreach($data as $columnName=>$value)
+        foreach($info->getColumns() as $prop=>$column)
         {
+            $columnName = $column[self::KEY_NAME];
+            $value = $data[$columnName];
             if(isset($typeMap[$columnName]))
             {
-                $result[$columnName] = $this->fixData($value, $typeMap[$columnName]);
+                $result[$prop] = $this->fixData($value, $typeMap[$columnName]);
             }
         }
         return $result;
@@ -2960,7 +3247,7 @@ class PicoDatabasePersistence // NOSONAR
         $data = null;
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->getTableName().".*")
+            ->select($this->getAllColumns($info))
             ->from($info->getTableName());
 
         if($this->isRequireJoin($specification, $pageable, $sortable, $info))
@@ -3021,7 +3308,7 @@ class PicoDatabasePersistence // NOSONAR
         $data = null;
         $sqlQuery = $queryBuilder
             ->newQuery()
-            ->select($info->getTableName().".*")
+            ->select($this->getAllColumns($info))
             ->from($info->getTableName());
 
         if($this->isRequireJoin($specification, $pageable, $sortable, $info))
@@ -3034,8 +3321,7 @@ class PicoDatabasePersistence // NOSONAR
             $stmt = $this->database->executeQuery($sqlQuery);
             if($this->matchRow($stmt))
             {
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                foreach($rows as $row)
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT))
                 {
                     $data = $this->fixDataType($row, $info);
                     $data = $this->join($data, $row, $info);
@@ -3083,7 +3369,7 @@ class PicoDatabasePersistence // NOSONAR
         }
         return $queryBuilder
             ->newQuery()
-            ->select($info->getTableName().".*")
+            ->select($this->getAllColumns($info))
             ->from($info->getTableName())
             ->where($where);
     }
@@ -3274,5 +3560,16 @@ class PicoDatabasePersistence // NOSONAR
         }
 
         return $persist;
+    }
+
+    /**
+     * Check if parameter is array
+     *
+     * @param mixed $array
+     * @return boolean
+     */
+    public function isArray($array)
+    {
+        return isset($array) && is_array($array);
     }
 }

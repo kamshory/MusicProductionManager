@@ -2,6 +2,8 @@
 
 namespace MagicObject\Util;
 
+use stdClass;
+
 class PicoArrayUtil
 {
     /**
@@ -45,13 +47,14 @@ class PicoArrayUtil
             return $array;
         }
     }
+    
     /**
      * Camelize array keys
      *
      * @param array $array
      * @return array
      */
-    private static function _camelize(&$array)
+    private static function _camelize(&$array) //NOSONAR
     {
         foreach (array_keys($array) as $key)
         {
@@ -84,7 +87,7 @@ class PicoArrayUtil
      * @param array $array
      * @return array
      */
-    private static function _snakeize(&$array)
+    private static function _snakeize(&$array) //NOSONAR
     {
         foreach (array_keys($array) as $key)
         {

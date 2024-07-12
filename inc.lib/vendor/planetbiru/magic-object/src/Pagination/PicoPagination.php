@@ -42,26 +42,39 @@ class PicoPagination
      */
     private $orderType = "";
 
-    public function __construct($pageSize = 20)
+    /**
+     * Constructor
+     *
+     * @param integer $pageSize
+     * @param string $orderby
+     * @param string $ordertype
+     */
+    public function __construct($pageSize = 20, $orderby = 'orderby', $ordertype = 'ordertype')
     {
         $this->pageSize = $pageSize;
         $this->currentPage = $this->parseCurrentPage();
         $this->offset = $this->pageSize * ($this->currentPage - 1);
-        $this->orderBy = @$_GET['orderby'];
-        $this->orderType = @$_GET['ordertype'];
+        if(isset($_GET[$orderby]))
+        {
+            $this->orderBy = @$_GET[$orderby];
+        }
+        if(isset($_GET[$ordertype]))
+        {
+            $this->orderType = @$_GET[$ordertype];
+        }
     }
 
     /**
      * Parse offset
      *
-     * @param string $paramName
+     * @param string $parameterName Parameter name
      * @return integer
      */
-    private function parseCurrentPage($paramName = 'page')
+    private function parseCurrentPage($parameterName = 'page')
     {
-        if(isset($_GET[$paramName]))
+        if(isset($_GET[$parameterName]))
         {
-            $pageStr = preg_replace("/\D/", "", $_GET[$paramName]);
+            $pageStr = preg_replace("/\D/", "", $_GET[$parameterName]);
             if($pageStr == "")
             {
                 $page = 0;
@@ -82,9 +95,9 @@ class PicoPagination
     /**
      * Create order
      *
-     * @param array $map
-     * @param array $filter
-     * @param string $defaultOrderBy
+     * @param array $map ORDER BY map
+     * @param array $filter ORDER BY filter
+     * @param string $defaultOrderBy Default ORDER BY
      * @return string
      */
     public function createOrder($map = null, $filter = null, $defaultOrderBy = null)
@@ -106,8 +119,8 @@ class PicoPagination
     /**
      * Get order by
      *
-     * @var array $filter
-     * @var string $defaultOrderBy
+     * @var array $filter ORDER BY filter
+     * @var string $defaultOrderBy Default ORDER BY
      * @return string
      */ 
     public function getOrderBy($filter = null, $defaultOrderBy = null)
@@ -138,17 +151,17 @@ class PicoPagination
     /**
      * Get order type
      *
-     * @var string $defaultOrderType
+     * @var string $defaultOrderType Default order type
      * @return string
      */ 
     public function getOrderType($defaultOrderType = null)
     {
         $orderType = $this->orderType;
-        if(strcasecmp($orderType, 'desc') == 0)
+        if(strcasecmp($orderType, PicoSort::ORDER_TYPE_DESC) == 0)
         {
             $orderType = PicoSort::ORDER_TYPE_DESC;
         }
-        else if(strcasecmp($orderType, 'asc') == 0)
+        else if(strcasecmp($orderType, PicoSort::ORDER_TYPE_ASC) == 0)
         {
             $orderType = PicoSort::ORDER_TYPE_ASC;
         }
@@ -196,28 +209,33 @@ class PicoPagination
     /**
      * Get page URL
      *
-     * @param integer $page
+     * @param integer $page Page number
+     * @param string $parameterName Parameter name for page number
+     * @param string $path Path
      * @return string
      */
-    public static function getPageUrl($page)
+    public static function getPageUrl($page, $parameterName = 'page', $path = null)
     {
         $urls = array();
-        $params = array();
-        $urls[] = $_SERVER['PHP_SELF'];
-        
-        $urlParameters = isset($_GET) ? $_GET : null;
-        
-        if($urlParameters != null && is_array($urlParameters))
+        $paths = explode("?", $_SERVER['REQUEST_URI']);
+        if($path === null)
         {
-            $urlParameters['page'] = $page;
-            foreach($urlParameters as $paramName=>$paramValue)
+            $path = trim($paths[0]);
+        }
+        $urls[] = $path;
+        $urlParameters = isset($_GET) ? $_GET : array();
+        foreach($urlParameters as $paramName=>$paramValue)
+        {
+            if($paramName == $parameterName)
             {
-                $params[] = urlencode($paramName)."=".urlencode($paramValue);
+                $urlParameters[$paramName] = $page;
             }
         }
-        if(!empty($params))
+        // replace value
+        $urlParameters[$parameterName] = $page;
+        if(!empty($urlParameters))
         {
-            $urls[] = implode("&", $params);
+            $urls[] = http_build_query($urlParameters);
         }
         return implode("?", $urls);
     }

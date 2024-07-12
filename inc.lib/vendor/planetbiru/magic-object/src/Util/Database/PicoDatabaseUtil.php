@@ -15,7 +15,7 @@ class PicoDatabaseUtil
      */
     public static function specificationFromParams($params)
     {
-        if(isset($params) && is_array($params))
+        if(self::isArray($params))
         {
             foreach($params as $param)
             {
@@ -35,7 +35,7 @@ class PicoDatabaseUtil
      */
     public static function pagableFromParams($params)
     {
-        if(isset($params) && is_array($params))
+        if(self::isArray($params))
         {
             foreach($params as $param)
             {
@@ -55,7 +55,7 @@ class PicoDatabaseUtil
      */
     public static function sortableFromParams($params)
     {
-        if(isset($params) && is_array($params))
+        if(self::isArray($params))
         {
             foreach($params as $param)
             {
@@ -76,7 +76,7 @@ class PicoDatabaseUtil
     public static function valuesFromParams($params)
     {
         $ret = array();
-        if(isset($params) && is_array($params))
+        if(self::isArray($params))
         {
             foreach($params as $param)
             {
@@ -236,5 +236,118 @@ class PicoDatabaseUtil
 		}
 		$random = sprintf('%06x', mt_rand(0, 16777215));
 		return sprintf('%s%s', $uuid, $random);
+    }
+
+    /**
+     * Split SQL
+     *
+     * @param string $sqlText
+     * @return string[]
+     */
+    public function splitSql($sqlText) //NOSONAR
+    {
+        $sqlText = str_replace("\n", "\r\n", $sqlText);
+        $sqlText = str_replace("\r\r\n", "\r\n", $sqlText);
+        $arr = explode("\r\n", $sqlText);
+        $arr2 = array();
+        foreach($arr as $key=>$val)
+        {
+            $arr[$key] = ltrim($val);
+            if(stripos($arr[$key], "-- ") !== 0 && $arr[$key] != "--" && $arr[$key] != "")
+            {
+                $arr2[] = $arr[$key];
+            }
+        }
+        $arr = $arr2;
+        unset($arr2);
+        
+        $append = 0;
+        $skip = 0;
+        $start = 1;
+        $nquery = -1;
+        $delimiter = ";";
+        $queryArray = array();
+        $delimiterArray = array();
+        
+        foreach($arr as $line=>$text)
+        {
+            if($text == "" && $append == 1)
+            {
+                $queryArray[$nquery] .= "\r\n";    
+            }
+            if($append == 0)
+            {
+                if(stripos(ltrim($text, " \t "), "--") === 0)
+                {
+                    $skip = 1;
+                    $nquery++;
+                    $start = 1;
+                    $append = 0;
+                }
+                else
+                {
+                    $skip = 0;
+                }
+            }
+            if($skip == 0)
+            {
+                if($start == 1)
+                {
+                    $nquery++;
+                    $queryArray[$nquery] = "";
+                    $delimiterArray[$nquery] = $delimiter;
+                    $start = 0;
+                }
+                $queryArray[$nquery] .= $text."\r\n";
+                $delimiterArray[$nquery] = $delimiter;
+                $text = ltrim($text, " \t ");
+                $start = strlen($text)-strlen($delimiter)-1;
+                if(stripos(substr($text, $start), $delimiter) !== false || $text == $delimiter)
+                {
+                    $nquery++;
+                    $start = 1;
+                    $append = 0;
+                }
+                else
+                {
+                    $start = 0;
+                    $append = 1;
+                }
+                $delimiterArray[$nquery] = $delimiter;
+                if(stripos($text, "delimiter ") !== false)
+                {
+                    $text = trim(preg_replace("/\s+/"," ",$text));
+                    $arr2 = explode(" ", $text);
+                    $delimiter = $arr2[1];
+                    $nquery++;
+                    $delimiterArray[$nquery] = $delimiter;
+                    $start = 1;
+                    $append = 0;
+                }
+            }
+        }
+        $result = array();
+        foreach($queryArray as $line=>$sql)
+        {
+            $delimiter = $delimiterArray[$line];
+            if(stripos($sql, "delimiter ") !== 0)
+            {
+                $sql = rtrim($sql, " \r\n\t ");
+                $sql = substr($sql, 0, strlen($sql)-strlen($delimiter));			
+                $result[] = array("query"=> $sql, "delimiter"=>$delimiter);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Check if parameter os array
+     *
+     * @param mixed $params
+     * @return boolean
+     */
+    private static function isArray($params)
+    {
+        return isset($params) && is_array($params);
     }
 }

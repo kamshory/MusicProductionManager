@@ -12,10 +12,11 @@ class PicoRequest extends PicoRequestBase
      * Constructor
      *
      * @param integer $inputType
+     * @param boolean $forceScalar
      */
-    public function __construct($inputType = INPUT_GET)
+    public function __construct($inputType = INPUT_GET, $forceScalar = false)
     {
-        parent::__construct();
+        parent::__construct($forceScalar);
         if($inputType == INPUT_GET && isset($_GET))
         {
             $this->loadData($_GET);

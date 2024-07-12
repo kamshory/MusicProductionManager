@@ -169,26 +169,6 @@ class EntityAlbum extends MagicObject
 	 * @var string
 	 */
 	protected $ipEdit;
-	
-	/**
-	 * Blocked
-	 * 
-	 * @Column(name="blocked", type="tinyint(1)", length=1, default_value="1", nullable=true)
-	 * @DefaultColumn(value="1")
-	 * @Label(content="Blocked")
-	 * @var boolean
-	 */
-	protected $blocked;
-	
-	/**
-	 * Hacked
-	 * 
-	 * @Column(name="hacked", type="tinyint(1)", length=1, default_value="null", nullable=true)
-	 * @DefaultColumn(value="1")
-	 * @Label(content="Hacked")
-	 * @var boolean
-	 */
-	protected $hacked;
 
 	/**
 	 * Active
@@ -643,7 +623,9 @@ class Artist extends MagicObject
 
 $databaseCredential = new SecretObject();
 $databaseCredential->loadYamlFile(dirname(dirname(__DIR__))."/test.yml", false, true, true);
-$database = new PicoDatabase($databaseCredential);
+$database = new PicoDatabase($databaseCredential->getDatabase(), function(){}, function($sql){
+	// echo $sql;
+});
 $database->connect();
 
 $album = new EntityAlbum(null, $database);
@@ -716,10 +698,49 @@ try
 	echo "\r\n-----\r\n";
 	*/
 	
-	$dumper = new PicoDatabaseDump();
+	//$dumper = new PicoDatabaseDump();
 	
-	$sql = $dumper->createAlterTableAdd($album);
-	print_r($sql);
+	//$sql = $dumper->createAlterTableAdd($album);
+	//print_r($sql);
+	
+	
+	$subqueryMap = array(
+		'producer'=>array(
+			'entityName'=>'Producer',
+			'tableName'=>'producer',
+			'primaryKey'=>'producer_id',
+			'columnName'=>'producer_id',
+			'objectName'=>'producer',
+			'propertyName'=>'name'
+		)
+	);
+	
+	/*
+	
+	$result = $album->findAll(null, null, null, true, $subqueryMap, MagicObject::FIND_OPTION_NO_COUNT_DATA | MagicObject::FIND_OPTION_NO_FETCH_DATA);
+	
+	while($data = $result->fetch())
+	{
+		echo $data;
+	}
+		*/
+		
+	
+	//echo $r;
+	
+
+	
+	$result = $album->findAll(null, null, null, true, $subqueryMap);
+	
+	foreach($result->getResult() as $row)
+	{
+		echo $row;
+	}
+
+	
+	
+	//$album->findOneWithPrimaryKeyValue('0648d495ade4515811f2', $arr);
+	//echo $album;
 }
 catch(Exception $e)
 {

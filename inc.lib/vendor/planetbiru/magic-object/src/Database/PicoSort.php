@@ -6,6 +6,7 @@ class PicoSort
 {
     const ORDER_TYPE_ASC = "asc";
     const ORDER_TYPE_DESC = "desc";
+    const SORT_BY = "sortBy";
     /**
      * Sort by
      *
@@ -77,13 +78,13 @@ class PicoSort
     /**
      * Magic method
      *
-     * @param string $method
-     * @param array $params
+     * @param string $method Method name
+     * @param array $params Parameters
      * @return self|mixed|null
      */
     public function __call($method, $params)
     {
-        if (strncasecmp($method, "sortBy", 6) === 0 && isset($params) && isset($params[0])){
+        if (strncasecmp($method, self::SORT_BY, 6) === 0 && isset($params) && isset($params[0])){
             $field = lcfirst(substr($method, 6));
             $value = $params[0];
             $this->setSortBy($field);
@@ -110,7 +111,7 @@ class PicoSort
      */
     public static function fixSortType($type)
     {
-        return strtolower($type) == 'desc' ? self::ORDER_TYPE_DESC : self::ORDER_TYPE_ASC;
+        return strcasecmp($type, self::ORDER_TYPE_DESC) == 0 ? self::ORDER_TYPE_DESC : self::ORDER_TYPE_ASC;
     }
 
     /**
@@ -121,8 +122,8 @@ class PicoSort
     public function __toString()
     {
         return json_encode(array(
-            'sortBy'=>$this->sortBy, 
-            'sortType'=>$this->sortType
+            'sortBy' => $this->sortBy, 
+            'sortType' => $this->sortType
         ));
     }
 }

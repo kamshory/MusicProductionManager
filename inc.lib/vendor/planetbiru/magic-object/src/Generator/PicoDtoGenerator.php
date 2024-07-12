@@ -181,6 +181,7 @@ class PicoDtoGenerator
         {
             $dtoName = ucfirst(PicoStringUtil::camelize($picoTableName))."Dto";
         }
+        
         $str = "";
         $str .="    /**\r\n";
         $str .="     * Construct $dtoName"." from $className and not copy other properties\r\n";

@@ -5,11 +5,12 @@ namespace MagicObject;
 use MagicObject\Exceptions\InvalidAnnotationException;
 use MagicObject\Exceptions\InvalidQueryInputException;
 use MagicObject\Util\ClassUtil\PicoAnnotationParser;
+use MagicObject\Util\PicoArrayUtil;
 use MagicObject\Util\PicoStringUtil;
 use ReflectionClass;
 use stdClass;
 
-class SetterGetter
+class SetterGetter extends stdClass
 {
     const JSON = 'JSON';
     
@@ -22,8 +23,10 @@ class SetterGetter
 
     /**
      * Constructor
+     * 
+     * @param self|array|stdClass|object $data
      */
-    public function __construct()
+    public function __construct($data = null)
     {
         $jsonAnnot = new PicoAnnotationParser(get_class($this));
         $params = $jsonAnnot->getParameters();
@@ -39,6 +42,41 @@ class SetterGetter
                 throw new InvalidAnnotationException("Invalid annotation @".$paramName);
             }  
         }
+        if($data != null)
+        {
+            if(is_array($data))
+            {
+                $data = PicoArrayUtil::camelize($data);
+            }
+            $this->loadData($data);
+        }
+    }
+
+    /**
+     * Load data to object
+     * @param mixed $data
+     * @return self
+     */
+    public function loadData($data)
+    {
+        if($data != null)
+        {
+            if($data instanceof self)
+            {
+                $values = $data->value();
+                foreach ($values as $key => $value) {
+                    $key2 = PicoStringUtil::camelize($key);
+                    $this->set($key2, $value);
+                }
+            }
+            else if (is_array($data) || is_object($data)) {
+                foreach ($data as $key => $value) {
+                    $key2 = PicoStringUtil::camelize($key);
+                    $this->set($key2, $value);
+                }
+            }
+        }
+        return $this;
     }
 
     /**
@@ -85,8 +123,8 @@ class SetterGetter
      * Gets datas from the property.
      * Example: echo $instance->foo;
      * 
-     * @param string $name Name of the property to get.
-     * @return mixed Datas stored in property.
+     * @param string $name Property name
+     * @return mixed Data stored in property.
      **/
     public function __get($name)
     {
@@ -99,7 +137,7 @@ class SetterGetter
     /**
      * Check if property has been set or not or has null value
      *
-     * @param string $name
+     * @param string $name Property name
      * @return boolean
      */
     public function __isset($name)
@@ -110,7 +148,7 @@ class SetterGetter
     /**
      * Unset property value
      *
-     * @param string $name
+     * @param string $name Property name
      * @return void
      */
     public function __unset($name)
@@ -187,8 +225,8 @@ class SetterGetter
     /**
      * Magic method called when user call any undefined method
      *
-     * @param string $method
-     * @param string $params
+     * @param string $method Called method
+     * @param string $params Parameters given
      * @return mixed|null
      */
     public function __call($method, $params) //NOSONAR

@@ -16,10 +16,11 @@ class  InputGet extends PicoRequestBase {
      * Constructor
      * @param boolean $recursive
      * @param boolean $parseNullAndBool
+     * @param boolean $forceScalar
      */
-    public function __construct($recursive = false, $parseNullAndBool = false)
+    public function __construct($recursive = false, $parseNullAndBool = false, $forceScalar = false)
     {
-        parent::__construct();
+        parent::__construct($forceScalar);
         $this->_recursive = $recursive; 
         if($parseNullAndBool)
         {
@@ -47,7 +48,7 @@ class  InputGet extends PicoRequestBase {
      * @param array $data
      * @return self
      */
-    public function loadData($data)
+    public function loadData($data, $tolower = false)
     {
         if($this->_recursive)
         {

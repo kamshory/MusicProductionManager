@@ -2,6 +2,7 @@
 
 namespace MagicObject\Database;
 
+use MagicObject\Request\PicoRequestBase;
 use MagicObject\Util\Database\PicoDatabaseUtil;
 
 class PicoSpecification
@@ -147,7 +148,6 @@ class PicoSpecification
         return $this;
     }
 
-
     /**
      * Check id specification is empty or not
      *
@@ -157,7 +157,6 @@ class PicoSpecification
     {
         return empty($this->specifications);
     }
-
 
     /**
      * Get predicate
@@ -200,6 +199,7 @@ class PicoSpecification
      */
     private function getWhere($specifications)
     {
+        $arr = array();
         foreach($specifications as $spec)
         {
             if($spec instanceof PicoPredicate)
@@ -237,12 +237,32 @@ class PicoSpecification
             {           
                 $entityField = new PicoEntityField($spec->getField());
                 $field = $entityField->getField();
+                $functionFormat = $entityField->getFunctionFormat();
+
                 $entityName = $entityField->getEntity();
                 $column = ($entityName == null) ? $field : $entityName.".".$field;
-                $arr[] = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue());      
+                $columnFinal = $this->formatColumn($column, $functionFormat);
+                
+                $arr[] = $spec->getFilterLogic() . " " . $columnFinal . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue());      
             }
         }
         return PicoDatabaseUtil::trimWhere(implode(" ", $arr));
+    }
+
+    /**
+     * Format column
+     *
+     * @param string $column Column name
+     * @param string $format Format
+     * @return string
+     */
+    private function formatColumn($column, $format)
+    {
+        if($format == null || strpos($format, "%s") === false)
+        {
+            return $column;
+        }
+        return sprintf($format, $column);
     }
 
     /**
@@ -274,22 +294,67 @@ class PicoSpecification
      * Get specification from user input
      *
      * @param PicoRequestBase $request
-     * @param string[] $map
+     * @param PicoSpecificationFilter[]|null $map
      * @return PicoSpecification
      */
-    public static function fromUserInput($request, $map)
+    public static function fromUserInput($request, $map = null)
     {
         $specification = new PicoSpecification();
-        if($map != null && is_array($map))
+        if(isset($map) && is_array($map))
         {
-            foreach($map as $key=>$value)
+            foreach($map as $key=>$filter)
             {
-                if($request->get($key) !== null)
+                $filterValue = $request->get($key);
+                if($filterValue != null && trim($filterValue) != "" && $filter instanceof PicoSpecificationFilter)
                 {
-                    $specification->addAnd(new PicoPredicate($value, $request->get($key)));
+                    if($filter->isNumber() || $filter->isBoolean())
+                    {
+                        $specification->addAnd(PicoPredicate::getInstance()->equals($filter->getColumnName(), $filter->valueOf($filterValue)));
+                    }
+                    else if($filter->isFulltext())
+                    {
+                        $specification->addAnd(self::fullTextSearch($filter->getColumnName(), $filterValue));
+                    }
+                    else
+                    {
+                        $specification->addAnd(PicoPredicate::getInstance()->like(PicoPredicate::functionLower($filter->getColumnName()), PicoPredicate::generateCenterLike(strtolower($filterValue))));
+                    }
                 }
             }
         }
         return $specification;
+    }
+
+    /**
+     * Create full text search
+     *
+     * @param string $columnName
+     * @param string $keywords
+     * @return self
+     */
+    public static function fullTextSearch($columnName, $keywords)
+    {
+        $specification = new self;
+        $arr = explode(" ", $keywords);
+        foreach($arr as $word)
+        {
+            if(!empty($word))
+            {
+                $specification->addAnd(PicoPredicate::getInstance()->like(PicoPredicate::functionLower($columnName), PicoPredicate::generateCenterLike(strtolower($word))));
+            }
+        }
+        return $specification;
+    }
+
+    /**
+     * Filter
+     *
+     * @param string $columnName
+     * @param string $dataType
+     * @return PicoSpecificationFilter
+     */
+    public static function filter($columnName, $dataType)
+    {
+        return new PicoSpecificationFilter($columnName, $dataType);
     }
 }

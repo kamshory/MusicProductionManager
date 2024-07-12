@@ -45,7 +45,7 @@ class  InputServer extends PicoRequestBase {
     public function __construct()
     {
         parent::__construct();
-        $this->loadData($_SERVER);
+        $this->loadData($_SERVER, true);
     }
 
     /**

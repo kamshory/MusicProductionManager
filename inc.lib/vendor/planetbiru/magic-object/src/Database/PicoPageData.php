@@ -2,7 +2,10 @@
 
 namespace MagicObject\Database;
 
+use MagicObject\Exceptions\FindOptionException;
 use MagicObject\MagicObject;
+use PDO;
+use PDOStatement;
 use stdClass;
 
 class PicoPageData
@@ -48,6 +51,13 @@ class PicoPageData
      * @var integer
      */
     private $pageSize = 0;
+
+    /**
+     * Data offset
+     *
+     * @var integer
+     */
+    private $dataOffset = 0;
     
     /**
      * Start time
@@ -78,6 +88,41 @@ class PicoPageData
     private $pagination = array();
 
     /**
+     * PDO statement
+     *
+     * @var PDOStatement
+     */
+    private $stmt = null;
+    
+    /**
+     * Class name
+     *
+     * @var string
+     */
+    private $className;
+    
+    /**
+     * Subquery info
+     *
+     * @var array
+     */
+    private $subqueryMap;
+    
+    /**
+     * By count result
+     *
+     * @var boolean
+     */
+    private $byCountResult = false;
+    
+    /**
+     * Entity
+     *
+     * @var MagicObject
+     */
+    private $entity;
+
+    /**
      * Constructor
      *
      * @param MagicObject[] $result
@@ -85,17 +130,18 @@ class PicoPageData
      * @param integer $totalResult
      * @param PicoPageable $pageable
      */
-    public function __construct($result, $startTime, $totalResult = 0, $pageable = null)
+    public function __construct($result, $startTime, $totalResult = 0, $pageable = null, $stmt = null, $entity = null, $subqueryMap = null)
     {
         $this->startTime = $startTime;
         $this->result = $result;
-        $countResult = count($result);
+        $countResult = $this->countData($result);
         if($totalResult != 0)
         {
             $this->totalResult = $totalResult;
         }
         else
         {
+            $this->byCountResult = true;
             $this->totalResult = $countResult;
         }
         if($pageable != null && $pageable instanceof PicoPageable)
@@ -108,9 +154,38 @@ class PicoPageData
             $this->pageNumber = 1;
             $this->totalPage = 1;
             $this->pageSize = $countResult;
+            $this->dataOffset = 0;
         }
         $this->endTime = microtime(true);
         $this->executionTime = $this->endTime - $this->startTime;
+        if($stmt != null)
+        {
+            $this->stmt = $stmt;
+        }
+        if($entity != null)
+        {
+            $this->entity = $entity;
+            $this->className = get_class($entity);
+        }
+        if($subqueryMap != null)
+        {
+            $this->subqueryMap = $subqueryMap;
+        }
+    }
+    
+    /**
+     * Count data
+     *
+     * @param array $result
+     * @return integer
+     */
+    private function countData($result)
+    {
+        if(isset($result) && is_array($result))
+        {
+            return count($result);
+        }
+        return 0;
     }
 
 
@@ -123,7 +198,9 @@ class PicoPageData
     {
         $this->pageNumber = $this->pageable->getPage()->getPageNumber();
         $this->totalPage = ceil($this->totalResult / $this->pageable->getPage()->getPageSize());
+        
         $this->pageSize = $this->pageable->getPage()->getPageSize();
+        $this->dataOffset = ($this->pageNumber - 1) * $this->pageSize;
 
         $curPage = $this->pageNumber;
         $totalPage = $this->totalPage;
@@ -134,12 +211,12 @@ class PicoPageData
             $minPage = 1;
         }
         $maxPage = $curPage + 3;
-        if($maxPage > $totalPage)
+        if(!$this->byCountResult && $maxPage > $totalPage)
         {
             $maxPage = $totalPage;
         }
         $this->pagination = array();
-        for($i = $minPage; $i<=$maxPage; $i++)
+        for($i = $minPage; $i <= $maxPage; $i++)
         {
             $this->pagination[] = array('page'=>$i, 'selected'=>$i == $curPage);
         }
@@ -193,9 +270,21 @@ class PicoPageData
     public function __toString()
     {
         $obj = new stdClass;
+        $exposedProps = array(
+            "pageable",
+            "totalResult",
+            "totalPage",
+            "pageNumber",
+            "pageSize", 
+            "dataOffset",
+            "startTime",
+            "endTime",
+            "executionTime",
+            "pagination"
+        );
         foreach($this as $key=>$value)
         {
-            if($key != self::RESULT && $key != self::PAGABLE)
+            if($key != self::RESULT && $key != self::PAGABLE && in_array($key, $exposedProps))
             {
                 $obj->{$key} = $value;
             }
@@ -222,6 +311,18 @@ class PicoPageData
     }
 
     /**
+     * Get page control
+     *
+     * @param string $parameterName
+     * @param string $path
+     * @return PicoPageControl
+     */
+    public function getPageControl($parameterName = 'page', $path = null)
+    {
+        return new PicoPageControl($this, $parameterName, $path);
+    }
+
+    /**
      * Get total match
      *
      * @return integer
@@ -239,5 +340,86 @@ class PicoPageData
     public function getPagable()
     {
         return $this->pageable;
+    }
+
+    /**
+     * Get data offset
+     *
+     * @return  integer
+     */ 
+    public function getDataOffset()
+    {
+        return $this->dataOffset;
+    }
+
+    /**
+     * Get PDO statement
+     *
+     * @return  PDOStatement
+     */ 
+    public function getPDOStatement()
+    {
+        if($this->stmt == null)
+        {
+            throw new FindOptionException("Statement is null. See MagicObject::FIND_OPTION_NO_FETCH_DATA option");
+        }
+        return $this->stmt;
+    }
+    
+    /**
+     * Fetch data
+     *
+     * @return MagicObject|mixed
+     */
+    public function fetch()
+    {
+        if($this->stmt == null)
+        {
+            throw new FindOptionException("Statement is null. See MagicObject::FIND_OPTION_NO_FETCH_DATA option");
+        }
+        $result = $this->stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+        if($result === false)
+        {
+            return false;
+        }
+        return $this->applySubqueryResult($result);
+    }
+    
+    /**
+     * Apply subquery result
+     *
+     * @param array $row
+     * @return MagicObject
+     */
+    public function applySubqueryResult($row)
+    {
+        $data = $row;
+        if(isset($this->subqueryMap) && is_array($this->subqueryMap))
+        { 
+            foreach($this->subqueryMap as $info)
+            {
+                $objectName = $info['objectName'];
+                $objectNameSub = $info['objectName'];
+                if(isset($row[$objectNameSub]))
+                {
+                    $data[$objectName] = (new MagicObject())
+                        ->set($info['primaryKey'], $row[$info['columnName']])
+                        ->set($info['propertyName'], $row[$objectNameSub])
+                    ;
+                }
+                else
+                {
+                    $data[$objectName] = new MagicObject();
+                }
+            }
+        }
+        else
+        {
+            $persist = new PicoDatabasePersistence($this->entity->currentDatabase(), $this->entity);
+            $info = $this->entity->tableInfo();
+            $data = $persist->fixDataType($row, $info);
+            $data = $persist->join($data, $row, $info);
+        }
+        return new $this->className($data);
     }
 }

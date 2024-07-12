@@ -11,8 +11,8 @@ class PicoColumnGenerator
     /**
      * Get column list
      *
-     * @param PicoDatabase $database
-     * @param string $picoTableName
+     * @param PicoDatabase $database Database connection
+     * @param string $picoTableName Database name
      * @return array
      */
     public static function getColumnList($database, $picoTableName)

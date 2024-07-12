@@ -3,6 +3,7 @@
 namespace MagicObject\Database;
 
 use MagicObject\Request\PicoRequestBase;
+use MagicObject\Util\PicoStringUtil;
 
 class PicoSortable
 {
@@ -32,6 +33,7 @@ class PicoSortable
             $this->initSortable($argc, $params);
         }
     }
+    
     /**
      * Initialize sortable
      *
@@ -117,7 +119,7 @@ class PicoSortable
     /**
      * Create sort by
      *
-     * @param PicoTableInfo $tableInfo
+     * @param PicoTableInfo $tableInfo Table information
      * @return string
      */
     public function createOrderBy($tableInfo = null)
@@ -168,7 +170,7 @@ class PicoSortable
     /**
      * Create sort with mapping
      *
-     * @param PicoTableInfo $tableInfo
+     * @param PicoTableInfo $tableInfo Table information
      * @return string
      */
     private function createWithMapping($tableInfo)
@@ -205,6 +207,16 @@ class PicoSortable
     }
 
     /**
+     * Check id specification is empty or not
+     *
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return empty($this->sortable);
+    }
+
+    /**
      * Get sortable
      *
      * @return  PicoSort[]
@@ -238,22 +250,45 @@ class PicoSortable
      * Get sortable from user input
      *
      * @param PicoRequestBase $request
-     * @param string[] $map
+     * @param string[]|null $map
+     * @param array|null $defaultSortable
      * @return PicoSortable
      */
-    public static function fromUserInput($request, $map)
+    public static function fromUserInput($request, $map = null, $defaultSortable = null)
     {
         $sortable = new PicoSortable();
-        if($map != null && is_array($map))
+        if(self::isArray($map))
         {
             foreach($map as $key=>$value)
             {
-                if($request->getOrderby() == $key)
+                if(PicoStringUtil::camelize($request->getOrderby()) == PicoStringUtil::camelize($key))
                 {
                     $sortable->add(new PicoSort($value, PicoSort::fixSortType($request->getOrdertype())));
                 }
             }
         }
+        if($sortable->isEmpty() && self::isArray($defaultSortable))
+        {
+            // no filter from user input
+            foreach($defaultSortable as $filter)
+            {
+                if(isset($filter['sortBy']) && isset($filter['sortType']))
+                {
+                    $sortable->add(new PicoSort($filter['sortBy'], $filter['sortType']));
+                }
+            }
+        }
         return $sortable;
+    }
+
+    /**
+     * Check if input is array
+     *
+     * @param mixed $array
+     * @return boolean
+     */
+    public static function isArray($array)
+    {
+        return isset($array) && is_array($array);
     }
 }

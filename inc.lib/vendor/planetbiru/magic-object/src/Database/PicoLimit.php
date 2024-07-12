@@ -86,6 +86,11 @@ class PicoLimit
      */
     public function __toString()
     {
-        return json_encode(array('limit'=>$this->limit, 'offset'=>$this->offset));
+        return json_encode(
+            array(
+                'limit' => $this->limit, 
+                'offset' => $this->offset
+            )
+        );
     }
 }

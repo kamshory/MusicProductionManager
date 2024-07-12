@@ -2,10 +2,12 @@
 
 namespace MagicObject\Generator;
 
+use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabasePersistence;
 use MagicObject\Database\PicoDatabaseType;
 use MagicObject\Database\PicoPageData;
 use MagicObject\Database\PicoTableInfo;
+use MagicObject\Database\PicoTableInfoExtended;
 use MagicObject\MagicObject;
 use MagicObject\Util\Database\PicoDatabaseUtil;
 use MagicObject\Util\Database\PicoDatabaseUtilMySql;
@@ -26,7 +28,6 @@ class PicoDatabaseDump
      */
     protected $picoTableName = "";
     
-    
     /**
      * Columns
      *
@@ -41,7 +42,7 @@ class PicoDatabaseDump
      * @param string $databaseType Target database type
      * @param boolean $createIfNotExists Add DROP TABLE IF EXISTS before create table
      * @param boolean $dropIfExists Add IF NOT EXISTS on create table
-     * @param string $engine Storage engine
+     * @param string $engine Storage engine (for MariaDB and MySQL)
      * @param string $charset Default charset
      * @return string
      */
@@ -60,10 +61,36 @@ class PicoDatabaseDump
             return "";
         }
     }
+
+    /**
+     * Dump strcuture of table
+     *
+     * @param PicoTableInfo $tableInfo
+     * @param string $databaseType
+     * @param boolean $createIfNotExists
+     * @param boolean $dropIfExists
+     * @param string $engine
+     * @param string $charset
+     * @return string
+     */
+    public function dumpStructureTable($tableInfo, $databaseType, $createIfNotExists = false, $dropIfExists = false, $engine = 'InnoDB', $charset = 'utf8mb4')
+    {
+        $picoTableName = $tableInfo->getTableName();
+        
+        if($databaseType == PicoDatabaseType::DATABASE_TYPE_MARIADB || $databaseType == PicoDatabaseType::DATABASE_TYPE_MYSQL)
+        {
+            return PicoDatabaseUtilMySql::dumpStructure($tableInfo, $picoTableName, $createIfNotExists, $dropIfExists, $engine, $charset);
+        }
+        else
+        {
+            return "";
+        }
+    }
+
     /**
      * Get entity table info 
      *
-     * @param MagicObject $entity
+     * @param MagicObject $entity ENtity
      * @return PicoTableInfo|null
      */
     public function getTableInfo($entity)
@@ -81,9 +108,9 @@ class PicoDatabaseDump
     /**
      * Update query alter table add column
      *
-     * @param string $query
-     * @param string $lastColumn
-     * @param string $databaseType
+     * @param string $query Query string
+     * @param string $lastColumn Last column
+     * @param string $databaseType Database type
      * @return string
      */
     public function updateQueryAlterTableAddColumn($query, $lastColumn, $databaseType)
@@ -98,8 +125,8 @@ class PicoDatabaseDump
     /**
      * Update query alter table nullable
      *
-     * @param string $query
-     * @param array $entityColumn
+     * @param string $query Query string
+     * @param array $entityColumn Entity name
      * @return string
      */
     public function updateQueryAlterTableNullable($query, $entityColumn)
@@ -114,15 +141,22 @@ class PicoDatabaseDump
     /**
      * Update query alter table default value
      *
-     * @param string $query
-     * @param array $entityColumn
+     * @param string $query Query string
+     * @param array $entityColumn Entity column
      * @return string
      */
     public function updateQueryAlterTableDefaultValue($query, $entityColumn)
     {
         if(isset($entityColumn['default_value']))
         {
-            $query .= " DEFAULT ".PicoDatabaseUtil::escapeValue($entityColumn['default_value'], true);
+            if($entityColumn['default_value'] == 'NULL' || $entityColumn['default_value'] == 'null')
+            {
+                $query .= " DEFAULT NULL";
+            }
+            else
+            {
+                $query .= " DEFAULT ".PicoDatabaseUtil::escapeValue($entityColumn['default_value'], true);
+            }
         }
         return $query;
     }
@@ -130,48 +164,344 @@ class PicoDatabaseDump
     /**
      * Create query ALTER TABLE ADD COLUMN
      *
-     * @param MagicObject $entity
+     * @param MagicObject|MagicObject[] $entity Entity
+     * @param PicoDatabase $database
      * @return string[]
      */
-    public function createAlterTableAdd($entity)
+    public function createAlterTableAdd($entity, $database = null)
     {
-        $tableInfo = $this->getTableInfo($entity);
-        $tableName = $tableInfo->getTableName();
-        $queryAlter = array();
-        if($tableInfo != null)
+        if(is_array($entity))
         {
-            $dbColumnNames = array();
-            
-            $database = $entity->currentDatabase();
-            $rows = PicoColumnGenerator::getColumnList($database, $tableInfo->getTableName());
+            return $this->createAlterTableAddFromEntities($entity, $database);
+        }
+        else
+        {
+            return $this->createAlterTableAddFromEntity($entity);
+        }
+    }
 
-            if(is_array($rows))
+    /**
+     * Get database
+     * 
+     * @param PicoDatabase $database
+     * @param MagicObject[] $entities
+     * @return PicoDatabase
+     */
+    private function getDatabase($database, $entities)
+    {
+        if(!isset($database))
+        {
+            $database = $entities[0]->currentDatabase();
+        }
+        return $database;
+    }
+
+    /**
+     * 
+     * Get database type
+     * @param PicoDatabase $database
+     * @return string
+     */
+    private function getDatabaseType($database)
+    {
+        if(isset($database))
+        {
+            $databaseType = $database->getDatabaseType();
+        }
+        else
+        {
+            $databaseType = PicoDatabaseType::DATABASE_TYPE_MYSQL;
+        }
+        return $databaseType;
+    }
+
+    /**
+     * 
+     * Get table name
+     * @param string $tableName
+     * @param PicoTableInfo $tableInfo
+     * @return string
+     */
+    private function getTableName($tableName, $tableInfo)
+    {
+        if(!isset($tableName))
+        {
+            $tableName = $tableInfo->getTableName();
+        }
+        return $tableName;
+    }
+
+    /**
+     * Get create alter table query
+     * 
+     * @param string $tableName
+     * @param string $columnName
+     * @param string $columnType
+     * @return string
+     */
+    public function createQueryAlterTable($tableName, $columnName, $columnType)
+    {
+        $format = "ALTER TABLE %s ADD COLUMN %s %s";
+        return sprintf($format, $tableName, $columnName, $columnType);
+    }
+
+    /**
+     * Create query ALTER TABLE ADD COLUMN
+     *
+     * @param MagicObject[] $entity Entity
+     * @param PicoDatabase $database
+     * @return string[]
+     */
+    public function createAlterTableAddFromEntities($entities, $tableName = null, $database = null)
+    {
+        $tableInfo = $this->getMergedTableInfo($entities);
+        $tableName = $this->getTableName($tableName, $tableInfo);
+        $database = $this->getDatabase($database, $entities);
+
+        $queryAlter = array();
+        $numberOfColumn = count($tableInfo->getColumns());
+        if(!empty($tableInfo->getColumns()))
+        {
+            $dbColumnNames = array();       
+            $rows = PicoColumnGenerator::getColumnList($database, $tableInfo->getTableName());
+            $createdColumns = array();
+            if(is_array($rows) && !empty($rows))
             {
                 foreach($rows as $row)
                 {
                     $columnName = $row['Field'];
                     $dbColumnNames[] = $columnName;
                 }
-            }
-            $lastColumn = null;
-            foreach($tableInfo->getColumns() as $entityColumn)
-            {
-                if(!in_array($entityColumn['name'], $dbColumnNames))
+                $lastColumn = null;
+                foreach($tableInfo->getColumns() as $entityColumn)
                 {
-                    $query = "ALTER TABLE $tableName ADD COLUMN ".$entityColumn['name']." ".$entityColumn['type'];
-                    $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
-                    $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
-                    $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());
-                    $queryAlter[]  = $query;
+                    if(!in_array($entityColumn['name'], $dbColumnNames))
+                    {
+                        $createdColumns[] = $entityColumn['name'];
+                        $query = $this->createQueryAlterTable($tableName, $entityColumn['name'], $entityColumn['type']);
+                        $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
+                        $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
+                        $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());                   
+                        $queryAlter[]  = $query.";";
+                    }
                     $lastColumn = $entityColumn['name'];
+                }
+                $queryAlter = $this->addPrimaryKey($queryAlter, $tableInfo, $tableName, $createdColumns);
+                $queryAlter = $this->addAutoIncrement($queryAlter, $tableInfo, $tableName, $createdColumns, $database->getDatabaseType());
+            }
+            else if($numberOfColumn > 0)
+            {
+                $queryAlter[] = $this->dumpStructureTable($tableInfo, $database->getDatabaseType());
+            }          
+        }
+        return $queryAlter;
+    }
+
+    /**
+     * Create query ALTER TABLE ADD COLUMN
+     *
+     * @param MagicObject|MagicObject[] $entity Entity
+     * @param PicoDatabase $database
+     * @return string[]
+     */
+    public function createAlterTableAddFromEntity($entity)
+    {
+        $tableInfo = $this->getTableInfo($entity);
+        $tableName = $tableInfo->getTableName();
+        $database = $entity->currentDatabase();
+
+        $queryAlter = array();
+        $numberOfColumn = count($tableInfo->getColumns());
+        if(!empty($tableInfo->getColumns()))
+        {
+            $dbColumnNames = array();         
+            $rows = PicoColumnGenerator::getColumnList($database, $tableInfo->getTableName());
+            $createdColumns = array();
+            if(is_array($rows) && !empty($rows))
+            {
+                foreach($rows as $row)
+                {
+                    $columnName = $row['Field'];
+                    $dbColumnNames[] = $columnName;
+                }
+                $lastColumn = null;
+                foreach($tableInfo->getColumns() as $entityColumn)
+                {
+                    if(!in_array($entityColumn['name'], $dbColumnNames))
+                    {
+                        $createdColumns[] = $entityColumn['name'];
+                        $query = $this->createQueryAlterTable($tableName, $entityColumn['name'], $entityColumn['type']);
+                        $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
+                        $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
+                        $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());                    
+                        $queryAlter[]  = $query.";";
+                    }
+                    $lastColumn = $entityColumn['name'];
+                }
+                $queryAlter = $this->addPrimaryKey($queryAlter, $tableInfo, $tableName, $createdColumns);
+                $queryAlter = $this->addAutoIncrement($queryAlter, $tableInfo, $tableName, $createdColumns, $database->getDatabaseType());
+            }
+            else if($numberOfColumn > 0)
+            {
+                $queryAlter[] = $this->dumpStructure($entity, $database->getDatabaseType());
+            }     
+        }
+        return $queryAlter;
+    }
+
+    /**
+     * Add primary key
+     * @param string[] $queryAlter
+     * @param PicoTableInfoExtended $tableInfo
+     * @param string $tableName
+     * @param string[] $createdColumns
+     * @return string[]
+     */
+    private function addPrimaryKey($queryAlter, $tableInfo, $tableName, $createdColumns)
+    {
+        $pk = $tableInfo->getPrimaryKeys();
+        $queries = array();
+        if(isset($pk) && is_array($pk) && !empty($pk))
+        {
+            
+            foreach($pk as $primaryKey)
+            {
+                if(in_array($primaryKey['name'], $createdColumns))
+                {
+                    $queries[] = "";
+                    $queries[] = "ALTER TABLE $tableName";
+                    $queries[] = "\tADD PRIMARY KEY ($primaryKey[name])";
+                    $queries[] = ";";
+                }
+            }                 
+            $queryAlter[] = implode("\r\n", $queries);
+        }
+        return $queryAlter;
+    }
+
+    /**
+     * Add auto increment
+     * 
+     * @param string[] $queryAlter
+     * @param PicoTableInfoExtended $tableInfo
+     * @param string $tableName
+     * @param string[] $createdColumns
+     * @param string $databaseType
+     * @return string[]
+     */
+    private function addAutoIncrement($queryAlter, $tableInfo, $tableName, $createdColumns, $databaseType)
+    {
+        $queries = array();
+        $aik = $this->getAutoIncrementKey($tableInfo);
+        foreach($tableInfo->getColumns() as $entityColumn)
+        {
+            if(isset($aik) && is_array($aik) && in_array($entityColumn['name'], $aik) && in_array($entityColumn['name'], $createdColumns))
+            {
+                $query = sprintf("%s %s", $entityColumn['name'], $entityColumn['type']);
+                $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
+                $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
+                
+                if($databaseType == PicoDatabaseType::DATABASE_TYPE_POSTGRESQL)
+                {
+                    $columnName = $entityColumn['name'];
+                    $sequenceName = $tableName."_".$columnName; 
+                    $queries[] = "";
+                    $queries[] = "DROP SEQUENCE IF EXISTS $sequenceName;";
+                    $queries[] = "CREATE SEQUENCE $sequenceName MINVALUE 1;";
+                    $queries[] = "ALTER TABLE $tableName \r\n\tALTER $columnName SET DEFAULT nextval('$sequenceName')";
+                    $queries[] = ";";
                 }
                 else
                 {
-                    $lastColumn = $entityColumn['name'];
+                    $queries[] = "";
+                    $queries[] = "ALTER TABLE $tableName \r\n\tMODIFY $query AUTO_INCREMENT";
+                    $queries[] = ";";
                 }
+
+                $queryAlter[] = implode("\r\n", $queries);
             }
         }
         return $queryAlter;
+    }
+
+    /**
+     * Get auto increment keys
+     * 
+     * @param PicoTableInfo $tableInfo Table information
+     * @return array
+     */
+    public function getAutoIncrementKey($tableInfo)
+    {
+        $autoIncrement = $tableInfo->getAutoIncrementKeys();
+        $autoIncrementKeys = array();
+        if(is_array($autoIncrement) && !empty($autoIncrement))
+        {
+            foreach($autoIncrement as $col)
+            {
+                if($col["strategy"] == 'GenerationType.IDENTITY')
+                {
+                    $autoIncrementKeys[] = $col["name"];
+                }
+            }
+        }
+        return $autoIncrementKeys;
+    }
+
+    /**
+     * Merge entities
+     * @param mixed $entities
+     * @return PicoTableInfoExtended
+     * @deprecated deprecated since version 1.13
+     */
+    public function getMergedTableInfoOld($entities)
+    {
+        $mergedTableInfo = PicoTableInfoExtended::getInstance();
+        foreach($entities as $entity)
+        {
+            $tableInfo = $this->getTableInfo($entity);
+            $mergedTableInfo->setTableName($tableInfo->getTableName());
+
+            $mergedTableInfo->setColumns(array_merge($mergedTableInfo->getColumns(), $tableInfo->getColumns()));
+            $mergedTableInfo->setJoinColumns(array_merge($mergedTableInfo->getJoinColumns(), $tableInfo->getJoinColumns()));
+            $mergedTableInfo->setPrimaryKeys(array_merge($mergedTableInfo->getPrimaryKeys(), $tableInfo->getPrimaryKeys()));
+            $mergedTableInfo->setAutoIncrementKeys(array_merge($mergedTableInfo->getAutoIncrementKeys(), $tableInfo->getAutoIncrementKeys()));
+            $mergedTableInfo->setDefaultValue(array_merge($mergedTableInfo->getDefaultValue(), $tableInfo->getDefaultValue()));
+            $mergedTableInfo->setNotNullColumns(array_merge($mergedTableInfo->getNotNullColumns(), $tableInfo->getNotNullColumns()));
+        }
+
+        $mergedTableInfo->uniqueColumns();
+        $mergedTableInfo->uniqueJoinColumns();
+        $mergedTableInfo->uniquePrimaryKeys();
+        $mergedTableInfo->uniqueAutoIncrementKeys();
+        $mergedTableInfo->uniqueDefaultValue();
+        $mergedTableInfo->uniqueNotNullColumns();
+
+        return $mergedTableInfo;
+    }
+    
+    /**
+     * Get merged table info
+     *
+     * @param MagicObject[] $entities
+     * @return PicoTableInfoExtended
+     */
+    public function getMergedTableInfo($entities)
+    {
+        $mergedTableInfo = PicoTableInfoExtended::getInstance();
+        foreach($entities as $entity)
+        {
+            $tableInfo = $this->getTableInfo($entity);
+            $mergedTableInfo->setTableName($tableInfo->getTableName());
+
+            $mergedTableInfo->mergeColumns($tableInfo->getColumns());
+            $mergedTableInfo->mergeJoinColumns($tableInfo->getJoinColumns());
+            $mergedTableInfo->mergePrimaryKeys($tableInfo->getPrimaryKeys());
+            $mergedTableInfo->mergeAutoIncrementKeys($tableInfo->getAutoIncrementKeys());
+            $mergedTableInfo->mergeDefaultValue($tableInfo->getDefaultValue());
+            $mergedTableInfo->mergeNotNullColumns($tableInfo->getNotNullColumns());
+        }
+
+        return $mergedTableInfo;
     }
     
     /**
@@ -219,7 +549,4 @@ class PicoDatabaseDump
             return "";
         }
     }
-    
-    
-    
 }

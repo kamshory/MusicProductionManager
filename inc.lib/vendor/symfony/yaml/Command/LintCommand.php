@@ -12,8 +12,6 @@
 namespace Symfony\Component\Yaml\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
-use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -88,17 +86,17 @@ EOF
 
         if (!$filename) {
             if (!$stdin = $this->getStdin()) {
-                throw new RuntimeException('Please provide a filename or pipe file content to STDIN.');
+                throw new \RuntimeException('Please provide a filename or pipe file content to STDIN.');
             }
 
-            return $this->display($io, [$this->validate($stdin, $flags)]);
+            return $this->display($io, array($this->validate($stdin, $flags)));
         }
 
         if (!$this->isReadable($filename)) {
-            throw new RuntimeException(sprintf('File or directory "%s" is not readable.', $filename));
+            throw new \RuntimeException(sprintf('File or directory "%s" is not readable.', $filename));
         }
 
-        $filesInfo = [];
+        $filesInfo = array();
         foreach ($this->getFiles($filename) as $file) {
             $filesInfo[] = $this->validate(file_get_contents($file), $flags, $file);
         }
@@ -109,7 +107,7 @@ EOF
     private function validate($content, $flags, $file = null)
     {
         $prevErrorHandler = set_error_handler(function ($level, $message, $file, $line) use (&$prevErrorHandler) {
-            if (\E_USER_DEPRECATED === $level) {
+            if (E_USER_DEPRECATED === $level) {
                 throw new ParseException($message, $this->getParser()->getRealCurrentLineNb() + 1);
             }
 
@@ -119,12 +117,12 @@ EOF
         try {
             $this->getParser()->parse($content, Yaml::PARSE_CONSTANT | $flags);
         } catch (ParseException $e) {
-            return ['file' => $file, 'line' => $e->getParsedLine(), 'valid' => false, 'message' => $e->getMessage()];
+            return array('file' => $file, 'line' => $e->getParsedLine(), 'valid' => false, 'message' => $e->getMessage());
         } finally {
             restore_error_handler();
         }
 
-        return ['file' => $file, 'valid' => true];
+        return array('file' => $file, 'valid' => true);
     }
 
     private function display(SymfonyStyle $io, array $files)
@@ -135,13 +133,13 @@ EOF
             case 'json':
                 return $this->displayJson($io, $files);
             default:
-                throw new InvalidArgumentException(sprintf('The format "%s" is not supported.', $this->format));
+                throw new \InvalidArgumentException(sprintf('The format "%s" is not supported.', $this->format));
         }
     }
 
     private function displayTxt(SymfonyStyle $io, array $filesInfo)
     {
-        $countFiles = \count($filesInfo);
+        $countFiles = count($filesInfo);
         $erroredFiles = 0;
 
         foreach ($filesInfo as $info) {
@@ -174,7 +172,7 @@ EOF
             }
         });
 
-        $io->writeln(json_encode($filesInfo, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
+        $io->writeln(json_encode($filesInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         return min($errors, 1);
     }
@@ -188,7 +186,7 @@ EOF
         }
 
         foreach ($this->getDirectoryIterator($fileOrDirectory) as $file) {
-            if (!\in_array($file->getExtension(), ['yml', 'yaml'])) {
+            if (!in_array($file->getExtension(), array('yml', 'yaml'))) {
                 continue;
             }
 
@@ -196,18 +194,15 @@ EOF
         }
     }
 
-    /**
-     * @return string|null
-     */
     private function getStdin()
     {
-        if (0 !== ftell(\STDIN)) {
-            return null;
+        if (0 !== ftell(STDIN)) {
+            return;
         }
 
         $inputs = '';
-        while (!feof(\STDIN)) {
-            $inputs .= fread(\STDIN, 1024);
+        while (!feof(STDIN)) {
+            $inputs .= fread(STDIN, 1024);
         }
 
         return $inputs;
@@ -232,7 +227,7 @@ EOF
         };
 
         if (null !== $this->directoryIteratorProvider) {
-            return \call_user_func($this->directoryIteratorProvider, $directory, $default);
+            return call_user_func($this->directoryIteratorProvider, $directory, $default);
         }
 
         return $default($directory);
@@ -245,7 +240,7 @@ EOF
         };
 
         if (null !== $this->isReadableProvider) {
-            return \call_user_func($this->isReadableProvider, $fileOrDirectory, $default);
+            return call_user_func($this->isReadableProvider, $fileOrDirectory, $default);
         }
 
         return $default($fileOrDirectory);

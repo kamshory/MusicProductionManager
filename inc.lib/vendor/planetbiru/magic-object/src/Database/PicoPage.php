@@ -84,9 +84,11 @@ class PicoPage
      */
     public function __toString()
     {
-        return json_encode(array(
-            'pageNumber'=>$this->pageNumber, 
-            'pageSize'=>$this->pageSize
-        ));
+        return json_encode(
+            array(
+                'pageNumber' => $this->pageNumber, 
+                'pageSize' => $this->pageSize
+            )
+        );
     }
 }

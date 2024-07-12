@@ -64,18 +64,6 @@ class PicoLanguage
     }
     
     /**
-     * Check if property value is set
-     *
-     * @param string $propertyName
-     * @return boolean
-     */
-    public function isset($propertyName)
-    {
-        $var = PicoStringUtil::camelize($propertyName);
-        return isset($this->$var);
-    }
-    
-    /**
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
      * 
@@ -124,5 +112,25 @@ class PicoLanguage
     public function __unset($name)
     {
         unset($this->$name);
+    }
+    
+    /**
+     * Magic method called when user call any undefined method
+     *
+     * @param string $method
+     * @param string $params
+     * @return mixed|null
+     */
+    public function __call($method, $params) // NOSONAR
+    {
+        if (strncasecmp($method, "get", 3) === 0) {
+            $var = lcfirst(substr($method, 3));
+            return $this->get($var);
+        }
+        else if (strncasecmp($method, "equals", 6) === 0) {
+            $var = lcfirst(substr($method, 6));
+            $value = isset($this->$var) ? $this->$var : null;
+            return isset($params[0]) && $params[0] == $value;
+        }
     }
 }
