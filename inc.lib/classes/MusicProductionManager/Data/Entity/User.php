@@ -124,7 +124,7 @@ class User extends MagicObject
 	/**
 	 * Current Role
 	 * 
-	 * @Column(name="surrent_role", type="text", nullable=true)
+	 * @Column(name="current_role", type="text", nullable=true)
 	 * @Label(content="Current Role")
 	 * @var string
 	 */
