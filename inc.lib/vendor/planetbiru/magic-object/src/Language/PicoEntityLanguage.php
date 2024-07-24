@@ -2,13 +2,10 @@
 
 namespace MagicObject\Language;
 
-use Exception;
-use MagicObject\Database\PicoTableInfo;
 use MagicObject\MagicObject;
 use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 use MagicObject\Util\PicoGenericObject;
 use MagicObject\Util\PicoStringUtil;
-use MagicObject\Util\PicoTableUtil;
 use ReflectionClass;
 use stdClass;
 
@@ -320,7 +317,7 @@ class PicoEntityLanguage
     /**
      * Get entity language
      *
-     * @return  string
+     * @return string
      */ 
     public function getEntityLanguage()
     {
@@ -330,7 +327,7 @@ class PicoEntityLanguage
     /**
      * Get entity class name
      *
-     * @return  string
+     * @return string
      */ 
     public function getEntityClassName()
     {
