@@ -11,8 +11,7 @@ try
     $songs = $songEnt->findAll(null, null, null);
     $results = $songs->getResult();
     foreach($results as $song)
-    {
-        
+    {     
         $midiPath = $song->getFilePathMidi();
         if(file_exists($midiPath))
         {
@@ -22,7 +21,6 @@ try
             $song->setVocalGuide($vocalGuide);
             $song->update();
             echo "Update vocal guide ".$song->getName()."<br>\r\n";
-        
         }
     }
 }
