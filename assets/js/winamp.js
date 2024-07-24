@@ -84,6 +84,7 @@ class Winamp {
         this.trackDuration(index) +
         "</div></div>"
       );
+      
     };
 
     this.createPlaylist = function () {
@@ -464,6 +465,8 @@ class Winamp {
       });
 
       // creation of the playlist, because I'm a little bit lazy, JS create the array for me :D
+
+      
       for (let i = 0; i < this.tracksNb; i++) {
         this.tracks.push({
           name: this.songList.songList[i].name,
@@ -473,10 +476,11 @@ class Winamp {
           url: this.songList.songList[i].song_url,
         });
 
+        /*
         this.audioForDuration = document.createElement("audio");
         this.audioForDuration.src = this.tracks[i].url;
-
         this.audioForDuration.dataset.id = i;
+
         this.audioForDuration.addEventListener("loadedmetadata", function (e) {
           _this.tracksCreated++;
           if (_this.tracksCreated === _this.tracksNb) {
@@ -485,7 +489,11 @@ class Winamp {
             console.log("tracks created: " + _this.tracksCreated);
           }
         });
+        */
+        
       }
+      _this.createPlaylist();
+      
     };
     if(typeof list != 'undefined')
     {

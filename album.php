@@ -63,16 +63,12 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
     );
     ?>
     
-    <link rel="stylesheet" href="winamp.css?<?php echo mt_rand(1111, 999999);?>">
+    <link rel="stylesheet" href="assets/css/winamp.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="winamp.js?<?php echo mt_rand(1111, 999999);?>"></script>
+    <script src="assets/js/winamp.js"></script>
     <script src="assets/js/karaoke.js"></script>
-
-    <link rel="stylesheet" href="vu-meter.css">
-    <style>
-      
-    </style>
-
+    <link rel="stylesheet" href="assets/css/vu-meter.css">
+    
     <div class="winamp-container">
     <div class="maxamp-container">
 
@@ -156,9 +152,9 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
                         <?php echo new PicoSelectOption(new Album(null, $database), array('value'=>'albumId', 'label'=>'name'), $inputGet->getAlbumId(), null, new PicoSortable('sortOrder', PicoSort::ORDER_TYPE_DESC)); ?>
                     </select>
                 </form>
-                </div>
+              </div>
 
-                </div>
+            </div>
 
         </div>
 
@@ -193,13 +189,9 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
           <div class="playlist">
           </div>
       </div>
+  </div>
 </div>
 </div>
-
-        
-    
-</div>
-
     <script>
       let karaoke = null;
       let albumEntry = <?php echo json_encode($json);?>;
@@ -222,8 +214,7 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
           if(wa.sourceConnected)
           {
             draw();
-          }
-          
+          } 
         }
       });
 
@@ -234,7 +225,6 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
           drawVuMeter(wa.analyserLeft, 0);
           drawVuMeter(wa.analyserRight, 1);
         }
-
         if(karaoke != null)
         {
           let pos = wa.getAudioCurrentTime();
@@ -246,20 +236,16 @@ if($inputGet->equalsAction('play') && $inputGet->getAlbumId() != null)
       function drawVuMeter(analyser, channel)
       {
         let meter = channel == 0 ? "meterLeft" : "meterRight";
-
         let frequencyData = new Uint8Array(1);
         analyser.getByteFrequencyData(frequencyData);
         let volume = frequencyData[0];
         let rotation = parseInt(volume * 0.54) + 20;
         let max = 100;
-        let cqmin = max - (max*volume/256);
-        
+        let cqmin = max - (max*volume/256);       
         let needle = document.querySelector('#'+meter);
         needle.style.width = cqmin+"%";
       }
-      
     </script>
-
 
     <?php
     
