@@ -293,7 +293,7 @@ class UserUtil
             'userId' => $userId,
             'method' => $method,
             'getData' => $inputGet == null || $inputGet->isEmpty() ? null : $inputGet->__toString(),
-            'postData' => $inputPost->__toString(),
+            'postData' => $inputPost == null || $inputPost->isEmpty() ? null : $inputPost->__toString(),
             'requestBody' => $requestBody,
             'timeCreate' => $timeCreate,
             'ipCreate' => $ipCreate
