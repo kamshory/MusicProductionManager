@@ -1672,7 +1672,7 @@ class EntitySong extends MagicObject
 
 	/**
 	 * Album
-	 * @JoinColumn(name="album_id")
+	 * @JoinColumn(name="album_id", referenceColumName="album_id")
 	 * @Label(content="Album")
 	 * @var Album
 	 */
@@ -1699,7 +1699,7 @@ class EntitySong extends MagicObject
 	/**
 	 * Producer
 	 * 
-	 * @JoinColumn(name="producer_id")
+	 * @JoinColumn(name="producer_id", referenceColumName="producer_id")
 	 * @Label(content="Producer")
 	 * @var Producer
 	 */
@@ -1717,7 +1717,7 @@ class EntitySong extends MagicObject
 	/**
 	 * Artist Vocal
 	 * 
-	 * @JoinColumn(name="artist_vocalist")
+	 * @JoinColumn(name="artist_vocalist", referenceColumnName="artist_id")
 	 * @Label(content="Artist Vocal")
 	 * @var Artist
 	 */
@@ -1735,7 +1735,7 @@ class EntitySong extends MagicObject
 	/**
 	 * Artist Composer
 	 * 
-	 * @JoinColumn(name="artist_composer")
+	 * @JoinColumn(name="artist_composer", referenceColumnName="artist_id")
 	 * @Label(content="Artist Composer")
 	 * @var Artist
 	 */
@@ -1753,7 +1753,7 @@ class EntitySong extends MagicObject
 	/**
 	 * Artist Arranger
 	 * 
-	 * @JoinColumn(name="artist_arranger")
+	 * @JoinColumn(name="artist_arranger", referenceColumnName="artist_id")
 	 * @Label(content="Artist Arranger")
 	 * @var Artist
 	 */
@@ -1915,7 +1915,7 @@ class EntitySong extends MagicObject
 	/**
 	 * Genre ID
 	 * 
-	 * @JoinColumn(name="genre_id")
+	 * @JoinColumn(name="genre_id", referenceColumName="genre_id")
 	 * @Label(content="Genre ID")
 	 * @var Genre
 	 */
@@ -2858,7 +2858,7 @@ To join `song` and `album`, we create property
 ```php
 	/**
 	 * Album
-	 * @JoinColumn(name="album_id")
+	 * @JoinColumn(name="album_id", referenceColumName="album_id")
 	 * @Label(content="Album")
 	 * @var Album
 	 */
@@ -2873,7 +2873,7 @@ To join `song` and `artist`, we create property
 	**
 	 * Artist Vocal
 	 * 
-	 * @JoinColumn(name="artist_vocalist")
+	 * @JoinColumn(name="artist_vocalist", referenceColumnName="artist_id")
 	 * @Label(content="Artist Vocal")
 	 * @var Artist
 	 */
@@ -2989,7 +2989,7 @@ class EntityAlbum extends MagicObject
     /**
 	 * Producer
 	 * 
-	 * @JoinColumn(name="producer_id")
+	 * @JoinColumn(name="producer_id", referenceColumName="producer_id")
 	 * @Label(content="Producer")
 	 * @var Producer
 	 */
@@ -3676,7 +3676,7 @@ class EntityAlbum extends MagicObject
     /**
 	 * Producer
 	 * 
-	 * @JoinColumn(name="producer_id")
+	 * @JoinColumn(name="producer_id", referenceColumName="producer_id")
 	 * @Label(content="Producer")
 	 * @var Producer
 	 */
@@ -4103,7 +4103,7 @@ class EntityAlbum extends MagicObject
     /**
 	 * Producer
 	 * 
-	 * @JoinColumn(name="producer_id")
+	 * @JoinColumn(name="producer_id", referenceColumName="producer_id")
 	 * @Label(content="Producer")
 	 * @var Producer
 	 */

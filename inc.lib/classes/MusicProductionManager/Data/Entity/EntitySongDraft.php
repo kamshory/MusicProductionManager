@@ -53,7 +53,7 @@ class EntitySongDraft extends MagicObject
     /**
 	 * Artist
 	 * 
-	 * @JoinColumn(name="artist_id")
+	 * @JoinColumn(name="artist_id", referenceColumName="artist_id")
 	 * @Label(content="Artist")
 	 * @var Artist
 	 */

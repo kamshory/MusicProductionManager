@@ -31,8 +31,8 @@ class EntitySongComment extends MagicObject
 	protected $songId;
 
 	/**
-	 * @JoinColumn(name="song_id")
-	 * @Label(content="@JoinColumn(name="song_id")")
+	 * @JoinColumn(name="song_id", referenceColumName="song_id")
+	 * @Label(content="@JoinColumn(name="song_id", referenceColumName="song_id")")
 	 * @var Song
 	 */
 	protected $song;

@@ -106,7 +106,7 @@ class EntityUser extends MagicObject
     /**
 	 * User Type ID
 	 * 
-	 * @JoinColumn(name="user_type_id")
+	 * @JoinColumn(name="user_type_id", referenceColumName="user_type_id")
 	 * @Label(content="User Type ID")
 	 * @var UserType
 	 */
@@ -124,7 +124,7 @@ class EntityUser extends MagicObject
     /**
 	 * Artist
 	 * 
-	 * @JoinColumn(name="associated_artist")
+	 * @JoinColumn(name="associated_artist", referenceColumnName="artist_id")
 	 * @Label(content="Artist")
 	 * @var Artist
 	 */
@@ -142,7 +142,7 @@ class EntityUser extends MagicObject
 	/**
 	 * Associated Producer
 	 * 
-	 * @JoinColumn(name="associated_producer")
+	 * @JoinColumn(name="associated_producer", referenceColumnName="artist_id")
 	 * @Label(content="Associated Producer")
 	 * @var Producer
 	 */

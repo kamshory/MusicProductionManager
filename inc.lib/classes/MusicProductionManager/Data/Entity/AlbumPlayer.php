@@ -71,7 +71,7 @@ class AlbumPlayer extends MagicObject
 	/**
 	 * Producer
 	 * 
-	 * @JoinColumn(name="producer_id")
+	 * @JoinColumn(name="producer_id", referenceColumName="producer_id")
 	 * @Label(content="Producer")
 	 * @var ProducerPublic
 	 */
@@ -89,7 +89,7 @@ class AlbumPlayer extends MagicObject
 	/**
 	 * Artist Vocal
 	 * 
-	 * @JoinColumn(name="artist_vocalist")
+	 * @JoinColumn(name="artist_vocalist", referenceColumnName="artist_id")
 	 * @Label(content="Artist Vocal")
 	 * @var ArtistPublic
 	 */
@@ -107,7 +107,7 @@ class AlbumPlayer extends MagicObject
 	/**
 	 * Artist Composer
 	 * 
-	 * @JoinColumn(name="artist_composer")
+	 * @JoinColumn(name="artist_composer", referenceColumnName="artist_id")
 	 * @Label(content="Artist Composer")
 	 * @var ArtistPublic
 	 */
@@ -125,7 +125,7 @@ class AlbumPlayer extends MagicObject
 	/**
 	 * Artist Arranger
 	 * 
-	 * @JoinColumn(name="artist_arranger")
+	 * @JoinColumn(name="artist_arranger", referenceColumnName="artist_id")
 	 * @Label(content="Artist Arranger")
 	 * @var ArtistPublic
 	 */
@@ -242,7 +242,7 @@ class AlbumPlayer extends MagicObject
 	/**
 	 * Genre ID
 	 * 
-	 * @JoinColumn(name="genre_id")
+	 * @JoinColumn(name="genre_id", referenceColumName="genre_id")
 	 * @Label(content="Genre ID")
 	 * @var Genre
 	 */

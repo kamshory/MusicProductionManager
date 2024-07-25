@@ -33,8 +33,8 @@ class EntityRating extends MagicObject
 	protected $userId;
 
     /**
-	 * @JoinColumn(name="user_id")
-	 * @Label(content="@JoinColumn(name="user_id")")
+	 * @JoinColumn(name="user_id", referenceColumName="user_id")
+	 * @Label(content="@JoinColumn(name="user_id", referenceColumName="user_id")")
 	 * @var User
 	 */
 	protected $user;

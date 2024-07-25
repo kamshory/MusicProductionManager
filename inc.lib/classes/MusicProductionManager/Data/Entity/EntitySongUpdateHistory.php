@@ -35,7 +35,7 @@ class EntitySongUpdateHistory extends MagicObject
     /**
 	 * Song
 	 * 
-	 * @JoinColumn(name="song_id")
+	 * @JoinColumn(name="song_id", referenceColumName="song_id")
 	 * @Label(content="Song")
 	 * @var EntitySong
 	 */
@@ -53,7 +53,7 @@ class EntitySongUpdateHistory extends MagicObject
     /**
 	 * User
 	 * 
-	 * @JoinColumn(name="user_id")
+	 * @JoinColumn(name="user_id", referenceColumName="user_id")
 	 * @Label(content="User")
 	 * @var EntityUser
 	 */

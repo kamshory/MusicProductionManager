@@ -2927,12 +2927,12 @@ class PicoDatabasePersistence // NOSONAR
             {
                 $referenceColumName = $this->getReferenceColumnName($join);
                 $classNameJoin = $join[self::KEY_PROPERTY_TYPE];
+                $columnName = $join[self::KEY_NAME];
                 $joinKeyName = $this->getJoinKeyName($classNameJoin, $referenceColumName);
-                $joinKeyValue = $this->getJoinKeyValue($row, $referenceColumName);
                 try
                 {
                     $this->prepareJoinCache($classNameJoin);
-                    $obj = $this->getJoinData($classNameJoin, $joinKeyName, $joinKeyValue);
+                    $obj = $this->getJoinData($classNameJoin, $joinKeyName, $row[$columnName]);
                     if($obj != null)
                     {
                         $data = $this->addProperty($data, $propName, $obj);
