@@ -73,7 +73,7 @@ class EntityAlbum extends MagicObject
     /**
 	 * Producer
 	 * 
-	 * @JoinColumn(name="producer_id", referenceColumName="producer_id")
+	 * @JoinColumn(name="producer_id")
 	 * @Label(content="Producer")
 	 * @var Producer
 	 */

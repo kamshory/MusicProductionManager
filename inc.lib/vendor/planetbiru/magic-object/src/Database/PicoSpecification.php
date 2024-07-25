@@ -122,15 +122,28 @@ class PicoSpecification
         }
         else if(is_array($predicate))
         {
-            foreach($predicate as $key=>$value)
+            $this->addFilterByArray($predicate, $logic);
+        }
+        return $this;
+    }
+    
+    /**
+     * Add filter by array
+     *
+     * @param array $predicate
+     * @param string $logic
+     * @return self
+     */
+    private function addFilterByArray($predicate, $logic)
+    {
+        foreach($predicate as $key=>$value)
+        {
+            $pred = new PicoPredicate($key, $value);    
+            $pred->setFilterLogic($logic);
+            $this->specifications[count($this->specifications)] = $pred;
+            if($pred->isRequireJoin())
             {
-                $pred = new PicoPredicate($key, $value);    
-                $pred->setFilterLogic($logic);
-                $this->specifications[count($this->specifications)] = $pred;
-                if($pred->isRequireJoin())
-                {
-                    $this->requireJoin = true;
-                }
+                $this->requireJoin = true;
             }
         }
         return $this;

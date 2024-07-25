@@ -295,6 +295,13 @@ class PicoEntityLanguage
         return isset($this->$name) ? $this->$name : null;
     }
 
+    /**
+     * Magic method to handle undefined methods
+     *
+     * @param string $method
+     * @param array $args
+     * @return mixed
+     */
     public function __call($method, $args) //NOSONAR
     {
         if(stripos($method, "get") === 0 && strlen($method) > 3)

@@ -2931,11 +2931,14 @@ class PicoDatabasePersistence // NOSONAR
                 $joinKeyName = $this->getJoinKeyName($classNameJoin, $referenceColumName);
                 try
                 {
-                    $this->prepareJoinCache($classNameJoin);
-                    $obj = $this->getJoinData($classNameJoin, $joinKeyName, $row[$columnName]);
-                    if($obj != null)
+                    if(isset($row[$columnName]))
                     {
-                        $data = $this->addProperty($data, $propName, $obj);
+                        $this->prepareJoinCache($classNameJoin);
+                        $obj = $this->getJoinData($classNameJoin, $joinKeyName, $row[$columnName]);
+                        if($obj != null)
+                        {
+                            $data = $this->addProperty($data, $propName, $obj);
+                        }
                     }
                 }
                 catch(Exception $e)
