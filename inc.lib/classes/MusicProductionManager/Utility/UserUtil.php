@@ -292,8 +292,8 @@ class UserUtil
             'path' => $path,
             'userId' => $userId,
             'method' => $method,
-            'getData' => $inputGet == null || $inputGet->isEmpty() ? null : $inputGet,
-            'postData' => $inputPost,
+            'getData' => $inputGet == null || $inputGet->isEmpty() ? null : $inputGet->__toString(),
+            'postData' => $inputPost->__toString(),
             'requestBody' => $requestBody,
             'timeCreate' => $timeCreate,
             'ipCreate' => $ipCreate
