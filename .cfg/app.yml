@@ -30,6 +30,8 @@ session:
   name: MUSICPRODUCTIONMANAGER
   max_life_time: 86400
   save_handler: files
+  cookie_secure: true
+  cookie_http_only: true
 vocal_guide_instrument: piano
 
 
