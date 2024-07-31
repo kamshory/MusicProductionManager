@@ -121,6 +121,13 @@ class PicoPageData
      * @var MagicObject
      */
     private $entity;
+    
+    /**
+     * Find option
+     *
+     * @var integer
+     */
+    private $findOption = 0;
 
     /**
      * Constructor
@@ -439,5 +446,29 @@ class PicoPageData
             $data = $persist->join($data, $row, $info);
         }
         return new $this->className($data);
+    }
+
+    /**
+     * Get find option
+     *
+     * @return  integer
+     */ 
+    public function getFindOption()
+    {
+        return $this->findOption;
+    }
+
+    /**
+     * Set find option
+     *
+     * @param  integer  $findOption  Find option
+     *
+     * @return  self
+     */ 
+    public function setFindOption($findOption)
+    {
+        $this->findOption = $findOption;
+
+        return $this;
     }
 }

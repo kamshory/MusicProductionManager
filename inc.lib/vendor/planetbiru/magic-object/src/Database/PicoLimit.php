@@ -39,9 +39,10 @@ class PicoLimit
         {
             $limit = 1;
         }
-        if (!is_int($offset) || !is_int($limit)) {
-            throw new InvalidParameterException("Limit and offset must an integer");
-        }
+
+        $offset = intval($offset);
+        $limit = intval($limit);
+        
         $this->setOffset($offset);
         $this->setLimit($limit);
     }
