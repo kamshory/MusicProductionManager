@@ -2,8 +2,6 @@
 
 namespace MagicObject\Database;
 
-use MagicObject\Exceptions\InvalidParameterException;
-
 /**
  * Limit and offset select database records
  */

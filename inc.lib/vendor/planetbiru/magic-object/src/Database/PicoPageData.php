@@ -314,6 +314,10 @@ class PicoPageData
                 $obj->{$key} = $value;
             }
         }
+        $obj->findOption = array(
+            "FIND_OPTION_NO_COUNT_DATA"=>$this->findOption & MagicObject::FIND_OPTION_NO_COUNT_DATA,
+            "FIND_OPTION_NO_FETCH_DATA"=>$this->findOption & MagicObject::FIND_OPTION_NO_FETCH_DATA
+        );
         return json_encode($obj);
     }
 
