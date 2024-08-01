@@ -10,7 +10,7 @@ $rowData = $songEntity->findAll();
 ?>
 
 <pre>
-    <?php
-    echo $rowData->getResult()[0];
-    ?>
+<?php
+echo $rowData->getResult()[0];
+?>
 </pre>
