@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f3451b62714e7a457bdad3ef3c204b3b6013bb6e',
+        'reference' => '8a07983a10284d91158ae89896752d1eeb2d14bf',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f3451b62714e7a457bdad3ef3c204b3b6013bb6e',
+            'reference' => '8a07983a10284d91158ae89896752d1eeb2d14bf',
             'dev_requirement' => false,
         ),
         'alchemy/binary-driver' => array(
@@ -92,12 +92,12 @@
             'dev_requirement' => false,
         ),
         'planetbiru/magic-object' => array(
-            'pretty_version' => '1.17.1',
-            'version' => '1.17.1.0',
+            'pretty_version' => '1.17.2',
+            'version' => '1.17.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../planetbiru/magic-object',
             'aliases' => array(),
-            'reference' => '2561f040ab12671a391c6695683e2c7f6772f125',
+            'reference' => '5ac4b920220969b27c0676093a46a2356f0efbf8',
             'dev_requirement' => false,
         ),
         'psr/cache' => array(
