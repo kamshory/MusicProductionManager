@@ -9,7 +9,6 @@ use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabasePersistence;
 use MagicObject\Database\PicoDatabasePersistenceExtended;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
-use MagicObject\Database\PicoDatabaseStructure;
 use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoPageData;
 use MagicObject\Database\PicoSortable;
@@ -721,19 +720,6 @@ class MagicObject extends stdClass // NOSONAR
             throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
         }
     }
-    
-    /**
-     * Scho create table
-     *
-     * @param string $databaseType
-     * @param string $tableName
-     * @return string
-     */
-    public function showCreateTable($databaseType, $tableName = null)
-    {
-        $structure = new PicoDatabaseStructure($this);
-        return $structure->showCreateTable($databaseType, $tableName);
-    }
 
     /**
      * Modify null properties
@@ -1198,7 +1184,6 @@ class MagicObject extends stdClass // NOSONAR
         {
             $match = $persist->countAll($specification, $pageable, $sortable);
         }
-
         return $match;
     }
 
@@ -1900,8 +1885,8 @@ class MagicObject extends stdClass // NOSONAR
             $pageable = PicoDatabaseUtil::pageableFromParams($params);
             return $this->findAll($specification, $pageable, PicoDatabasePersistence::ORDER_DESC, true);
         }
-        else if (strncasecmp($method, "countBy", 6) === 0) {
-            $var = lcfirst(substr($method, 6));
+        else if (strncasecmp($method, "countBy", 7) === 0) {
+            $var = lcfirst(substr($method, 7));
             $parameters = PicoDatabaseUtil::valuesFromParams($params);
             return $this->countBy($var, $parameters);
         }

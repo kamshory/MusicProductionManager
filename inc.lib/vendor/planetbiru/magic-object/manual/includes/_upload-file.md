@@ -27,7 +27,7 @@ use MagicObject\File\PicoUplodFile;
 
 require_once "vendor/autoload.php";
 
-$files = new UplodFile();
+$files = new PicoUplodFile();
 
 $file1 = $files->get('myupload');
 // or 
