@@ -11,7 +11,7 @@ class PicoYamlUtil
     /**
      * Get array depth
      *
-     * @param array $array Array to be check
+     * @param array $array Array to be checked
      * @return integer
      */
     public static function arrayDepth($array) {
@@ -41,9 +41,9 @@ class PicoYamlUtil
      * The dump method, when supplied with an array, will do its best
      * to convert the array into friendly YAML.
      *
-     * @param int|null   $inline The level where you switch to inline YAML. If $inline set to NULL, MagicObject will use maximum value of array depth
-     * @param int   $indent The amount of spaces to use for indentation of nested nodes
-     * @param int   $flags  A bit field of DUMP_* constants to customize the dumped YAML string
+     * @param int|null $inline The level where you switch to inline YAML. If $inline set to NULL, MagicObject will use maximum value of array depth
+     * @param int $indent The amount of spaces to use for indentation of nested nodes
+     * @param int $flags A bit field of DUMP_* constants to customize the dumped YAML string
      *
      * @return string A YAML string representing the original PHP value
      */

@@ -10,7 +10,7 @@ class EntityUtil
 {
     /**
      * Table property column
-     * @param MagicObject $entity
+     * @param MagicObject $entity Input entity
      * @return string[]|array
      */
     public static function getPropertyColumn($entity)
@@ -31,7 +31,7 @@ class EntityUtil
 
     /**
      * Table property join column
-     * @param MagicObject $entity
+     * @param MagicObject $entity Input entity
      * @return string[]|array
      */
     public static function getPropertyJoinColumn($entity)
@@ -52,8 +52,8 @@ class EntityUtil
 
     /**
      * Get entity data
-     * @param array|stdClass|MagicObject $data
-     * @param string[] $map
+     * @param array|stdClass|MagicObject $data Data
+     * @param string[] $map Map
      * @return array
      */
     public static function getEntityData($data, $map)
@@ -79,8 +79,8 @@ class EntityUtil
 
     /**
      * From array
-     * @param array $data
-     * @param string[] $map
+     * @param array $data Data
+     * @param string[] $map Map
      * @return array
      */
     private static function fromArray($data, $map)
@@ -98,8 +98,8 @@ class EntityUtil
 
     /**
      * From stdClass
-     * @param stdClass $data
-     * @param string[] $map
+     * @param stdClass $data Data
+     * @param string[] $map Map
      * @return array
      */
     private static function fromStdClass($data, $map)
@@ -117,8 +117,8 @@ class EntityUtil
 
     /**
      * From MagicObject
-     * @param MagicObject $data
-     * @param string[] $map
+     * @param MagicObject $data Input entity
+     * @param string[] $map Map
      * @return array
      */
     private static function fromMagicObject($data, $map)

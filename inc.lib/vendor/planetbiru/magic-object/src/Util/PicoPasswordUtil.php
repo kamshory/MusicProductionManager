@@ -108,7 +108,7 @@ class PicoPasswordUtil{
     /**
      * Validate password
      *
-     * @param string $password
+     * @param string $password Password to be validated
      * @return true
      * @throws InvalidInputFormatException
      */
@@ -128,9 +128,9 @@ class PicoPasswordUtil{
     /**
      * Get password hash
      *
-     * @param string $password
-     * @param boolean $binary
-     * @param boolean $validate
+     * @param string $password Plain text
+     * @param boolean $binary Flag that result is binary
+     * @param boolean $validate Flag to validate password
      * @return string
      */
     public function getHash($password, $binary = false, $validate = true)
@@ -179,7 +179,7 @@ class PicoPasswordUtil{
     /**
      * Set minimum length of the password
      *
-     * @param integer  $minLength  Minimum length of the password
+     * @param integer $minLength Minimum length of the password
      *
      * @return self
      */ 

@@ -7,8 +7,8 @@ class AttrUtil
     /**
      * return selected="selected" if $param1 == $param2 
      *
-     * @param mixed $param1
-     * @param mixed $param2
+     * @param mixed $param1 Parameter 1
+     * @param mixed $param2 Parameter 2
      * @return string
      */
     public static function selected($param1, $param2)
@@ -19,8 +19,8 @@ class AttrUtil
     /**
      * return checked="checked" if $param1 == $param2 
      *
-     * @param mixed $param1
-     * @param mixed $param2
+     * @param mixed $param1 Parameter 1
+     * @param mixed $param2 Parameter 2
      * @return string
      */
     public static function checked($param1, $param2)

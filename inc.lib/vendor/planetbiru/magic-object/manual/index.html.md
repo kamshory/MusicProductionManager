@@ -15,7 +15,7 @@ includes:
   - installation
   - implementation
   - simple-object
-  - extend-magic-object
+  - extends-magic-object
   - multilevel-object
   - object-from-yaml
   - object-from-ini

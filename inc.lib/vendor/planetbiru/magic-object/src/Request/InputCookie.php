@@ -14,9 +14,9 @@ class  InputCookie extends PicoRequestBase {
 
     /**
      * Constructor
-     * @param boolean $recursive
-     * @param boolean $parseNullAndBool
-     * @param boolean $forceScalar
+     * @param boolean $recursive Flag to convert all objects recusrsively
+     * @param boolean $parseNullAndBool Parse NULL and BOOL
+     * @param boolean $forceScalar Get scalar value only
      */
     public function __construct($recursive = false, $parseNullAndBool = false, $forceScalar = false)
     {
@@ -45,7 +45,7 @@ class  InputCookie extends PicoRequestBase {
     /**
      * Override loadData
      *
-     * @param array $data
+     * @param array $data Data to load
      * @return self
      */
     public function loadData($data, $tolower = false)

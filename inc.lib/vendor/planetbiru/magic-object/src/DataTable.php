@@ -71,7 +71,7 @@ class DataTable extends SetterGetter
     private $_tableIdentity; //NOSONAR
     
     /**
-     * Table info
+     * Table information
      *
      * @var PicoTableInfo
      */

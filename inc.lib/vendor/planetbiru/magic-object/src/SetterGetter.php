@@ -24,7 +24,7 @@ class SetterGetter extends stdClass
     /**
      * Constructor
      * 
-     * @param self|array|stdClass|object $data
+     * @param self|array|stdClass|object $data Data
      */
     public function __construct($data = null)
     {
@@ -54,7 +54,7 @@ class SetterGetter extends stdClass
 
     /**
      * Load data to object
-     * @param mixed $data
+     * @param mixed $data Data
      * @return self
      */
     public function loadData($data)
@@ -82,8 +82,8 @@ class SetterGetter extends stdClass
     /**
      * Set property value
      *
-     * @param string $propertyName
-     * @param mixed|null
+     * @param string $propertyName Property name
+     * @param mixed|null $propertyValue Property value
      * @return self
      */
     public function set($propertyName, $propertyValue)
@@ -96,8 +96,8 @@ class SetterGetter extends stdClass
     /**
      * Get property value
      *
-     * @param string $propertyName
-     * @return mixed|null
+     * @param string $propertyName Property name
+     * @return mixed|null $propertyValue Property value
      */
     public function get($propertyName)
     {
@@ -109,8 +109,8 @@ class SetterGetter extends stdClass
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
      * 
-     * @param string $name Name of the property.
-     * @param string $value Value of the property.
+     * @param string $name Property name
+     * @param string $value Property value
      * @return void 
      **/
     public function __set($name, $value)
@@ -159,7 +159,7 @@ class SetterGetter extends stdClass
     /**
      * Get value
      *
-     * @var boolean $snakeCase
+     * @var boolean $snakeCase Flag to snake case property
      */
     public function value($snakeCase = false)
     {
@@ -187,9 +187,8 @@ class SetterGetter extends stdClass
 
     /**
      * Property list
-     *
-     * @var boolean $reflectSelf
-     * @var boolean $asArrayProps
+     * @var boolean $reflectSelf Flag to reflect self
+     * @var boolean $asArrayProps Flag to convert properties as array
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -297,7 +296,7 @@ class SetterGetter extends stdClass
     }
 
     /**
-     * toString
+     * Magic method to stringify object
      *
      * @return string
      */

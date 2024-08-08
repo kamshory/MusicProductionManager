@@ -10,8 +10,8 @@ class PicoTableUtil
     /**
      * Set class
      *
-     * @param DOMElement $node
-     * @param array $classList
+     * @param DOMElement $node DOM node
+     * @param array $classList Class list
      * @return DOMElement
      */
     public static function setClassList($node, $classList)
@@ -26,8 +26,8 @@ class PicoTableUtil
     /**
      * Set attributes
      *
-     * @param DOMElement $node
-     * @param array $annotationClass
+     * @param DOMElement $node DOM node
+     * @param array $annotationClass Annotation class
      * @return DOMElement
      */
     public static function setAttributes($node, $annotationAttributes)
@@ -45,8 +45,8 @@ class PicoTableUtil
     /**
      * Set identity
      *
-     * @param DOMElement $node
-     * @param PicoGenericObject $identity
+     * @param DOMElement $node DOM node
+     * @param PicoGenericObject $identity Identity
      * @return DOMElement
      */
     public static function setIdentity($node, $identity)
@@ -61,7 +61,7 @@ class PicoTableUtil
     /**
      * Parse attribute
      *
-     * @param string $attributes
+     * @param string $attributes Attributes
      * @return array
      */
     public static function parseElementAttributes($attributes)
@@ -79,7 +79,6 @@ class PicoTableUtil
             $attributes = trim($attributes);
             $attributes = PicoStringUtil::lTrim($attributes, "(", 1);
             $attributes = PicoStringUtil::rTrim($attributes, ")", 1);
-
             $doc = new DOMDocument();
             $doc->loadHTML("<html><body><div $attributes></div></body></html>");
             $div = $doc->getElementsByTagName("div")->item(0);
@@ -94,7 +93,7 @@ class PicoTableUtil
     /**
      * Validate class name of DOMElement
      *
-     * @param string $className
+     * @param string $className Class name
      * @return boolean
      */
     public static function isValidClassName($className)

@@ -15,7 +15,7 @@ use MagicObject\Util\Database\PicoDatabaseUtilMySql;
 class PicoDatabaseDump
 {
     /**
-     * Table info
+     * Table information
      *
      * @var PicoTableInfo
      */
@@ -65,12 +65,12 @@ class PicoDatabaseDump
     /**
      * Dump strcuture of table
      *
-     * @param PicoTableInfo $tableInfo
-     * @param string $databaseType
-     * @param boolean $createIfNotExists
-     * @param boolean $dropIfExists
-     * @param string $engine
-     * @param string $charset
+     * @param PicoTableInfo $tableInfo Table information
+     * @param string $databaseType Database type
+     * @param boolean $createIfNotExists Flag to add create if not exists
+     * @param boolean $dropIfExists Flag to add drop if exists
+     * @param string $engine Database engine
+     * @param string $charset Charset
      * @return string
      */
     public function dumpStructureTable($tableInfo, $databaseType, $createIfNotExists = false, $dropIfExists = false, $engine = 'InnoDB', $charset = 'utf8mb4')
@@ -90,7 +90,7 @@ class PicoDatabaseDump
     /**
      * Get entity table info 
      *
-     * @param MagicObject $entity ENtity
+     * @param MagicObject $entity Entity
      * @return PicoTableInfo|null
      */
     public function getTableInfo($entity)
@@ -165,7 +165,7 @@ class PicoDatabaseDump
      * Create query ALTER TABLE ADD COLUMN
      *
      * @param MagicObject|MagicObject[] $entity Entity
-     * @param PicoDatabase $database
+     * @param PicoDatabase $database Database connection
      * @return string[]
      */
     public function createAlterTableAdd($entity, $database = null)
@@ -183,8 +183,8 @@ class PicoDatabaseDump
     /**
      * Get database
      * 
-     * @param PicoDatabase $database
-     * @param MagicObject[] $entities
+     * @param PicoDatabase $database Database connection
+     * @param MagicObject[] $entities Entities
      * @return PicoDatabase
      */
     private function getDatabase($database, $entities)
@@ -199,7 +199,7 @@ class PicoDatabaseDump
     /**
      * 
      * Get database type
-     * @param PicoDatabase $database
+     * @param PicoDatabase $database Database connection
      * @return string
      */
     private function getDatabaseType($database)
@@ -218,8 +218,8 @@ class PicoDatabaseDump
     /**
      * 
      * Get table name
-     * @param string $tableName
-     * @param PicoTableInfo $tableInfo
+     * @param string $tableName Table name
+     * @param PicoTableInfo $tableInfo Table information
      * @return string
      */
     private function getTableName($tableName, $tableInfo)
@@ -234,9 +234,9 @@ class PicoDatabaseDump
     /**
      * Get create alter table query
      * 
-     * @param string $tableName
-     * @param string $columnName
-     * @param string $columnType
+     * @param string $tableName Table name
+     * @param string $columnName Column name
+     * @param string $columnType Column type
      * @return string
      */
     public function createQueryAlterTable($tableName, $columnName, $columnType)
@@ -249,7 +249,7 @@ class PicoDatabaseDump
      * Create query ALTER TABLE ADD COLUMN
      *
      * @param MagicObject[] $entity Entity
-     * @param PicoDatabase $database
+     * @param PicoDatabase $database Database connection
      * @return string[]
      */
     public function createAlterTableAddFromEntities($entities, $tableName = null, $database = null)
@@ -301,7 +301,7 @@ class PicoDatabaseDump
      * Create query ALTER TABLE ADD COLUMN
      *
      * @param MagicObject|MagicObject[] $entity Entity
-     * @param PicoDatabase $database
+     * @param PicoDatabase $database Database connection
      * @return string[]
      */
     public function createAlterTableAddFromEntity($entity)
@@ -351,10 +351,10 @@ class PicoDatabaseDump
 
     /**
      * Add primary key
-     * @param string[] $queryAlter
-     * @param PicoTableInfoExtended $tableInfo
-     * @param string $tableName
-     * @param string[] $createdColumns
+     * @param string[] $queryAlter Query alter
+     * @param PicoTableInfoExtended $tableInfo Table information
+     * @param string $tableName Table name
+     * @param string[] $createdColumns Create column
      * @return string[]
      */
     private function addPrimaryKey($queryAlter, $tableInfo, $tableName, $createdColumns)
@@ -382,11 +382,11 @@ class PicoDatabaseDump
     /**
      * Add auto increment
      * 
-     * @param string[] $queryAlter
-     * @param PicoTableInfoExtended $tableInfo
-     * @param string $tableName
-     * @param string[] $createdColumns
-     * @param string $databaseType
+     * @param string[] $queryAlter  Query alter
+     * @param PicoTableInfoExtended $tableInfo Table information
+     * @param string $tableName Table name
+     * @param string[] $createdColumns Create column
+     * @param string $databaseType Database type
      * @return string[]
      */
     private function addAutoIncrement($queryAlter, $tableInfo, $tableName, $createdColumns, $databaseType)
@@ -482,7 +482,7 @@ class PicoDatabaseDump
     /**
      * Get merged table info
      *
-     * @param MagicObject[] $entities
+     * @param MagicObject[] $entities Entities
      * @return PicoTableInfoExtended
      */
     public function getMergedTableInfo($entities)

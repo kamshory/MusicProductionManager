@@ -12,9 +12,9 @@ class JSONSelectOption
     /**
      * Constructor
      *
-     * @param PicoDatabase $database
-     * @param PicoDatabaseQueryBuilder $query
-     * @param mixed $defautValue
+     * @param PicoDatabase $database Database connection
+     * @param PicoDatabaseQueryBuilder $query Query builder
+     * @param mixed $defautValue Default value
      */
     public function __construct($database, $query, $defautValue)
     {

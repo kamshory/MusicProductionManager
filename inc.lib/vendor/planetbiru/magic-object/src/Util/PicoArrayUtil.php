@@ -9,7 +9,7 @@ class PicoArrayUtil
     /**
      * Camelize array keys
      *
-     * @param array|object|stdClass $array
+     * @param array|object|stdClass $array Array contains data to be processed
      * @return array
      */
     public static function camelize($input)
@@ -30,7 +30,7 @@ class PicoArrayUtil
     /**
      * Snakeize array keys
      *
-     * @param array|object|stdClass $array
+     * @param array|object|stdClass $array Array contains data to be processed
      * @return array
      */
     public static function snakeize($input)
@@ -51,8 +51,8 @@ class PicoArrayUtil
     /**
      * Camelize array keys
      *
-     * @param array $array
-     * @return array
+     * @param array $array Array contains data to be processed
+     * @return array|null
      */
     private static function _camelize(&$array) //NOSONAR
     {
@@ -84,8 +84,8 @@ class PicoArrayUtil
     /**
      * Snakeize array keys
      *
-     * @param array $array
-     * @return array
+     * @param array $array Array contains data to be processed
+     * @return array|null
      */
     private static function _snakeize(&$array) //NOSONAR
     {

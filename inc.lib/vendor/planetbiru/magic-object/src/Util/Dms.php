@@ -35,9 +35,9 @@ class Dms
     /**
      * Converting DMS ( Degrees / minutes / seconds ) to decimal format
      *
-     * @param integer $deg
-     * @param integer $min
-     * @param float $sec
+     * @param integer $deg Degree
+     * @param integer $min Minute
+     * @param float $sec Second
      * @return self
      */
     public function dmsToDd($deg, $min, $sec)
@@ -55,7 +55,7 @@ class Dms
     /**
      * Converts decimal format to DMS ( Degrees / minutes / seconds ) 
      *
-     * @param float $dec
+     * @param float $dec Decimal
      * @return self
      */
     public function ddToDms($dec)
@@ -88,8 +88,8 @@ class Dms
     /**
      * Print Dms
      *
-     * @param boolean $trim
-     * @param boolean $rounded
+     * @param boolean $trim Flag to trim 0
+     * @param boolean $rounded Flag to round value
      * @return string
      */
     public function printDms($trim = false, $rounded = false)

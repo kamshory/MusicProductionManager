@@ -414,8 +414,8 @@ class PicoRequestBase extends stdClass //NOSONAR
     /**
      * Get value from formated number
      *
-     * @param stdClass|MagicObject $cfg
-     * @param mixed $input
+     * @param stdClass|MagicObject $cfg Configuration
+     * @param mixed $input Input
      * @return float
      */
     public function _getValue($cfg, $input)
@@ -450,8 +450,8 @@ class PicoRequestBase extends stdClass //NOSONAR
     /**
      * Magic method called when user call any undefined method
      *
-     * @param string $method
-     * @param array $params
+     * @param string $method Method
+     * @param array $params Parameters
      * @return mixed|null
      */
     public function __call($method, $params) //NOSONAR
@@ -524,8 +524,8 @@ class PicoRequestBase extends stdClass //NOSONAR
     /**
      * Apply filter
      *
-     * @param string $value
-     * @param string $filterType
+     * @param string $value Value
+     * @param string $filterType Fiter type
      * @return string|null
      */
     private function applyFilter($value, $filterType)

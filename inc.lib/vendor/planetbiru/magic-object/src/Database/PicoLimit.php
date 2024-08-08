@@ -44,6 +44,35 @@ class PicoLimit
         $this->setOffset($offset);
         $this->setLimit($limit);
     }
+    
+    /**
+     * Increase page number
+     *
+     * @return self
+     */
+    public function nextPage()
+    {
+        $this->offset += $this->limit;
+        return $this;
+    }
+    
+    /**
+     * Decrease page number
+     *
+     * @return self
+     */
+    public function previousPage()
+    {
+        if($this->offset > 1)
+        {
+            $this->offset -= $this->limit;
+        }
+        if($this->offset < 0)
+        {
+            $this->offset = 0;
+        }
+        return $this;
+    }
 
     /**
      * Get the value of limit

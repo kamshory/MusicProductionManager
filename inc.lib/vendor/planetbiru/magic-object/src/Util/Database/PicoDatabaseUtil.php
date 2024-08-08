@@ -10,7 +10,7 @@ class PicoDatabaseUtil
 {
     /**
      * Get specification from parameters
-     * @param array $params
+     * @param array $params Parameters
      * @return PicoSpecification|null
      */
     public static function specificationFromParams($params)
@@ -30,7 +30,7 @@ class PicoDatabaseUtil
 
     /**
      * Get pageable from parameters
-     * @param array $params
+     * @param array $params Parameters
      * @return PicoPageable|null
      */
     public static function pageableFromParams($params)
@@ -50,7 +50,7 @@ class PicoDatabaseUtil
     
     /**
      * Get sortable from parameters
-     * @param array $params
+     * @param array $params Parameters
      * @return PicoSortable|null
      */
     public static function sortableFromParams($params)
@@ -70,7 +70,7 @@ class PicoDatabaseUtil
 
     /**
      * Get pageable from parameters
-     * @param array $params
+     * @param array $params Parameters
      * @return array
      */
     public static function valuesFromParams($params)
@@ -124,8 +124,8 @@ class PicoDatabaseUtil
     /**
      * Check if value is null
      *
-     * @param mixed $value
-     * @param boolean $importFromString
+     * @param mixed $value Value
+     * @param boolean $importFromString Flag thai input is from string
      * @return boolean
      */
     public static function isNull($value, $importFromString)
@@ -136,8 +136,8 @@ class PicoDatabaseUtil
     /**
      * Check if value is numeric
      *
-     * @param mixed $value
-     * @param boolean $importFromString
+     * @param mixed $value Value
+     * @param boolean $importFromString Flag thai input is from string
      * @return boolean
      */
     public static function isNumeric($value, $importFromString)
@@ -147,8 +147,8 @@ class PicoDatabaseUtil
     
     /**
 	 * Escape value
-	 * @param mixed $value
-     * @param boolean $importFromString
+     * @param mixed $value Value
+     * @param boolean $importFromString Flag thai input is from string
 	 * @return string
 	 */
 	public static function escapeValue($value, $importFromString = false)
@@ -194,7 +194,7 @@ class PicoDatabaseUtil
     /**
      * Escape SQL
      *
-     * @param string $value
+     * @param string $value Value
      * @return string
      */
     public static function escapeSQL($value)
@@ -205,7 +205,7 @@ class PicoDatabaseUtil
     /**
      * Trim WHERE
      *
-     * @param string $where
+     * @param string $where Raw WHERE
      * @return string
      */
     public static function trimWhere($where)
@@ -241,7 +241,7 @@ class PicoDatabaseUtil
     /**
      * Split SQL
      *
-     * @param string $sqlText
+     * @param string $sqlText Raw SQL
      * @return string[]
      */
     public function splitSql($sqlText) //NOSONAR
@@ -343,7 +343,7 @@ class PicoDatabaseUtil
     /**
      * Check if parameter os array
      *
-     * @param mixed $params
+     * @param mixed $params Parameters
      * @return boolean
      */
     private static function isArray($params)

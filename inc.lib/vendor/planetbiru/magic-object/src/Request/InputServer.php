@@ -51,7 +51,7 @@ class  InputServer extends PicoRequestBase {
     /**
      * Get request header with specific key
      *
-     * @param string $key
+     * @param string $key Header key
      * @return string
      */
     public function getHeader($key)

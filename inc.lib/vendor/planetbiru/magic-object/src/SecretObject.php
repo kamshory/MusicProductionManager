@@ -273,7 +273,7 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Check data if instanceof self or instanceof stdClass
      *
-     * @param mixed $data
+     * @param mixed $data Tada to be tested
      * @return boolean
      */
     private function typeStdClass($data)
@@ -288,8 +288,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Encrypt data recursive
      *
-     * @param MagicObject|PicoGenericObject|self|array|stdClass|string|number $data
-     * @param string $hexKey
+     * @param MagicObject|PicoGenericObject|self|array|stdClass|string|number $data Data
+     * @param string $hexKey Key in hexadecimal format
      * @return mixed
      */
     public function encryptValue($data, $hexKey = null) 
@@ -331,8 +331,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Encrypt string
      *
-     * @param string $plaintext
-     * @param string $hexKey
+     * @param string $plaintext Plain text
+     * @param string $hexKey Key in hexadecimal format
      * @return string
      */
     public function encryptString($plaintext, $hexKey = null)
@@ -352,8 +352,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Decrypt data recursive
      *
-     * @param MagicObject|PicoGenericObject|self|array|stdClass|string $data
-     * @param string $hexKey
+     * @param MagicObject|PicoGenericObject|self|array|stdClass|string $data Data
+     * @param string $hexKey Key in hexadecimal format
      * @return mixed
      */
     public function decryptValue($data, $hexKey = null) 
@@ -395,8 +395,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Decrypt string
      *
-     * @param string $data
-     * @param string $hexKey
+     * @param string $data Data
+     * @param string $hexKey Key in hexadecimal format
      * @return string
      */
     public function decryptString($ciphertext, $hexKey = null) 
@@ -425,7 +425,7 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Check if value is required to be encrypted before stored
      *
-     * @param string $var
+     * @param string $var Variable
      * @return boolean
      */
     private function needInputEncryption($var)
@@ -436,7 +436,7 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Check if value is required to be decrypted after read
      *
-     * @param string $var
+     * @param string $var Variable
      * @return boolean
      */
     private function needOutputDecryption($var)
@@ -447,7 +447,7 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Check if value is required to be encrypted after read
      *
-     * @param string $var
+     * @param string $var Variable
      * @return boolean
      */
     private function needOutputEncryption($var)
@@ -458,7 +458,7 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Check if value is required to be decrypted before stored
      *
-     * @param string $var
+     * @param string $var Variable
      * @return boolean
      */
     private function needInputDecryption($var)
@@ -468,7 +468,7 @@ class SecretObject extends stdClass //NOSONAR
 
     /**
      * Load data to object
-     * @param mixed $data
+     * @param mixed $data Data
      * @return self
      */
     public function loadData($data)
@@ -496,8 +496,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Load data from INI string
      *
-     * @param string $rawData
-     * @param boolean $systemEnv
+     * @param string $rawData Raw data
+     * @param boolean $systemEnv Flag to use environment variable
      * @return self
      */
     public function loadIniString($rawData, $systemEnv = false)
@@ -517,8 +517,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Load data from INI file
      *
-     * @param string $path
-     * @param boolean $systemEnv
+     * @param string $path File path
+     * @param boolean $systemEnv Flag to use environment variable
      * @return self
      */
     public function loadIniFile($path, $systemEnv = false)
@@ -569,7 +569,7 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Load data from Yaml file
      *
-     * @param string $path
+     * @param string $path File path
      * @param boolean $systemEnv Replace all environment variable value
      * @param boolean $asObject Result is object instead of array
      * @param boolean $recursive Convert all object to MagicObject
@@ -600,9 +600,9 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Load data from JSON string
      *
-     * @param string $rawData
-     * @param boolean $systemEnv
-     * @param boolean $recursive
+     * @param string $rawData Raw data
+     * @param boolean $systemEnv Flag to use environment variable
+     * @param boolean $recursive Flag to create recursive object
      * @return self
      */
     public function loadJsonString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
@@ -630,9 +630,9 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Load data from JSON file
      *
-     * @param string $path
-     * @param boolean $systemEnv
-     * @param boolean $recursive
+     * @param string $path File path
+     * @param boolean $systemEnv Flag to use environment variable
+     * @param boolean $recursive Flag to create recursive object
      * @return self
      */
     public function loadJsonFile($path, $systemEnv = false, $asObject = false, $recursive = false)
@@ -660,7 +660,7 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Set readonly. When object is set to readonly, setter will not change value of its properties but loadData still works fine
      *
-     * @param boolean $readonly
+     * @param boolean $readonly Flag to set object to be readonly
      * @return self
      */
     protected function readOnly($readonly)
@@ -672,8 +672,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Set property value
      *
-     * @param string $propertyName
-     * @param mixed|null
+     * @param string $propertyName Property name
+     * @param mixed|null $propertyValue Property value
      * @return self
      */
     public function set($propertyName, $propertyValue)
@@ -684,8 +684,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Get property value
      *
-     * @param string $propertyName
-     * @return mixed|null
+     * @param string $propertyName Property name
+     * @return mixed|null $propertyValue Property value
      */
     public function get($propertyName)
     {
@@ -695,8 +695,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Get property value 
      *
-     * @param string $propertyName
-     * @return mixed|null
+     * @param string $propertyName Property name
+     * @return mixed|null $propertyValue Property value
      */
     public function getOrDefault($propertyName, $defaultValue = null)
     {
@@ -707,9 +707,9 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Copy value from other object
      *
-     * @param self|mixed $source
-     * @param array $filter
-     * @param boolean $includeNull
+     * @param self|mixed $source Source
+     * @param array $filter Filter
+     * @param boolean $includeNull Flag to include null
      * @return void
      */
     public function copyValueFrom($source, $filter = null, $includeNull = false)
@@ -741,6 +741,7 @@ class SecretObject extends stdClass //NOSONAR
 
     /**
      * Get object value
+     * @param boolean $snakeCase Flag to snake case property
      * @return stdClass
      */
     public function value($snakeCase = false)
@@ -769,6 +770,7 @@ class SecretObject extends stdClass //NOSONAR
     
     /**
      * Get object value
+     * @param boolean $snakeCase Flag to snake case property
      * @return stdClass
      */
     public function valueObject($snakeCase = false)
@@ -778,6 +780,7 @@ class SecretObject extends stdClass //NOSONAR
 
     /**
      * Get object value as associative array
+     * @param boolean $snakeCase Flag to snake case property
      * @return array
      */
     public function valueArray($snakeCase = false)
@@ -858,8 +861,8 @@ class SecretObject extends stdClass //NOSONAR
 
     /**
      * Property list
-     * @var boolean $reflectSelf
-     * @var boolean $asArrayProps
+     * @var boolean $reflectSelf Flag to reflect self
+     * @var boolean $asArrayProps Flag to convert properties as array
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -896,8 +899,8 @@ class SecretObject extends stdClass //NOSONAR
     /**
      * Modify null properties
      *
-     * @param string $propertyName
-     * @param mixed $propertyValue
+     * @param string $propertyName Property name
+     * @param mixed $propertyValue Property value
      * @return void
      */
     private function modifyNullProperties($propertyName, $propertyValue)
@@ -967,7 +970,7 @@ class SecretObject extends stdClass //NOSONAR
     }
     
     /**
-     * Convert object to string
+     * Magic method to stringify object
      *
      * @return string
      */

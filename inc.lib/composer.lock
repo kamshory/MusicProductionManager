@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e5c08f65ada9acd1fa77e1c79ae74f1",
+    "content-hash": "1ecae3975e1cd2c52ecf6478137047e6",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -546,16 +546,16 @@
         },
         {
             "name": "planetbiru/magic-object",
-            "version": "1.17.6",
+            "version": "1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "8efb514c52eca7f196c90f6fd233bc69daa631a7"
+                "reference": "6f8e09f031208121bcf1b132041bd8e5b77ee203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/8efb514c52eca7f196c90f6fd233bc69daa631a7",
-                "reference": "8efb514c52eca7f196c90f6fd233bc69daa631a7",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/6f8e09f031208121bcf1b132041bd8e5b77ee203",
+                "reference": "6f8e09f031208121bcf1b132041bd8e5b77ee203",
                 "shasum": ""
             },
             "require": {
@@ -579,9 +579,9 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/1.17.6"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/1.18.0"
             },
-            "time": "2024-08-06T00:49:55+00:00"
+            "time": "2024-08-08T15:27:41+00:00"
         },
         {
             "name": "psr/cache",

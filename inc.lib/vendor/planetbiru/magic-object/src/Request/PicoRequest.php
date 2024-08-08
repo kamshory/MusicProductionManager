@@ -11,8 +11,8 @@ class PicoRequest extends PicoRequestBase
     /**
      * Constructor
      *
-     * @param integer $inputType
-     * @param boolean $forceScalar
+     * @param integer $inputType Input type
+     * @param boolean $forceScalar Get scalar value only
      */
     public function __construct($inputType = INPUT_GET, $forceScalar = false)
     {
@@ -77,8 +77,8 @@ class PicoRequest extends PicoRequestBase
     /**
      * Get request header
      *
-     * @param string $key
-     * @param array|null $allHeaders
+     * @param string $key Header key
+     * @param array|null $allHeaders All headers
      * @return string|null
      */
     public static function getRequestHeader($key, $allHeaders = null)

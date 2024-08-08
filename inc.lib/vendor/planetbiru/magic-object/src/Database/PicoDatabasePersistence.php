@@ -1824,7 +1824,7 @@ class PicoDatabasePersistence // NOSONAR
         $result = array();
         foreach($columns as $column)
         {
-            $result[] = $info->getTableName().".".$column['name'];
+            $result[] = $info->getTableName().".".$column[self::KEY_NAME];
         }
         return $this->joinStringArray($result, self::MAX_LINE_LENGTH, self::COMMA, self::COMMA_RETURN);
     }
@@ -2455,7 +2455,7 @@ class PicoDatabasePersistence // NOSONAR
      * @param mixed $propertyValue Property value
      * @param PicoPageable $pageable Pageable
      * @param PicoSortable|string $sortable Sortable
-     * @param PicoTableInfo $info Table info
+     * @param PicoTableInfo $info Table information
      * @return PicoDatabaseQueryBuilder
      * @throws PDOException|NoDatabaseConnectionException|EntityException
      */
@@ -2841,7 +2841,7 @@ class PicoDatabasePersistence // NOSONAR
         $info = $persist->getTableInfo();
         foreach($info->getColumns() as $prop => $col)
         {
-            if($col['name'] == $referenceColumName)
+            if($col[self::KEY_NAME] == $referenceColumName)
             {
                 return $prop;
             }
@@ -2877,7 +2877,8 @@ class PicoDatabasePersistence // NOSONAR
         {      
             $className = $this->getRealClassName($classNameJoin);
             $obj = new $className(null, $this->database);
-            $obj->{'findOneBy'.ucfirst($referenceColumName)}($joinKeyValue);           
+            $method = 'findOneBy'.ucfirst($referenceColumName);
+            $obj->{$method}($joinKeyValue);           
             $this->joinCache[$classNameJoin][$joinKeyValue] = $obj;
             return $obj;
         }

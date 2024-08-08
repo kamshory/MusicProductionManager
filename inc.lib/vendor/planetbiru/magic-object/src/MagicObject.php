@@ -91,7 +91,7 @@ class MagicObject extends stdClass // NOSONAR
     private $_label = array(); // NOSONAR
     
     /**
-     * Table info
+     * Table information
      *
      * @var PicoTableInfo
      */
@@ -117,8 +117,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Constructor
      *
-     * @param self|array|stdClass|object $data
-     * @param PicoDatabase $database
+     * @param self|array|stdClass|object $data Initial data
+     * @param PicoDatabase $database Database connection
      */
     public function __construct($data = null, $database = null)
     {
@@ -152,7 +152,7 @@ class MagicObject extends stdClass // NOSONAR
     
     /**
      * Load data to object
-     * @param mixed $data
+     * @param mixed $data Data
      * @return self
      */
     public function loadData($data)
@@ -180,8 +180,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Load data from INI string
      *
-     * @param string $rawData
-     * @param boolean $systemEnv
+     * @param string $rawData Raw data
+     * @param boolean $systemEnv Flag to use environment variable
      * @return self
      */
     public function loadIniString($rawData, $systemEnv = false)
@@ -201,8 +201,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Load data from INI file
      *
-     * @param string $path
-     * @param boolean $systemEnv
+     * @param string $path File path
+     * @param boolean $systemEnv Flag to use environment variable
      * @return self
      */
     public function loadIniFile($path, $systemEnv = false)
@@ -267,7 +267,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Load data from Yaml file
      *
-     * @param string $path
+     * @param string $path Yaml file path
      * @param boolean $systemEnv Replace all environment variable value
      * @param boolean $asObject Result is object instead of array
      * @param boolean $recursive Convert all object to MagicObject
@@ -312,9 +312,9 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Load data from JSON string
      *
-     * @param string $rawData
-     * @param boolean $systemEnv
-     * @param boolean $recursive
+     * @param string $rawData JSON string
+     * @param boolean $systemEnv Replace all environment variable value
+     * @param boolean $recursive Convert all object to MagicObject
      * @return self
      */
     public function loadJsonString($rawData, $systemEnv = false, $asObject = false, $recursive = false)
@@ -356,9 +356,9 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Load data from JSON file
      *
-     * @param string $path
-     * @param boolean $systemEnv
-     * @param boolean $recursive
+     * @param string $path JSON file path
+     * @param boolean $systemEnv Replace all environment variable value
+     * @param boolean $recursive Convert all object to MagicObject
      * @return self
      */
     public function loadJsonFile($path, $systemEnv = false, $asObject = false, $recursive = false)
@@ -400,7 +400,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Set readonly. When object is set to readonly, setter will not change value of its properties but loadData still works fine
      *
-     * @param boolean $readonly
+     * @param boolean $readonly Flag to set object to be readonly
      * @return self
      */
     protected function readOnly($readonly)
@@ -411,7 +411,7 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Set database connection
-     * @var PicoDatabase $database
+     * @var PicoDatabase $database Database connection
      * @return self
      */
     public function withDatabase($database)
@@ -423,7 +423,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Set or get current database. If parameter is not empty, set current database with database given. Return current database or null.
      *
-     * @param PicoDatabase|null $database
+     * @param PicoDatabase|null $database Database connection
      * @return PicoDatabase|null
      */
     public function currentDatabase($database = null)
@@ -442,8 +442,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Remove property
      *
-     * @param object $sourceData
-     * @param array $propertyNames
+     * @param object $sourceData Data
+     * @param array $propertyNames Properties name
      * @return mixed
      */
     public function removePropertyExcept($sourceData, $propertyNames)
@@ -705,7 +705,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Get MagicObject with WHERE specification
      *
-     * @param PicoSpecification $specification
+     * @param PicoSpecification $specification Specification
      * @return PicoDatabasePersistenceExtended
      */
     public function where($specification)
@@ -724,8 +724,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Modify null properties
      *
-     * @param string $propertyName
-     * @param mixed $propertyValue
+     * @param string $propertyName Property name
+     * @param mixed $propertyValue Property value
      * @return void
      */
     private function modifyNullProperties($propertyName, $propertyValue)
@@ -743,9 +743,9 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Set property value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @param mixed|null
-     * @param boolean $skipModifyNullProperties
+     * @param boolean $skipModifyNullProperties Skip modify null properties
      * @return self
      */
     public function set($propertyName, $propertyValue, $skipModifyNullProperties = false)
@@ -762,7 +762,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Get property value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @return mixed|null
      */
     public function get($propertyName)
@@ -774,8 +774,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Get property value 
      *
-     * @param string $propertyName
-     * @param mixed|null $defaultValue
+     * @param string $propertyName Property name
+     * @param mixed|null $defaultValue Property value
      * @return mixed|null
      */
     public function getOrDefault($propertyName, $defaultValue = null)
@@ -787,7 +787,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Set property value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @param mixed|null
      */
     public function __set($propertyName, $propertyValue)
@@ -798,7 +798,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Get property value 
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @return mixed|null
      */
     public function __get($propertyName)
@@ -813,7 +813,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Check if property has been set or not or has null value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @return boolean
      */
     public function __isset($propertyName)
@@ -825,7 +825,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Unset property value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @return void
      */
     public function __unset($propertyName)
@@ -837,9 +837,9 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Copy value from other object
      *
-     * @param self|mixed $source
-     * @param array $filter
-     * @param boolean $includeNull
+     * @param self|mixed $source Source data
+     * @param array $filter Filter
+     * @param boolean $includeNull Flag include null
      * @return void
      */
     public function copyValueFrom($source, $filter = null, $includeNull = false)
@@ -872,8 +872,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Unset property value
      *
-     * @param string $propertyName
-     * @param boolean $skipModifyNullProperties
+     * @param string $propertyName Property name
+     * @param boolean $skipModifyNullProperties Skip modify null properties
      * @return self
      */
     private function removeValue($propertyName, $skipModifyNullProperties = false)
@@ -899,7 +899,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Get default value
      *
-     * @param boolean $snakeCase
+     * @param boolean $snakeCase Flag to snake case property
      * @return stdClass
      */
     public function defaultValue($snakeCase = false)
@@ -930,6 +930,8 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Get object value
+     * 
+     * @param boolean $snakeCase Flag to snake case property
      * @return stdClass
      */
     public function value($snakeCase = false)
@@ -956,6 +958,8 @@ class MagicObject extends stdClass // NOSONAR
     
     /**
      * Get object value
+     * 
+     * @param boolean $snakeCase Flag to snake case property
      * @return stdClass
      */
     public function valueObject($snakeCase = null)
@@ -990,6 +994,8 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Get object value as associative array
+     * 
+     * @param boolean $snakeCase Flag to snake case property
      * @return array
      */
     public function valueArray($snakeCase = false)
@@ -1084,7 +1090,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Check if data is not null and not empty
      *
-     * @param mixed $value
+     * @param mixed $value Value to be checked
      * @return boolean
      */
     private function _notNullAndNotEmpty($value)
@@ -1094,8 +1100,8 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Property list
-     * @var boolean $reflectSelf
-     * @var boolean $asArrayProps
+     * @var boolean $reflectSelf Flag to reflect self
+     * @var boolean $asArrayProps Flag to convert properties as array
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -1132,11 +1138,11 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * List all
      *
-     * @param PicoSpecification $specification
-     * @param PicoPageable|string $pageable
-     * @param PicoSortable|string $sortable
-     * @param boolean $passive
-     * @param array $subqueryMap
+     * @param PicoSpecification $specification Specification
+     * @param PicoPageable|string $pageable Pageable
+     * @param PicoSortable|string $sortable Sortable
+     * @param boolean $passive Flag that object is passive
+     * @param array $subqueryMap Subquery map
      * @return PicoPageData
      * @throws NoRecordFoundException if no record found
      * @throws NoDatabaseConnectionException if no database connection
@@ -1159,15 +1165,15 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Count data
      *
-     * @param PicoDatabasePersistence $persist
-     * @param PicoSpecification $specification
-     * @param PicoPageable|string $pageable
-     * @param PicoSortable $sortable
-     * @param integer $findOption
-     * @param array $result
+     * @param PicoDatabasePersistence $persist Database persistence
+     * @param PicoSpecification $specification Specification
+     * @param PicoPageable|string $pageable Pageable
+     * @param PicoSortable $sortable Sortable
+     * @param integer $findOption Find option
+     * @param array $result Result
      * @return integer
      */
-    private function countData($persist, $specification, $pageable, $sortable, $findOption, $result)
+    private function countData($persist, $specification, $pageable, $sortable, $findOption = 0, $result = null)
     {
         if($findOption & self::FIND_OPTION_NO_COUNT_DATA)
         {
@@ -1190,12 +1196,12 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find all
      *
-     * @param PicoSpecification $specification
-     * @param PicoPageable|string $pageable
-     * @param PicoSortable|string $sortable
-     * @param boolean $passive
-     * @param array $subqueryMap
-     * @param integer $findOption
+     * @param PicoSpecification $specification Specification
+     * @param PicoPageable|string $pageable Pageable
+     * @param PicoSortable|string $sortable Sortable
+     * @param boolean $passive Flag that object is passive
+     * @param array $subqueryMap Subquery map
+     * @param integer $findOption Find option
      * @return PicoPageData
      * @throws NoRecordFoundException if no record found
      * @throws NoDatabaseConnectionException if no database connection
@@ -1254,13 +1260,13 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find specific
      *
-     * @param string $selected
-     * @param PicoSpecification $specification
-     * @param PicoPageable|string $pageable
-     * @param PicoSortable|string $sortable
-     * @param boolean $passive
-     * @param array $subqueryMap
-     * @param integer $findOption
+     * @param string $selected Selected field
+     * @param PicoSpecification $specification Specification
+     * @param PicoPageable|string $pageable Pageable
+     * @param PicoSortable|string $sortable Sortable
+     * @param boolean $passive Flag that object is passive
+     * @param array $subqueryMap Subquery map
+     * @param integer $findOption Find option
      * @return PicoPageData
      * @throws NoRecordFoundException if no record found
      * @throws NoDatabaseConnectionException if no database connection
@@ -1319,9 +1325,9 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Count all record
      *
-     * @param PicoSpecification $specification
-     * @param PicoPageable $pageable
-     * @param PicoSortable $sortable
+     * @param PicoSpecification $specification Specification
+     * @param PicoPageable $pageable Pageable
+     * @param PicoSortable $sortable Sortable
      * @return integer|false
      * @throws NoRecordFoundException if no record found
      * @throws NoDatabaseConnectionException if no database connection
@@ -1358,9 +1364,9 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find all query
      *
-     * @param PicoSpecification $specification
-     * @param PicoPageable|string $pageable
-     * @param PicoSortable|string $sortable
+     * @param PicoSpecification $specification Specification
+     * @param PicoPageable|string $pageable Pageable
+     * @param PicoSortable|string $sortable Sortable
      * @return PicoDatabaseQueryBuilder
      * @throws NoRecordFoundException if no record found
      * @throws NoDatabaseConnectionException if no database connection
@@ -1389,7 +1395,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find one record by primary key value. 
      * 
-     * @param mixed $params
+     * @param mixed $params Parameters
      * @return self
      */
     public function find($params)
@@ -1417,7 +1423,7 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find one record if exists by primary key value. 
      * 
-     * @param array $params
+     * @param array $params Parameters
      * @return self
      */
     public function findIfExists($params)
@@ -1443,11 +1449,11 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find by params
      *
-     * @param string $method
-     * @param mixed $params
-     * @param PicoPageable $pageable
-     * @param PicoSortable|string $sortable
-     * @param boolean $passive
+     * @param string $method Find method
+     * @param mixed $params Parameters
+     * @param PicoPageable $pageable Pageable
+     * @param PicoSortable|string $sortable Sortable
+     * @param boolean $passive Flag that object is passive
      * @return PicoPageData
      */
     private function findBy($method, $params, $pageable = null, $sortable = null, $passive = false)
@@ -1485,8 +1491,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Count data from database
      *
-     * @param string $method
-     * @param mixed $params
+     * @param string $method Find method
+     * @param mixed $params Parameters
      * @return integer
      */
     private function countBy($method, $params)
@@ -1505,8 +1511,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Delete by params
      *
-     * @param string $method
-     * @param mixed $params
+     * @param string $method Find method
+     * @param mixed $params Parameters
      * @return integer
      */
     private function deleteBy($method, $params)
@@ -1525,8 +1531,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find one with primary key value
      *
-     * @param mixed $primaryKeyVal
-     * @param array $subqueryMap
+     * @param mixed $primaryKeyVal Primary key value
+     * @param array $subqueryMap Subquery map
      * @return self
      */
     public function findOneWithPrimaryKeyValue($primaryKeyVal, $subqueryMap = null)
@@ -1554,8 +1560,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find one by params
      *
-     * @param string $method
-     * @param mixed $params
+     * @param string $method Method
+     * @param mixed $params Parameters
      * @param PicoSortable|string $sortable
      * @return object
      */
@@ -1584,8 +1590,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Find one if existsby params
      *
-     * @param string $method
-     * @param mixed $params
+     * @param string $method Method
+     * @param mixed $params Parameters
      * @param PicoSortable|string $sortable
      * @return object
      */
@@ -1612,8 +1618,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Delete one by params
      *
-     * @param string $method
-     * @param mixed $params
+     * @param string $method Method
+     * @param mixed $params Parameters
      * @param PicoSortable|string $sortable
      * @return PDOStatement|boolean
      */
@@ -1633,9 +1639,9 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Exists by params
      *
-     * @param string $method
-     * @param mixed $params
-     * @param string $orderType
+     * @param string $method Method
+     * @param mixed $params Parameters
+     * @param string $orderType Order type
      * @return boolean
      */
     private function existsBy($method, $params)
@@ -1654,8 +1660,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Convert boolean to text
      *
-     * @param string $propertyName
-     * @param string[] $params
+     * @param string $propertyName Property name
+     * @param string[] $params Parameters
      * @return string
      */
     private function booleanToTextBy($propertyName, $params)
@@ -1675,8 +1681,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Convert to array object
      *
-     * @param array $result
-     * @param boolean $passive
+     * @param array $result Result
+     * @param boolean $passive Flag that object is passive
      * @return array
      */
     private function toArrayObject($result, $passive = false)
@@ -1772,7 +1778,7 @@ class MagicObject extends stdClass // NOSONAR
             $var = lcfirst(substr($method, 3));
             return isset($this->$var) ? $this->$var : null;
         }
-        else if (strncasecmp($method, "set", 3) === 0 && isset($params) && isset($params[0]) && !$this->_readonly){
+        else if (strncasecmp($method, "set", 3) === 0 && isset($params) && isset($params[0]) && !$this->_readonly) {
             $var = lcfirst(substr($method, 3));
             $this->$var = $params[0];
             $this->modifyNullProperties($var, $params[0]);
@@ -2024,8 +2030,8 @@ class MagicObject extends stdClass // NOSONAR
     /**
      * Stringify object
      *
-     * @param self $value
-     * @param boolean $snake
+     * @param self $value Value
+     * @param boolean $snake Flag to snake case property
      * @return mixed
      */
     private function stringifyObject($value, $snake)
@@ -2060,9 +2066,9 @@ class MagicObject extends stdClass // NOSONAR
      * The dump method, when supplied with an array, will do its best
      * to convert the array into friendly YAML.
      *
-     * @param int|null   $inline The level where you switch to inline YAML. If $inline set to NULL, MagicObject will use maximum value of array depth
-     * @param int   $indent The amount of spaces to use for indentation of nested nodes
-     * @param int   $flags  A bit field of DUMP_* constants to customize the dumped YAML string
+     * @param int|null $inline The level where you switch to inline YAML. If $inline set to NULL, MagicObject will use maximum value of array depth
+     * @param int $indent The amount of spaces to use for indentation of nested nodes
+     * @param int $flags  A bit field of DUMP_* constants to customize the dumped YAML string
      *
      * @return string A YAML string representing the original PHP value
      */

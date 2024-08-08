@@ -9,9 +9,9 @@ class PicoEnvironmentVariable
     /**
      * Replace all values from other properties
      *
-     * @param array $values
-     * @param array $collection
-     * @param boolean $recursive
+     * @param array $values Values
+     * @param array $collection Collection
+     * @param boolean $recursive Flag that process is recursive
      * @return array
      */
     public static function replaceValueAll($values, $collection, $recursive = false)
@@ -30,9 +30,9 @@ class PicoEnvironmentVariable
     /**
      * Replace all values from other properties as array
      *
-     * @param array $values
-     * @param array $collection
-     * @param boolean $recursive
+     * @param array $values Values
+     * @param array $collection Collection
+     * @param boolean $recursive Flag that process is recursive
      * @return array
      */
     public static function replaceValueAllArray($values, $collection, $recursive = false)
@@ -63,8 +63,8 @@ class PicoEnvironmentVariable
      * Replace all values from other properties as object
      *
      * @param stdClass|object $values
-     * @param array $collection
-     * @param boolean $recursive
+     * @param array $collection Collection
+     * @param boolean $recursive Flag that process is recursive
      * @return array|stdClass|object
      */
     public static function replaceValueAllObject($values, $collection, $recursive = false)
@@ -94,8 +94,8 @@ class PicoEnvironmentVariable
     /**
      * Replace string with environment variable nane from a string
      *
-     * @param string $value
-     * @param array $collection
+     * @param string $value Value
+     * @param array $collection Collection
      * @return mixed
      */
     public static function replaceWithOtherProperties($value, $collection)
@@ -131,8 +131,8 @@ class PicoEnvironmentVariable
     /**
      * Get other value
      *
-     * @param string $key
-     * @param array $collection
+     * @param string $key Key name
+     * @param array $collection Collection
      * @return mixed
      */
     public static function getOtherValue($key, $collection)
@@ -161,8 +161,8 @@ class PicoEnvironmentVariable
     /**
      * Replace all values with environment variable
      *
-     * @param array $values
-     * @param boolean $recursive
+     * @param array $values Values
+     * @param boolean $recursive Flag that process is recursive
      * @return array
      */
     public static function replaceSysEnvAll($values, $recursive = false)
@@ -192,7 +192,7 @@ class PicoEnvironmentVariable
     /**
      * Replace string with environment variable nane from a string
      *
-     * @param string $value
+     * @param string $value Value
      * @return string
      */
     public static function replaceWithEnvironmentVariable($value)
@@ -223,7 +223,7 @@ class PicoEnvironmentVariable
     /**
      * Replace value with environment variable
      *
-     * @param string $value
+     * @param string $value Value
      * @return string
      */
     public static function replaceSysEnv($value)
@@ -244,7 +244,7 @@ class PicoEnvironmentVariable
     /**
      * Get environment variable name from a string
      *
-     * @param string $value
+     * @param string $value Value
      * @return array
      */
     public static function getVariables($value)

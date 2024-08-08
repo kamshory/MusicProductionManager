@@ -127,7 +127,7 @@ echo $someObject;
 error_log($someObject);
 ```
 
-## Extend Magic Object
+## Extends MagicObject
 
 User can extend `MagicObject` to many classes.
 
@@ -8655,6 +8655,7 @@ foreach($file1->getAll() as $fileItem)
 	echo "$name | $temporaryName | $size\r\n";
 	move_uploaded_file($temporaryName, $targetDir."/".$name);
 }
+
 ```
 
 Developers simply retrieve data using the `getAll` method and developers will get all files uploaded by users either via single file or multiple file forms. If necessary, the developer can check whether the file was uploaded using a single file or multiple file form with the `isMultiple()` method

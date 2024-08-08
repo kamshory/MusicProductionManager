@@ -22,7 +22,7 @@ class PicoTestValueUtil
     /**
      * Do return
      *
-     * @param mixed $returnValue
+     * @param mixed $returnValue Return value
      * @return self|mixed
      */
     public function doReturn($returnValue)
@@ -39,7 +39,7 @@ class PicoTestValueUtil
     /**
      * Do return selected
      *
-     * @param mixed $returnValue
+     * @param mixed $returnValue Return value
      * @return self|mixed
      */
     public function doReturnSelected()
@@ -57,7 +57,7 @@ class PicoTestValueUtil
     /**
      * Do return selected=selected
      *
-     * @param mixed $returnValue
+     * @param mixed $returnValue Return value
      * @return self|mixed
      */
     public function doReturnAttributeSelected()
@@ -75,7 +75,7 @@ class PicoTestValueUtil
     /**
      * Do return checked
      *
-     * @param mixed $returnValue
+     * @param mixed $returnValue Return value
      * @return self|mixed
      */
     public function doReturnChecked()
@@ -93,7 +93,7 @@ class PicoTestValueUtil
     /**
      * Do return checked=checked
      *
-     * @param mixed $returnValue
+     * @param mixed $returnValue Return value
      * @return self|mixed
      */
     public function doReturnAttributeChecked()
@@ -111,7 +111,7 @@ class PicoTestValueUtil
     /**
      * Then return
      *
-     * @param mixed $returnValue
+     * @param mixed $returnValue Return value
      * @return self|mixed
      */
     public function thenReturn($returnValue)
@@ -127,7 +127,7 @@ class PicoTestValueUtil
     /**
      * When
      *
-     * @param boolean $condition
+     * @param boolean $condition Contition
      * @return self|mixed
      */
     public function when($condition)
@@ -153,8 +153,8 @@ class PicoTestValueUtil
     /**
      * When equals
      *
-     * @param mixed $param1
-     * @param mixed $param2
+     * @param mixed $param1 Parameter 1
+     * @param mixed $param2 Parameter 2
      * @return self|mixed
      */
     public function whenEquals($param1, $param2)

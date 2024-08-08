@@ -107,6 +107,38 @@ class PicoTableInfo
         $stdClass->notNullColumns = $this->notNullColumns;
         return json_encode($stdClass);
     }
+    
+    /**
+     * Get column map
+     *
+     * @return string[]
+     */
+    public function getColumnsMap()
+    {
+        $columns = $this->getColumns();
+        $propertyColumns = array();
+        foreach($columns as $prop=>$column)
+        {
+            $propertyColumns[$prop] = $column['name'];
+        }
+        return $propertyColumns;
+    }
+    
+    /**
+     * Get join column map
+     *
+     * @return string[]
+     */
+    public function getJoinColumnsMap()
+    {
+        $columns = $this->getJoinColumns();
+        $propertyColumns = array();
+        foreach($columns as $prop=>$column)
+        {
+            $propertyColumns[$prop] = $column['name'];
+        }
+        return $propertyColumns;
+    }
 
     /**
      * Get table name

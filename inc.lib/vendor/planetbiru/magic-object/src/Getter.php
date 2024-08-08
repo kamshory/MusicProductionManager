@@ -42,7 +42,7 @@ class Getter extends stdClass
     
     /**
      * Load data to object
-     * @param stdClass|array $data
+     * @param stdClass|array $data Data
      */
     public function loadData($data)
     {
@@ -57,7 +57,7 @@ class Getter extends stdClass
     /**
      * Get property value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @return mixed|null
      */
     public function get($propertyName)
@@ -68,6 +68,7 @@ class Getter extends stdClass
 
     /**
      * Get value
+     * @param boolean $snakeCase Flag to snake case property
      */
     public function value($snakeCase = false)
     {
@@ -93,7 +94,8 @@ class Getter extends stdClass
 
     /**
      * Property list
-     * @var boolean $reflectSelf
+     * @var boolean $reflectSelf Flag to reflect self
+     * @var boolean $asArrayProps Flag to convert properties as array
      * @return array
      */
     protected function propertyList($reflectSelf = false, $asArrayProps = false)
@@ -127,8 +129,8 @@ class Getter extends stdClass
     /**
      * Magic method called when user call any undefined method
      *
-     * @param string $method
-     * @param string $params
+     * @param string $method Method
+     * @param string $params Parameters
      * @return mixed|null
      */
     public function __call($method, $params) // NOSONAR
@@ -170,6 +172,11 @@ class Getter extends stdClass
             ;
     }
 
+    /**
+     * Magic method to stringify object
+     *
+     * @return string
+     */
     public function __toString()
     {
         $obj = clone $this;
@@ -180,6 +187,4 @@ class Getter extends stdClass
         }
         return json_encode($obj->value($this->isSnake()), $json_flag);
     }
-    
-    
 }

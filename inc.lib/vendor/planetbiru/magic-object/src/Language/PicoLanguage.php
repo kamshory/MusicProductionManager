@@ -67,8 +67,8 @@ class PicoLanguage
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
      * 
-     * @param string $name Name of the property.
-     * @param mixed $value Value of the property.
+     * @param string $name Property name
+     * @param mixed $value Property value
      * @return void 
      **/
     public function __set($name, $value)

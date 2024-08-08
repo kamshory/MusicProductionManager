@@ -237,7 +237,7 @@ class PicoSpecification
     /**
      * Create where
      *
-     * @param PicoSpecification[] $specifications
+     * @param PicoSpecification[] $specifications Specifications
      * @return string[]
      */
     private function getWhere($specifications)
@@ -245,14 +245,17 @@ class PicoSpecification
         $arr = array();
         foreach($specifications as $spec)
         {
-            if($spec instanceof PicoPredicate)
+            if(isset($spec) && $spec instanceof PicoPredicate)
             {
                 $entityField = new PicoEntityField($spec->getField());
                 $field = $entityField->getField();
                 $parentField = $entityField->getParentField();
                 $column = ($parentField == null) ? $field : $parentField.".".$field;
-                $where = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue());
-                $arr[] = $where;               
+                if($spec->getComparation() != null)
+                {
+                    $where = $spec->getFilterLogic() . " " . $column . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue());
+                    $arr[] = $where; 
+                }               
             }
             else if($spec instanceof PicoSpecification)
             {
@@ -273,12 +276,11 @@ class PicoSpecification
     {
         $arr = array();
         $arr[] = "(1=1)";
-        if($specification != null && !$specification->isEmpty())
+        if($this->hasValue($specification))
         {
             $specifications = $specification->getSpecifications();
             foreach($specifications as $spec)
-            {           
-                
+            {                    
                 if($spec instanceof PicoPredicate)
                 {
                     $entityField = new PicoEntityField($spec->getField());
@@ -289,7 +291,10 @@ class PicoSpecification
                     $column = ($entityName == null) ? $field : $entityName.".".$field;
                     $columnFinal = $this->formatColumn($column, $functionFormat);
                     
-                    $arr[] = $spec->getFilterLogic() . " " . $columnFinal . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue());    
+                    if($spec->getComparation() != null)
+                    {
+                        $arr[] = $spec->getFilterLogic() . " " . $columnFinal . " " . $spec->getComparation()->getComparison() . " " . PicoDatabaseUtil::escapeValue($spec->getValue()); 
+                    }   
                 }  
                 else
                 {
@@ -298,6 +303,16 @@ class PicoSpecification
             }
         }
         return PicoDatabaseUtil::trimWhere(implode(" ", $arr));
+    }
+
+    /**
+     * Check if specification is not numm and not empty
+     * @param mixed $specification Specification to be checked
+     * @return boolean
+     */
+    private function hasValue($specification)
+    {
+        return $specification != null && !$specification->isEmpty();
     }
 
     /**

@@ -54,11 +54,11 @@ class PicoSelectOption
     /**
      * Constructor
      *
-     * @param MagicObject $object
-     * @param array $map
-     * @param mixed $value
-     * @param array|null $attributes
-     * @param PicoSortable $sortable
+     * @param MagicObject $object ENtity
+     * @param array $map Map
+     * @param mixed $value Value
+     * @param array|null $attributes Attributes
+     * @param PicoSortable $sortable Sortable
      */
     public function __construct($object, $map, $value, $attributes = null, $sortable = null)
     {
@@ -83,9 +83,9 @@ class PicoSelectOption
     /**
      * Create attributes
      *
-     * @param MagicObject $row
-     * @param string $attr
-     * @param string $value
+     * @param MagicObject $row Entity
+     * @param string $attr Attribute
+     * @param string $value Value
      * @return array
      */
     private function createAttributes($row, $attr, $value)
@@ -140,7 +140,7 @@ class PicoSelectOption
     /**
      * Convert associated array to HTML attributes as string
      *
-     * @param array $array
+     * @param array $array Attributes
      * @return string
      */
     private function attributeToString($array)

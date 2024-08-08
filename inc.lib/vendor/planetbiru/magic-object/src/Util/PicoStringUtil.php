@@ -8,7 +8,7 @@ class PicoStringUtil
     /**
      * Convert snake case to camel case
      *
-     * @param string $input Inout string
+     * @param string $input Input string
      * @param string $glue Glue
      * @return string
      */
@@ -21,7 +21,7 @@ class PicoStringUtil
     /**
      * Convert snake case to upper camel case
      *
-     * @param string $input Inout string
+     * @param string $input Input string
      * @param string $glue Glue
      * @return string
      */
@@ -34,7 +34,7 @@ class PicoStringUtil
     /**
      * Convert camel case to snake case
      *
-     * @param string $input Inout string
+     * @param string $input Input string
      * @param string $glue Glue
      * @return string
      */
@@ -82,8 +82,8 @@ class PicoStringUtil
     /**
      * Convert snake case to title
      *
-     * @param string $input
-     * @param string $glue
+     * @param string $input Input
+     * @param string $glue Glue
      * @return string
      */
     public static function snakeToTitle($input, $glue = '_')
@@ -95,7 +95,7 @@ class PicoStringUtil
     /**
      * Convert camel case to title
      *
-     * @param string $input
+     * @param string $input Input
      * @return string
      */
     public static function camelToTitle($input)
@@ -107,9 +107,9 @@ class PicoStringUtil
     /**
      * Check if string is starts with substring
      *
-     * @param string $haystack
-     * @param string $value
-     * @param boolean $caseSensitive
+     * @param string $haystack Haystack
+     * @param string $value Value
+     * @param boolean $caseSensitive Flag that comparation is case sensitive
      * @return boolean
      */
     public static function startsWith($haystack, $value, $caseSensitive = false)
@@ -127,9 +127,9 @@ class PicoStringUtil
     /**
      * Check if string is ends with substring
      *
-     * @param string $haystack
-     * @param string $value
-     * @param boolean $caseSensitive
+     * @param string $haystack Haystack
+     * @param string $value Value
+     * @param boolean $caseSensitive Flag that comparation is case sensitive
      * @return boolean
      */
     public static function endsWith($haystack, $value, $caseSensitive = false)
@@ -147,9 +147,9 @@ class PicoStringUtil
     /**
      * Left trim a string
      *
-     * @param string $haystack
-     * @param string $substring
-     * @param integer $count
+     * @param string $haystack Haystack
+     * @param string $substring Substring
+     * @param integer $count Count
      * @return string
      */
     public static function lTrim($haystack, $substring, $count = -1)
@@ -176,9 +176,9 @@ class PicoStringUtil
     /**
      * Right trim a string
      *
-     * @param string $haystack
-     * @param string $substring
-     * @param integer $count
+     * @param string $haystack Haystack
+     * @param string $substring Substring
+     * @param integer $count Count
      * @return string
      */
     public static function rTrim($haystack, $substring, $count = -1)
@@ -205,7 +205,7 @@ class PicoStringUtil
     /**
      * Check if string is not null and not empty
      *
-     * @param string $value
+     * @param string $value Value
      * @return boolean
      */
     public static function isNotNullAndNotEmpty($value)
@@ -216,7 +216,7 @@ class PicoStringUtil
     /**
      * Check if string is null or empty
      *
-     * @param string $value
+     * @param string $value Value
      * @return boolean
      */
     public static function isNullOrEmpty($value)
@@ -227,8 +227,8 @@ class PicoStringUtil
     /**
      * Select not null value
      *
-     * @param mixed $value1
-     * @param mixed $value2
+     * @param mixed $value1 Value 1
+     * @param mixed $value2 Value 2
      * @return mixed
      */
     public static function selectNotNull($value1, $value2)
@@ -239,7 +239,7 @@ class PicoStringUtil
     /**
      * Fix cariage return
      *
-     * @param string $str
+     * @param string $str Input string
      * @return string
      */
     public static function windowsCariageReturn($str)

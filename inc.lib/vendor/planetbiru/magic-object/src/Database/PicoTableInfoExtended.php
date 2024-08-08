@@ -147,9 +147,9 @@ class PicoTableInfoExtended extends PicoTableInfo
     /**
      * Merge list
      *
-     * @param array $tmp
-     * @param array $oldListCheck
-     * @param array $newList
+     * @param array $tmp Temporary list
+     * @param array $oldListCheck Old list
+     * @param array $newList New list
      * @return array
      */
     private function mergeList($tmp, $oldListCheck, $newList)
@@ -193,7 +193,7 @@ class PicoTableInfoExtended extends PicoTableInfo
     /**
      * Get oldlist check
      *
-     * @param array $oldList
+     * @param array $oldList Old list
      * @return array
      */
     private function getOldListCheck($oldList)
@@ -284,7 +284,7 @@ class PicoTableInfoExtended extends PicoTableInfo
     /**
      * Unique not null column
      *
-     * @param array $newList
+     * @param array $newList New list
      * @return self
      */
     public function mergeNotNullColumns($newList)

@@ -1,4 +1,4 @@
-## Extend Magic Object
+## Extends MagicObject
 
 User can extend `MagicObject` to many classes.
 

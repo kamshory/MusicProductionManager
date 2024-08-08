@@ -22,7 +22,7 @@ class PicoGenericObject extends stdClass
     
     /**
      * Load data to object
-     * @param stdClass|array $data
+     * @param stdClass|array $data Data
      * @return self
      */
     public function loadData($data)
@@ -40,7 +40,7 @@ class PicoGenericObject extends stdClass
     /**
      * Set property value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @param mixed|null
      * @return self
      */
@@ -54,7 +54,7 @@ class PicoGenericObject extends stdClass
     /**
      * Get property value
      *
-     * @param string $propertyName
+     * @param string $propertyName Property name
      * @return mixed|null
      */
     public function get($propertyName)
@@ -67,8 +67,8 @@ class PicoGenericObject extends stdClass
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
      * 
-     * @param string $name Name of the property.
-     * @param string $value Value of the property.
+     * @param string $name Property name
+     * @param string $value Property value
      * @return void 
      **/
     public function __set($name, $value)
@@ -94,7 +94,7 @@ class PicoGenericObject extends stdClass
     /**
      * Check if property has been set or not or has null value
      *
-     * @param string $name
+     * @param string $name Property name
      * @return boolean
      */
     public function __isset($name)
@@ -105,7 +105,7 @@ class PicoGenericObject extends stdClass
     /**
      * Unset property value
      *
-     * @param string $name
+     * @param string $name Property name
      * @return void
      */
     public function __unset($name)
@@ -116,8 +116,8 @@ class PicoGenericObject extends stdClass
     /**
      * Magic method called when user call any undefined method
      *
-     * @param string $method
-     * @param string $params
+     * @param string $method Method
+     * @param string $params Parameters
      * @return mixed|null
      */
     public function __call($method, $params) //NOSONAR

@@ -118,9 +118,12 @@ class PicoPredicate //NOSONAR
      */
     public function in($field, $value)
     {
-        $this->field = $field;
-        $this->value = $value;
-        $this->comparation = PicoDataComparation::in($value);
+        if(!empty($value))
+        {
+            $this->field = $field;
+            $this->value = $value;
+            $this->comparation = PicoDataComparation::in($value);
+        }
         return $this;
     }
 
@@ -283,7 +286,7 @@ class PicoPredicate //NOSONAR
      */
     public static function generateLikeStarts($value)
     {
-        return $value."%";
+        return "$value%";
     }
     
     /**
@@ -294,7 +297,7 @@ class PicoPredicate //NOSONAR
      */
     public static function generateLikeEnds($value)
     {
-        return "%".$value;
+        return "%$value";
     }
     
     /**
@@ -305,7 +308,7 @@ class PicoPredicate //NOSONAR
      */
     public static function generateLikeContains($value)
     {
-        return "%".$value."%";
+        return "%$value%";
     }
 
     /**

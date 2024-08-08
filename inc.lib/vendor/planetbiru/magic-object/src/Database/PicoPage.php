@@ -40,6 +40,31 @@ class PicoPage
         $this->setPageNumber($pageNumber);
         $this->setPageSize($pageSize);
     }
+    
+    /**
+     * Increase page number
+     *
+     * @return self
+     */
+    public function nextPage()
+    {
+        $this->pageNumber++;
+        return $this;
+    }
+    
+    /**
+     * Decrease page number
+     *
+     * @return self
+     */
+    public function previousPage()
+    {
+        if($this->pageNumber > 1)
+        {
+            $this->pageNumber--;
+        }
+        return $this;
+    }
 
     /**
      * Get the value of pageNumber

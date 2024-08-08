@@ -11,11 +11,13 @@ use MagicObject\MagicObject;
 
 class PicoDatabaseUtilMySql
 {
+    const KEY_NAME = "name";
+    
     /**
      * Get column list
      *
-     * @param PicoDatabase $database
-     * @param string $picoTableName
+     * @param PicoDatabase $database Datavase connection
+     * @param string $picoTableName Table name
      * @return array
      */
     public static function getColumnList($database, $picoTableName)
@@ -51,7 +53,7 @@ class PicoDatabaseUtilMySql
      * Dump database structure
      *
      * @param PicoTableInfo $tableInfo Table information
-     * @param string $picoTableName
+     * @param string $picoTableName Table name
      * @return string
      */
     public static function dumpStructure($tableInfo, $picoTableName, $createIfNotExists = false, $dropIfExists = false, $engine = 'InnoDB', $charset = 'utf8mb4')
@@ -96,7 +98,7 @@ class PicoDatabaseUtilMySql
         
         foreach($tableInfo->getColumns() as $column)
         {
-            if(isset($autoIncrementKeys) && is_array($autoIncrementKeys) && in_array($column['name'], $autoIncrementKeys))
+            if(isset($autoIncrementKeys) && is_array($autoIncrementKeys) && in_array($column[self::KEY_NAME], $autoIncrementKeys))
             {
                 $query[] = "";
                 $query[] = "ALTER TABLE `$picoTableName` \r\n\tMODIFY ".trim(self::createColumn($column), " \r\n\t ")." AUTO_INCREMENT";
@@ -110,14 +112,14 @@ class PicoDatabaseUtilMySql
     /**
      * Create column
      *
-     * @param array $column
+     * @param array $column Column
      * @return string
      */
     public static function createColumn($column)
     {
         $col = array();
         $col[] = "\t";
-        $col[] = "`".$column['name']."`";
+        $col[] = "`".$column[self::KEY_NAME]."`";
         $col[] = $column['type'];
         if(isset($column['nullable']) && strtolower(trim($column['nullable'])) == 'true')
         {
@@ -139,8 +141,8 @@ class PicoDatabaseUtilMySql
     /**
      * Fixing default value
      *
-     * @param string $defaultValue
-     * @param string $type
+     * @param string $defaultValue Default value
+     * @param string $type Data type
      * @return string
      */
     public static function fixDefaultValue($defaultValue, $type)
@@ -159,9 +161,9 @@ class PicoDatabaseUtilMySql
     /**
      * Dump data
      *
-     * @param array $columns
-     * @param string $picoTableName
-     * @param MagicObject|PicoPageData $data
+     * @param array $columns Columns
+     * @param string $picoTableName Table name
+     * @param MagicObject|PicoPageData $data Data
      * @return string
      */
     public static function dumpData($columns, $picoTableName, $data) //NOSONAR
@@ -184,9 +186,9 @@ class PicoDatabaseUtilMySql
     /**
      * Dump records
      *
-     * @param array $columns
-     * @param string $picoTableName
-     * @param MagicObject[] $data
+     * @param array $columns Columns
+     * @param string $picoTableName Table name
+     * @param MagicObject[] $data Data
      * @return string
      */
     public static function dumpRecords($columns, $picoTableName, $data)
@@ -202,9 +204,9 @@ class PicoDatabaseUtilMySql
     /**
      * Dump records
      *
-     * @param array $columns
-     * @param string $picoTableName
-     * @param MagicObject $record
+     * @param array $columns Columns
+     * @param string $picoTableName Table name
+     * @param MagicObject $record Record
      * @return string
      */
     public static function dumpRecord($columns, $picoTableName, $record)
@@ -215,7 +217,7 @@ class PicoDatabaseUtilMySql
         {
             if(isset($columns[$key]))
             {
-                $rec[$columns[$key]['name']] = $val;
+                $rec[$columns[$key][self::KEY_NAME]] = $val;
             }
         }
         $queryBuilder = new PicoDatabaseQueryBuilder(PicoDatabaseType::DATABASE_TYPE_MYSQL);
