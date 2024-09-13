@@ -1,0 +1,39 @@
+:root {
+    --dark-grey: #353535;
+    --light-grey: #8c8c8c;
+}
+
+body {
+    background: var(--dark-grey);
+    font-family: sans-serif, arial;
+    text-align: center;
+}
+
+.karaoke {
+    &__progressbar {
+        position: absolute;
+        background: #fff;
+        padding: 2rem;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &__lyrics {
+        display: inline-grid;
+        list-style-type: none;
+        &-item {
+            margin: 1.5rem 0;
+            font-size: 2rem;
+            color: var(--light-grey);
+            padding: 1.2rem 4rem;
+            &--selected {
+                transition: background-color 1s, color 0.2s,
+                    font-size 0.4s linear;
+                background: white;
+                color: black;
+                font-size: 2.5rem;
+                font-weight: bold;
+            }
+        }
+    }
+}

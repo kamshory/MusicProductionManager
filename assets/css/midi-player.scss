@@ -1,0 +1,269 @@
+$color_1: #555555;
+$font-family_1: Arial;
+$background-color_1: #EEEEEE;
+$background-color_2: #555555;
+$background-color_3: #999999;
+$background-color_4: #444444;
+$background-color_5: #FFCCCC;
+$background-color_6: #FFFFFF;
+$background-color_7: yellow;
+
+.planet-midi-player {
+    width: 100%;
+    font-family: $font-family_1;
+    font-size: 12px;
+}
+
+.mp-wrapper {
+    background-color: $background-color_1;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.mp-control {
+    padding: 0px 0;
+    text-align: center;
+    margin-bottom: -12px;
+
+    button {
+        border: none;
+        border-radius: 50%;
+        background-color: $background-color_2;
+        display: inline-block;
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        background-image: -webkit-linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+        background-image: linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+        border-bottom: solid 2px #b5b5b5;
+
+        i {
+            color: $color_1;
+        }
+    }
+
+    button.mp-play {
+        width: 36px;
+        height: 36px;
+    }
+
+    button.mp-stop {
+        width: 36px;
+        height: 36px;
+    }
+
+    .fa-pause {
+        display: none;
+    }
+
+    .fa-play {
+        display: initial;
+    }
+}
+
+.mp-progress-bar-container {
+    width: 100%;
+    background-color: $background-color_3;
+    box-shadow: 1px 0px 0px #aaaaaa;
+}
+
+.mp-progress-bar-inner {
+    height: 8px;
+    width: 0%;
+    background-color: $background-color_4;
+    max-width: 100%;
+}
+
+.mp-duration {
+    float: right;
+    text-align: right;
+
+    &:before {
+        content: '\00a0';
+    }
+}
+
+mp-control {
+    button {
+        &:active {
+            background-image: -webkit-linear-gradient(#efefef 0%, #d6d6d6 100%);
+            border-bottom: none;
+        }
+    }
+}
+
+.mp-status-bar {
+    margin-top: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:after {
+        content: '\00a0';
+    }
+}
+
+.mp-elapsed {
+    &:after {
+        content: '\00a0';
+    }
+}
+
+[data-is-playing="true"] {
+    .mp-control {
+        .fa-pause {
+            display: initial;
+        }
+
+        .fa-play {
+            display: none;
+        }
+    }
+}
+
+[data-is-playing="false"] {
+    .mp-control {
+        .fa-pause {
+            display: none;
+        }
+
+        .fa-play {
+            display: initial;
+        }
+    }
+}
+
+.mp-song-title {
+    &:after {
+        content: '\00a0';
+    }
+}
+
+mp-song-artist {
+    &:after {
+        content: '\00a0';
+    }
+}
+
+.mp-song-genre {
+    &:after {
+        content: '\00a0';
+    }
+}
+
+.mp-midi-info {
+    table {
+        tr {
+            >td {
+                &:nth-child(2) {
+                    max-width: 0;
+
+                    div {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 100%;
+                        box-sizing: border-box;
+                    }
+                }
+
+                &:nth-child(1) {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.table {
+    tr[data-active="0"] {
+        td {
+            background-color: $background-color_5;
+        }
+    }
+}
+
+.waveform {
+    text-align: center;
+}
+
+.lyric {
+    padding: 10px;
+    background-color: $background-color_6;
+    border: 1px solid #DDDDDD;
+    min-height: 100px;
+}
+
+.hilight {
+    background-color: $background-color_7;
+}
+
+@media screen and (min-width:480px) {
+    .mp-song-info {
+        padding-left: 136px;
+        padding-bottom: 10px;
+    }
+
+    .mp-thumbnail {
+        background: no-repeat center center url(../images/midi-120x120.png);
+        width: 120px;
+        height: 120px;
+        margin-left: -136px;
+        position: absolute;
+    }
+
+    .mp-midi-info {
+        min-height: 120px;
+
+        table {
+            tr {
+                >td {
+                    padding: 3px 0;
+
+                    &:nth-child(1) {
+                        width: 25%;
+                        padding-right: 4px;
+
+                        &:after {
+                            content: ':';
+                            float: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:480px) {
+    .mp-song-info {
+        padding-bottom: 10px;
+    }
+
+    .mp-thumbnail {
+        background: no-repeat center center url(assets/images/midi-120x120.png);
+        width: 120px;
+        height: 120px;
+        margin: auto auto 16px auto;
+    }
+
+    .mp-midi-info {
+        table {
+            tr {
+                >td {
+                    padding: 2px 0;
+
+                    &:nth-child(1) {
+                        width: 25%;
+                        padding-right: 4px;
+
+                        &:after {
+                            content: ':';
+                            float: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

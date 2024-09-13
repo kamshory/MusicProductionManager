@@ -1,0 +1,100 @@
+.flex-row {
+  display: flex;
+}
+.flex-row .flex-column:not(:first-child) {
+  margin-left: 10px;
+}
+.flex-row .flex-column:not(:last-child) {
+  margin-right: 10px;
+}
+
+.flex-column {
+  flex: 50%;
+  max-height: calc(100vh - 345px);
+  overflow: auto;
+}
+.flex-column table td {
+  position: relative;
+}
+
+.ta-lyric-editor {
+  border: 1px solid #CCCCCC;
+  padding: 5px;
+  width: 100%;
+  height: 50px;
+}
+
+.hilight-green {
+  background-color: #ffbebb;
+}
+
+.hilight {
+  background-color: yellow;
+}
+
+.mp-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+.mp-wrapper .mp-div {
+  width: 25%;
+}
+.mp-wrapper .mp-div:not(:first-child) {
+  margin-left: 5px;
+}
+.mp-wrapper .mp-div:not(:last-child) {
+  margin-right: 5px;
+}
+
+.midi-display {
+  width: 400px;
+}
+
+.midi-channel {
+  border: 1px solid #CCCCCC;
+  height: 50px;
+  display: inline-block;
+  width: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+.midi-channel:after {
+  content: attr(data-channel);
+  position: absolute;
+  bottom: -14px;
+  font-size: 10px;
+  width: 100%;
+  text-align: center;
+}
+.midi-channel:before {
+  content: attr(data-note);
+  position: absolute;
+  top: -14px;
+  font-size: 9px;
+  width: 100%;
+  text-align: center;
+}
+.midi-channel > div {
+  background-color: #880000;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transition: height 0.015s;
+}
+
+textarea.rawdata {
+  width: 100%;
+  box-sizing: border-box;
+  height: 200px;
+  resize: vertical;
+  border: 1px solid #CCCCCC;
+  padding: 10px;
+}
+
+.button-area {
+  padding: 5px 0;
+}
+
+[data-channel="1"] > div {
+  position: relative;
+}/*# sourceMappingURL=midi-lyric-editor.css.map */

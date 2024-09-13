@@ -1,0 +1,563 @@
+/*
+font-family: 'Share Tech Mono', monospace;
+font-family: 'Source Sans Pro', sans-serif;
+font-family: 'Aldrich', sans-serif;
+font-family: 'VT323', monospace;
+*/
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Source+Sans+Pro&display=swap&family=Aldrich&family=VT323&display=swap');
+
+.winamp-container {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+:root {
+    --volume-track-lightness: 50%;
+    --btn-color: #ADBAC7;
+}
+
+
+.maxamp-container {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.top-container,
+.playlist-container,
+.visualisation-container {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(90deg, #11101A, #373857 35%, #373857 50%, #373857 65%, #11101A);
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+
+}
+
+.top-container:after,
+.playlist-container:after,
+.visualisation-container:after {
+    content: '';
+    inset: 2px;
+    position: absolute;
+    border: 2px outset #555265;
+    pointer-events: none;
+}
+
+.playlist-container,
+.visualisation-container {
+    height: auto
+        /*  overflow: hidden;
+  height: 32px;*/
+}
+
+.winamp-container .title {
+    width: 100%;
+    padding: 2px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -6px;
+}
+
+.winamp-container .resizable {
+    cursor: pointer;
+}
+
+.winamp-container h1 {
+    width: 20%;
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: 8px;
+    font-family: 'VT323', monospace;
+    color: #8A8BA0;
+    padding: 8px;
+}
+
+.winamp-container .line {
+    border: 1px solid black;
+    border-radius: 3px;
+    display: inline-block;
+    background: linear-gradient(#87785A, #635A42 35%, #202024 50%, #635A42 65%, #87785A);
+}
+
+.cmd-container {
+    padding: 12px;
+    border: 2px solid #555265;
+    margin: 8px 8px;
+}
+
+.time-container {
+    display: flex;
+}
+
+.time-container--left {
+    width: 33%;
+}
+
+.time-container--right {
+    width: 67%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 8px;
+}
+
+.time-displayer {
+    font-family: 'Aldrich', sans-serif;
+    /*font-family: 'VT323', monospace;*/
+    color: lime;
+    background: black;
+    width: 100%;
+    font-size: 30px;
+    border: 2px inset #555265;
+    padding-top: 3px;
+    padding-left: 10px;
+}
+
+.track-info-displayer {
+    width: 100%;
+    height: 32px;
+    background: black;
+    color: lime;
+    border: 2px inset #555265;
+    padding-left: 7px;
+    padding-top: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+.track-info .track-id {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    padding-right: 10px;
+}
+
+/* input type range */
+
+/* avalaible for all range input*/
+.winamp-container input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    /*nécessaire pour Chrome */
+    padding: 0;
+    /* nécessaire pour IE */
+    font: inherit;
+    /* même rendu suivant font document */
+    outline: none;
+    cursor: pointer;
+}
+
+.winamp-container input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* également nécessaire sur le curseur */
+}
+
+.winamp-container input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    /* également nécessaire sur le curseur */
+}
+
+.winamp-container input[type=range]::-ms-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    /* également nécessaire sur le curseur */
+}
+
+.volume-controller {
+    width: 100%;
+    height: 12px;
+    border-radius: 25px;
+    border: 2px inset #555265;
+}
+
+/* Chrome */
+
+.volume-controller::-webkit-slider-thumb {
+    width: 28px;
+    height: 20px;
+    background: var(--btn-color);
+    border: 2px inset #555265;
+    position: relative;
+    top: calc(-2px - 50%);
+}
+
+.volume-controller::-webkit-slider-runnable-track {
+    height: 100%;
+    width: 100%;
+    background: hsl(0, 100%, var(--volume-track-lightness));
+    border-radius: 25px;
+}
+
+/* firefox */
+
+.volume-controller::-moz-range-thumb {
+    width: 28px;
+    height: 20px;
+    background: var(--btn-color);
+    border: 0px inset #555265;
+    border-radius: 0px;
+    position: relative;
+    top: calc(-2px - 50%);
+}
+
+.volume-controller::-moz-range-track {
+    height: 100%;
+    width: 100%;
+    background: hsl(0, 100%, var(--volume-track-lightness));
+    border-radius: 0px;
+}
+
+/* IE Edge */
+
+.winamp-container input[type=range]::-ms-thumb {
+    width: 28px;
+    height: 20px;
+    background: var(--btn-color);
+    border: 0px inset #555265;
+    border-radius: 0px;
+    position: relative;
+    top: calc(-2px - 50%);
+}
+
+.color[data-color="red"]::-ms-track {
+    height: 100%;
+    width: 100%;
+    background: hsl(0, 100%, var(--volume-track-lightness));
+    border-radius: 25px;
+}
+
+/* progress bar */
+
+.progress-bar {
+    margin: 12px 0;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    border: 2px inset #555265;
+    overflow: hidden;
+    /*erase the shadow of the thumb*/
+}
+
+/* Chrome */
+
+.progress-bar::-webkit-slider-thumb {
+    width: 32px;
+    height: 20px;
+    background: #B39D66;
+    border: 0px outset #DDCBA2;
+    border-radius: 0px;
+    position: relative;
+    top: calc(-2px - 50%);
+    box-shadow: -600px 0 0 600px #F9EBBC;
+    /* create a shadow before the thumb for the range progress*/
+}
+
+/* firefox */
+
+.progress-bar::-moz-range-thumb {
+    width: 32px;
+    height: 20px;
+    background: #B39D66;
+    border: 0px outset #DDCBA2;
+    border-radius: 0px;
+    position: relative;
+    top: calc(-2px - 50%);
+}
+
+.progress-bar::-moz-range-progress {
+    background-color: #F9EBBC;
+    height: 100%;
+}
+
+/* IE Edge */
+
+.volume-controller::-ms-thumb {
+    width: 32px;
+    height: 24px;
+    background: #B39D66;
+    border: 0px outset #DDCBA2;
+    border-radius: 0px;
+    position: relative;
+    top: calc(-2px - 50%);
+}
+
+.volume-controller::-ms-fill-lower {
+    background-color: #F9EBBC;
+}
+
+/* end of input type range */
+
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.winamp-container button {
+    position: relative;
+    cursor: pointer;
+    min-width: 28px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    background: var(--btn-color);
+    border: 1px outset #ADBAC7;
+}
+
+.winamp-containerbutton:after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    height: 16px;
+    width: 48px;
+    border: 2px solid #202033;
+}
+
+.btn-container--1 {
+    width: 240px;
+    display: flex;
+}
+
+.btn-container--2 {
+    width: 160px;
+    display: flex;
+}
+
+.shuffle-btn {
+    width: 80px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.shuffle-btn:after {
+    width: 80px;
+}
+
+.repeat-btn {
+    width: 48px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logo {
+    color: orange;
+    transform: rotate(20deg);
+    transform-origin: center;
+    font-size: 24px;
+}
+
+@media screen and (max-width: 600px) {
+    .logo {
+        display: none;
+    }
+}
+
+
+.highlighted {
+    color: lime;
+    border: 0px inset #ADBAC7;
+}
+
+/* here i am */
+
+.playlist {
+    margin: 8px 8px 8px;
+    padding: 12px;
+    border: 2px solid #555265;
+    background: black;
+    color: lime;
+    font-size: 14px;
+}
+
+.cmd-container,
+.playlist,
+.lyric-container {
+    width: calc(100% - 20px);
+}
+
+
+.maxamp-container h2 {
+    font-size: 19px;
+    letter-spacing: 4px;
+    font-family: 'VT323', monospace;
+    color: #8A8BA0;
+    padding: 8px;
+    text-align: center;
+    margin: 0;
+    width: 220px;
+}
+
+.winamp-container .line-first,
+.winamp-container .line.line-other {
+    width: calc(50% - 120px);
+    height: 0.75em;
+}
+
+.prevent-select {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+[data-minimized="true"] {
+    height: 44px;
+}
+
+
+.highlighted-track {
+    color: whitesmoke;
+}
+
+.track-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    line-height: 1.45;
+}
+
+.track-id,
+.track-duration {
+    pointer-events: none;
+}
+
+.lyric-container {
+    height: 300px;
+    margin: 8px 8px 8px;
+    padding: 12px;
+    border: 2px solid #555265;
+    background: black;
+    display: flex;
+    justify-content: center;
+}
+
+.visualisation {
+    height: auto;
+    max-height: 600px;
+    width: auto;
+    max-width: 100%;
+    display: none;
+    object-fit: cover;
+}
+
+.maxamp-container {
+    font-size: 12px;
+    width: 100vw;
+    margin-top: 0;
+}
+
+@media screen and (max-width : 540px) {
+    .time-displayer {
+        font-size: 20px;
+        padding-left: 4px;
+    }
+}
+
+.vu-meter {
+    padding-bottom: 10px;
+}
+
+.vu-meter-container {
+    padding: 1px 0;
+}
+
+.vu-meter-inner {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#2fbc25+0,e5af00+71,e5af00+71,e5af00+87,e00000+100 */
+    background: linear-gradient(to right, #2fbc25 0%, #2fbc25 60%, #e5af00 85%, #e5af00 90%, #e00000 98%, #e00000 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    position: relative;
+}
+
+.vu-meter-bar {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 8px;
+    margin: 0px 0px 0px auto;
+
+}
+
+.albumselect-container{
+    padding: 10px 0 0px 0;
+}
+
+form.albumselect {
+    
+    display: block;
+    width: 100%;
+    border: 2px inset #555265;
+}
+
+.album-selector {
+    padding: 5px 6px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    background: transparent;
+    border: 0px solid #DDDDDD;
+    color: lime;
+}
+
+.album-selector option {
+    background-color: #11101A;
+    color: lime;
+}
+select.album-selector:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+select.album-selector::-moz-dropdown-list {
+    background-color: inherit;
+    color: inherit;
+    border-style: inherit;
+    border-color: inherit;
+    border-width: 0;
+    z-index: 2147483647;
+    -moz-user-select: none;
+  }
+ .teleprompter{
+    overflow: hidden;
+    position: relative;
+    height: 270px;
+    width: calc(100% + 22px);
+    margin-left: -11px;
+    margin-right: -11px;
+    
+ }
+  .teleprompter-container{
+    position: absolute;
+    width: 100%;
+
+  }
+  .teleprompter-container > div{
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+    color: #48bd48;
+    line-height: 1;
+  }
+
+  .teleprompter-container > div.marked{
+    color: lime;
+    background-color: #353535;
+  }

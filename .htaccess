@@ -1,0 +1,11 @@
+<FilesMatch "\.(eot|ttf|otf|woff|mp3|pdf|musicxml|xml|css|js)$">
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET,PUT,POST,DELETE"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+</FilesMatch>
+
+<FilesMatch "\.(mp3|pat)$">
+    ExpiresActive On
+    ExpiresDefault "access plus 10 years"
+</FilesMatch>

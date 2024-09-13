@@ -1,0 +1,145 @@
+body {
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.icon-size-20 {
+    font-size: 20px;
+}
+.main-page {
+    box-sizing: border-box;
+    position: relative;
+    min-height: calc(100vh - 75px);
+    padding: 100px 20px 0px 20px;
+}
+@media screen and (min-width: 1200px) {
+    .main-page {
+        padding: 100px 20px 0px 20px;
+    }
+}
+@media screen and (max-width: 199px) {
+    .main-page {
+        padding: 100px 0px 0px 0px;
+    }
+}
+.modal-body .table-borderless td {
+    padding: 5px 5px;
+    vertical-align: middle;
+}
+.modal table td {
+    position: relative;
+}
+.button-add-list {
+    position: absolute;
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    right: 11px;
+    top: 10px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 50%;
+}
+.file-uploader[data-status="1"] .file-upload-zone {
+    display: block;
+}
+.file-uploader[data-status="1"] .song-info {
+    display: none;
+}
+.file-uploader[data-status="2"] .file-upload-zone {
+    display: none;
+}
+.file-uploader[data-status="2"] .song-info {
+    display: block;
+}
+.dialog-table {
+    width: 100%;
+}
+.dialog-table tr td:first-child {
+    width: 35%;
+}
+.dialog-table tr td {
+    padding: 2px 0;
+}
+.pagination {
+    text-align: center;
+    padding: 10px 0;
+    width: auto;
+    margin: auto;
+}
+.pagination-number {
+    display: inline-block;
+    margin: auto;
+}
+.pagination .page-selector {
+    border: solid #dddddd;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 0;
+    border-right-width: 1px;
+    display: inline-block;
+    background-color: #fafafa;
+}
+.pagination .page-selector:first-child {
+    border-left-width: 1px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.pagination .page-selector:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.pagination .page-selector a {
+    display: block;
+    padding: 5px 10px;
+}
+.pagination .page-selector.page-selected {
+    background-color: #ffffff;
+}
+.filter-container .form-control {
+    display: inline;
+    width: auto;
+}
+.filter-group {
+    display: inline-block;
+    padding: 5px 0;
+    vertical-align: middle;
+    padding-right: 10px;
+}
+.filter-group span{
+    display: inline-block;
+    padding-right: 5px;
+
+}
+@media screen and (max-width: 1199px) {
+    .custom-card-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .custom-card-container .card {
+        background-color: transparent;
+        box-shadow: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .custom-card-container .card .card-body {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .app-header {
+        left: -20px;
+        box-sizing: border-box;
+        width: calc(100% + 40px);
+    }
+    .table-responsive td {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.custom-card-container .card .card-body .btn-tn {
+    font-size: 0.7em;
+    --bs-btn-padding-x: 0.4rem;
+}
+.song-tools > div a{
+    vertical-align: middle;
+}
