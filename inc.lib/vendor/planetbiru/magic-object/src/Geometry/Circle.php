@@ -39,8 +39,8 @@ class Circle {
      * Constructor to initialize the Circle with x, y and r
      *
      * @param double $x x coordinate
-     * @param double $y y Coordinate
-     * @param double $r Radius
+     * @param double $y y Coordinate 
+     * @param double $r radius
      */
     public function __construct($x, $y, $r) {
         $this->x = $x;

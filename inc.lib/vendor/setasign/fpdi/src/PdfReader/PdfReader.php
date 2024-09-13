@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -191,7 +191,7 @@ class PdfReader
     /**
      * Walk the page tree and resolve all indirect objects of all pages.
      *
-     * @param boolean $readAll
+     * @param bool $readAll
      * @throws CrossReferenceException
      * @throws PdfParserException
      * @throws PdfTypeException

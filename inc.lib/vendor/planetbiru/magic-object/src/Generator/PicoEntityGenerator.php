@@ -6,8 +6,8 @@ use MagicObject\Database\PicoDatabase;
 use MagicObject\Util\PicoStringUtil;
 
 /**
- * PicoEntityGenerator is an entity generator for automatically generating PHP code.
- * This class is optimized on the MariaDB database.
+ * PicoEntityGenerator is an entity generator for automatically generating PHP code. 
+ * This class is optimized on the MariaDB database. 
  * Users must provide appropriate parameters so that the entity class can be directly used in the application.
  * @link https://github.com/Planetbiru/MagicObject
  */
@@ -40,47 +40,46 @@ class PicoEntityGenerator
      * @var string
      */
     protected $tableName = "";
-
+    
     /**
      * Entity name
      *
      * @var string
      */
     protected $entityName = null;
-
+    
     /**
      * Prettify
      *
      * @var boolean
      */
     protected $prettify = false;
-
+    
     /**
      * Constructor
      *
      * @param PicoDatabase $database
-     * @param string $baseDir Base directory
-     * @param string $tableName Table name
-     * @param string $baseNamespace Base namespace
-     * @param string $entityName Entity name
-     * @param boolean $prettify Flag to prettify
+     * @param string $baseDir
+     * @param string $tableName
+     * @param string $baseNamespace
+     * @param string $entityName
+     * @param boolean $prettify
      */
-    public function __construct($database, $baseDir, $tableName, $baseNamespace, $entityName = null, $prettify = false)
+    public function __construct($database, $baseDir, $tableName, $baseNamespace, $entityName = null)
     {
         $this->database = $database;
         $this->baseDir = $baseDir;
         $this->baseNamespace = $baseNamespace;
         $this->tableName = $tableName;
         $this->entityName = $entityName;
-        $this->prettify = $prettify;
     }
-
+    
     /**
      * Create property
      *
-     * @param array $typeMap Type map
-     * @param string $row Data row
-     * @param string[] $nonupdatables Nonupdateable columns
+     * @param array $typeMap
+     * @param string $row
+     * @param string[] $nonupdatables
      * @return string
      */
     protected function createProperty($typeMap, $row, $nonupdatables = null)
@@ -117,7 +116,7 @@ class PicoEntityGenerator
         {
             $docs[] = "\t * @GeneratedValue(strategy=GenerationType.IDENTITY)";
         }
-
+        
         if(strcasecmp($columnNull, 'No') == 0)
         {
             $docs[] = "\t * @NotNull";
@@ -155,7 +154,7 @@ class PicoEntityGenerator
         $docs[] = "\t * @Column(".implode(", ", $attrs).")";
         if(!empty($columnDefault))
         {
-            $docs[] = "\t * @DefaultColumn(value=\"".$columnDefault."\")";
+            $docs[] = "\t * @DefaultColumn(value=\"".$columnDefault."\")";        
         }
 
         $docs[] = "\t * @Label(content=\"$description\")";
@@ -186,8 +185,8 @@ class PicoEntityGenerator
     /**
      * Get data type
      *
-     * @param array $typeMap Type map
-     * @param string $columnType Column type
+     * @param array $typeMap
+     * @param string $columnType
      * @return string
      */
     protected function getDataType($typeMap, $columnType)
@@ -222,7 +221,7 @@ class PicoEntityGenerator
             $str2 = "0";
         }
         $length = $str2 * 1;
-
+        
         if(stripos($str, "datetime") !== false || stripos($str, "timestamp") !== false)
         {
             $length += 20;
@@ -233,7 +232,7 @@ class PicoEntityGenerator
         }
         return $length;
     }
-
+    
     /**
      * Get type map
      *
@@ -262,13 +261,13 @@ class PicoEntityGenerator
             "datetime" => "string",
             "date" => "string",
             "time" => "string"
-        );
+        );    
     }
 
     /**
      * Generate entity
      *
-     * @param string[] $nonupdatables Nonupdatetable columns
+     * @param string[] $nonupdatables
      * @return string
      */
     public function generate($nonupdatables = null)
@@ -286,7 +285,7 @@ class PicoEntityGenerator
         $fileName = $this->baseNamespace."/".$className;
         $path = $this->baseDir."/".$fileName.".php";
         $path = str_replace("\\", "/", $path);
-
+        
         $dir = dirname($path);
         if(!file_exists($dir))
         {
@@ -304,7 +303,7 @@ class PicoEntityGenerator
                 $attrs[] = $prop;
             }
         }
-
+        
         $prettify = $this->prettify ? 'true' : 'false';
 
         $uses = array();
@@ -317,9 +316,9 @@ namespace '.$this->baseNamespace.';
 use MagicObject\MagicObject;'.implode("\r\n", $uses).'
 
 /**
- * '.$className.' is entity of table '.$picoTableName.'. You can join this entity to other entity using annotation JoinColumn.
+ * '.$className.' is entity of table '.$picoTableName.'. You can join this entity to other entity using annotation JoinColumn. 
  * Visit https://github.com/Planetbiru/MagicObject/blob/main/tutorial.md#entity
- *
+ * 
  * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE, prettify='.$prettify.')
  * @Table(name="'.$picoTableName.'")

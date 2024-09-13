@@ -35,7 +35,7 @@ class PicoObjectParser
         }
         return $magicObject;
     }
-
+    
     /**
      * Parse Object
      * @param stdClass|array $data
@@ -57,7 +57,7 @@ class PicoObjectParser
         }
         return $magicObject;
     }
-
+    
     /**
      * Check if input is associated array
      *
@@ -67,7 +67,7 @@ class PicoObjectParser
     private static function hasStringKeys($array) {
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
-
+    
     /**
      * Parse recursive
      * @param mixed $data
@@ -97,7 +97,7 @@ class PicoObjectParser
         }
         return $result;
     }
-
+    
     /**
      * Update object
      *
@@ -129,7 +129,7 @@ class PicoObjectParser
         }
         return $obj;
     }
-
+    
     /**
      * Check if value is object
      *
@@ -138,13 +138,13 @@ class PicoObjectParser
      */
     private static function isObject($value)
     {
-        if ($value instanceof stdClass || is_object($value))
+        if ($value instanceof stdClass || is_object($value))  
         {
             return true;
         }
         return false;
     }
-
+    
     /**
      * Parse recursive
      * @param array $data
@@ -179,7 +179,7 @@ class PicoObjectParser
         }
         return $result;
     }
-
+    
     /**
      * Parse from Yaml recursively
      * @param string $yamlString
@@ -195,7 +195,7 @@ class PicoObjectParser
         }
         return null;
     }
-
+    
     /**
      * Parse from JSON recursively
      * @param mixed $data

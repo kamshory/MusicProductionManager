@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -39,7 +39,7 @@ trait FpdfTrait
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param boolean $adjustPageSize
+     * @param bool $adjustPageSize
      * @return array The size
      * @see Fpdi::getTemplateSize()
      */

@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -214,7 +214,7 @@ class PdfParser
      * Get an indirect object by its object number.
      *
      * @param int $objectNumber
-     * @param boolean $cache
+     * @param bool $cache
      * @return PdfIndirectObject
      * @throws CrossReferenceException
      * @throws PdfParserException
@@ -363,7 +363,7 @@ class PdfParser
     }
 
     /**
-     * @return boolean|PdfDictionary
+     * @return bool|PdfDictionary
      * @throws PdfTypeException
      */
     protected function parsePdfDictionary()
@@ -410,7 +410,7 @@ class PdfParser
      *
      * @param string $token
      * @param string|null $expectedType
-     * @return boolean
+     * @return bool
      * @throws Type\PdfTypeException
      */
     protected function ensureExpectedType($token, $expectedType)

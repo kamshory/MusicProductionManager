@@ -12,14 +12,14 @@ class ImageColor
      * @var integer
      */
     protected $red;
-
+    
     /**
      * Green component
      *
      * @var integer
      */
     protected $green;
-
+    
     /**
      * Blue component
      *
@@ -46,7 +46,7 @@ class ImageColor
      * Allocate image
      *
      * @param GdImage $image
-     * @return integer
+     * @return integer 
      */
     public function allocate($image)
     {
@@ -72,12 +72,12 @@ class ImageColor
     {
         return sprintf("rgb(%d,%d,%d)", $this->red, $this->green, $this->blue);
     }
-
+    
     /**
      * Get red component
      *
      * @return integer
-     */
+     */ 
     public function getRed()
     {
         return $this->red;
@@ -89,7 +89,7 @@ class ImageColor
      * @param integer  $red  Red component
      *
      * @return self
-     */
+     */ 
     public function setRed($red)
     {
         $this->red = $red;
@@ -101,7 +101,7 @@ class ImageColor
      * Get green component
      *
      * @return integer
-     */
+     */ 
     public function getGreen()
     {
         return $this->green;
@@ -113,7 +113,7 @@ class ImageColor
      * @param integer  $green  Green component
      *
      * @return self
-     */
+     */ 
     public function setGreen($green)
     {
         $this->green = $green;
@@ -125,7 +125,7 @@ class ImageColor
      * Get blue component
      *
      * @return integer
-     */
+     */ 
     public function getBlue()
     {
         return $this->blue;
@@ -137,7 +137,7 @@ class ImageColor
      * @param integer  $blue  Blue component
      *
      * @return self
-     */
+     */ 
     public function setBlue($blue)
     {
         $this->blue = $blue;

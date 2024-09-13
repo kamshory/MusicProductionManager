@@ -90,7 +90,7 @@ class PicoResponse
                 else
                 {
                     // force convert to string with __toString() method if exists
-                    $bodyToSent = $body."";
+                    $bodyToSent = $body.""; 
                 }
             }
             else

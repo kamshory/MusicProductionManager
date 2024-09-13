@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -95,7 +95,7 @@ trait FpdfTplTrait
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param boolean $adjustPageSize
+     * @param bool $adjustPageSize
      * @return array The size
      * @see FpdfTplTrait::getTemplateSize()
      */
@@ -184,7 +184,7 @@ trait FpdfTplTrait
      *
      * @param float|int|null $width The width of the template. If null, the current page width is used.
      * @param float|int|null $height The height of the template. If null, the current page height is used.
-     * @param boolean $groupXObject Define the form XObject as a group XObject to support transparency (if used).
+     * @param bool $groupXObject Define the form XObject as a group XObject to support transparency (if used).
      * @return int A template identifier.
      */
     public function beginTemplate($width = null, $height = null, $groupXObject = false)
@@ -253,9 +253,9 @@ trait FpdfTplTrait
         $this->currentTemplateId = $templateId;
 
         $this->h = $height;
-        $this->hPt = $height / $this->k;
+        $this->hPt = $height * $this->k;
         $this->w = $width;
-        $this->wPt = $width / $this->k;
+        $this->wPt = $width * $this->k;
 
         $this->SetXY($this->lMargin, $this->tMargin);
         $this->SetRightMargin($this->w - $width + $this->rMargin);
@@ -266,7 +266,7 @@ trait FpdfTplTrait
     /**
      * Ends a template.
      *
-     * @return boolean|int|null A template identifier.
+     * @return bool|int|null A template identifier.
      */
     public function endTemplate()
     {

@@ -164,7 +164,7 @@ class PicoAnnotationParser
     {
         $pattern = "/@(?=(.*)" . $this->endPattern . ")/U";
         preg_match_all($pattern, $this->rawDocBlock, $matches);
-
+                
         foreach ($matches[1] as $rawParameter) {
             if (preg_match("/^(" . $this->keyPattern . ")(.*)$/", $rawParameter, $match)) {
                 $parsedValue = $this->parseValue($match[2]);
@@ -284,7 +284,7 @@ class PicoAnnotationParser
 
     /**
      * Get parameters
-     *
+     * 
      * @return array
      */
     public function getParameters()
@@ -298,7 +298,7 @@ class PicoAnnotationParser
 
     /**
      * Get parameters
-     *
+     * 
      * @return PicoGenericObject
      */
     public function getParametersAsObject()
@@ -370,7 +370,7 @@ class PicoAnnotationParser
      *
      * @param string $queryString
      * @return string[]
-     * @throws InvalidQueryInputException
+     * @throws InvalidQueryInputException 
      */
     public function parseKeyValue($queryString)
     {
@@ -384,22 +384,22 @@ class PicoAnnotationParser
         }
 
         // For every modification, please test regular expression with https://regex101.com/
-
+    
         // parse attributes with quotes
         $pattern1 = '/([_\-\w+]+)\=\"([a-zA-Z0-9\-\+ _,.\(\)\{\}\`\~\!\@\#\$\%\^\*\\\|\<\>\[\]\/&%?=:;\'\t\r\n|\r|\n]+)\"/m'; // NOSONAR
         preg_match_all($pattern1, $queryString, $matches1);
         $pair1 = array_combine($matches1[1], $matches1[2]);
-
+        
         // parse attributes without quotes
         $pattern2 = '/([_\-\w+]+)\=([a-zA-Z0-9._]+)/m'; // NOSONAR
         preg_match_all($pattern2, $queryString, $matches2);
 
         $pair3 = $this->combineAndMerge($matches2, $pair1);
-
+        
         // parse attributes without any value
         $pattern3 = '/([\w\=\-\_"]+)/m'; // NOSONAR
         preg_match_all($pattern3, $queryString, $matches3);
-
+        
         $pair4 = array();
         if(isset($matches3) && isset($matches3[0]) && is_array($matches3[0]))
         {
@@ -420,7 +420,7 @@ class PicoAnnotationParser
                 }
             }
         }
-
+        
         // merge $pair3 and $pair4 into result
         return array_merge($pair3, $pair4);
     }

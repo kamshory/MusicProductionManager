@@ -37,7 +37,7 @@ class PicoTableUtil
             foreach($annotationAttributes as $attributeName=>$attributeValue)
             {
                 $node->setAttribute($attributeName, $attributeValue);
-            }
+            }            
         }
         return $node;
     }
@@ -53,11 +53,11 @@ class PicoTableUtil
     {
         if(isset($identity) && $identity->issetName())
         {
-            $node->setAttribute("name", $identity->getName());
+            $node->setAttribute("name", $identity->getName());      
         }
         return $node;
     }
-
+    
     /**
      * Parse attribute
      *
@@ -89,7 +89,7 @@ class PicoTableUtil
         }
         return $attrs;
     }
-
+    
     /**
      * Validate class name of DOMElement
      *

@@ -2,6 +2,7 @@
 
 namespace MagicObject\Util\Database;
 
+use MagicObject\Database\PicoTableInfo;
 use MagicObject\MagicObject;
 use stdClass;
 

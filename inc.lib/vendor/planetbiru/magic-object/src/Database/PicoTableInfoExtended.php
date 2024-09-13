@@ -8,10 +8,10 @@ namespace MagicObject\Database;
  */
 class PicoTableInfoExtended extends PicoTableInfo
 {
-    const NAME      = "name";
+    const NAME = "name";
     const PREV_NAME = "prevColumnName";
-    const ELEMENT   = "element";
-
+    const ELEMENT = "element";
+    
     /**
      * Get instance
      *
@@ -21,7 +21,7 @@ class PicoTableInfoExtended extends PicoTableInfo
     {
         return new self(null, array(), array(), array(), array(), array(), array());
     }
-
+    
     /**
      * Unique column
      *
@@ -147,7 +147,7 @@ class PicoTableInfoExtended extends PicoTableInfo
         $this->notNullColumns = $tmp;
         return $this;
     }
-
+    
     /**
      * Merge list
      *
@@ -177,7 +177,7 @@ class PicoTableInfoExtended extends PicoTableInfo
             }
             else
             {
-                $tmp2 = array();
+                $tmp2 = array();                
                 foreach($tmp as $prop2=>$elem2)
                 {
                     $tmp2[$prop2] = $elem2;
@@ -188,12 +188,12 @@ class PicoTableInfoExtended extends PicoTableInfo
                     }
                 }
                 // update temporary list
-                $tmp = $tmp2;
-            }
+                $tmp = $tmp2;  
+            }     
         }
         return $tmp;
     }
-
+    
     /**
      * Get oldlist check
      *
@@ -209,11 +209,11 @@ class PicoTableInfoExtended extends PicoTableInfo
         }
         return $oldListCheck;
     }
-
+    
     /**
      * Unique column
      *
-     * @param array $newList New list
+     * @param array $newList
      * @return self
      */
     public function mergeColumns($newList)
@@ -228,7 +228,7 @@ class PicoTableInfoExtended extends PicoTableInfo
     /**
      * Unique join column
      *
-     * @param array $newList New list
+     * @param array $newList
      * @return self
      */
     public function mergeJoinColumns($newList)
@@ -243,7 +243,7 @@ class PicoTableInfoExtended extends PicoTableInfo
     /**
      * Unique primary key
      *
-     * @param array $newList New list
+     * @param array $newList
      * @return self
      */
     public function mergePrimaryKeys($newList)
@@ -258,7 +258,7 @@ class PicoTableInfoExtended extends PicoTableInfo
     /**
      * Unique auto increment
      *
-     * @param array $newList New list
+     * @param array $newList
      * @return self
      */
     public function mergeAutoIncrementKeys($newList)
@@ -273,7 +273,7 @@ class PicoTableInfoExtended extends PicoTableInfo
     /**
      * Unique default value
      *
-     * @param array $newList New list
+     * @param array $newList
      * @return self
      */
     public function mergeDefaultValue($newList)

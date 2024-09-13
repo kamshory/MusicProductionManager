@@ -9,7 +9,7 @@ namespace MagicObject\Util;
 class AttrUtil
 {
     /**
-     * return selected="selected" if $param1 == $param2
+     * return selected="selected" if $param1 == $param2 
      *
      * @param mixed $param1 Parameter 1
      * @param mixed $param2 Parameter 2
@@ -19,9 +19,9 @@ class AttrUtil
     {
         return $param1 == $param2 ? ' selected="selected"' : '';
     }
-
+    
     /**
-     * return checked="checked" if $param1 == $param2
+     * return checked="checked" if $param1 == $param2 
      *
      * @param mixed $param1 Parameter 1
      * @param mixed $param2 Parameter 2

@@ -28,33 +28,33 @@ class SecretObject extends stdClass //NOSONAR
     const KEY_VALUE = "value";
     const PROPERTY_NAMING_STRATEGY = "property-naming-strategy";
     const KEY_PROPERTY_TYPE = "propertyType";
-    const KEY_DEFAULT_VALUE = "default_value";
+    const KEY_DEFAULT_VALUE = "default_value"; 
     const ANNOTATION_ENCRYPT_IN = "EncryptIn";
     const ANNOTATION_DECRYPT_IN = "DecryptIn";
     const ANNOTATION_ENCRYPT_OUT = "EncryptOut";
     const ANNOTATION_DECRYPT_OUT = "DecryptOut";
-
+    
     /**
      * List of propertis to be encrypted when call SET
      *
      * @var string[]
      */
     private $_encryptInProperties = array(); //NOSONAR
-
+    
     /**
      * Class parameters
      *
      * @var array
      */
     protected $_classParams = array(); //NOSONAR
-
+    
     /**
      * NULL properties
      *
      * @var array
      */
     protected $_nullProperties = array(); //NOSONAR
-
+    
     /**
      * List of propertis to be decrypted when call GET
      *
@@ -68,7 +68,7 @@ class SecretObject extends stdClass //NOSONAR
      * @var string[]
      */
     private $_encryptOutProperties = array(); //NOSONAR
-
+    
     /**
      * List of propertis to be decrypted when call SET
      *
@@ -82,9 +82,9 @@ class SecretObject extends stdClass //NOSONAR
      * @var boolean
      */
     private $_readonly = false; //NOSONAR
-
+    
     private $_secureFunction = null; //NOSONAR
-
+    
     /**
      * Constructor
      *
@@ -107,7 +107,7 @@ class SecretObject extends stdClass //NOSONAR
             $this->loadData($data);
         }
     }
-
+    
     /**
      * Process object information
      *
@@ -119,7 +119,7 @@ class SecretObject extends stdClass //NOSONAR
         $reflexClass = new PicoAnnotationParser($className);
         $params = $reflexClass->getParameters();
         $props = $reflexClass->getProperties();
-
+        
         foreach($params as $paramName=>$paramValue)
         {
             try
@@ -130,9 +130,9 @@ class SecretObject extends stdClass //NOSONAR
             catch(InvalidQueryInputException $e)
             {
                 throw new InvalidAnnotationException("Invalid annotation @".$paramName);
-            }
+            }    
         }
-
+        
         // iterate each properties of the class
         foreach($props as $prop)
         {
@@ -178,7 +178,7 @@ class SecretObject extends stdClass //NOSONAR
             return PicoSecret::RANDOM_KEY_1.PicoSecret::RANDOM_KEY_2;
         }
     }
-
+    
     /**
      * Magic method
      *
@@ -206,7 +206,7 @@ class SecretObject extends stdClass //NOSONAR
             return $this;
         }
     }
-
+    
     /**
      * Set value
      *
@@ -227,7 +227,7 @@ class SecretObject extends stdClass //NOSONAR
         $this->$var = $value;
         return $this;
     }
-
+    
     /**
      * Get value
      *
@@ -247,7 +247,7 @@ class SecretObject extends stdClass //NOSONAR
         }
         return $value;
     }
-
+    
     /**
      * Get value
      *
@@ -288,7 +288,7 @@ class SecretObject extends stdClass //NOSONAR
         }
         return false;
     }
-
+    
     /**
      * Encrypt data recursive
      *
@@ -296,7 +296,7 @@ class SecretObject extends stdClass //NOSONAR
      * @param string $hexKey Key in hexadecimal format
      * @return mixed
      */
-    public function encryptValue($data, $hexKey = null)
+    public function encryptValue($data, $hexKey = null) 
     {
         if($hexKey == null)
         {
@@ -347,12 +347,12 @@ class SecretObject extends stdClass //NOSONAR
         }
         $key = $hexKey;
         $method = "AES-256-CBC";
-        $iv = openssl_random_pseudo_bytes(16);
+        $iv = openssl_random_pseudo_bytes(16);   
         $ciphertext = openssl_encrypt($plaintext, $method, $key, OPENSSL_RAW_DATA, $iv);
         $hash = hash_hmac('sha256', $ciphertext . $iv, $key, true);
         return base64_encode($iv . $hash . $ciphertext);
     }
-
+    
     /**
      * Decrypt data recursive
      *
@@ -360,7 +360,7 @@ class SecretObject extends stdClass //NOSONAR
      * @param string $hexKey Key in hexadecimal format
      * @return mixed
      */
-    public function decryptValue($data, $hexKey = null)
+    public function decryptValue($data, $hexKey = null) 
     {
         if($hexKey == null)
         {
@@ -403,7 +403,7 @@ class SecretObject extends stdClass //NOSONAR
      * @param string $hexKey Key in hexadecimal format
      * @return string
      */
-    public function decryptString($ciphertext, $hexKey = null)
+    public function decryptString($ciphertext, $hexKey = null) 
     {
         if($hexKey == null)
         {
@@ -419,13 +419,13 @@ class SecretObject extends stdClass //NOSONAR
         $iv = substr($ivHashCiphertext, 0, 16);
         $hash = substr($ivHashCiphertext, 16, 32);
         $ciphertext = substr($ivHashCiphertext, 48);
-        if (!hash_equals(hash_hmac('sha256', $ciphertext . $iv, $key, true), $hash))
+        if (!hash_equals(hash_hmac('sha256', $ciphertext . $iv, $key, true), $hash)) 
         {
             return null;
         }
         return openssl_decrypt($ciphertext, $method, $key, OPENSSL_RAW_DATA, $iv);
     }
-
+    
     /**
      * Check if value is required to be encrypted before stored
      *
@@ -436,7 +436,7 @@ class SecretObject extends stdClass //NOSONAR
     {
         return in_array($var, $this->_encryptInProperties);
     }
-
+    
     /**
      * Check if value is required to be decrypted after read
      *
@@ -447,7 +447,7 @@ class SecretObject extends stdClass //NOSONAR
     {
         return in_array($var, $this->_decryptOutProperties);
     }
-
+    
     /**
      * Check if value is required to be encrypted after read
      *
@@ -458,7 +458,7 @@ class SecretObject extends stdClass //NOSONAR
     {
         return in_array($var, $this->_encryptOutProperties);
     }
-
+    
     /**
      * Check if value is required to be decrypted before stored
      *
@@ -496,7 +496,7 @@ class SecretObject extends stdClass //NOSONAR
         }
         return $this;
     }
-
+    
     /**
      * Load data from INI string
      *
@@ -566,10 +566,10 @@ class SecretObject extends stdClass //NOSONAR
         {
             $this->loadData($data);
         }
-
+        
         return $this;
     }
-
+    
     /**
      * Load data from Yaml file
      *
@@ -597,7 +597,7 @@ class SecretObject extends stdClass //NOSONAR
         {
             $this->loadData($data);
         }
-
+    
         return $this;
     }
 
@@ -627,10 +627,10 @@ class SecretObject extends stdClass //NOSONAR
         {
             $this->loadData($data);
         }
-
+    
         return $this;
     }
-
+    
     /**
      * Load data from JSON file
      *
@@ -657,7 +657,7 @@ class SecretObject extends stdClass //NOSONAR
         {
             $this->loadData($data);
         }
-
+        
         return $this;
     }
 
@@ -672,7 +672,7 @@ class SecretObject extends stdClass //NOSONAR
         $this->_readonly = $readonly;
         return $this;
     }
-
+    
     /**
      * Set property value
      *
@@ -684,7 +684,7 @@ class SecretObject extends stdClass //NOSONAR
     {
         return $this->_set($propertyName, $propertyValue);
     }
-
+    
     /**
      * Get property value
      *
@@ -695,9 +695,9 @@ class SecretObject extends stdClass //NOSONAR
     {
         return $this->_get($propertyName);
     }
-
+    
     /**
-     * Get property value
+     * Get property value 
      *
      * @param string $propertyName Property name
      * @return mixed|null $propertyValue Property value
@@ -707,7 +707,7 @@ class SecretObject extends stdClass //NOSONAR
         $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : $defaultValue;
     }
-
+    
     /**
      * Copy value from other object
      *
@@ -724,7 +724,7 @@ class SecretObject extends stdClass //NOSONAR
             $index = 0;
             foreach($filter as $val)
             {
-                $tmp[$index] = trim(PicoStringUtil::camelize($val));
+                $tmp[$index] = trim(PicoStringUtil::camelize($val));               
                 $index++;
             }
             $filter = $tmp;
@@ -733,8 +733,8 @@ class SecretObject extends stdClass //NOSONAR
         foreach($values as $property=>$value)
         {
             if(
-                ($filter == null || (is_array($filter) && !empty($filter) && in_array($property, $filter)))
-                &&
+                ($filter == null || (is_array($filter) && !empty($filter) && in_array($property, $filter))) 
+                && 
                 ($includeNull || $value != null)
                 )
             {
@@ -771,7 +771,7 @@ class SecretObject extends stdClass //NOSONAR
         }
         return $value;
     }
-
+    
     /**
      * Get object value
      * @param boolean $snakeCase Flag to snake case property
@@ -792,7 +792,7 @@ class SecretObject extends stdClass //NOSONAR
         $value = $this->value($snakeCase);
         return json_decode(json_encode($value), true);
     }
-
+    
     /**
      * Get object value as associated array with upper case first
      *
@@ -807,13 +807,13 @@ class SecretObject extends stdClass //NOSONAR
         foreach($keys as $key)
         {
             $renameMap[$key] = ucfirst($key);
-        }
+        }          
         $array = array_combine(array_map(function($el) use ($renameMap) {
             return $renameMap[$el];
         }, array_keys($array)), array_values($array));
         return $array;
     }
-
+    
     /**
      * Check if JSON naming strategy is snake case or not
      *
@@ -839,7 +839,7 @@ class SecretObject extends stdClass //NOSONAR
             && strcasecmp($this->_classParams[self::YAML][self::PROPERTY_NAMING_STRATEGY], 'SNAKE_CASE') == 0
             ;
     }
-
+    
     /**
      *  Check if JSON naming strategy is upper camel case or not
      *
@@ -852,7 +852,7 @@ class SecretObject extends stdClass //NOSONAR
             && strcasecmp($this->_classParams[self::JSON][self::PROPERTY_NAMING_STRATEGY], 'UPPER_CAMEL_CASE') == 0
             ;
     }
-
+    
     /**
      * Check if JSON naming strategy is camel case or not
      *
@@ -889,7 +889,7 @@ class SecretObject extends stdClass //NOSONAR
             foreach ($properties as $key) {
                 $prop = $key->name;
                 $result[$index] = $prop;
-
+                
                 $index++;
             }
             return $result;
@@ -899,7 +899,7 @@ class SecretObject extends stdClass //NOSONAR
             return $properties;
         }
     }
-
+    
     /**
      * Modify null properties
      *
@@ -911,14 +911,14 @@ class SecretObject extends stdClass //NOSONAR
     {
         if($propertyValue === null && !isset($this->_nullProperties[$propertyName]))
         {
-            $this->_nullProperties[$propertyName] = true;
+            $this->_nullProperties[$propertyName] = true; 
         }
         if($propertyValue != null && isset($this->_nullProperties[$propertyName]))
         {
-            unset($this->_nullProperties[$propertyName]);
+            unset($this->_nullProperties[$propertyName]); 
         }
     }
-
+    
     /**
      * Get encrypted value
      *
@@ -972,7 +972,7 @@ class SecretObject extends stdClass //NOSONAR
         $input = $this->valueArray($snake);
         return PicoYamlUtil::dump($input, $inline, $indent, $flags);
     }
-
+    
     /**
      * Magic method to stringify object
      *

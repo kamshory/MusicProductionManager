@@ -23,7 +23,7 @@ class PicoGenericObject extends stdClass
             $this->loadData($data);
         }
     }
-
+    
     /**
      * Load data to object
      * @param stdClass|array $data Data
@@ -66,14 +66,14 @@ class PicoGenericObject extends stdClass
         $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
-
+    
     /**
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
-     *
+     * 
      * @param string $name Property name
      * @param string $value Property value
-     * @return void
+     * @return void 
      **/
     public function __set($name, $value)
     {
@@ -83,7 +83,7 @@ class PicoGenericObject extends stdClass
     /**
      * Gets datas from the property.
      * Example: echo $instance->foo;
-     *
+     * 
      * @param string $name Name of the property to get.
      * @return mixed Datas stored in property.
      **/
@@ -126,16 +126,16 @@ class PicoGenericObject extends stdClass
      */
     public function __call($method, $params) //NOSONAR
     {
-        if (strncasecmp($method, "isset", 5) === 0)
+        if (strncasecmp($method, "isset", 5) === 0) 
         {
             $var = lcfirst(substr($method, 5));
             return isset($this->$var);
-        }
-        else if (strncasecmp($method, "is", 2) === 0)
+        } 
+        else if (strncasecmp($method, "is", 2) === 0) 
         {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) ? $this->$var == 1 : false;
-        }
+        } 
         else if (strncasecmp($method, "get", 3) === 0)
         {
             $var = lcfirst(substr($method, 3));
@@ -147,7 +147,7 @@ class PicoGenericObject extends stdClass
             $this->$var = $params[0];
             return $this;
         }
-        else if (strncasecmp($method, "unset", 5) === 0)
+        else if (strncasecmp($method, "unset", 5) === 0) 
         {
             $var = lcfirst(substr($method, 5));
             $this->__unset($var);

@@ -37,7 +37,7 @@ class PicoDatabase //NOSONAR
 	 * @var boolean
 	 */
 	private $connected = false;
-
+	
 	/**
 	 * Autocommit
 	 *
@@ -74,12 +74,12 @@ class PicoDatabase //NOSONAR
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @param SecretObject $databaseCredentials Database credentials
 	 * @param callable $callbackExecuteQuery Callback when execute query that modify data. Parameter 1 is SQL, parameter 2 is one of query type (PicoDatabase::QUERY_INSERT, PicoDatabase::QUERY_UPDATE, PicoDatabase::QUERY_DELETE, PicoDatabase::QUERY_TRANSACTION)
 	 * @param callable $callbackDebugQuery Callback when execute all queries. Parameter 1 is SQL
 	 */
-	public function __construct($databaseCredentials, $callbackExecuteQuery = null, $callbackDebugQuery = null)
+	public function __construct($databaseCredentials, $callbackExecuteQuery = null, $callbackDebugQuery = null) //NOSONAR
 	{
 		$this->databaseCredentials = $databaseCredentials;
 		if($callbackExecuteQuery != null && is_callable($callbackExecuteQuery))
@@ -94,8 +94,8 @@ class PicoDatabase //NOSONAR
 
 	/**
 	 * Connect to database
-	 *
-	 * @param boolean $withDatabase Flag to select database when connected
+	 * 
+	 * @param boolean $withDatabase
 	 * @return boolean true if success and false if failed
 	 */
 	public function connect($withDatabase = true)
@@ -107,7 +107,7 @@ class PicoDatabase //NOSONAR
 		}
 		$timeZoneOffset = date("P");
 		$connected = false;
-		try
+		try 
 		{
 			$connectionString = $this->constructConnectionString($withDatabase);
 			if(!$this->databaseCredentials->issetUsername())
@@ -135,18 +135,17 @@ class PicoDatabase //NOSONAR
 
 			$connected = true;
 			$this->connected = $connected;
-		}
-		catch (Exception $e)
+		} 
+		catch (Exception $e) 
 		{
 			throw new PDOException($e->getMessage(), intval($e->getCode()));
 		}
 		return $connected;
 	}
-
+	
 	/**
 	 * Create connection string
 	 *
-	 * @param boolean $withDatabase Flag to select database when connected
 	 * @return string
 	 * @throws InvalidDatabaseConfiguration
 	 */
@@ -159,9 +158,9 @@ class PicoDatabase //NOSONAR
 		$emptyValue = "";
 		$emptyValue .= $emptyDriver ? "{driver}" : "";
 		$emptyValue .= $emptyHost ? "{host}" : "";
-		$emptyValue .= $emptyPort ? "{port}" : "";
+		$emptyValue .= $emptyPort ? "{port}" : "";		
 		$invalidParam1 = $emptyDriver || $emptyHost || $emptyPort;
-
+		
 		if($withDatabase)
 		{
 			if(
@@ -188,14 +187,13 @@ class PicoDatabase //NOSONAR
 	/**
 	 * Disconnect from database
 	 *
-	 * @return self
+	 * @return void
 	 */
 	public function disconnect()
 	{
 		$this->databaseConnection = null;
-		return $this;
 	}
-
+	
 	/**
 	 * Set time zone offset
 	 * Time zone offset is difference to Greenwich time (GMT) with colon between hours and minutes. See date("P") on PHP manual
@@ -209,7 +207,7 @@ class PicoDatabase //NOSONAR
 		$this->execute($sql);
 		return $this;
 	}
-
+	
 	/**
 	 * Set autocommit ON of OFF
 	 * When it set to OFF, user MUST call commit or rollback manualy. Default action is rollback
@@ -222,7 +220,7 @@ class PicoDatabase //NOSONAR
 		$this->autocommit = $autocommit;
 		return $this->databaseConnection->setAttribute(PDO::ATTR_AUTOCOMMIT, $this->autocommit ? 1 : 0);
 	}
-
+	
 	/**
 	 * Commit
 	 *
@@ -232,7 +230,7 @@ class PicoDatabase //NOSONAR
 	{
 		return $this->databaseConnection->commit();
 	}
-
+	
 	/**
 	 * Rollback
 	 *
@@ -251,7 +249,7 @@ class PicoDatabase //NOSONAR
 	{
 		return $this->databaseConnection;
 	}
-
+	
 	/**
 	 * Execute query
 	 *
@@ -281,12 +279,12 @@ class PicoDatabase //NOSONAR
 		$result = array();
 		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
-		try
+		try 
 		{
 			$stmt->execute();
 			$result = $stmt->rowCount() > 0 ? $stmt->fetch($tentativeType) : $defaultValue;
-		}
-		catch (PDOException $e)
+		} 
+		catch (PDOException $e) 
 		{
 			$result = $defaultValue;
 		}
@@ -307,12 +305,12 @@ class PicoDatabase //NOSONAR
 		}
 		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
-		try
+		try 
 		{
 			$stmt->execute();
 			return $stmt->rowCount() > 0;
-		}
-		catch (PDOException $e)
+		} 
+		catch (PDOException $e) 
 		{
 			throw new PDOException($e->getMessage(), intval($e->getCode()));
 		}
@@ -335,12 +333,12 @@ class PicoDatabase //NOSONAR
 		$result = array();
 		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
-		try
+		try 
 		{
 			$stmt->execute();
 			$result = $stmt->rowCount() > 0 ? $stmt->fetchAll($tentativeType) : $defaultValue;
-		}
-		catch (PDOException $e)
+		} 
+		catch (PDOException $e) 
 		{
 			$result = $defaultValue;
 		}
@@ -359,11 +357,11 @@ class PicoDatabase //NOSONAR
 		}
 		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
-		try
+		try 
 		{
 			$stmt->execute();
-		}
-		catch (PDOException $e)
+		} 
+		catch (PDOException $e) 
 		{
 			// Do nothing
 		}
@@ -382,11 +380,11 @@ class PicoDatabase //NOSONAR
 		}
 		$this->executeDebug($sql);
 		$stmt = $this->databaseConnection->prepare($sql);
-		try
+		try 
 		{
 			$stmt->execute();
-		}
-		catch (PDOException $e)
+		} 
+		catch (PDOException $e) 
 		{
 			throw new PDOException($e->getMessage(), intval($e->getCode()));
 		}
@@ -455,7 +453,7 @@ class PicoDatabase //NOSONAR
 			call_user_func($this->callbackExecuteQuery, $query, $type);
 		}
 	}
-
+	
 	/**
 	 * Execute debug query function
 	 *
@@ -508,7 +506,7 @@ class PicoDatabase //NOSONAR
 	 * Get indication that database is connected or not
 	 *
 	 * @return boolean
-	 */
+	 */ 
 	public function isConnected()
 	{
 		return $this->connected;
@@ -518,12 +516,12 @@ class PicoDatabase //NOSONAR
 	 * Get database type
 	 *
 	 * @return string
-	 */
+	 */ 
 	public function getDatabaseType()
 	{
 		return $this->databaseType;
 	}
-
+	
 	/**
 	 * Magic method to debug object. This method also prevent PHP sho show its attribute when it converted to a string
 	 *

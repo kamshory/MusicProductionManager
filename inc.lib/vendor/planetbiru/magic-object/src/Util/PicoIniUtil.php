@@ -95,7 +95,7 @@ class PicoIniUtil
      * @param string $path File path
      * @return array|false
      */
-    public static function parseIniFile($path)
+    public static function parseIniFile($path) 
     {
         if (!file_exists($path)) {
             return false;
@@ -107,7 +107,7 @@ class PicoIniUtil
 
         return self::parseIniString($str);
     }
-
+    
     /**
      * Parse INI string
      *
@@ -149,7 +149,7 @@ class PicoIniUtil
                 if (self::matchValue($matches)) {
                     $arr_name = preg_replace('#\[(.*?)\]#is', '', $key);
                     $ret = self::fixValue3($ret, $inside_section, $arr_name, $matches, $value);
-
+                    
                 } else {
                     $ret[$inside_section][trim($tmp[0])] = $value;
                 }
@@ -161,7 +161,7 @@ class PicoIniUtil
         }
         return $ret;
     }
-
+    
     /**
      * check if match
      * @param array $matches Mathes
@@ -171,7 +171,7 @@ class PicoIniUtil
     {
         return !empty($matches) && isset($matches[0]);
     }
-
+    
     /**
      * Check if line is invalid
      *
@@ -182,7 +182,7 @@ class PicoIniUtil
     {
         return !$line || $line[0] == "#" || $line[0] == ";";
     }
-
+    
     /**
      * Fix value
      *
@@ -199,7 +199,7 @@ class PicoIniUtil
         }
         return $value;
     }
-
+    
     /**
      * Fix value
      *
@@ -213,7 +213,7 @@ class PicoIniUtil
         }
         return $value;
     }
-
+    
     /**
      * Fix value
      *

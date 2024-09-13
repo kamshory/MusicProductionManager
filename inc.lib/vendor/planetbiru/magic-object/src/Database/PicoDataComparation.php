@@ -8,37 +8,37 @@ namespace MagicObject\Database;
  */
 class PicoDataComparation
 {
-    const EQUALS                 = "=";
-    const NOT_EQUALS             = "!=";
-    const IN                     = "in";
-    const NOT_IN                 = "not in";
-    const IS                     = "is";
-    const IS_NOT                 = "is not";
-    const LIKE                   = "like";
-    const NOT_LIKE               = "not like";
-    const LESS_THAN              = "<";
-    const GREATER_THAN           = ">";
-    const LESS_THAN_OR_EQUALS    = "<=";
+    const EQUALS = "=";
+    const NOT_EQUALS = "!=";
+    const IN = "in";
+    const NOT_IN = "not in";
+    const IS = "is";
+    const IS_NOT = "is not";
+    const LIKE = "like";
+    const NOT_LIKE = "not like";
+    const LESS_THAN = "<";
+    const GREATER_THAN = ">";
+    const LESS_THAN_OR_EQUALS = "<=";
     const GREATER_THAN_OR_EQUALS = ">=";
-    const TYPE_STRING            = "string";
-    const TYPE_BOOLEAN           = "boolean";
-    const TYPE_NUMERIC           = "numeric";
-    const TYPE_NULL              = "null";
-
+    const TYPE_STRING = "string";
+    const TYPE_BOOLEAN = "boolean";
+    const TYPE_NUMERIC = "numeric";
+    const TYPE_NULL = "null";
+    
     /**
      * Value comparator
      *
      * @var string
      */
     private $comparison = "=";
-
+    
     /**
      * Value
      *
      * @var mixed
      */
     private $value = null;
-
+    
     /**
      * Stype
      *
@@ -63,23 +63,23 @@ class PicoDataComparation
     {
         return new self($value, self::NOT_EQUALS);
     }
-
+    
     /**
      * In
-     * @param mixed[] $values Values
+     * @param mixed $value
      */
-    public static function in($values)
+    public static function in($value)
     {
-        return new self($values, self::IN);
+        return new self($value, self::IN);
     }
 
     /**
      * Not in
-     * @param mixed[] $values
+     * @param mixed $value
      */
-    public static function notIn($values)
+    public static function notIn($value)
     {
-        return new self($values, self::NOT_IN);
+        return new self($value, self::NOT_IN);
     }
 
     /**
@@ -138,7 +138,7 @@ class PicoDataComparation
 
     /**
      * Constructor
-     *
+     * 
      * @param mixed $value
      * @param string $comparison
      */
@@ -189,7 +189,7 @@ class PicoDataComparation
     {
         return self::LESS_THAN;
     }
-
+    
     /**
      * Get greater than operator
      *
@@ -209,7 +209,7 @@ class PicoDataComparation
     {
         return self::LESS_THAN_OR_EQUALS;
     }
-
+    
     /**
      * Get greater than or equals operator
      *
@@ -261,7 +261,7 @@ class PicoDataComparation
 
     /**
      * Get the value of property value
-     */
+     */ 
     public function getValue()
     {
         return $this->value;

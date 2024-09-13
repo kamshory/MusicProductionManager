@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -46,7 +46,7 @@ class Fpdi extends \TCPDF
      *
      * @string
      */
-    const VERSION = '2.6.0';
+    const VERSION = '2.6.1';
 
     /**
      * A counter for template ids.
@@ -90,7 +90,7 @@ class Fpdi extends \TCPDF
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param boolean $adjustPageSize
+     * @param bool $adjustPageSize
      * @return array The size
      * @see FpdiTrait::getTemplateSize()
      */
@@ -111,7 +111,7 @@ class Fpdi extends \TCPDF
      * @param float|int $y The ordinate of upper-left corner.
      * @param float|int|null $width The width.
      * @param float|int|null $height The height.
-     * @param boolean $adjustPageSize
+     * @param bool $adjustPageSize
      * @return array The size.
      * @see Fpdi::getTemplateSize()
      */
@@ -212,7 +212,7 @@ class Fpdi extends \TCPDF
      * Append content to the buffer of TCPDF.
      *
      * @param string $s
-     * @param boolean $newLine
+     * @param bool $newLine
      */
     protected function _put($s, $newLine = true)
     {

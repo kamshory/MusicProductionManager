@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -100,7 +100,7 @@ class Page
      * Get a page attribute.
      *
      * @param string $name
-     * @param boolean $inherited
+     * @param bool $inherited
      * @return PdfType|null
      * @throws PdfParserException
      * @throws PdfTypeException
@@ -178,8 +178,8 @@ class Page
      * Get a boundary of this page.
      *
      * @param string $box
-     * @param boolean $fallback
-     * @return boolean|Rectangle
+     * @param bool $fallback
+     * @return bool|Rectangle
      * @throws PdfParserException
      * @throws PdfTypeException
      * @throws CrossReferenceException
@@ -213,7 +213,7 @@ class Page
      * Get the width and height of this page.
      *
      * @param string $box
-     * @param boolean $fallback
+     * @param bool $fallback
      * @return array|bool
      * @throws PdfParserException
      * @throws PdfTypeException

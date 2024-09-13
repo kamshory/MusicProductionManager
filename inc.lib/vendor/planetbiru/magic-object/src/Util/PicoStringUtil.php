@@ -17,7 +17,7 @@ class PicoStringUtil
         $input = lcfirst($input);
         return lcfirst(str_replace($glue, '', ucwords(trim($input), $glue)));
     }
-
+    
     /**
      * Convert snake case to upper camel case
      *
@@ -103,7 +103,7 @@ class PicoStringUtil
         $snake = self::snakeize($input);
         return self::snakeToTitle($snake);
     }
-
+    
     /**
      * Convert to kebap case
      *
@@ -115,7 +115,7 @@ class PicoStringUtil
         $snake = self::snakeize($input, '-');
         return str_replace('_', '-', $snake);
     }
-
+    
     /**
      * Create constant key
      *
@@ -126,7 +126,7 @@ class PicoStringUtil
     {
         return strtoupper(self::snakeize($input, '-'));
     }
-
+    
     /**
      * Check if string is starts with substring
      *
@@ -146,7 +146,7 @@ class PicoStringUtil
             return isset($haystack) && strtolower(substr($haystack, 0, strlen($value))) == strtolower($value);
         }
     }
-
+    
     /**
      * Check if string is ends with substring
      *
@@ -224,7 +224,7 @@ class PicoStringUtil
         while($found && ($count == -1 || $count > $i));
         return $haystack;
     }
-
+    
     /**
      * Check if string is not null and not empty
      *
@@ -235,7 +235,7 @@ class PicoStringUtil
     {
         return isset($value) && !empty($value);
     }
-
+    
     /**
      * Check if string is null or empty
      *
@@ -246,7 +246,7 @@ class PicoStringUtil
     {
         return !isset($value) || empty($value);
     }
-
+    
     /**
      * Select not null value
      *
@@ -258,7 +258,7 @@ class PicoStringUtil
     {
         return isset($value1) ? $value1 : $value2;
     }
-
+    
     /**
      * Fix cariage return
      *
@@ -273,5 +273,5 @@ class PicoStringUtil
         $input = str_replace("\r\n\n", "\r\n", $input);
         return $input;
     }
-
+    
 }

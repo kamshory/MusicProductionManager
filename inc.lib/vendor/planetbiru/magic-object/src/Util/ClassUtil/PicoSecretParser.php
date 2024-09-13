@@ -20,22 +20,22 @@ class PicoSecretParser
      */
     private static function parseSecretObject($data)
     {
-        $secretObject = new SecretObject();
+        $SecretObject = new SecretObject();
         $values = $data->value();
         foreach ($values as $key => $value) {
             $key2 = PicoStringUtil::camelize($key);
             if(is_scalar($value))
             {
-                $secretObject->set($key2, $value);
+                $SecretObject->set($key2, $value);
             }
             else
             {
-                $secretObject->set($key2, self::parseRecursiveObject($value));
+                $SecretObject->set($key2, self::parseRecursiveObject($value));
             }
         }
-        return $secretObject;
+        return $SecretObject;
     }
-
+    
     /**
      * Parse Object
      * @param stdClass|array $data
@@ -43,21 +43,21 @@ class PicoSecretParser
      */
     private static function parseObject($data)
     {
-        $secretObject = new SecretObject();
+        $SecretObject = new SecretObject();
         foreach ($data as $key => $value) {
             $key2 = PicoStringUtil::camelize($key);
             if(is_scalar($value))
             {
-                $secretObject->set($key2, $value);
+                $SecretObject->set($key2, $value);
             }
             else
             {
-                $secretObject->set($key2, self::parseRecursiveObject($value));
+                $SecretObject->set($key2, self::parseRecursiveObject($value));
             }
         }
-        return $secretObject;
+        return $SecretObject;
     }
-
+    
     /**
      * Check if input is associated array
      *
@@ -67,7 +67,7 @@ class PicoSecretParser
     private static function hasStringKeys($array) {
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
-
+    
     /**
      * Parse recursive
      * @param mixed $data
@@ -97,7 +97,7 @@ class PicoSecretParser
         }
         return $result;
     }
-
+    
     /**
      * Update object
      *
@@ -129,7 +129,7 @@ class PicoSecretParser
         }
         return $obj;
     }
-
+    
     /**
      * Check if value is object
      *
@@ -138,13 +138,13 @@ class PicoSecretParser
      */
     private static function isObject($value)
     {
-        if ($value instanceof stdClass || is_object($value))
+        if ($value instanceof stdClass || is_object($value))  
         {
             return true;
         }
         return false;
     }
-
+    
     /**
      * Parse recursive
      * @param array $data
@@ -179,7 +179,7 @@ class PicoSecretParser
         }
         return $result;
     }
-
+    
     /**
      * Parse from Yaml recursively
      */
@@ -194,7 +194,7 @@ class PicoSecretParser
         }
         return null;
     }
-
+    
     /**
      * Parse from JSON recursively
      */

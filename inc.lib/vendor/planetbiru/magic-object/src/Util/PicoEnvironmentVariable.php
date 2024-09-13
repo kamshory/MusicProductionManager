@@ -30,7 +30,7 @@ class PicoEnvironmentVariable
         }
         return $values;
     }
-
+    
     /**
      * Replace all values from other properties as array
      *
@@ -62,7 +62,7 @@ class PicoEnvironmentVariable
         }
         return $values;
     }
-
+    
     /**
      * Replace all values from other properties as object
      *
@@ -94,7 +94,7 @@ class PicoEnvironmentVariable
         }
         return $values;
     }
-
+    
     /**
      * Replace string with environment variable nane from a string
      *
@@ -108,8 +108,8 @@ class PicoEnvironmentVariable
         {
             $result = $value;
             $regex = '/\$\\{([^}]+)\\}/m';
-            preg_match_all($regex, $value, $matches);
-            $pair = array_combine($matches[0], $matches[1]);
+            preg_match_all($regex, $value, $matches);        
+            $pair = array_combine($matches[0], $matches[1]);  
             if(!empty($pair))
             {
                 foreach($pair as $key=>$value)
@@ -131,7 +131,7 @@ class PicoEnvironmentVariable
         }
         return $value;
     }
-
+    
     /**
      * Get other value
      *
@@ -161,7 +161,7 @@ class PicoEnvironmentVariable
         }
         return $value;
     }
-
+    
     /**
      * Replace all values with environment variable
      *
@@ -192,7 +192,7 @@ class PicoEnvironmentVariable
         }
         return $values;
     }
-
+    
     /**
      * Replace string with environment variable nane from a string
      *
@@ -204,7 +204,7 @@ class PicoEnvironmentVariable
         $result = $value;
         $regex = '/\$\\{([^}]+)\\}/m';
         preg_match_all($regex, $value, $matches);
-        $pair = array_combine($matches[0], $matches[1]);
+        $pair = array_combine($matches[0], $matches[1]);  
         if(!empty($pair))
         {
             foreach($pair as $key=>$value)

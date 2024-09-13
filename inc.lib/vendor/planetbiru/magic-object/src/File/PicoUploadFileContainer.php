@@ -41,7 +41,7 @@ class PicoUploadFileContainer
     /**
      * Check if file is multiple upload or not
      *
-     * @param integer $index Uploaded file index
+     * @param integer $index
      * @return boolean
      */
     public function isExists($index)
@@ -94,7 +94,7 @@ class PicoUploadFileContainer
     /**
      * Get one file
      *
-     * @param integer $index Uploade file index
+     * @param integer $index
      * @return array
      */
     public function getItem($index)

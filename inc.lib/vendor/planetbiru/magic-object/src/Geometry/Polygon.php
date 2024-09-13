@@ -12,7 +12,7 @@ class Polygon
      * @var Point[]
      */
     private $points = array();
-
+    
     /**
      * Constructor
      *
@@ -71,10 +71,10 @@ class Polygon
             $p2 = $this->points[$i+1];
 
             // Create a Triangle object using the origin and two consecutive points
-            $t = new Triangle($o, $p1, $p2);
+            $T = new Triangle($o, $p1, $p2);
 
             // Add the area of the triangle to the total sum
-            $sum += $t->getArea();
+            $sum += $T->getArea();
         }
         return $sum;
     }
@@ -101,19 +101,19 @@ class Polygon
             $p2 = $this->points[$i+1];
 
             // Create a Triangle object using the origin and two consecutive points
-            $l = new Line($p1, $p2);
+            $L = new Line($p1, $p2);
 
             // Add the area of the triangle to the total sum
-            $sum += $l->getLength();
+            $sum += $L->getLength();
         }
         return $sum;
-    }
+    } 
 
     /**
      * Get points
      *
      * @return Point[]
-     */
+     */ 
     public function getPoints()
     {
         return $this->points;

@@ -58,7 +58,7 @@ class PicoTableInfo
      * @var array
      */
     protected $notNullColumns = array();
-
+    
     protected $columnType;
 
     /**
@@ -92,7 +92,7 @@ class PicoTableInfo
         $this->defaultValue = $defaultValue;
         $this->notNullColumns = $notNullColumns;
     }
-
+    
     /**
      * Magic method to debug object
      *
@@ -111,7 +111,7 @@ class PicoTableInfo
         $stdClass->notNullColumns = $this->notNullColumns;
         return json_encode($stdClass);
     }
-
+    
     /**
      * Get column map
      *
@@ -127,7 +127,7 @@ class PicoTableInfo
         }
         return $propertyColumns;
     }
-
+    
     /**
      * Get join column map
      *
@@ -148,7 +148,7 @@ class PicoTableInfo
      * Get table name
      *
      * @return string
-     */
+     */ 
     public function getTableName()
     {
         return $this->tableName;
@@ -160,7 +160,7 @@ class PicoTableInfo
      * @param string $tableName Table name
      *
      * @return self
-     */
+     */ 
     public function setTableName($tableName)
     {
         $this->tableName = $tableName;
@@ -172,7 +172,7 @@ class PicoTableInfo
      * Get columns
      *
      * @return array
-     */
+     */ 
     public function getColumns()
     {
         return $this->columns;
@@ -184,7 +184,7 @@ class PicoTableInfo
      * @param array $columns Columns
      *
      * @return self
-     */
+     */ 
     public function setColumns($columns)
     {
         $this->columns = $columns;
@@ -195,7 +195,7 @@ class PicoTableInfo
      * Get join columns
      *
      * @return array
-     */
+     */ 
     public function getJoinColumns()
     {
         return $this->joinColumns;
@@ -207,7 +207,7 @@ class PicoTableInfo
      * @param array $joinColumns Join columns
      *
      * @return self
-     */
+     */ 
     public function setJoinColumns($joinColumns)
     {
         $this->joinColumns = $joinColumns;
@@ -219,7 +219,7 @@ class PicoTableInfo
      * Get primary keys
      *
      * @return array
-     */
+     */ 
     public function getPrimaryKeys()
     {
         return $this->primaryKeys;
@@ -231,7 +231,7 @@ class PicoTableInfo
      * @param array $primaryKeys Primary keys
      *
      * @return self
-     */
+     */ 
     public function setPrimaryKeys($primaryKeys)
     {
         $this->primaryKeys = $primaryKeys;
@@ -243,7 +243,7 @@ class PicoTableInfo
      * Get auto increment keys
      *
      * @return array
-     */
+     */ 
     public function getAutoIncrementKeys()
     {
         return $this->autoIncrementKeys;
@@ -255,7 +255,7 @@ class PicoTableInfo
      * @param array $autoIncrementKeys Auto increment keys
      *
      * @return self
-     */
+     */ 
     public function setAutoIncrementKeys($autoIncrementKeys)
     {
         $this->autoIncrementKeys = $autoIncrementKeys;
@@ -267,7 +267,7 @@ class PicoTableInfo
      * Get default value keys
      *
      * @return array
-     */
+     */ 
     public function getDefaultValue()
     {
         return $this->defaultValue;
@@ -279,7 +279,7 @@ class PicoTableInfo
      * @param array $defaultValue Default value keys
      *
      * @return self
-     */
+     */ 
     public function setDefaultValue($defaultValue)
     {
         $this->defaultValue = $defaultValue;
@@ -291,7 +291,7 @@ class PicoTableInfo
      * Get not null columns
      *
      * @return array
-     */
+     */ 
     public function getNotNullColumns()
     {
         return $this->notNullColumns;
@@ -303,7 +303,7 @@ class PicoTableInfo
      * @param array $notNullColumns Not null columns
      *
      * @return self
-     */
+     */ 
     public function setNotNullColumns($notNullColumns)
     {
         $this->notNullColumns = $notNullColumns;

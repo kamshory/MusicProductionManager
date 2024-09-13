@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -96,7 +96,7 @@ class StreamReader
      * StreamReader constructor.
      *
      * @param resource $stream
-     * @param boolean $closeStream Defines whether to close the stream resource if the instance is destructed or not.
+     * @param bool $closeStream Defines whether to close the stream resource if the instance is destructed or not.
      */
     public function __construct($stream, $closeStream = false)
     {
@@ -145,7 +145,7 @@ class StreamReader
     /**
      * Returns the byte length of the buffer.
      *
-     * @param boolean $atOffset
+     * @param bool $atOffset
      * @return int
      */
     public function getBufferLength($atOffset = false)
@@ -170,7 +170,7 @@ class StreamReader
     /**
      * Returns the current buffer.
      *
-     * @param boolean $atOffset
+     * @param bool $atOffset
      * @return string
      */
     public function getBuffer($atOffset = true)
@@ -358,7 +358,7 @@ class StreamReader
     /**
      * Make sure that there is at least one character beyond the current offset in the buffer.
      *
-     * @return boolean
+     * @return bool
      */
     public function ensureContent()
     {
@@ -456,7 +456,7 @@ class StreamReader
      * Forcefully read more data into the buffer.
      *
      * @param int $minLength
-     * @return boolean Returns false if the stream reaches the end
+     * @return bool Returns false if the stream reaches the end
      */
     public function increaseLength($minLength = 100)
     {

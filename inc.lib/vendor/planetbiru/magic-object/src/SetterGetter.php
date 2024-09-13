@@ -17,7 +17,7 @@ use stdClass;
 class SetterGetter extends stdClass
 {
     const JSON = 'JSON';
-
+    
     /**
      * Class parameter
      *
@@ -27,7 +27,7 @@ class SetterGetter extends stdClass
 
     /**
      * Constructor
-     *
+     * 
      * @param self|array|stdClass|object $data Data
      */
     public function __construct($data = null)
@@ -44,7 +44,7 @@ class SetterGetter extends stdClass
             catch(InvalidQueryInputException $e)
             {
                 throw new InvalidAnnotationException("Invalid annotation @".$paramName);
-            }
+            }  
         }
         if($data != null)
         {
@@ -108,14 +108,14 @@ class SetterGetter extends stdClass
         $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
-
+    
     /**
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
-     *
+     * 
      * @param string $name Property name
      * @param string $value Property value
-     * @return void
+     * @return void 
      **/
     public function __set($name, $value)
     {
@@ -126,7 +126,7 @@ class SetterGetter extends stdClass
     /**
      * Gets datas from the property.
      * Example: echo $instance->foo;
-     *
+     * 
      * @param string $name Property name
      * @return mixed Data stored in property.
      **/
@@ -234,16 +234,16 @@ class SetterGetter extends stdClass
      */
     public function __call($method, $params) //NOSONAR
     {
-        if (strncasecmp($method, "isset", 5) === 0)
+        if (strncasecmp($method, "isset", 5) === 0) 
         {
             $var = lcfirst(substr($method, 5));
             return isset($this->$var);
-        }
-        else if (strncasecmp($method, "is", 2) === 0)
+        } 
+        else if (strncasecmp($method, "is", 2) === 0) 
         {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) ? $this->$var == 1 : false;
-        }
+        } 
         else if (strncasecmp($method, "get", 3) === 0)
         {
             $var = lcfirst(substr($method, 3));
@@ -255,7 +255,7 @@ class SetterGetter extends stdClass
             $this->$var = $params[0];
             return $this;
         }
-        else if (strncasecmp($method, "unset", 5) === 0)
+        else if (strncasecmp($method, "unset", 5) === 0) 
         {
             $var = lcfirst(substr($method, 5));
             $this->removeValue($var, $params[0]);
@@ -275,7 +275,7 @@ class SetterGetter extends stdClass
             && strcasecmp($this->classParams[self::JSON]['property-naming-strategy'], 'SNAKE_CASE') == 0
             ;
     }
-
+    
     /**
      * Check if JSON naming strategy is camel case or not
      *

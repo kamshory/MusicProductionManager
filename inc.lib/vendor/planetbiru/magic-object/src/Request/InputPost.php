@@ -25,7 +25,7 @@ class  InputPost extends PicoRequestBase {
     public function __construct($recursive = false, $parseNullAndBool = false, $forceScalar = false)
     {
         parent::__construct($forceScalar);
-        $this->_recursive = $recursive;
+        $this->_recursive = $recursive; 
         if($parseNullAndBool)
         {
             $this->loadData($this->forceBoolAndNull($_POST));
@@ -75,5 +75,5 @@ class  InputPost extends PicoRequestBase {
             parent::loadData($data);
         }
         return $this;
-    }
+    } 
 }

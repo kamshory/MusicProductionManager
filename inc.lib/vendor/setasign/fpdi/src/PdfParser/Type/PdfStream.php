@@ -4,7 +4,7 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2023 Setasign GmbH & Co. KG (https://www.setasign.com)
+ * @copyright Copyright (c) 2024 Setasign GmbH & Co. KG (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
  */
 
@@ -31,12 +31,15 @@ class PdfStream extends PdfType
      *
      * @param PdfDictionary $dictionary
      * @param StreamReader $reader
-     * @param PdfParser $parser Optional to keep backwards compatibility
+     * @param PdfParser|null $parser Optional to keep backwards compatibility
      * @return self
      * @throws PdfTypeException
      */
-    public static function parse(PdfDictionary $dictionary, StreamReader $reader, PdfParser $parser = null)
+    public static function parse(PdfDictionary $dictionary, StreamReader $reader, $parser = null)
     {
+        if ($parser !== null && !($parser instanceof PdfParser)) {
+            throw new \InvalidArgumentException('$parser must be an instance of PdfParser or null');
+        }
         $v = new self();
         $v->value = $dictionary;
         $v->reader = $reader;
@@ -123,8 +126,8 @@ class PdfStream extends PdfType
     /**
      * Get the stream data.
      *
-     * @param boolean $cache Whether cache the stream data or not.
-     * @return boolean|string
+     * @param bool $cache Whether cache the stream data or not.
+     * @return bool|string
      * @throws PdfTypeException
      * @throws CrossReferenceException
      * @throws PdfParserException

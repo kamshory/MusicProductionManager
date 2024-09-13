@@ -4,7 +4,7 @@ namespace MagicObject\Request;
 
 /**
  * InputServer
- *
+ * 
  * Available methods:
  * getPhpSelf() return $_SERVER['PHP_SELF']
  * getGatewayInterface() return $_SERVER['GATEWAY_INTERFACE']
@@ -35,7 +35,7 @@ namespace MagicObject\Request;
  * getAuthType() return $_SERVER['AUTH_TYPE']
  * getPathInfo() return $_SERVER['PATH_INFO']
  * getOrigPathInfo() return $_SERVER['ORIG_PATH_INFO']
- *
+ * 
  * @link https://www.php.net/manual/en/reserved.variables.server.php
  */
 class  InputServer extends PicoRequestBase {

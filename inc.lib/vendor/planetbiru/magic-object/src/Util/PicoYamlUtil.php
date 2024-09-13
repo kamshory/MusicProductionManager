@@ -19,23 +19,23 @@ class PicoYamlUtil
      * @return integer
      */
     public static function arrayDepth($array) {
-        if (!is_array($array))
+        if (!is_array($array)) 
         {
             return 0;
         }
-        if (empty($array))
+        if (empty($array))     
         {
             return 1;
         }
         $depth = 0;
         $iteIte = new RecursiveIteratorIterator(new RecursiveArrayIterator($array));
-
+    
         foreach ($iteIte as $ite) //NOSONAR
         {
             $d = $iteIte->getDepth();
             $depth = $d > $depth ? $d : $depth;
         }
-
+    
         return $depth + 1;
     }
 

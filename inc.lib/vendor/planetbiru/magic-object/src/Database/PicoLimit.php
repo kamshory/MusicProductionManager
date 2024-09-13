@@ -14,14 +14,14 @@ class PicoLimit
      * @var integer
      */
     private $limit = 0;
-
+    
     /**
      * Offset
      *
      * @var integer
      */
     private $offset = 0;
-
+    
     /**
      * Constructor
      *
@@ -41,11 +41,11 @@ class PicoLimit
 
         $offset = intval($offset);
         $limit = intval($limit);
-
+        
         $this->setOffset($offset);
         $this->setLimit($limit);
     }
-
+    
     /**
      * Increase page number
      *
@@ -56,7 +56,7 @@ class PicoLimit
         $this->offset += $this->limit;
         return $this;
     }
-
+    
     /**
      * Decrease page number
      *
@@ -77,9 +77,9 @@ class PicoLimit
 
     /**
      * Get the value of limit
-     *
+     * 
      * @return integer
-     */
+     */ 
     public function getLimit()
     {
         return $this->limit;
@@ -90,7 +90,7 @@ class PicoLimit
      *
      * @param integer $limit Limit
      * @return self
-     */
+     */ 
     public function setLimit($limit)
     {
         if($limit < 0)
@@ -103,9 +103,9 @@ class PicoLimit
 
     /**
      * Get the value of offset
-     *
+     * 
      * @return integer
-     */
+     */ 
     public function getOffset()
     {
         return $this->offset;
@@ -116,7 +116,7 @@ class PicoLimit
      *
      * @param integer $offset Offset
      * @return self
-     */
+     */ 
     public function setOffset($offset)
     {
         if($offset < 0)
@@ -126,7 +126,7 @@ class PicoLimit
         $this->offset = $offset;
         return $this;
     }
-
+    
     /**
      * Get page
      *
@@ -135,7 +135,7 @@ class PicoLimit
     public function getPage()
     {
         $limit = $this->limit;
-        $offset = $this->offset;
+        $offset = $this->offset;      
         if($limit <= 0)
         {
             $limit = 1;
@@ -154,7 +154,7 @@ class PicoLimit
         }
         return new PicoPage($pageNumber, $limit);
     }
-
+    
     /**
      * Magic method to debug object
      *
@@ -164,7 +164,7 @@ class PicoLimit
     {
         return json_encode(
             array(
-                'limit' => $this->limit,
+                'limit' => $this->limit, 
                 'offset' => $this->offset
             )
         );

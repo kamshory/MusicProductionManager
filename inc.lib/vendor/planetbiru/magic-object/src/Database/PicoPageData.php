@@ -62,21 +62,21 @@ class PicoPageData
      * @var integer
      */
     private $dataOffset = 0;
-
+    
     /**
      * Start time
      *
      * @var float
      */
     private $startTime = 0.0;
-
+    
     /**
      * End time
      *
      * @var float
      */
     private $endTime = 0.0;
-
+    
     /**
      * Execution time
      *
@@ -97,35 +97,35 @@ class PicoPageData
      * @var PDOStatement
      */
     private $stmt = null;
-
+    
     /**
      * Class name
      *
      * @var string
      */
     private $className;
-
+    
     /**
      * Subquery info
      *
      * @var array
      */
     private $subqueryMap;
-
+    
     /**
      * By count result
      *
      * @var boolean
      */
     private $byCountResult = false;
-
+    
     /**
      * Entity
      *
      * @var MagicObject
      */
     private $entity;
-
+    
     /**
      * Find option
      *
@@ -186,7 +186,7 @@ class PicoPageData
             $this->subqueryMap = $subqueryMap;
         }
     }
-
+    
     /**
      * Count data
      *
@@ -212,7 +212,7 @@ class PicoPageData
     {
         $this->pageNumber = $this->pageable->getPage()->getPageNumber();
         $this->totalPage = ceil($this->totalResult / $this->pageable->getPage()->getPageSize());
-
+        
         $this->pageSize = $this->pageable->getPage()->getPageSize();
         $this->dataOffset = ($this->pageNumber - 1) * $this->pageSize;
         $this->generatePagination(3);
@@ -221,7 +221,7 @@ class PicoPageData
 
     /**
      * Generate pagination
-     * @param integer $margin Minimum page number before current page and maximum page number after current page
+     * @param integer $margin
      * @return self
      */
     public function generatePagination($margin = 3)
@@ -255,7 +255,7 @@ class PicoPageData
      * Get result
      *
      * @return MagicObject[]
-     */
+     */ 
     public function getResult()
     {
         return $this->result;
@@ -265,7 +265,7 @@ class PicoPageData
      * Get page number
      *
      * @return integer
-     */
+     */ 
     public function getPageNumber()
     {
         return $this->pageNumber;
@@ -275,7 +275,7 @@ class PicoPageData
      * Get total page
      *
      * @return integer
-     */
+     */ 
     public function getTotalPage()
     {
         return $this->totalPage;
@@ -285,7 +285,7 @@ class PicoPageData
      * Get page size
      *
      * @return integer
-     */
+     */ 
     public function getPageSize()
     {
         return $this->pageSize;
@@ -304,7 +304,7 @@ class PicoPageData
             "totalResult",
             "totalPage",
             "pageNumber",
-            "pageSize",
+            "pageSize", 
             "dataOffset",
             "startTime",
             "endTime",
@@ -329,7 +329,7 @@ class PicoPageData
      * Get execution time
      *
      * @return float
-     */
+     */ 
     public function getExecutionTime()
     {
         return $this->executionTime;
@@ -337,7 +337,7 @@ class PicoPageData
 
     /**
      * Get the value of pagination
-     */
+     */ 
     public function getPagination()
     {
         return $this->pagination;
@@ -346,8 +346,8 @@ class PicoPageData
     /**
      * Get page control
      *
-     * @param string $parameterName Parameter name for page
-     * @param string $path Link path
+     * @param string $parameterName
+     * @param string $path
      * @return PicoPageControl
      */
     public function getPageControl($parameterName = 'page', $path = null)
@@ -359,7 +359,7 @@ class PicoPageData
      * Get total match
      *
      * @return integer
-     */
+     */ 
     public function getTotalResult()
     {
         return $this->totalResult;
@@ -369,7 +369,7 @@ class PicoPageData
      * Get pageable
      *
      * @return PicoPageable
-     */
+     */ 
     public function getPageable()
     {
         return $this->pageable;
@@ -379,7 +379,7 @@ class PicoPageData
      * Get data offset
      *
      * @return integer
-     */
+     */ 
     public function getDataOffset()
     {
         return $this->dataOffset;
@@ -389,7 +389,7 @@ class PicoPageData
      * Get PDO statement
      *
      * @return PDOStatement
-     */
+     */ 
     public function getPDOStatement()
     {
         if($this->stmt == null)
@@ -398,7 +398,7 @@ class PicoPageData
         }
         return $this->stmt;
     }
-
+    
     /**
      * Fetch data
      *
@@ -417,18 +417,18 @@ class PicoPageData
         }
         return $this->applySubqueryResult($result);
     }
-
+    
     /**
      * Apply subquery result
      *
-     * @param array $row Data row
+     * @param array $row
      * @return MagicObject
      */
     public function applySubqueryResult($row)
     {
         $data = $row;
         if(isset($this->subqueryMap) && is_array($this->subqueryMap))
-        {
+        { 
             foreach($this->subqueryMap as $info)
             {
                 $objectName = $info['objectName'];
@@ -460,7 +460,7 @@ class PicoPageData
      * Get find option
      *
      * @return integer
-     */
+     */ 
     public function getFindOption()
     {
         return $this->findOption;
@@ -469,10 +469,10 @@ class PicoPageData
     /**
      * Set find option
      *
-     * @param integer $findOption Find option
+     * @param integer  $findOption  Find option
      *
      * @return self
-     */
+     */ 
     public function setFindOption($findOption)
     {
         $this->findOption = $findOption;

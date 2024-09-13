@@ -32,9 +32,9 @@ use stdClass;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class to create magic object.
- * Magic object is an object created from any class so that user can add any property with any name and value, load data from INI file, Yaml file, JSON file and database.
- * User can create entity from a table of database, insert, select, update and delete record from database.
+ * Class to create magic object. 
+ * Magic object is an object created from any class so that user can add any property with any name and value, load data from INI file, Yaml file, JSON file and database. 
+ * User can create entity from a table of database, insert, select, update and delete record from database. 
  * User can also create property from other entity with full name of class (namespace + class name)
  * @link https://github.com/Planetbiru/MagicObject
  */
@@ -49,14 +49,14 @@ class MagicObject extends stdClass // NOSONAR
     const KEY_VALUE = "value";
     const JSON = 'JSON';
     const YAML = 'Yaml';
-
+    
     const ATTR_CHECKED = ' checked="checked"';
     const ATTR_SELECTED = ' selected="selected"';
 
     const FIND_OPTION_DEFAULT = 0;
     const FIND_OPTION_NO_COUNT_DATA = 1;
     const FIND_OPTION_NO_FETCH_DATA = 2;
-
+    
     /**
      * Flag readonly
      *
@@ -90,14 +90,14 @@ class MagicObject extends stdClass // NOSONAR
      * @var array
      */
     private $_label = array(); // NOSONAR
-
+    
     /**
      * Table information
      *
      * @var PicoTableInfo
      */
     private $_tableInfoProp = null; // NOSONAR
-
+    
     /**
      * Database persistence
      *
@@ -135,7 +135,7 @@ class MagicObject extends stdClass // NOSONAR
             catch(InvalidQueryInputException $e)
             {
                 throw new InvalidAnnotationException("Invalid annotation @".$paramName);
-            }
+            }    
         }
         if($data != null)
         {
@@ -150,7 +150,7 @@ class MagicObject extends stdClass // NOSONAR
             $this->_database = $database;
         }
     }
-
+    
     /**
      * Load data to object
      * @param mixed $data Data
@@ -177,7 +177,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $this;
     }
-
+    
     /**
      * Load data from INI string
      *
@@ -264,7 +264,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $this;
     }
-
+    
     /**
      * Load data from Yaml file
      *
@@ -353,7 +353,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $this;
     }
-
+    
     /**
      * Load data from JSON file
      *
@@ -420,7 +420,7 @@ class MagicObject extends stdClass // NOSONAR
         $this->_database = $database;
         return $this;
     }
-
+    
     /**
      * Set or get current database. If parameter is not empty, set current database with database given. Return current database or null.
      *
@@ -733,11 +733,11 @@ class MagicObject extends stdClass // NOSONAR
     {
         if($propertyValue === null && !isset($this->_nullProperties[$propertyName]))
         {
-            $this->_nullProperties[$propertyName] = true;
+            $this->_nullProperties[$propertyName] = true; 
         }
         if($propertyValue != null && isset($this->_nullProperties[$propertyName]))
         {
-            unset($this->_nullProperties[$propertyName]);
+            unset($this->_nullProperties[$propertyName]); 
         }
     }
 
@@ -759,7 +759,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $this;
     }
-
+    
     /**
      * Get property value
      *
@@ -771,9 +771,9 @@ class MagicObject extends stdClass // NOSONAR
         $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
-
+    
     /**
-     * Get property value
+     * Get property value 
      *
      * @param string $propertyName Property name
      * @param mixed|null $defaultValue Property value
@@ -784,7 +784,7 @@ class MagicObject extends stdClass // NOSONAR
         $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : $defaultValue;
     }
-
+    
     /**
      * Set property value
      *
@@ -797,7 +797,7 @@ class MagicObject extends stdClass // NOSONAR
     }
 
     /**
-     * Get property value
+     * Get property value 
      *
      * @param string $propertyName Property name
      * @return mixed|null
@@ -833,7 +833,7 @@ class MagicObject extends stdClass // NOSONAR
     {
         $propertyName = lcfirst($propertyName);
         unset($this->$propertyName);
-    }
+    }   
 
     /**
      * Copy value from other object
@@ -851,7 +851,7 @@ class MagicObject extends stdClass // NOSONAR
             $index = 0;
             foreach($filter as $val)
             {
-                $tmp[$index] = trim(PicoStringUtil::camelize($val));
+                $tmp[$index] = trim(PicoStringUtil::camelize($val));               
                 $index++;
             }
             $filter = $tmp;
@@ -860,8 +860,8 @@ class MagicObject extends stdClass // NOSONAR
         foreach($values as $property=>$value)
         {
             if(
-                ($filter == null || (is_array($filter) && !empty($filter) && in_array($property, $filter)))
-                &&
+                ($filter == null || (is_array($filter) && !empty($filter) && in_array($property, $filter))) 
+                && 
                 ($includeNull || $value != null)
                 )
             {
@@ -881,7 +881,7 @@ class MagicObject extends stdClass // NOSONAR
     {
         return $this->set($propertyName, null, $skipModifyNullProperties);
     }
-
+    
     /**
      * Get table info
      *
@@ -896,7 +896,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $this->_tableInfoProp;
     }
-
+    
     /**
      * Get default value
      *
@@ -904,9 +904,9 @@ class MagicObject extends stdClass // NOSONAR
      * @return stdClass
      */
     public function defaultValue($snakeCase = false)
-    {
+    {     
         $defaultValue = new stdClass;
-        $tableInfo = $this->tableInfo();
+        $tableInfo = $this->tableInfo();   
         if(isset($tableInfo) && $tableInfo->getDefaultValue() != null)
         {
             foreach($tableInfo->getDefaultValue() as $column)
@@ -931,7 +931,7 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Get object value
-     *
+     * 
      * @param boolean $snakeCase Flag to snake case property
      * @return stdClass
      */
@@ -956,10 +956,10 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $value;
     }
-
+    
     /**
      * Get object value
-     *
+     * 
      * @param boolean $snakeCase Flag to snake case property
      * @return stdClass
      */
@@ -984,10 +984,10 @@ class MagicObject extends stdClass // NOSONAR
         }
         $upperCamel = $this->isUpperCamel();
         if($upperCamel)
-        {
+        {         
             return json_decode(json_encode($this->valueArrayUpperCamel()));
         }
-        else
+        else 
         {
             return $obj->value($snake);
         }
@@ -995,7 +995,7 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Get object value as associative array
-     *
+     * 
      * @param boolean $snakeCase Flag to snake case property
      * @return array
      */
@@ -1004,7 +1004,7 @@ class MagicObject extends stdClass // NOSONAR
         $value = $this->value($snakeCase);
         return json_decode(json_encode($value), true);
     }
-
+    
     /**
      * Get object value as associated array with upper case first
      *
@@ -1019,13 +1019,13 @@ class MagicObject extends stdClass // NOSONAR
         foreach($keys as $key)
         {
             $renameMap[$key] = ucfirst($key);
-        }
+        }          
         $array = array_combine(array_map(function($el) use ($renameMap) {
             return $renameMap[$el];
         }, array_keys($array)), array_values($array));
         return $array;
     }
-
+    
     /**
      * Check if JSON naming strategy is snake case or not
      *
@@ -1051,7 +1051,7 @@ class MagicObject extends stdClass // NOSONAR
             && strcasecmp($this->_classParams[self::YAML][self::PROPERTY_NAMING_STRATEGY], 'SNAKE_CASE') == 0
             ;
     }
-
+    
     /**
      *  Check if JSON naming strategy is upper camel case or not
      *
@@ -1064,7 +1064,7 @@ class MagicObject extends stdClass // NOSONAR
             && strcasecmp($this->_classParams[self::JSON][self::PROPERTY_NAMING_STRATEGY], 'UPPER_CAMEL_CASE') == 0
             ;
     }
-
+    
     /**
      * Check if JSON naming strategy is camel case or not
      *
@@ -1087,7 +1087,7 @@ class MagicObject extends stdClass // NOSONAR
             && strcasecmp($this->_classParams[self::JSON]['prettify'], 'true') == 0
             ;
     }
-
+    
     /**
      * Check if data is not null and not empty
      *
@@ -1125,7 +1125,7 @@ class MagicObject extends stdClass // NOSONAR
             foreach ($properties as $key) {
                 $prop = $key->name;
                 $result[$index] = $prop;
-
+                
                 $index++;
             }
             return $result;
@@ -1135,7 +1135,7 @@ class MagicObject extends stdClass // NOSONAR
             return $properties;
         }
     }
-
+    
     /**
      * List all
      *
@@ -1155,7 +1155,7 @@ class MagicObject extends stdClass // NOSONAR
 
     /**
      * Check if database is connected or not
-     *
+     * 
      * @return boolean
      */
     private function _databaseConnected()
@@ -1226,7 +1226,7 @@ class MagicObject extends stdClass // NOSONAR
             else
             {
                 throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
-            }
+            }         
         }
         catch(FindOptionException $e)
         {
@@ -1274,7 +1274,7 @@ class MagicObject extends stdClass // NOSONAR
                     $result = $persist->findAll($specification, $pageable, $sortable, $subqueryMap);
                     $stmt = null;
                 }
-
+                
                 if($pageable != null && $pageable instanceof PicoPageable)
                 {
                     $match = $this->countData($persist, $specification, $pageable, $sortable, $findOption, $result);
@@ -1290,7 +1290,7 @@ class MagicObject extends stdClass // NOSONAR
             else
             {
                 throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
-            }
+            }         
         }
         catch(FindOptionException $e)
         {
@@ -1305,7 +1305,7 @@ class MagicObject extends stdClass // NOSONAR
             throw new PDOException($e->getMessage(), intval($e->getCode()));
         }
     }
-
+    
     /**
      * Find all record without filter and sort by primary key asc
      *
@@ -1318,7 +1318,7 @@ class MagicObject extends stdClass // NOSONAR
         $startTime = microtime(true);
         return new PicoPageData($this->toArrayObject($result, false), $startTime);
     }
-
+    
     /**
      * Find all record without filter and sort by primary key desc
      *
@@ -1365,7 +1365,7 @@ class MagicObject extends stdClass // NOSONAR
                     $result = $persist->findSpecificWithSubquery($selected, $specification, $pageable, $sortable, $subqueryMap);
                     $stmt = null;
                 }
-
+                
                 if($pageable != null && $pageable instanceof PicoPageable)
                 {
                     $match = $this->countData($persist, $specification, $pageable, $sortable, $findOption, $result);
@@ -1381,7 +1381,7 @@ class MagicObject extends stdClass // NOSONAR
             else
             {
                 throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
-            }
+            }         
         }
         catch(FindOptionException $e)
         {
@@ -1435,7 +1435,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $result;
     }
-
+    
     /**
      * Find all query
      *
@@ -1451,7 +1451,7 @@ class MagicObject extends stdClass // NOSONAR
         try
         {
             if($this->_databaseConnected())
-            {
+            {  
                 $persist = new PicoDatabasePersistence($this->_database, $this);
                 $result = $persist->findAllQuery($specification, $pageable, $sortable);
             }
@@ -1468,8 +1468,8 @@ class MagicObject extends stdClass // NOSONAR
     }
 
     /**
-     * Find one record by primary key value.
-     *
+     * Find one record by primary key value. 
+     * 
      * @param mixed $params Parameters
      * @return self
      */
@@ -1496,8 +1496,8 @@ class MagicObject extends stdClass // NOSONAR
     }
 
     /**
-     * Find one record if exists by primary key value.
-     *
+     * Find one record if exists by primary key value. 
+     * 
      * @param array $params Parameters
      * @return self
      */
@@ -1562,7 +1562,7 @@ class MagicObject extends stdClass // NOSONAR
             return new PicoPageData(array(), $startTime);
         }
     }
-
+    
     /**
      * Count data from database
      *
@@ -1582,7 +1582,7 @@ class MagicObject extends stdClass // NOSONAR
             throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
         }
     }
-
+    
     /**
      * Delete by params
      *
@@ -1602,7 +1602,7 @@ class MagicObject extends stdClass // NOSONAR
             throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
         }
     }
-
+    
     /**
      * Find one with primary key value
      *
@@ -1689,14 +1689,14 @@ class MagicObject extends stdClass // NOSONAR
             throw $e;
         }
     }
-
+    
     /**
      * Delete one by params
      *
      * @param string $method Method
      * @param mixed $params Parameters
      * @param PicoSortable|string $sortable
-     * @return boolean
+     * @return PDOStatement|boolean
      */
     private function deleteOneBy($method, $params)
     {
@@ -1706,11 +1706,10 @@ class MagicObject extends stdClass // NOSONAR
             {
                 $data = $this->findOneBy($method, $params);
                 $data->delete();
-                return true;
             }
             catch(NoRecordFoundException $e)
             {
-                return false;
+                return $this;
             }
         }
         else
@@ -1718,7 +1717,7 @@ class MagicObject extends stdClass // NOSONAR
             throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
         }
     }
-
+    
     /**
      * Exists by params
      *
@@ -1739,7 +1738,7 @@ class MagicObject extends stdClass // NOSONAR
             throw new NoDatabaseConnectionException(self::MESSAGE_NO_DATABASE_CONNECTION);
         }
     }
-
+    
     /**
      * Convert boolean to text
      *
@@ -1756,7 +1755,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         else
         {
-            $boolVal = $value === true || $value == 1 || $value = "1";
+            $boolVal = $value === true || $value == 1 || $value = "1"; 
         }
         return $boolVal?$params[0]:$params[1];
     }
@@ -1783,7 +1782,7 @@ class MagicObject extends stdClass // NOSONAR
         }
         return $instance;
     }
-
+    
     /**
      * Get number of property of the object
      *
@@ -1839,13 +1838,13 @@ class MagicObject extends stdClass // NOSONAR
      * @param string $method Method name
      * @param mixed $params Parameters
      * @return mixed|null
-     */
+     */    
     public function __call($method, $params) // NOSONAR
     {
         if (strncasecmp($method, "hasValue", 8) === 0) {
             $var = lcfirst(substr($method, 8));
             return isset($this->$var);
-        }
+        } 
         else if (strncasecmp($method, "isset", 5) === 0) {
             $var = lcfirst(substr($method, 5));
             return isset($this->$var);
@@ -1853,11 +1852,11 @@ class MagicObject extends stdClass // NOSONAR
         else if (strncasecmp($method, "is", 2) === 0) {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) ? $this->$var == 1 : false;
-        }
+        } 
         else if (strncasecmp($method, "equals", 6) === 0) {
             $var = lcfirst(substr($method, 6));
             return isset($this->$var) && $this->$var == $params[0];
-        }
+        } 
         else if (strncasecmp($method, "get", 3) === 0) {
             $var = lcfirst(substr($method, 3));
             return isset($this->$var) ? $this->$var : null;
@@ -1983,7 +1982,7 @@ class MagicObject extends stdClass // NOSONAR
         else if (strncasecmp($method, "existsBy", 8) === 0) {
             $var = lcfirst(substr($method, 8));
             return $this->existsBy($var, $params);
-        }
+        } 
         else if (strncasecmp($method, "deleteBy", 8) === 0) {
             $var = lcfirst(substr($method, 8));
             return $this->deleteBy($var, $params);
@@ -2021,18 +2020,18 @@ class MagicObject extends stdClass // NOSONAR
             {
                 return isset($this->$var) && $this->$var == 1 ? self::ATTR_CHECKED : '';
             }
-        }
+        }            
         else if (strncasecmp($method, "startsWith", 10) === 0) {
             $var = lcfirst(substr($method, 10));
             $value = $params[0];
-            $caseSensitive = isset($params[1]) && $params[1];
+            $caseSensitive = isset($params[1]) && $params[1];    
             $haystack = $this->$var;
             return PicoStringUtil::startsWith($haystack, $value, $caseSensitive);
-        }
+        }  
         else if (strncasecmp($method, "endsWith", 8) === 0) {
             $var = lcfirst(substr($method, 8));
             $value = $params[0];
-            $caseSensitive = isset($params[1]) && $params[1];
+            $caseSensitive = isset($params[1]) && $params[1];  
             $haystack = $this->$var;
             return PicoStringUtil::endsWith($haystack, $value, $caseSensitive);
         }
@@ -2045,19 +2044,19 @@ class MagicObject extends stdClass // NOSONAR
             if(!empty($var) && !isset($this->_label[$var]))
             {
                 $reflexProp = new PicoAnnotationParser(get_class($this), $var, PicoAnnotationParser::PROPERTY);
-                $parameters = $reflexProp->getParameters();
+                $parameters = $reflexProp->getParameters();   
                 if(isset($parameters['Label']))
                 {
                     $label = $reflexProp->parseKeyValueAsObject($parameters['Label']);
                     $this->_label[$var] = $label->getContent();
-                }
+                }             
             }
             if(isset($this->_label[$var]))
             {
                 return $this->_label[$var];
             }
             return "";
-        }
+        } 
         else if(strncasecmp($method, "option", 6) === 0) {
             $var = lcfirst(substr($method, 6));
             return isset($this->$var) && ($this->$var == 1 || $this->$var === true) ? $params[0] : $params[1];
@@ -2077,7 +2076,7 @@ class MagicObject extends stdClass // NOSONAR
         else if (strncasecmp($method, "notEquals", 9) === 0) {
             $var = lcfirst(substr($method, 9));
             return isset($this->$var) && $this->$var != $params[0];
-        }
+        } 
     }
 
     /**
@@ -2101,16 +2100,16 @@ class MagicObject extends stdClass // NOSONAR
         }
         $upperCamel = $this->isUpperCamel();
         if($upperCamel)
-        {
+        {         
             $value = $this->valueArrayUpperCamel();
             return json_encode($value, $flag);
         }
-        else
+        else 
         {
             return json_encode($obj->value($snake), $flag);
         }
     }
-
+    
     /**
      * Stringify object
      *
@@ -2136,7 +2135,7 @@ class MagicObject extends stdClass // NOSONAR
             {
                 if($val2 instanceof self)
                 {
-
+                    
                     $value->{$key2} = $val2->stringifyObject($val2, $snake);
                 }
             }

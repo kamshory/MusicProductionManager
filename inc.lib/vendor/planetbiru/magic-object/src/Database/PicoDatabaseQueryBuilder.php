@@ -41,7 +41,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	 * @var string
 	 */
 	private $databaseType = "mysql";
-
+	
 	/**
 	 * Flag that value has been set
 	 *
@@ -65,7 +65,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 			$this->databaseType = $databaseType;
 		}
 	}
-
+	
 	/**
 	 * Get the value of databaseType
 	 */
@@ -129,7 +129,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		$this->buffer .= "into $query\r\n";
 		return $this;
 	}
-
+	
 	/**
 	 * Create field statement
 	 *
@@ -168,7 +168,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 				$vals[$key] = $this->escapeValue($val);
 			}
 			$buffer = "(".implode(", ", $vals).")";
-			$values = $buffer;
+			$values = $buffer;			
 		}
 		else
 		{
@@ -184,19 +184,19 @@ class PicoDatabaseQueryBuilder // NOSONAR
 			}
 			else
 			{
-				$values = $query;
+				$values = $query;				
 			}
 		}
-
+		
 		if($this->hasValues)
 		{
 			$this->buffer .= ",\r\n$values";
 		}
-		else
+		else 
 		{
 			$this->buffer .= "values $values";
 		}
-
+		
 		$this->hasValues = true;
 		return $this;
 	}
@@ -539,7 +539,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		}
 		return $ret;
 	}
-
+	
 	/**
 	 * Convert array to list
 	 *
@@ -783,7 +783,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Create current time statement
 	 *
@@ -797,7 +797,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Create current date time statement
 	 *
@@ -811,7 +811,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Create now statement
 	 *
@@ -865,7 +865,7 @@ class PicoDatabaseQueryBuilder // NOSONAR
 	{
 		return str_replace("'", "''", $query);
 	}
-
+	
 	/**
 	 * Add query parameter
 	 *
@@ -923,5 +923,5 @@ class PicoDatabaseQueryBuilder // NOSONAR
 		}
 		return $sql;
 	}
-
+	
 }

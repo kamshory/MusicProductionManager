@@ -25,7 +25,7 @@ class  InputEnv extends PicoRequestBase {
     public function __construct($recursive = false, $parseNullAndBool = false, $forceScalar = false)
     {
         parent::__construct($forceScalar);
-        $this->_recursive = $recursive;
+        $this->_recursive = $recursive; 
         if($parseNullAndBool)
         {
             $this->loadData($this->forceBoolAndNull($_ENV));
@@ -65,5 +65,5 @@ class  InputEnv extends PicoRequestBase {
             parent::loadData($data);
         }
         return $this;
-    }
+    } 
 }

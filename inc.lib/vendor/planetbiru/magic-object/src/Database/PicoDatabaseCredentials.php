@@ -59,7 +59,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @var string
 	 */
 	protected $databaseName = "";
-
+	
 	/**
 	 * Database schema
 	 *

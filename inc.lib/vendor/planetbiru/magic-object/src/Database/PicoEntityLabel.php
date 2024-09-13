@@ -14,28 +14,30 @@ use stdClass;
  */
 class PicoEntityLabel
 {
-    const ANNOTATION_TABLE            = "Table";
-    const ANNOTATION_LABEL            = "label";
-    const ANNOTATION_COLUMN           = "Column";
-    const ANNOTATION_JOIN_COLUMN      = "JoinColumn";
-    const ANNOTATION_VAR              = "var";
-    const ANNOTATION_ID               = "Id";
-    const ANNOTATION_GENERATED_VALUE  = "GeneratedValue";
-    const ANNOTATION_NOT_NULL         = "NotNull";
-    const ANNOTATION_DEFAULT_COLUMN   = "DefaultColumn";
-    const KEY_NAME                    = "name";
-    const KEY_NULL                    = "null";
-    const KEY_NOT_NULL                = "notnull";
-    const KEY_NULLABLE                = "nullable";
-    const KEY_INSERTABLE              = "insertable";
-    const KEY_UPDATABLE               = "updatable";
-    const KEY_STRATEGY                = "strategy";
-    const KEY_GENERATOR               = "generator";
-    const KEY_PROPERTY_TYPE           = "propertyType";
-    const KEY_VALUE                   = "value";
-    const KEY_ENTITY_OBJECT           = "entityObject";
-    const VALUE_TRUE                  = "true";
-    const VALUE_FALSE                 = "false";
+    const ANNOTATION_TABLE = "Table";
+    const ANNOTATION_LABEL = "label";
+    const ANNOTATION_COLUMN = "Column";
+    const ANNOTATION_JOIN_COLUMN = "JoinColumn";
+    const ANNOTATION_VAR = "var";
+    const ANNOTATION_ID = "Id";
+    const ANNOTATION_GENERATED_VALUE = "GeneratedValue";
+    const ANNOTATION_NOT_NULL = "NotNull";
+    const ANNOTATION_DEFAULT_COLUMN = "DefaultColumn";
+    
+    const KEY_NAME = "name";
+    const KEY_NULL = "null";
+    const KEY_NOT_NULL = "notnull";
+    const KEY_NULLABLE = "nullable";
+    const KEY_INSERTABLE = "insertable";
+    const KEY_UPDATABLE = "updatable";
+    const KEY_STRATEGY = "strategy";
+    const KEY_GENERATOR = "generator";
+    const KEY_PROPERTY_TYPE = "propertyType";
+    const KEY_VALUE = "value";
+    const KEY_ENTITY_OBJECT = "entityObject";
+    
+    const VALUE_TRUE = "true";
+    const VALUE_FALSE = "false";
 
     /**
      * Class name
@@ -53,8 +55,8 @@ class PicoEntityLabel
     /**
      * Object
      *
-     * @param MagicObject $object Entity
-     * @param string[] $langs Languages
+     * @param MagicObject $object
+     * @param string[] $langs
      */
     public function __construct($object, $langs)
     {
@@ -65,14 +67,14 @@ class PicoEntityLabel
     /**
      * Get map
      *
-     * @param string|null $lang Language
+     * @param string|null $lang
      * @return array|null
      */
     public function getMap($lang = null)
     {
         $info = $this->getObjectInfo();
         $labels = $info->labels;
-
+        
         $map = array();
 
         // get from join columns
@@ -108,8 +110,8 @@ class PicoEntityLabel
     /**
      * Filter
      *
-     * @param array $merged Merged array
-     * @param string $lang Language
+     * @param array $merged
+     * @param string $lang
      * @return array|null
      */
     private function filter($merged, $lang)
@@ -143,9 +145,9 @@ class PicoEntityLabel
     /**
      * Parse key value string
      *
-     * @param PicoAnnotationParser $reflexClass Reflection class
-     * @param string $queryString Query string
-     * @param string $parameter Parameter
+     * @param PicoAnnotationParser $reflexClass
+     * @param string $queryString
+     * @param string $parameter
      * @return array
      */
     private function parseKeyValue($reflexClass, $queryString, $parameter)
@@ -157,7 +159,7 @@ class PicoEntityLabel
         catch(InvalidQueryInputException $e)
         {
             throw new InvalidAnnotationException("Invalid annotation @".$parameter);
-        }
+        } 
     }
 
     /**
@@ -214,7 +216,7 @@ class PicoEntityLabel
                     }
                 }
             }
-
+            
             // set column type
             foreach($parameters as $param=>$val)
             {
@@ -224,7 +226,7 @@ class PicoEntityLabel
                     $columns[$prop->name][self::KEY_PROPERTY_TYPE] = $type;
                 }
             }
-
+            
             // get join column name of each parameters
             foreach($parameters as $param=>$val)
             {
@@ -246,7 +248,7 @@ class PicoEntityLabel
                     $joinColumns[$prop->name][self::KEY_PROPERTY_TYPE] = $type;
                     $joinColumns[$prop->name][self::KEY_ENTITY_OBJECT] = true;
                 }
-            }
+            }          
 
             // list primary key
             foreach($parameters as $param=>$val)
@@ -270,7 +272,7 @@ class PicoEntityLabel
                     );
                 }
             }
-
+            
             // define default column value
             foreach($parameters as $param=>$val)
             {

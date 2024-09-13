@@ -23,15 +23,15 @@ class PicoDatabaseDump
      *
      * @var PicoTableInfo
      */
-    protected $tableInfo;
-
+    protected $tableInfo;    
+    
     /**
      * Table name
      *
      * @var string
      */
     protected $picoTableName = "";
-
+    
     /**
      * Columns
      *
@@ -55,7 +55,7 @@ class PicoDatabaseDump
         $databasePersist = new PicoDatabasePersistence(null, $entity);
         $tableInfo = $databasePersist->getTableInfo();
         $picoTableName = $tableInfo->getTableName();
-
+        
         if($databaseType == PicoDatabaseType::DATABASE_TYPE_MARIADB || $databaseType == PicoDatabaseType::DATABASE_TYPE_MYSQL)
         {
             return PicoDatabaseUtilMySql::dumpStructure($tableInfo, $picoTableName, $createIfNotExists, $dropIfExists, $engine, $charset);
@@ -80,7 +80,7 @@ class PicoDatabaseDump
     public function dumpStructureTable($tableInfo, $databaseType, $createIfNotExists = false, $dropIfExists = false, $engine = 'InnoDB', $charset = 'utf8mb4')
     {
         $picoTableName = $tableInfo->getTableName();
-
+        
         if($databaseType == PicoDatabaseType::DATABASE_TYPE_MARIADB || $databaseType == PicoDatabaseType::DATABASE_TYPE_MYSQL)
         {
             return PicoDatabaseUtilMySql::dumpStructure($tableInfo, $picoTableName, $createIfNotExists, $dropIfExists, $engine, $charset);
@@ -92,7 +92,7 @@ class PicoDatabaseDump
     }
 
     /**
-     * Get entity table info
+     * Get entity table info 
      *
      * @param MagicObject $entity Entity
      * @return PicoTableInfo|null
@@ -108,7 +108,7 @@ class PicoDatabaseDump
             return null;
         }
     }
-
+    
     /**
      * Update query alter table add column
      *
@@ -125,7 +125,7 @@ class PicoDatabaseDump
         }
         return $query;
     }
-
+    
     /**
      * Update query alter table nullable
      *
@@ -141,7 +141,7 @@ class PicoDatabaseDump
         }
         return $query;
     }
-
+    
     /**
      * Update query alter table default value
      *
@@ -164,7 +164,7 @@ class PicoDatabaseDump
         }
         return $query;
     }
-
+    
     /**
      * Create query ALTER TABLE ADD COLUMN
      *
@@ -186,7 +186,7 @@ class PicoDatabaseDump
 
     /**
      * Get database
-     *
+     * 
      * @param PicoDatabase $database Database connection
      * @param MagicObject[] $entities Entities
      * @return PicoDatabase
@@ -201,12 +201,12 @@ class PicoDatabaseDump
     }
 
     /**
-     *
+     * 
      * Get database type
      * @param PicoDatabase $database Database connection
      * @return string
      */
-    public function getDatabaseType($database)
+    private function getDatabaseType($database)
     {
         if(isset($database))
         {
@@ -220,7 +220,7 @@ class PicoDatabaseDump
     }
 
     /**
-     *
+     * 
      * Get table name
      * @param string $tableName Table name
      * @param PicoTableInfo $tableInfo Table information
@@ -237,7 +237,7 @@ class PicoDatabaseDump
 
     /**
      * Get create alter table query
-     *
+     * 
      * @param string $tableName Table name
      * @param string $columnName Column name
      * @param string $columnType Column type
@@ -266,7 +266,7 @@ class PicoDatabaseDump
         $numberOfColumn = count($tableInfo->getColumns());
         if(!empty($tableInfo->getColumns()))
         {
-            $dbColumnNames = array();
+            $dbColumnNames = array();       
             $rows = PicoColumnGenerator::getColumnList($database, $tableInfo->getTableName());
             $createdColumns = array();
             if(is_array($rows) && !empty($rows))
@@ -284,8 +284,8 @@ class PicoDatabaseDump
                         $createdColumns[] = $entityColumn['name'];
                         $query = $this->createQueryAlterTable($tableName, $entityColumn['name'], $entityColumn['type']);
                         $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
-                        $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);
-                        $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());
+                        $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
+                        $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());                   
                         $queryAlter[]  = $query.";";
                     }
                     $lastColumn = $entityColumn['name'];
@@ -296,7 +296,7 @@ class PicoDatabaseDump
             else if($numberOfColumn > 0)
             {
                 $queryAlter[] = $this->dumpStructureTable($tableInfo, $database->getDatabaseType());
-            }
+            }          
         }
         return $queryAlter;
     }
@@ -318,7 +318,7 @@ class PicoDatabaseDump
         $numberOfColumn = count($tableInfo->getColumns());
         if(!empty($tableInfo->getColumns()))
         {
-            $dbColumnNames = array();
+            $dbColumnNames = array();         
             $rows = PicoColumnGenerator::getColumnList($database, $tableInfo->getTableName());
             $createdColumns = array();
             if(is_array($rows) && !empty($rows))
@@ -336,8 +336,8 @@ class PicoDatabaseDump
                         $createdColumns[] = $entityColumn['name'];
                         $query = $this->createQueryAlterTable($tableName, $entityColumn['name'], $entityColumn['type']);
                         $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
-                        $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);
-                        $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());
+                        $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
+                        $query = $this->updateQueryAlterTableAddColumn($query, $lastColumn, $database->getDatabaseType());                    
                         $queryAlter[]  = $query.";";
                     }
                     $lastColumn = $entityColumn['name'];
@@ -348,7 +348,7 @@ class PicoDatabaseDump
             else if($numberOfColumn > 0)
             {
                 $queryAlter[] = $this->dumpStructure($entity, $database->getDatabaseType());
-            }
+            }     
         }
         return $queryAlter;
     }
@@ -367,7 +367,7 @@ class PicoDatabaseDump
         $queries = array();
         if(isset($pk) && is_array($pk) && !empty($pk))
         {
-
+            
             foreach($pk as $primaryKey)
             {
                 if(in_array($primaryKey['name'], $createdColumns))
@@ -377,7 +377,7 @@ class PicoDatabaseDump
                     $queries[] = "\tADD PRIMARY KEY ($primaryKey[name])";
                     $queries[] = ";";
                 }
-            }
+            }                 
             $queryAlter[] = implode("\r\n", $queries);
         }
         return $queryAlter;
@@ -385,7 +385,7 @@ class PicoDatabaseDump
 
     /**
      * Add auto increment
-     *
+     * 
      * @param string[] $queryAlter  Query alter
      * @param PicoTableInfoExtended $tableInfo Table information
      * @param string $tableName Table name
@@ -403,12 +403,12 @@ class PicoDatabaseDump
             {
                 $query = sprintf("%s %s", $entityColumn['name'], $entityColumn['type']);
                 $query = $this->updateQueryAlterTableNullable($query, $entityColumn);
-                $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);
-
+                $query = $this->updateQueryAlterTableDefaultValue($query, $entityColumn);  
+                
                 if($databaseType == PicoDatabaseType::DATABASE_TYPE_POSTGRESQL)
                 {
                     $columnName = $entityColumn['name'];
-                    $sequenceName = $tableName."_".$columnName;
+                    $sequenceName = $tableName."_".$columnName; 
                     $queries[] = "";
                     $queries[] = "DROP SEQUENCE IF EXISTS $sequenceName;";
                     $queries[] = "CREATE SEQUENCE $sequenceName MINVALUE 1;";
@@ -430,7 +430,7 @@ class PicoDatabaseDump
 
     /**
      * Get auto increment keys
-     *
+     * 
      * @param PicoTableInfo $tableInfo Table information
      * @return array
      */
@@ -482,7 +482,7 @@ class PicoDatabaseDump
 
         return $mergedTableInfo;
     }
-
+    
     /**
      * Get merged table info
      *
@@ -507,9 +507,9 @@ class PicoDatabaseDump
 
         return $mergedTableInfo;
     }
-
+    
     /**
-     * Dump data to SQL.
+     * Dump data to SQL. 
      * WARNING!!! Use different instance to dump different entity
      *
      * @param MagicObject|PicoPageData $data Data to be dump
@@ -537,13 +537,13 @@ class PicoDatabaseDump
             {
                 return "";
             }
-
+            
             $databasePersist = new PicoDatabasePersistence(null, $entity);
             $this->tableInfo = $databasePersist->getTableInfo();
             $this->picoTableName = $this->tableInfo->getTableName();
             $this->columns = $this->tableInfo->getColumns();
         }
-
+        
         if($databaseType == PicoDatabaseType::DATABASE_TYPE_MARIADB || $databaseType == PicoDatabaseType::DATABASE_TYPE_MYSQL)
         {
             return PicoDatabaseUtilMySql::dumpData($this->columns, $this->picoTableName, $data);

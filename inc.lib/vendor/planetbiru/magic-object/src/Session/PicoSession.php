@@ -22,7 +22,7 @@ class PicoSession
      * @var boolean
      */
     private $_sessionState = self::SESSION_NOT_STARTED; //NOSONAR
-
+ 
     /**
      * The instance of the object
      *
@@ -55,20 +55,20 @@ class PicoSession
         else if($sessConf->getSaveHandler() == "files" && $sessConf->getSavePath() != "")
         {
             $this->saveToFiles($sessConf->getSavePath());
-        }
+        }     
     }
 
     /**
      * Returns the instance of 'PicoSession'.
      * The session is automatically initialized if it wasn't.
-     *
+     * 
      * @param string $name
      * @param integer $maxLifeTime
      * @return self
      **/
     public static function getInstance($name = null, $maxLifeTime = 0)
     {
-        if (!isset(self::$_instance))
+        if (!isset(self::$_instance)) 
         {
             self::$_instance = new self;
             if(isset($name))
@@ -87,12 +87,12 @@ class PicoSession
 
     /**
      * (Re)starts the session.
-     *
+     * 
      * @return boolean true if the session has been initialized, else false.
      **/
     public function startSession()
     {
-        if ($this->_sessionState == self::SESSION_NOT_STARTED)
+        if ($this->_sessionState == self::SESSION_NOT_STARTED) 
         {
             $this->_sessionState = session_start();
         }
@@ -113,10 +113,10 @@ class PicoSession
     /**
      * Stores datas in the session.
      * Example: $_instance->foo = 'bar';
-     *
+     * 
      * @param string $name Name of the datas.
      * @param string $value Your datas.
-     * @return void
+     * @return void 
      **/
     public function __set($name, $value)
     {
@@ -126,7 +126,7 @@ class PicoSession
     /**
      * Gets datas from the session.
      * Example: echo $_instance->foo;
-     *
+     * 
      * @param string $name Name of the datas to get.
      * @return mixed Datas stored in session.
      **/
@@ -160,12 +160,12 @@ class PicoSession
 
     /**
      * Destroys the current session.
-     *
+     * 
      * @return boolean true is session has been deleted, else false.
      **/
     public function destroy()
     {
-        if ($this->_sessionState == self::SESSION_STARTED)
+        if ($this->_sessionState == self::SESSION_STARTED) 
         {
             $this->_sessionState = !session_destroy();
             unset($_SESSION);
@@ -202,7 +202,7 @@ class PicoSession
 
     /**
      * Support samesite cookie flag in both php 7.2 (current production) and php >= 7.3 (when we get there)
-     * From: https://github.com/GoogleChromeLabs/samesite-examples/blob/master/php.md and https://stackoverflow.com/a/46971326/2308553
+     * From: https://github.com/GoogleChromeLabs/samesite-examples/blob/master/php.md and https://stackoverflow.com/a/46971326/2308553 
      *
      * @see https://www.php.net/manual/en/function.setcookie.php
      *
@@ -269,7 +269,7 @@ class PicoSession
         ini_set("session.cookie_lifetime", $lifeTime);
         return $this;
     }
-
+    
     /**
      * Save session to redis
      *

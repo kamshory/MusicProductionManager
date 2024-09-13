@@ -20,7 +20,6 @@ use MagicObject\MagicObject;
 use MagicObject\Util\ClassUtil\ExtendedReflectionClass;
 use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 use MagicObject\Util\ClassUtil\PicoEmptyParameter;
-use MagicObject\Util\Database\PicoDatabaseUtil;
 use ReflectionProperty;
 
 /**
@@ -1285,10 +1284,6 @@ class PicoDatabasePersistence // NOSONAR
                 {
                     $wheres[] = $column . "is " . $value;
                 }
-                else if(is_array($propertyValues[$i]))
-                {
-                    $wheres[] = $column . "in (" . $value.")";
-                }
                 else
                 {
                     $wheres[] = $column . "= " . $value;
@@ -1635,7 +1630,15 @@ class PicoDatabasePersistence // NOSONAR
      */
     private function trimWhere($where)
     {
-        return PicoDatabaseUtil::trimWhere($where);
+        if(stripos($where, "(1=1) or ") === 0)
+        {
+            $where = substr($where, 9);
+        }
+        if(stripos($where, "(1=1) and ") === 0)
+        {
+            $where = substr($where, 10);
+        }
+        return $where;
     }
 
     /**
@@ -2160,7 +2163,7 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get findAll query
      *
-     * @param PicoSpecification|null $specification Specification
+     * @param PicoSpecification $specification Specification
      * @param PicoPageable|null $pageable Pageable
      * @param PicoSortable|string|null $sortable Sortable
      * @param PicoTableInfo $info Table information
@@ -2179,7 +2182,7 @@ class PicoDatabasePersistence // NOSONAR
      * Get findSpecific query
      *
      * @param string $selected
-     * @param PicoSpecification|null $specification Specification
+     * @param PicoSpecification $specification Specification
      * @param PicoPageable|null $pageable Pageable
      * @param PicoSortable|string|null $sortable Sortable
      * @param PicoTableInfo $info Table information
@@ -2223,9 +2226,9 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get all record from database wihout filter
      *
-     * @param PicoSpecification|null $specification Specification
+     * @param PicoSpecification $specification Specification
      * @param PicoSortable|string|null $sortable Sortable
-     * @param array|null $subqueryMap
+     * @param array $subqueryMap
      * @throws EntityException|EmptyResultException
      */
     public function findOne($specification, $sortable = null, $subqueryMap = null)
@@ -2245,10 +2248,10 @@ class PicoDatabasePersistence // NOSONAR
     /**
      * Get all record from database wihout filter
      *
-     * @param PicoSpecification|null $specification Specification
+     * @param PicoSpecification $specification Specification
      * @param PicoPageable|null $pageable Pageable
      * @param PicoSortable|string|null $sortable Sortable
-     * @param array|null $subqueryMap
+     * @param array $subqueryMap
      * @throws EntityException|EmptyResultException
      */
     public function findAll($specification, $pageable = null, $sortable = null, $subqueryMap = null)
