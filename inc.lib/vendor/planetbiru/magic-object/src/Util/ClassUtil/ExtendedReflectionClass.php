@@ -7,19 +7,19 @@ use ReflectionClass;
 
 /**
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) Ozgur (Ozzy) Giritli <ozgur@zeronights.com>
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,26 +30,23 @@ use ReflectionClass;
  */
 class ExtendedReflectionClass extends ReflectionClass {
 
-
 	/**
 	 * Array of use statements for class.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $useStatements = array();
 
-
 	/**
 	 * Check if use statements have been parsed.
-	 * 
+	 *
 	 * @var boolean
 	 */
 	protected $useStatementsParsed = false;
 
-
 	/**
 	 * Parse class file and get use statements from current namespace.
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function parseUseStatements() {
@@ -69,14 +66,13 @@ class ExtendedReflectionClass extends ReflectionClass {
 		return $this->useStatements;
 	}
 
-
 	/**
 	 * Read file source up to the line where our class is defined.
-	 * 
+	 *
 	 * @return string
 	 */
 	private function readFileSource() {
-		
+
 		$file = fopen($this->getFileName(), 'r');
 		$line = 0;
 		$source = '';
@@ -92,17 +88,16 @@ class ExtendedReflectionClass extends ReflectionClass {
 		}
 
 		fclose($file);
-		
+
 		return $source;
 	}
-
 
 	/**
 	 * Parse the use statements from read source by
 	 * tokenizing and reading the tokens. Returns
 	 * an array of use statements and aliases.
-	 * 
-	 * @param string $source
+	 *
+	 * @param string $source Source
 	 * @return array
 	 */
 	private function tokenizeSource($source) //NOSONAR
@@ -204,13 +199,12 @@ class ExtendedReflectionClass extends ReflectionClass {
 			}
 		}
 
-
 		// Make sure the as key has the name of the class even
 		// if there is no alias in the use statement.
 		foreach ($useStatements as &$useStatement) {
 
 			if (empty($useStatement['as'])) {
-			
+
 				$useStatement['as'] = $this->baseName($useStatement['class']);
 			}
 		}
@@ -218,10 +212,9 @@ class ExtendedReflectionClass extends ReflectionClass {
 		return $useStatements;
 	}
 
-
 	/**
 	 * Return array of use statements from class.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getUseStatements() {
@@ -232,7 +225,7 @@ class ExtendedReflectionClass extends ReflectionClass {
 	/**
 	 * Base name of class
 	 *
-	 * @param string $className
+	 * @param string $className Class name
 	 * @return string
 	 */
 	private function baseName($className)
@@ -246,11 +239,10 @@ class ExtendedReflectionClass extends ReflectionClass {
 		return $className;
 	}
 
-
 	/**
 	 * Check if class is using a class or an alias of a class.
-	 * 
-	 * @param string $class
+	 *
+	 * @param string $class Class name
 	 * @return boolean
 	 */
 	public function hasUseStatement($class) {

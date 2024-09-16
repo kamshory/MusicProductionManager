@@ -4,21 +4,21 @@ namespace MagicObject\Util;
 
 class PicoTestValueUtil
 {
-    
+
     /**
      * Value to be return
      *
      * @var mixed
      */
     private $returnValue;
-    
+
     /**
      * Condition
      *
      * @var boolean
      */
     private $condition;
-    
+
     /**
      * Do return
      *
@@ -35,7 +35,7 @@ class PicoTestValueUtil
         $this->returnValue = $returnValue;
         return $this;
     }
-    
+
     /**
      * Do return selected
      *
@@ -53,7 +53,7 @@ class PicoTestValueUtil
         $this->returnValue = $returnValue;
         return $this;
     }
-    
+
     /**
      * Do return selected=selected
      *
@@ -71,7 +71,7 @@ class PicoTestValueUtil
         $this->returnValue = $returnValue;
         return $this;
     }
-    
+
     /**
      * Do return checked
      *
@@ -89,7 +89,7 @@ class PicoTestValueUtil
         $this->returnValue = $returnValue;
         return $this;
     }
-    
+
     /**
      * Do return checked=checked
      *
@@ -107,7 +107,7 @@ class PicoTestValueUtil
         $this->returnValue = $returnValue;
         return $this;
     }
-    
+
     /**
      * Then return
      *
@@ -123,7 +123,7 @@ class PicoTestValueUtil
         }
         return null;
     }
-    
+
     /**
      * When
      *
@@ -149,7 +149,7 @@ class PicoTestValueUtil
             return $this;
         }
     }
-    
+
     /**
      * When equals
      *

@@ -32,6 +32,7 @@ includes:
   - database-query-builder
   - upload-file
   - data-table
+  - database-migration
 ---
 </div>
 

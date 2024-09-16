@@ -31,7 +31,7 @@ class PicoPagination
      * @var integer
      */
     private $offset = 0;
-    
+
     /**
      * Order by
      *
@@ -126,7 +126,7 @@ class PicoPagination
      * @var array $filter ORDER BY filter
      * @var string $defaultOrderBy Default ORDER BY
      * @return string
-     */ 
+     */
     public function getOrderBy($filter = null, $defaultOrderBy = null)
     {
         $orderBy = PicoStringUtil::camelize($this->orderBy);
@@ -157,7 +157,7 @@ class PicoPagination
      *
      * @var string $defaultOrderType Default order type
      * @return string
-     */ 
+     */
     public function getOrderType($defaultOrderType = null)
     {
         $orderType = $this->orderType;
@@ -178,13 +178,13 @@ class PicoPagination
             $orderType = $defaultOrderType;
         }
         return $orderType;
-    }   
+    }
 
     /**
      * Get current page
      *
      * @return integer
-     */ 
+     */
     public function getCurrentPage()
     {
         return $this->currentPage;
@@ -194,7 +194,7 @@ class PicoPagination
      * Get page size
      *
      * @return integer
-     */ 
+     */
     public function getPageSize()
     {
         return $this->pageSize;
@@ -204,12 +204,12 @@ class PicoPagination
      * Get offset
      *
      * @return integer
-     */ 
+     */
     public function getOffset()
     {
         return $this->offset;
     }
-    
+
     /**
      * Get page URL
      *

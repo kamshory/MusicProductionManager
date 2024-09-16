@@ -13,6 +13,11 @@ use Symfony\Component\Yaml\Yaml;
  */
 class PicoSecretParser
 {
+    private function __construct()
+    {
+        // prevent object construction from outside the class
+    }
+    
     /**
      * Parse SecretObject
      * @param SecretObject $data
@@ -20,22 +25,22 @@ class PicoSecretParser
      */
     private static function parseSecretObject($data)
     {
-        $SecretObject = new SecretObject();
+        $secretObject = new SecretObject();
         $values = $data->value();
         foreach ($values as $key => $value) {
             $key2 = PicoStringUtil::camelize($key);
             if(is_scalar($value))
             {
-                $SecretObject->set($key2, $value);
+                $secretObject->set($key2, $value);
             }
             else
             {
-                $SecretObject->set($key2, self::parseRecursiveObject($value));
+                $secretObject->set($key2, self::parseRecursiveObject($value));
             }
         }
-        return $SecretObject;
+        return $secretObject;
     }
-    
+
     /**
      * Parse Object
      * @param stdClass|array $data
@@ -43,31 +48,31 @@ class PicoSecretParser
      */
     private static function parseObject($data)
     {
-        $SecretObject = new SecretObject();
+        $secretObject = new SecretObject();
         foreach ($data as $key => $value) {
             $key2 = PicoStringUtil::camelize($key);
             if(is_scalar($value))
             {
-                $SecretObject->set($key2, $value);
+                $secretObject->set($key2, $value);
             }
             else
             {
-                $SecretObject->set($key2, self::parseRecursiveObject($value));
+                $secretObject->set($key2, self::parseRecursiveObject($value));
             }
         }
-        return $SecretObject;
+        return $secretObject;
     }
-    
+
     /**
      * Check if input is associated array
      *
-     * @param array $array
+     * @param array $array Array
      * @return boolean
      */
     private static function hasStringKeys($array) {
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
-    
+
     /**
      * Parse recursive
      * @param mixed $data
@@ -97,13 +102,13 @@ class PicoSecretParser
         }
         return $result;
     }
-    
+
     /**
      * Update object
      *
-     * @param SecretObject $obj
-     * @param string $key
-     * @param mixed $val
+     * @param SecretObject $obj Secret object
+     * @param string $key Property name
+     * @param mixed $val Property value
      * @return SecretObject
      */
     private static function updateObject($obj, $key, $val)
@@ -129,25 +134,25 @@ class PicoSecretParser
         }
         return $obj;
     }
-    
+
     /**
      * Check if value is object
      *
-     * @param [type] $value
+     * @param mixed $value Value to be checked
      * @return boolean
      */
     private static function isObject($value)
     {
-        if ($value instanceof stdClass || is_object($value))  
+        if ($value instanceof stdClass || is_object($value))
         {
             return true;
         }
         return false;
     }
-    
+
     /**
      * Parse recursive
-     * @param array $data
+     * @param array $data Data to be parsed
      */
     public static function parseRecursiveArray($data)
     {
@@ -179,7 +184,7 @@ class PicoSecretParser
         }
         return $result;
     }
-    
+
     /**
      * Parse from Yaml recursively
      */
@@ -194,7 +199,7 @@ class PicoSecretParser
         }
         return null;
     }
-    
+
     /**
      * Parse from JSON recursively
      */

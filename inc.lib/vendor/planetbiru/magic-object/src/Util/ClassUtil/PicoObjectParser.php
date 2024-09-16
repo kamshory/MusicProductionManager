@@ -15,7 +15,7 @@ class PicoObjectParser
 {
     /**
      * Parse MagicObject
-     * @param MagicObject $data
+     * @param MagicObject $data Data
      * @return MagicObject
      */
     private static function parseMagicObject($data)
@@ -35,10 +35,10 @@ class PicoObjectParser
         }
         return $magicObject;
     }
-    
+
     /**
      * Parse Object
-     * @param stdClass|array $data
+     * @param stdClass|array $data Data
      * @return MagicObject
      */
     private static function parseObject($data)
@@ -57,20 +57,20 @@ class PicoObjectParser
         }
         return $magicObject;
     }
-    
+
     /**
      * Check if input is associated array
      *
-     * @param array $array
+     * @param array $array Array
      * @return boolean
      */
     private static function hasStringKeys($array) {
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
-    
+
     /**
      * Parse recursive
-     * @param mixed $data
+     * @param mixed $data Data
      * @return mixed
      */
     public static function parseRecursiveObject($data)
@@ -97,13 +97,13 @@ class PicoObjectParser
         }
         return $result;
     }
-    
+
     /**
      * Update object
      *
-     * @param MagicObject $obj
-     * @param string $key
-     * @param mixed $val
+     * @param MagicObject $obj Magic object
+     * @param string $key Property name
+     * @param mixed $val Property value
      * @return MagicObject
      */
     private static function updateObject($obj, $key, $val)
@@ -129,25 +129,25 @@ class PicoObjectParser
         }
         return $obj;
     }
-    
+
     /**
      * Check if value is object
      *
-     * @param [type] $value
+     * @param mixed $value Value to be checked
      * @return boolean
      */
     private static function isObject($value)
     {
-        if ($value instanceof stdClass || is_object($value))  
+        if ($value instanceof stdClass || is_object($value))
         {
             return true;
         }
         return false;
     }
-    
+
     /**
      * Parse recursive
-     * @param array $data
+     * @param array $data Data to be parsed
      */
     public static function parseRecursiveArray($data)
     {
@@ -179,10 +179,10 @@ class PicoObjectParser
         }
         return $result;
     }
-    
+
     /**
      * Parse from Yaml recursively
-     * @param string $yamlString
+     * @param string $yamlString YAML string
      */
     public static function parseYamlRecursive($yamlString)
     {
@@ -195,10 +195,10 @@ class PicoObjectParser
         }
         return null;
     }
-    
+
     /**
      * Parse from JSON recursively
-     * @param mixed $data
+     * @param mixed $data Data to be parsed
      */
     public static function parseJsonRecursive($data) //NOSONAR
     {
@@ -222,7 +222,7 @@ class PicoObjectParser
     /**
      * Parse string
      *
-     * @param string $data
+     * @param string $data Data
      * @return mixed
      */
     public static function parseString($data) //NOSONAR

@@ -3469,7 +3469,7 @@ if($inputGet->getUserAction() == UserAction::ACTIVATE)
 				$album->setAdminAskEdit($currentAction->getUserId());
 				$album->setTimeAskEdit($currentAction->getTime());
 				$album->setIpAskEdit($currentAction->getIp());
-				$album->setWaitingFor(WaitingFor::ACTIVATE)->update();
+				$album->setActive(WaitingFor::ACTIVATE)->update();
 			}
 			catch(Exception $e)
 			{
@@ -3530,7 +3530,7 @@ if($inputGet->getUserAction() == UserAction::ACTIVATE)
 				->setAdminAskEdit($currentAction->getUserId())
 				->setTimeAskEdit($currentAction->getTime())
 				->setIpAskEdit($currentAction->getIp())
-				->setWaitingFor(WaitingFor::ACTIVATE)
+				->setActive(WaitingFor::ACTIVATE)
 				->update();
 			}
 			catch(Exception $e)
@@ -3557,7 +3557,7 @@ $album
 ->setAdminAskEdit($currentAction->getUserId())
 ->setTimeAskEdit($currentAction->getTime())
 ->setIpAskEdit($currentAction->getIp())
-->setWaitingFor(WaitingFor::ACTIVATE)
+->setActive(WaitingFor::ACTIVATE)
 ->update();
 ```
 

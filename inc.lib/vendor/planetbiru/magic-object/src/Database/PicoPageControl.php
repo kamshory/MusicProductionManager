@@ -118,6 +118,11 @@ class PicoPageControl
         return $this->__toString();
     }
 
+    /**
+     * Create HTML
+     *
+     * @return string
+     */
     public function __toString()
     {
         $lines = array();

@@ -55,7 +55,7 @@ class PicoPredicate //NOSONAR
             }
         }
     }
-    
+
     /**
      * Return true if require real join table
      *
@@ -76,18 +76,15 @@ class PicoPredicate //NOSONAR
     {
         $this->field = $field;
         $this->value = $value;
-        $this->comparation = PicoDataComparation::equals($value);
+        if(is_array($value))
+        {
+            $this->comparation = PicoDataComparation::in($value);
+        }
+        else
+        {
+            $this->comparation = PicoDataComparation::equals($value);
+        }
         return $this;
-    }
-    
-    /**
-     * Is NULL
-     * @param string $field Field name
-     * @return self
-     */
-    public function isNull($field)
-    {
-        return $this->equals($field, null);
     }
 
     /**
@@ -100,10 +97,27 @@ class PicoPredicate //NOSONAR
     {
         $this->field = $field;
         $this->value = $value;
-        $this->comparation = new PicoDataComparation($value, PicoDataComparation::NOT_EQUALS);
+        if(is_array($value))
+        {
+            $this->comparation = PicoDataComparation::notIn($value);
+        }
+        else
+        {
+            $this->comparation = PicoDataComparation::notEquals($value);
+        }
         return $this;
     }
-    
+
+    /**
+     * Is NULL
+     * @param string $field Field name
+     * @return self
+     */
+    public function isNull($field)
+    {
+        return $this->equals($field, null);
+    }
+
     /**
      * Is Not NULL
      * @param string $field Field name
@@ -113,20 +127,24 @@ class PicoPredicate //NOSONAR
     {
         return $this->notEquals($field, null);
     }
-    
+
     /**
      * In
      * @param string $field Field name
-     * @param mixed $value Value
+     * @param mixed[] $values Value
      * @return self
      */
-    public function in($field, $value)
+    public function in($field, $values)
     {
-        if(!empty($value))
+        if(!empty($values))
         {
+            if(is_scalar($values))
+            {
+                $values = array($values);
+            }
             $this->field = $field;
-            $this->value = $value;
-            $this->comparation = PicoDataComparation::in($value);
+            $this->value = $values;
+            $this->comparation = PicoDataComparation::in($values);
         }
         return $this;
     }
@@ -134,14 +152,21 @@ class PicoPredicate //NOSONAR
     /**
      * Not in
      * @param string $field Field name
-     * @param mixed $value Value
+     * @param mixed[] $values Value
      * @return self
      */
-    public function notIn($field, $value)
+    public function notIn($field, $values)
     {
-        $this->field = $field;
-        $this->value = $value;
-        $this->comparation = PicoDataComparation::notIn($value);
+        if(!empty($values))
+        {
+            if(is_scalar($values))
+            {
+                $values = array($values);
+            }
+            $this->field = $field;
+            $this->value = $values;
+            $this->comparation = PicoDataComparation::notIn($values);
+        }
         return $this;
     }
 
@@ -183,7 +208,7 @@ class PicoPredicate //NOSONAR
     {
         $this->field = $field;
         $this->value = $value;
-        $this->comparation = new PicoDataComparation($value, PicoDataComparation::LESS_THAN);
+        $this->comparation = PicoDataComparation::lessThan($value);
         return $this;
     }
 
@@ -197,7 +222,7 @@ class PicoPredicate //NOSONAR
     {
         $this->field = $field;
         $this->value = $value;
-        $this->comparation = new PicoDataComparation($value, PicoDataComparation::GREATER_THAN);
+        $this->comparation = PicoDataComparation::greaterThan($value);
         return $this;
     }
 
@@ -211,7 +236,7 @@ class PicoPredicate //NOSONAR
     {
         $this->field = $field;
         $this->value = $value;
-        $this->comparation = new PicoDataComparation($value, PicoDataComparation::LESS_THAN_OR_EQUALS);
+        $this->comparation = PicoDataComparation::lessThanOrEquals($value);
         return $this;
     }
 
@@ -225,7 +250,7 @@ class PicoPredicate //NOSONAR
     {
         $this->field = $field;
         $this->value = $value;
-        $this->comparation = new PicoDataComparation($value, PicoDataComparation::GREATER_THAN_OR_EQUALS);
+        $this->comparation = PicoDataComparation::greaterThanOrEquals($value);
         return $this;
     }
 
@@ -233,7 +258,7 @@ class PicoPredicate //NOSONAR
      * Get the value of field
      *
      * @return string
-     */ 
+     */
     public function getField()
     {
         return $this->field;
@@ -243,7 +268,7 @@ class PicoPredicate //NOSONAR
      * Get value
      *
      * @return mixed
-     */ 
+     */
     public function getValue()
     {
         return $this->value;
@@ -253,7 +278,7 @@ class PicoPredicate //NOSONAR
      * Get data comparation
      *
      * @return PicoDataComparation
-     */ 
+     */
     public function getComparation()
     {
         return $this->comparation;
@@ -263,7 +288,7 @@ class PicoPredicate //NOSONAR
      * Get filter logic
      *
      * @return string
-     */ 
+     */
     public function getFilterLogic()
     {
         return $this->filterLogic;
@@ -272,42 +297,42 @@ class PicoPredicate //NOSONAR
     /**
      * Set filter logic
      *
-     * @param string $filterLogic  Filter logic
+     * @param string $filterLogic Filter logic
      *
      * @return self
-     */ 
+     */
     public function setFilterLogic($filterLogic)
     {
         $this->filterLogic = $filterLogic;
         return $this;
     }
-    
+
     /**
      * Generate LIKE STARTS wildcard
      *
-     * @param string $value
+     * @param string $value Value
      * @return string
      */
     public static function generateLikeStarts($value)
     {
         return "$value%";
     }
-    
+
     /**
      * Generate LIKE ENDS wildcard
      *
-     * @param string $value
+     * @param string $value Value
      * @return string
      */
     public static function generateLikeEnds($value)
     {
         return "%$value";
     }
-    
+
     /**
      * Generate LIKE CONTAINS wildcard
      *
-     * @param string $value
+     * @param string $value Value
      * @return string
      */
     public static function generateLikeContains($value)
@@ -316,10 +341,10 @@ class PicoPredicate //NOSONAR
     }
 
     /**
-     * Magic method
+     * Magic method to handle undefined method
      *
-     * @param string $method
-     * @param array $params
+     * @param string $method Method name
+     * @param array $params Parameters
      * @return self|mixed|null
      */
     public function __call($method, $params)
@@ -333,6 +358,17 @@ class PicoPredicate //NOSONAR
     }
 
     /**
+     * Magic object to set value
+     *
+     * @param string $name Column name
+     * @param mixed|mixed[] $value Column value
+     */
+    public function __set($name, $value)
+    {
+        $this->equals($name, $value);
+    }
+
+    /**
      * Get instance of PicoPredicate
      *
      * @return PicoPredicate
@@ -341,40 +377,41 @@ class PicoPredicate //NOSONAR
     {
         return new self;
     }
-    
+
     /**
      * Function lower
      *
-     * @param string $value
+     * @param string $value Function value
      * @return string
      */
     public static function functionLower($value)
     {
         return "lower($value)";
     }
-    
+
     /**
      * Function upper
      *
-     * @param string $value
+     * @param string $value Function value
      * @return string
      */
     public static function functionUpper($value)
     {
         return "upper($value)";
     }
-    
+
     /**
      * Function lower
      *
-     * @param string $value
+     * @param string $function Function name
+     * @param string $value Function value
      * @return string
      */
     public static function functionAndValue($function, $value)
     {
         return sprintf("%s(%s)", $function, $value);
     }
-    
+
     /**
      * Magic method to debug object
      *

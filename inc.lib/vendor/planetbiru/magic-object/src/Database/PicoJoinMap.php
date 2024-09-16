@@ -14,35 +14,35 @@ class PicoJoinMap
      * @var string
      */
     private $propertyName;
-    
+
     /**
      * Column name
      *
      * @var string
      */
     private $columnName;
-    
+
     /**
      * Entity name
      *
      * @var string
      */
     private $entity;
-    
+
     /**
      * Table name
      *
      * @var string
      */
     private $joinTable;
-    
+
     /**
      * Table alias
      *
      * @var string
      */
     private $joinTableAlias;
-    
+
     /**
      * Constructor
      *
@@ -60,12 +60,12 @@ class PicoJoinMap
         $this->joinTable = $joinTable;
         $this->joinTableAlias = $joinTableAlias;
     }
-    
+
     /**
      * Get property name name
      *
      * @return string
-     */ 
+     */
     public function getPropertyName()
     {
         return $this->propertyName;
@@ -75,7 +75,7 @@ class PicoJoinMap
      * Get column name
      *
      * @return string
-     */ 
+     */
     public function getColumnName()
     {
         return $this->columnName;
@@ -85,7 +85,7 @@ class PicoJoinMap
      * Get entity name
      *
      * @return string
-     */ 
+     */
     public function getEntity()
     {
         return $this->entity;
@@ -95,7 +95,7 @@ class PicoJoinMap
      * Get table name
      *
      * @return string
-     */ 
+     */
     public function getJoinTable()
     {
         return $this->joinTable;
@@ -105,7 +105,7 @@ class PicoJoinMap
      * Get table alias
      *
      * @return string
-     */ 
+     */
     public function getJoinTableAlias()
     {
         return $this->joinTableAlias;
@@ -120,10 +120,10 @@ class PicoJoinMap
     {
         return json_encode(
             array(
-                'propertyName' => $this->propertyName,
-                'columnName' => $this->columnName,
-                'entity' => $this->entity,
-                'joinTable' => $this->joinTable,
+                'propertyName'   => $this->propertyName,
+                'columnName'     => $this->columnName,
+                'entity'         => $this->entity,
+                'joinTable'      => $this->joinTable,
                 'joinTableAlias' => $this->joinTableAlias
                 )
             );

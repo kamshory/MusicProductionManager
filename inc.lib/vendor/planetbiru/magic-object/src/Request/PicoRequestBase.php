@@ -47,7 +47,7 @@ class PicoRequestBase extends stdClass //NOSONAR
             $this->classParams[$paramName] = $vals;
         }
     }
-    
+
     /**
      * Load data to object
      * @param mixed $data
@@ -214,7 +214,7 @@ class PicoRequestBase extends stdClass //NOSONAR
         }
         return $this->filterValue(isset($var[$variable_name])?$var[$variable_name]:null, $filter, $escapeSQL);
     }
-    
+
     /**
      * Filter value
      *
@@ -228,7 +228,7 @@ class PicoRequestBase extends stdClass //NOSONAR
     public function filterValue($val, $filter = PicoFilterConstant::FILTER_DEFAULT, $escapeSQL = false, $nullIfEmpty = false, $requireScalar = false)
     {
         $ret = null;
-        
+
         if(($requireScalar || $this->forceScalar) && (isset($val) && !is_scalar($val)))
         {
             // If application require scalar but user give non-scalar, MagicObject will return null
@@ -255,7 +255,7 @@ class PicoRequestBase extends stdClass //NOSONAR
                 $ret->{$k} = $this->filterValueSingle($v, $filter, $escapeSQL, $nullIfEmpty);
             }
         }
-        return $ret;  
+        return $ret;
     }
 
     /**
@@ -377,7 +377,7 @@ class PicoRequestBase extends stdClass //NOSONAR
             }
         }
         if(
-            $escapeSQL && 
+            $escapeSQL &&
             (
                 $filter == PicoFilterConstant::FILTER_SANITIZE_EMAIL ||
                 $filter == PicoFilterConstant::FILTER_SANITIZE_ENCODED ||
@@ -394,7 +394,7 @@ class PicoRequestBase extends stdClass //NOSONAR
         }
         if($filter == PicoFilterConstant::FILTER_SANITIZE_BOOL){
             $val = trim(preg_replace("/\s+/"," ",$val)); // NOSONAR
-            return ($val != null && !empty($val)) && ($val === true || $val == 1 || $val == "1"); 
+            return ($val != null && !empty($val)) && ($val === true || $val == 1 || $val == "1");
         }
 
         if(is_string($val) && empty($val) && $nullIfEmpty)
@@ -459,18 +459,18 @@ class PicoRequestBase extends stdClass //NOSONAR
      * @return mixed|null
      */
     public function __call($method, $params) //NOSONAR
-    { 
-        if (strncasecmp($method, "countable", 9) === 0) 
+    {
+        if (strncasecmp($method, "countable", 9) === 0)
         {
             $var = lcfirst(substr($method, 9));
             return isset($this->$var) && is_array($this->$var);
-        } 
-        else if (strncasecmp($method, "isset", 5) === 0) 
+        }
+        else if (strncasecmp($method, "isset", 5) === 0)
         {
             $var = lcfirst(substr($method, 5));
             return isset($this->$var);
-        } 
-        else if (strncasecmp($method, "is", 2) === 0) 
+        }
+        else if (strncasecmp($method, "is", 2) === 0)
         {
             $var = lcfirst(substr($method, 2));
             return isset($this->$var) && ($this->$var == 1 || strtolower($this->$var) == 'true');
@@ -523,7 +523,7 @@ class PicoRequestBase extends stdClass //NOSONAR
             $this->removeValue($var, $params[0]);
             return $this;
         }
-    }  
+    }
 
     /**
      * Apply filter
@@ -565,7 +565,7 @@ class PicoRequestBase extends stdClass //NOSONAR
             && strcasecmp($this->classParams['JSON']['property-naming-strategy'], 'SNAKE_CASE') == 0
             ;
     }
-    
+
     /**
      * Check if JSON naming strategy is camel case or not
      *

@@ -45,7 +45,7 @@ namespace MagicObject\Util\WS;
   timeout (optional)
     The maximum time in seconds, a read operation will wait for an answer from
     the server. Default value is 10 seconds.
-  ssl (optional)  
+  ssl (optional)
   persistant (optional)
   path (optional)
   Context (optional)

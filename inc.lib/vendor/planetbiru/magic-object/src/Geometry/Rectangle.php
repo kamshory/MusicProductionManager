@@ -33,16 +33,16 @@ class Rectangle {
     /**
      * Constructor to initialize the Rectangle with two Point objects
      *
-     * @param Point $a
-     * @param Point $b
+     * @param Point $a Point a
+     * @param Point $b Point b
      */
     public function __construct(Point $a, Point $b) {
-        
+
         if(!isset($this->polygon))
         {
             $this->polygon = new Polygon();
         }
-        
+
         $this->a = $a;
         $this->b = $b;
 
@@ -50,13 +50,13 @@ class Rectangle {
         $point2 = new Point($this->b->x, $this->a->y);
         $point3 = new Point($this->b->x, $this->b->y);
         $point4 = new Point($this->a->x, $this->b->y);
-        
+
         $this->polygon
             ->addPoint($point1)
             ->addPoint($point2)
             ->addPoint($point3)
             ->addPoint($point4)
-            ; 
+            ;
     }
 
     /**

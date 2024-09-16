@@ -10,16 +10,15 @@ use MagicObject\Exceptions\InvalidParameterException;
 /**
  * A Wrapper for GD library in PHP. GD must be installed in your system for this to work.
  * Example: $img = new Image('wheel.png');
- *            $img->flip(1)->resize(120, 0)->save('wheel.jpg');
+ *          $img->flip(1)->resize(120, 0)->save('wheel.jpg');
  */
 class ImageUtil
 {
-    
+
     const FLIP_HORIZONTAL = 1;
     const FLIP_VERTICAL = 2;
     const FLIP_BOTH = 3;
-    
-    
+
     const STAMP_POSITION_TOPRIGHT = 1;
     const STAMP_POSITION_TOPLEFT = 2;
     const STAMP_POSITION_BOTTOMRIGHT = 3;
@@ -30,21 +29,21 @@ class ImageUtil
     const STAMP_POSITION_LEFT = 8;
     const STAMP_POSITION_RIGHT = 9;
     const STAMP_POSITION_RANDOM = 999;
-    
+
     const TEXT_ALIGN_LEFT = 1;
     const TEXT_ALIGN_RIGHT = 2;
     const TEXT_ALIGN_CENTER = 3;
-        
+
     private $fileName;
     private $info;
-    
+
     /**
      * Image
      *
      * @var GdImage
      */
     private $image;
-    
+
     /**
      * Image
      *
@@ -52,7 +51,18 @@ class ImageUtil
      */
     private $orgImage;
 
+    /**
+     * Image width
+     *
+     * @var integer
+     */
     protected $width;
+
+    /**
+     * Image height
+     *
+     * @var integer
+     */
     protected $height;
 
     /**
@@ -144,21 +154,42 @@ class ImageUtil
         return $img;
     }
 
+    /**
+     * Get width
+     *
+     * @return integer
+     */
     public function getWidth()
     {
         return imagesx($this->image);
     }
 
+    /**
+     * Get width
+     *
+     * @return integer
+     */
     public function getHeight()
     {
         return imagesy($this->image);
     }
 
+    /**
+     * Get file name
+     *
+     * @return string
+     */
     public function getFilename()
     {
         return $this->fileName;
     }
 
+    /**
+     * Retain transparency
+     *
+     * @param GdImage $image
+     * @return void
+     */
     protected function retainTransparency($image = null)
     {
         if (empty($image)) {
@@ -467,7 +498,7 @@ class ImageUtil
      * @param int $textAlignment
      * @throws ImageUtilException
      */
-    public function writeText($text, $point, $size, $angle, $font, $maxwidth = 0, $rgbAr = null, $textAlignment = 1)
+    public function writeText($text, $point, $size, $angle, $font, $maxwidth = 0, $rgbAr = null, $textAlignment = 1) //NOSONAR
     {
         if (!is_readable($font)) {
             throw new ImageUtilException('Error: The specified font not found');
@@ -546,7 +577,6 @@ class ImageUtil
         return $this;
     }
 
-
     /**
      * Discard any changes made to the image and restore the original state
      */
@@ -618,7 +648,6 @@ class ImageUtil
         if (!is_null($this->image)) {
             imagedestroy($this->image);
             imagedestroy($this->orgImage);
-
             unset($this->image);
             unset($this->orgImage);
         }

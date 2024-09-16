@@ -39,7 +39,7 @@ class JSONSelectOption
 
     /**
      * Get the value of data
-     */ 
+     */
     public function getData()
     {
         return $this->data;

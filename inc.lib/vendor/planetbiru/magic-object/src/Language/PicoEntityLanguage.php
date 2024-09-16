@@ -19,7 +19,7 @@ class PicoEntityLanguage
     const ANNOTATION_LANGUAGE = "Language";
 
     private $_defaultColumnName = "key"; //NOSONAR
-    
+
     /**
      * Current language
      *
@@ -32,14 +32,14 @@ class PicoEntityLanguage
      * @var PicoLanguage[]
      */
     private $_lableLanguage = array(); //NOSONAR
-    
+
     /**
      * Table identity
      *
      * @var PicoGenericObject
      */
     private $_tableIdentity; //NOSONAR
-        
+
     /**
      * Labels
      *
@@ -73,7 +73,7 @@ class PicoEntityLanguage
             $this->loadEntityLabel($entity);
         }
     }
-    
+
     /**
      * Load data to object
      * @param MagicObject $entity ENtity
@@ -91,7 +91,7 @@ class PicoEntityLanguage
             {
                 $this->_entityLanguage = trim($prefLanguage->getContent());
                 $this->_currentLanguage = $this->_entityLanguage;
-            }  
+            }
         }
         else
         {
@@ -103,10 +103,10 @@ class PicoEntityLanguage
         $defualtLanguage = array();
         foreach($propertyList as $prop)
         {
-            $reflexProp = new PicoAnnotationParser($this->_entityClassName, $prop, PicoAnnotationParser::PROPERTY);            
+            $reflexProp = new PicoAnnotationParser($this->_entityClassName, $prop, PicoAnnotationParser::PROPERTY);
             if($reflexProp != null)
             {
-                $parameters = $reflexProp->getParametersAsObject();    
+                $parameters = $reflexProp->getParametersAsObject();
                 if($parameters->issetLabel())
                 {
                     $property = PicoStringUtil::camelize($prop);
@@ -115,10 +115,10 @@ class PicoEntityLanguage
                 }
             }
         }
-        $this->addLanguage($this->_entityLanguage, $defualtLanguage, true);   
+        $this->addLanguage($this->_entityLanguage, $defualtLanguage, true);
         return $this;
     }
-    
+
     /**
      * Add language
      *
@@ -156,7 +156,7 @@ class PicoEntityLanguage
         }
         return $this;
     }
-    
+
     /**
      * Set current language
      *
@@ -168,7 +168,7 @@ class PicoEntityLanguage
         $this->_currentLanguage = $code;
         return $this;
     }
-    
+
     /**
      * Property list
      * @var boolean $asArrayProps
@@ -193,7 +193,7 @@ class PicoEntityLanguage
             foreach ($properties as $key) {
                 $prop = $key->name;
                 $result[$index] = $prop;
-                
+
                 $index++;
             }
             return $result;
@@ -225,7 +225,7 @@ class PicoEntityLanguage
         }
         return null;
     }
-    
+
     /**
      * Define label
      *
@@ -267,7 +267,7 @@ class PicoEntityLanguage
         {
             return $this->_lableLanguage[$this->_currentLanguage]->get($var);
         }
-        else 
+        else
         {
             return PicoStringUtil::camelToTitle($var);
         }
@@ -276,7 +276,7 @@ class PicoEntityLanguage
     /**
      * Gets datas from the property.
      * Example: echo $instance->foo;
-     * 
+     *
      * @param string $name Name of the property to get.
      * @return mixed Datas stored in property.
      **/
@@ -319,7 +319,7 @@ class PicoEntityLanguage
      * Get table identity
      *
      * @return PicoGenericObject
-     */ 
+     */
     public function getTableIdentity()
     {
         return $this->_tableIdentity;
@@ -329,7 +329,7 @@ class PicoEntityLanguage
      * Get entity language
      *
      * @return string
-     */ 
+     */
     public function getEntityLanguage()
     {
         return $this->_entityLanguage;
@@ -339,7 +339,7 @@ class PicoEntityLanguage
      * Get entity class name
      *
      * @return string
-     */ 
+     */
     public function getEntityClassName()
     {
         return $this->_entityClassName;

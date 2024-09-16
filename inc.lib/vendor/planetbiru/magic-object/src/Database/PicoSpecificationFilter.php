@@ -8,6 +8,14 @@ namespace MagicObject\Database;
  */
 class PicoSpecificationFilter
 {
+    const DATA_TYPE_NUMBER = "number";
+    const DATA_TYPE_STRING = "string";
+    const DATA_TYPE_BOOLEAN = "boolean";
+    const DATA_TYPE_ARRAY_NUMBER = "number[]";
+    const DATA_TYPE_ARRAY_STRING = "string[]";
+    const DATA_TYPE_ARRAY_BOOLEAN = "boolean[]";
+    const DATA_TYPE_FULLTEXT = "fulltext";
+
     /**
      * Column name
      *
@@ -21,7 +29,7 @@ class PicoSpecificationFilter
      * @var string
      */
     private $dataType;
-    
+
     /**
      * Constructor
      *
@@ -35,19 +43,89 @@ class PicoSpecificationFilter
     }
 
     /**
+     * Magic method to debug object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode(array(
+            'columnName' => $this->columnName,
+            'dataType' => $this->dataType,
+        ));
+    }
+
+    /**
      * Get value
-     * 
+     *
+     * @param mixed $stringValue Value given
      * @return mixed
      */
     public function valueOf($stringValue)
     {
-        if($this->isNumber())
+        $result = null;
+        if($this->isArrayNumber())
         {
-            return $this->getNumber($stringValue);
+            $result = $this->getArrayNumber($stringValue);
+        }
+        else if($this->isArrayBoolean())
+        {
+            $result = $this->getArrayBoolean($stringValue);
+        }
+        else if($this->isNumber())
+        {
+            $result = $this->getNumber($stringValue);
         }
         else if($this->isBoolean())
         {
-            return $this->getBoolean($stringValue);
+            $result = $this->getBoolean($stringValue);
+        }
+        else
+        {
+            $result = $stringValue;
+        }
+        return $result;
+    }
+
+    /**
+     * Get number values
+     *
+     * @param mixed $stringValue Value given
+     * @return float[]|integer[]
+     */
+    private function getArrayNumber($stringValue)
+    {
+        if(is_array($stringValue))
+        {
+            $values = array();
+            foreach($stringValue as $value)
+            {
+                $values[] = $this->getNumber($value);
+            }
+            return $values;
+        }
+        else
+        {
+            return $stringValue;
+        }
+    }
+
+    /**
+     * Get boolean values
+     *
+     * @param mixed $stringValue Value given
+     * @return boolean[]
+     */
+    private function getArrayBoolean($stringValue)
+    {
+        if(is_array($stringValue))
+        {
+            $values = array();
+            foreach($stringValue as $value)
+            {
+                $values[] = $this->getBoolean($value);
+            }
+            return $values;
         }
         else
         {
@@ -57,7 +135,8 @@ class PicoSpecificationFilter
 
     /**
      * Get number value
-     * 
+     *
+     * @param mixed $stringValue Value given
      * @return float|integer
      */
     private function getNumber($stringValue)
@@ -74,14 +153,15 @@ class PicoSpecificationFilter
 
     /**
      * Get boolean value
-     * 
+     *
+     * @param mixed $stringValue Value given
      * @return boolean
      */
     private function getBoolean($stringValue)
     {
-        return strcasecmp($stringValue, "yes") === 0 
-        || strcasecmp($stringValue, "true") === 0 
-        || $stringValue === "1" 
+        return strcasecmp($stringValue, "yes") === 0
+        || strcasecmp($stringValue, "true") === 0
+        || $stringValue === "1"
         || $stringValue === 1
         ;
     }
@@ -89,21 +169,12 @@ class PicoSpecificationFilter
     /**
      * Check if data type is a number
      *
+     * @param mixed $stringValue Value given
      * @return boolean
      */
     public function isNumber()
     {
-        return $this->dataType == "number";
-    }
-
-    /**
-     * Check if data type is full text
-     *
-     * @return boolean
-     */
-    public function isFulltext()
-    {
-        return $this->dataType == "fulltext";
+        return $this->dataType == self::DATA_TYPE_NUMBER;
     }
 
     /**
@@ -113,7 +184,7 @@ class PicoSpecificationFilter
      */
     public function isString()
     {
-        return $this->dataType == "string";
+        return $this->dataType == self::DATA_TYPE_STRING;
     }
 
     /**
@@ -123,14 +194,54 @@ class PicoSpecificationFilter
      */
     public function isBoolean()
     {
-        return $this->dataType == "boolean";
+        return $this->dataType == self::DATA_TYPE_BOOLEAN;
+    }
+
+    /**
+     * Check if data type is an array of number
+     *
+     * @return boolean
+     */
+    public function isArrayNumber()
+    {
+        return $this->dataType == self::DATA_TYPE_ARRAY_NUMBER;
+    }
+
+    /**
+     * Check if data type is an array of string
+     *
+     * @return boolean
+     */
+    public function isArrayString()
+    {
+        return $this->dataType == self::DATA_TYPE_ARRAY_STRING;
+    }
+
+    /**
+     * Check if data type is an array of boolean
+     *
+     * @return boolean
+     */
+    public function isArrayBoolean()
+    {
+        return $this->dataType == self::DATA_TYPE_ARRAY_BOOLEAN;
+    }
+
+    /**
+     * Check if data type is full text
+     *
+     * @return boolean
+     */
+    public function isFulltext()
+    {
+        return $this->dataType == self::DATA_TYPE_FULLTEXT;
     }
 
     /**
      * Get column name
      *
      * @return string
-     */ 
+     */
     public function getColumnName()
     {
         return $this->columnName;
@@ -140,7 +251,7 @@ class PicoSpecificationFilter
      * Get data type
      *
      * @return string
-     */ 
+     */
     public function getDataType()
     {
         return $this->dataType;

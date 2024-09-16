@@ -25,7 +25,6 @@ function processBlock($block)
     // Enable the safe mode of Parsedown.
 	$parsedown->setSafeMode(true);
 
-
     $fp = fopen(dirname(__DIR__) . "/tutorial.md", "w+");
     $article = 0;
     foreach($arr as $line)
@@ -43,7 +42,6 @@ function processBlock($block)
                 fwrite($fp, $markdown."\r\n");
             }
         }
-        
         
         $command = getCommand($line);
         if($command !== null)

@@ -17,31 +17,31 @@ class PicoPageable
      * @var PicoPage
      */
     private $page = null;
-    
+
     /**
      * Sortable
      *
      * @var PicoSortable
      */
     private $sortable = null;
-    
+
     /**
      * Offset and limit
      *
      * @var PicoLimit
      */
     private $offsetLimit = null;
-    
+
     /**
      * Constructor of Pageable
-     * Example: 
-     * 1. $pageable = new Pageable(array(0, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
-     * 2. $pageable = new Pageable(new PicoPage(0, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
-     * 3. $pageable = new Pageable(array(0, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
-     * 4. $pageable = new Pageable(new PicoPage(0, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * Example:
+     * 1. $pageable = new Pageable(array(1, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * 2. $pageable = new Pageable(new PicoPage(1, 100), array('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * 3. $pageable = new Pageable(array(1, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
+     * 4. $pageable = new Pageable(new PicoPage(1, 100), new PicoSortable('userName', 'asc', 'email', 'desc', 'phone', 'asc'));
      *
-     * @param PicoPage|PicoLimit|array $page
-     * @param PicoSortable|array $sortable
+     * @param PicoPage|PicoLimit|array|null $page Page
+     * @param PicoSortable|array|null $sortable Sortable
      */
     public function __construct($page = null, $sortable = null)
     {
@@ -80,7 +80,7 @@ class PicoPageable
      * Get sortable
      *
      * @return PicoSortable
-     */ 
+     */
     public function getSortable()
     {
         return $this->sortable;
@@ -92,14 +92,14 @@ class PicoPageable
      * @param PicoSortable $sortable Sortable
      *
      * @return self
-     */ 
-    public function setSortable(PicoSortable $sortable)
+     */
+    public function setSortable($sortable)
     {
         $this->sortable = $sortable;
 
         return $this;
     }
-    
+
     /**
      * Add sortable
      *
@@ -119,7 +119,7 @@ class PicoPageable
         $this->sortable->addSortable(new PicoSort($sortBy, $sortType));
         return $this;
     }
-    
+
     /**
      * Create sort by
      *
@@ -139,7 +139,7 @@ class PicoPageable
      * Get page
      *
      * @return PicoPage
-     */ 
+     */
     public function getPage()
     {
         return $this->page;
@@ -151,8 +151,8 @@ class PicoPageable
      * @param PicoPage $page Page
      *
      * @return self
-     */ 
-    public function setPage(PicoPage $page)
+     */
+    public function setPage($page)
     {
         $this->page = $page;
         $offset = ($page->getPageNumber()-1) * $page->getPageSize();
@@ -165,7 +165,7 @@ class PicoPageable
      * Get offset and limit
      *
      * @return PicoLimit
-     */ 
+     */
     public function getOffsetLimit()
     {
         return $this->offsetLimit;
@@ -177,14 +177,14 @@ class PicoPageable
      * @param PicoLimit  $offsetLimit  Offset and limit
      *
      * @return self
-     */ 
-    public function setOffsetLimit(PicoLimit $offsetLimit)
+     */
+    public function setOffsetLimit($offsetLimit)
     {
         $this->offsetLimit = $offsetLimit;
 
         return $this;
     }
-    
+
     /**
      * Magic method to debug object
      *
@@ -195,7 +195,7 @@ class PicoPageable
         $stdClass = new stdClass;
         $offsetLimit = new stdClass;
         $page = new stdClass;
-        
+
         $offsetLimit->limit = $this->offsetLimit->getLimit();
         $offsetLimit->offset = $this->offsetLimit->getOffset();
 
@@ -204,7 +204,7 @@ class PicoPageable
 
         $stdClass->page = $page;
         $stdClass->offsetLimit = $offsetLimit;
-        
+
         return json_encode($stdClass);
     }
 }

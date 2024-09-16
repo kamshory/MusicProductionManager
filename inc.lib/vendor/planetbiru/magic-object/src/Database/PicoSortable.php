@@ -17,7 +17,7 @@ class PicoSortable
      * @var PicoSort[]
      */
     private $sortable = array();
-    
+
     /**
      * Constructor
      */
@@ -29,7 +29,7 @@ class PicoSortable
             $params = array();
             if($argc > 1)
             {
-                for($i = 0; $i<$argc; $i++)
+                for($i = 0; $i < $argc; $i++)
                 {
                     $params[] = func_get_arg($i);
                 }
@@ -37,18 +37,18 @@ class PicoSortable
             $this->initSortable($argc, $params);
         }
     }
-    
+
     /**
      * Initialize sortable
      *
-     * @param integer $argc
-     * @param array $params
-     * @return void
+     * @param integer $argc Argument count
+     * @param array $params Parameters
+     * @return self
      */
     private function initSortable($argc, $params)
     {
         $this->sortable = array();
-        
+
         $index = 0;
         $sortBy = null;
         foreach($params as $idx=>$value)
@@ -72,23 +72,25 @@ class PicoSortable
             $lastOrder = $this->createSortable($sortBy, $sortType);
             $this->sortable[count($this->sortable) - 1] = $lastOrder;
         }
+
+        return $this;
     }
-    
+
     /**
      * Add sortable
      *
-     * @param PicoSort|array $sort
+     * @param PicoSort|array $sort Sort
      * @return self
      */
     public function add($sort)
     {
         return $this->addSortable($sort);
     }
-    
+
     /**
      * Add sortable
      *
-     * @param PicoSort|array $sort
+     * @param PicoSort|array $sort Sort
      * @return self
      */
     public function addSortable($sort)
@@ -107,19 +109,19 @@ class PicoSortable
         }
         return $this;
     }
-    
+
     /**
      * Create sortable
      *
-     * @param string $sortBy
-     * @param string $sortType
+     * @param string $sortBy Sort by
+     * @param string $sortType Sort type
      * @return PicoSort
      */
     public function createSortable($sortBy, $sortType)
     {
         return new PicoSort($sortBy, $sortType);
     }
-    
+
     /**
      * Create sort by
      *
@@ -143,7 +145,7 @@ class PicoSortable
         }
         return $ret;
     }
-    
+
     /**
      * Create sort without mapping
      *
@@ -160,9 +162,9 @@ class PicoSortable
         foreach($this->sortable as $sortable)
         {
             $columnName = $sortable->getSortBy();
-            $sortType = $sortable->getSortType();             
+            $sortType = $sortable->getSortType();
             $sortBy = $columnName;
-            $sorts[] = $sortBy . " " . $sortType;           
+            $sorts[] = $sortBy . " " . $sortType;
         }
         if(!empty($sorts))
         {
@@ -170,7 +172,7 @@ class PicoSortable
         }
         return $ret;
     }
-    
+
     /**
      * Create sort with mapping
      *
@@ -206,7 +208,7 @@ class PicoSortable
         if(!empty($sorts))
         {
             $ret = implode(", ", $sorts);
-        } 
+        }
         return $ret;
     }
 
@@ -224,7 +226,7 @@ class PicoSortable
      * Get sortable
      *
      * @return PicoSort[]
-     */ 
+     */
     public function getSortable()
     {
         return $this->sortable;
@@ -239,7 +241,7 @@ class PicoSortable
     {
         return new self;
     }
-    
+
     /**
      * Magic method to debug object. This method is for debug purpose only.
      *
@@ -249,13 +251,13 @@ class PicoSortable
     {
         return $this->createWithoutMapping();
     }
-    
+
     /**
      * Get sortable from user input
      *
-     * @param PicoRequestBase $request
-     * @param string[]|null $map
-     * @param array|null $defaultSortable
+     * @param PicoRequestBase $request Request
+     * @param string[]|null $map Map
+     * @param array|null $defaultSortable Default sortable
      * @return self
      */
     public static function fromUserInput($request, $map = null, $defaultSortable = null)
@@ -288,7 +290,7 @@ class PicoSortable
     /**
      * Check if input is array
      *
-     * @param mixed $array
+     * @param mixed $array Array to be checked
      * @return boolean
      */
     public static function isArray($array)

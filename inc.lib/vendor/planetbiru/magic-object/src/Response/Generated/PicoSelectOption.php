@@ -29,21 +29,21 @@ class PicoSelectOption
      * @var mixed
      */
     private $value;
-    
+
     /**
      * Attributes
      *
      * @var array
      */
     private $attributes = array();
-    
+
     /**
      * Rows
      *
      * @var array
      */
     private $rows = array();
-    
+
     /**
      * Sortable
      *
@@ -118,7 +118,7 @@ class PicoSelectOption
     private function findAllActive()
     {
         try
-        {         
+        {
             $result = $this->object->findByActive(true, null, $this->sortable);
             foreach($result->getResult() as $row)
             {

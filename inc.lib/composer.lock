@@ -546,16 +546,16 @@
         },
         {
             "name": "planetbiru/magic-object",
-            "version": "1.20.7",
+            "version": "1.20.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Planetbiru/MagicObject.git",
-                "reference": "71d92b00a2f11364a9a0444a827bd4827073d2f7"
+                "reference": "b248781c7ae52d448fd76eb32a85ab59ff9d0d08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/71d92b00a2f11364a9a0444a827bd4827073d2f7",
-                "reference": "71d92b00a2f11364a9a0444a827bd4827073d2f7",
+                "url": "https://api.github.com/repos/Planetbiru/MagicObject/zipball/b248781c7ae52d448fd76eb32a85ab59ff9d0d08",
+                "reference": "b248781c7ae52d448fd76eb32a85ab59ff9d0d08",
                 "shasum": ""
             },
             "require": {
@@ -579,9 +579,9 @@
             "description": "Magic object",
             "support": {
                 "issues": "https://github.com/Planetbiru/MagicObject/issues",
-                "source": "https://github.com/Planetbiru/MagicObject/tree/1.20.7"
+                "source": "https://github.com/Planetbiru/MagicObject/tree/1.20.9"
             },
-            "time": "2024-09-13T09:24:26+00:00"
+            "time": "2024-09-13T15:09:51+00:00"
         },
         {
             "name": "psr/cache",

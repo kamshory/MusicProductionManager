@@ -15,8 +15,8 @@ use MagicObject\Util\ClassUtil\PicoAnnotationParser;
 class PicoDatabaseStructure
 {
     const ANNOTATION_TABLE = "Table";
-    const ANNOTATION_COLUMN = "Column";  
-    const ANNOTATION_ID = "Id";  
+    const ANNOTATION_COLUMN = "Column";
+    const ANNOTATION_ID = "Id";
     const KEY_NAME = "name";
     const KEY_TYPE = "type";
     const KEY_NULL = "null";
@@ -25,27 +25,33 @@ class PicoDatabaseStructure
     const KEY_PRIMARY = "primary";
     const DATABASE_TYPE_MYSQL = "mysql";
     const DATABASE_TYPE_MARIADB = "mariadb";
-    
+
     /**
      * Object
      *
      * @var MagicObject
      */
     private $object;
-    
+
     /**
      * Class name
      *
      * @var string
      */
     private $className = "";
+
+    /**
+     * Constructor
+     *
+     * @param MagicObject $object
+     */
     public function __construct($object)
     {
         $this->className = get_class($object);
         $this->object = $object;
     }
-    
-    
+
+
     /**
      * Show create table
      *
@@ -56,7 +62,7 @@ class PicoDatabaseStructure
     public function showCreateTable($databaseType, $tableName = null)
     {
         $info = $this->getObjectInfo();
-        if (!isset($tableName) || $info->getTableName() != null) 
+        if (!isset($tableName) || $info->getTableName() != null)
         {
             throw new MandatoryTableNameException("Table name is mandatory");
         }
@@ -70,7 +76,7 @@ class PicoDatabaseStructure
         $createStrArr[] = ");";
         return implode("\r\n", $createStrArr);
     }
-    
+
     /**
      * Show create table
      *
@@ -82,13 +88,13 @@ class PicoDatabaseStructure
     {
         $createStrArr = array();
         $pk = array();
-        if($databaseType == self::DATABASE_TYPE_MYSQL) 
+        if($databaseType == self::DATABASE_TYPE_MYSQL)
         {
-            foreach($info->getColumns() as $column) 
+            foreach($info->getColumns() as $column)
             {
                 $createStrArr[] = $column[self::KEY_NAME]." ".$column[self::KEY_TYPE]." ".$this->nullable($column[self::KEY_NULLABLE]);
             }
-            foreach($info->getColumns() as $column) 
+            foreach($info->getColumns() as $column)
             {
                 if(isset($column[self::KEY_PRIMARY]) && $column[self::KEY_PRIMARY] === true)
                 {
@@ -100,14 +106,14 @@ class PicoDatabaseStructure
                 $createStrArr[] = "PRIMARY KEY (".implode(", ", $pk).")";
             }
         }
-        
+
         return implode(",\r\n", $createStrArr);
     }
-    
+
     /**
      * Create nullable
      *
-     * @param mixed $nullable
+     * @param mixed $nullable Nullable
      * @return string
      */
     private function nullable($nullable)
@@ -139,19 +145,20 @@ class PicoDatabaseStructure
         catch(InvalidQueryInputException $e)
         {
             throw new InvalidAnnotationException("Invalid annotation @".$parameter);
-        } 
+        }
     }
-    
+
     /**
      * Get object information
      *
      * @return PicoTableInfo
      */
-    public function getObjectInfo(){
+    public function getObjectInfo()
+    {
         $reflexClass = new PicoAnnotationParser($this->className);
         $table = $reflexClass->getParameter(self::ANNOTATION_TABLE);
         $values = $this->parseKeyValue($reflexClass, $table, self::ANNOTATION_TABLE);
-        
+
         $picoTableName = $values[self::KEY_NAME];
         $columns = array();
         $primaryKeys = array();

@@ -14,17 +14,17 @@ class Dms
      * @var integer
      */
     private $deg = 0;
-    
+
     /**
      * Minute
-     * 
+     *
      * @var integer
      */
     private $min = 0;
 
     /**
      * Second
-     * 
+     *
      * @var float
      */
     private $sec = 0.0;
@@ -35,7 +35,7 @@ class Dms
      * @var float
      */
     private $dd = 0.0;
-    
+
     /**
      * Converting DMS ( Degrees / minutes / seconds ) to decimal format
      *
@@ -48,23 +48,23 @@ class Dms
     {
         // Converting DMS ( Degrees / minutes / seconds ) to decimal format
         $dec = $deg+((($min*60)+$sec)/3600);
-        
+
         $this->deg = $deg;
         $this->min = $min;
         $this->sec = $sec;
         $this->dd = $dec;
         return $this;
-    }    
+    }
 
     /**
-     * Converts decimal format to DMS ( Degrees / minutes / seconds ) 
+     * Converts decimal format to DMS ( Degrees / minutes / seconds )
      *
      * @param float $dec Decimal
      * @return self
      */
     public function ddToDms($dec)
     {
-        // Converts decimal format to DMS ( Degrees / minutes / seconds ) 
+        // Converts decimal format to DMS ( Degrees / minutes / seconds )
         if(stripos($dec, ".") !== false)
         {
             $vars = explode(".",$dec);
@@ -81,14 +81,14 @@ class Dms
         $tempma = $tempma * 3600;
         $min = floor($tempma / 60);
         $sec = $tempma - ($min*60);
-        
+
         $this->deg = $deg;
         $this->min = $min;
         $this->sec = $sec;
         $this->dd = $dec;
         return $this;
-    }   
-    
+    }
+
     /**
      * Print Dms
      *
@@ -110,7 +110,7 @@ class Dms
         }
         return $result;
     }
-    
+
     /**
      * Print Dms
      *

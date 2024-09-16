@@ -8,37 +8,37 @@ namespace MagicObject\Database;
  */
 class PicoDataComparation
 {
-    const EQUALS = "=";
-    const NOT_EQUALS = "!=";
-    const IN = "in";
-    const NOT_IN = "not in";
-    const IS = "is";
-    const IS_NOT = "is not";
-    const LIKE = "like";
-    const NOT_LIKE = "not like";
-    const LESS_THAN = "<";
-    const GREATER_THAN = ">";
-    const LESS_THAN_OR_EQUALS = "<=";
+    const EQUALS                 = "=";
+    const NOT_EQUALS             = "!=";
+    const IN                     = "in";
+    const NOT_IN                 = "not in";
+    const IS                     = "is";
+    const IS_NOT                 = "is not";
+    const LIKE                   = "like";
+    const NOT_LIKE               = "not like";
+    const LESS_THAN              = "<";
+    const GREATER_THAN           = ">";
+    const LESS_THAN_OR_EQUALS    = "<=";
     const GREATER_THAN_OR_EQUALS = ">=";
-    const TYPE_STRING = "string";
-    const TYPE_BOOLEAN = "boolean";
-    const TYPE_NUMERIC = "numeric";
-    const TYPE_NULL = "null";
-    
+    const TYPE_STRING            = "string";
+    const TYPE_BOOLEAN           = "boolean";
+    const TYPE_NUMERIC           = "numeric";
+    const TYPE_NULL              = "null";
+
     /**
      * Value comparator
      *
      * @var string
      */
     private $comparison = "=";
-    
+
     /**
      * Value
      *
      * @var mixed
      */
     private $value = null;
-    
+
     /**
      * Stype
      *
@@ -48,7 +48,7 @@ class PicoDataComparation
 
     /**
      * Equals
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function equals($value)
     {
@@ -57,34 +57,34 @@ class PicoDataComparation
 
     /**
      * Not equals
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function notEquals($value)
     {
         return new self($value, self::NOT_EQUALS);
     }
-    
+
     /**
      * In
-     * @param mixed $value
+     * @param mixed[] $values Values
      */
-    public static function in($value)
+    public static function in($values)
     {
-        return new self($value, self::IN);
+        return new self($values, self::IN);
     }
 
     /**
      * Not in
-     * @param mixed $value
+     * @param mixed[] $values Values
      */
-    public static function notIn($value)
+    public static function notIn($values)
     {
-        return new self($value, self::NOT_IN);
+        return new self($values, self::NOT_IN);
     }
 
     /**
      * Like
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function like($value)
     {
@@ -93,7 +93,7 @@ class PicoDataComparation
 
     /**
      * Not like
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function notLike($value)
     {
@@ -102,7 +102,7 @@ class PicoDataComparation
 
     /**
      * Less than
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function lessThan($value)
     {
@@ -111,7 +111,7 @@ class PicoDataComparation
 
     /**
      * Greater than
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function greaterThan($value)
     {
@@ -120,7 +120,7 @@ class PicoDataComparation
 
     /**
      * Less than or equals
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function lessThanOrEquals($value)
     {
@@ -129,7 +129,7 @@ class PicoDataComparation
 
     /**
      * Greater than or equals
-     * @param mixed $value
+     * @param mixed $value Value
      */
     public static function greaterThanOrEquals($value)
     {
@@ -138,9 +138,9 @@ class PicoDataComparation
 
     /**
      * Constructor
-     * 
-     * @param mixed $value
-     * @param string $comparison
+     *
+     * @param mixed $value Value
+     * @param string $comparison Comparison
      */
     public function __construct($value, $comparison=self::EQUALS)
     {
@@ -189,7 +189,7 @@ class PicoDataComparation
     {
         return self::LESS_THAN;
     }
-    
+
     /**
      * Get greater than operator
      *
@@ -209,7 +209,7 @@ class PicoDataComparation
     {
         return self::LESS_THAN_OR_EQUALS;
     }
-    
+
     /**
      * Get greater than or equals operator
      *
@@ -261,7 +261,7 @@ class PicoDataComparation
 
     /**
      * Get the value of property value
-     */ 
+     */
     public function getValue()
     {
         return $this->value;

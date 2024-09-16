@@ -10,7 +10,7 @@ class Map
      * @var Area[]
      */
     private $area = array();
-    
+
     public function __construct($area = null)
     {
         if(isset($area) && is_array($area))
@@ -18,7 +18,7 @@ class Map
             $this->area = $area;
         }
     }
-    
+
     /**
      * Add area
      *
@@ -35,7 +35,7 @@ class Map
      * Get area
      *
      * @return  Area[]
-     */ 
+     */
     public function getArea()
     {
         return $this->area;

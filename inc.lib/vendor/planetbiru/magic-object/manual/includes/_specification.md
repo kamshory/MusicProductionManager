@@ -60,27 +60,27 @@ If the field is given a value, the constructor will call the `equals` method wit
 
 Methods:
 
-- equals
-- isNull
-- notEquals
-- isNotNull
-- like
-- notLike
-- in
-- notIn
-- lessThan
-- greaterThan
-- lessThanOrEquals
-- greaterThanOrEquals
+- equals(string $fieldName, mixed $value)
+- isNull(string $fieldName)
+- notEquals(string $fieldName, mixed $value)
+- isNotNull(string $fieldName)
+- like(string $fieldName, mixed $value)
+- notLike(string $fieldName, mixed $value)
+- in(string $fieldName, mixed[] $value)
+- notIn(string $fieldName, mixed[] $value)
+- lessThan(string $fieldName, string|integer|float $value)
+- greaterThan(string $fieldName, string|integer|float $value)
+- lessThanOrEquals(string $fieldName, string|integer|float $value)
+- greaterThanOrEquals(string $fieldName, string|integer|float $value)
 
 Static Methods:
-- getInstance
-- generateLikeStarts
-- generateLikeEnds
-- generateLikeContains
-- functionUpper
-- functionLower
-- functionAndValue
+- getInstance()
+- generateLikeStarts(string $value)
+- generateLikeEnds(string $value)
+- generateLikeContains(string $value)
+- functionUpper(string $value)
+- functionLower(string $value)
+- functionAndValue(string $value)
 
 Example:
 
@@ -142,7 +142,26 @@ $specification = PicoSpecification::getInstance()
 ;
 ```
 
-When a user passes an array as a parameter to the `addAnd` and `addOr` methods, MagicObject will convert it to an instance of `PicoPredicate` with `equals` comparison. If using `array` is easier, feel free to use it but it is recommended to use `PicoPredicate` so that it can be used directly by MagicObject.
+will be:
+
+```sql
+SELECT * FROM producer WHERE producer_id = 'asdf' AND active = true
+```
+
+When a user passes an array as a parameter to the `addAnd` and `addOr` methods, MagicObject will convert it to an instance of `PicoPredicate` with `equals` comparison. If using `array` is easier, feel free to use it but it is recommended to use `PicoPredicate` so that it can be used directly by MagicObject. If the second parameter is an array, then the comparison logic becomes `in` instead of `equals`.
+
+```php
+$specification = PicoSpecification::getInstance()
+    ->addAnd(['producerId', ['asdf', 'qwerty']])
+    ->addAnd(['active', true])
+;
+```
+
+will be:
+
+```sql
+SELECT * FROM producer WHERE producer_id IN ('asdf', 'qwerty') AND active = true
+```
 
 For comparisons other than `equals`, we must specify them explicitly. Here are some examples of specifying AND logic.
 
@@ -266,6 +285,15 @@ And because `addAnd` and `addOr` can accept parameters in the form of `PicoSpeci
 ```php
 $specification = PicoSpecification::getInstance()
     ->addOr(['producerId', 'asdf'])
+    ->addOr(['active', true])
+;
+```
+
+As in `addAnd`, if the second parameter is an array, then the comparison logic becomes `in` instead of `equals`.
+
+```php
+$specification = PicoSpecification::getInstance()
+    ->addOr(['producerId', ['asdf', 'qwerty']])
     ->addOr(['active', true])
 ;
 ```
@@ -485,4 +513,193 @@ $specification = PicoSpecification::getInstance()
             ->addAnd(PicoPredicate::getInstance()->equals('approvalId', null))
     )
 ;
+```
+
+MagicObject version 1.20 offers the simplest way to create specifications with `AND` logic and `equal` or `in` comparisons.
+
+For example:
+
+```php
+$album = new EntityAlbum(null, $database);
+
+$specs = new PicoSpecification();
+$specs->name = ['Album 1', 'Album 2'];
+$specs->numberOfSong = 11;
+$specs->active = true;
+$specs->asDraft = false;
+$specs->ipCreate = '::1';
+$specs->ipEdit = null;
+
+try
+{
+	$album->findAll($specs);
+}
+catch(Exception $e)
+{
+	error_log($e);
+}
+```
+
+will be:
+
+```sql
+select album.* 
+from album
+where album.name in ('Album 1', 'Album 2') and album.number_of_song = 11
+and album.active = true and album.as_draft = false and album.ip_create = '::1'
+and album.ip_edit is null
+```
+
+Instead of writing very long code to create a specification, users can simply write a few very short lines of code. However, it should be noted that this method only applies to `AND` logic with `equals` and `in` comparisons.
+
+When the user assigns the value of `active` to `true`, then MagicObject will add the predicate `active = true`, likewise when the user assigns the value of `asDraft` to `false`. Since `name` is assigned an array value, the comparison used is `in`. It should be noted that the specification is not an object that stores the given properties as its own properties but rather it will add the predicate each time the predicate is entered.
+
+For example, the code is as follows:
+
+```php
+
+$album = new EntityAlbum(null, $database);
+
+$specs = new PicoSpecification();
+$specs->name = ['Album 1', 'Album 2'];
+$specs->active = true;
+$specs->asDraft = false;
+$specs->ipCreate = '::1';
+$specs->ipCreate = null;
+
+try
+{
+	$album->findAll($specs);
+}
+catch(Exception $e)
+{
+	error_log($e);
+}
+```
+
+You have given the value `$specs->ipCreate = '::1'` and you don't if change that value to `null` for example. So the above code is wrong because it stumbles with the wrong logic i.e. `ip_create = '::1' ,
+album.ip_create is null`.
+
+If you mean `ipCreate = '::1' or ipCreate = null`, then you can use the following way:
+
+```php
+$album = new EntityAlbum(null, $database);
+
+$specs = new PicoSpecification();
+$specs->name = ['Album 1', 'Album 2'];
+$specs->numberOfSong = 11;
+$specs->active = true;
+$specs->asDraft = false;
+$specs->ipCreate = ['::1', null];
+
+try
+{
+	$album->findAll($specs);
+}
+catch(Exception $e)
+{
+	error_log($e);
+}
+```
+
+or
+
+```php
+$album = new EntityAlbum(null, $database);
+
+$specs = new PicoSpecification();
+$specs->name = ['Album 1', 'Album 2'];
+$specs->numberOfSong = 11;
+$specs->active = true;
+$specs->asDraft = false;
+$specs->addAnd(
+	PicoSpecification::getInstance()
+		->addOr(['ipCreate', '::1'])
+		->addOr(['ipCreate', null])
+);
+
+try
+{
+	$album->findAll($specs);
+}
+catch(Exception $e)
+{
+	error_log($e);
+}
+```
+
+If you want to set a column from a reference table, you can use the `set` method. Suppose you want to expect MagicObject to make the following query:
+
+```sql
+SELECT album.* FROM album
+INNER JOIN producer ON producer.producer_id = album.producer_id
+WHERE album.active = true AND producer.active = true
+```
+
+So you can write
+
+```php
+$album = new EntityAlbum(null, $database);
+
+$specs = new PicoSpecification();
+$specs->active = true;
+$specs->set('producer.active', true); // use `set` method instead
+
+try
+{
+	$album->findAll($specs);
+}
+catch(Exception $e)
+{
+	error_log($e);
+}
+```
+
+What if you want to use full `OR` logic instead of `AND` logic? You can use the following way:
+
+```php
+$album = new EntityAlbum(null, $database);
+
+$specs = new PicoSpecification();
+$specs->setDefaultLogicOr();
+
+$specs->name = ['Album 1', 'Album 2'];
+$specs->numberOfSong = 11;
+$specs->active = true;
+$specs->asDraft = false;
+$specs->ipCreate = null;
+
+try
+{
+	$album->findAll($specs);
+}
+catch(Exception $e)
+{
+	error_log($e);
+}
+```
+
+When you set any predicate to a specification, MagicObject will always add the predicate with `OR` logic instead of `AND` logic. Please note that you must call the `setDefaultLogicOr` method before you set a predicate. If you call the `setDefaultLogicOr` method after you set a predicate, you will end up with a logical mess. 
+
+To avoid errors when calling the `setDefaultLogicOr` method, it is recommended to use the following method:
+
+```php
+$album = new EntityAlbum(null, $database);
+
+$specs = PicoSpecification::getInstance()->setDefaultLogicOr();
+
+$specs->name = ['Album 1', 'Album 2'];
+$specs->numberOfSong = 11;
+$specs->active = true;
+$specs->asDraft = false;
+$specs->setIpCreate(null);
+
+try
+{
+	$album->findAll($specs);
+}
+catch(Exception $e)
+{
+	error_log($e);
+}
 ```

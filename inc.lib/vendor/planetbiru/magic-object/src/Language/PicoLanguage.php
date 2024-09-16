@@ -23,7 +23,7 @@ class PicoLanguage
             $this->loadData($data);
         }
     }
-    
+
     /**
      * Load data to object
      * @param stdClass|array $data
@@ -66,14 +66,14 @@ class PicoLanguage
         $var = PicoStringUtil::camelize($propertyName);
         return isset($this->$var) ? $this->$var : null;
     }
-    
+
     /**
      * Stores datas in the property.
      * Example: $instance->foo = 'bar';
-     * 
+     *
      * @param string $name Property name
      * @param mixed $value Property value
-     * @return void 
+     * @return void
      **/
     public function __set($name, $value)
     {
@@ -84,7 +84,7 @@ class PicoLanguage
     /**
      * Gets datas from the property.
      * Example: echo $instance->foo;
-     * 
+     *
      * @param string $name Name of the property to get.
      * @return mixed Datas stored in property.
      **/
@@ -117,7 +117,7 @@ class PicoLanguage
     {
         unset($this->$name);
     }
-    
+
     /**
      * Magic method called when user call any undefined method
      *

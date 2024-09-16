@@ -10,7 +10,7 @@ require_once dirname(__DIR__) . "/vendor/autoload.php";
 
 $databaseCredential = new SecretObject();
 $databaseCredential->loadYamlFile(dirname(dirname(__DIR__))."/test.yml", false, true, true);
-$database = new PicoDatabase($databaseCredential, null, function($sql){
+$database = new PicoDatabase($databaseCredential->getDatabase(), null, function($sql){
     echo $sql.";\r\n\r\n";
 });
 $database->connect();
@@ -178,25 +178,6 @@ class EntityAlbum extends MagicObject
 	 */
 	protected $ipEdit;
 	
-	/**
-	 * Blocked
-	 * 
-	 * @Column(name="blocked", type="tinyint(1)", length=1, default_value="1", nullable=true)
-	 * @DefaultColumn(value="1")
-	 * @Label(content="Blocked")
-	 * @var boolean
-	 */
-	protected $blocked;
-	
-	/**
-	 * Hacked
-	 * 
-	 * @Column(name="hacked", type="tinyint(1)", length=1, default_value="null", nullable=true)
-	 * @DefaultColumn(value="1")
-	 * @Label(content="Hacked")
-	 * @var boolean
-	 */
-	protected $hacked;
 
 	/**
 	 * Active
@@ -217,14 +198,7 @@ class EntityAlbum extends MagicObject
 	 */
 	protected $asDraft;
 
-	/**
-	 * Waiting For
-	 * 
-	 * @Column(name="waiting_for", type="tinyint(1)", length=1, default_value="1", nullable=true)
-	 * @DefaultColumn(value="1")
-	 * @var integer
-	 */
-	protected $waitingFor;
+
 
 	
 
@@ -443,30 +417,20 @@ class Producer extends MagicObject
 
 $album = new EntityAlbum(null, $database);
 
-$album->where((new PicoSpecification())->addAnd(PicoPredicate::getInstance()->setActive(true))->addAnd(PicoPredicate::getInstance()->setName('Collection 3')))->setTitle('Coba lagi ya')->update();
-$result = $album->where((new PicoSpecification())->addAnd(new PicoPredicate('active', true))->addAnd(new PicoPredicate('producer.producerId', '0648d52126a420c6a8dd')))->setAsDraft(true)->selectAll();
-foreach($result as $data)
+$specs = new PicoSpecification();
+$specs->name = ['Album 1', 'Album 2'];
+$specs->numberOfSong = 11;
+$specs->active = true;
+$specs->asDraft = false;
+$specs->setIpCreate('::');
+$specs->setIpEdit(null);
+
+
+try
 {
-    //echo $data;
+	$album->findByNameAndNumberOfSongAndActiveAndDraft(['Album 1', 'Album 2'], 11, true, false);
 }
-
-$album->where((new PicoSpecification())->addAnd(new PicoPredicate('active', true))->addAnd(new PicoPredicate('producer.producerId', '0648d52126a420c6a8dd')))->setAsDraft(true)->select();
-//$a = $album->findAll((new PicoSpecification())->addAnd(new PicoPredicate('active', true))->addAnd(new PicoPredicate('producer.imageUpdate', 'qq')));
-
-exit();
-
-$rowId = "1111111111";
-
-$album = new EntityAlbum(null, $database);
-
-$album->where(PicoSpecification::getInstance()
-		->addAnd(PicoPredicate::getInstance()->setActive(null))
-		->addAnd(new PicoPredicate('lower(producer.producerId', '1111111'))
-		->addAnd(PicoPredicate::getInstance()->setWaitingFor(0))
-	)
-	->setAdminAskEdit("AAA")
-	->setTimeAskEdit(date('Y-m-d H:i:s'))
-	->setIpAskEdit('::1')
-	->setWaitingFor(5)
-	->setActive(true)
-	->update();
+catch(Exception $e)
+{
+	error_log($e);
+}

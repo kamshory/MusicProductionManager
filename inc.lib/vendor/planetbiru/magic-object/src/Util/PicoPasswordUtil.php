@@ -64,17 +64,17 @@ class PicoPasswordUtil{
      *
      * @var string
      */
-    private $regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{%d,}$/'; 
-    
+    private $regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{%d,}$/';
+
     /**
      * Minimum length of the password
      *
      * @var integer
      */
     private $minLength = 8;
-    
+
     private $hashAlgorithm = self::ALG_SHA1;
-    
+
     public function __construct($hashAlgorithm = null, $minLength = 8, $regex = null)
     {
         if(isset($hashAlgorithm))
@@ -90,7 +90,7 @@ class PicoPasswordUtil{
             $this->regex = $regex;
         }
     }
-    
+
     /**
      * Get regular expression
      *
@@ -104,7 +104,7 @@ class PicoPasswordUtil{
         }
         return $this->regex;
     }
-    
+
     /**
      * Validate password
      *
@@ -124,7 +124,7 @@ class PicoPasswordUtil{
         }
         return true;
     }
-    
+
     /**
      * Get password hash
      *
@@ -146,7 +146,7 @@ class PicoPasswordUtil{
      * Get regular expression format
      *
      * @return string
-     */ 
+     */
     public function getRegex()
     {
         return $this->regex;
@@ -158,7 +158,7 @@ class PicoPasswordUtil{
      * @param string  $regex  Regular expression format
      *
      * @return self
-     */ 
+     */
     public function setRegex($regex)
     {
         $this->regex = $regex;
@@ -170,7 +170,7 @@ class PicoPasswordUtil{
      * Get minimum length of the password
      *
      * @return integer
-     */ 
+     */
     public function getMinLength()
     {
         return $this->minLength;
@@ -182,7 +182,7 @@ class PicoPasswordUtil{
      * @param integer $minLength Minimum length of the password
      *
      * @return self
-     */ 
+     */
     public function setMinLength($minLength)
     {
         $this->minLength = $minLength;
@@ -192,7 +192,7 @@ class PicoPasswordUtil{
 
     /**
      * Get the value of hashAlgorithm
-     */ 
+     */
     public function getHashAlgorithm()
     {
         return $this->hashAlgorithm;
@@ -202,7 +202,7 @@ class PicoPasswordUtil{
      * Set the value of hashAlgorithm
      *
      * @return self
-     */ 
+     */
     public function setHashAlgorithm($hashAlgorithm)
     {
         $this->hashAlgorithm = $hashAlgorithm;

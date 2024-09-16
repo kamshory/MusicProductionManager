@@ -21,21 +21,21 @@ class PicoEntityField
      * @var string
      */
     private $objectName = null;
-    
+
     /**
      * Field
      *
      * @var string
      */
     private $field = null;
-    
+
     /**
      * Parent field
      *
      * @var string
      */
     private $parentField = null;
-    
+
     /**
      * Function format
      *
@@ -47,7 +47,7 @@ class PicoEntityField
      * Get entity
      *
      * @return string
-     */ 
+     */
     public function getEntity()
     {
         return $this->entity;
@@ -57,37 +57,37 @@ class PicoEntityField
      * Get field
      *
      * @return string
-     */ 
+     */
     public function getField()
     {
         return $this->field;
     }
-    
+
     /**
      * Get parent field
      *
      * @return string
-     */ 
+     */
     public function getParentField()
     {
         return $this->parentField;
     }
-    
+
     /**
      * Get function format
      *
      * @return string
-     */ 
+     */
     public function getFunctionFormat()
     {
         return $this->functionFormat;
     }
-    
+
     /**
      * Constructor
      *
-     * @param string $fieldRaw
-     * @param PicoTableInfo|null $info
+     * @param string $fieldRaw Raw field
+     * @param PicoTableInfo|null $info Table info
      */
     public function __construct($fieldRaw, $info = null)
     {
@@ -97,7 +97,7 @@ class PicoEntityField
             $arr = explode(".", $field, 2);
             $this->field = $arr[1];
             $this->objectName = $arr[0];
-            $this->parentField = $arr[0];  
+            $this->parentField = $arr[0];
 
             if($info != null && $info->getJoinColumns() != null)
             {
@@ -106,18 +106,18 @@ class PicoEntityField
                 {
                     $this->entity = $columns[$this->objectName]['propertyType'];
                 }
-            } 
+            }
         }
         else
         {
             $this->field = $field;
         }
     }
-    
+
     /**
      * Extract field from any function
      *
-     * @param string $fieldRaw
+     * @param string $fieldRaw Raw field
      * @return string
      */
     public function extractField($fieldRaw)

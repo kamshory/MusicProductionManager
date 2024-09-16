@@ -10,6 +10,11 @@ use stdClass;
  */
 class PicoArrayUtil
 {
+    private function __construct()
+    {
+        // prevent object construction from outside the class
+    }
+    
     /**
      * Camelize array keys
      *
@@ -30,7 +35,7 @@ class PicoArrayUtil
             return $array;
         }
     }
-    
+
     /**
      * Snakeize array keys
      *
@@ -51,7 +56,7 @@ class PicoArrayUtil
             return $array;
         }
     }
-    
+
     /**
      * Camelize array keys
      *
@@ -70,21 +75,21 @@ class PicoArrayUtil
             #  - remove exclamation marks at the front
             #  - camelCase to snake_case
             # $transformedKey = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', ltrim($key, '!')));
-            
+
             $transformedKey = PicoStringUtil::camelize($key);
-            
+
             # Work recursively
-            if (is_array($value)) 
+            if (is_array($value))
             {
                 self::_camelize($value);
             }
             # Store with new key
-            $array[$transformedKey] = $value;      
+            $array[$transformedKey] = $value;
             # Do not forget to unset references!
             unset($value);
         }
     }
-    
+
     /**
      * Snakeize array keys
      *
@@ -103,16 +108,16 @@ class PicoArrayUtil
             #  - remove exclamation marks at the front
             #  - camelCase to snake_case
             # $transformedKey = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', ltrim($key, '!')));
-            
+
             $transformedKey = PicoStringUtil::snakeize($key);
-            
+
             # Work recursively
-            if (is_array($value)) 
+            if (is_array($value))
             {
                 self::_snakeize($value);
             }
             # Store with new key
-            $array[$transformedKey] = $value;      
+            $array[$transformedKey] = $value;
             # Do not forget to unset references!
             unset($value);
         }

@@ -24,8 +24,8 @@ class Line {
     /**
      * Constructor to initialize the Line with two Point objects
      *
-     * @param Point $a
-     * @param Point $b
+     * @param Point $a Point a
+     * @param Point $b Point b
      */
     public function __construct(Point $a, Point $b) {
         $this->a = $a;

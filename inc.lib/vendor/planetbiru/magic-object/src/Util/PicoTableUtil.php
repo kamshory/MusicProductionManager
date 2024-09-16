@@ -7,6 +7,11 @@ use MagicObject\Exceptions\InvalidParameterException;
 
 class PicoTableUtil
 {
+    private function __construct()
+    {
+        // prevent object construction from outside the class
+    }
+    
     /**
      * Set class
      *
@@ -37,7 +42,7 @@ class PicoTableUtil
             foreach($annotationAttributes as $attributeName=>$attributeValue)
             {
                 $node->setAttribute($attributeName, $attributeValue);
-            }            
+            }
         }
         return $node;
     }
@@ -53,11 +58,11 @@ class PicoTableUtil
     {
         if(isset($identity) && $identity->issetName())
         {
-            $node->setAttribute("name", $identity->getName());      
+            $node->setAttribute("name", $identity->getName());
         }
         return $node;
     }
-    
+
     /**
      * Parse attribute
      *
@@ -89,7 +94,7 @@ class PicoTableUtil
         }
         return $attrs;
     }
-    
+
     /**
      * Validate class name of DOMElement
      *

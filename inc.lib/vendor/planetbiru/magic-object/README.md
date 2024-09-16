@@ -13,16 +13,17 @@ Some examples of using MagicObject are as follows:
 5. filtering and pagination
 6. dump database
 7. serialize and deserialize objects in JSON and Yaml format
-8. reads INI, Yaml, and JSON files
-9. Get the environment variable value
-10. encrypt and decrypt application configuration
-11. object from POST, GET, COOKIE, REQUEST, SERVER
-12. PHP session
-13. object label
-14. multi language
-15. upload file
-16. annotations
-17. debug objects 
+8. importing data from another database with destination table and column names can be different from the source table and column names
+9. reads INI, Yaml, and JSON files
+10. Get the environment variable value
+11. encrypt and decrypt application configuration
+12. object from POST, GET, COOKIE, REQUEST, SERVER
+13. PHP session
+14. object label
+15. multi language
+16. upload file
+17. annotations
+18. debug objects 
 
 # Installation
 

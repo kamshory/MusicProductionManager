@@ -8,7 +8,7 @@ use MagicObject\DataLabel\PicoDataLabel;
  * Data labels
  * @link https://github.com/Planetbiru/MagicObject
  */
-class PicoDataLabels 
+class PicoDataLabels
 {
     /**
      * Data
@@ -16,7 +16,7 @@ class PicoDataLabels
      * @var PicoDataLabel[]
      */
     private $data = array();
-    
+
     /**
      * Append data
      *
@@ -28,12 +28,12 @@ class PicoDataLabels
         $this->data[] = $data;
         return $this;
     }
-    
+
     public function generate()
     {
         foreach($this->data as $data)
         {
-            
+
         }
     }
 }

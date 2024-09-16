@@ -11,7 +11,7 @@ class PicoRequest extends PicoRequestBase
     const ACTION_DETAIL = "detail";
     const ACTION_EDIT = "edit";
     const ACTION_ADD = "add";
-    
+
     /**
      * Constructor
      *
@@ -42,7 +42,7 @@ class PicoRequest extends PicoRequestBase
             $this->loadData($_SERVER);
         }
     }
-    
+
     /**
      * Get request body
      *
@@ -52,7 +52,7 @@ class PicoRequest extends PicoRequestBase
     {
         return file_get_contents("php://input");
     }
-    
+
     /**
      * Get all request headers
      *
@@ -60,24 +60,24 @@ class PicoRequest extends PicoRequestBase
      */
     public static function getRequestHeaders()
     {
-        if (!function_exists('getallheaders')) 
+        if (!function_exists('getallheaders'))
         {
-            foreach ($_SERVER as $name => $value) 
+            foreach ($_SERVER as $name => $value)
             {
                 /* RFC2616 (HTTP/1.1) defines header fields as case-insensitive entities. */
-                if (strtolower(substr($name, 0, 5)) == 'http_') 
+                if (strtolower(substr($name, 0, 5)) == 'http_')
                 {
                     $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
                 }
             }
             return $headers;
-        } 
-        else 
+        }
+        else
         {
             return getallheaders();
         }
     }
-    
+
     /**
      * Get request header
      *
@@ -92,7 +92,7 @@ class PicoRequest extends PicoRequestBase
             $allHeaders = self::getRequestHeaders();
         }
         $key = strtolower($key);
-        
+
         // fixing array
         $keys = array_keys($allHeaders);
         $values = array_values($allHeaders);
@@ -101,6 +101,6 @@ class PicoRequest extends PicoRequestBase
             $keys[$k] = strtolower($key);
         }
         $allHeaders = array_combine($keys, $values);
-        return isset($allHeaders[$key]) ? $allHeaders[$key] : null;      
-    }      
+        return isset($allHeaders[$key]) ? $allHeaders[$key] : null;
+    }
 }

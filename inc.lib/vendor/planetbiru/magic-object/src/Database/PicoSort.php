@@ -8,27 +8,28 @@ namespace MagicObject\Database;
  */
 class PicoSort
 {
-    const ORDER_TYPE_ASC = "asc";
+    const ORDER_TYPE_ASC  = "asc";
     const ORDER_TYPE_DESC = "desc";
-    const SORT_BY = "sortBy";
+    const SORT_BY         = "sortBy";
+
     /**
      * Sort by
      *
      * @var string
      */
     private $sortBy = "";
-    
+
     /**
      * Sort type
      *
      * @var string
      */
     private $sortType = "";
-    
+
     /**
      * Constructor
-     * @param string $sortBy
-     * @param string $sortType
+     * @param string $sortBy Sort by
+     * @param string $sortType Sort type
      */
     public function __construct($sortBy = null, $sortType = null)
     {
@@ -40,7 +41,7 @@ class PicoSort
      * Get sort by
      *
      * @return string
-     */ 
+     */
     public function getSortBy()
     {
         return $this->sortBy;
@@ -52,7 +53,7 @@ class PicoSort
      * @param string $sortBy Sort by
      *
      * @return self
-     */ 
+     */
     public function setSortBy($sortBy)
     {
         $this->sortBy = $sortBy;
@@ -64,7 +65,7 @@ class PicoSort
      * Get sort type
      *
      * @return string
-     */ 
+     */
     public function getSortType()
     {
         return $this->sortType;
@@ -76,7 +77,7 @@ class PicoSort
      * @param string $sortType Sort type
      *
      * @return self
-     */ 
+     */
     public function setSortType($sortType)
     {
         $this->sortType = $sortType;
@@ -111,11 +112,11 @@ class PicoSort
     {
         return new self;
     }
-    
+
     /**
      * Fix sort type
      *
-     * @param string $type
+     * @param string $type Sort type
      * @return string
      */
     public static function fixSortType($type)
@@ -131,7 +132,7 @@ class PicoSort
     public function __toString()
     {
         return json_encode(array(
-            'sortBy' => $this->sortBy, 
+            'sortBy' => $this->sortBy,
             'sortType' => $this->sortType
         ));
     }

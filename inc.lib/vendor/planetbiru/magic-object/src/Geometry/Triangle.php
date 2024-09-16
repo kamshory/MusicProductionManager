@@ -52,9 +52,9 @@ class Triangle {
     /**
      * Constructor to initialize the Triangle with three Point objects
      *
-     * @param Point $a
-     * @param Point $b
-     * @param Point $c
+     * @param Point $a Point a
+     * @param Point $b Point b
+     * @param Point $c Point c
      */
     public function __construct(Point $a, Point $b, Point $c) {
         $this->a = $a;

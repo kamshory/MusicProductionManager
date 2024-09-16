@@ -14,9 +14,9 @@ use stdClass;
 class PicoDataLabel extends SetterGetter
 {
     const ANNOTATION_PROPERTIES = "Properties";
-    const ANNOTATION_TABLE = "Table";
-    const KEY_NAME = "name";
-    const ANNOTATION_VAR = "var";
+    const ANNOTATION_TABLE      = "Table";
+    const KEY_NAME              = "name";
+    const ANNOTATION_VAR        = "var";
     
     /**
      * Class params
@@ -34,7 +34,7 @@ class PicoDataLabel extends SetterGetter
     /**
      * Constructor
      *
-     * @param self|array|object $data
+     * @param self|array|object $data Data
      */
     public function __construct($data)
     {
@@ -55,7 +55,7 @@ class PicoDataLabel extends SetterGetter
     
     /**
      * Load data to object
-     * @param mixed $data
+     * @param mixed $data Data to be load
      * @return self
      */
     public function loadData($data)
@@ -85,7 +85,7 @@ class PicoDataLabel extends SetterGetter
      *
      * @return stdClass
      */
-    public function getObjectInfo() // NOSONAR
+    public function getObjectInfo()
     {
         $reflexClass = new PicoAnnotationParser($this->className);
         $table = $reflexClass->getParameter(self::ANNOTATION_TABLE);

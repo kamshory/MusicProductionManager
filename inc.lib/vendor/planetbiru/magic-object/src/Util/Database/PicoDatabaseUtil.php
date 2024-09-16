@@ -8,6 +8,13 @@ use MagicObject\Database\PicoSpecification;
 
 class PicoDatabaseUtil
 {
+    const INLINE_TRIM = " \r\n\t ";
+
+    private function __construct()
+    {
+        // prevent object construction from outside the class
+    }
+
     /**
      * Get specification from parameters
      * @param array $params Parameters
@@ -47,7 +54,7 @@ class PicoDatabaseUtil
         }
         return null;
     }
-    
+
     /**
      * Get sortable from parameters
      * @param array $params Parameters
@@ -89,7 +96,7 @@ class PicoDatabaseUtil
         }
         return $ret;
     }
-    
+
     /**
      * Fix value
      *
@@ -115,12 +122,12 @@ class PicoDatabaseUtil
         {
             return $value + 0;
         }
-        else 
+        else
         {
             return $value;
         }
     }
-    
+
     /**
      * Check if value is null
      *
@@ -132,7 +139,7 @@ class PicoDatabaseUtil
     {
         return $value === null || $value == 'null' && $importFromString;
     }
-    
+
     /**
      * Check if value is numeric
      *
@@ -144,7 +151,7 @@ class PicoDatabaseUtil
     {
         return is_string($value) && is_numeric($value) && $importFromString;
     }
-    
+
     /**
 	 * Escape value
      * @param mixed $value Value
@@ -177,7 +184,12 @@ class PicoDatabaseUtil
 			// convert number to string
 			$ret = $value."";
 		}
-		else if(is_array($value) || is_object($value))
+		else if(is_array($value))
+		{
+			// encode to JSON and escapethe value
+			$ret = "(".self::toList($value).")";
+		}
+        else if(is_object($value))
 		{
 			// encode to JSON and escapethe value
 			$ret = "'".self::escapeSQL(json_encode($value))."'";
@@ -187,10 +199,25 @@ class PicoDatabaseUtil
 			// force convert to string and escapethe value
 			$ret = "'".self::escapeSQL($value)."'";
 		}
-		
 		return $ret;
 	}
-    
+
+    /**
+     * Convert array to list
+     *
+     * @param array $array Array
+     * @return string
+     */
+    public static function toList($array)
+    {
+        foreach($array as $key=>$value)
+        {
+            $type = gettype($value);
+            $array[$key] = self::fixValue($value, $type);
+        }
+        return implode(", ", $array);
+    }
+
     /**
      * Escape SQL
      *
@@ -201,7 +228,7 @@ class PicoDatabaseUtil
     {
         return addslashes($value);
     }
-    
+
     /**
      * Trim WHERE
      *
@@ -210,15 +237,21 @@ class PicoDatabaseUtil
      */
     public static function trimWhere($where)
     {
-        // DO NOT EDIT THIS CONSTANT
-        if(stripos($where, "(1=1) or ") === 0)
+        $where = trim($where, self::INLINE_TRIM);
+        if($where != "(1=1)")
         {
-            $where = substr($where, 9);
-        }
-        // DO NOT EDIT THIS CONSTANT
-        if(stripos($where, "(1=1) and ") === 0)
-        {
-            $where = substr($where, 10);
+            if(stripos($where, "(1=1)") === 0)
+            {
+                $where = trim(substr($where, 5), self::INLINE_TRIM);
+            }
+            if(stripos($where, "and ") === 0)
+            {
+                $where = substr($where, 4);
+            }
+            if(stripos($where, "or ") === 0)
+            {
+                $where = substr($where, 3);
+            }
         }
         return $where;
     }
@@ -260,7 +293,7 @@ class PicoDatabaseUtil
         }
         $arr = $arr2;
         unset($arr2);
-        
+
         $append = 0;
         $skip = 0;
         $start = 1;
@@ -268,12 +301,12 @@ class PicoDatabaseUtil
         $delimiter = ";";
         $queryArray = array();
         $delimiterArray = array();
-        
+
         foreach($arr as $line=>$text)
         {
             if($text == "" && $append == 1)
             {
-                $queryArray[$nquery] .= "\r\n";    
+                $queryArray[$nquery] .= "\r\n";
             }
             if($append == 0)
             {
@@ -332,8 +365,8 @@ class PicoDatabaseUtil
             $delimiter = $delimiterArray[$line];
             if(stripos($sql, "delimiter ") !== 0)
             {
-                $sql = rtrim($sql, " \r\n\t ");
-                $sql = substr($sql, 0, strlen($sql)-strlen($delimiter));			
+                $sql = rtrim($sql, self::INLINE_TRIM);
+                $sql = substr($sql, 0, strlen($sql)-strlen($delimiter));
                 $result[] = array("query"=> $sql, "delimiter"=>$delimiter);
             }
         }

@@ -44,7 +44,7 @@ class PicoHttpStatus
     const HTTP_SERVICE_UNAVAILABLE = 503;
     const HTTP_GATEWAY_TIME_OUT = 504;
     const HTTP_HTTP_VERSION_NOT_SUPPORTED = 505;
-    
+
     /**
      * HTTP status
      *
