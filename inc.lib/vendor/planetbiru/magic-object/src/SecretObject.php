@@ -552,7 +552,7 @@ class SecretObject extends stdClass // NOSONAR
         $iv = substr($ivHashCiphertext, 0, 16);
         $hash = substr($ivHashCiphertext, 16, 32);
         $ciphertext = substr($ivHashCiphertext, 48);
-        if (!hash_equals(hash_hmac('sha256', $ciphertext . $iv, $key, true), $hash))
+        if (!$hash || !hash_equals(hash_hmac('sha256', $ciphertext . $iv, $key, true), $hash))
         {
             return null;
         }
