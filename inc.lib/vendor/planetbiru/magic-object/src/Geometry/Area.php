@@ -2,148 +2,157 @@
 
 namespace MagicObject\Geometry;
 
+/**
+ * Class Area
+ *
+ * Represents a geometric area defined by various shapes such as 
+ * rectangles, triangles, polygons, and circles. This class encapsulates 
+ * properties related to the shape, its coordinates, and any associated 
+ * attributes or hyperlinks. It also provides methods to calculate 
+ * coordinates based on the shape type, apply zoom factors, and generate 
+ * an HTML representation for use in maps or similar applications.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Geometry
+ * @link https://github.com/Planetbiru/MagicObject
+ */
 class Area
 {
     /**
-     * Shape
+     * Shape type of the area.
      *
      * @var string
      */
     public $shape;
+
     /**
-     * Coordinates
+     * Coordinates defining the shape.
      *
      * @var float[]
      */
-    public $coords = array();
+    public $coords = [];
 
     /**
-     * Href
+     * Hyperlink reference associated with the area.
      *
-     * @var string
+     * @var string|null
      */
     public $href;
 
     /**
-     * Zoom
+     * Additional attributes for the area.
+     *
+     * @var string[]
+     */
+    public $attributes;
+
+    /**
+     * Zoom factor for the area.
      *
      * @var float
      */
     public $zoom = 1;
 
     /**
-     * Constructor
+     * Constructor for the Area class.
      *
-     * @param Rectangle|Triangle|Polygon|Circle $object One of Rectangle, Triangle, Polygon, or Circle
-     * @param float $zoom Zoom
-     * @param string $href Href
+     * @param mixed $object One of Rectangle, Triangle, Polygon, or Circle
+     * @param float $zoom Zoom factor (default: 1)
+     * @param string|null $href Hyperlink reference (optional)
+     * @param string[]|null $attributes Additional attributes (optional)
      */
-    public function __construct($object, $zoom = 1, $href = null)
+    public function __construct($object, $zoom = 1, $href = null, $attributes = null)
     {
-        if(isset($href))
-        {
-            $this->href = $href;
-        }
+        $this->href = $href;
+        $this->attributes = is_array($attributes) ? $attributes : [];
         $this->zoom = $zoom;
-        if($object instanceof Rectangle)
-        {
+
+        if ($object instanceof Rectangle) {
             $this->shape = "rect";
             $this->coords = $this->coordsFromRectangle($object);
-        }
-        if($object instanceof Triangle)
-        {
+        } elseif ($object instanceof Triangle) {
             $this->shape = "poly";
             $this->coords = $this->coordsFromTriangle($object);
-        }
-        if($object instanceof Polygon)
-        {
+        } elseif ($object instanceof Polygon) {
             $this->shape = "poly";
             $this->coords = $this->coordsFromPolygon($object);
-        }
-        if($object instanceof Circle)
-        {
+        } elseif ($object instanceof Circle) {
             $this->shape = "circle";
             $this->coords = $this->coordsFromCircle($object);
         }
     }
 
     /**
-     * Get rectangle coordinates
+     * Get coordinates from a rectangle.
      *
-     * @param Rectangle $object
-     * @return float[]
+     * @param Rectangle $object Rectangle object
+     * @return float[] Coordinates of the rectangle
      */
     public function coordsFromRectangle($object)
     {
-        return array(
+        return [
             $object->a->x,
             $object->a->y,
             $object->b->x,
             $object->b->y
-        );
+        ];
     }
 
     /**
-     * Get triangle coordinates
+     * Get coordinates from a triangle.
      *
-     * @param Triangle $object
-     * @return float[]
+     * @param Triangle $object Triangle object
+     * @return float[] Coordinates of the triangle
      */
     public function coordsFromTriangle($object)
     {
-        return array(
+        return [
             $object->a->x,
             $object->a->y,
             $object->b->x,
             $object->b->y,
             $object->c->x,
             $object->c->y
-        );
+        ];
     }
 
     /**
-     * Get Polygon coordinates
+     * Get coordinates from a polygon.
      *
-     * @param Polygon $object
-     * @return float[]
+     * @param Polygon $object Polygon object
+     * @return float[] Coordinates of the polygon
      */
     public function coordsFromPolygon($object)
     {
         $points = $object->getPoints();
-        $str = array();
-        foreach($points as $coords)
-        {
-            $str[] = $coords->x;
-            $str[] = $coords->y;
+        $coords = [];
+        foreach ($points as $point) {
+            $coords[] = $point->x;
+            $coords[] = $point->y;
         }
-        return $str;
+        return $coords;
     }
 
     /**
-     * Get circle info
+     * Get coordinates from a circle.
      *
-     * @param Circle $object
-     * @return float[]
+     * @param Circle $object Circle object
+     * @return float[] Coordinates of the circle
      */
     public function coordsFromCircle($object)
     {
-        return array($object->x, $object->y, $object->r);
+        return [$object->x, $object->y, $object->r];
     }
 
     /**
-     * Get coordinates
+     * Get coordinates with optional zoom factor.
      *
-     * @param float $zoom
-     * @return float[]
+     * @param float $zoom Zoom factor (default: 1)
+     * @return float[] Adjusted coordinates
      */
     public function getCoords($zoom = 1)
     {
-        if($zoom == 1)
-        {
-            return $this->coords;
-        }
-        if($zoom < 0)
-        {
+        if ($zoom <= 0) {
             $zoom = abs($zoom);
         }
         return array_map(function($value) use ($zoom) {
@@ -152,26 +161,33 @@ class Area
     }
 
     /**
-     * Get HTML
+     * Generate HTML representation of the area.
      *
-     * @return string
+     * @return string HTML string for the area
      */
     public function getHTML()
     {
-        $attrs = array();
-        $attrs[] = 'shape="'.$this->shape.'"';
-        $attrs[] = 'coords="'.implode(", ", $this->getCoords($this->zoom)).'"';
-        if(isset($this->href))
-        {
-            $attrs[] = 'href="'.$this->href.'"';
+        $attrs = [];
+        $attrs[] = 'shape="' . $this->shape . '"';
+        $attrs[] = 'coords="' . implode(", ", $this->getCoords($this->zoom)) . '"';
+
+        if (isset($this->href)) {
+            $attrs[] = 'href="' . $this->href . '"';
         }
-        return '<area '.implode(' ', $attrs).' />';
+
+        if (isset($this->attributes) && is_array($this->attributes)) {
+            foreach ($this->attributes as $key => $value) {
+                $attrs[] = $key . '="' . $value . '"';
+            }
+        }
+
+        return '<area ' . implode(' ', $attrs) . ' />';
     }
 
     /**
-     * To String
+     * Convert the area object to a string.
      *
-     * @return string
+     * @return string HTML representation of the area
      */
     public function __toString()
     {
@@ -179,7 +195,9 @@ class Area
     }
 
     /**
-     * Get the value of zoom
+     * Get the current zoom factor.
+     *
+     * @return float Zoom factor
      */
     public function getZoom()
     {
@@ -187,9 +205,10 @@ class Area
     }
 
     /**
-     * Set the value of zoom
+     * Set the zoom factor.
      *
-     * @return self
+     * @param float $zoom Zoom factor
+     * @return self Returns the current instance for method chaining.
      */
     public function setZoom($zoom)
     {

@@ -2,6 +2,10 @@
 
 namespace Music\Dto;
 
+use MagicObject\Database\PicoDatabase;
+use MagicObject\Database\PicoPredicate;
+use MagicObject\Database\PicoSpecification;
+use MagicObject\SecretObject;
 use MagicObject\SetterGetter;
 use Music\Entity\EntitySong;
 
@@ -401,7 +405,7 @@ class DtoSong extends SetterGetter
      * Construct DtoSong from EntitySong and not copy other properties
      * 
      * @param EntitySong $input
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public static function valueOf($input)
     {
@@ -458,3 +462,4 @@ class DtoSong extends SetterGetter
     }
 
 }
+

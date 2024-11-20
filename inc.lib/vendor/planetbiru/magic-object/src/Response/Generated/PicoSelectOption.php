@@ -7,45 +7,54 @@ use MagicObject\Database\PicoSort;
 use MagicObject\Database\PicoSortable;
 use MagicObject\MagicObject;
 
+/**
+ * Class PicoSelectOption
+ *
+ * This class generates HTML `<option>` elements based on data from a MagicObject entity.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Response\Generated
+ * @link https://github.com/Planetbiru/Request
+ */
 class PicoSelectOption
 {
     /**
-     * Object
+     * Entity object
      *
      * @var MagicObject
      */
     private $object;
 
     /**
-     * Map
+     * Mapping of value and label fields
      *
      * @var array
      */
     private $map = array();
 
     /**
-     * Value
+     * Selected value
      *
      * @var mixed
      */
     private $value;
 
     /**
-     * Attributes
+     * Additional attributes for options
      *
      * @var array
      */
     private $attributes = array();
 
     /**
-     * Rows
+     * Rows for generating options
      *
      * @var array
      */
     private $rows = array();
 
     /**
-     * Sortable
+     * Sortable options
      *
      * @var PicoSortable
      */
@@ -54,11 +63,13 @@ class PicoSelectOption
     /**
      * Constructor
      *
-     * @param MagicObject $object ENtity
-     * @param array $map Map
-     * @param mixed $value Value
-     * @param array|null $attributes Attributes
-     * @param PicoSortable $sortable Sortable
+     * Initializes the PicoSelectOption with the provided parameters and fetches active options.
+     *
+     * @param MagicObject $object Entity to fetch data from
+     * @param array $map Mapping for value and label keys
+     * @param mixed $value Selected value
+     * @param array|null $attributes Additional attributes for the options
+     * @param PicoSortable|null $sortable Sortable options for fetching
      */
     public function __construct($object, $map, $value, $attributes = null, $sortable = null)
     {
@@ -81,12 +92,12 @@ class PicoSelectOption
     }
 
     /**
-     * Create attributes
+     * Create attributes for an option element.
      *
-     * @param MagicObject $row Entity
-     * @param string $attr Attribute
-     * @param string $value Value
-     * @return array
+     * @param MagicObject $row Entity representing a row.
+     * @param string $attr Attribute name for the option.
+     * @param string $value Option value.
+     * @return array Attributes for the option element.
      */
     private function createAttributes($row, $attr, $value)
     {
@@ -111,7 +122,7 @@ class PicoSelectOption
     }
 
     /**
-     * Find all data from database
+     * Find all active options from the database
      *
      * @return void
      */
@@ -138,10 +149,10 @@ class PicoSelectOption
     }
 
     /**
-     * Convert associated array to HTML attributes as string
+     * Convert an array of attributes to an HTML attributes string.
      *
-     * @param array $array Attributes
-     * @return string
+     * @param array $array Attributes to convert.
+     * @return string String representation of HTML attributes.
      */
     private function attributeToString($array)
     {
@@ -157,6 +168,11 @@ class PicoSelectOption
         return rtrim(" ".implode(" ", $optAttributes));
     }
 
+    /**
+     * Convert the options to HTML `<option>` elements.
+     *
+     * @return string HTML string of `<option>` elements.
+     */
     public function __toString()
     {
         $texts = array();

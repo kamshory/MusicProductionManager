@@ -5,71 +5,92 @@ namespace MagicObject\Database;
 use stdClass;
 
 /**
- * Table info
+ * Class representing information about a database table.
+ *
+ * This class contains details such as the table name, columns, 
+ * primary keys, and other related metadata necessary for managing 
+ * database interactions.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Database
  * @link https://github.com/Planetbiru/MagicObject
  */
-class PicoTableInfo
+class PicoTableInfo // NOSONAR
 {
     /**
-     * Table name
+     * The name of the table.
      *
      * @var string
      */
     protected $tableName = null;
 
     /**
-     * Columns
+     * The columns of the table.
      *
      * @var array
      */
     protected $columns = array();
 
     /**
-     * Join columns
+     * The columns used for joining other tables.
      *
      * @var array
      */
     protected $joinColumns = array();
 
     /**
-     * Primary keys
+     * The primary keys of the table.
      *
      * @var array
      */
     protected $primaryKeys = array();
 
     /**
-     * Auto increment keys
+     * The columns that auto-increment.
      *
      * @var array
      */
     protected $autoIncrementKeys = array();
 
     /**
-     * Default value keys
+     * The columns that have default values.
      *
      * @var array
      */
     protected $defaultValue = array();
 
     /**
-     * Not null columns
+     * The columns that cannot be null.
      *
      * @var array
      */
     protected $notNullColumns = array();
 
     /**
-     * Column type
+     * The type of the columns.
      *
      * @var string
      */
     protected $columnType;
+    
+    /**
+     * Flag to disable cache when any entities join with this entity
+     *
+     * @var boolean
+     */
+    protected $noCache = false;
 
     /**
-     * Get instance
+     * The package name or namespace.
      *
-     * @return self
+     * @var string
+     */
+    protected $package;
+
+    /**
+     * Gets an instance of PicoTableInfo.
+     *
+     * @return self A new instance of the class.
      */
     public static function getInstance()
     {
@@ -77,17 +98,21 @@ class PicoTableInfo
     }
 
     /**
-     * Constructor
+     * Constructor for PicoTableInfo.
      *
-     * @param string $tableName Table name
-     * @param array $columns Columns
-     * @param array $joinColumns Join columns
-     * @param array $primaryKeys Primary keys
-     * @param array $autoIncrementKeys Auto increment keys
-     * @param array $defaultValue Columns with default value
-     * @param array $notNullColumns Columns with not null
+     * Initializes the table information with the provided parameters.
+     *
+     * @param string|null $tableName The name of the table.
+     * @param array $columns The columns of the table.
+     * @param array $joinColumns The columns used for joins.
+     * @param array $primaryKeys The primary keys of the table.
+     * @param array $autoIncrementKeys The auto-increment keys of the table.
+     * @param array $defaultValue The columns with default values.
+     * @param array $notNullColumns The columns that cannot be null.
+     * @param bool $noCache Flag to disable cache when any entities join with this entity
+     * @param string $package The package name or namespace of the class
      */
-    public function __construct($tableName, $columns, $joinColumns, $primaryKeys, $autoIncrementKeys, $defaultValue, $notNullColumns)
+    public function __construct($tableName, $columns, $joinColumns, $primaryKeys, $autoIncrementKeys, $defaultValue, $notNullColumns, $noCache = false, $package = null) // NOSONAR
     {
         $this->tableName = $tableName;
         $this->columns = $columns;
@@ -96,16 +121,18 @@ class PicoTableInfo
         $this->autoIncrementKeys = $autoIncrementKeys;
         $this->defaultValue = $defaultValue;
         $this->notNullColumns = $notNullColumns;
+        $this->noCache = $noCache;
+        $this->package = $package;
     }
 
     /**
-     * Magic method to debug object
+     * Magic method to return a JSON representation of the object.
      *
-     * @return string
+     * @return string JSON encoded string of the object's properties.
      */
     public function __toString()
     {
-        // create new object because all properties are private
+        // Create a new stdClass object to expose the properties
         $stdClass = new stdClass;
         $stdClass->tableName = $this->tableName;
         $stdClass->columns = $this->columns;
@@ -114,45 +141,45 @@ class PicoTableInfo
         $stdClass->autoIncrementKeys = $this->autoIncrementKeys;
         $stdClass->defaultValue = $this->defaultValue;
         $stdClass->notNullColumns = $this->notNullColumns;
+        $stdClass->this->noCache = $this->noCache;
+        $stdClass->package = $this->package;
         return json_encode($stdClass);
     }
 
     /**
-     * Get column map
+     * Gets a map of column properties.
      *
-     * @return string[]
+     * @return string[] An associative array mapping property names to column names.
      */
     public function getColumnsMap()
     {
         $columns = $this->getColumns();
         $propertyColumns = array();
-        foreach($columns as $prop=>$column)
-        {
+        foreach ($columns as $prop => $column) {
             $propertyColumns[$prop] = $column['name'];
         }
         return $propertyColumns;
     }
 
     /**
-     * Get join column map
+     * Gets a map of join column properties.
      *
-     * @return string[]
+     * @return string[] An associative array mapping property names to join column names.
      */
     public function getJoinColumnsMap()
     {
         $columns = $this->getJoinColumns();
         $propertyColumns = array();
-        foreach($columns as $prop=>$column)
-        {
+        foreach ($columns as $prop => $column) {
             $propertyColumns[$prop] = $column['name'];
         }
         return $propertyColumns;
     }
 
     /**
-     * Get table name
+     * Gets the name of the table.
      *
-     * @return string
+     * @return string|null The name of the table.
      */
     public function getTableName()
     {
@@ -160,23 +187,22 @@ class PicoTableInfo
     }
 
     /**
-     * Set table name
+     * Sets the name of the table.
      *
-     * @param string $tableName Table name
+     * @param string $tableName The name of the table.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setTableName($tableName)
     {
         $this->tableName = $tableName;
-
         return $this;
     }
 
     /**
-     * Get columns
+     * Gets the columns of the table.
      *
-     * @return array
+     * @return array The columns of the table.
      */
     public function getColumns()
     {
@@ -184,11 +210,11 @@ class PicoTableInfo
     }
 
     /**
-     * Set columns
+     * Sets the columns of the table.
      *
-     * @param array $columns Columns
+     * @param array $columns The columns to set.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setColumns($columns)
     {
@@ -197,9 +223,9 @@ class PicoTableInfo
     }
 
     /**
-     * Get join columns
+     * Gets the join columns of the table.
      *
-     * @return array
+     * @return array The join columns.
      */
     public function getJoinColumns()
     {
@@ -207,23 +233,22 @@ class PicoTableInfo
     }
 
     /**
-     * Set join columns
+     * Sets the join columns of the table.
      *
-     * @param array $joinColumns Join columns
+     * @param array $joinColumns The join columns to set.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setJoinColumns($joinColumns)
     {
         $this->joinColumns = $joinColumns;
-
         return $this;
     }
 
     /**
-     * Get primary keys
+     * Gets the primary keys of the table.
      *
-     * @return array
+     * @return array The primary keys.
      */
     public function getPrimaryKeys()
     {
@@ -231,23 +256,22 @@ class PicoTableInfo
     }
 
     /**
-     * Set primary keys
+     * Sets the primary keys of the table.
      *
-     * @param array $primaryKeys Primary keys
+     * @param array $primaryKeys The primary keys to set.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setPrimaryKeys($primaryKeys)
     {
         $this->primaryKeys = $primaryKeys;
-
         return $this;
     }
 
     /**
-     * Get auto increment keys
+     * Gets the auto-increment keys of the table.
      *
-     * @return array
+     * @return array The auto-increment keys.
      */
     public function getAutoIncrementKeys()
     {
@@ -255,23 +279,22 @@ class PicoTableInfo
     }
 
     /**
-     * Set auto increment keys
+     * Sets the auto-increment keys of the table.
      *
-     * @param array $autoIncrementKeys Auto increment keys
+     * @param array $autoIncrementKeys The auto-increment keys to set.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setAutoIncrementKeys($autoIncrementKeys)
     {
         $this->autoIncrementKeys = $autoIncrementKeys;
-
         return $this;
     }
 
     /**
-     * Get default value keys
+     * Gets the default value keys of the table.
      *
-     * @return array
+     * @return array The default value keys.
      */
     public function getDefaultValue()
     {
@@ -279,23 +302,22 @@ class PicoTableInfo
     }
 
     /**
-     * Set default value keys
+     * Sets the default value keys of the table.
      *
-     * @param array $defaultValue Default value keys
+     * @param array $defaultValue The default value keys to set.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setDefaultValue($defaultValue)
     {
         $this->defaultValue = $defaultValue;
-
         return $this;
     }
 
     /**
-     * Get not null columns
+     * Gets the not-null columns of the table.
      *
-     * @return array
+     * @return array The not-null columns.
      */
     public function getNotNullColumns()
     {
@@ -303,15 +325,62 @@ class PicoTableInfo
     }
 
     /**
-     * Set not null columns
+     * Sets the not-null columns of the table.
      *
-     * @param array $notNullColumns Not null columns
+     * @param array $notNullColumns The not-null columns to set.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setNotNullColumns($notNullColumns)
     {
         $this->notNullColumns = $notNullColumns;
+        return $this;
+    }
+
+    /**
+     * Get flag to disable cache when any entities join with this entity
+     *
+     * @return  boolean
+     */ 
+    public function getNoCache()
+    {
+        return $this->noCache;
+    }
+
+    /**
+     * Set flag to disable cache when any entities join with this entity
+     *
+     * @param  boolean  $noCache  Flag to disable cache when any entities join with this entity
+     *
+     * @return  self
+     */ 
+    public function setNoCache($noCache)
+    {
+        $this->noCache = $noCache;
+
+        return $this;
+    }
+
+    /**
+     * Get the package name or namespace.
+     *
+     * @return  string
+     */ 
+    public function getPackage()
+    {
+        return $this->package;
+    }
+
+    /**
+     * Set the package name or namespace.
+     *
+     * @param  string  $package  The package name or namespace.
+     *
+     * @return  self
+     */ 
+    public function setPackage($package)
+    {
+        $this->package = $package;
 
         return $this;
     }

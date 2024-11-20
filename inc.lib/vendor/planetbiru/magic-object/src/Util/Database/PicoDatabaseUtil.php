@@ -2,10 +2,23 @@
 
 namespace MagicObject\Util\Database;
 
+use DateTime;
 use MagicObject\Database\PicoPageable;
 use MagicObject\Database\PicoSortable;
 use MagicObject\Database\PicoSpecification;
+use PDOStatement;
 
+/**
+ * Class PicoDatabaseUtil
+ *
+ * A utility class for handling database operations and specifications within the framework.
+ * This class provides methods to retrieve specifications, handle SQL query formatting,
+ * and manage data types, ensuring safe and efficient interactions with the database.
+ *
+ * @author Kamshory
+ * @package MagicObject\Util\Database
+ * @link https://github.com/Planetbiru/MagicObject
+ */
 class PicoDatabaseUtil
 {
     const INLINE_TRIM = " \r\n\t ";
@@ -16,9 +29,13 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Get specification from parameters
-     * @param array $params Parameters
-     * @return PicoSpecification|null
+     * Retrieve a PicoSpecification instance from the given parameters.
+     *
+     * This method iterates through the provided parameters to find and return
+     * the first instance of PicoSpecification. If none is found, null is returned.
+     *
+     * @param array $params An array of parameters to search.
+     * @return PicoSpecification|null Returns the PicoSpecification instance or null if not found.
      */
     public static function specificationFromParams($params)
     {
@@ -36,9 +53,12 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Get pageable from parameters
-     * @param array $params Parameters
-     * @return PicoPageable|null
+     * Retrieve a PicoPageable instance from the given parameters.
+     *
+     * This method searches through the parameters for an instance of PicoPageable.
+     *
+     * @param array $params An array of parameters to search.
+     * @return PicoPageable|null Returns the PicoPageable instance or null if not found.
      */
     public static function pageableFromParams($params)
     {
@@ -56,9 +76,12 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Get sortable from parameters
-     * @param array $params Parameters
-     * @return PicoSortable|null
+     * Retrieve a PicoSortable instance from the given parameters.
+     *
+     * This method looks for the first instance of PicoSortable in the parameters.
+     *
+     * @param array $params An array of parameters to search.
+     * @return PicoSortable|null Returns the PicoSortable instance or null if not found.
      */
     public static function sortableFromParams($params)
     {
@@ -76,13 +99,17 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Get pageable from parameters
-     * @param array $params Parameters
-     * @return array
+     * Retrieve values from the parameters until a PicoPageable instance is found.
+     *
+     * This method collects and returns all parameters up to the first
+     * PicoPageable instance, effectively filtering the parameters.
+     *
+     * @param array $params An array of parameters to process.
+     * @return array An array of values up to the first PicoPageable instance.
      */
     public static function valuesFromParams($params)
     {
-        $ret = array();
+        $ret = [];
         if(self::isArray($params))
         {
             foreach($params as $param)
@@ -98,11 +125,14 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Fix value
+     * Fix a value based on its expected type.
      *
-     * @param string $value Value
-     * @param string $type Data type
-     * @return mixed
+     * This method normalizes various representations of values (e.g., "true", "false", "null")
+     * into their appropriate PHP types based on the expected type.
+     *
+     * @param string $value The value to fix.
+     * @param string $type The expected data type.
+     * @return mixed The fixed value, converted to the appropriate type.
      */
     public static function fixValue($value, $type) // NOSONAR
     {
@@ -129,11 +159,13 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Check if value is null
+     * Check if a value is null.
      *
-     * @param mixed $value Value
-     * @param boolean $importFromString Flag thai input is from string
-     * @return boolean
+     * This method checks if the provided value is null or represents "null" as a string.
+     *
+     * @param mixed $value The value to check.
+     * @param bool $importFromString Indicates if the input is from a string.
+     * @return bool Returns true if the value is null or the string "null".
      */
     public static function isNull($value, $importFromString)
     {
@@ -141,11 +173,14 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Check if value is numeric
+     * Check if a value is numeric.
      *
-     * @param mixed $value Value
-     * @param boolean $importFromString Flag thai input is from string
-     * @return boolean
+     * This method checks if the value is a numeric string, specifically when
+     * the input is treated as a string.
+     *
+     * @param mixed $value The value to check.
+     * @param bool $importFromString Indicates if the input is from a string.
+     * @return bool Returns true if the value is a numeric string and input is from a string.
      */
     public static function isNumeric($value, $importFromString)
     {
@@ -153,11 +188,15 @@ class PicoDatabaseUtil
     }
 
     /**
-	 * Escape value
-     * @param mixed $value Value
-     * @param boolean $importFromString Flag thai input is from string
-	 * @return string
-	 */
+     * Escape a value for SQL.
+     *
+     * This method prepares a value for safe SQL insertion by escaping it,
+     * handling various types including nulls, booleans, strings, and arrays.
+     *
+     * @param mixed $value The value to escape.
+     * @param bool $importFromString Indicates if the input is from a string.
+     * @return string The escaped value suitable for SQL.
+     */
 	public static function escapeValue($value, $importFromString = false)
 	{
 		if(self::isNull($value, $importFromString))
@@ -187,7 +226,7 @@ class PicoDatabaseUtil
 		else if(is_array($value))
 		{
 			// encode to JSON and escapethe value
-			$ret = "(".self::toList($value).")";
+			$ret = self::toList($value, true);
 		}
         else if(is_object($value))
 		{
@@ -203,37 +242,70 @@ class PicoDatabaseUtil
 	}
 
     /**
-     * Convert array to list
+     * Convert an array to a list format for SQL queries.
      *
-     * @param array $array Array
-     * @return string
+     * This method converts an array into a comma-separated string representation,
+     * optionally enclosing the result in parentheses.
+     *
+     * @param array $array The array to convert.
+     * @param bool $bracket Indicates if the result should be enclosed in parentheses.
+     * @param bool $escape Indicates if the values should be escaped for SQL.
+     * @return string The list representation of the array.
      */
-    public static function toList($array)
+    public static function toList($array, $bracket = false, $escape = false)
     {
         foreach($array as $key=>$value)
         {
             $type = gettype($value);
-            $array[$key] = self::fixValue($value, $type);
+            if($value instanceof DateTime)
+            {
+                $array[$key] = "'".$value->format('Y-m-d H:i:s')."'";
+            }
+            else if(is_string($value))
+            {
+                if($escape)
+                {
+                    $array[$key] = "'".self::escapeSQL(self::fixValue($value, $type))."'";
+                }
+                else
+                {
+                    $array[$key] = "'".self::fixValue($value, $type)."'";
+                }
+                
+            }
+            else
+            {
+                $array[$key] = self::fixValue($value, $type);
+            }
+        }
+        if($bracket)
+        {
+            return "(".implode(", ", $array).")";
         }
         return implode(", ", $array);
     }
 
     /**
-     * Escape SQL
+     * Escape a SQL value to prevent SQL injection.
      *
-     * @param string $value Value
-     * @return string
+     * This method escapes special characters in a string to ensure safe SQL execution.
+     *
+     * @param string $value The value to escape.
+     * @return string The escaped value.
      */
     public static function escapeSQL($value)
     {
         return addslashes($value);
     }
 
-    /**
-     * Trim WHERE
+   /**
+     * Trim a WHERE clause by removing unnecessary characters.
      *
-     * @param string $where Raw WHERE
-     * @return string
+     * This method cleans up a raw WHERE clause by trimming whitespace
+     * and removing common redundant patterns.
+     *
+     * @param string $where The raw WHERE clause to be trimmed.
+     * @return string The cleaned WHERE clause.
      */
     public static function trimWhere($where)
     {
@@ -257,9 +329,9 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Generate UUID
+     * Generate a UUID.
      *
-     * @return string
+     * @return string A generated UUID.
      */
     public static function uuid()
     {
@@ -272,115 +344,124 @@ class PicoDatabaseUtil
     }
 
     /**
-     * Split SQL
+     * Split a SQL string into separate queries.
      *
-     * @param string $sqlText Raw SQL
-     * @return string[]
+     * This method takes a raw SQL string and splits it into individual
+     * queries based on delimiters, handling comments and whitespace.
+     *
+     * @param string $sqlText The raw SQL string containing one or more queries.
+     * @return array An array of queries with their respective delimiters.
      */
-    public function splitSql($sqlText) //NOSONAR
+    public static function splitSql($sqlText)
     {
-        $sqlText = str_replace("\n", "\r\n", $sqlText);
-        $sqlText = str_replace("\r\r\n", "\r\n", $sqlText);
-        $arr = explode("\r\n", $sqlText);
-        $arr2 = array();
-        foreach($arr as $key=>$val)
-        {
-            $arr[$key] = ltrim($val);
-            if(stripos($arr[$key], "-- ") !== 0 && $arr[$key] != "--" && $arr[$key] != "")
-            {
-                $arr2[] = $arr[$key];
-            }
-        }
-        $arr = $arr2;
-        unset($arr2);
+        // Normalize newlines and clean up any redundant line breaks
+        $sqlText = str_replace("\r\r\n", "\r\n", str_replace("\n", "\r\n", $sqlText));
+        
+        // Split the SQL text by newlines
+        $lines = explode("\r\n", $sqlText);
+        
+        // Clean up lines, remove comments, and empty lines
+        $cleanedLines = array_filter(array_map('ltrim', $lines), function ($line) {
+            return !(empty($line) || stripos($line, "-- ") === 0 || $line == "--");
+        });
+        
+        // Initialize state variables
+        $queries = [];
+        $currentQuery = '';
+        $isAppending = false;
+        $delimiter = ';';
+        $skip = false;
 
-        $append = 0;
-        $skip = 0;
-        $start = 1;
-        $nquery = -1;
-        $delimiter = ";";
-        $queryArray = array();
-        $delimiterArray = array();
+        foreach ($cleanedLines as $line) {
+            // Skip lines if needed
+            if ($skip) {
+                $skip = false;
+                continue;
+            }
 
-        foreach($arr as $line=>$text)
-        {
-            if($text == "" && $append == 1)
-            {
-                $queryArray[$nquery] .= "\r\n";
+            // Handle "delimiter" statements
+            if (stripos(trim($line), 'delimiter ') === 0) {
+                $parts = explode(' ', trim($line));
+                $delimiter = $parts[1] != null ? ';' : null;
+                continue;
             }
-            if($append == 0)
-            {
-                if(stripos(ltrim($text, " \t "), "--") === 0)
-                {
-                    $skip = 1;
-                    $nquery++;
-                    $start = 1;
-                    $append = 0;
+
+            // Start a new query if necessary
+            if (!$isAppending) {
+                if (!empty($currentQuery)) {
+                    // Store the previous query and reset for the next one
+                    $queries[] = ['query' => rtrim($currentQuery, self::INLINE_TRIM), 'delimiter' => $delimiter];
                 }
-                else
-                {
-                    $skip = 0;
-                }
+                $currentQuery = '';
+                $isAppending = true;
             }
-            if($skip == 0)
-            {
-                if($start == 1)
-                {
-                    $nquery++;
-                    $queryArray[$nquery] = "";
-                    $delimiterArray[$nquery] = $delimiter;
-                    $start = 0;
-                }
-                $queryArray[$nquery] .= $text."\r\n";
-                $delimiterArray[$nquery] = $delimiter;
-                $text = ltrim($text, " \t ");
-                $start = strlen($text)-strlen($delimiter)-1;
-                if(stripos(substr($text, $start), $delimiter) !== false || $text == $delimiter)
-                {
-                    $nquery++;
-                    $start = 1;
-                    $append = 0;
-                }
-                else
-                {
-                    $start = 0;
-                    $append = 1;
-                }
-                $delimiterArray[$nquery] = $delimiter;
-                if(stripos($text, "delimiter ") !== false)
-                {
-                    $text = trim(preg_replace("/\s+/"," ",$text));
-                    $arr2 = explode(" ", $text);
-                    $delimiter = $arr2[1];
-                    $nquery++;
-                    $delimiterArray[$nquery] = $delimiter;
-                    $start = 1;
-                    $append = 0;
-                }
+
+            // Append current line to the current query
+            $currentQuery .= $line . "\r\n";
+
+            // Check if the query ends with the delimiter
+            if (substr(rtrim($line), -strlen($delimiter)) === $delimiter) {
+                $isAppending = false; // End of query, so we stop appending
             }
         }
-        $result = array();
-        foreach($queryArray as $line=>$sql)
-        {
-            $delimiter = $delimiterArray[$line];
-            if(stripos($sql, "delimiter ") !== 0)
-            {
-                $sql = rtrim($sql, self::INLINE_TRIM);
-                $sql = substr($sql, 0, strlen($sql)-strlen($delimiter));
-                $result[] = array("query"=> $sql, "delimiter"=>$delimiter);
-            }
+
+        // Add the last query if any
+        if (!empty($currentQuery)) {
+            $queries[] = ['query' => rtrim($currentQuery, self::INLINE_TRIM), 'delimiter' => $delimiter];
         }
-        return $result;
+
+        return $queries;
     }
 
     /**
-     * Check if parameter os array
+     * Check if a parameter is an array.
      *
-     * @param mixed $params Parameters
-     * @return boolean
+     * This method checks if the provided parameter is an array.
+     *
+     * @param mixed $params The parameter to check.
+     * @return bool Returns true if the parameter is an array, false otherwise.
      */
-    private static function isArray($params)
+    public static function isArray($params)
     {
         return isset($params) && is_array($params);
     }
+
+    /**
+     * Find an instance of a specified class in an array of parameters.
+     *
+     * This method iterates through the parameters to find an instance
+     * of the specified class, returning it if found, or null otherwise.
+     *
+     * @param array $params An array of parameters to search.
+     * @param string $className The name of the class to find.
+     * @return object|null Returns the instance of the specified class or null if not found.
+     */
+    public static function findInstanceInArray($params, $className)
+    {
+        foreach ($params as $param) {
+            if ($param instanceof $className) {
+                return $param;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Retrieves the final query to be executed by the PDOStatement.
+     *
+     * This function replaces the placeholders in the query with the bound parameter values.
+     *
+     * @param PDOStatement $stmt The PDOStatement containing the original query.
+     * @param array $params An array of parameter values to replace the placeholders.
+     * @return string The final query with parameter values substituted.
+     */
+    public static function getFinalQuery($stmt, $params) {
+        $query = $stmt->queryString; // Get the original query
+        foreach ($params as $key => $value) {
+            // Replace placeholder with parameter value
+            $query = str_replace(":$key", self::escapeValue($value), $query);
+        }
+        return $query;
+    }
+
 }

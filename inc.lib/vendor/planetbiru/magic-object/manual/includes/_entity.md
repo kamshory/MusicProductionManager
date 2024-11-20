@@ -2,6 +2,9 @@
 
 Entity is class to access database. Entity is derived from MagicObject. Some annotations required to activated all entity features. 
 
+MagicObject version 2.7 introduces new features for transactional database management, namely `startTransaction()`, `commit()`, and `rollback()`. These functions allow entities to directly initiate and manage transactions within their scope. The `startTransaction()` function begins a new transaction, while `commit()` ensures that all changes made during the transaction are permanently saved to the database. On the other hand, `rollback()` can be used to revert any changes made during the transaction in case of an error or interruption. These functions require an active database connection to operate, providing a streamlined way for entities to manage data consistency and integrity within their transactions.
+
+
 **Constructor**
 
 Parameters:
@@ -25,6 +28,8 @@ use MagicObject\MagicObject;
  * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE, prettify=true)
  * @Table(name="album")
+ * @Cache(enable="true")
+ * @package MusicProductionManager\Data\Entity
  */
 class Album extends MagicObject
 {
@@ -199,16 +204,17 @@ class Album extends MagicObject
  * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE)
  * @Table(name="album")
+ * @Cache(enable="true")
 
 ### Class Parameters
 
 **@Entity**
 
-`@Entity` is parameter to validate that the object is an entity.
+`@Entity` Indicates that the class represents an entity.
 
 **@JSON**
 
-`@JSON` is parameter to inform how the object will be serialized.
+`@JSON` Configures how the object will be serialized.
 
 Attributes:
 1. `property-naming-strategy`
@@ -219,7 +225,7 @@ Allowed value:
 - `CAMEL_CASE` all properties will be camel case when `__toString()` method called.
 - `UPPER_CAMEL_CASE` all properties will be camel case with capitalize first character when `__toString()` method called.
 
-Default value: `CAMEL_CASE`
+Default: `CAMEL_CASE`
 
 2. `prettify`
 
@@ -228,16 +234,40 @@ Allowed value:
 - `true` JSON string will be prettified
 - `false` JSON string will not be prettified
 
-Default value: `false`
+Default: `false`
 
 **@Table**
 
-`@Table` is parameter contains table information.
+`@Table` Provides caching configuration.
 
 Attributes:
 `name`
 
 `name` is the table name of the entity.
+
+**@Cache**
+
+`@Cache` Specifies the namespace of the class.
+
+Attributes:
+`enable`
+
+`enable` is option to enable or disable cache.
+
+Allowed value:
+
+- `true` Cache is enabled
+- `false` Cache is disabled
+
+Default: `false`
+
+**@package**
+
+`@package` is parameter for namespace.
+
+PHP does not provide a native method to retrieve a class's namespace. Earlier versions of MagicObject attempted to obtain this information by reading the PHP script, a method that proved both unsafe and inefficient.
+
+With the addition of package annotations to each entity, MagicObject now offers a safer and more efficient way to join entities. However, if a package annotation is not available on an entity, version 2.1 will still revert to the old method.
 
 ### Property Parameters
 
@@ -961,7 +991,7 @@ class SpecificationUtil
      * $@param array|null $additional
      * @return PicoSpecification
      */
-    public static function createSongSpecification($inputGet, $additional = null) //NOSONAR
+    public static function createSongSpecification($inputGet, $additional = null) // NOSONAR
     {
         $spesification = new PicoSpecification();
 
@@ -1182,7 +1212,7 @@ class SpecificationUtil
      * $@param array|null $additional
      * @return PicoSpecification
      */
-    public static function createSongDraftSpecification($inputGet, $additional = null) //NOSONAR
+    public static function createSongDraftSpecification($inputGet, $additional = null) // NOSONAR
     {
         $spesification = new PicoSpecification();
 

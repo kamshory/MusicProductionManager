@@ -3,53 +3,50 @@
 namespace MagicObject\Database;
 
 /**
- * Limit and offset select database records
+ * Class PicoLimit
+ *
+ * This class provides functionality to manage pagination in database queries 
+ * by setting limits and offsets for record retrieval.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Database
  * @link https://github.com/Planetbiru/MagicObject
  */
 class PicoLimit
 {
     /**
-     * Limit
+     * The maximum number of records to retrieve.
      *
-     * @var integer
+     * @var int
      */
     private $limit = 0;
 
     /**
-     * Offset
+     * The number of records to skip before starting to collect the result set.
      *
-     * @var integer
+     * @var int
      */
     private $offset = 0;
 
     /**
-     * Constructor
+     * Constructor to initialize offset and limit.
      *
-     * @param integer $offset Offset
-     * @param integer $limit Limit
+     * @param int $offset The number of records to skip. Default is 0.
+     * @param int $limit The maximum number of records to retrieve. Default is 0.
      */
     public function __construct($offset = 0, $limit = 0)
     {
-        if($offset < 0)
-        {
-            $offset = 0;
-        }
-        if($limit < 1)
-        {
-            $limit = 1;
-        }
-
-        $offset = intval($offset);
-        $limit = intval($limit);
-
-        $this->setOffset($offset);
-        $this->setLimit($limit);
+        $this->setOffset(max(0, intval($offset)));
+        $this->setLimit(max(1, intval($limit)));
     }
 
     /**
-     * Increase page number
+     * Increment the offset to retrieve the next page of records.
      *
-     * @return self
+     * This method adjusts the offset based on the current limit, allowing 
+     * for the retrieval of the next set of records in a paginated result.
+     *
+     * @return self Returns the current instance for method chaining.
      */
     public function nextPage()
     {
@@ -58,27 +55,23 @@ class PicoLimit
     }
 
     /**
-     * Decrease page number
+     * Decrement the offset to retrieve the previous page of records.
      *
-     * @return self
+     * This method adjusts the offset back, ensuring it does not fall below 
+     * zero, thus allowing navigation to the previous set of records.
+     *
+     * @return self Returns the current instance for method chaining.
      */
     public function previousPage()
     {
-        if($this->offset > 1)
-        {
-            $this->offset -= $this->limit;
-        }
-        if($this->offset < 0)
-        {
-            $this->offset = 0;
-        }
+        $this->offset = max(0, $this->offset - $this->limit);
         return $this;
     }
 
     /**
-     * Get the value of limit
+     * Get the maximum number of records to retrieve.
      *
-     * @return integer
+     * @return int
      */
     public function getLimit()
     {
@@ -86,25 +79,23 @@ class PicoLimit
     }
 
     /**
-     * Set the value of limit
+     * Set the maximum number of records to retrieve.
      *
-     * @param integer $limit Limit
-     * @return self
+     * This method ensures that the limit is at least 1.
+     *
+     * @param int $limit The maximum number of records.
+     * @return self Returns the current instance for method chaining.
      */
     public function setLimit($limit)
     {
-        if($limit < 0)
-        {
-            $limit = 0;
-        }
-        $this->limit = $limit;
+        $this->limit = max(1, intval($limit));
         return $this;
     }
 
     /**
-     * Get the value of offset
+     * Get the current offset for record retrieval.
      *
-     * @return integer
+     * @return int
      */
     public function getOffset()
     {
@@ -112,61 +103,48 @@ class PicoLimit
     }
 
     /**
-     * Set the value of offset
+     * Set the number of records to skip before starting to collect the result set.
      *
-     * @param integer $offset Offset
-     * @return self
+     * This method ensures that the offset is not negative.
+     *
+     * @param int $offset The number of records to skip.
+     * @return self Returns the current instance for method chaining.
      */
     public function setOffset($offset)
     {
-        if($offset < 0)
-        {
-            $offset = 0;
-        }
-        $this->offset = $offset;
+        $this->offset = max(0, intval($offset));
         return $this;
     }
 
     /**
-     * Get page
+     * Get information about the current page based on the offset and limit.
+     *
+     * This method calculates the current page number and returns a 
+     * PicoPage object containing the page number and limit.
      *
      * @return PicoPage
      */
     public function getPage()
     {
-        $limit = $this->limit;
-        $offset = $this->offset;
-        if($limit <= 0)
-        {
-            $limit = 1;
-        }
-        if($limit > 0)
-        {
-            $pageNumber = round(($offset + $limit) / $limit);
-            if($pageNumber < 1)
-            {
-                $pageNumber = 1;
-            }
-        }
-        else
-        {
-            $pageNumber = 1;
-        }
+        $limit = $this->limit > 0 ? $this->limit : 1;
+        $pageNumber = max(1, round(($this->offset + $limit) / $limit));
+        
         return new PicoPage($pageNumber, $limit);
     }
 
     /**
-     * Magic method to debug object
+     * Convert the object to a JSON string representation for debugging.
      *
-     * @return string
+     * This method is intended for debugging purposes only and provides 
+     * a JSON representation of the object's state.
+     *
+     * @return string The JSON representation of the object.
      */
     public function __toString()
     {
-        return json_encode(
-            array(
-                'limit' => $this->limit,
-                'offset' => $this->offset
-            )
-        );
+        return json_encode([
+            'limit' => $this->limit,
+            'offset' => $this->offset
+        ]);
     }
 }

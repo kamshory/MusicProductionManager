@@ -3,7 +3,19 @@
 namespace MagicObject\Database;
 
 /**
- * Data comparation
+ * Class PicoDataComparation
+ *
+ * This class provides various comparison operations for use in database queries.
+ * It allows the creation of comparison objects that can be utilized to 
+ * compare values against specified criteria, facilitating flexible and 
+ * expressive database querying.
+ *
+ * The class supports a variety of comparison operators such as equality, 
+ * inequality, inclusion, and range comparisons. Each operator can be 
+ * applied to values of various types, including strings, booleans, and numbers.
+ *
+ * @author Kamshory
+ * @package MagicObject\Database
  * @link https://github.com/Planetbiru/MagicObject
  */
 class PicoDataComparation
@@ -26,29 +38,31 @@ class PicoDataComparation
     const TYPE_NULL              = "null";
 
     /**
-     * Value comparator
+     * The comparison operator.
      *
      * @var string
      */
     private $comparison = "=";
 
     /**
-     * Value
+     * The value to compare against.
      *
      * @var mixed
      */
     private $value = null;
 
     /**
-     * Stype
+     * The type of the value.
      *
      * @var string
      */
-    private $type = "null";
+    private $type = self::TYPE_NULL;
 
     /**
-     * Equals
-     * @param mixed $value Value
+     * Creates a comparison for equality.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function equals($value)
     {
@@ -56,8 +70,10 @@ class PicoDataComparation
     }
 
     /**
-     * Not equals
-     * @param mixed $value Value
+     * Creates a comparison for inequality.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function notEquals($value)
     {
@@ -65,8 +81,10 @@ class PicoDataComparation
     }
 
     /**
-     * In
-     * @param mixed[] $values Values
+     * Creates a comparison for inclusion in a set.
+     *
+     * @param mixed[] $values The values to compare against.
+     * @return self Returns the current instance for method chaining.
      */
     public static function in($values)
     {
@@ -74,8 +92,10 @@ class PicoDataComparation
     }
 
     /**
-     * Not in
-     * @param mixed[] $values Values
+     * Creates a comparison for exclusion from a set.
+     *
+     * @param mixed[] $values The values to compare against.
+     * @return self Returns the current instance for method chaining.
      */
     public static function notIn($values)
     {
@@ -83,8 +103,10 @@ class PicoDataComparation
     }
 
     /**
-     * Like
-     * @param mixed $value Value
+     * Creates a comparison using the LIKE operator.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function like($value)
     {
@@ -92,8 +114,10 @@ class PicoDataComparation
     }
 
     /**
-     * Not like
-     * @param mixed $value Value
+     * Creates a comparison using the NOT LIKE operator.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function notLike($value)
     {
@@ -101,8 +125,10 @@ class PicoDataComparation
     }
 
     /**
-     * Less than
-     * @param mixed $value Value
+     * Creates a comparison for less than.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function lessThan($value)
     {
@@ -110,8 +136,10 @@ class PicoDataComparation
     }
 
     /**
-     * Greater than
-     * @param mixed $value Value
+     * Creates a comparison for greater than.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function greaterThan($value)
     {
@@ -119,8 +147,10 @@ class PicoDataComparation
     }
 
     /**
-     * Less than or equals
-     * @param mixed $value Value
+     * Creates a comparison for less than or equal to.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function lessThanOrEquals($value)
     {
@@ -128,8 +158,10 @@ class PicoDataComparation
     }
 
     /**
-     * Greater than or equals
-     * @param mixed $value Value
+     * Creates a comparison for greater than or equal to.
+     *
+     * @param mixed $value The value to compare.
+     * @return self Returns the current instance for method chaining.
      */
     public static function greaterThanOrEquals($value)
     {
@@ -137,33 +169,31 @@ class PicoDataComparation
     }
 
     /**
-     * Constructor
+     * Constructor for PicoDataComparation.
      *
-     * @param mixed $value Value
-     * @param string $comparison Comparison
+     * @param mixed $value The value to compare.
+     * @param string $comparison The comparison operator.
      */
-    public function __construct($value, $comparison=self::EQUALS)
+    public function __construct($value, $comparison = self::EQUALS)
     {
         $this->comparison = $comparison;
         $this->value = $value;
-        if(is_string($value))
-		{
-			$this->type = self::TYPE_STRING;
-		}
-		else if(is_bool($value))
-		{
-			$this->type = self::TYPE_BOOLEAN;
-		}
-		else if(is_numeric($value))
-		{
+        if (is_string($value)) {
+            $this->type = self::TYPE_STRING;
+        } elseif (is_bool($value)) {
+            $this->type = self::TYPE_BOOLEAN;
+        } elseif (is_numeric($value)) {
             $this->type = self::TYPE_NUMERIC;
         }
     }
 
     /**
-     * Get equals operator
+     * Returns the appropriate equals operator based on the value's state.
      *
-     * @return string
+     * If the value is null or of type null, returns the IS operator; 
+     * otherwise, returns the standard equals operator.
+     *
+     * @return string The equals operator.
      */
     private function _equals()
     {
@@ -171,9 +201,12 @@ class PicoDataComparation
     }
 
     /**
-     * Get not equals operator
+     * Returns the appropriate not equals operator based on the value's state.
      *
-     * @return string
+     * If the value is null or of type null, returns the IS NOT operator; 
+     * otherwise, returns the standard not equals operator.
+     *
+     * @return string The not equals operator.
      */
     private function _notEquals()
     {
@@ -181,9 +214,9 @@ class PicoDataComparation
     }
 
     /**
-     * Get less than operator
+     * Returns the less than operator.
      *
-     * @return string
+     * @return string The less than operator.
      */
     private function _lessThan()
     {
@@ -191,9 +224,9 @@ class PicoDataComparation
     }
 
     /**
-     * Get greater than operator
+     * Returns the greater than operator.
      *
-     * @return string
+     * @return string The greater than operator.
      */
     private function _greaterThan()
     {
@@ -201,9 +234,9 @@ class PicoDataComparation
     }
 
     /**
-     * Get less than or equals operator
+     * Returns the less than or equals operator.
      *
-     * @return string
+     * @return string The less than or equals operator.
      */
     private function _lessThanOrEquals()
     {
@@ -211,9 +244,9 @@ class PicoDataComparation
     }
 
     /**
-     * Get greater than or equals operator
+     * Returns the greater than or equals operator.
      *
-     * @return string
+     * @return string The greater than or equals operator.
      */
     private function _greaterThanOrEquals()
     {
@@ -221,46 +254,37 @@ class PicoDataComparation
     }
 
     /**
-     * Get comparison operator
+     * Determines the comparison operator based on the current value and its type.
      *
-     * @return string
+     * @return string The comparison operator corresponding to the current state.
      */
-    public function getComparison()
+    public function getComparison() // NOSONAR
     {
-        $ret = $this->_equals();
-        if($this->comparison === self::NOT_EQUALS)
-        {
-            $ret = $this->_notEquals();
+        switch ($this->comparison) {
+            case self::NOT_EQUALS:
+                return $this->_notEquals();
+            case self::LESS_THAN:
+                return $this->_lessThan();
+            case self::GREATER_THAN:
+                return $this->_greaterThan();
+            case self::LESS_THAN_OR_EQUALS:
+                return $this->_lessThanOrEquals();
+            case self::GREATER_THAN_OR_EQUALS:
+                return $this->_greaterThanOrEquals();
+            case self::LIKE:
+            case self::NOT_LIKE:
+            case self::IN:
+            case self::NOT_IN:
+                return $this->comparison;
+            default:
+                return $this->_equals();
         }
-        else if($this->comparison === self::LESS_THAN)
-        {
-            $ret = $this->_lessThan();
-        }
-        else if($this->comparison === self::GREATER_THAN)
-        {
-            $ret = $this->_greaterThan();
-        }
-        else if($this->comparison === self::LESS_THAN_OR_EQUALS)
-        {
-            $ret = $this->_lessThanOrEquals();
-        }
-        else if($this->comparison === self::GREATER_THAN_OR_EQUALS)
-        {
-            $ret = $this->_greaterThanOrEquals();
-        }
-        else if($this->comparison == self::LIKE || $this->comparison == self::NOT_LIKE)
-        {
-            $ret = $this->comparison;
-        }
-        else if($this->comparison == self::IN || $this->comparison == self::NOT_IN)
-        {
-            $ret = $this->comparison;
-        }
-        return $ret;
     }
 
     /**
-     * Get the value of property value
+     * Gets the value being compared.
+     *
+     * @return mixed The value that is currently being compared.
      */
     public function getValue()
     {

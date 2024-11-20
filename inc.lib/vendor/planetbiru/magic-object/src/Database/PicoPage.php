@@ -1,54 +1,51 @@
 <?php
+
 namespace MagicObject\Database;
 
 /**
- * Data page
+ * Class representing a data page for pagination.
+ *
+ * This class provides functionality to manage page numbers and sizes,
+ * and to calculate offsets for database queries.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Database
  * @link https://github.com/Planetbiru/MagicObject
  */
 class PicoPage
 {
     /**
-     * Page number
+     * Page number.
      *
-     * @var integer
+     * @var int
      */
-    private $pageNumber = 0;
+    private $pageNumber = 1;
 
     /**
-     * Page size
+     * Page size (number of items per page).
      *
-     * @var integer
+     * @var int
      */
     private $pageSize = 1;
 
     /**
-     * Page
+     * Constructor.
      *
-     * @param integer $pageNumber Page number
-     * @param integer $pageSize Page size
+     * Initializes the page number and page size.
+     *
+     * @param int $pageNumber Page number (default is 1).
+     * @param int $pageSize Page size (default is 1).
      */
-    public function __construct($pageNumber, $pageSize)
+    public function __construct($pageNumber = 1, $pageSize = 1)
     {
-        if($pageNumber < 1)
-        {
-            $pageNumber = 1;
-        }
-        if($pageSize < 1)
-        {
-            $pageSize = 1;
-        }
-
-        $pageNumber = intval($pageNumber);
-        $pageSize = intval($pageSize);
-
-        $this->setPageNumber($pageNumber);
-        $this->setPageSize($pageSize);
+        $this->setPageNumber(max(1, intval($pageNumber)));
+        $this->setPageSize(max(1, intval($pageSize)));
     }
 
     /**
-     * Increase page number
+     * Increase the page number by one.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function nextPage()
     {
@@ -57,23 +54,22 @@ class PicoPage
     }
 
     /**
-     * Decrease page number
+     * Decrease the page number by one, ensuring it doesn't go below 1.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function previousPage()
     {
-        if($this->pageNumber > 1)
-        {
+        if ($this->pageNumber > 1) {
             $this->pageNumber--;
         }
         return $this;
     }
 
     /**
-     * Get the value of pageNumber
+     * Retrieves the current page number.
      *
-     * @return integer
+     * @return int The current page number.
      */
     public function getPageNumber()
     {
@@ -81,26 +77,21 @@ class PicoPage
     }
 
     /**
-     * Set the value of pageNumber
+     * Set the page number.
      *
-     * @param integer $pageNumber Page number
-     * @return self
+     * @param int $pageNumber Page number.
+     * @return self Returns the current instance for method chaining.
      */
     public function setPageNumber($pageNumber)
     {
-        if($pageNumber < 1)
-        {
-            $pageNumber = 1;
-        }
-        $this->pageNumber = $pageNumber;
-
+        $this->pageNumber = max(1, intval($pageNumber));
         return $this;
     }
 
     /**
-     * Get the value of pageSize
+     * Retrieves the page size (number of items per page).
      *
-     * @return integer
+     * @return int The page size.
      */
     public function getPageSize()
     {
@@ -108,53 +99,58 @@ class PicoPage
     }
 
     /**
-     * Set the value of pageSize
+     * Set the page size.
      *
-     * @param integer $pageSize Page size
-     * @return self
+     * @param int $pageSize Page size.
+     * @return self Returns the current instance for method chaining.
      */
     public function setPageSize($pageSize)
     {
-        if($pageSize < 1)
-        {
-            $pageSize = 1;
-        }
-        $this->pageSize = $pageSize;
-
+        $this->pageSize = max(1, intval($pageSize));
         return $this;
+    }
+    
+    /**
+     * Calculates and retrieves the offset for database queries.
+     *
+     * The offset is used to determine the starting point for fetching data 
+     * in paginated queries, based on the current page number and page size.
+     *
+     * @return int The calculated offset for database queries.
+     */
+    public function getOffset()
+    {
+        $limit = $this->getPageSize();
+        $offset = ($this->getPageNumber() - 1) * $limit;
+        return max(0, $offset);
     }
 
     /**
-     * Get limit
-     * @return PicoLimit
+     * Calculates the limit and offset for database queries.
+     *
+     * @return PicoLimit An instance of PicoLimit with the calculated offset and limit.
      */
     public function getLimit()
     {
         $limit = $this->getPageSize();
-        if($limit < 0)
-        {
-            $limit = 0;
-        }
         $offset = ($this->getPageNumber() - 1) * $limit;
-        if($offset < 0)
-        {
-            $offset = 0;
-        }
-        return new PicoLimit($offset, $limit);
+        
+        return new PicoLimit(max(0, $offset), $limit);
     }
 
     /**
-     * Magic method to debug object
+     * Convert the object to a JSON string representation for debugging.
      *
-     * @return string
+     * This method is intended for debugging purposes only and provides 
+     * a JSON representation of the object's state.
+     *
+     * @return string The JSON representation of the object.
      */
     public function __toString()
     {
-        return json_encode(
-            array(
-                'pageNumber' => $this->pageNumber,
-                'pageSize' => $this->pageSize
-            )
-        );
+        return json_encode([
+            'pageNumber' => $this->pageNumber,
+            'pageSize' => $this->pageSize
+        ]);
     }
 }

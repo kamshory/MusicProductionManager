@@ -3,43 +3,75 @@
 namespace MagicObject\Geometry;
 
 /**
- * Class representing a Point with x and y coordinates
+ * Class representing a Point with x and y coordinates.
+ *
+ * This class defines a Point in a 2D Cartesian coordinate system,
+ * allowing for the representation of its position and the calculation of distances to other Points.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Geometry
+ * @link https://github.com/Planetbiru/MagicObject
  */
-class Point {
+class Point
+{
     /**
-     * X coordinate
+     * X coordinate.
      *
-     * @var double
+     * @var float
      */
     public $x = 0.0;
 
     /**
-     * Y coordinate
+     * Y coordinate.
      *
-     * @var double
+     * @var float
      */
     public $y = 0.0;
 
     /**
-     * Constructor to initialize the Point with x and y coordinates
+     * Constructor to initialize the Point with x and y coordinates.
      *
-     * @param double $x x coordinate
-     * @param double $y y coordinate
+     * @param float $x X coordinate.
+     * @param float $y Y coordinate.
      */
-    public function __construct($x, $y) {
+    public function __construct($x, $y)
+    {
         $this->x = $x;
         $this->y = $y;
     }
 
     /**
-     * Method to calculate the distance between two Point objects
+     * Calculate the distance between this Point and another Point.
      *
-     * @param self $p
-     * @return double
+     * This method computes the Euclidean distance between the current Point
+     * and another Point provided as an argument.
+     *
+     * @param Point $p Another Point.
+     * @return float The distance between the two Points.
+     * @throws \InvalidArgumentException If the argument is not of type Point.
      */
-    public function distanceFrom(Point $p) {
+    public function distanceFrom($p)
+    {
+        // Ensure $p is an instance of Point
+        if (!$p instanceof Point) {
+            throw new \InvalidArgumentException('Argument must be of type Point.');
+        }
+
         $dx = $this->x - $p->x;
         $dy = $this->y - $p->y;
         return sqrt($dx * $dx + $dy * $dy);
+    }
+
+    /**
+     * Calculate the distance between this Point and another Point.
+     *
+     * This method serves as an alias to distanceFrom for better readability.
+     *
+     * @param Point $p Another Point.
+     * @return float The distance between the two Points.
+     */
+    public function distanceTo($p)
+    {
+        return $this->distanceFrom($p);
     }
 }

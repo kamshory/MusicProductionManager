@@ -1,4 +1,96 @@
+# Introduction
+
+## What Is MagicObject
+
+MagicObject is a powerful library designed to simplify object management and data handling in PHP applications. It provides a set of features that enhance flexibility, efficiency, and maintainability, making it easier for developers to create and manage complex applications.
+
+In modern application development, managing objects efficiently is paramount. The **MagicObject** library provides an extensive suite of features that simplify object creation, data handling, and database interactions. Below, we’ll explore some of the core functionalities that make MagicObject a powerful tool for developers.
+
+## Key Features
+
+### Dynamic Object Creation
+
+MagicObject allows for **dynamic object creation**, enabling developers to instantiate objects at runtime easily. This flexibility is crucial for applications that require variable object structures based on user input or external data sources.
+
+### Setters and Getters
+
+The library simplifies property management with **automatic setters and getters**. This feature streamlines how properties are accessed and modified, promoting cleaner code and reducing boilerplate.
+
+### Multi-Level Objects
+
+Support for **multi-level objects** enables developers to create nested structures seamlessly. This capability is essential for representing complex data models that mirror real-world relationships.
+
+### Entity Access
+
+MagicObject streamlines interactions with entities, making it easier to manage and manipulate data models. This feature is particularly beneficial in applications with multiple entities, as it promotes organized and efficient access.
+
+### Filtering and Pagination
+
+With built-in methods for **filtering and pagination**, developers can manage data display effectively. This feature enhances user experience by allowing the retrieval of specific data sets and controlling how much information is presented at once.
+
+### Native Query
+
+Defining **native queries** within the library increases flexibility and resource efficiency in database access. This feature allows developers to leverage the full power of SQL while benefiting from MagicObject's abstraction layer.
+
+### Multiple Database Connections
+
+MagicObject supports the configuration of **multiple database connections**, enabling applications to interact with different databases simultaneously. This capability is vital for applications that aggregate data from various sources or require connections to multiple environments.
+
+### Database Dumping
+
+Efficiently exporting database contents is made possible through **database dumping** features. This functionality aids in backup processes, data migrations, and reporting.
+
+### Serialization/Deserialization
+
+Handling JSON and YAML formats is straightforward with built-in **serialization and deserialization** methods. This feature is essential for applications that communicate with APIs or require data interchange formats.
+
+### Data Importing
+
+MagicObject provides robust support for **data importing**, allowing users to bring data into the application even if the source and destination schemas differ. This flexibility is crucial in data migration and integration scenarios.
+
+### File Reading
+
+The library supports reading configuration files in various formats, including **INI, YAML, and JSON**. This feature simplifies application configuration management, making it easier to maintain different environments.
+
+### Environment Variable Access
+
+MagicObject enables easy fetching of **environment variable values**, promoting better configuration management and enhancing security by separating sensitive information from code.
+
+### Configuration Encryption
+
+To secure application settings, MagicObject offers **configuration encryption** features. This ensures that sensitive data, such as API keys and database credentials, are protected from unauthorized access.
+
+### HTTP Data Handling
+
+Creating objects from global request variables (e.g., POST, GET) is simplified with built-in **HTTP data handling** capabilities. This feature enhances the ease of integrating with web forms and APIs.
+
+### Session Management
+
+Integrating with **PHP sessions** allows MagicObject to maintain state effectively across user interactions. This functionality is crucial for applications that rely on user sessions for personalized experiences.
+
+### Object Labeling
+
+Enhancing object identification through **object labeling** improves the clarity of code and debugging processes. Labels allow developers to categorize and reference objects more easily.
+
+### Multi-Language Support
+
+Facilitating **localization** is a key feature of MagicObject, allowing developers to create applications that can serve multiple languages and regions. This capability is essential for reaching a global audience.
+
+### File Uploads
+
+Handling file uploads efficiently is another strength of MagicObject. The library provides tools to manage file uploads securely and effectively, making it easier to incorporate user-generated content.
+
+### Annotations
+
+Adding **metadata to objects** through annotations allows for better structure and organization within the code. This feature can be leveraged for documentation, validation, and configuration purposes.
+
+### Debugging
+
+Finally, MagicObject includes comprehensive **debugging tools** to inspect and analyze objects during development. This feature is invaluable for troubleshooting and ensuring that applications run smoothly.
+
 # MagicObject Installation
+
+## Installing MagicObject
 
 To install **MagicObbject**
 
@@ -12,6 +104,8 @@ or if composer is not installed
 php composer.phar require planetbiru/magic-object
 ```
 
+## Removing MagicObject
+
 To remove **MagicObbject**
 
 ```
@@ -23,6 +117,8 @@ or if composer is not installed
 ```
 php composer.phar remove planetbiru/magic-object
 ```
+
+## Installing Composer
 
 To install composer on your PC or download latest composer.phar, click https://getcomposer.org/download/ 
 # MagicObject Implementation
@@ -127,6 +223,204 @@ echo $someObject;
 error_log($someObject);
 ```
 
+### Push
+
+Push is present in MagicObject version 1.22. Push is used to add array elements from a MagicObject property. The `push` method basically uses the `array_push` function which is a built-in PHP function.
+
+As with the `set` method, users can use the `push` method in two ways:
+
+1. using a subfix in the form of a property name written in camelcase style with one parameter, namely the value of the element to be added.
+2. using two parameters, namely the property name written in camelcase style and the value of the element to be added.
+
+**Warning!**
+
+Be careful when using the `push` method. If a property has a value other than an array and the user calls the `push` method on that property, MagicObject will ignore it and nothing will change the property value..
+
+```
+<?php
+use MagicObject\MagicObject;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+$someObject = new MagicObject();
+
+$someObject->pushData("Text 1");
+$someObject->pushData("Text 2");
+$someObject->pushData(3);
+$someObject->pushData(4.0);
+$someObject->pushData(true);
+
+/*
+or
+
+$someObject->push("data", "Text 1");
+$someObject->push("data", "Text 2");
+$someObject->push("data", 3);
+$someObject->push("data", 4.1);
+$someObject->push("data", true);
+*/
+
+echo $someObject;
+```
+
+Output will be
+
+```json
+{"data":["Text 1","Text 2",3,4.1,true]}
+```
+
+### Pop
+
+Pop is present in MagicObject version 1.22. Pop is used to remove the last element of an array from a MagicObject property. The `pop` method basically uses the `array_pop` function which is a built-in PHP function.
+
+As with the `unset` method, users can use the `pop` method in two ways:
+
+1. using a subfix in the form of a property name written in camelcase style.
+2. using one parameter, namely the property name.
+
+**Warning!**
+
+The `pup` method only applies if the property is a traditional array. It does not apply to scalar, object, and associated array properties.
+
+```
+<?php
+use MagicObject\MagicObject;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+$someObject = new MagicObject();
+
+$someObject->setData(["Text 1", "Text 2", 3, 4.1, true]);
+echo $someObject."\r\n\r\n";
+
+echo "Pop\r\n";
+echo $someObject->popData()."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+echo $someObject->popData()."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+echo $someObject->popData()."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+```
+
+Output will be:
+
+```
+{"data":["Text 1","Text 2",3,4.1,true]}
+
+Pop
+1
+After Pop
+{"data":["Text 1","Text 2",3,4.1]}
+
+4.1
+After Pop
+{"data":["Text 1","Text 2",3]}
+
+3
+After Pop
+{"data":["Text 1","Text 2"]}
+```
+
+`push` and `pop` example:
+
+```php
+<?php
+use MagicObject\MagicObject;
+
+require_once __DIR__ . "/vendor/autoload.php";
+$someObject = new MagicObject();
+
+
+$someObject->pushData("Text 1");
+$someObject->pushData("Text 2");
+$someObject->pushData(3);
+$someObject->pushData(4.1);
+$someObject->pushData(true);
+
+/*
+or
+
+$someObject->push("data", "Text 1");
+$someObject->push("data", "Text 2");
+$someObject->push("data", 3);
+$someObject->push("data", 4.1);
+$someObject->push("data", true);
+*/
+
+
+echo "After Push\r\n";
+
+echo $someObject."\r\n\r\n";
+
+echo "Pop\r\n";
+echo $someObject->popData()."\r\n";
+// or echo $someObject->pop("data")."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+echo $someObject->popData()."\r\n";
+// or echo $someObject->pop("data")."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+echo $someObject->popData()."\r\n";
+// or echo $someObject->pop("data")."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+```
+
+Output will be:
+
+```
+After Push
+{"data":["Text 1","Text 2",3,4.1,true]}
+
+Pop
+1
+After Pop
+{"data":["Text 1","Text 2",3,4.1]}
+
+4.1
+After Pop
+{"data":["Text 1","Text 2",3]}
+
+3
+After Pop
+{"data":["Text 1","Text 2"]}
+```
+
+`push` and `pop` only apply to properties that are arrays.
+
+```php
+<?php
+use MagicObject\MagicObject;
+
+require_once __DIR__ . "/vendor/autoload.php";
+$someObject = new MagicObject();
+
+$someObject->setData(8); // push and pop will not change this
+$someObject->pushData("Text 1");
+$someObject->pushData("Text 2");
+$someObject->pushData(3);
+$someObject->pushData(4.1);
+$someObject->pushData(true);
+
+echo "After Push\r\n";
+
+echo $someObject."\r\n\r\n";
+
+echo "Pop\r\n";
+echo $someObject->popData()."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+echo $someObject->popData()."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+echo $someObject->popData()."\r\n";
+echo "After Pop\r\n";
+echo $someObject."\r\n\r\n";
+``
 ## Extends MagicObject
 
 User can extend `MagicObject` to many classes.
@@ -191,6 +485,8 @@ Default value: `CAMEL_CASE`
 
 ## Multilevel Object
 
+In the first code snippet, you are creating a multilevel object structure to represent a car with its components, specifically the tire and body.
+
 ```php
 <?php
 use MagicObject\MagicObject;
@@ -224,7 +520,17 @@ echo $car->getBody()->getColor();
 
 ```
 
+**Explanation**
+
+1. **Creating Objects**: Instances of `MagicObject` are created for the car, tire, and body.
+2. **Setting Properties**: You set properties on the tire (diameter and pressure) and the body (length, width, height, and color) using the `set` methods.
+3. **Nested Objects**: The tire and body are associated with the car using `setTire()` and `setBody()`.
+4. **JSON Output**: When you output `$car`, it returns a JSON representation of the object structure.
+5. **Accessing Properties**: You can retrieve the color of the car's body through the method chaining `getBody()->getColor()`.
+
 ### Parse Yaml
+
+The second code snippet demonstrates how to load and manipulate structured data from a YAML string.
 
 ```php
 
@@ -278,6 +584,16 @@ foreach($song->getVocalist()->getAgency()->getCompany()->getPic() as $pic)
 }
 ```
 
+**Explanation**
+
+1. **Loading YAML**: The `loadYamlString()` method is used to load a YAML string into the `MagicObject`. This creates a structured object based on the YAML data.
+2. **Accessing Nested Data**: You can navigate through the object hierarchy to retrieve values, like getting the company name with `getVocalist()->getAgency()->getCompany()->getName()`.
+3. **Adding Properties**: You can also set additional properties, like the company address.
+4. **Iterating Over Arrays**: The `pic` property is an array of objects, so you can loop through it to access individual picture details.
+
+### Conclusion
+
+Both examples demonstrate how MagicObject allows you to create complex object structures and manage nested data efficiently. The use of YAML for configuration or data storage makes it easier to define complex structures in a human-readable format. The ability to set and get properties through method chaining enhances the flexibility and readability of your code.
 ## Object from Yaml
 
 ### From Yaml String
@@ -355,6 +671,50 @@ echo $car->getBody()->getColor();
 
 ## Object from INI
 
+
+When working with configuration files, the INI format is a popular choice due to its simplicity and readability. However, PHP's native INI parsing functions come with significant limitations, particularly concerning reserved words. These restrictions can hinder developers' ability to create flexible and user-defined content in INI files. To address this issue, MagicObject has developed its own custom INI parser, providing greater freedom and functionality.
+
+### The Limitations of Native INI Parsing in PHP
+
+PHP's built-in functions for parsing INI files, such as `parse_ini_file()`, are convenient but have notable drawbacks:
+
+1.  **Reserved Words**: PHP defines certain keywords as reserved words, which cannot be used as keys in INI files. This limitation can frustrate developers who want to use these words in their configuration settings.
+    
+2.  **Data Types**: The native parser treats all values as strings, making it difficult to handle different data types without additional processing.
+    
+3.  **Error Handling**: The native functions offer limited error reporting, making it challenging to debug issues in INI files.
+    
+4.  **Lack of Flexibility**: PHP’s native INI parser does not support advanced features like sections or comments beyond basic syntax, which can be a hindrance for complex configurations.
+    
+
+### The MagicObject Solution
+
+To provide developers with a more robust and flexible solution, MagicObject introduces its own custom INI parser. Here are some of the benefits of using MagicObject's INI parser:
+
+**1. Freedom from Reserved Words**
+
+One of the most significant advantages of the custom parser is its ability to handle reserved words. Developers can define keys in their INI files without worrying about conflicts with PHP's reserved keywords, leading to greater flexibility in configuration design.
+
+**2. Enhanced Data Type Support**
+
+MagicObject's INI parser can intelligently handle various data types. This means that values can be parsed as integers, booleans, or arrays, reducing the need for manual type conversion after reading the configuration.
+
+**3. Comprehensive Error Handling**
+
+The custom parser includes robust error handling features, providing detailed feedback when issues arise. This improved debugging capability allows developers to quickly identify and resolve problems in their INI files.
+
+**4. Advanced Features**
+
+The MagicObject INI parser supports advanced features such as:
+
+-   **Nested Sections**: Allowing developers to create hierarchical configurations.
+-   **Comments**: Supporting inline comments to enhance readability and maintainability.
+-   **Dynamic Keys**: Enabling the creation of dynamic keys that can change based on specific conditions.
+
+**5. Improved Performance**
+
+The custom parser is optimized for performance, ensuring that reading and processing INI files is efficient, even for larger configurations. This enhancement is crucial for applications that rely on quick access to configuration settings.
+
 INI not support multilevel object. If multilevel object needed, use Yaml instead.
 
 ### From INI String
@@ -394,9 +754,22 @@ $cfg->loadIniFile(__DIR__ . "/config.ini", false);
 ```
 ## Environment Variable
 
-Many application use environment variable to store the config. We can replace the config template with the environment variable. We must set the environment variable to the server before run the application.
+Environment variables play a crucial role in modern application development, providing a flexible way to manage configuration settings. Instead of hardcoding values directly into your code, you can utilize environment variables to keep sensitive information secure and maintain a clean separation between your application's logic and its configuration. This approach not only enhances security but also makes your application more portable and easier to manage.
 
- 
+
+### Benefits of Using Environment Variables
+
+1.  **Security**: Sensitive information such as API keys, database credentials, and configuration settings can be kept out of your codebase, reducing the risk of accidental exposure.
+    
+2.  **Portability**: Environment variables allow you to run the same code across different environments (development, staging, production) without needing to modify the codebase.
+    
+3.  **Simplicity**: Managing configurations through environment variables simplifies deployment processes, particularly in cloud environments where configurations can be set per instance.
+
+### Example Configuration Using YAML and Environment Variables
+
+Here's a basic example of how you can define application settings using a YAML file that references environment variables.
+
+**Sample YAML Configuration**
 
 ```yaml
 # config.yml
@@ -412,7 +785,11 @@ body:
 
 ```
 
-Before execute this script, user must set environment variable for `TIRE_DIAMETER`, `TIRE_PRESSURE`, `BODY_LENGTH`, `BODY_WIDTH`, `BODY_HEIGHT`, and `BODY_COLOR` depend on the operating system used.
+### Setting Environment Variables
+
+Before running your application, ensure that you have set the appropriate environment variables for `TIRE_DIAMETER`, `TIRE_PRESSURE`, `BODY_LENGTH`, `BODY_WIDTH`, `BODY_HEIGHT`, and `BODY_COLOR` based on the operating system you are using.
+
+**Example PHP Code**
 
 ```php
 <?php
@@ -433,6 +810,10 @@ echo $car;
 echo $car->getBody()->getColor();
 
 ```
+
+**Another Sample YAML Configuration**
+
+In addition to the previous example, here's another configuration file that utilizes environment variables for various settings:
 
 ### Create Yaml File
 
@@ -471,7 +852,7 @@ session:
 vocal_guide_instrument: piano
 ```
 
-### Create Environment Variable
+### Setting Up Environment Variables
 
 On Windows, users can directly create environment variables either via the graphical user interface (GUI) or the `setx` command line. PHP can immediately read environment variables after Windows is restarted.
 
@@ -512,6 +893,9 @@ echo -e 'SetEnv APP_DATABASE_SALT "GaramDapur"' >> /etc/httpd/conf.d/mpm.conf
 service httpd restart
 ```
 
+### Conclusion
+
+Utilizing environment variables for configuration management is an essential practice for modern application development. By separating configuration from code, you can enhance security, portability, and maintainability. MagicObject’s ability to integrate with environment variables through YAML configuration files allows for a flexible and powerful setup that can adapt to various environments seamlessly. This approach empowers developers to build more secure and robust applications while simplifying deployment and management processes.
 ## Secret Object
 
 ### Definition
@@ -584,7 +968,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @DecryptOut
 	 * @var string
 	 */
-	protected $databseSchema = "public";
+	protected $databaseSchema = "public";
 
 	/**
 	 * Application time zone
@@ -703,7 +1087,7 @@ class SecretGenerator extends SecretObject
 	 * @EncryptOut
 	 * @var string
 	 */
-	protected $databseSchema;
+	protected $databaseSchema;
 
 	/**
 	 * Application time zone
@@ -878,7 +1262,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @DecryptOut
 	 * @var string
 	 */
-	protected $databseSchema = "public";
+	protected $databaseSchema = "public";
 
 	/**
 	 * Application time zone
@@ -1108,7 +1492,7 @@ class PicoDatabaseCredentials extends SecretObject
 	 * @DecryptOut
 	 * @var string
 	 */
-	protected $databseSchema = "public";
+	protected $databaseSchema = "public";
 
 	/**
 	 * Application time zone
@@ -1124,11 +1508,11 @@ $cfg->loadYamlFile(dirname(__DIR__)."/.cfg/app.yml", true, true, true);
 $databaseCredentials = new PicoDatabaseCredentials($cfg->getDatabase());
 
 $database = new PicoDatabase($databaseCredentials, 
-    function($sql, $type) //NOSONAR
+    function($sql, $type) // NOSONAR
     {
         // callback when execute query that modify data
     }, 
-    function($sql) //NOSONAR
+    function($sql) // NOSONAR
     {
         // callback when execute all query
     }
@@ -1146,9 +1530,586 @@ catch(Exception $e)
 }
 
 ```
+## MagicDto
+
+### Introduction to DTOs
+
+A Data Transfer Object (DTO) is a design pattern used to transfer data between software application subsystems or layers. DTOs encapsulate data, reducing the number of method calls needed to retrieve or send information. JSON (JavaScript Object Notation) has become the standard for data serialization due to its simplicity and ease of integration with various programming languages.
+
+The properties defined in MagicDto adhere strictly to the specifications set forth by the developer, ensuring a well-defined structure. This means that users are prohibited from adding any input or output that falls outside the established DTO framework. As a result, the integrity of the data is maintained, and the application remains predictable and reliable, as any deviation from the predefined structure is not permitted. This strict adherence to the DTO structure promotes clarity and consistency, facilitating better communication between different layers of the application while reducing the risk of errors or unintended behavior.
+
+### The Need for MagicDto
+
+In modern applications, especially those that interact with third-party services, maintaining consistent data formats can be challenging. Different systems may use varying naming conventions, such as camel case (`myProperty`) and snake case (`my_property`). Additionally, inconsistencies can occur with uppercase and lowercase letters, leading to potential mismatches when exchanging data.
+
+**MagicDto** addresses these issues by allowing developers to create DTOs that seamlessly translate property names between different naming conventions. This ensures that data is properly formatted for both internal and external use, enhancing interoperability and reducing errors.
+
+### Benefits of Using MagicDto
+
+- **Reduced Complexity**: By automating property translation, MagicDto minimizes the need for manual mapping code, reducing complexity and potential errors.
+- **Improved Maintainability**: With clearly defined annotations and a structured approach, developers can easily understand and maintain the DTOs, even as systems evolve.
+- **Enhanced Interoperability**: MagicDto ensures that data exchanged between different systems is consistent and correctly formatted, leading to smoother integrations and fewer runtime issues.
+
+### Features of MagicDto
+
+1. **Flexible Naming Strategies**:
+
+   - MagicDto supports both camel case and snake case naming strategies. This flexibility is particularly useful when integrating with diverse APIs or legacy systems that may employ different conventions.
+2. **Automatic Property Mapping**:
+
+   - Users can define DTOs that automatically map properties from their internal representation to the expected format of third-party services. This reduces boilerplate code and simplifies maintenance.
+3. **Annotations for Clarity**:
+
+   - The MagicDto class utilizes PHP annotations to clarify the purpose of each property. These annotations enhance code readability and provide useful metadata for serialization.
+4. **XML Support**
+
+   - MagicDto provides support for both XML input and output. This feature allows seamless integration with systems that utilize XML as their primary data format, making it easier to work with various data sources and services.
+
+   To parse XML string, use method `MagicTdo::xmlToObject(string $xmlString)`. This method takes an XML string as input and returning it as a stdClass object.
+
+### Class Structure
+
+The `MagicDto` class is designed with properties that have protected access levels, ensuring encapsulation while still allowing derived classes to access these properties. Each property is annotated with `@var`, which specifies its data type. This structured approach enhances type safety and improves code quality.
+
+#### Key Annotations
+
+**Class Annotations**
+
+1. **@JSON**
+
+   The `@JSON` annotation controls whether the JSON format should be prettified. Using `@JSON(prettify=true)` will format the output in a more readable way, while `@JSON(prettify=false)` will minimize the format
+2. **@XML**
+
+   The `@XML` annotation controls whether the XML format should be prettified. Using `@XML(prettify=true)` will format the output in a more readable way, while `@XML(prettify=false)` will minimize the format
+
+**Property Annotations**
+
+1. **@Source**
+
+   The `@Source` annotation indicates the source property that maps to a specific field in the incoming data. If this annotation is omitted, MagicDto will default to using the property name that matches the class property name. This allows for flexibility in cases where the external API may use different naming conventions.
+
+```php
+/**
+ * @Source("album_name")
+ * @var string
+ */
+protected $title;
+```
+
+2. **@JsonProperty**
+
+   The `@JsonProperty` annotation specifies the output property name when data is serialized to JSON. If this annotation is not provided, MagicDto will serialize the property using its class property name. This ensures that data sent to third-party applications adheres to their expected format.
+
+```php
+/**
+ * @JsonProperty("album_title")
+ * @var string
+ */
+protected $title;
+```
+
+We can put it together
+
+```php
+/**
+ * @Source("album_name")
+ * @JsonProperty("album_title")
+ * @var string
+ */
+protected $title;
+```
+
+In this example, `@Source("album_name")` indicates that the incoming data will use `album_name`, while `@JsonProperty("album_title")` specifies that when the data is serialized, it will be output as `album_title`.
+
+To facilitate bidirectional communication, we need two different DTOs. The `@Source` annotation in the first DTO corresponds to the `@JsonProperty` annotation in the second DTO, while the `@JsonProperty` in the first DTO maps to the `@Source` in the second DTO.
+
+3. **@JsonFormat**
+
+   The @JsonFormat annotation specifies the output date-time format when data is serialized to JSON. The property type must be `DateTime`. It is written as `@JsonFormat(pattern="Y-m-d H:i:s")`. If this annotation is not provided, MagicDto will serialize the property using the default format `Y-m-d H:i:s`. This ensures that data sent to third-party applications adheres to their expected format.
+
+   Format the date and time according to the conventions used in the PHP programming language. This includes utilizing the built-in date and time functions, which allow for various formatting options to display dates and times in a way that is both readable and compatible with PHP's standards. Ensure that you adhere to formats such as `Y-m-d H:i:s` for complete timestamps or `d/m/Y` for more localized representations, depending on the specific requirements of your application.
+
+   MagicDto automatically parses input as both strings and integers. The integer is a unique timestamp, while the string date-time format must be one of the following:
+
+
+#### Date Format Examples
+
+Below are various date format strings that you can use in PHP, along with their descriptions and typical use cases:
+
+-   **`'Y-m-d'`**  
+    _Format:_ ISO 8601  
+    _Example:_ `2024-10-24`  
+    _Description:_ This format represents the date in a standard way that is widely used in APIs and databases. It is particularly useful for storing dates in a consistent format.
+    
+-   **`'Y-m-d H:i:s'`**  
+    _Format:_ ISO 8601 with Time  
+    _Example:_ `2024-10-24 15:30:00`  
+    _Description:_ This format includes both the date and time, making it suitable for logging events or recording timestamps in applications where precision is required.
+    
+-   **`'Y-m-d\TH:i:s'`**  
+    _Format:_ ISO 8601 with 'T' Separator  
+    _Example:_ `2024-10-24T15:30:00`  
+    _Description:_ This format uses a 'T' to separate the date and time, conforming to the strict ISO 8601 standard. It is commonly used in JSON data and web APIs.
+    
+-   **`'Y-m-d\TH:i:s\Z'`**  
+    _Format:_ ISO 8601 with UTC Indicator  
+    _Example:_ `2024-10-24T15:30:00Z`  
+    _Description:_ Similar to the previous format but includes a 'Z' at the end to indicate that the time is in UTC (Coordinated Universal Time). Useful in global applications where time zone context is important.
+    
+-   **`'D, d M Y H:i:s O'`**  
+    _Format:_ RFC 2822  
+    _Example:_ `Thu, 24 Oct 2024 15:30:00 +0000`  
+    _Description:_ This format is often used in email headers and HTTP headers. It provides a readable representation of the date and time along with the time zone offset.
+    
+-   **`'d/m/Y'`**  
+    _Format:_ Local Format  
+    _Example:_ `24/10/2024`  
+    _Description:_ A simple date format that is commonly used in various countries. It is easily readable and useful for forms and local applications.
+    
+-   **`'d F Y'`**  
+    _Format:_ Date with Full Month Name  
+    _Example:_ `24 October 2024`  
+    _Description:_ This format spells out the month, making it very human-readable. Ideal for generating reports or documents where clarity is essential.
+    
+-   **`'l, d F Y'`**  
+    _Format:_ Date with Day of the Week  
+    _Example:_ `Thursday, 24 October 2024`  
+    _Description:_ This format includes the full name of the day, providing a complete and easily readable date string. Perfect for calendars, invitations, or any context where a formal date presentation is needed.
+    
+-   **`'U'`**  
+    _Format:_ Unix Timestamp  
+    _Example:_ `1698151800`  
+    _Description:_ This format represents the date as a Unix timestamp, which is the number of seconds that have elapsed since January 1, 1970 (UTC). It is useful for database storage and calculations involving time, as well as for interoperability with systems that utilize Unix timestamps.
+
+
+**Example:**
+
+DTO on the Input Side
+
+```php
+class AlbumDtoInput extends MagicDto
+{
+    /**
+     * @Source("album_id")
+     * @JsonProperty("albumId")
+     * @var string
+     */
+    protected $id;
+
+    /**
+     * @Source("album_name")
+     * @JsonProperty("albumTitle")
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @Source("date_release")
+     * @JsonProperty("releaseDate")
+     * @JsonFormat(pattern="Y-m-d H:i:s")
+     * @var DateTime
+     */
+    protected $release;
+
+    /**
+     * @Source("song")
+     * @JsonProperty("numberOfSong")
+     * @var string
+     */
+    protected $songs;
+}
+```
+
+DTO on the Output Side
+
+```php
+class AlbumDtoOutput extends MagicDto
+{
+    /**
+     * @Source("albumId")
+     * @JsonProperty("album_id")
+     * @var string
+     */
+    protected $id;
+
+    /**
+     * @Source("albumTitle")
+     * @JsonProperty("album_name")
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @Source("releaseDate")
+     * @JsonProperty("date_release")
+     * @var string
+     */
+    protected $release;
+
+    /**
+     * @Source("numberOfSong")
+     * @JsonProperty("song")
+     * @var string
+     */
+    protected $songs;
+}
+```
+
+**Description**
+
+In this example, we have two DTO classes: `AlbumDtoInput` and `AlbumDtoOutput`. The `AlbumDtoInput` class is designed to receive data from external sources, using the `@Source` annotation to specify the incoming property names and the `@JsonProperty` annotation to define the corresponding properties in the internal representation.
+
+Conversely, the `AlbumDtoOutput` class is structured for sending data outwards. Here, the `@Source` annotation reflects the internal property names, while the `@JsonProperty` annotation defines the expected property names when the data is serialized for external use. This bidirectional mapping ensures that data flows seamlessly between internal and external systems.
+
+The `@Source` annotation allows a Data Transfer Object (DTO) to inherit properties from an underlying object, enabling seamless data integration across related entities.
+
+### Cross Object Mapping
+
+#### Cross Object Mapping Explanation
+
+1. **Concept Clarification**:
+
+   - Cross Object Mapping refers to the ability to access and utilize properties from related objects in a hierarchical structure. In your case, the `SongDto` pulls in the agency name associated with the artist of a song.
+2. **DTO Definition**:
+
+   - A DTO is a simple object that carries data between processes. In this context, `SongDto` aggregates data from the `Song`, `Artist`, and `Agency` models without duplicating properties unnecessarily.
+
+For example, we want to directly include properties from the agency within the SongDto.
+
+- **Song**
+  - **Artist**
+    - **Agency**
+
+When creating a DTO for a `Song`, the user can incorporate properties from the associated `Agency` into the `SongDto`. This is particularly useful for aggregating data from related models without needing to replicate information.
+
+#### Code Implementation
+
+**Song**
+
+```php
+class Song extends MagicObject {
+    /**
+    * Song ID
+    * 
+    * @Column(name="song_id")
+    * @var string
+    */
+    protected $songId;
+
+    /**
+    * Name
+    * 
+    * @Column(name="name")
+    * @var string
+    */
+    protected $name;
+
+    /**
+    * Artist
+    * 
+    * @JoinColumn(name="artist_id")
+    * @var Artist
+    */
+    protected $artist;
+  
+    // Additional properties and methods for the Song can be defined here.
+}
+```
+
+**Artist**
+
+```php
+class Artist extends MagicObject {
+    /**
+    * Artist ID
+    * 
+    * @Column(name="artist_id")
+    * @var string
+    */
+    protected $artistId;
+
+    /**
+    * Name
+    * 
+    * @Column(name="name")
+    * @var string
+    */
+    protected $name;
+
+    /**
+    * Agency
+    * 
+    * @JoinColumn(name="agency_id")
+    * @var Agency
+    */
+    protected $agency;
+  
+    // Additional properties and methods for the Artist can be defined here.
+}
+```
+
+**Agency**
+
+```php
+class Agency extends MagicObject {
+    /**
+    * Agency ID
+    * 
+    * @Column(name="agency_id")
+    * @var string
+    */
+    protected $agencyId;
+
+    /**
+    * Name
+    * 
+    * @Column(name="name")
+    * @var string
+    */
+    protected $name;
+  
+    // Additional properties and methods for the Agency can be defined here.
+}
+```
+
+**SongDto**
+
+```php
+class SongDto extends MagicDto
+{
+    /**
+    * Song ID
+    * 
+    * @Source("songId")
+    * @JsonProperty(name="song_id")
+    * @var string
+    */
+    protected $songId;
+
+    /**
+    * Title
+    *
+    * @Source("title")
+    * @JsonProperty("title")
+    * @var string
+    */
+    protected $title;
+
+    /**
+    * Artist
+    *
+    * @Source("artist")
+    * @JsonProperty("artist")
+    * @var ArtistDto
+    */
+    protected $artist;
+
+    /**
+     * The name of the agency associated with the artist.
+     * 
+     * This property is sourced from the agency related to the artist of the song.
+     * 
+     * @Source("artist->agency->name")
+     * @JsonProperty("agency_name")
+     * @var string
+     */
+    protected $agencyName;
+
+    // Additional properties and methods for the SongDto can be defined here.
+}
+```
+
+**ArtistDto**
+
+```php
+class ArtistDto extends MagicDto
+{
+    /**
+    * Artist ID
+    * 
+    * @Source("artistId")
+    * @JsonProperty(name="artist_id")
+    * @var string
+    */
+    protected $artistId;
+
+    /**
+    * Name
+    *
+    * @Source("name")
+    * @JsonProperty("name")
+    * @var string
+    */
+    protected $name;
+
+    /**
+    * Agency
+    *
+    * @Source("agency")
+    * @JsonProperty("agency")
+    * @var AgencyDto
+    */
+    protected $agency;
+
+    /**
+     * The name of the agency associated with the artist.
+     * 
+     * This property is sourced from the agency related to the artist of the song.
+     * 
+     * @Source("artist->agency->name")
+     * @JsonProperty("agency_name")
+     * @var string
+     */
+    protected $agencyName;
+
+    // Additional properties and methods for the SongDto can be defined here.
+}
+```
+
+**AgencyDto**
+
+```php
+class AgencyDto extends MagicDto
+{
+    /**
+    * Agency ID
+    * 
+    * @Source("agencyId")
+    * @JsonProperty(name="agency_id")
+    * @var string
+    */
+    protected $agencyId;
+
+    /**
+    * Name
+    *
+    * @Source("name")
+    * @JsonProperty("name")
+    * @var string
+    */
+    protected $name;
+}
+
+```
+
+**Usage**
+
+1. JSON Format
+
+```php
+$song = new Song(null, $database);
+$song->find("1234");
+$songDto = new SongDto($song);
+
+header("Content-type: application/json");
+echo $songDto;
+```
+
+2. XML Format
+
+```php
+$song = new Song(null, $database);
+$song->find("1234");
+$songDto = new SongDto($song);
+
+header("Content-type: application/xml");
+echo $songDto->toXml("root");
+```
+
+3. Parse XML
+
+```php
+$albumDto = new AlbumDto();
+$obj = $albumDto->xmlToObject($xmlString);
+// $obj is stdClass
+header("Content-type: application/json");
+echo json_encode($obj);
+```
+
+3. Load from XML
+
+```php
+$albumDto = new AlbumDtoInput();
+$albumDto->loadXml($xmlString);
+header("Content-type: application/json");
+echo $albumDto;
+```
+
+`loadXml` method will load data from XML to `AlbumDtoInput`. `AlbumDtoInput` is the inverse of `AlbumDto`, where values of the `@JsonProperty` and `@Source` annotations are swapped. This inversion also applies to the objects contained within it.
+
+### Customizing Data Transfer Objects (DTOs) in MagicDto
+
+When creating a Data Transfer Object (DTO) using `MagicDto`, users have the flexibility to define override methods that can manipulate input data before it is loaded into the DTO. This allows for customization and validation of the data being processed.
+
+#### Example of an Override Method
+
+```php
+public function onBeforeLoad($data)
+{
+    // This method can be overridden to manipulate the incoming data
+    return $data;
+}
+```
+
+By overriding the onBeforeLoad method, users can modify the input data directly before it is handled by the DTO. This can be useful for tasks such as data sanitization or transformation.
+
+#### Handling Various Data Types
+
+`MagicDto` is designed to accept parameters of various data types, such as objects, arrays, or scalar values. To prevent errors during operations, it is crucial for users to check the data type before executing any logic on the input data.
+
+#### Example of Validating Input Data
+
+```php
+public function onLoadData($data)
+{
+    // Check if the input data is an instance of EntityAlbum
+    if ($data instanceof EntityAlbum) {
+        // Modify properties of the EntityAlbum object
+        $data->setName("Album Name");
+        $data->setProducerName($data->getProducer()->getName());
+    }
+
+    // Return the modified data
+    return $data;
+}
+```
+
+In the ``onLoadData` method, we first verify whether the incoming `$data` is an instance of `EntityAlbum`. If it is, we proceed to set specific properties on the `EntityAlbum` object. This ensures that the operations performed are valid and appropriate for the type of data being processed.
+
+#### Example of Throwing Exceptions
+
+```php
+public function onBeforeLoad($data)
+{
+    if ($data instanceof EntityAlbum) {
+        throw new InvalidArgumentException("Data must be an EntityAlbum.");
+    }
+
+    // Further manipulation of data can occur here
+    return $data;
+}
+```
+
+In this example, if the incoming data is not an `EntityAlbum`, an `InvalidArgumentException` is thrown, preventing further processing of invalid data.
+
+#### Explanation
+
+- **@Source**: This annotation specifies the path to the property within the nested object structure. In this case, `artist->agency->name` indicates that the `agencyName` will pull data from the `name` property of the `Agency` object linked to the `Artist`.
+- **@JsonProperty**: This annotation maps the `agencyName` property to a different key in the JSON representation of the DTO. Here, it will be serialized as `agency_name`.
+
+This approach enhances data encapsulation and promotes cleaner code by allowing DTOs to automatically gather necessary data from related entities.
+
+### Conclusion
+
+MagicDto is a powerful solution for managing data transfer in applications that need to communicate with external systems. By leveraging flexible naming strategies and clear annotations, it simplifies the process of creating and maintaining DTOs, ensuring seamless data exchange. Whether you’re building a new application or integrating with legacy systems, MagicDto can help you navigate the complexities of data serialization and improve overall application reliability.
+
 ## Input POST/GET/COOKIE/REQUEST/SERVER
 
+In PHP, handling user input can be done through various superglobals, such as `$_POST`, `$_GET`, `$_COOKIE`, `$_REQUEST`, and `$_SERVER`. Each of these superglobals serves a specific purpose for gathering data from different types of requests.
+
 ### Input POST
+
+The `$_POST` superglobal is used to collect data sent via HTTP POST requests. In the provided code snippet:
 
 ```php
 
@@ -1164,7 +2125,11 @@ $name = $_POST['real_name'];
 
 ```
 
+This snippet utilizes a class called `InputPost` to retrieve the value associated with the key `'real_name'` from the `POST` request.
+
 ### Input GET
+
+The `$_GET` superglobal retrieves data sent via URL parameters in a GET request. The corresponding code is:
 
 ```php
 
@@ -1180,7 +2145,11 @@ $name = $_GET['real_name'];
 
 ```
 
+Here, the `InputGet` class is used similarly to fetch the `'real_name'` from the `GET` request.
+
 ### Input COOKIE
+
+The `$_COOKIE` superglobal accesses cookies sent by the client. The code example is:
 
 ```php
 
@@ -1198,6 +2167,8 @@ $name = $_COOKIE['real_name'];
 
 ### Input REQUEST
 
+The `$_REQUEST` superglobal can collect data from both POST and GET requests, as well as cookies. The example is:
+
 ```php
 
 use MagicObject\Request\InputRequest;
@@ -1211,6 +2182,8 @@ $name = $inputRequest->getRealName();
 $name = $_REQUEST['real_name'];
 
 ```
+
+This allows for a unified approach to retrieve the `'real_name'` regardless of its source.
 
 ### Input SERVER
 
@@ -1228,9 +2201,11 @@ $remoteAddress = $_SERVER_['REMOTE_ADDR'];
 
 ```
 
+This retrieves the remote address of the client making the request.
+
 ### Filter Input
 
-Filter input from InputGet, InputPost, InputRequest and InputCookie
+Filtering user input is crucial for security, as it helps prevent malicious data from affecting your application. The code snippet for filtering input looks like this:
 
 ```php
 
@@ -1259,35 +2234,42 @@ $name = $inputGet->getRealName();
 
 ```
 
+In this example, the getRealName method can take a filtering constant to sanitize the input value. The filter `FILTER_SANITIZE_SPECIAL_CHARS` is used to escape special characters, preventing XSS (Cross-Site Scripting) attacks.
+
 List of filter
 
 ```
-FILTER_SANITIZE_NO_DOUBLE_SPACE = 512;
-FILTER_SANITIZE_PASSWORD = 511;
-FILTER_SANITIZE_ALPHA = 510;
-FILTER_SANITIZE_ALPHANUMERIC = 509;
-FILTER_SANITIZE_ALPHANUMERICPUNC = 506;
-FILTER_SANITIZE_NUMBER_UINT = 508;
-FILTER_SANITIZE_NUMBER_INT = 519;
-FILTER_SANITIZE_URL = 518;
-FILTER_SANITIZE_NUMBER_FLOAT = 520;
-FILTER_SANITIZE_STRING_NEW = 513;
-FILTER_SANITIZE_ENCODED = 514;
-FILTER_SANITIZE_STRING_INLINE = 507;
-FILTER_SANITIZE_STRING_BASE64 = 505;
-FILTER_SANITIZE_IP = 504;
-FILTER_SANITIZE_NUMBER_OCTAL = 503;
-FILTER_SANITIZE_NUMBER_HEXADECIMAL = 502;
-FILTER_SANITIZE_COLOR = 501;
-FILTER_SANITIZE_POINT = 500;
-FILTER_SANITIZE_BOOL = 600;
-FILTER_VALIDATE_URL = 273;
-FILTER_VALIDATE_EMAIL = 274;
-FILTER_SANITIZE_EMAIL = 517;
-FILTER_SANITIZE_SPECIAL_CHARS = 515;
-FILTER_SANITIZE_ASCII = 601;
+PicoFilterConstant::FILTER_DEFAULT                      = 516;
+PicoFilterConstant::FILTER_SANITIZE_NO_DOUBLE_SPACE     = 512;
+PicoFilterConstant::FILTER_SANITIZE_PASSWORD            = 511;
+PicoFilterConstant::FILTER_SANITIZE_ALPHA               = 510;
+PicoFilterConstant::FILTER_SANITIZE_ALPHANUMERIC        = 509;
+PicoFilterConstant::FILTER_SANITIZE_ALPHANUMERICPUNC    = 506;
+PicoFilterConstant::FILTER_SANITIZE_NUMBER_UINT         = 508;
+PicoFilterConstant::FILTER_SANITIZE_NUMBER_INT          = 519;
+PicoFilterConstant::FILTER_SANITIZE_URL                 = 518;
+PicoFilterConstant::FILTER_SANITIZE_NUMBER_FLOAT        = 520;
+PicoFilterConstant::FILTER_SANITIZE_STRING_NEW          = 513;
+PicoFilterConstant::FILTER_SANITIZE_ENCODED             = 514;
+PicoFilterConstant::FILTER_SANITIZE_STRING_INLINE       = 507;
+PicoFilterConstant::FILTER_SANITIZE_STRING_BASE64       = 505;
+PicoFilterConstant::FILTER_SANITIZE_IP                  = 504;
+PicoFilterConstant::FILTER_SANITIZE_NUMBER_OCTAL        = 503;
+PicoFilterConstant::FILTER_SANITIZE_NUMBER_HEXADECIMAL  = 502;
+PicoFilterConstant::FILTER_SANITIZE_COLOR               = 501;
+PicoFilterConstant::FILTER_SANITIZE_POINT               = 500;
+PicoFilterConstant::FILTER_SANITIZE_BOOL                = 600;
+PicoFilterConstant::FILTER_VALIDATE_URL                 = 273;
+PicoFilterConstant::FILTER_VALIDATE_EMAIL               = 274;
+PicoFilterConstant::FILTER_SANITIZE_EMAIL               = 517;
+PicoFilterConstant::FILTER_SANITIZE_SPECIAL_CHARS       = 515;
+PicoFilterConstant::FILTER_SANITIZE_ASCII               = 601;
 ```
 
+
+### Conclusion
+
+In summary, handling input in PHP through superglobals is straightforward but requires careful filtering to ensure security. Using classes like `InputPost`, `InputGet`, `InputCookie`, `InputRequest`, and `InputServer` can abstract the underlying superglobal accesses, making the code cleaner and potentially more secure by enforcing consistent input handling and sanitization practices.
 ## Session
 
 Session variables keep information about one single user, and are available to all pages in one application.
@@ -1303,6 +2285,11 @@ session:
   save_handler: files
   save_path: /tmp/sessions
 ```
+
+- `name`: Name of the session.
+- `max_life_time`: Maximum lifetime of the session in seconds (e.g., 86400 seconds = 24 hours).
+- `save_handler`: Specifies the session storage mechanism (in this case, files).
+- `save_path`: Directory where session files are stored.
 
 **PHP Script**
 
@@ -1412,6 +2399,413 @@ $sessions = new PicoSession($sessConf);
 
 $sessions->startSession();
 ```
+
+This setup ensures that the session save path is securely managed and decrypted at runtime.
+
+### Conclusion
+
+This implementation provides a robust framework for session management in a PHP application, allowing flexibility in storage options (files or Redis) while emphasizing security through encryption. The use of YAML for configuration keeps the setup clean and easily adjustable. By encapsulating session configuration in dedicated classes, you enhance maintainability and security.
+## Database 
+
+
+### Overview
+
+`PicoDatabase` is a PHP class designed for simplified database interactions using PDO (PHP Data Objects). It provides methods to connect to a database, execute SQL commands, manage transactions, and fetch results in various formats. This manual outlines how to use the class, its features, and provides examples for reference.
+
+### Features
+
+-   **Connection Management**: Establish and manage database connections.
+-   **SQL Execution**: Execute various SQL commands such as INSERT, UPDATE, DELETE, and SELECT.
+-   **Transaction Handling**: Support for committing and rolling back transactions.
+-   **Result Fetching**: Fetch results in different formats (array, object, etc.).
+-   **Callbacks**: Support for custom callback functions for query execution and debugging.
+-   **Unique ID Generation**: Generate unique identifiers for database records.
+
+### Database Support
+
+MagicObject supports the following databases:
+
+1. **MySQL**
+    
+    One of the most popular open-source relational databases, known for its speed, reliability, and ease of use. MySQL is widely used in web applications and offers strong performance, security features, and support for SQL standards.
+
+2. **MariaDB**
+    
+    A fork of MySQL, created by the original developers of MySQL after concerns over Oracle’s acquisition of MySQL. MariaDB is designed to maintain compatibility with MySQL while adding new features and optimizations. It is fully open-source and highly regarded for its performance and stability.
+
+3. **PostgreSQL**
+    
+    A powerful, open-source relational database system known for its robustness, SQL compliance, and extensive feature set, including ACID compliance, JSON support, and advanced indexing mechanisms.
+
+4. **SQLite**
+    
+    A lightweight, serverless, self-contained SQL database engine that is highly portable. It is often used for embedded systems or small-scale applications due to its minimal setup and resource usage. Despite its simplicity, SQLite supports a wide range of SQL features and is widely used in mobile apps and other local storage scenarios.
+
+MagicObject’s compatibility with these databases enables flexible, scalable, and efficient data management across different platforms and environments.
+
+### Installation
+
+To use the `PicoDatabase` class, ensure you have PHP with PDO support. Include the class file in your project, and you can instantiate it with your database credentials.
+
+```php
+use MagicObject\Database\PicoDatabase;
+
+// Example credentials setup
+$credentials = new SecretObject();
+$db = new PicoDatabase($credentials);
+```
+
+**Credentials**
+
+To create database credentials, please see the `SecretObject` section.
+
+```php
+<?php
+
+namespace MagicObject\Database;
+
+use MagicObject\SecretObject;
+
+/**
+ * PicoDatabaseCredentials class
+ * 
+ * This class encapsulates database credentials and utilizes the SecretObject to encrypt all attributes,
+ * ensuring the security of database configuration details from unauthorized access.
+ * 
+ * It provides getter methods to retrieve database connection parameters such as driver, host, port,
+ * username, password, database name, schema, and application time zone.
+ * 
+ * Example usage:
+ * ```php
+ * $credentials = new PicoDatabaseCredentials();
+ * $credentials->setHost('localhost');
+ * $credentials->setUsername('user');
+ * $credentials->setPassword('password');
+ * ```
+ * 
+ * The attributes are automatically encrypted when set, providing a secure way to handle sensitive
+ * information within your application.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Database
+ * @link https://github.com/Planetbiru/MagicObject
+ */
+class PicoDatabaseCredentials extends SecretObject
+{
+    /**
+     * Database driver (e.g., 'mysql', 'pgsql').
+     *
+     * @var string
+     */
+    protected $driver = 'mysql';
+
+    /**
+     * Database file path for SQLite database only
+     *
+     * @var string
+     */
+    protected $databaseFilePath;
+
+    /**
+     * Database server host.
+     *
+     * @EncryptIn
+     * @DecryptOut
+     * @var string
+     */
+    protected $host = 'localhost';
+
+    /**
+     * Database server port.
+     *
+     * @var int
+     */
+    protected $port = 3306;
+
+    /**
+     * Database username.
+     *
+     * @EncryptIn
+     * @DecryptOut
+     * @var string
+     */
+    protected $username = "";
+
+    /**
+     * Database user password.
+     *
+     * @EncryptIn
+     * @DecryptOut
+     * @var string
+     */
+    protected $password = "";
+
+    /**
+     * Database name.
+     *
+     * @EncryptIn
+     * @DecryptOut
+     * @var string
+     */
+    protected $databaseName = "";
+
+    /**
+     * Database schema (default: 'public').
+     *
+     * @EncryptIn
+     * @DecryptOut
+     * @var string
+     */
+    protected $databaseSchema = "public"; 
+
+    /**
+     * Application time zone.
+     *
+     * @var string
+     */
+    protected $timeZone = "Asia/Jakarta";
+}
+```
+
+### Class Methods
+
+#### Constructor
+
+```php
+public function __construct($databaseCredentials, $callbackExecuteQuery = null, $callbackDebugQuery = null)
+```
+
+**Parameters:**
+
+-   `SecretObject $databaseCredentials`: Database credentials object.
+-   `callable|null $callbackExecuteQuery`: Optional callback for executing modifying queries.
+    -   If the callback has **3 parameters**, it will be:
+        -   `$sqlQuery`: The SQL query being executed.
+        -   `$params`: The parameters used in the SQL query.
+        -   `$type`: The type of query (e.g., `PicoDatabase::QUERY_INSERT`).
+    -   If the callback has **2 parameters**, it will be:
+        -   `$sqlQuery`: The SQL query being executed.
+        -   `$type`: The type of query.
+-   `callable|null $callbackDebugQuery`: Optional callback for debugging queries.
+    -   If the callback has **2 parameters**, it will be:
+        -   `$sqlQuery`: The SQL query being debugged.
+        -   `$params`: The parameters used in the SQL query.
+    -   If the callback has **1 parameter**, it will be:
+        -   `$sqlQuery`: The SQL query being debugged.
+
+To use setter methods for configuring the `callbackExecuteQuery` and `callbackDebugQuery` in the PicoDatabase class, follow the example below. This allows you to set the callbacks after instantiation
+
+**Setting Callbacks with Setters**
+
+Here's how you can set the callbacks using setter methods:
+
+```php
+use MagicObject\Database\PicoDatabase;
+use MagicObject\Database\PicoDatabaseCredentials;
+
+// Example credentials setup
+$credentials = new PicoDatabaseCredentials();
+$credentials->setHost('localhost');
+$credentials->setUsername('user');
+$credentials->setPassword('password');
+
+// Instantiate PicoDatabase
+$db = new PicoDatabase($credentials);
+
+// Set callback for executing queries
+$db->setCallbackExecuteQuery(function($sqlQuery, $params, $type) {
+    echo "Executing query: $sqlQuery\n";
+    echo "Parameters: " . json_encode($params) . "\n";
+});
+
+// Set callback for debugging queries
+$db->setCallbackDebugQuery(function($sqlQuery, $params) {
+    echo "Debugging query: $sqlQuery\n";
+    echo "Parameters: " . json_encode($params) . "\n";
+});
+
+```
+
+**Disabling Callbacks Using Setters**
+
+You can also disable the callbacks by setting them to `null`:
+
+```php
+// Instantiate PicoDatabase
+$dbWithoutCallbacks = new PicoDatabase($credentials);
+
+// Disable callbacks
+$dbWithoutCallbacks->setCallbackExecuteQuery(null);
+$dbWithoutCallbacks->setCallbackDebugQuery(null);
+
+```
+
+#### Connecting to the Database
+
+```php
+public function connect($withDatabase = true): bool
+```
+
+**Parameters**:
+
+-   `bool $withDatabase`: Whether to select the database upon connection.
+
+**Returns**: `true` if connection is successful, `false` otherwise.
+
+#### Disconnecting from the Database
+
+```php
+public function disconnect(): self
+```
+
+**Returns**: Current instance for method chaining.
+
+#### Query Execution
+
+```php
+public function query($sql, $params = null)
+```
+
+
+**Parameters**:
+-   `string $sql`: SQL command to be executed.
+-   `array|null $params`: Optional parameters for the SQL query.
+**Returns**: PDOStatement object or `false` on failure.
+
+#### Fetch a Single Result
+
+```php
+public function fetch($sql, $tentativeType = PDO::FETCH_ASSOC, $defaultValue = null, $params = null)
+```
+
+**Parameters**:
+-   `string $sql`: SQL command.
+-   `int $tentativeType`: Fetch mode (default is `PDO::FETCH_ASSOC`).
+-   `mixed $defaultValue`: Default value if no results found.
+-   `array|null $params`: Optional parameters.
+**Returns**: Fetched result or default value.
+
+#### Fetch All Results
+
+```php
+public function fetchAll($sql, $tentativeType = PDO::FETCH_ASSOC, $defaultValue = null, $params = null)
+```
+
+Similar to fetch, but returns all matching results as an array.
+
+### Transaction Management
+
+#### Commit Transaction
+
+```php
+public function commit(): bool
+```
+
+**Returns:** true if successful.
+
+#### Rollback Transaction
+
+```php
+public function rollback(): bool
+```
+
+**Returns:** true if successful.
+
+#### Unique ID Generation
+
+```php
+public function generateNewId(): string
+```
+
+**Returns:** A unique 20-byte ID.
+
+#### Last Inserted ID
+
+```php
+public function lastInsertId($name = null): string|false
+```
+
+**Parameters:**
+
+- string|null $name: Sequence name (for PostgreSQL).
+
+**Returns:** The last inserted ID or false on error.
+
+### Connection Status
+
+#### Check Connection
+
+```php
+public function isConnected(): bool
+```
+
+### Example Usage
+
+#### Connecting and Fetching Data
+
+```php
+// Instantiate PicoDatabase
+$db = new PicoDatabase($credentials);
+
+// Connect to the database
+if ($db->connect()) {
+    // Fetch a user by ID
+    $user = $db->fetch("SELECT * FROM users WHERE id = ?", [1]);
+    print_r($user);
+    
+    // Disconnect
+    $db->disconnect();
+}
+```
+
+#### Executing a Transaction
+
+```php
+$db->connect();
+$db->setAudoCommit(false); // Disable autocommit
+
+try {
+    $db->executeInsert("INSERT INTO users (name) VALUES (?)", ['John Doe']);
+    $db->commit(); // Commit the transaction
+} catch (Exception $e) {
+    $db->rollback(); // Rollback on error
+}
+```
+
+### Conclusion
+
+`PicoDatabase` is a robust class for managing database operations in PHP applications. By following the examples and method descriptions provided in this manual, you can effectively utilize its features for your database interactions. For further assistance, refer to the source code and documentation available at [MagicObject GitHub](https://github.com/Planetbiru/MagicObject).
+
+## MagicObject with PDO
+
+### Overview
+
+With the release of **MagicObject 2.7**, a significant update has been introduced to allow users to leverage **PDO** (PHP Data Objects) for database connections. In previous versions, **MagicObject** required the use of **PicoDatabase**, its custom database handling class. However, recognizing that many developers are accustomed to establishing database connections via traditional PDO, this new version introduces flexibility by allowing PDO connections to be passed directly to the **MagicObject** constructor.
+
+This update aims to bridge the gap between traditional PDO-based database management and the advanced features provided by **MagicObject**, thus enhancing compatibility while retaining all the powerful functionality of the framework.
+
+### Why PDO Support?
+
+The decision to support **PDO** was made to accommodate users who have already established database connections in their applications using PDO, instead of relying on **PicoDatabase** from the start. By supporting PDO, **MagicObject** allows users to continue working with their preferred method of connecting to the database while still benefiting from the full range of features and utilities **MagicObject** offers.
+
+While PDO is now an option for initializing **MagicObject**, it is used only in the constructor. Once the object is initialized, **MagicObject** continues to use **PicoDatabase** for all subsequent database interactions, ensuring that users can still benefit from **PicoDatabase**'s advanced features like automatic query building, database abstraction, and optimized query execution.
+
+### How PDO Support Works
+
+In **MagicObject 2.7**, when you pass a **PDO** connection object to the constructor, it is automatically converted into a **PicoDatabase** instance using the `PicoDatabase::fromPdo()` static method. This ensures that even though PDO is used to establish the initial connection, the object will still operate using **PicoDatabase** for all subsequent database operations. The constructor of **MagicObject** ensures that the database connection is properly initialized and the type of database is correctly detected based on the PDO driver.
+
+### Benefits of PDO Support in MagicObject 2.7
+
+-   **Compatibility**: This change makes **MagicObject** more compatible with existing applications that are already using PDO for database connections. Developers can continue to use PDO for initializing connections while taking advantage of **PicoDatabase**'s advanced database features for the rest of the application.
+    
+-   **Flexibility**: Developers now have the flexibility to choose between traditional PDO connections and **PicoDatabase**, depending on their needs. This is especially useful for applications transitioning to **MagicObject** but needing to maintain compatibility with existing database handling code.
+    
+-   **Ease of Transition**: By supporting PDO in the constructor, **MagicObject** makes it easier for developers to gradually adopt its features without the need to refactor existing database handling code.
+
+### Conclusion
+
+Version 2.7 of **MagicObject** introduces an important enhancement by allowing PDO connections to be used alongside **PicoDatabase**. This update provides greater flexibility for developers, allowing them to work with traditional PDO connections if they choose, while still benefiting from the advanced features of **MagicObject** for database interactions. This change aligns with the goal of making **MagicObject** more accessible to a wider range of developers, whether they are just starting with **MagicObject** or are looking to transition from an existing PDO-based application.
+
 ## Entity
 
 Entity is class to access database. Entity is derived from MagicObject. Some annotations required to activated all entity features. 
@@ -1439,6 +2833,8 @@ use MagicObject\MagicObject;
  * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE, prettify=true)
  * @Table(name="album")
+ * @Cache(enable="true")
+ * @package MusicProductionManager\Data\Entity
  */
 class Album extends MagicObject
 {
@@ -1613,16 +3009,17 @@ class Album extends MagicObject
  * @Entity
  * @JSON(property-naming-strategy=SNAKE_CASE)
  * @Table(name="album")
+ * @Cache(enable="true")
 
 ### Class Parameters
 
 **@Entity**
 
-`@Entity` is parameter to validate that the object is an entity.
+`@Entity` Indicates that the class represents an entity.
 
 **@JSON**
 
-`@JSON` is parameter to inform how the object will be serialized.
+`@JSON` Configures how the object will be serialized.
 
 Attributes:
 1. `property-naming-strategy`
@@ -1633,7 +3030,7 @@ Allowed value:
 - `CAMEL_CASE` all properties will be camel case when `__toString()` method called.
 - `UPPER_CAMEL_CASE` all properties will be camel case with capitalize first character when `__toString()` method called.
 
-Default value: `CAMEL_CASE`
+Default: `CAMEL_CASE`
 
 2. `prettify`
 
@@ -1642,16 +3039,40 @@ Allowed value:
 - `true` JSON string will be prettified
 - `false` JSON string will not be prettified
 
-Default value: `false`
+Default: `false`
 
 **@Table**
 
-`@Table` is parameter contains table information.
+`@Table` Provides caching configuration.
 
 Attributes:
 `name`
 
 `name` is the table name of the entity.
+
+**@Cache**
+
+`@Cache` Specifies the namespace of the class.
+
+Attributes:
+`enable`
+
+`enable` is option to enable or disable cache.
+
+Allowed value:
+
+- `true` Cache is enabled
+- `false` Cache is disabled
+
+Default: `false`
+
+**@package**
+
+`@package` is parameter for namespace.
+
+PHP does not provide a native method to retrieve a class's namespace. Earlier versions of MagicObject attempted to obtain this information by reading the PHP script, a method that proved both unsafe and inefficient.
+
+With the addition of package annotations to each entity, MagicObject now offers a safer and more efficient way to join entities. However, if a package annotation is not available on an entity, version 2.1 will still revert to the old method.
 
 ### Property Parameters
 
@@ -2375,7 +3796,7 @@ class SpecificationUtil
      * $@param array|null $additional
      * @return PicoSpecification
      */
-    public static function createSongSpecification($inputGet, $additional = null) //NOSONAR
+    public static function createSongSpecification($inputGet, $additional = null) // NOSONAR
     {
         $spesification = new PicoSpecification();
 
@@ -2596,7 +4017,7 @@ class SpecificationUtil
      * $@param array|null $additional
      * @return PicoSpecification
      */
-    public static function createSongDraftSpecification($inputGet, $additional = null) //NOSONAR
+    public static function createSongDraftSpecification($inputGet, $additional = null) // NOSONAR
     {
         $spesification = new PicoSpecification();
 
@@ -8265,9 +9686,959 @@ require_once "inc/footer.php";
 ?>
 ```
 
+## Native Query
+
+In MagicObject version 2, native queries have been introduced as an efficient way to interact with the database.
+
+Native queries offer significant performance improvements when handling large volumes of data, allowing users to craft highly efficient queries that meet diverse requirements.
+
+Native queries can perform several tasks such as:
+1. performing INSERT operations
+2. performing SELECT operations with complex queries such as JOIN, UNION, IF-ELSE, CASE, and others
+3. counting the number of rows without reading the data in detail
+4. performing UPDATE operations
+5. performing DELETE operations
+6. calling functions
+7. calling procedures and stored procedures
+
+Native queries do not support multiple database connections. This means that all operations performed using native queries must be executed within a single, active database connection. This design choice ensures data consistency and integrity by preventing potential conflicts that may arise from attempting to manage multiple connections simultaneously. Users should ensure that their application logic accommodates this limitation, potentially leveraging connection pooling or other techniques to optimize database interaction when needed.
+
+### Parameters
+
+The parameters accepted by the native query function are as follows:
+
+1. `string`
+2. `int` or `integer`
+3. `float`
+4. `bool` or `boolean`
+5. `null`
+6. `DateTime`
+7. `array` of `string`, `int`, `bool` and `DateTime`
+
+For columns with data type `DATETIME` and `TIMESTAMP`, users can use either `string` or `DateTime` parameters. `DateTime` will be first converted to 'Y-md H:i:s' format automatically by MagicObject. Don't forget to define DateTimeZone for DateTime object. Also note the time resolution for the `in` and `=` criteria.
+
+### Return Type
+
+This method executes a database query using the parameters and annotations defined in the caller function.
+It leverages reflection to access the query string specified in the caller's docblock, binds the relevant parameters,
+and then runs the query against the database.
+
+By analyzing the parameters and return type of the calling function, this method enables dynamic query execution tailored to the parameters and return type specified in the @return annotation. Supported return types include:
+
+- **void**: The method will return `null`.
+- **int** or **integer**: It will return the number of affected rows.
+- **object** or **stdClass**: It will return a single result as an object.
+- **stdClass[]**: All results will be returned as an array of stdClass objects.
+- **array**: All results will be returned as an associative array.
+- **string**: The results will be JSON-encoded.
+- **PDOStatement**: The method can return a prepared statement for further operations if necessary.
+- **MagicObject** and its derived classes: If the return type is a class name or an array of class names, instances
+  of the specified class will be created for each row fetched.
+
+MagicObject also supports return types `self` and `self[]` which will represent the respective class.
+
+The method returns a mixed type result, which varies based on the caller function's return type:
+- It will return `null` for void types.
+- An integer representing the number of affected rows for int types.
+- An object for single result types.
+- An array of associative arrays for array types.
+- A JSON string for string types.
+- Instances of a specified class for class name matches.
+
+If there is an error executing the database query, a **PDOException** will be thrown.
+
+Native query must be a function of a class that extends from the MagicObject class. In its definition, this method must call `$this->executeNativeQuery()`. `MagicObject::executeNativeQuery()` will analyze the docblock, parameters, and return type to process the given query. For ease and flexibility in writing code, the `MagicObject::executeNativeQuery()` function call does not pass parameters. Instead, the `MagicObject::executeNativeQuery()` function takes parameters from the calling function. Thus, changes to the parameters of the calling function do not require changes to the function definition.
+
+Native queries can be created on entities used by the application. If in the previous version the entity only contained properties, then in version 2.0, the entity can also contain functions for native queries. However, entities in versions 1 and 2 both support functions but functions with native queries are only supported in version 2.0.
+
+### Pagination and Sorting
+
+In **MagicObject version 2.7**, support for **pageable** and **sortable** functionality has been added to native queries. Previously, native queries did not support pagination and sorting directly. Instead, users had to manually include `SORT BY` and `LIMIT OFFSET` clauses in their queries, which made them less flexible. This approach was problematic because each Database Management System (DBMS) has its own syntax for writing queries, making it cumbersome to adapt queries for different platforms.
+
+With the introduction of pageable and sortable support in version 2.7, users can now easily pass **pagination** parameters using the `PicoPageable` type and **sorting** parameters using the `PicoSortable` type directly into their native queries. These parameters can be placed anywhere within the query, but it is recommended to position them either at the beginning or the end of the query for optimal readability and organization.
+
+This enhancement makes native queries more flexible and easier to maintain, as the logic for pagination and sorting is handled automatically, without requiring manual intervention for each DBMS. As a result, users can now write cleaner, more efficient, and database-agnostic native queries.
+
+### Debug Query
+
+MagicObject checks if the database connection has a debugging function for queries. If available, it sends the executed query along with the parameter values to this function, aiding users in identifying errors during query definition and execution.
+
+**Example:**
+
+```php
+<?php
+
+use MagicObject\Database\PicoDatabase;
+use MagicObject\MagicObject;
+use MagicObject\SecretObject;
+
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+
+$databaseCredential = new SecretObject();
+$databaseCredential->loadYamlFile(dirname(dirname(__DIR__)) . "/test.yml", false, true, true);
+$database = new PicoDatabase($databaseCredential->getDatabase(), null, function($sql){
+    error_log($sql); // Debug query here
+});
+$database->connect();
+
+class Supervisor extends MagicObject
+{
+    /**
+     * Native query 1
+     *
+     * This method will return null.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return void
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native1($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 2
+     *
+     * This method will return the number of affected rows.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return int
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native2($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 3
+     *
+     * This method will return a single result as an object.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return stdClass
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native3($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 4
+     *
+     * This method will return an array of stdClass objects.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return stdClass[]
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native4($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 5
+     *
+     * This method will return an associative array.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return array
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native5($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 6
+     *
+     * This method will return a JSON-encoded string.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return string
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native6($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 7
+     *
+     * This method will return a prepared statement for further operations if necessary.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return PDOStatement
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native7($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 8
+     *
+     * This method will return an object of Supervisor.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return Supervisor
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native8($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 9
+     *
+     * This method will return an array of Supervisor object.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return Supervisor[]
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native9($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 10
+     *
+     * This method will return an object of Supervisor.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return self
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native10($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 11
+     *
+     * This method will return an array of Supervisor object.
+     *
+     * @param int $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return self[]
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id = :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native11($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+    
+    /**
+     * Native query 12
+     *
+     * This method will return a prepared statement for further operations if necessary.
+     *
+     * @param int[] $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return PDOStatement
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id in :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native7($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+
+    /**
+     * Native query 13
+     *
+     * This method will return a prepared statement for further operations if necessary.
+     *
+     * @param PicoPagebale $pageable
+     * @param PicoSortable $sortable
+     * @param bool $aktif The active status to filter results.
+     * @return MagicObject[]
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id in :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native13($pageable, $sortable, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+}
+
+$obj = new Supervisor(null, $database);
+
+$native1 = $obj->native1(1, true);
+
+$native2 = $obj->native2(1, true);
+echo "\r\nnative2:\r\n";
+print_r($native2);
+
+$native3 = $obj->native3(1, true);
+echo "\r\nnative3:\r\n";
+print_r($native3);
+
+$native4 = $obj->native4(1, true);
+echo "\r\nnative4:\r\n";
+print_r($native4);
+
+$native5 = $obj->native5(1, true);
+echo "\r\nnative5:\r\n";
+print_r($native5);
+
+$native6 = $obj->native6(1, true);
+echo "\r\nnative6:\r\n";
+print_r($native6);
+
+$native7 = $obj->native7(1, true);
+echo "\r\nnative7:\r\n";
+print_r($native7->fetchAll(PDO::FETCH_ASSOC));
+
+$native8 = $obj->native8(1, true);
+echo "\r\nnative8:\r\n";
+print_r($native8);
+
+$native9 = $obj->native9(1, true);
+echo "\r\nnative9:\r\n";
+print_r($native9);
+
+$native10 = $obj->native10(1, true);
+echo "\r\nnative10:\r\n";
+print_r($native10);
+
+$native11 = $obj->native11(1, true);
+echo "\r\nnative11:\r\n";
+print_r($native11);
+
+// For the MagicObject return type, users can utilize the features of the MagicObject except for 
+// interacting with the database again because native queries are designed for a different purpose.
+
+echo "Alamat: " . $native8->getTelepon() . "\r\n";
+echo "Alamat: " . $native9[0]->getTelepon() . "\r\n";
+echo "Alamat: " . $native10->getTelepon() . "\r\n";
+echo "Alamat: " . $native11[0]->getTelepon() . "\r\n";
+
+
+$sortable = new PicoSortable();
+$sortable->addSortable(new PicoSort("nama", PicoSort::ORDER_TYPE_ASC));
+$pageable = new PicoPageable(new PicoPage(3, 20));
+
+try
+{
+    $native13 = $obj->native13($pageable, $sortable, true);
+    echo "\r\nnative13:\r\n";
+    foreach($native13 as $sup)
+    {
+        echo $sup."\r\n\r\n";
+    }
+}
+catch(Exception $e)
+{
+    echo $e->getMessage();
+}
+```
+
+For the purpose of exporting large amounts of data, use the PDOStatement return type. PDOStatement allows users to read one by one and process it immediately, allowing PHP to release memory from the previous process. PHP does not need to store very large data in a variable.
+
+Example 12 shows how to use array parameters.
+
+For example:
+
+```sql
+SELECT supervisor.*
+FROM supervisor
+WHERE supervisor.supervisor_id in (1, 2, 3, 4)
+AND supervisor.aktif = true;
+```
+
+So the method is:
+
+```php
+    /**
+     * Native query 12
+     *
+     * This method will return a prepared statement for further operations if necessary.
+     *
+     * @param int[] $supervisorId The ID of the table to search for.
+     * @param bool $aktif The active status to filter results.
+     * @return PDOStatement
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.supervisor_id in :supervisorId 
+      AND supervisor.aktif = :aktif
+     ")
+     */
+    public function native7($supervisorId, $aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+```
+
+**Example 1**
+
+Using MagicObject
+
+```php
+class SupervisorExport extends MagicObject
+{
+    /**
+     * Export active supervisor
+     *
+     * @param bool $aktif The active status to filter results.
+     * @return PDOStatement
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.aktif = :aktif
+      ORDER BY supervisor.waktu_buat ASC
+     ")
+     */
+    public function exportActive($aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+}
+
+function generateHeader($fp, $map)
+{
+    $fields = [];
+    $fields[] = "No";
+    foreach($map as $column)
+    {
+        $fields[] = PicoStringUtil::snakeToTitle($column);
+    }
+    fputcsv($fp, $fields);
+}
+function generateHeader($fp, $map, $data, $iteration)
+{
+    $fields = [];
+    $fields[] = $iteration;
+    foreach($map as $column)
+    {
+        $fields[] = $data->get($column);
+    }
+    fputcsv($fp, $fields);
+}
+
+$map = [
+    "supervisor_id",
+    "nama",
+    "tanggal_lahir",
+    "telepon",
+    "email"
+];
+
+$path = "/var/www/export.csv";
+$fp = fopen($path, "w");
+
+$exporter = new SupervisorExport(null, $database);
+
+$stmt = $exporter->exportActive(true);
+
+$iteration = 0;
+while($row = $stmt->fetch(PDO::FETCH_OBJ))
+{
+    $data = new SupervisorExport($row);
+    if($iteration == 0)
+    {
+        generateHeader($fp, $map);
+    }
+    $iteration++;
+    generateData($fp, $map, $data, $iteration);
+}
+fclose($fp);
+```
+
+**Example 2**
+
+Using stdClass
+
+```php
+class SupervisorExport extends MagicObject
+{
+    /**
+     * Export active supervisor
+     *
+     * @param bool $aktif The active status to filter results.
+     * @return PDOStatement
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.aktif = :aktif
+      ORDER BY supervisor.waktu_buat ASC
+     ")
+     */
+    public function exportActive($aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+}
+
+function generateHeader($fp, $map)
+{
+    $fields = [];
+    $fields[] = "No";
+    foreach($map as $column)
+    {
+        $fields[] = PicoStringUtil::snakeToTitle($column);
+    }
+    fputcsv($fp, $fields);
+}
+function generateData($fp, $map, $data, $iteration)
+{
+    $fields = [];
+    $fields[] = $iteration;
+    foreach($map as $column)
+    {
+        $fields[] = $data->{$column};
+    }
+    fputcsv($fp, $fields);
+}
+
+$map = [
+    "supervisor_id",
+    "nama",
+    "tanggal_lahir",
+    "telepon",
+    "email"
+];
+
+$path = "/var/www/export.csv";
+$fp = fopen($path, "w");
+
+$exporter = new SupervisorExport(null, $database);
+
+$stmt = $exporter->exportActive(true);
+
+$iteration = 0;
+while($row = $stmt->fetch(PDO::FETCH_OBJ))
+{
+    if($iteration == 0)
+    {
+        generateHeader($fp, $map);
+    }
+    $iteration++;
+    generateData($fp, $map, $row, $iteration);
+}
+fclose($fp);
+```
+
+**Example 3**
+
+Using associated array
+
+```php
+class SupervisorExport extends MagicObject
+{
+    /**
+     * Export active supervisor
+     *
+     * @param bool $aktif The active status to filter results.
+     * @return PDOStatement
+     * @query("
+      SELECT supervisor.* 
+      FROM supervisor 
+      WHERE supervisor.aktif = :aktif
+      ORDER BY supervisor.waktu_buat ASC
+     ")
+     */
+    public function exportActive($aktif)
+    {
+        // Call parent method to execute the query
+        return $this->executeNativeQuery();
+    }
+}
+
+function generateHeader($fp, $map)
+{
+    $fields = [];
+    $fields[] = "No";
+    foreach($map as $column)
+    {
+        $fields[] = PicoStringUtil::snakeToTitle($column);
+    }
+    fputcsv($fp, $fields);
+}
+function generateHeader($fp, $map, $data, $iteration)
+{
+    $fields = [];
+    $fields[] = $iteration;
+    foreach($map as $column)
+    {
+        $fields[] = $data[$column];
+    }
+    fputcsv($fp, $fields);
+}
+
+$map = [
+    "supervisor_id",
+    "nama",
+    "tanggal_lahir",
+    "telepon",
+    "email"
+];
+
+$path = "/var/www/export.csv";
+$fp = fopen($path, "w");
+
+$exporter = new SupervisorExport(null, $database);
+
+$stmt = $exporter->exportActive(true);
+
+$iteration = 0;
+while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+{
+    if($iteration == 0)
+    {
+        generateHeader($fp, $map);
+    }
+    $iteration++;
+    generateData($fp, $map, $row, $iteration);
+}
+fclose($fp);
+```
+
+### Best Practices
+
+1. **Utilize Prepared Statements**: Always prefer using prepared statements for security against SQL injection.
+2. **Error Handling**: Wrap database calls in try-catch blocks to handle exceptions gracefully.
+3. **Efficient Data Retrieval**: Use PDOStatement for large datasets to process rows one by one.
+4. **Debugging**: Implement logging for SQL queries to troubleshoot issues more effectively.
+5. **Keep Queries Simple**: Break down complex queries into simpler components if possible, making them easier to maintain and debug.
+
+By leveraging the native query feature in MagicObject, you can create efficient and maintainable database interactions, enhancing your application's performance and security.
+## Multiple Database Connections
+
+MagicObject version 2 introduces support for multiple database connections, enabling users to manage entities stored across different databases seamlessly. When performing operations such as JOINs with entities from multiple databases, it is essential to define a database connection for each entity involved.
+
+### Example Scenario
+
+In this example, we will illustrate how to manage entities stored in different databases:
+
+- **Album**, **Producer** and **Song** entities are stored in **Database 1**.
+- **Artist** entity is stored in **Database 2**.
+
+### Entity Definitions
+
+Here are the definitions for the `Album`, `Artist`, `Producer`, and `Song` classes:
+
+**Album Class**
+
+```php
+class Album
+{
+    /**
+     * @Id
+     * @Column(name="album_id")
+     * @var string
+     */
+    private $albumId;
+    
+    /**
+     * @Column(name="name")
+     * @var string
+     */
+    private $name;
+    
+    // add property and annotation here
+}
+```
+
+**Artist Class**
+
+```php
+class Artist
+{
+    /**
+     * @Id
+     * @Column(name="artist_id")
+     * @var string
+     */
+    private $artistId;
+    
+    /**
+     * @Column(name="name")
+     * @var string
+     */
+    private $name;
+
+    // add property and annotation here
+}
+```
+
+**Producer Class**
+
+```php
+class Producer
+{
+    /**
+     * @Id
+     * @Column(name="producer_id")
+     * @var string
+     */
+    private $producerId;
+    
+    /**
+     * @Column(name="name")
+     * @var string
+     */
+    private $name;
+
+    // add property and annotation here
+}
+```
+
+**Song Class**
+
+```php
+class Song
+{
+    /**
+     * @Id
+     * @Column(name="song_id")
+     * @var string
+     */
+    private $songId;
+    
+    /**
+     * @Column(name="name")
+     * @var string
+     */
+    private $name;
+    
+    /**
+     * @Column(name="album_id")
+     * @var string
+     */
+    private $albumId;
+    
+    /**
+     * @JoinColumn(name="album_id")
+     * @var Album
+     */
+    private $album;
+    
+    /**
+     * @Column(name="producer_id")
+     * @var string
+     */
+    private $producerId;
+    
+    /**
+     * @JoinColumn(name="producer_id")
+     * @var Producer
+     */
+    private $producer;
+    
+    /**
+     * @Column(name="artist_id")
+     * @var string
+     */
+    private $artistId;
+    
+    /**
+     * @JoinColumn(name="album_id")
+     * @var Artist
+     */
+    private $artist;
+    
+    // add property and annotation here
+}
+```
+
+### Creating Instances
+
+To demonstrate how to create instances of these entities and associate them with their respective databases:
+
+```php
+$song = new Song(null, $database1);
+$album = new Album(null, $database1);
+$producer = new Producer(null, $database1);
+$artist = new Artist(null, $database2);
+```
+
+### Setting Database Entities
+
+You can set the database entities for `Album`, `Producer`, and `Artist` associated with a `Song` instance in several ways:
+
+**Method 1: Chaining Method Calls**
+
+```php
+$song->databaseEntity($album)->databaseEntity($producer)->databaseEntity($artist);
+```
+
+**Method 2: Using a DatabaseEntity Instance**
+
+```php
+$databaseEntity = new DatabaseEntity();
+$databaseEntity->add($album, $database1);
+$databaseEntity->add($producer, $database1);
+$databaseEntity->add($artist, $database2);
+$song->databaseEntity($databaseEntity);
+```
+
+**Method 3: Automatic Database Association**
+
+```php
+$databaseEntity = new DatabaseEntity();
+$databaseEntity->add($album); // Automatically uses $database1 for $album
+$databaseEntity->add($producer); // Automatically uses $database1 for $producer
+$databaseEntity->add($artist); // Automatically uses $database2 for $artist
+$song->databaseEntity($databaseEntity);
+```
+
+Since `$album` and `$producer` are stored in the same database as `$song`, user can skip to set `DatabaseEntity` for `$album` and `$producer`. MagicObject will use `$database1` as the default database connection. Thus, we can write a shorter code as follows:
+
+```php
+$song = new Song(null, $database1);
+$artist = new Artist(null, $database2);
+```
+
+**Method 1: Chaining Method Calls**
+
+```php
+$song->databaseEntity($artist);
+```
+
+**Method 2: Using a DatabaseEntity Instance**
+
+```php
+$databaseEntity = new DatabaseEntity();
+$databaseEntity->add($artist, $database2);
+$song->databaseEntity($databaseEntity);
+```
+
+**Method 3: Automatic Database Association**
+
+```php
+$databaseEntity = new DatabaseEntity();
+$databaseEntity->add($artist); // Automatically uses $database2 for $artist
+$song->databaseEntity($databaseEntity);
+```
+
+### Using the Song Object
+
+Once the entities are set up, you can perform operations on the Song object. For example, to retrieve all songs:
+
+```php
+try {
+    $pageData = $song->findAll();
+} catch (Exception $e) {
+    // Handle exception here (e.g., logging or displaying an error message)
+}
+```
+
+### Conclusion
+
+With MagicObject version 2, managing entities across multiple database connections is straightforward. By defining the correct associations and utilizing the provided methods, users can effectively work with complex data structures that span multiple databases. Make sure to handle exceptions properly to ensure robustness in your application.
+
 ## Dump Database
 
 We can dump database to another database type. We do not need any database converter. Just define the target database type when we dump the database.
+
+### Database Dump Overview
+
+1. Dumping Database Structure
+
+You can dump the structure of a database without needing to connect to a real database. Specify the target database type when calling the dump method.
+
+**Code Example:**
 
 ```php
 <?php
@@ -8736,6 +11107,13 @@ $dumpForSong = new PicoDatabaseDump();
 echo $dumpForSong->dumpStructure($song, PicoDatabaseType::DATABASE_TYPE_MYSQL, true, true);
 ```
 
+**Parameters:**
+
+-    **$song:** An instance of the Song class, representing the table structure you want to dump.
+-    **PicoDatabaseType::DATABASE_TYPE_MYSQL:** The type of database you are targeting (e.g., MySQL, PostgreSQL).
+-    **true (createIfNotExists):** Whether to include the "IF NOT EXISTS" clause in the CREATE statement.
+-    **true (dropIfExists):** Whether to include the "DROP TABLE IF EXISTS" statement before creating the table.
+
 ### Dump Data
 
 We can dump data by connecting to real database. Don't forget to define the target database type. If we will dump multiple table, we must use dedicated instance of `PicoDatabaseDump`.
@@ -8747,7 +11125,45 @@ $dumpForSong = new PicoDatabaseDump();
 echo $dumpForSong->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL);
 ```
 
+**Important Note:**
 
+When exporting a table with a large amount of data, the above method may not be suitable, as it can consume a significant amount of memory while trying to accommodate all the data before writing it to a file.
+
+To efficiently handle large datasets, you can use the following approach:
+
+```php
+$song = new Song(null, $database);
+/*
+$speficication = null
+$pageable = null
+$sortable = null
+$passive = true
+$subqueryMap = null
+$findOption = MagicObject::FIND_OPTION_NO_COUNT_DATA | MagicObject::FIND_OPTION_NO_FETCH_DATA
+*/
+$pageData = $song->findAll(null, null, null, true, null, MagicObject::FIND_OPTION_NO_COUNT_DATA | MagicObject::FIND_OPTION_NO_FETCH_DATA);
+$dumpForSong = new PicoDatabaseDump();
+
+$dumpForSong->dumpData($pageData, PicoDatabaseType::DATABASE_TYPE_MYSQL, new Song(), $maxRecord, function($sql){
+    $fp = fopen("dump.sql", "a");
+    fputs($fp, $sql);
+    fclose($fp);
+});
+```
+
+**Explanation:**
+
+-    **findAll Parameters:** This allows you to customize your query. The options provided (e.g., FIND_OPTION_NO_COUNT_DATA, FIND_OPTION_NO_FETCH_DATA) ensure that only the necessary data is fetched, thus reducing memory consumption.
+-    **Callback Function:** The anonymous function passed as a parameter to dumpData handles the SQL output, appending it to dump.sql in an efficient manner, thereby avoiding excessive memory usage.
+
+By following these guidelines, you can effectively manage both the structure and data dumping processes while optimizing for performance and resource utilization.
+
+### Summary
+
+- **Structure Dumping**: Use `dumpStructure` to get the schema of the database without a real connection.
+- **Data Dumping**: Use `dumpData` to extract data from an actual database connection.
+
+This approach allows developers to quickly switch between database types and manage their database schemas and data efficiently. The use of dedicated instances of PicoDatabaseDump for multiple tables ensures clarity and organization in your database operations.
 ## Object Label
 
 ```
@@ -9238,11 +11654,457 @@ where song.active = true
 
 This way, `$active` will be escaped before being executed by the database. You don't need to escape it first.
 
-## Upload File
+## PicoSqlite
 
-Uploading lots of files with arrays is difficult for some developers, especially novice developers. There is a significant difference between uploading a single file and multiple files.
+### Overview
 
-When the developer decides to change the form from single file to multiple files or vice versa, the backend developer must change the code to handle the uploaded files.
+`PicoSqlite` is a PHP class designed for simplified interactions with SQLite databases using PDO (PHP Data Objects). This class extends `PicoDatabase` and provides methods for connecting to the database, creating tables, and performing basic CRUD (Create, Read, Update, Delete) operations.
+
+Here are some advantages of using SQLite:
+
+1.  **Lightweight**: SQLite is a serverless, self-contained database engine that requires minimal setup and uses a single file to store the entire database, making it easy to manage and deploy.
+    
+2.  **Easy to Use**: Its simple API allows for straightforward integration with PHP, enabling quick database operations without the overhead of complex configurations.
+    
+3.  **No Server Required**: Unlike other database systems, SQLite does not require a separate server process, which simplifies the development process and reduces resource usage.
+    
+4.  **Cross-Platform**: SQLite databases are cross-platform and can be used on various operating systems without compatibility issues.
+    
+5.  **Fast Performance**: For smaller databases and applications, SQLite often outperforms more complex database systems, thanks to its lightweight architecture.
+    
+6.  **ACID Compliance**: SQLite provides full ACID (Atomicity, Consistency, Isolation, Durability) compliance, ensuring reliable transactions and data integrity.
+    
+7.  **Rich Feature Set**: Despite being lightweight, SQLite supports many advanced features like transactions, triggers, views, and complex queries.
+    
+8.  **No Configuration Required**: SQLite is easy to set up and requires no configuration, allowing developers to focus on building applications rather than managing the database server.
+    
+9.  **Great for Prototyping**: Its simplicity makes it ideal for prototyping applications before moving to a more complex database system.
+    
+10.  **Good for Read-Heavy Workloads**: SQLite performs well in read-heavy scenarios, making it suitable for applications where data is frequently read but rarely modified.
+    
+
+These features make SQLite a popular choice for many PHP applications, especially for smaller projects or for applications that need a lightweight database solution.
+
+SQLite has a slightly different method for determining whether a SELECT query returns matching rows. While other databases often utilize the rowCount() method to get this information, SQLite does not support this functionality in the same way. To address this limitation, MagicObject has implemented a solution that seamlessly handles row checking for users. With MagicObject, developers can interact with SQLite without needing to worry about the intricacies of row counting. This allows for a more intuitive and efficient experience when working with SQLite, enabling users to focus on their application logic rather than the underlying database mechanics.
+
+### Requirements
+
+-    PHP 7.0 or higher
+-    PDO extension enabled
+
+### Installation
+
+To use the `PicoSqlite` class, include it in your PHP project. Ensure that your project structure allows for proper namespace loading.
+
+```php
+use MagicObject\Database\PicoSqlite;
+
+// Example usage:
+$db = new PicoSqlite('path/to/database.sqlite');
+```
+
+### Class Methods
+
+#### Constructor
+
+```php
+public function __construct($databaseFilePath)
+```
+
+**Parameters:**
+
+    string $databaseFilePath: The path to the SQLite database file.
+
+**Throws:** PDOException if the connection fails.
+
+**Usage Example:**
+
+```php
+$sqlite = new PicoSqlite('path/to/database.sqlite');
+```
+
+#### Connecting to the Database
+
+```php
+public function connect($withDatabase = true)
+```
+
+**Parameters:**
+-    bool $withDatabase: Optional. Default is true. Indicates whether to select the database when connecting.
+
+**Returns:** `bool` - True if the connection is successful, false otherwise.
+
+**Usage Example:**
+
+```php
+if ($sqlite->connect()) {
+    echo "Connected to database successfully.";
+} else {
+    echo "Failed to connect.";
+}
+```
+
+#### Check Table
+
+```php
+public function tableExists($tableName) : bool
+```
+
+**Parameters:**
+
+-    string $tableName: The name of the table to check.
+
+**Returns:** `bool` - True if the table exists, false otherwise.
+
+**Usage Example:**
+
+```php
+if ($sqlite->tableExists('users')) {
+    echo "Table exists.";
+} else {
+    echo "Table does not exist.";
+}
+```
+
+#### Create Table
+
+```php
+public function createTable($tableName, $columns) : int|false
+```
+
+**Parameters:**
+
+-    string $tableName: The name of the table to create.
+-    string[] $columns: An array of columns in the format 'column_name TYPE'.
+
+**Returns:** `int|false` - Number of rows affected or false on failure.
+
+**Usage Example:**
+
+```php
+$columns = ['id INTEGER PRIMARY KEY', 'name TEXT', 'email TEXT'];
+$sqlite->createTable('users', $columns);
+```
+
+#### Insert
+
+```php
+public function insert($tableName, $data) : array 
+```
+
+**Parameters:**
+
+-    string $tableName: The name of the table to insert into.
+-    array $data: An associative array of column names and values to insert.
+
+**Returns:** `bool` - True on success, false on failure.
+
+**Usage Example:**
+
+```php
+$data = ['name' => 'John Doe', 'email' => 'john@example.com'];
+$sqlite->insert('users', $data);
+```
+
+```php
+public function update($tableName, $data, $conditions) : bool
+```
+
+**Parameters:**
+
+-    string $tableName: The name of the table to update.
+    array $data: An associative array of column names and new values.
+-    array $conditions: An associative array of conditions for the WHERE clause.
+
+**Returns:** `bool` - True on success, false on failure.
+
+**Usage Example:**
+
+```php
+$data = ['name' => 'John Smith'];
+$conditions = ['id' => 1];
+$sqlite->update('users', $data, $conditions);
+```
+
+#### Delete
+
+```php
+public function delete($tableName, $conditions) : bool 
+```
+
+**Parameters:**
+
+-    string $tableName: The name of the table to delete from.
+-    array $conditions: An associative array of conditions for the WHERE clause.
+
+**Returns:** `bool` - True on success, false on failure.
+
+**Usage Example:**
+
+```php
+$conditions = ['id' => 1];
+$sqlite->delete('users', $conditions);
+```
+
+### Entity with PicoSqlite
+
+```php
+<?php
+
+use MagicObject\Database\PicoSqlite;
+use MagicObject\MagicObject;
+use MagicObject\Util\Database\PicoDatabaseUtilSqlite;
+
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+
+/**
+ * @Entity
+ * @JSON(property-naming-strategy=SNAKE_CASE, prettify=false)
+ * @Table(name="album")
+ * @Cache(enable="true")
+ * @package MusicProductionManager\Data\Entity
+ */
+class Album extends MagicObject
+{
+    /**
+     * Album ID
+     * 
+     * @Id
+     * @GeneratedValue(strategy=GenerationType.UUID)
+     * @NotNull
+     * @Column(name="album_id", type="varchar(50)", length=50, nullable=false)
+     * @Label(content="Album ID")
+     * @var string
+     */
+    protected $albumId;
+
+    /**
+     * Name
+     * 
+     * @Column(name="name", type="varchar(50)", length=50, nullable=true)
+     * @Label(content="Name")
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Title
+     * 
+     * @Column(name="title", type="text", nullable=true)
+     * @Label(content="Title")
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * Description
+     * 
+     * @Column(name="description", type="longtext", nullable=true)
+     * @Label(content="Description")
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * Producer ID
+     * 
+     * @Column(name="producer_id", type="varchar(40)", length=40, nullable=true)
+     * @Label(content="Producer ID")
+     * @var string
+     */
+    protected $producerId;
+
+    /**
+     * Release Date
+     * 
+     * @Column(name="release_date", type="date", nullable=true)
+     * @Label(content="Release Date")
+     * @var string
+     */
+    protected $releaseDate;
+
+    /**
+     * Number Of Song
+     * 
+     * @Column(name="number_of_song", type="int(11)", length=11, nullable=true)
+     * @Label(content="Number Of Song")
+     * @var integer
+     */
+    protected $numberOfSong;
+
+    /**
+     * Duration
+     * 
+     * @Column(name="duration", type="float", nullable=true)
+     * @Label(content="Duration")
+     * @var double
+     */
+    protected $duration;
+
+    /**
+     * Image Path
+     * 
+     * @Column(name="image_path", type="text", nullable=true)
+     * @Label(content="Image Path")
+     * @var string
+     */
+    protected $imagePath;
+
+    /**
+     * Sort Order
+     * 
+     * @Column(name="sort_order", type="int(11)", length=11, nullable=true)
+     * @Label(content="Sort Order")
+     * @var integer
+     */
+    protected $sortOrder;
+
+    /**
+     * Time Create
+     * 
+     * @Column(name="time_create", type="timestamp", length=19, nullable=true, updatable=false)
+     * @Label(content="Time Create")
+     * @var string
+     */
+    protected $timeCreate;
+
+    /**
+     * Time Edit
+     * 
+     * @Column(name="time_edit", type="timestamp", length=19, nullable=true)
+     * @Label(content="Time Edit")
+     * @var string
+     */
+    protected $timeEdit;
+
+    /**
+     * Admin Create
+     * 
+     * @Column(name="admin_create", type="varchar(40)", length=40, nullable=true, updatable=false)
+     * @Label(content="Admin Create")
+     * @var string
+     */
+    protected $adminCreate;
+
+    /**
+     * Admin Edit
+     * 
+     * @Column(name="admin_edit", type="varchar(40)", length=40, nullable=true)
+     * @Label(content="Admin Edit")
+     * @var string
+     */
+    protected $adminEdit;
+
+    /**
+     * IP Create
+     * 
+     * @Column(name="ip_create", type="varchar(50)", length=50, nullable=true, updatable=false)
+     * @Label(content="IP Create")
+     * @var string
+     */
+    protected $ipCreate;
+
+    /**
+     * IP Edit
+     * 
+     * @Column(name="ip_edit", type="varchar(50)", length=50, nullable=true)
+     * @Label(content="IP Edit")
+     * @var string
+     */
+    protected $ipEdit;
+
+    /**
+     * Active
+     * 
+     * @Column(name="active", type="tinyint(1)", length=1, default_value="1", nullable=true)
+     * @DefaultColumn(value="1")
+     * @var boolean
+     */
+    protected $active;
+
+    /**
+     * As Draft
+     * 
+     * @Column(name="as_draft", type="tinyint(1)", length=1, default_value="1", nullable=true)
+     * @DefaultColumn(value="1")
+     * @var boolean
+     */
+    protected $asDraft;
+
+}
+
+$database = new PicoSqlite(__DIR__ . "/db.sqlite", null, function($sql){
+    //echo $sql."\r\n";
+});
+try
+{
+    $database->connect();
+
+    $album = new Album(null, $database);
+
+    // create table if not exists
+    $util = new PicoDatabaseUtilSqlite();
+    $tableStructure = $util->showCreateTable($album, true);
+    $database->query($tableStructure);
+
+    $album->setAlbumId("1235");
+    $album->setName("Meraih Mimpi 2 ");
+    $album->setTitle("Meraih Mimpi 2");
+    $album->setDescription("Album pertama dengan judul Meraih Mimpi 2");
+    $album->setProducerId("5678");
+    $album->setReleaseDate("2024-09-09");
+    $album->setNumberOfSong(10);
+    $album->duration(185*60);
+    $album->setSortOrder(1);
+    $album->setIpCreate("::1");
+    $album->setIpEdit("::1");
+    $album->setTimeCreate(date("Y-m-d H:i:s"));
+    $album->setTimeEdit(date("Y-m-d H:i:s"));
+    $album->setAdminCreate("1");
+    $album->setAdminEdit("1");
+    $album->setIpCreate("::1");
+    $album->setActive(true);
+    $album->setAsDraft(false);
+    echo $album."\r\n--------\r\n";
+    $album->save();
+
+    $album2 = new Album(null, $database);
+    
+    $res = $album2->findAll();
+    foreach($res->getResult() as $row)
+    {
+        echo $row."\r\n";
+    }
+}
+catch(Exception $e)
+{
+    echo $e->getMessage();
+}
+```
+
+### Error Handling
+
+If an operation fails, `PicoSqlite` may throw exceptions or return false. It is recommended to implement error handling using try-catch blocks to catch `PDOException` for connection-related issues.
+
+### Conclusion
+
+`PicoSqlite` provides an efficient way to interact with SQLite databases. Its straightforward API allows developers to perform common database operations with minimal code. For more advanced database operations, consider extending the class or using additional PDO features.
+## File Upload
+
+### Overview
+
+Uploading files can be challenging, especially for novice developers. This guide explains how to manage single and multiple file uploads in PHP, highlighting the differences and providing straightforward examples.
+
+### Key Features
+
+-    **Easy File Handling:** The `PicoUploadFile` class simplifies the process of retrieving uploaded files.
+-    **Unified Retrieval:** The `getAll` method allows you to handle files uploaded through both single and multiple forms without needing separate logic.
+
+### Uploading Files
+
+#### Single File Upload
+
+To upload a single file, use the following HTML form:
 
 ```html
 <!-- single file -->
@@ -9252,6 +12114,10 @@ When the developer decides to change the form from single file to multiple files
 </form>
 ```
 
+#### Multiple File Upload
+
+To enable multiple file uploads, modify the input name to include brackets (`[]`) and use the `multiple` attribute:
+
 ```html
 <!-- multiple files -->
 <form action="" method="post" enctype="multipart/form-data">
@@ -9260,31 +12126,39 @@ When the developer decides to change the form from single file to multiple files
 </form>
 ```
 
+- For single uploads, the input field is named `myupload`.
+- For multiple uploads, the input field name is `myupload[]`, which allows multiple files to be uploaded at once.
+
+### PHP Backend Handling
+
+To handle the uploaded files on the server side, you can use the PicoUploadFile class. Here’s how to do it:
+
 ```php
 <?php
 
-use MagicObject\File\PicoUplodFile;
+use MagicObject\File\PicoUploadFile;
 
 require_once "vendor/autoload.php";
 
-$files = new PicoUplodFile();
+$files = new PicoUploadFile();
 
 $file1 = $files->get('myupload');
-// or 
+// or alternatively
 // $file1 = $files->myupload;
 
 $targetDir = __DIR__;
 
-foreach($file1->getAll() as $fileItem)
-{
-	$temporaryName = $fileItem->getTmpName();
-	$name = $fileItem->getName();
-	$size = $fileItem->getSize();
-	echo "$name | $temporaryName | $size\r\n";
-	move_uploaded_file($temporaryName, $targetDir."/".$name);
+foreach ($file1->getAll() as $fileItem) {
+    $temporaryName = $fileItem->getTmpName();
+    $name = $fileItem->getName();
+    $size = $fileItem->getSize();
+    
+    echo "$name | $temporaryName | $size\r\n";
+    move_uploaded_file($temporaryName, $targetDir . "/" . $name);
 }
-
 ```
+
+### Checking Upload Type
 
 Developers simply retrieve data using the `getAll` method and developers will get all files uploaded by users either via single file or multiple file forms. If necessary, the developer can check whether the file was uploaded using a single file or multiple file form with the `isMultiple()` method
 
@@ -9299,6 +12173,106 @@ else
 	// do something here
 }
 ```
+
+### Summary
+
+This implementation offers a straightforward way to manage file uploads in PHP, abstracting complexities for developers. By using methods like `getAll()` and `isMultiple()`, developers can seamlessly handle both types of uploads without needing to write separate logic for each scenario. This approach not only improves code maintainability but also enhances the developer experience.
+
+## Resumable File Download
+
+### Namespace
+
+`MagicObject\File`
+
+### Description
+
+The `PicoDownloadFile` class is designed to facilitate efficient file downloading in PHP, supporting **partial content** (range requests) for large files. It ensures that requested files exist, handles errors gracefully, and enables downloading in chunks to minimize server load and bandwidth consumption, particularly for large files.
+
+The class supports the following:
+
+-   Verifying the existence of the file.
+-   Handling byte-range requests for resuming downloads.
+-   Sending appropriate HTTP headers to manage the download.
+-   Streaming the file to the client in manageable chunks (default size: 8 KB).
+-   Returning relevant HTTP status codes and error messages.
+
+This class is ideal for scenarios where large files need to be served to clients and you want to offer functionality like resuming interrupted downloads.
+
+
+### Constructor
+
+```php
+__construct($filepath, $filename = null)
+```
+
+**Parameters**:
+
+-   `$filepath` (string): The full path to the file that should be downloaded.
+-   `$filename` (string|null, optional): The name of the file for download. If not provided, the filename is extracted from the `filepath` using `basename()`.
+
+**Description**: Initializes the `PicoDownloadFile` object with the path of the file to be downloaded and an optional filename for the download response. If the filename is not specified, the base name of the file is used.
+
+**Example**:
+
+```php
+$file = new PicoDownloadFile("/path/to/large-file.zip", "downloaded-file.zip");
+```
+
+### Method
+
+```php
+download($exit = false)
+```
+
+**Parameters**:
+
+-   `$exit` (bool, optional): Whether to terminate the script after sending the file. Default is `false`.
+
+**Returns**:
+
+-   `bool`: Returns `true` if the entire file was successfully sent, `false` if only part of the file was sent (due to range requests).
+
+**Description**: This method is responsible for initiating the file download process. It performs the following:
+
+1.  Verifies the existence of the file.
+2.  Handles byte-range requests for partial downloads (useful for resuming interrupted downloads).
+3.  Sends the appropriate HTTP headers for the file download.
+4.  Streams the file to the client in chunks of 8 KB (by default).
+
+If `$exit` is set to `true`, the script will terminate after the file is sent.
+
+**Example 1**
+
+```php
+<?php
+require 'vendor/autoload.php'; // Include the PicoDownloadFile class
+$path = "/path/to/large-file.zip";
+$localName = "downloaded-file.zip";
+$file = new PicoDownloadFile($path, $localName);
+$file->download(true); // Initiate download and terminate the script after sending
+```
+
+**Example 2**
+
+```php
+<?php
+require 'vendor/autoload.php'; // Include the PicoDownloadFile class
+$path = "/path/to/large-file.zip";
+$localName = "downloaded-file.zip";
+$file = new PicoDownloadFile($path, $localName);
+$finished = $file->download(false); // Initiate download without terminate the script after sending
+if($finished && file_exists($path))
+{
+	unlink($path); // Delete file when finish
+}
+```
+
+### Error Handling
+
+-   **404 - File Not Found**: If the file does not exist at the specified path, a 404 error is returned.
+-   **416 - Range Not Satisfiable**: If an invalid byte range is requested (e.g., the start byte is larger than the end byte), a 416 error is returned.
+-   **500 - Internal Server Error**: If there is an issue opening the file for reading (e.g., permissions issues), a 500 error is returned.
+
 
 ## Language
 
@@ -9550,7 +12524,7 @@ database_target:
   username: root
   password: Jenglotsaurus
   database_name: sipro
-  databseSchema: public
+  databaseSchema: public
   timeZone: Asia/Jakarta
 database_source:
   driver: mysql
@@ -9559,7 +12533,7 @@ database_source:
   username: root
   password: Jenglotsaurus
   database_name: sipro_ori
-  databseSchema: public
+  databaseSchema: public
   timeZone: Asia/Jakarta
 maximum_record: 100
 table:
@@ -9666,7 +12640,7 @@ database_target:
   username: root
   password: Jenglotsaurus
   database_name: sipro
-  databseSchema: public
+  databaseSchema: public
   timeZone: Asia/Jakarta
 database_source:
   driver: mysql
@@ -9675,7 +12649,7 @@ database_source:
   username: root
   password: Jenglotsaurus
   database_name: sipro_ori
-  databseSchema: public
+  databaseSchema: public
   timeZone: Asia/Jakarta
 maximum_record: 100
 ```

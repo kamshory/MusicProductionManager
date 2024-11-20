@@ -2,42 +2,60 @@
 
 namespace MagicObject\Geometry;
 
+/**
+ * Class representing a Map containing multiple Areas.
+ *
+ * This class manages a collection of Area objects, allowing for the addition and retrieval of areas.
+ * It can be initialized with an optional array of Area objects.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Geometry
+ * @link https://github.com/Planetbiru/MagicObject
+ */
 class Map
 {
     /**
-     * Area
+     * Areas in the map.
      *
      * @var Area[]
      */
-    private $area = array();
+    private $areas = [];
 
-    public function __construct($area = null)
+    /**
+     * Constructor to initialize the Map with optional areas.
+     *
+     * @param Area[]|null $areas An array of Area objects to initialize the map with.
+     */
+    public function __construct($areas = null)
     {
-        if(isset($area) && is_array($area))
-        {
-            $this->area = $area;
+        if (isset($areas) && is_array($areas)) {
+            $this->areas = $areas;
         }
     }
 
     /**
-     * Add area
+     * Add an area to the map.
      *
-     * @param Area $area
-     * @return self
+     * This method appends a new Area object to the map's collection of areas.
+     *
+     * @param Area $area Area to add
+     * @return self Returns the current instance for method chaining.
      */
     public function addArea($area)
     {
-        $this->area[] = $area;
+        $this->areas[] = $area;
         return $this;
     }
 
     /**
-     * Get area
+     * Get all areas in the map.
      *
-     * @return  Area[]
+     * This method returns an array of Area objects contained in the map.
+     *
+     * @return Area[] An array of Area objects
      */
-    public function getArea()
+    public function getAreas()
     {
-        return $this->area;
+        return $this->areas;
     }
 }

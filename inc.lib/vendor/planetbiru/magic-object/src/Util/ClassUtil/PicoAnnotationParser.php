@@ -14,7 +14,18 @@ use ReflectionMethod;
 use ReflectionProperty;
 
 /**
- * Annotation parser
+ * Annotation parser for handling and processing annotations in PHP classes.
+ *
+ * This class is designed to read, parse, and manage annotations present in
+ * the doc comments of classes, methods, and properties. It provides functionalities
+ * to retrieve annotations as arrays or objects, handle key-value pairs from query
+ * strings, and validate input parameters.
+ *
+ * The `PicoAnnotationParser` is particularly useful in frameworks or libraries
+ * that rely on annotations for configuration, routing, or metadata purposes.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Util\ClassUtil
  * @link https://github.com/Planetbiru/MagicObject
  */
 class PicoAnnotationParser
@@ -24,12 +35,14 @@ class PicoAnnotationParser
 
     /**
      * Raw docblock
+     *
      * @var string
      */
     private $rawDocBlock;
 
     /**
      * Parameters
+     *
      * @var array
      */
     private $parameters;
@@ -49,20 +62,23 @@ class PicoAnnotationParser
     private $endPattern = "[ ]*(?:@|\r\n|\n)";
 
     /**
-     * Parsed
+     * Parsed state
      *
-     * @var boolean
+     * @var bool
      */
     private $parsedAll = false;
 
     /**
      * Reflection object
+     *
      * @var ReflectionClass|ReflectionMethod|ReflectionProperty
      */
     private $reflection;
 
     /**
      * Constructor
+     *
+     * @param mixed ...$args
      * @throws ZeroArgumentException|InvalidParameterException
      */
     public function __construct()
@@ -92,9 +108,9 @@ class PicoAnnotationParser
     }
 
     /**
-     * Get properties
+     * Retrieves all properties of the reflected class or method.
      *
-     * @return array
+     * @return ReflectionProperty[] An array of ReflectionProperty objects.
      */
     public function getProperties()
     {
@@ -102,10 +118,10 @@ class PicoAnnotationParser
     }
 
     /**
-     * Check if value is null or empty
+     * Checks if the given value is null or empty.
      *
-     * @param string $value
-     * @return boolean
+     * @param string $value The value to check.
+     * @return bool True if the value is null or empty, otherwise false.
      */
     private function isNullOrEmpty($value)
     {
@@ -113,10 +129,10 @@ class PicoAnnotationParser
     }
 
     /**
-     * Parse single annotation
+     * Parses a single annotation based on the provided key.
      *
-     * @param string $key Key
-     * @return array|null
+     * @param string $key The annotation key to parse.
+     * @return array|null The parsed value(s) of the annotation or null if not found.
      */
     private function parseSingle($key)
     {
@@ -156,7 +172,10 @@ class PicoAnnotationParser
     }
 
     /**
-     * Parse annotation
+     * Parses all annotations found in the raw docblock.
+     *
+     * This method should not be called directly; use `getParameters()` to access
+     * parsed parameters instead.
      *
      * @return void
      */
@@ -190,8 +209,9 @@ class PicoAnnotationParser
     }
 
     /**
-     * fixing duplicated annotation
-     * if any duplication, use last one instead
+     * Fixes duplicated annotations by keeping only the last occurrence.
+     *
+     * This method is called during the parsing process.
      *
      * @return void
      */
@@ -208,10 +228,10 @@ class PicoAnnotationParser
     }
 
     /**
-     * Get declared variables
+     * Retrieves declared variables from a specified annotation.
      *
-     * @param string $name Name
-     * @return string[]
+     * @param string $name The name of the annotation to retrieve variables from.
+     * @return string[] An array of declared variables.
      */
     public function getVariableDeclarations($name)
     {
@@ -223,12 +243,12 @@ class PicoAnnotationParser
     }
 
     /**
-     * Get declared variable
+     * Parses a variable declaration from an annotation.
      *
-     * @param mixed $declaration Declaration
-     * @param string $name Name
-     * @return string[]
-     * @throws InvalidArgumentException
+     * @param mixed $declaration The raw declaration string.
+     * @param string $name The name of the annotation for error context.
+     * @return string[] An array containing 'type' and 'name'.
+     * @throws InvalidArgumentException if the declaration is not a string or is empty.
      */
     private function parseVariableDeclaration($declaration, $name)
     {
@@ -265,7 +285,7 @@ class PicoAnnotationParser
      * Parse value
      *
      * @param string $originalValue Original value
-     * @return array
+     * @return mixed
      */
     private function parseValue($originalValue)
     {
@@ -283,9 +303,11 @@ class PicoAnnotationParser
     }
 
     /**
-     * Get parameters
+     * Retrieves all parameters from the parsed annotations.
      *
-     * @return array
+     * If the annotations have not been parsed yet, this method will trigger parsing.
+     *
+     * @return array An associative array of parsed annotation parameters.
      */
     public function getParameters()
     {
@@ -297,9 +319,11 @@ class PicoAnnotationParser
     }
 
     /**
-     * Get parameters
+     * Retrieves all parameters as an object of type PicoGenericObject.
      *
-     * @return PicoGenericObject
+     * If the annotations have not been parsed yet, this method will trigger parsing.
+     *
+     * @return PicoGenericObject An object containing the parsed annotation parameters.
      */
     public function getParametersAsObject()
     {
@@ -311,10 +335,10 @@ class PicoAnnotationParser
     }
 
     /**
-     * Get parameter
+     * Retrieves a specific parameter by its key.
      *
-     * @param string $key Key
-     * @return array
+     * @param string $key The key of the parameter to retrieve.
+     * @return mixed The value of the specified parameter or null if not found.
      */
     public function getParameter($key)
     {
@@ -322,10 +346,15 @@ class PicoAnnotationParser
     }
 
     /**
-     * Get first parameter
+     * Get the first parameter for a given key from the parsed annotations.
      *
-     * @param string $key Key
-     * @return string
+     * This method retrieves the first value associated with the specified key.
+     * If the parameter does not exist or is null, it returns null. 
+     * If the parameter is an array, it returns the first string element. 
+     * Otherwise, it returns the value directly.
+     *
+     * @param string $key The key for which to retrieve the first parameter.
+     * @return string|null The first parameter value, or null if not found.
      */
     public function getFirstParameter($key)
     {
@@ -345,11 +374,14 @@ class PicoAnnotationParser
     }
 
     /**
-     * Combine and merge array
+     * Combine and merge two arrays, where the first array contains keys and the second contains values.
      *
-     * @param array $matches Matched
-     * @param array $pair Pair
-     * @return array
+     * This method checks if both arrays are set and are of the correct type. 
+     * It combines them into a new associative array and returns the merged result.
+     *
+     * @param array $matches An array of matched keys and values.
+     * @param array $pair An associative array to merge with.
+     * @return array The merged array containing keys and values from both input arrays.
      */
     private function combineAndMerge($matches, $pair)
     {
@@ -366,11 +398,15 @@ class PicoAnnotationParser
     }
 
     /**
-     * Parse parameters. Note that all numeric attributes will be started with underscore (_). Do not use it as is
+     * Parse key-value pairs from a query string.
      *
-     * @param string $queryString Query string
-     * @return string[]
-     * @throws InvalidQueryInputException
+     * This method extracts key-value pairs from a query string, which may contain 
+     * attributes with or without quotes. Numeric attributes will have an underscore 
+     * prefix. Throws an exception if the input is invalid.
+     *
+     * @param string $queryString The query string to parse.
+     * @return string[] An associative array of parsed key-value pairs.
+     * @throws InvalidQueryInputException If the input is not a valid query string.
      */
     public function parseKeyValue($queryString)
     {
@@ -426,22 +462,30 @@ class PicoAnnotationParser
     }
 
     /**
-     * Check if argument is match
+     * Check if the provided value matches the expected criteria.
      *
-     * @param array $keys Keys
-     * @param string $val Value
-     * @return boolean
+     * This method checks if the given value does not contain an equals sign, quotes,
+     * and is not present in the provided keys array.
+     *
+     * @param array $keys The array of valid keys.
+     * @param string $val The value to check.
+     * @return bool True if the value matches the criteria, otherwise false.
      */
     private function matchArgs($keys, $val)
     {
         return stripos($val, '=') === false && stripos($val, '"') === false && stripos($val, "'") === false && !in_array($val, $keys);
     }
+    
     /**
-     * Parse parameters as object. Note that all numeric attributes will be started with underscore (_). Do not use it as is
+     * Parse parameters from a query string and return them as a PicoGenericObject.
      *
-     * @param string $queryString Query string
-     * @return PicoGenericObject
-     * @throws InvalidAnnotationException
+     * This method transforms the key-value pairs parsed from the query string
+     * into an instance of PicoGenericObject. All numeric attributes will be 
+     * prefixed with an underscore. 
+     *
+     * @param string $queryString The query string to parse.
+     * @return PicoGenericObject An object containing the parsed key-value pairs.
+     * @throws InvalidAnnotationException If the input is not a valid query string.
      */
     public function parseKeyValueAsObject($queryString)
     {

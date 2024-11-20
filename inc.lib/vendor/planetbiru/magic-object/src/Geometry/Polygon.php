@@ -4,33 +4,40 @@ namespace MagicObject\Geometry;
 
 use MagicObject\Exceptions\InvalidPolygonException;
 
+/**
+ * Class representing a polygon defined by a series of points.
+ *
+ * This class allows for the creation and manipulation of polygons, including
+ * adding points, clearing the polygon, and calculating its area and circumference.
+ * 
+ * @author Kamshory
+ * @package MagicObject\Geometry
+ * @link https://github.com/Planetbiru/MagicObject
+ */
 class Polygon
 {
     /**
-     * Points
+     * Points that make up the polygon.
      *
      * @var Point[]
      */
-    private $points = array();
+    private $points = [];
 
     /**
-     * Constructor
+     * Constructor to initialize the Polygon with an array of Points.
      *
-     * @param Point[] $poins
+     * @param Point[] $points Initial points for the polygon.
      */
-    public function __construct($poins = null)
+    public function __construct($points = [])
     {
-        if(isset($poins) && is_array($poins))
-        {
-            $this->points = $poins;
-        }
+        $this->points = $points;
     }
 
     /**
-     * Add point
+     * Add a point to the polygon.
      *
-     * @param Point $point
-     * @return self
+     * @param Point $point Point to add.
+     * @return self Returns the current instance for method chaining.
      */
     public function addPoint($point)
     {
@@ -39,80 +46,71 @@ class Polygon
     }
 
     /**
-     * Clear polygon
+     * Clear all points from the polygon.
      *
-     * @return self
+     * This method removes all points currently defined for the polygon.
+     *
+     * @return self Returns the current instance for method chaining.
      */
     public function clearPolygon()
     {
-        $this->points = array();
+        $this->points = [];
         return $this;
     }
 
     /**
-     * Function to calculate the area of a polygon using the Shoelace formula
+     * Calculate the area of the polygon using the Shoelace formula.
      *
-     * @return double
-     * @throws InvalidPolygonException
+     * @return float The area of the polygon.
+     * @throws InvalidPolygonException If the polygon has fewer than 3 points.
      */
-    public function getArea() {
+    public function getArea()
+    {
         $cnt = count($this->points);
-        if($cnt < 3)
-        {
-            throw new InvalidPolygonException("Invalid polygon. Polygon at least has 3 points. $cnt given.");
+        if ($cnt < 3) {
+            throw new InvalidPolygonException("Invalid polygon. A polygon must have at least 3 points. $cnt given.");
         }
-        // Initialize variables for the sum and the origin point
+
         $sum = 0;
-        $o = $this->points[0];
-
-        // Loop through the points to calculate the area of the polygon
-        for ($i = 1; $i < count($this->points) - 1; $i++) {
+        for ($i = 0; $i < $cnt; $i++) {
             $p1 = $this->points[$i];
-            $p2 = $this->points[$i+1];
-
-            // Create a Triangle object using the origin and two consecutive points
-            $t = new Triangle($o, $p1, $p2);
-
-            // Add the area of the triangle to the total sum
-            $sum += $t->getArea();
+            $p2 = $this->points[($i + 1) % $cnt]; // Wrap around to the first point
+            $sum += ($p1->x * $p2->y) - ($p2->x * $p1->y);
         }
-        return $sum;
+
+        return abs($sum) / 2;
     }
 
     /**
-     * Get circumference
+     * Calculate the circumference of the polygon.
      *
-     * @return double
-     * @throws InvalidPolygonException
+     * This method computes the total length of the polygon's edges.
+     *
+     * @return float The circumference of the polygon.
+     * @throws InvalidPolygonException If the polygon has fewer than 2 points.
      */
     public function getCircumference()
     {
         $cnt = count($this->points);
-        if($cnt < 2)
-        {
-            throw new InvalidPolygonException("Invalid polygon. Polygon at least has 3 points. $cnt given.");
+        if ($cnt < 2) {
+            throw new InvalidPolygonException("Invalid polygon. A polygon must have at least 2 points. $cnt given.");
         }
-        // Initialize variables for the sum and the origin point
+
         $sum = 0;
-
-        // Loop through the points to calculate the area of the polygon
-        for ($i = 0; $i < count($this->points) - 1; $i++) {
+        for ($i = 0; $i < $cnt; $i++) {
             $p1 = $this->points[$i];
-            $p2 = $this->points[$i+1];
-
-            // Create a Triangle object using the origin and two consecutive points
+            $p2 = $this->points[($i + 1) % $cnt]; // Wrap around to the first point
             $l = new Line($p1, $p2);
-
-            // Add the area of the triangle to the total sum
             $sum += $l->getLength();
         }
+
         return $sum;
     }
 
     /**
-     * Get points
+     * Get the points of the polygon.
      *
-     * @return Point[]
+     * @return Point[] An array of Point objects that define the polygon.
      */
     public function getPoints()
     {

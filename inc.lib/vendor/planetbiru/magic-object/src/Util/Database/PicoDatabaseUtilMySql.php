@@ -6,66 +6,81 @@ use Exception;
 use MagicObject\Database\PicoDatabase;
 use MagicObject\Database\PicoDatabaseQueryBuilder;
 use MagicObject\Database\PicoDatabaseType;
-use MagicObject\Database\PicoPageData;
 use MagicObject\Database\PicoTableInfo;
 use MagicObject\MagicObject;
 use MagicObject\SecretObject;
 use PDO;
 
-class PicoDatabaseUtilMySql //NOSONAR
+/**
+ * Class PicoDatabaseUtilMySql
+ *
+ * This class extends the PicoDatabaseUtilBase and implements the PicoDatabaseUtilInterface specifically 
+ * for MySQL database operations. It provides specialized utility methods tailored to leverage MySQL's 
+ * features and syntax while ensuring compatibility with the general database utility interface.
+ *
+ * Key functionalities include:
+ *
+ * - **Retrieve and display column information for tables:** Methods to fetch detailed column data, 
+ *   including types and constraints, from MySQL tables.
+ * - **Generate SQL statements to create tables based on existing structures:** Automated generation 
+ *   of CREATE TABLE statements to replicate existing table schemas.
+ * - **Dump data from various sources into SQL insert statements:** Convert data from different formats 
+ *   into valid SQL INSERT statements for efficient data insertion.
+ * - **Facilitate the import of data between source and target databases:** Streamlined processes for 
+ *   transferring data, including handling pre and post-import scripts to ensure smooth operations.
+ * - **Ensure data integrity by fixing types during the import process:** Validation and correction of 
+ *   data types to match MySQL's requirements, enhancing data quality during imports.
+ *
+ * This class is designed for developers who are working with MySQL databases and need a robust set of tools 
+ * to manage database operations efficiently. By adhering to the PicoDatabaseUtilInterface, it provides 
+ * a consistent API for database utilities while taking advantage of MySQL-specific features.
+ *
+ * Usage:
+ * To use this class, instantiate it with a MySQL database connection and utilize its methods to perform 
+ * various database tasks, ensuring efficient data management and manipulation.
+ *
+ * @author Kamshory
+ * @package MagicObject\Util\Database
+ * @link https://github.com/Planetbiru/MagicObject
+ */
+class PicoDatabaseUtilMySql extends PicoDatabaseUtilBase implements PicoDatabaseUtilInterface // NOSONAR
 {
-    const KEY_NAME = "name";
 
     /**
-     * Get column list
+     * Retrieves a list of columns for a specified table.
      *
-     * @param PicoDatabase $database Datavase connection
-     * @param string $picoTableName Table name
-     * @return array
+     * @param PicoDatabase $database Database connection.
+     * @param string $tableName Table name.
+     * @return array An array of column details.
      */
-    public static function getColumnList($database, $picoTableName)
+    public function getColumnList($database, $tableName)
     {
-        $sql = "SHOW COLUMNS FROM $picoTableName";
+        $sql = "SHOW COLUMNS FROM $tableName";
         return $database->fetchAll($sql);
     }
 
     /**
-     * Get auto increment keys
+     * Dumps the structure of a table as a SQL statement.
      *
-     * @param PicoTableInfo $tableInfo Table information
-     * @return array
-     */
-    public static function getAutoIncrementKey($tableInfo)
-    {
-        $autoIncrement = $tableInfo->getAutoIncrementKeys();
-        $autoIncrementKeys = array();
-        if(is_array($autoIncrement) && !empty($autoIncrement))
-        {
-            foreach($autoIncrement as $col)
-            {
-                if($col["strategy"] == 'GenerationType.IDENTITY')
-                {
-                    $autoIncrementKeys[] = $col["name"];
-                }
-            }
-        }
-        return $autoIncrementKeys;
-    }
-
-    /**
-     * Dump database structure
+     * This method generates a SQL CREATE TABLE statement based on the provided table information,
+     * including the option to include or exclude specific clauses such as "IF NOT EXISTS" and 
+     * "DROP TABLE IF EXISTS". It also handles the definition of primary keys if present.
      *
-     * @param PicoTableInfo $tableInfo Table information
-     * @param string $picoTableName Table name
-     * @return string
+     * @param PicoTableInfo $tableInfo         The information about the table, including column details and primary keys.
+     * @param string        $tableName         The name of the table for which the structure is being generated.
+     * @param bool          $createIfNotExists Whether to add "IF NOT EXISTS" in the CREATE statement (default is false).
+     * @param bool          $dropIfExists      Whether to add "DROP TABLE IF EXISTS" before the CREATE statement (default is false).
+     * @param string|null   $engine            The storage engine to use for the table (optional, default is null).
+     * @param string|null   $charset           The character set to use for the table (optional, default is null).
+     * @return string                          The SQL statement to create the table, including column definitions and primary keys.
      */
-    public static function dumpStructure($tableInfo, $picoTableName, $createIfNotExists = false, $dropIfExists = false, $engine = 'InnoDB', $charset = 'utf8mb4')
+    public function dumpStructure($tableInfo, $tableName, $createIfNotExists = false, $dropIfExists = false, $engine = 'InnoDB', $charset = 'utf8mb4')
     {
-        $query = array();
-        $columns = array();
+        $query = [];
+        $columns = [];
         if($dropIfExists)
         {
-            $query[] = "-- DROP TABLE IF EXISTS `$picoTableName`;";
+            $query[] = "-- DROP TABLE IF EXISTS `$tableName`;";
             $query[] = "";
         }
         $createStatement = "";
@@ -76,13 +91,13 @@ class PicoDatabaseUtilMySql //NOSONAR
             $createStatement .= " IF NOT EXISTS";
         }
 
-        $autoIncrementKeys = self::getAutoIncrementKey($tableInfo);
+        $autoIncrementKeys = $this->getAutoIncrementKey($tableInfo);
 
-        $query[] = "$createStatement `$picoTableName` (";
+        $query[] = "$createStatement `$tableName` (";
 
         foreach($tableInfo->getColumns() as $column)
         {
-            $columns[] = self::createColumn($column);
+            $columns[] = $this->createColumn($column);
         }
         $query[] = implode(",\r\n", $columns);
         $query[] = ") ENGINE=$engine DEFAULT CHARSET=$charset;";
@@ -91,7 +106,7 @@ class PicoDatabaseUtilMySql //NOSONAR
         if(isset($pk) && is_array($pk) && !empty($pk))
         {
             $query[] = "";
-            $query[] = "ALTER TABLE `$picoTableName`";
+            $query[] = "ALTER TABLE `$tableName`";
             foreach($pk as $primaryKey)
             {
                 $query[] = "\tADD PRIMARY KEY (`$primaryKey[name]`)";
@@ -101,10 +116,10 @@ class PicoDatabaseUtilMySql //NOSONAR
 
         foreach($tableInfo->getColumns() as $column)
         {
-            if(isset($autoIncrementKeys) && is_array($autoIncrementKeys) && in_array($column[self::KEY_NAME], $autoIncrementKeys))
+            if(isset($autoIncrementKeys) && is_array($autoIncrementKeys) && in_array($column[parent::KEY_NAME], $autoIncrementKeys))
             {
                 $query[] = "";
-                $query[] = "ALTER TABLE `$picoTableName` \r\n\tMODIFY ".trim(self::createColumn($column), " \r\n\t ")." AUTO_INCREMENT";
+                $query[] = "ALTER TABLE `$tableName` \r\n\tMODIFY ".trim($this->createColumn($column), " \r\n\t ")." AUTO_INCREMENT";
                 $query[] = ";";
             }
         }
@@ -113,16 +128,25 @@ class PicoDatabaseUtilMySql //NOSONAR
     }
 
     /**
-     * Create column
+     * Creates a column definition for a SQL statement.
      *
-     * @param array $column Column
-     * @return string
+     * This method constructs a SQL column definition based on the provided column details,
+     * including the column name, data type, nullability, and default value. The resulting 
+     * definition is formatted for use in a CREATE TABLE statement.
+     *
+     * @param array $column An associative array containing details about the column:
+     *                      - string name: The name of the column.
+     *                      - string type: The data type of the column (e.g., VARCHAR, INT).
+     *                      - bool|string nullable: Indicates if the column allows NULL values (true or 'true' for NULL; otherwise, NOT NULL).
+     *                      - mixed default_value: The default value for the column (optional).
+     *
+     * @return string The SQL column definition formatted as a string, suitable for inclusion in a CREATE TABLE statement.
      */
-    public static function createColumn($column)
+    public function createColumn($column)
     {
-        $col = array();
+        $col = [];
         $col[] = "\t";
-        $col[] = "`".$column[self::KEY_NAME]."`";
+        $col[] = "`".$column[parent::KEY_NAME]."`";
         $col[] = $column['type'];
         if(isset($column['nullable']) && strtolower(trim($column['nullable'])) == 'true')
         {
@@ -135,20 +159,26 @@ class PicoDatabaseUtilMySql //NOSONAR
         if(isset($column['default_value']))
         {
             $defaultValue = $column['default_value'];
-            $defaultValue = self::fixDefaultValue($defaultValue, $column['type']);
+            $defaultValue = $this->fixDefaultValue($defaultValue, $column['type']);
             $col[] = "DEFAULT $defaultValue";
         }
         return implode(" ", $col);
     }
 
     /**
-     * Fixing default value
+     * Fixes the default value for SQL insertion based on its type.
      *
-     * @param string $defaultValue Default value
-     * @param string $type Data type
-     * @return string
+     * This method processes the given default value according to the specified data type,
+     * ensuring that it is correctly formatted for SQL insertion. For string-like types,
+     * the value is enclosed in single quotes, while boolean and null values are returned 
+     * as is.
+     *
+     * @param mixed $defaultValue The default value to fix, which can be a string, boolean, or null.
+     * @param string $type The data type of the column (e.g., ENUM, CHAR, TEXT, INT, FLOAT, DOUBLE).
+     *
+     * @return mixed The fixed default value formatted appropriately for SQL insertion.
      */
-    public static function fixDefaultValue($defaultValue, $type)
+    public function fixDefaultValue($defaultValue, $type)
     {
         if(strtolower($defaultValue) == 'true' || strtolower($defaultValue) == 'false' || strtolower($defaultValue) == 'null')
         {
@@ -162,71 +192,34 @@ class PicoDatabaseUtilMySql //NOSONAR
     }
 
     /**
-     * Dump data
+     * Dumps a single record into an SQL INSERT statement.
      *
-     * @param array $columns Columns
-     * @param string $picoTableName Table name
-     * @param MagicObject|PicoPageData $data Data
-     * @return string
-     */
-    public static function dumpData($columns, $picoTableName, $data) //NOSONAR
-    {
-        if($data instanceof PicoPageData && isset($data->getResult()[0]))
-        {
-            return self::dumpRecords($columns, $picoTableName, $data->getResult());
-        }
-        else if($data instanceof MagicObject)
-        {
-            return self::dumpRecords($columns, $picoTableName, array($data));
-        }
-        else if(is_array($data) && isset($data[0]) && $data[0] instanceof MagicObject)
-        {
-            return self::dumpRecords($columns, $picoTableName, $data);
-        }
-        return null;
-    }
-
-    /**
-     * Dump records
+     * This method takes a data record and constructs an SQL INSERT statement 
+     * for the specified table. It maps the values of the record to the corresponding 
+     * columns based on the provided column definitions.
      *
-     * @param array $columns Columns
-     * @param string $picoTableName Table name
-     * @param MagicObject[] $data Data
-     * @return string
-     */
-    public static function dumpRecords($columns, $picoTableName, $data)
-    {
-        $result = "";
-        foreach($data as $record)
-        {
-            $result .= self::dumpRecord($columns, $picoTableName, $record).";\r\n";
-        }
-        return $result;
-    }
-
-    /**
-     * Dump records
+     * @param array $columns An associative array where keys are column names and values are column details.
+     * @param string $tableName The name of the table where the record will be inserted.
+     * @param MagicObject $record The data record to be inserted, which provides a method to retrieve values.
      *
-     * @param array $columns Columns
-     * @param string $picoTableName Table name
-     * @param MagicObject $record Record
-     * @return string
+     * @return string The generated SQL INSERT statement.
+     * @throws Exception If the record cannot be processed or if there are no values to insert.
      */
-    public static function dumpRecord($columns, $picoTableName, $record)
+    public function dumpRecord($columns, $tableName, $record)
     {
         $value = $record->valueArray();
-        $rec = array();
+        $rec = [];
         foreach($value as $key=>$val)
         {
             if(isset($columns[$key]))
             {
-                $rec[$columns[$key][self::KEY_NAME]] = $val;
+                $rec[$columns[$key][parent::KEY_NAME]] = $val;
             }
         }
         $queryBuilder = new PicoDatabaseQueryBuilder(PicoDatabaseType::DATABASE_TYPE_MYSQL);
         $queryBuilder->newQuery()
             ->insert()
-            ->into($picoTableName)
+            ->into($tableName)
             ->fields(array_keys($rec))
             ->values(array_values($rec));
 
@@ -234,18 +227,22 @@ class PicoDatabaseUtilMySql //NOSONAR
     }
 
     /**
-     * Show columns
+     * Retrieves the columns of a specified table from the database.
      *
-     * @param PicoDatabase $database Database connection
-     * @param string $tableName Table name
-     * @return string[]
+     * This method executes a SQL query to show the columns of the given table and returns 
+     * an associative array where the keys are column names and the values are their respective types.
+     *
+     * @param PicoDatabase $database Database connection object.
+     * @param string $tableName Name of the table whose columns are to be retrieved.
+     * @return array An associative array mapping column names to their types.
+     * @throws Exception If the query fails or the table does not exist.
      */
-    public static function showColumns($database, $tableName)
+    public function showColumns($database, $tableName)
     {
         $sql = "SHOW COLUMNS FROM $tableName";
         $result = $database->fetchAll($sql, PDO::FETCH_ASSOC);
 
-        $columns = array();
+        $columns = [];
         foreach($result as $row)
         {
             $columns[$row['Field']] = $row['Type'];
@@ -254,12 +251,16 @@ class PicoDatabaseUtilMySql //NOSONAR
     }
 
     /**
-     * Autoconfigure import data
+     * Automatically configures the import data settings based on the source and target databases.
      *
-     * @param SecretObject $config Configuration
-     * @return SecretObject
+     * This method connects to the source and target databases, retrieves the list of existing 
+     * tables, and updates the configuration for each target table by checking its presence in the 
+     * source database. It handles exceptions and logs any errors encountered during the process.
+     *
+     * @param SecretObject $config The configuration object containing database and table information.
+     * @return SecretObject The updated configuration object with modified table settings.
      */
-    public static function autoConfigureImportData($config)
+    public function autoConfigureImportData($config)
     {
         $databaseConfigSource = $config->getDatabaseSource();
         $databaseConfigTarget = $config->getDatabaseTarget();
@@ -272,7 +273,7 @@ class PicoDatabaseUtilMySql //NOSONAR
             $databaseTarget->connect();
             $tables = $config->getTable();
 
-            $existingTables = array();
+            $existingTables = [];
             foreach($tables as $tb)
             {
                 $existingTables[] = $tb->getTarget();
@@ -286,7 +287,7 @@ class PicoDatabaseUtilMySql //NOSONAR
 
             foreach($targetTables as $target)
             {
-                $tables = self::updateConfigTable($databaseSource, $databaseTarget, $tables, $sourceTables, $target, $existingTables);
+                $tables = $this->updateConfigTable($databaseSource, $databaseTarget, $tables, $sourceTables, $target, $existingTables);
             }
             $config->setTable($tables);
         }
@@ -298,405 +299,45 @@ class PicoDatabaseUtilMySql //NOSONAR
     }
 
     /**
-     * Update config table
+     * Fixes imported data based on specified column types.
      *
-     * @param SecretObject[] $tables Tables
-     * @param string[] $sourceTables Source tables
-     * @param string $target Target table
-     * @param string[] $existingTables Existing table
-     * @return SecretObject[]
-     */
-    public static function updateConfigTable($databaseSource, $databaseTarget, $tables, $sourceTables, $target, $existingTables)
-    {
-        if(!in_array($target, $existingTables))
-        {
-            $tableInfo = new SecretObject();
-            if(in_array($target, $sourceTables))
-            {
-                // ada di database sumber
-                $tableInfo->setTarget($target);
-                $tableInfo->setSource($target);
-                $map = self::createMapTemplate($databaseSource, $databaseTarget, $target);
-                if(isset($map) && !empty($map))
-                {
-                    $tableInfo->setMap($map);
-                }
-            }
-            else
-            {
-                // tidak ada di database sumber
-                $tableInfo->setTarget($target);
-                $tableInfo->setSource("???");
-            }
-            $tables[] = $tableInfo;
-        }
-        return $tables;
-    }
-
-    /**
-     * Create map template
+     * This method processes the input data array and adjusts the values 
+     * according to the expected types defined in the columns array. It 
+     * supports boolean, integer, and float types.
      *
-     * @param PicoDatabase $databaseSource Source database
-     * @param PicoDatabase $databaseTarget Target database
-     * @param string $target Target table
-     * @return string[]
+     * @param mixed[] $data The input data to be processed.
+     * @param string[] $columns An associative array mapping column names to their types.
+     * @return mixed[] The updated data array with fixed types.
      */
-    public static function createMapTemplate($databaseSource, $databaseTarget, $target)
+    public function fixImportData($data, $columns)
     {
-        $targetColumns = array_keys(self::showColumns($databaseTarget, $target));
-        $sourceColumns = array_keys(self::showColumns($databaseSource, $target));
-        $map = array();
-        foreach($targetColumns as $column)
-        {
-            if(!in_array($column, $sourceColumns))
-            {
-                $map[] = "$column : ???";
-            }
-        }
-        return $map;
-    }
-
-    /**
-     * Importing data from another database. The destination table and column names can be different from the source table and column names.
-     *
-     * @param SecretObject $config Database import configuration
-     * @param callable $callbackFunction Callback function that will process the query made by the importer
-     * @return boolean
-     */
-    public static function importData($config, $callbackFunction)
-    {
-        $databaseConfigSource = $config->getDatabaseSource();
-        $databaseConfigTarget = $config->getDatabaseTarget();
-
-        $databaseSource = new PicoDatabase($databaseConfigSource);
-        $databaseTarget = new PicoDatabase($databaseConfigTarget);
-        try
-        {
-            $databaseSource->connect();
-            $databaseTarget->connect();
-            $tables = $config->getTable();
-            $maxRecord = $config->getMaximumRecord();
-
-            // query pre import data
-            foreach($tables as $tableInfo)
-            {
-                $tableNameTarget = $tableInfo->getTarget();
-                $tableNameSource = $tableInfo->getSource();
-                $preImportScript = $tableInfo->getPreImportScript();
-                if(self::isNotEmpty($preImportScript))
-                {
-                    foreach($preImportScript as $sql)
-                    {
-                        call_user_func($callbackFunction, $sql, $tableNameSource, $tableNameTarget);
-                    }
-                }
-            }
-
-            // import data
-            foreach($tables as $tableInfo)
-            {
-                $tableNameTarget = $tableInfo->getTarget();
-                $tableNameSource = $tableInfo->getSource();
-                self::importDataTable($databaseSource, $databaseTarget, $tableNameSource, $tableNameTarget, $tableInfo, $maxRecord, $callbackFunction);
-            }
-
-            // query post import data
-            foreach($tables as $tableInfo)
-            {
-                $tableNameTarget = $tableInfo->getTarget();
-                $tableNameSource = $tableInfo->getSource();
-                $postImportScript = $tableInfo->getPostImportScript();
-                if(self::isNotEmpty($postImportScript))
-                {
-                    foreach($postImportScript as $sql)
-                    {
-                        call_user_func($callbackFunction, $sql, $tableNameSource, $tableNameTarget);
-                    }
-                }
-            }
-        }
-        catch(Exception $e)
-        {
-            error_log($e->getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Check if array is not empty
-     *
-     * @param array $array Array to be checked
-     * @return boolean
-     */
-    public static function isNotEmpty($array)
-    {
-        return $array != null && is_array($array) && !empty($array);
-    }
-
-    /**
-     * Import table
-     *
-     * @param PicoDatabase $databaseSource Source database
-     * @param PicoDatabase $databaseTarget Target database
-     * @param string $tableName Table name
-     * @param SecretObject $tableInfo Table information
-     * @param integer $maxRecord Maximum record per query
-     * @param callable $callbackFunction Callback function
-     * @return boolean
-     */
-    public static function importDataTable($databaseSource, $databaseTarget, $tableNameSource, $tableNameTarget, $tableInfo, $maxRecord, $callbackFunction)
-    {
-        $maxRecord = self::getMaxRecord($tableInfo, $maxRecord);
-        try
-        {
-            $columns = self::showColumns($databaseTarget, $tableNameTarget);
-            $queryBuilderSource = new PicoDatabaseQueryBuilder($databaseSource);
-            $sourceTable = $tableInfo->getSource();
-            $queryBuilderSource->newQuery()
-                ->select("*")
-                ->from($sourceTable);
-            $stmt = $databaseSource->query($queryBuilderSource);
-            $records = array();
-            while($data = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT))
-            {
-                $data = self::processDataMapping($data, $columns, $tableInfo->getMap());
-                if(count($records) < $maxRecord)
-                {
-                    $records[] = $data;
-                }
-                else
-                {
-                    if(isset($callbackFunction) && is_callable($callbackFunction))
-                    {
-                        $sql = self::insert($tableNameTarget, $records);
-                        call_user_func($callbackFunction, $sql, $tableNameSource, $tableNameTarget);
-                    }
-                    // reset buffer
-                    $records = array();
-                }
-            }
-            if(!empty($records) && isset($callbackFunction) && is_callable($callbackFunction))
-            {
-                $sql = self::insert($tableNameTarget, $records);
-                call_user_func($callbackFunction, $sql, $tableNameSource, $tableNameTarget);
-            }
-        }
-        catch(Exception $e)
-        {
-            error_log($e->getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Get maximum record
-     *
-     * @param SecretObject $tableInfo Table information
-     * @param integer $maxRecord Maximum record per query
-     * @return integer
-     */
-    public static function getMaxRecord($tableInfo, $maxRecord)
-    {
-        if($tableInfo->getMaximumRecord() != null)
-        {
-            $maxRecord = $tableInfo->getMaximumRecord();
-        }
-        if($maxRecord < 1)
-        {
-            $maxRecord = 1;
-        }
-        return $maxRecord;
-    }
-
-    /**
-     * Process data mapping
-     *
-     * @param array $data
-     * @param SecretObject[] $maps Maps
-     * @return array
-     */
-    public static function processDataMapping($data, $columns, $maps)
-    {
-        if(isset($maps) && is_array($maps))
-        {
-            foreach($maps as $map)
-            {
-                $arr = explode(':', $map, 2);
-                $target = trim($arr[0]);
-                $source = trim($arr[1]);
-                $data[$target] = $data[$source];
-                unset($data[$source]);
-            }
-        }
-        $data = array_intersect_key($data, array_flip(array_keys($columns)));
-        $data = self::fixImportData($data, $columns);
-        return $data;
-    }
-
-    /**
-     * Fix import data
-     *
-     * @param mixed[] $data Data
-     * @param string[] $columns Columns
-     * @return mixed[]
-     */
-    public static function fixImportData($data, $columns)
-    {
+        // Iterate through each item in the data array
         foreach($data as $name=>$value)
         {
+            // Check if the column exists in the columns array
             if(isset($columns[$name]))
             {
                 $type = $columns[$name];
+                
                 if(strtolower($type) == 'tinyint(1)' || strtolower($type) == 'boolean' || strtolower($type) == 'bool')
                 {
-                    $data = self::fixBooleanData($data, $name, $value);
+                    // Process boolean types
+                    $data = $this->fixBooleanData($data, $name, $value);
                 }
                 else if(stripos($type, 'integer') !== false || stripos($type, 'int(') !== false)
                 {
-                    $data = self::fixIntegerData($data, $name, $value);
+                    // Process integer types
+                    $data = $this->fixIntegerData($data, $name, $value);
                 }
                 else if(stripos($type, 'float') !== false || stripos($type, 'double') !== false || stripos($type, 'decimal') !== false)
                 {
-                    $data = self::fixFloatData($data, $name, $value);
+                    // Process float types
+                    $data = $this->fixFloatData($data, $name, $value);
                 }
             }
         }
         return $data;
     }
 
-    /**
-     * Fix data
-     *
-     * @param mixed $value Value
-     * @return string
-     */
-    public static function fixData($value)
-    {
-        $ret = null;
-        if (is_string($value))
-        {
-            $ret = "'" . addslashes($value) . "'";
-        }
-        else if(is_bool($value))
-        {
-            $ret = $value === true ? 'true' : 'false';
-        }
-        else if ($value === null)
-        {
-            $ret = "null";
-        }
-        else
-        {
-            $ret = $value;
-        }
-        return $ret;
-    }
-
-    /**
-     * Fix boolean data
-     *
-     * @param mixed[] $data Data
-     * @param string $name Name
-     * @param mixed $value Value
-     * @return mixed[]
-     */
-    public static function fixBooleanData($data, $name, $value)
-    {
-        if($value === null || $value === '')
-        {
-            $data[$name] = null;
-        }
-        else
-        {
-            $data[$name] = $data[$name] == 1 ? true : false;
-        }
-        return $data;
-    }
-
-    /**
-     * Fix integer data
-     *
-     * @param mixed[] $data Data
-     * @param string $name Name
-     * @param mixed $value Value
-     * @return mixed[]
-     */
-    public static function fixIntegerData($data, $name, $value)
-    {
-        if($value === null || $value === '')
-        {
-            $data[$name] = null;
-        }
-        else
-        {
-            $data[$name] = intval($data[$name]);
-        }
-        return $data;
-    }
-
-    /**
-     * Fix float data
-     *
-     * @param mixed[] $data Data
-     * @param string $name Name
-     * @param mixed $value Value
-     * @return mixed[]
-     */
-    public static function fixFloatData($data, $name, $value)
-    {
-        if($value === null || $value === '')
-        {
-            $data[$name] = null;
-        }
-        else
-        {
-            $data[$name] = floatval($data[$name]);
-        }
-        return $data;
-    }
-
-    /**
-     * Create query insert with multiple record
-     *
-     * @param string $tableName Table name
-     * @param array $data Data
-     * @return string
-     */
-    public static function insert($tableName, $data)
-    {
-        // Kumpulkan semua kolom
-        $columns = array();
-        foreach ($data as $record) {
-            $columns = array_merge($columns, array_keys($record));
-        }
-        $columns = array_unique($columns);
-
-        // Buat placeholder untuk prepared statement
-        $placeholdersArr = array_fill(0, count($columns), '?');
-        $placeholders = '(' . implode(', ', $placeholdersArr) . ')';
-
-        // Buat query INSERT
-        $query = "INSERT INTO $tableName (" . implode(', ', $columns) . ") \r\nVALUES \r\n".
-        implode(",\r\n", array_fill(0, count($data), $placeholders));
-
-        // Siapkan nilai untuk bind
-        $values = array();
-        foreach ($data as $record) {
-            foreach ($columns as $column) {
-                $values[] = isset($record[$column]) && $record[$column] !== null ? $record[$column] : null;
-            }
-        }
-
-        // Fungsi untuk menambahkan single quote jika elemen adalah string
-
-        // Format elemen array
-        $formattedElements = array_map(function($element){
-            return self::fixData($element);
-        }, $values);
-
-        // Ganti tanda tanya dengan elemen array yang telah diformat
-        return vsprintf(str_replace('?', '%s', $query), $formattedElements);
-    }
+    
 }
