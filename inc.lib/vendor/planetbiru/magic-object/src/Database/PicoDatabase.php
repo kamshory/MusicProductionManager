@@ -626,7 +626,7 @@ class PicoDatabase // NOSONAR
             throw new NullPointerException(self::DATABASE_NONECTION_IS_NULL);
         }
         
-        $result = [];
+        $result = array();
         $this->executeDebug($sql);
         $stmt = $this->databaseConnection->prepare($sql);
         
@@ -703,7 +703,7 @@ class PicoDatabase // NOSONAR
             throw new NullPointerException(self::DATABASE_NONECTION_IS_NULL);
         }
         
-        $result = [];
+        $result = array();
         $this->executeDebug($sql);
         $stmt = $this->databaseConnection->prepare($sql);
         

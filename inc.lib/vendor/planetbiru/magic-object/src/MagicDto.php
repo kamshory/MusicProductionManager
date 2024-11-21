@@ -44,7 +44,7 @@ class MagicDto extends stdClass // NOSONAR
      *
      * @var array
      */
-    private $_classParams = []; // NOSONAR
+    private $_classParams = array(); // NOSONAR
 
     /**
      * Data source.
@@ -829,17 +829,6 @@ class MagicDto extends stdClass // NOSONAR
         }
     }
 
-    /**
-     * Checks if a method has been overridden in a child class.
-     *
-     * This method determines whether a specified public method, originally defined 
-     * in a parent class, has been overridden in the child class.
-     *
-     * @param string|object $childClass The fully qualified name of the child class or an instance of the class.
-     * @param string $methodName The name of the method to check.
-     * @return bool Returns true if the method has been overridden in the child class, false otherwise.
-     * @throws ReflectionException If the provided class name or instance cannot be reflected.
-     */
     private function isMethodOverridden($childClass, $methodName) {
         // Buat instance ReflectionClass untuk kelas anak
         $childReflection = new ReflectionClass($childClass);

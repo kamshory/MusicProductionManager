@@ -38,14 +38,14 @@ class PicoSqlParser
      *
      * @var array
      */
-    private $typeList = [];
+    private $typeList = array();
 
     /**
      * Information about the parsed tables, including columns, data types, and primary keys.
      *
      * @var array
      */
-    private $tableInfo = [];
+    private $tableInfo = array();
 
     /**
      * Constructor to initialize the parser.
@@ -96,13 +96,13 @@ class PicoSqlParser
         preg_match($rg_tb, $sql, $result);
         $tableName = $result['tb'];
 
-        $fldList = [];
+        $fldList = array();
         $primaryKey = null;
-        $columnList = [];
+        $columnList = array();
 
         preg_match_all($rg_fld, $sql, $matches);
         foreach ($matches[0] as $f) {
-            $rg_fld2_result = [];
+            $rg_fld2_result = array();
             preg_match($rg_fld2, $f, $rg_fld2_result);
             $dataType = $rg_fld2_result[2];
             $is_pk = false;
@@ -233,7 +233,7 @@ class PicoSqlParser
     public function parseAll($sql)
     {
         $sql = str_replace("`", "", $sql);
-        $inf = [];
+        $inf = array();
         $rg_tb = '/(create\s+table\s+if\s+not\s+exists|create\s+table)\s+(?<tb>.*)\s+\(/i';
         
         preg_match_all($rg_tb, $sql, $matches);

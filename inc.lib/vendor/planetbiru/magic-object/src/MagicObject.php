@@ -813,7 +813,7 @@ class MagicObject extends stdClass // NOSONAR
         $queryString = $nativeQueryUtil->extractQueryString($docComment);
         $returnType = $nativeQueryUtil->extractReturnType($docComment, $callerClassName);    
         
-        $params = [];
+        $params = array();
 
         try {
             // Apply query parameters (pagination, sorting, etc.)

@@ -37,7 +37,7 @@ class ExtendedReflectionClass extends ReflectionClass {
      *
      * @var array
      */
-    protected $useStatements = [];
+    protected $useStatements = array();
 
     /**
      * Flag indicating whether use statements have been parsed.

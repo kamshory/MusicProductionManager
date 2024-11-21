@@ -80,7 +80,7 @@
             $returnType = $callerClassName;
         }
 
-        $params = [];
+        $params = array();
         $pageable = null;
         $sortable = null;
         try {
@@ -178,7 +178,7 @@
                         } 
                         else if($className == 'MagicObject') {
                             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                            $ret = [];
+                            $ret = array();
                             foreach ($result as $row) {
                                 $ret[] = new MagicObject($row);
                             }

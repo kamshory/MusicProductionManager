@@ -200,7 +200,7 @@ class NativeQueryUtil
     private function mapRowsToMagicObject($stmt)
     {
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $objects = [];
+        $objects = array();
 
         foreach ($result as $row) {
             $objects[] = new MagicObject($row);
@@ -220,7 +220,7 @@ class NativeQueryUtil
     private function mapRowsToClass($stmt, $className)
     {
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $objects = [];
+        $objects = array();
 
         foreach ($result as $row) {
             $objects[] = new $className($row);
