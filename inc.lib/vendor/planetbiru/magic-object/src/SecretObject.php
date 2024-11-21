@@ -274,7 +274,6 @@ class SecretObject extends stdClass // NOSONAR
      * @param array $params Parameters for the method.
      * @return mixed|null The result of the method call or null if not applicable.
      */
-
     public function __call($method, $params) // NOSONAR
     {
         if (strncasecmp($method, "isset", 5) === 0) {
@@ -383,10 +382,13 @@ class SecretObject extends stdClass // NOSONAR
     }
 
     /**
-     * Check if the given data is an instance of MagicObject or PicoGenericObject.
+     * Determine if the given data is an instance of `MagicObject` or `PicoGenericObject`.
+     *
+     * This method checks whether the provided data is an object of type `MagicObject`
+     * or `PicoGenericObject`.
      *
      * @param mixed $data The data to check.
-     * @return bool True if the data is an instance, otherwise false.
+     * @return bool Returns true if the data is an instance of `MagicObject` or `PicoGenericObject`; false otherwise.
      */
     private function typeObject($data)
     {
@@ -398,10 +400,13 @@ class SecretObject extends stdClass // NOSONAR
     }
 
     /**
-     * Check if the given data is an instance of self or stdClass.
+     * Determine if the given data is an instance of the current class (`self`) or `stdClass`.
+     *
+     * This method checks whether the provided data is an object of type `self` (the current class)
+     * or the standard PHP class `stdClass`.
      *
      * @param mixed $data The data to check.
-     * @return bool True if the data is an instance, otherwise false.
+     * @return bool Returns true if the data is an instance of `self` or `stdClass`; false otherwise.
      */
     private function typeStdClass($data)
     {
@@ -560,10 +565,13 @@ class SecretObject extends stdClass // NOSONAR
     }
 
     /**
-     * Check if a value requires encryption before being stored.
+     * Determine if a value requires encryption before being stored.
      *
-     * @param string $var The variable name.
-     * @return bool True if the value needs to be encrypted, otherwise false.
+     * This method checks if a specific variable is listed among the properties
+     * that require encryption before being stored.
+     *
+     * @param string $var The name of the variable to check.
+     * @return bool Returns true if the variable needs to be encrypted before storing; false otherwise.
      */
     private function needInputEncryption($var)
     {
@@ -571,10 +579,13 @@ class SecretObject extends stdClass // NOSONAR
     }
 
     /**
-     * Check if a value requires decryption after being read.
+     * Determine if a value requires decryption after being retrieved.
      *
-     * @param string $var The variable name.
-     * @return bool True if the value needs to be decrypted, otherwise false.
+     * This method checks if a specific variable is listed among the properties
+     * that require decryption after being read from storage.
+     *
+     * @param string $var The name of the variable to check.
+     * @return bool Returns true if the variable needs to be decrypted after retrieval; false otherwise.
      */
     private function needOutputDecryption($var)
     {
@@ -582,10 +593,13 @@ class SecretObject extends stdClass // NOSONAR
     }
 
     /**
-     * Check if a value requires encryption after being read.
+     * Determine if a value requires encryption after being retrieved.
      *
-     * @param string $var The variable name.
-     * @return bool True if the value needs to be encrypted, otherwise false.
+     * This method checks if a specific variable is listed among the properties
+     * that require encryption after being read from storage or other operations.
+     *
+     * @param string $var The name of the variable to check.
+     * @return bool Returns true if the variable needs to be encrypted after retrieval; false otherwise.
      */
     private function needOutputEncryption($var)
     {
@@ -593,10 +607,13 @@ class SecretObject extends stdClass // NOSONAR
     }
 
     /**
-     * Check if a value requires decryption before being stored.
+     * Determine if a value requires decryption before being stored.
      *
-     * @param string $var The variable name.
-     * @return bool True if the value needs to be decrypted, otherwise false.
+     * This method checks if a specific variable is listed among the properties
+     * that require decryption before being written to storage.
+     *
+     * @param string $var The name of the variable to check.
+     * @return bool Returns true if the variable needs to be decrypted before storing; false otherwise.
      */
     private function needInputDecryption($var)
     {
