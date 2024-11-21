@@ -539,7 +539,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
               </div>
               <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">
                 <div><?php echo $uActivity->getName(); ?> </div>
-                <div><?php echo $uActivity->hasValueUser() ? $uActivity->getUser()->getName() : ''; ?></div>
+                <div><?php echo $uActivity->issetUser() ? $uActivity->getUser()->getName() : ''; ?></div>
               </div>
             </li>
           <?php
@@ -622,7 +622,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
                       <span class="fw-normal"><?php echo $album->getDescription(); ?></span>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-normal mb-0 fs-4"><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : ""; ?></h6>
+                      <h6 class="fw-normal mb-0 fs-4"><?php echo $album->issetProducer() ? $album->getProducer()->getName() : ""; ?></h6>
                     </td>
                     <td class="border-bottom-0">
                       <h6 class="fw-normal mb-0 fs-4"><?php echo $album->getNumberOfSong(); ?></h6>
@@ -631,7 +631,7 @@ $query = new PicoDatabaseQueryBuilder($database->getDatabaseType());
                       <h6 class="fw-normal mb-0 fs-4"><?php echo (new Dms())->ddToDms($album->getDuration() / 3600)->printDms(true, true); ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"><?php echo !$album->hasValueReleaseDate() || $album->emptyReleaseDate() || $album->equalsReleaseDate('0000-00-00') ? "-" : date('j M Y', strtotime($album->getReleaseDate())); ?></p>
+                      <p class="mb-0 fw-normal"><?php echo !$album->issetReleaseDate() || $album->emptyReleaseDate() || $album->equalsReleaseDate('0000-00-00') ? "-" : date('j M Y', strtotime($album->getReleaseDate())); ?></p>
                     </td>
                   </tr>
 
@@ -773,31 +773,31 @@ $orderMap = array(
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Album</div>
-          <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Producer</div>
-          <div class="col-8"><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetProducer() ? $song->getProducer()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Genre</div>
-          <div class="col-8"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetGenre() ? $song->getGenre()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Composer</div>
-          <div class="col-8"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetComposer() ? $song->getComposer()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Arranger</div>
-          <div class="col-8"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetArranger() ? $song->getArranger()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Vocalist</div>
-          <div class="col-8"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Track</div>
-          <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->hasValueAlbum() ? "/" . $song->getAlbum()->getNumberOfSong() : ''; ?></div>
+          <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->issetAlbum() ? "/" . $song->getAlbum()->getNumberOfSong() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Duration</div>

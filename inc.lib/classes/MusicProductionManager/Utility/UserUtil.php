@@ -24,7 +24,7 @@ class UserUtil
      */
     public static function getUserType($user)
     {
-        return $user->hasValueUserType() ? $user->getUserType() : new UserType(null);
+        return $user->issetUserType() ? $user->getUserType() : new UserType(null);
     }
     
     /**
@@ -35,7 +35,7 @@ class UserUtil
      */
     public static function getArtist($user)
     {
-        return $user->hasValueArtist() ? $user->getArtist() : new Artist(null);
+        return $user->issetArtist() ? $user->getArtist() : new Artist(null);
     }
     
     /**
@@ -57,7 +57,7 @@ class UserUtil
      */
     public static function isUserAsProducer($user)
     {
-        return $user->getCurrentRole() == UserRole::PRODUCER && $user->hasValueProducer();
+        return $user->getCurrentRole() == UserRole::PRODUCER && $user->issetProducer();
     }
     
     /**
@@ -79,7 +79,7 @@ class UserUtil
      */
     public static function isUserAsVocalist($user)
     {
-        return $user->getCurrentRole() == UserRole::VOCALIST && $user->hasValueArtist();
+        return $user->getCurrentRole() == UserRole::VOCALIST && $user->issetArtist();
     }
     
     /**
@@ -101,7 +101,7 @@ class UserUtil
      */
     public static function isUserAsComposer($user)
     {
-        return $user->getCurrentRole() == UserRole::COMPOSER && $user->hasValueComposer();
+        return $user->getCurrentRole() == UserRole::COMPOSER && $user->issetComposer();
     }
     
     /**
@@ -123,7 +123,7 @@ class UserUtil
      */
     public static function isUserAsArranger($user)
     {
-        return $user->getCurrentRole() == UserRole::ARRANGER && $user->hasValueArtist();
+        return $user->getCurrentRole() == UserRole::ARRANGER && $user->issetArtist();
     }
     
     /**
@@ -139,19 +139,19 @@ class UserUtil
         {
             $role[] = UserRole::ADMIN;
         }
-        if($user->hasValueProducer())
+        if($user->issetProducer())
         {
             $role[] = UserRole::PRODUCER;
         }
-        if($user->hasValueComposer())
+        if($user->issetComposer())
         {
             $role[] = UserRole::COMPOSER;
         }
-        if($user->hasValueArranger())
+        if($user->issetArranger())
         {
             $role[] = UserRole::ARRANGER;
         }
-        if($user->hasValueVocalist())
+        if($user->issetVocalist())
         {
             $role[] = UserRole::VOCALIST;
         }

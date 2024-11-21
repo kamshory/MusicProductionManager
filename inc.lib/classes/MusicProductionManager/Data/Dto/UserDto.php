@@ -209,9 +209,9 @@ class UserDto extends SetterGetter
         $output->setGender($input->getGender());
         $output->setEmail($input->getEmail());
         $output->setUserTypeId($input->getUserTypeId());
-        $output->setUserType($input->hasValueUserType() ?$input->getUserType()->getName() : null);
+        $output->setUserType($input->issetUserType() ?$input->getUserType()->getName() : null);
         $output->setAssociatedArtist($input->getAssociatedArtist());
-        $output->setArtist($input->hasValueArtist() ?$input->getArtist()->getName() : null);
+        $output->setArtist($input->issetArtist() ?$input->getArtist()->getName() : null);
         $output->setImagePath($input->getImagePath());
         $output->setTimeCreate($input->getTimeCreate());
         $output->setTimeEdit($input->getTimeEdit());

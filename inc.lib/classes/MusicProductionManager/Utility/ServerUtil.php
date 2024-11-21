@@ -18,7 +18,7 @@ class ServerUtil
      */
     public static function getRemoteAddress($cfg = null)
     {
-        if($cfg != null && $cfg->hasValueProxyProvider() && $cfg->getProxyProvider() == 'cloudflare')
+        if($cfg != null && $cfg->issetProxyProvider() && $cfg->getProxyProvider() == 'cloudflare')
         {
             // get remote address from header sent by Cloudflare
             return CloudflareUtil::getClientIp(false);

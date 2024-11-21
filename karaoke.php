@@ -41,7 +41,7 @@ catch(Exception $e)
 {
     // do nothing
 }
-$vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
+$vocalGuideInstrument = $userProfile->issetProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
 ?>
 <script>
     let baseSoundFontUrl = "assets/soundfont/";
@@ -160,8 +160,8 @@ $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->get
             let piano = null;
             let karaoke = null;
             let data = <?php echo $songDto;?>;
-            let hasMidiSong = <?php echo $song->hasValueVocalGuide() ? 'true' : 'false';?>;
-            let midiSong = <?php echo $song->hasValueVocalGuide() ? $song->getVocalGuide() : '[]';?>;
+            let hasMidiSong = <?php echo $song->issetVocalGuide() ? 'true' : 'false';?>;
+            let midiSong = <?php echo $song->issetVocalGuide() ? $song->getVocalGuide() : '[]';?>;
             let playInterval = setInterval('', 1000000);
             let timeInterval = 2;
             let audioContent = null;

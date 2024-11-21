@@ -91,7 +91,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_EDIT))
     {
       // do nothing
     }
-    $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
+    $vocalGuideInstrument = $userProfile->issetProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
 
     ?>
     <form action="" method="post">
@@ -191,7 +191,7 @@ else
     {
       // do nothing
     }
-    $vocalGuideInstrument = $userProfile->hasValueProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
+    $vocalGuideInstrument = $userProfile->issetProfileValue() ? $userProfile->getProfileValue() : $cfg->getDefaultVocalGuideInstrument();
     ?>
     <table class="table table-responsive table-responsive-two-side">
     <tbody>

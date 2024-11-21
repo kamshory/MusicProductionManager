@@ -284,7 +284,7 @@ else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getA
       </tr>
       <tr>
         <td>Producer</td>
-        <td><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : "";?></td>
+        <td><?php echo $album->issetProducer() ? $album->getProducer()->getName() : "";?></td>
       </tr>
       <tr>
         <td>Release Date</td>
@@ -433,7 +433,7 @@ if(!empty($result))
       <th scope="row"><?php echo $no;?></th>
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $album->getName();?></a></td>
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $album->getTitle();?></a></td>
-      <td class="text-data text-data-producer"><?php echo $album->hasValueProducer() ? $album->getProducer()->getName() : "";?></td>
+      <td class="text-data text-data-producer"><?php echo $album->issetProducer() ? $album->getProducer()->getName() : "";?></td>
       <td class="text-data text-data-duration"><?php echo (new Dms())->ddToDms($album->getDuration()/3600)->printDms(true, true); ?></td>
       <td class="text-data text-data-number-of-song"><?php echo $album->getNumberOfSong();?></td>
       <td class="text-data text-data-sort-order"><?php echo $album->getSortOrder();?></td>

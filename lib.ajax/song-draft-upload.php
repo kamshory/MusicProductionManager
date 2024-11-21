@@ -72,7 +72,7 @@ function processFile($cfg, $database, $file, $currentLoggedInUser)
         $songDraft->setIpCreate($ip);
         $songDraft->setIpEdit($ip);
 
-        if($currentLoggedInUser->hasValueArtist())
+        if($currentLoggedInUser->issetArtist())
         {
             // set artist ID if exists
             $songDraft->setArtistId($currentLoggedInUser->getArtist()->getArtistId());

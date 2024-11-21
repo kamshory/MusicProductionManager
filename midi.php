@@ -127,23 +127,23 @@ else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getS
         </tr>
         <tr>
           <td>Genre</td>
-          <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : '';?></td>
+          <td><?php echo $song->issetGenre() ? $song->getGenre()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Album</td>
-          <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : '';?></td>
+          <td><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Vocal</td>
-          <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
+          <td><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : "";?></td>
         </tr>
         <tr>
           <td>Composer</td>
-          <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : '';?></td>
+          <td><?php echo $song->issetComposer() ? $song->getComposer()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Arranger</td>
-          <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : '';?></td>
+          <td><?php echo $song->issetArranger() ? $song->getArranger()->getName() : '';?></td>
         </tr>
         <tr>
           <td>File Size</td>
@@ -211,7 +211,7 @@ else if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getS
       {
         ?>
         <div class="comment-wrapper">
-        <div class="comment-creator"><?php echo $comment->hasValueCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->getTimeCreate()));?></div>
+        <div class="comment-creator"><?php echo $comment->issetCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->getTimeCreate()));?></div>
         <div class="comment-content"><?php echo $comment->getComment();?></div>
         <div class="comment-controller"><a class="comment-edit" href="javascript:">Edit</a> &nbsp; <a class="comment-delete" href="javascript:">Delete</a></div>
         </div>
@@ -417,12 +417,12 @@ if(!empty($result))
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $song->getName();?></a></td>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $song->getTitle();?></a></td>
-        <td class="text-data text-data-album-name"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
-        <td class="text-data text-data-rating"><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
-        <td class="text-data text-data-track-number"><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
-        <td class="text-data text-data-genre-name"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
-        <td class="text-data text-data-artist-vocal-name"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
-        <td class="text-data text-data-artist-composer-name"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
+        <td class="text-data text-data-album-name"><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : "";?></td>
+        <td class="text-data text-data-rating"><?php echo $song->issetRating() ? $song->getRating() : "";?></td>
+        <td class="text-data text-data-track-number"><?php echo $song->issetTrackNumber() ? $song->getTrackNumber() : "";?></td>
+        <td class="text-data text-data-genre-name"><?php echo $song->issetGenre() ? $song->getGenre()->getName() : "";?></td>
+        <td class="text-data text-data-artist-vocal-name"><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : "";?></td>
+        <td class="text-data text-data-artist-composer-name"><?php echo $song->issetComposer() ? $song->getComposer()->getName() : "";?></td>
         <td class="text-data text-data-duration"><?php echo (new Dms())->ddToDms($song->getDuration()/3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-active"><?php echo $song->isActive() ? 'Yes' : 'No';?></td>
         </tr>

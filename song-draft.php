@@ -121,7 +121,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongDr
       {
         ?>
         <div class="comment-wrapper">
-        <div class="comment-creator"><?php echo $comment->hasValueCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->getTimeCreate()));?></div>
+        <div class="comment-creator"><?php echo $comment->issetCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->getTimeCreate()));?></div>
         <div class="comment-content"><?php echo $comment->getComment();?></div>
         <div class="comment-controller"><a class="comment-edit" href="javascript:">Edit</a> &nbsp; <a class="comment-delete" href="javascript:">Delete</a></div>
         </div>
@@ -285,7 +285,7 @@ if(!empty($result))
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td class="text-nowrap"><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $songDraft->getName();?></a></td>
         <td class="text-data text-data-time-create text-nowrap"><?php echo number_format($songDraft->getRating(), 1);?></td>
-        <td class="text-data text-data-time-artist text-nowrap"><?php echo $songDraft->hasValueArtist() ? $songDraft->getArtist()->getName() : "";?></td>
+        <td class="text-data text-data-time-artist text-nowrap"><?php echo $songDraft->issetArtist() ? $songDraft->getArtist()->getName() : "";?></td>
         <td class="text-data text-data-time-create text-nowrap"><?php echo $songDraft->getTimeCreate();?></td>
         <td class="text-data text-data-duration text-nowrap"><?php echo (new Dms())->ddToDms($songDraft->getDuration() / 3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-active text-nowrap"><?php echo $songDraft->isActive() ? 'Yes' : 'No';?></td>

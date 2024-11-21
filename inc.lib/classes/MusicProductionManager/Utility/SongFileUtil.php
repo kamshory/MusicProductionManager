@@ -246,7 +246,7 @@ class SongFileUtil extends SongUtil
      */
     public static function getSongBasePath($cfg, $songId, $default = null)
     {
-        if($cfg->hasValueSongBasePath())
+        if($cfg->issetSongBasePath())
         {
             return $cfg->getSongBasePath() . "/" . $songId;
         }
@@ -263,7 +263,7 @@ class SongFileUtil extends SongUtil
      */
     public static function getSongDraftBasePath($cfg, $songId, $default = null)
     {
-        if($cfg->hasValueSongDraftBasePath())
+        if($cfg->issetSongDraftBasePath())
         {
             return $cfg->getSongDraftBasePath() . "/" . $songId;
         }

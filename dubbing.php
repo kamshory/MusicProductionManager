@@ -368,10 +368,10 @@ if(!empty($result))
         <th scope="row"><a href="<?php echo $linkEdit;?>" class="edit-data"><i class="ti ti-edit"></i></a></th>
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getName();?></a></td>
-        <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
-        <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
-        <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
-        <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
+        <td><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : "";?></td>
+        <td><?php echo $song->issetGenre() ? $song->getGenre()->getName() : "";?></td>
+        <td><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : "";?></td>
+        <td><?php echo $song->issetComposer() ? $song->getComposer()->getName() : "";?></td>
         <td><?php echo $song->getDuration();?></td>
         </tr>
         <?php

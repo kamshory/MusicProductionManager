@@ -42,23 +42,23 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
         </tr>
         <tr>
           <td>Genre</td>
-          <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : '';?></td>
+          <td><?php echo $song->issetGenre() ? $song->getGenre()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Album</td>
-          <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : '';?></td>
+          <td><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Vocal</td>
-          <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
+          <td><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : "";?></td>
         </tr>
         <tr>
           <td>Composer</td>
-          <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : '';?></td>
+          <td><?php echo $song->issetComposer() ? $song->getComposer()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Arranger</td>
-          <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : '';?></td>
+          <td><?php echo $song->issetArranger() ? $song->getArranger()->getName() : '';?></td>
         </tr>
         <tr>
           <td>File Size</td>

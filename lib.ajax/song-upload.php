@@ -150,8 +150,8 @@ try
             $entitySong = new EntitySong(null, $database);
             $entitySong->findOneBySongId($song->getSongId());
 
-            $album = $entitySong->hasValueAlbum() ? $entitySong->getAlbum()->getName() : "";
-            $artist = $entitySong->hasValueVocalist() ? $entitySong->getVocalist()->getName() : "";
+            $album = $entitySong->issetAlbum() ? $entitySong->getAlbum()->getName() : "";
+            $artist = $entitySong->issetVocalist() ? $entitySong->getVocalist()->getName() : "";
 
             $tagData = new Id3Tag;
             $tagData->addAlbum($album);

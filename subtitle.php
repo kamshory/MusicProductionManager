@@ -475,14 +475,14 @@ if(!empty($result))
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getName();?></a></td>
         <td><a href="<?php echo $linkDetail;?>"><?php echo $song->getTitle();?></a></td>
-        <td><?php echo $song->hasValueRating() ? $song->getRating() : "";?></td>
-        <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : "";?></td>
-        <td><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : "";?></td>
-        <td><?php echo $song->hasValueTrackNumber() ? $song->getTrackNumber() : "";?></td>
-        <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : "";?></td>
-        <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
-        <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : "";?></td>
-        <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : "";?></td>
+        <td><?php echo $song->issetRating() ? $song->getRating() : "";?></td>
+        <td><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : "";?></td>
+        <td><?php echo $song->issetProducer() ? $song->getProducer()->getName() : "";?></td>
+        <td><?php echo $song->issetTrackNumber() ? $song->getTrackNumber() : "";?></td>
+        <td><?php echo $song->issetGenre() ? $song->getGenre()->getName() : "";?></td>
+        <td><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : "";?></td>
+        <td><?php echo $song->issetComposer() ? $song->getComposer()->getName() : "";?></td>
+        <td><?php echo $song->issetArranger() ? $song->getArranger()->getName() : "";?></td>
         <td><?php echo (new Dms())->ddToDms($song->getDuration() / 3600)->printDms(true, true); ?></td>
         <td class="text-data text-data-vocal"><?php echo $song->isVocal() ? 'Yes' : 'No';?></td>
         <td><?php echo $song->isLyricComplete() ? 'Yes':'No';?></td>

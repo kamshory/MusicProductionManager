@@ -37,11 +37,11 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getRefere
         </tr>
         <tr>
           <td>Genre</td>
-          <td><?php echo $reference->hasValueGenre() ? $reference->getGenre()->getName() : '';?></td>
+          <td><?php echo $reference->issetGenre() ? $reference->getGenre()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Artist</td>
-          <td><?php echo $reference->hasValueArtist() ? $reference->getArtist()->getName() : '';?></td>
+          <td><?php echo $reference->issetArtist() ? $reference->getArtist()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Album</td>
@@ -196,8 +196,8 @@ if(!empty($result))
         <th class="text-right" scope="row"><?php echo $no;?></th>
         <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-title"><?php echo $reference->getTitle();?></a></td>
         <td class="text-data text-data-album"><?php echo $reference->getAlbum();?></td>
-        <td class="text-data text-data-genre-name"><?php echo $reference->hasValueGenre() ? $reference->getGenre()->getName() : "";?></td>
-        <td class="text-data text-data-artist-name"><?php echo $reference->hasValueArtist() ? $reference->getArtist()->getName() : "";?></td>
+        <td class="text-data text-data-genre-name"><?php echo $reference->issetGenre() ? $reference->getGenre()->getName() : "";?></td>
+        <td class="text-data text-data-artist-name"><?php echo $reference->issetArtist() ? $reference->getArtist()->getName() : "";?></td>
         <td class="text-data text-data-duration"><?php echo $reference->getYear();?></td>
         <td class="text-data text-data-active"><?php echo $reference->isActive() ? 'Yes' : 'No';?></td>
         </tr>

@@ -23,7 +23,7 @@ if($inputPost->getUsername() != null && $inputPost->getPassword() != null)
     {
       $currentLoggedInUser = new EntityUser(null, $database);
       $currentLoggedInUser->findOneByUsernameAndPasswordAndBlockedAndActive($username, $password, false, true);
-      if($currentLoggedInUser->hasValueUserId())
+      if($currentLoggedInUser->issetUserId())
       {
         // save to sessions
         $sessions->suser = $username;

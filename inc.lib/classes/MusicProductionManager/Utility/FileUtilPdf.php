@@ -30,7 +30,7 @@ class FileUtilPdf
     */
     public static function replacePdfTitle($content, $song)
     {
-        if($song->hasValueTitle())
+        if($song->issetTitle())
         {
             $title = $song->getTitle();
         }
@@ -38,7 +38,7 @@ class FileUtilPdf
         {
             $title = $song->getName();
         }
-        if($song->hasValueComposer())
+        if($song->issetComposer())
         {
             $title .= ' by '.$song->getComposer()->getName();
         }

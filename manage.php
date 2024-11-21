@@ -49,23 +49,23 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
         </tr>
         <tr>
           <td>Genre</td>
-          <td><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : '';?></td>
+          <td><?php echo $song->issetGenre() ? $song->getGenre()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Album</td>
-          <td><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : '';?></td>
+          <td><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Vocal</td>
-          <td><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : "";?></td>
+          <td><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : "";?></td>
         </tr>
         <tr>
           <td>Composer</td>
-          <td><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : '';?></td>
+          <td><?php echo $song->issetComposer() ? $song->getComposer()->getName() : '';?></td>
         </tr>
         <tr>
           <td>Arranger</td>
-          <td><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : '';?></td>
+          <td><?php echo $song->issetArranger() ? $song->getArranger()->getName() : '';?></td>
         </tr>
         <tr>
           <td>File Size</td>
@@ -133,7 +133,7 @@ if($inputGet->equalsAction(ParamConstant::ACTION_DETAIL) && $inputGet->getSongId
       {
         ?>
         <div class="comment-wrapper">
-        <div class="comment-creator"><?php echo $comment->hasValueCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->getTimeCreate()));?></div>
+        <div class="comment-creator"><?php echo $comment->issetCreator() ? $comment->getCreator()->getName() : "";?> <?php echo date("j F Y H:i:s", strtotime($comment->getTimeCreate()));?></div>
         <div class="comment-content"><?php echo $comment->getComment();?></div>
         <div class="comment-controller"><a class="comment-edit" href="javascript:">Edit</a> &nbsp; <a class="comment-delete" href="javascript:">Delete</a></div>
         </div>
@@ -401,31 +401,31 @@ foreach ($result as $song) {
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Album</div>
-          <div class="col-8"><?php echo $song->hasValueAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetAlbum() ? $song->getAlbum()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Producer</div>
-          <div class="col-8"><?php echo $song->hasValueProducer() ? $song->getProducer()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetProducer() ? $song->getProducer()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Genre</div>
-          <div class="col-8"><?php echo $song->hasValueGenre() ? $song->getGenre()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetGenre() ? $song->getGenre()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Composer</div>
-          <div class="col-8"><?php echo $song->hasValueComposer() ? $song->getComposer()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetComposer() ? $song->getComposer()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Arranger</div>
-          <div class="col-8"><?php echo $song->hasValueArranger() ? $song->getArranger()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetArranger() ? $song->getArranger()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Vocalist</div>
-          <div class="col-8"><?php echo $song->hasValueVocalist() ? $song->getVocalist()->getName() : ''; ?></div>
+          <div class="col-8"><?php echo $song->issetVocalist() ? $song->getVocalist()->getName() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Track</div>
-          <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->hasValueAlbum() ? "/" . $song->getAlbum()->getNumberOfSong() : ''; ?></div>
+          <div class="col-8"><?php echo $song->getTrackNumber(); ?><?php echo $song->issetAlbum() ? "/" . $song->getAlbum()->getNumberOfSong() : ''; ?></div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="col-4">Duration</div>

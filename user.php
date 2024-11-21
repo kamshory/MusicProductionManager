@@ -287,7 +287,7 @@ if(!empty($result))
       <td><a href="<?php echo $linkDetail;?>" class="text-data text-data-name"><?php echo $user->getName();?></a></td>
       <td class="text-data text-data-admin"><?php echo $user->getAdmin() ? 'Yes' : 'No';?></td>
       <td class="text-data text-data-associated-artist"><?php 
-      if($user->hasValueArtist())
+      if($user->issetArtist())
       {
         echo $user->getArtist()->getName();
       }

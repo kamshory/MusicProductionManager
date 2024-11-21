@@ -168,7 +168,7 @@ class SongUtil
      */
     public static function getPdfTitle($song)
     {
-        if($song->hasValueTitle())
+        if($song->issetTitle())
         {
             $songTitle = $song->getTitle();
         }
@@ -176,7 +176,7 @@ class SongUtil
         {
             $songTitle = $song->getName();
         }
-        if($song->hasValueComposer())
+        if($song->issetComposer())
         {
             $songTitle .= ' by '.$song->getComposer()->getName();
         }

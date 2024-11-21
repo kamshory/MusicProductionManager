@@ -46,8 +46,8 @@ class FileUtil
         } else if ($inputGet->equalsType('pdf') && file_exists($song->getFilePathPdf())) {
 
             $name = $song->getName();
-            $title = $song->hasValueTitle() ? ("(".$song->getTitle().")") : $song->getName();
-            $composer = $song->hasValueComposer() ? $song->getComposer()->getName() : "NN";
+            $title = $song->issetTitle() ? ("(".$song->getTitle().")") : $song->getName();
+            $composer = $song->issetComposer() ? $song->getComposer()->getName() : "NN";
             
             $songTitle = SongUtil::getPdfTitle($song);
 
@@ -231,10 +231,10 @@ class FileUtil
         }
 
         $name = $song->getName();
-        $title = $song->hasValueTitle() ? ("(".$song->getTitle().")") : $song->getName();
-        $composer = $song->hasValueComposer() ? $song->getComposer()->getName() : "NN";
+        $title = $song->issetTitle() ? ("(".$song->getTitle().")") : $song->getName();
+        $composer = $song->issetComposer() ? $song->getComposer()->getName() : "NN";
 
-        if($song->hasValueTitle())
+        if($song->issetTitle())
         {
             $songTitle = $song->getTitle();
         }
@@ -242,7 +242,7 @@ class FileUtil
         {
             $songTitle = $song->getName();
         }
-        if($song->hasValueComposer())
+        if($song->issetComposer())
         {
             $songTitle .= ' by '.$song->getComposer()->getName();
         }

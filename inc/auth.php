@@ -15,7 +15,7 @@ if(isset($sessions) && $sessions->isSessionStarted() && isset($sessions->suser) 
         $currentLoggedInUser->findOneByUsernameAndPasswordAndBlockedAndActive($username, $password, false, true);
         
         // Set time zone
-        if($currentLoggedInUser->hasValueTimeZone() && $currentLoggedInUser->getTimeZone() != "")
+        if($currentLoggedInUser->issetTimeZone() && $currentLoggedInUser->getTimeZone() != "")
         {
             date_default_timezone_set($currentLoggedInUser->getTimeZone());
 		    $timeZoneOffset = date("P");
